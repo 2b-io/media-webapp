@@ -16,12 +16,13 @@ const devMiddleware = webpackDevMiddleware(compiler, {
 app.use(devMiddleware);
 
 app.use('*', (req, res, next) => {
-  const filename = path.join(compiler.outputPath, 'index.html');
+  const filename = path.join(compiler.outputPath, '../index.html');
 
   compiler.outputFileSystem.readFile(filename, (err, result) => {
     if (err) {
       return next(err);
     }
+
     res
       .set('content-type','text/html')
       .send(result)
