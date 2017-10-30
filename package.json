@@ -1,0 +1,36 @@
+{
+  "name": "media-on-demand-webapp",
+  "version": "1.0.0",
+  "description": "A web app that allows tenants register and configure their media-on-demand presets.",
+  "main": "index.js",
+  "repository": "git@github.com:MediaSocialNetwork/media-on-demand-webapp.git",
+  "author": "LongLH <d@dapps.me>",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "2.141.0",
+    "bluebird": "3.5.1",
+    "express": "4.16.2",
+    "react": "16.0.0",
+    "react-dom": "16.0.0",
+    "react-redux": "5.0.6",
+    "redux": "3.7.2",
+    "redux-immutable": "4.0.0",
+    "redux-saga": "0.16.0"
+  },
+  "devDependencies": {
+    "babel-loader": "7.1.2",
+    "css-loader": "0.28.7",
+    "file-loader": "1.1.5",
+    "html-loader": "0.5.1",
+    "html-webpack-plugin": "2.30.1",
+    "nodemon": "1.12.1",
+    "style-loader": "0.19.0",
+    "stylus-loader": "3.0.1",
+    "webpack": "3.8.1",
+    "webpack-dev-middleware": "1.12.0"
+  },
+  "scripts": {
+    "dev": "webpack --config internals/webpack/webpack.dev.babel.js",
+    "dev-server": "node internals/dev-server"
+  }
+}
