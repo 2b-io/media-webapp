@@ -45,7 +45,19 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: /.styl$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'stylus-loader'
+        ]
       }
     ]
+  },
+  resolve: {
+    modules: [ 'app', 'node_modules' ],
+    extensions: [ '.js', '.jsx', '.styl' ]
   }
 };
