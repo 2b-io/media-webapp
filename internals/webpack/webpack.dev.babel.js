@@ -7,11 +7,11 @@ const rootDir = path.resolve(__dirname, '../..');
 
 module.exports = {
   entry: {
-    app: [ path.join(rootDir, 'app/app.js') ]
+    app: [ path.join(rootDir, 'app/index.js') ]
   },
   output: {
     path: path.join(rootDir, 'build'),
-    publicPath: '/assets',
+    publicPath: '/assets/',
     filename: '[name].bundle.js'
   },
   plugins: [
@@ -26,10 +26,25 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: {
-          presets: [ 'react', 'stage-2' ]
-        }
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [ 'react', 'stage-2' ]
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(jpg|png|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: 'img/'
+            }
+          }
+        ]
       }
     ]
   }
