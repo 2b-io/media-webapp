@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // const BabelMinifyWebpackPlugin = require('babel-minify-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
@@ -10,9 +11,9 @@ module.exports = {
     app: [ path.join(rootDir, 'app/index.js') ]
   },
   output: {
-    path: path.join(rootDir, 'build/js'),
-    publicPath: '/js/',
-    filename: '[name].bundle.[hash:5].js'
+    path: path.join(rootDir, 'build/assets'),
+    publicPath: '/assets/',
+    filename: 'js/[name].bundle.[hash:5].js'
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -20,6 +21,7 @@ module.exports = {
       template: path.join(rootDir, 'app/index.html'),
       filename: path.join(rootDir, 'build/index.html')
     }),
+    new ExtractTextPlugin('css/global.[hash:5].css')
     // new BabelMinifyWebpackPlugin()
   ],
   module: {
@@ -50,11 +52,9 @@ module.exports = {
       },
       {
         test: /.styl$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'stylus-loader'
-        ]
+        use: ExtractTextPlugin.extract({
+          use: ['css-loader', 'stylus-loader']
+        })
       }
     ]
   },
