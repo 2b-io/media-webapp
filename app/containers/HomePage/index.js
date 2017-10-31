@@ -1,10 +1,13 @@
+import Radium from 'radium';
 import React from 'react';
-require('./style.styl');
 
+import styles from './styles';
+
+@Radium
 class HomePage extends React.Component {
   render() {
     return (
-      <div className="homepage container">
+      <div style={styles.container}>
         <h1>HomePage</h1>
       </div>
     );

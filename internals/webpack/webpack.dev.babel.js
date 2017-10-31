@@ -12,7 +12,7 @@ module.exports = {
   output: {
     path: path.join(rootDir, 'build/js'),
     publicPath: '/js/',
-    filename: '[name].bundle.[hash].js'
+    filename: '[name].bundle.[hash:5].js'
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -31,7 +31,8 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              presets: [ 'react', 'stage-2' ]
+              presets: [ 'react', 'stage-2' ],
+              plugins: [ 'transform-decorators-legacy' ]
             }
           }
         ]
