@@ -1,17 +1,15 @@
-import { createStore, applyMiddlware } from 'redux';
-import { fromJS } from 'immutable';
+import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import createHistory from 'history/createBrowserHistory';
 
-import createReducer from 'reducers';
+import createReducer from './reducers';
 
-const sagaMiddleware = createSagaMiddleware();
-const history = createHistory();
-const initialState = {};
+export default function() {
+  const sagaMiddleware = createSagaMiddleware();
 
-const store = createStore(
-  createReducer(),
-  fromJS(initialState)
-);
+  const store = createStore(
+    createReducer(),
+    applyMiddleware(sagaMiddleware)
+  );
 
-export default store;
+  return store;
+}
