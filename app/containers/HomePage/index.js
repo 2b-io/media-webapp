@@ -31,8 +31,6 @@ class HomePage extends React.Component {
   }
 
   redirect() {
-    console.log('click [Sign In]')
-
     history.push('/sign-in')
   }
 
