@@ -2,7 +2,7 @@ import App from 'containers/App';
 import HomePage from 'containers/HomePage/Loadable';
 import SignIn from 'containers/SignIn';
 
-const routes = [
+export const routes = [
   {
     component: App,
     routes: [
@@ -19,5 +19,3 @@ const routes = [
     ]
   }
 ];
-
-export default routes;

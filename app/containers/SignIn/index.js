@@ -1,11 +1,32 @@
-import React from 'react';
+import React from 'react'
+import { connect } from 'react-redux'
 
 class SignIn extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.redirectToHomePage = this.redirectToHomePage.bind(this)
+  }
+
   render() {
     return (
-      <h1>Sign In</h1>
-    );
+      <div>
+        <h1>Sign In</h1>
+        <div>
+          <button onClick={this.redirectToHomePage}>HomePage</button>
+        </div>
+      </div>
+    )
+  }
+
+  redirectToHomePage() {
+    let { dispatch } = this.props;
+
+    dispatch({
+      type: 'CHANGE_HISTORY',
+      path: '/'
+    })
   }
 }
 
-export default SignIn;
+export default connect()(SignIn)

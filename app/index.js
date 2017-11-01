@@ -1,15 +1,9 @@
-import React from 'react';
-import { render } from 'react-dom';
-import { renderRoutes } from 'react-router-config';
-import { BrowserRouter } from 'react-router-dom';
+import React from 'react'
+import { render } from 'react-dom'
 
-import './global.styl';
-import routes from './routes';
+import './global.styl'
+import Mount from 'core/Mount'
 
-render(
-  <BrowserRouter>
-    {renderRoutes(routes)}
-  </BrowserRouter>,
-  document.getElementById('root'),
-  () => console.log('Render completed')
-);
+const MOUNT_NODE = document.getElementById('root')
+
+render(<Mount />, MOUNT_NODE, () => console.log('Render completed'))
