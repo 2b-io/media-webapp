@@ -2,16 +2,15 @@ import { take, put } from 'redux-saga/effects'
 
 import HISTORY from 'components/History/actions'
 
+import { pushHistory, popHistory, replaceHistory } from 'core/actions'
+
 export function *historyPush() {
   while (true) {
     let action = yield take(HISTORY.PUSH)
 
     console.log(`history push to ${action.pathname}`)
 
-    yield put({
-      type: HISTORY.PUSH_ACCEPTED,
-      pathname: action.pathname
-    })
+    yield put(pushHistory(action.pathname))
   }
 }
 
@@ -21,16 +20,13 @@ export function *historyPop() {
 
     console.log(`history pop to ${action.pathname}`)
 
-    yield put({
-      type: HISTORY.POP_ACCEPTED,
-      pathname: action.pathname
-    })
+    yield put(popHistory(action.pathname))
 
-    if (action.pathname === '/profile') {
-      yield put({
-        type: HISTORY.REPLACE,
-        pathname: '/sign-in'
-      })
+    // TODO should call API for validating current session
+    let requiresSignIn = action.pathname === '/profile'
+
+    if (requiresSignIn) {
+      yield put(replaceHistory('/sign-in'))
     }
   }
 }

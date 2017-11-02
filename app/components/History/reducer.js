@@ -8,26 +8,10 @@ let initialStates = {
 
 export default function(state = initialStates, action) {
   switch (action.type) {
-    case HISTORY.PUSH_ACCEPTED:
+    case HISTORY.CHANGED:
       return Object.assign({}, state, {
         pathname: action.pathname,
-        type: 'push'
-        // TODO store user flows
-        // flows: state.flows.concat([ action.pathname ])
-      })
-
-    case HISTORY.POP_ACCEPTED:
-      return Object.assign({}, state, {
-        pathname: action.pathname,
-        type: 'pop'
-        // TODO store user flows
-        // flows: state.flows.concat([ action.pathname ])
-      })
-
-    case HISTORY.REPLACE:
-      return Object.assign({}, state, {
-        pathname: action.pathname,
-        type: 'replace'
+        type: action.method,
         // TODO store user flows
         // flows: state.flows.concat([ action.pathname ])
       })

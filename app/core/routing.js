@@ -1,6 +1,6 @@
-
 export const routes = [
   {
+    name: 'root',
     routes: [
       {
         path: '/',
@@ -9,6 +9,9 @@ export const routes = [
       {
         path: '/sign-in',
         exact: true
+      },
+      {
+        path: '/tenant/:id'
       }
     ]
   }

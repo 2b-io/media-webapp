@@ -13,3 +13,27 @@ export function informHistoryPopManually(pathname) {
     pathname
   }
 }
+
+export function pushHistory(pathname) {
+  return {
+    type: HISTORY.CHANGED,
+    method: 'push',
+    pathname
+  }
+}
+
+export function popHistory(pathname) {
+  return {
+    type: HISTORY.CHANGED,
+    method: 'pop',
+    pathname
+  }
+}
+
+export function replaceHistory(pathname) {
+  return {
+    type: HISTORY.CHANGED,
+    method: 'replace',
+    pathname
+  }
+}

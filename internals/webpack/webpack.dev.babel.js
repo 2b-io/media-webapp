@@ -8,7 +8,7 @@ const rootDir = path.resolve(__dirname, '../..');
 
 module.exports = {
   entry: {
-    app: [ path.join(rootDir, 'app/index.js') ]
+    app: path.join(rootDir, 'app/index.js')
   },
   output: {
     path: path.join(rootDir, 'build/assets'),
