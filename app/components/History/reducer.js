@@ -2,21 +2,24 @@ import HISTORY from 'components/History/actions'
 
 let initialStates = {
   pathname: '/',
-  type: 'push/pop'
+  type: 'initial'
   // flows: []
 }
 
-function reducer(state = initialStates, action) {
-  console.debug('>> History:reducer')
-  console.debug('>>', action)
-  console.debug(`\n`)
-
+export default function(state = initialStates, action) {
   switch (action.type) {
     case HISTORY.PUSH_ACCEPTED:
+      return Object.assign({}, state, {
+        pathname: action.pathname,
+        type: 'push'
+        // TODO store user flows
+        // flows: state.flows.concat([ action.pathname ])
+      })
+
     case HISTORY.POP_ACCEPTED:
       return Object.assign({}, state, {
         pathname: action.pathname,
-        type: 'push/pop'
+        type: 'pop'
         // TODO store user flows
         // flows: state.flows.concat([ action.pathname ])
       })
@@ -32,5 +35,3 @@ function reducer(state = initialStates, action) {
 
   return state
 }
-
-export default reducer
