@@ -2,7 +2,7 @@ import React from 'react'
 import { Router as BrowserRouter } from 'react-router'
 import { renderRoutes } from 'react-router-config'
 
-class Router extends React.Component {
+class Router extends React.PureComponent {
   render() {
     let { history, routes } = this.props
 

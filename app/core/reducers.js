@@ -1,5 +1,7 @@
-let initialState = {}
+import { combineReducers } from 'redux'
 
-export default function(state = initialState, action) {
-  return state
-}
+import history from 'components/History/reducer'
+
+export default combineReducers({
+  history
+})

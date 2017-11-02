@@ -1,12 +1,13 @@
 import { fork, take, put } from 'redux-saga/effects'
 
-import history from 'core/history'
-
 function *changeHistoryFlow() {
   while (true) {
-    let action = yield take('CHANGE_HISTORY')
+    let action = yield take('HISTORY_CHANGING')
 
-    history.push(action.path);
+    yield put({
+      type: 'HISTORY_CHANGED',
+      pathname: action.pathname
+    })
   }
 }
 

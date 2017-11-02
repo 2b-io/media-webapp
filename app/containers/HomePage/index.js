@@ -5,15 +5,12 @@ import { withRouter } from 'react-router-dom'
 
 import styles from './styles'
 
-import history from 'core/history'
-
 @Radium
 class HomePage extends React.Component {
   constructor(props) {
     super(props)
 
     this.redirect = this.redirect.bind(this)
-    this.redirectByRedux = this.redirectByRedux.bind(this)
   }
 
   render() {
@@ -23,23 +20,16 @@ class HomePage extends React.Component {
         <div>
           <button onClick={this.redirect}>Sign In</button>
         </div>
-        <div>
-          <button onClick={this.redirectByRedux}>Sign In by Redux</button>
-        </div>
       </div>
     )
   }
 
   redirect() {
-    history.push('/sign-in')
-  }
-
-  redirectByRedux() {
     let { dispatch } = this.props
 
     dispatch({
-      type: 'CHANGE_HISTORY',
-      path: '/sign-in'
+      type: 'HISTORY_CHANGING',
+      pathname: '/sign-in'
     })
   }
 }

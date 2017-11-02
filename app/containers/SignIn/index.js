@@ -20,11 +20,11 @@ class SignIn extends React.Component {
   }
 
   redirectToHomePage() {
-    let { dispatch } = this.props;
+    let { dispatch } = this.props
 
     dispatch({
-      type: 'CHANGE_HISTORY',
-      path: '/'
+      type: 'HISTORY_CHANGING',
+      pathname: '/'
     })
   }
 }

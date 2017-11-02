@@ -1,11 +1,9 @@
 import React from 'react'
-
-import Router from 'components/Router'
-
-// redux
 import { Provider } from 'react-redux'
 
-import history from 'core/history'
+import History from 'components/History'
+import Router from 'components/Router'
+
 import store from 'core/store'
 import { routes } from 'core/routing'
 
@@ -13,7 +11,9 @@ class Mount extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <Router routes={routes} history={history} />
+        <History>
+          <Router routes={routes} />
+        </History>
       </Provider>
     )
   }
