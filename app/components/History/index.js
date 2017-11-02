@@ -22,12 +22,17 @@ class History extends React.Component {
     dispatch(informHistoryPopManually(location.pathname))
   }
 
+  @trace()
   componentWillReceiveProps(nextProps) {
     if (this.history.location.pathname === nextProps.pathname) {
       return
     }
 
-    this.history.push(nextProps.pathname)
+    if (nextProps.type === 'replace') {
+      this.history.replace(nextProps.pathname)
+    } else {
+      this.history.push(nextProps.pathname)
+    }
   }
 
   shouldComponentUpdate() {

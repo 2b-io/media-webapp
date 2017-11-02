@@ -25,5 +25,12 @@ export function *historyPop() {
       type: HISTORY.POP_ACCEPTED,
       pathname: action.pathname
     })
+
+    if (action.pathname === '/profile') {
+      yield put({
+        type: HISTORY.REPLACE,
+        pathname: '/sign-in'
+      })
+    }
   }
 }
