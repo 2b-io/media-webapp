@@ -1,4 +1,4 @@
-import request from 'super-agent'
+import request from 'superagent'
 
 function get() {}
 
