@@ -2,6 +2,7 @@ import createHistory from 'history/createBrowserHistory'
 import React from 'react'
 import { connect } from 'react-redux'
 
+@connect(state => state.history)
 class History extends React.Component {
   constructor(props) {
     super(props)
@@ -40,4 +41,4 @@ class History extends React.Component {
   }
 }
 
-export default connect(state => state.history)(History)
+export default History

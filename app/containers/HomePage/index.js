@@ -1,16 +1,23 @@
 import Radium from 'radium'
 import React from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 
 import styles from './styles'
 
+import AuthorizedRoute from 'components/Router/AuthorizedRoute'
+
+@connect()
 @Radium
+@AuthorizedRoute
 class HomePage extends React.Component {
   constructor(props) {
     super(props)
 
     this.redirect = this.redirect.bind(this)
+  }
+
+  componentWillMount() {
+    console.log('HomePage:componentWillMount')
   }
 
   render() {
@@ -34,4 +41,4 @@ class HomePage extends React.Component {
   }
 }
 
-export default withRouter(connect()(HomePage))
+export default HomePage
