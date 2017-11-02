@@ -1,4 +1,4 @@
-import color from 'color';
+import color from 'color'
 
 export default {
   container: Object.assign({
@@ -12,4 +12,4 @@ export default {
     padding: '20px',
     margin: '15px'
   })
-};
+}

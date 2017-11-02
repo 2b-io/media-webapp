@@ -1,14 +1,13 @@
 import React from 'react'
 import { Router as BrowserRouter } from 'react-router'
-import { renderRoutes } from 'react-router-config'
 
 class Router extends React.PureComponent {
   render() {
-    let { history, routes } = this.props
+    let { history, component: Component } = this.props
 
     return (
       <BrowserRouter history={history}>
-        {renderRoutes(routes)}
+        <Component />
       </BrowserRouter>
     )
   }
