@@ -2,12 +2,16 @@ import createHistory from 'history/createBrowserHistory'
 import React from 'react'
 import { connect } from 'react-redux'
 
+import trace from 'helpers/trace'
+
 @connect(state => state.history)
 class History extends React.Component {
   constructor(props) {
     super(props)
 
     this.history = createHistory()
+
+    this.history.listen(this.__dispatchHistoryChange.bind(this, true))
   }
 
   componentWillMount() {
@@ -15,6 +19,10 @@ class History extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (this.history.location.pathname === nextProps.pathname) {
+      return
+    }
+
     this.history.push(nextProps.pathname)
   }
 
@@ -30,9 +38,12 @@ class History extends React.Component {
     })
   }
 
-  __dispatchHistoryChange() {
+  @trace()
+  __dispatchHistoryChange(manual = false) {
     let { dispatch } = this.props
     let { pathname } = this.history.location
+
+    console.log('__dispatchHistoryChange', manual)
 
     dispatch({
       type: 'HISTORY_CHANGED',

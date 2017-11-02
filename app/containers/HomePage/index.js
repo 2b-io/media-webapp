@@ -25,18 +25,19 @@ class HomePage extends React.Component {
       <div style={styles.container}>
         <h1>HomePage</h1>
         <div>
-          <button onClick={this.redirect}>Sign In</button>
+          <button onClick={this.redirect.bind(this, '/sign-in')}>Sign In</button>
+          <button onClick={this.redirect.bind(this, '/profile')}>Profile</button>
         </div>
       </div>
     )
   }
 
-  redirect() {
+  redirect(pathname) {
     let { dispatch } = this.props
 
     dispatch({
       type: 'HISTORY_CHANGING',
-      pathname: '/sign-in'
+      pathname
     })
   }
 }
