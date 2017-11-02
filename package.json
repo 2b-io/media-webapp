@@ -27,7 +27,8 @@
     "redux-immutable": "4.0.0",
     "redux-saga": "0.16.0",
     "stylus": "0.54.5",
-    "superagent": "3.8.0"
+    "superagent": "3.8.0",
+    "unique-random": "1.0.0"
   },
   "devDependencies": {
     "babel-core": "6.26.0",

@@ -3,6 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import AuthorizedRoute from 'components/Router/AuthorizedRoute'
+import { redirect } from 'core/actions'
 
 @connect()
 @Radium
@@ -28,10 +29,7 @@ class SignIn extends React.Component {
   redirectToHomePage() {
     let { dispatch } = this.props
 
-    dispatch({
-      type: 'HISTORY_CHANGING',
-      pathname: '/'
-    })
+    dispatch(redirect('/'))
   }
 }
 

@@ -6,6 +6,8 @@ import styles from './styles'
 
 import AuthorizedRoute from 'components/Router/AuthorizedRoute'
 
+import { redirect } from 'core/actions'
+
 @connect()
 @Radium
 @AuthorizedRoute
@@ -35,10 +37,7 @@ class HomePage extends React.Component {
   redirect(pathname) {
     let { dispatch } = this.props
 
-    dispatch({
-      type: 'HISTORY_CHANGING',
-      pathname
-    })
+    dispatch(redirect(pathname))
   }
 }
 

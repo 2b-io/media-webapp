@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 
 import trace from 'helpers/trace'
 
+import { informHistoryPopManually } from 'core/actions'
+
 @connect(state => state.history)
 class History extends React.Component {
   constructor(props) {
@@ -11,11 +13,13 @@ class History extends React.Component {
 
     this.history = createHistory()
 
-    this.history.listen(this.__dispatchHistoryChange.bind(this, true))
+    this.history.listen(this.__handleHistoryChange.bind(this))
   }
 
   componentWillMount() {
-    this.__dispatchHistoryChange()
+    let { dispatch } = this.props
+
+    dispatch(informHistoryPopManually(location.pathname))
   }
 
   componentWillReceiveProps(nextProps) {
@@ -39,16 +43,12 @@ class History extends React.Component {
   }
 
   @trace()
-  __dispatchHistoryChange(manual = false) {
-    let { dispatch } = this.props
-    let { pathname } = this.history.location
+  __handleHistoryChange(location, action) {
+    if (action === 'POP') {
+      let { dispatch } = this.props
 
-    console.log('__dispatchHistoryChange', manual)
-
-    dispatch({
-      type: 'HISTORY_CHANGED',
-      pathname
-    })
+      dispatch(informHistoryPopManually(location.pathname))
+    }
   }
 }
 

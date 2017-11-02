@@ -1,18 +1,10 @@
-import { fork, take, put } from 'redux-saga/effects'
+import { fork } from 'redux-saga/effects'
 
-function *changeHistoryFlow() {
-  while (true) {
-    let action = yield take('HISTORY_CHANGING')
-
-    yield put({
-      type: 'HISTORY_CHANGED',
-      pathname: action.pathname
-    })
-  }
-}
+import { historyPush, historyPop } from 'components/Router/saga'
 
 function *root() {
-  yield fork(changeHistoryFlow)
+  yield fork(historyPush)
+  yield fork(historyPop)
 }
 
 export default root

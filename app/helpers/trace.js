@@ -1,4 +1,4 @@
-export default function trace(log = console.debug) {
+export default function trace(log = console.debug, scope) {
   return function(target, name, descriptor) {
     if (!descriptor) {
       return descriptor
@@ -7,8 +7,9 @@ export default function trace(log = console.debug) {
     const func = descriptor.value
 
     descriptor.value = function wrapper(...args) {
-      log(`>> ${target.constructor.name}:${name} executing...`)
+      log(`>> ${scope ? scope : target.constructor.name}:${name} executing...`)
       log(`>>`, args)
+      log(`\n`)
 
       return func.call(this, ...args)
     }
