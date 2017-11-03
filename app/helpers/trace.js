@@ -1,4 +1,4 @@
-export default function trace(log = console.debug, scope) {
+export default function trace(log = () => {}, scope) {
   return function(target, name, descriptor) {
     if (!descriptor) {
       return descriptor

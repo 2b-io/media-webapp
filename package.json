@@ -26,8 +26,8 @@
     "redux": "3.7.2",
     "redux-immutable": "4.0.0",
     "redux-saga": "0.16.0",
+    "rest-facade": "1.10.0",
     "stylus": "0.54.5",
-    "superagent": "3.8.0",
     "unique-random": "1.0.0"
   },
   "devDependencies": {
