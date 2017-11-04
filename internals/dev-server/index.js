@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 
 const app  = module.exports = express();
-const port = 3000;
+const port = 3001;
 
 const webpackConfig = require('../webpack/webpack.dev.babel.js');
 
@@ -29,3 +29,5 @@ app.use('*', (req, res, next) => {
       .end();
   });
 });
+
+app.listen(port, () => console.log(`dev-server started at ${port}`))

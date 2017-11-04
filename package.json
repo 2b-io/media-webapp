@@ -13,6 +13,7 @@
     "babel-plugin-transform-decorators-legacy": "1.3.4",
     "babel-preset-react": "6.24.1",
     "babel-preset-stage-2": "6.24.1",
+    "concurrently": "3.5.0",
     "css-loader": "0.28.7",
     "extract-text-webpack-plugin": "3.0.2",
     "file-loader": "1.1.5",
@@ -28,7 +29,9 @@
     "install:app": "cd app/ && yarn && cd ..",
     "install:server": "cd server/ && yarn && cd ..",
     "install:dev-server": "cd internals/dev-server/ && yarn && cd ../..",
+    "dev": "concurrently \"yarn dev:webpack-server\" \"yarn dev:server\"",
     "dev:build": "webpack --config internals/webpack/webpack.dev.babel.js",
-    "dev:server": "NODE_ENV=development node server/index.js"
+    "dev:webpack-server": "nodemon --watch internals/dev-server internals/dev-server",
+    "dev:server": "NODE_ENV=development nodemon --watch server server/index.js"
   }
 }
