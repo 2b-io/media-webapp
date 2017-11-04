@@ -6,27 +6,6 @@
   "repository": "git@github.com:MediaSocialNetwork/media-on-demand-webapp.git",
   "author": "LongLH <d@dapps.me>",
   "license": "MIT",
-  "dependencies": {
-    "aws-sdk": "2.141.0",
-    "bluebird": "3.5.1",
-    "color": "2.0.0",
-    "express": "4.16.2",
-    "history": "4.7.2",
-    "immutable": "3.8.2",
-    "kouto-swiss": "1.1.0",
-    "radium": "0.19.6",
-    "react": "16.0.0",
-    "react-dom": "16.0.0",
-    "react-loadable": "5.3.1",
-    "react-media": "1.6.1",
-    "react-redux": "5.0.6",
-    "react-router": "4.2.0",
-    "react-router-config": "1.0.0-beta.4",
-    "redux": "3.7.2",
-    "redux-saga": "0.16.0",
-    "rest-facade": "1.10.0",
-    "unique-random": "1.0.0"
-  },
   "devDependencies": {
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
@@ -40,12 +19,16 @@
     "html-webpack-plugin": "2.30.1",
     "nodemon": "1.12.1",
     "style-loader": "0.19.0",
+    "stylus": "0.54.5",
     "stylus-loader": "3.0.1",
-    "webpack": "3.8.1",
-    "webpack-dev-middleware": "1.12.0"
+    "webpack": "3.8.1"
   },
   "scripts": {
-    "dev-build": "webpack --config internals/webpack/webpack.dev.babel.js",
-    "dev-server": "NODE_ENV=development node server/index.js"
+    "install:all": "yarn && yarn install:app && yarn install:server && yarn install:dev-server",
+    "install:app": "cd app/ && yarn && cd ..",
+    "install:server": "cd server/ && yarn && cd ..",
+    "install:dev-server": "cd internals/dev-server/ && yarn && cd ../..",
+    "dev:build": "webpack --config internals/webpack/webpack.dev.babel.js",
+    "dev:server": "NODE_ENV=development node server/index.js"
   }
 }
