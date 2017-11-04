@@ -3,7 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 
-const app = express();
+const app  = module.exports = express();
 const port = 3000;
 
 const webpackConfig = require('../webpack/webpack.dev.babel.js');
@@ -29,5 +29,3 @@ app.use('*', (req, res, next) => {
       .end();
   });
 });
-
-app.listen(port, () => console.log(`dev-server listens to :${port}`));
