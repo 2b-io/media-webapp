@@ -1,33 +1,33 @@
-const express = require('express');
-const path = require('path');
-const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware');
+import express from 'express'
+import path from 'path'
+import webpack from 'webpack'
+import webpackDevMiddleware from 'webpack-dev-middleware'
 
-const app  = module.exports = express();
-const port = 3001;
+import webpackConfig from '../webpack/webpack.dev.babel.js'
 
-const webpackConfig = require('../webpack/webpack.dev.babel.js');
+const app = express()
+const port = 3001
 
-const compiler = webpack(webpackConfig);
+const compiler = webpack(webpackConfig)
 const devMiddleware = webpackDevMiddleware(compiler, {
   publicPath: webpackConfig.output.publicPath
-});
+})
 
-app.use(devMiddleware);
+app.use(devMiddleware)
 
 app.use('*', (req, res, next) => {
-  const filename = path.join(compiler.outputPath, '../index.html');
+  const filename = path.join(compiler.outputPath, '../index.html')
 
   compiler.outputFileSystem.readFile(filename, (err, result) => {
     if (err) {
-      return next(err);
+      return next(err)
     }
 
     res
       .set('content-type','text/html')
       .send(result)
-      .end();
-  });
-});
+      .end()
+  })
+})
 
 app.listen(port, () => console.log(`dev-server started at ${port}`))

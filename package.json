@@ -7,6 +7,7 @@
   "author": "LongLH <d@dapps.me>",
   "license": "MIT",
   "devDependencies": {
+    "babel-cli": "6.26.0",
     "concurrently": "3.5.0",
     "nodemon": "1.12.1"
   },
@@ -16,7 +17,7 @@
     "install:server": "cd server/ && yarn && cd ..",
     "dev": "concurrently \"yarn dev:webpack-server\" \"yarn dev:server\"",
     "dev:build": "cd client && node_modules/.bin/webpack --config internals/webpack/webpack.dev.babel.js && cd ..",
-    "dev:webpack-server": "cd client && nodemon --watch internals/dev-server internals/dev-server",
-    "dev:server": "NODE_ENV=development nodemon --watch server server/index.js"
+    "dev:webpack-server": "cd client && nodemon internals/dev-server --watch internals/dev-server --exec babel-node --presets env,stage-2",
+    "dev:server": "NODE_ENV=development nodemon server/index.js --watch server --exec babel-node --presets env,stage-2"
   }
 }
