@@ -1,15 +1,15 @@
 import React from 'react'
 
 export default function AuthorizedRoute(Component) {
-  let componentWillMount = Component.prototype.componentWillMount
+  let componentDidMount = Component.prototype.componentDidMount
 
-  Component.prototype.componentWillMount = function(nextProps) {
+  Component.prototype.componentDidMount = function(nextProps) {
     let { history } = this.props;
 
-    console.log(`AuthorizedRoute:${Component.name}:componentWillMount`, history.location.pathname)
+    console.log(`AuthorizedRoute:${Component.name}:componentDidMount`, history.location.pathname)
 
-    if (componentWillMount && componentWillMount instanceof Function) {
-      componentWillMount(nextProps)
+    if (componentDidMount && componentDidMount instanceof Function) {
+      componentDidMount(nextProps)
     }
   }
 }

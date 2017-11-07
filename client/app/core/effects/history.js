@@ -23,7 +23,7 @@ export function *historyPop() {
     yield put(popHistory(action.pathname))
 
     // TODO should call API for validating current session
-    let requiresSignIn = action.pathname === '/profile'
+    let requiresSignIn = false //action.pathname === '/profile'
 
     if (requiresSignIn) {
       yield put(replaceHistory('/sign-in'))
