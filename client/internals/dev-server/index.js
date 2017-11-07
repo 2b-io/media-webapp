@@ -3,7 +3,7 @@ import path from 'path'
 import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 
-import webpackConfig from '../webpack/webpack.dev.babel.js'
+import webpackConfig from '../webpack/webpack.dev.js'
 
 const app = express()
 const port = 3001

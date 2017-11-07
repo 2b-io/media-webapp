@@ -6,3 +6,9 @@ A web app that allows tenants register and configure their media-on-demand prese
 yarn install:all
 yarn dev
 ```
+
+# Production
+```
+yarn prod:build
+yarn prod:server:run
+```

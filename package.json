@@ -16,10 +16,15 @@
     "install:all": "yarn && yarn install:client && yarn install:server",
     "install:client": "cd client/ && yarn && cd ..",
     "install:server": "cd server/ && yarn && cd ..",
-    "dev": "concurrently \"yarn dev:webpack-server\" \"yarn dev:server\"",
-    "dev:build": "cd client && webpack --config internals/webpack/webpack.dev.babel.js && cd ..",
-    "dev:webpack-server": "cd client && nodemon internals/dev-server --watch internals/dev-server --exec babel-node --presets env,stage-2",
-    "dev:server": "NODE_ENV=development nodemon server/index.js --watch server --exec babel-node --presets env,stage-2",
-    "prod:server": "NODE_ENV=production babel server/index.js -o server/prod.js --presets env,stage-2"
+    "dev": "concurrently \"yarn dev:client:watch\" \"yarn dev:server:run\"",
+    "dev:client:build": "cd client && webpack --config internals/webpack/webpack.dev.js && cd ..",
+    "dev:client:watch": "cd client && nodemon internals/dev-server --watch internals/dev-server --exec babel-node --presets env,stage-2",
+    "dev:server:run": "NODE_ENV=development nodemon server/index.js --watch server --exec babel-node --presets env,stage-2",
+    "prod:build": "yarn prod:client:build && yarn prod:server:build",
+    "prod:client:build": "cd client && webpack --config internals/webpack/webpack.prod.js && cd ..",
+    "prod:server:build": "NODE_ENV=production babel server/index.js -o server/prod.js --presets env,stage-2",
+    "prod:server:run": "NODE_ENV=production node server/prod.js",
+    "client:clean": "rm -rf client/build",
+    "server:clean": "rm server/prod.js"
   }
 }
