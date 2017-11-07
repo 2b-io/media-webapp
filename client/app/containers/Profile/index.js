@@ -27,7 +27,14 @@ class Profile extends React.Component {
 }
 
 @connect()
+@Radium
 class ProfileDetail extends React.Component {
+  constructor(props) {
+    super(props)
+
+    console.log(props)
+  }
+
   render() {
     let { params } = this.props.match
 

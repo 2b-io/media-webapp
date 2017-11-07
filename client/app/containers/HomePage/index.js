@@ -4,22 +4,18 @@ import { connect } from 'react-redux'
 
 import styles from './styles'
 
-import AuthorizedRoute from 'components/Router/AuthorizedRoute'
+import Preload from 'components/Preload'
 
-import { redirect } from 'core/actions'
+import { getSession, redirect } from 'core/actions'
 
 @connect()
+@Preload({ session: () => getSession() }, state => ({ session: state.session.id ? state.session : null }))
 @Radium
-@AuthorizedRoute
 class HomePage extends React.Component {
   constructor(props) {
     super(props)
 
     this.redirect = this.redirect.bind(this)
-  }
-
-  componentWillMount() {
-    console.log('HomePage:componentWillMount')
   }
 
   render() {

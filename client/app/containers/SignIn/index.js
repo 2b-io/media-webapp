@@ -2,12 +2,10 @@ import Radium from 'radium'
 import React from 'react'
 import { connect } from 'react-redux'
 
-import AuthorizedRoute from 'components/Router/AuthorizedRoute'
 import { redirect } from 'core/actions'
 
 @connect()
 @Radium
-@AuthorizedRoute
 class SignIn extends React.Component {
   constructor(props) {
     super(props)

@@ -37,3 +37,9 @@ export function replaceHistory(pathname) {
     pathname
   }
 }
+
+export function getSession() {
+  return {
+    type: 'GET_SESSION'
+  }
+}
