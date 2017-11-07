@@ -1,6 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-// const BabelMinifyWebpackPlugin = require('babel-minify-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
 
@@ -21,8 +20,11 @@ module.exports = {
       template: path.join(rootDir, 'app/index.html'),
       filename: path.join(rootDir, 'build/index.html')
     }),
-    new ExtractTextPlugin('css/global.[hash:5].css')
-    // new BabelMinifyWebpackPlugin()
+    new ExtractTextPlugin('css/global.[hash:5].css'),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('development'),
+      PRODUCTION: JSON.stringify(false)
+    })
   ],
   module: {
     rules: [
