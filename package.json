@@ -9,15 +9,17 @@
   "devDependencies": {
     "babel-cli": "6.26.0",
     "concurrently": "3.5.0",
-    "nodemon": "1.12.1"
+    "nodemon": "1.12.1",
+    "webpack": "3.8.1"
   },
   "scripts": {
     "install:all": "yarn && yarn install:client && yarn install:server",
     "install:client": "cd client/ && yarn && cd ..",
     "install:server": "cd server/ && yarn && cd ..",
     "dev": "concurrently \"yarn dev:webpack-server\" \"yarn dev:server\"",
-    "dev:build": "cd client && node_modules/.bin/webpack --config internals/webpack/webpack.dev.babel.js && cd ..",
+    "dev:build": "cd client && webpack --config internals/webpack/webpack.dev.babel.js && cd ..",
     "dev:webpack-server": "cd client && nodemon internals/dev-server --watch internals/dev-server --exec babel-node --presets env,stage-2",
-    "dev:server": "NODE_ENV=development nodemon server/index.js --watch server --exec babel-node --presets env,stage-2"
+    "dev:server": "NODE_ENV=development nodemon server/index.js --watch server --exec babel-node --presets env,stage-2",
+    "prod:server": "NODE_ENV=production babel server/index.js -o server/prod.js --presets env,stage-2"
   }
 }
