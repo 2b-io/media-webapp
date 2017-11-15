@@ -1,6 +1,6 @@
 import { fork } from 'redux-saga/effects'
 
-import { historyPush, historyPop } from 'core/effects/history'
+import { historyPush, historyPop } from 'saga/history'
 
 function *root() {
   yield fork(historyPush)

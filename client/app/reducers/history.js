@@ -1,12 +1,12 @@
-import HISTORY from 'components/History/actions'
+import { HISTORY } from 'actions/history'
 
-let initialStates = {
+let initialState = {
   pathname: '/',
   type: 'initial'
   // flows: []
 }
 
-export default function(state = initialStates, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case HISTORY.CHANGED:
       return Object.assign({}, state, {

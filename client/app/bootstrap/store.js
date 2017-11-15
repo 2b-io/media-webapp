@@ -1,8 +1,8 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 
-import reducers from 'core/reducers'
-import rootSaga from 'core/saga'
+import reducer from 'bootstrap/reducer'
+import rootSaga from 'bootstrap/saga'
 
 // support REDUX Chrome Extension
 let composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -10,7 +10,7 @@ let composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 let sagaMiddleware = createSagaMiddleware();
 
 let store = createStore(
-  reducers,
+  reducer,
   composeEnhancers(
     applyMiddleware(sagaMiddleware)
   )

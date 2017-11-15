@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Route } from 'react-router'
 
-import { getSession, redirect } from 'core/actions'
+import { redirect } from 'actions/routing'
 
 import AuthenticationRequired from 'components/AuthenticationRequired'
 
@@ -30,12 +30,10 @@ class Profile extends React.Component {
 }
 
 @connect()
-@Radium
+@AuthenticationRequired
 class ProfileDetail extends React.Component {
   constructor(props) {
     super(props)
-
-    console.log(props)
   }
 
   render() {

@@ -15,8 +15,7 @@
     "react-router-config": "1.0.0-beta.4",
     "redux": "3.7.2",
     "redux-saga": "0.16.0",
-    "rest-facade": "1.10.0",
-    "unique-random": "1.0.0"
+    "rest-facade": "1.10.0"
   },
   "devDependencies": {
     "babel-core": "6.26.0",

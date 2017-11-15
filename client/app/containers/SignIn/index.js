@@ -2,7 +2,7 @@ import Radium from 'radium'
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { redirect } from 'core/actions'
+import { redirect } from 'actions/routing'
 
 @connect()
 @Radium

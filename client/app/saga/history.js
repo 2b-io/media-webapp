@@ -1,8 +1,6 @@
 import { take, put } from 'redux-saga/effects'
 
-import HISTORY from 'components/History/actions'
-
-import { pushHistory, popHistory, replaceHistory } from 'core/actions'
+import { HISTORY, pushHistory, popHistory, replaceHistory } from 'actions/history'
 
 export function *historyPush() {
   while (true) {

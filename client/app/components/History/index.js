@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import trace from 'helpers/trace'
 
-import { informHistoryPopManually } from 'core/actions'
+import { informHistoryPopManually } from 'actions/history'
 
 @connect(state => state.history)
 class History extends React.Component {

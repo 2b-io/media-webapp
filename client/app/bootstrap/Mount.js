@@ -5,7 +5,7 @@ import History from 'components/History'
 import Router from 'components/Router'
 import App from 'containers/App'
 
-import store from 'core/store'
+import store from 'bootstrap/store'
 
 class Mount extends React.Component {
   render() {

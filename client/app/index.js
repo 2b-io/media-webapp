@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 
 import './global.styl'
-import Mount from 'core/Mount'
+import Mount from 'bootstrap/Mount'
 
 const MOUNT_NODE = document.getElementById('root')
 

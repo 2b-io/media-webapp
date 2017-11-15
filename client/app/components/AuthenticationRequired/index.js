@@ -1,16 +1,16 @@
-import { getSession } from 'core/actions'
+import { verifySession } from 'actions/session'
 import ConditionalRenderer from 'components/ConditionalRenderer'
 
 export default ConditionalRenderer(
   props => {
     let { dispatch } = props
 
-    dispatch(getSession())
+    dispatch(verifySession())
   },
   props => {
     let { session } = props
 
-    return !!session
+    return !!(session && session.id)
   },
   state => ({ session: state.session })
 )
