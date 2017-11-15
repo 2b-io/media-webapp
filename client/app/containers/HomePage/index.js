@@ -4,12 +4,9 @@ import { connect } from 'react-redux'
 
 import styles from './styles'
 
-import Preload from 'components/Preload'
-
-import { getSession, redirect } from 'core/actions'
+import { redirect } from 'core/actions'
 
 @connect()
-@Preload({ session: () => getSession() }, state => ({ session: state.session.id ? state.session : null }))
 @Radium
 class HomePage extends React.Component {
   constructor(props) {
