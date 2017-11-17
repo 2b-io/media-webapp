@@ -1,6 +1,6 @@
 import prefix from 'helpers/prefix-map'
 
-export const SESSION = prefix('SESSION', {
+export const SESSION = prefix('session', {
   VERIFY: 'VERIFY'
 })
 

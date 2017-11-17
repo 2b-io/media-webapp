@@ -3,20 +3,33 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Route } from 'react-router'
 
-import { redirect } from 'actions/routing'
+import { redirect } from 'actions/location'
+import { fetchProfile } from 'actions/profile'
 
-import AuthenticationRequired from 'components/AuthenticationRequired'
+import conditionalRenderer from 'decorators/ConditionalRenderer'
+import AuthRequired from 'decorators/AuthRequired'
+
+const RenderWhenProfileAvailable = conditionalRenderer(
+  props => {
+    const { dispatch } = props
+
+    dispatch(fetchProfile('me'))
+  },
+  props => !!props.profile.username,
+  state => ({ profile: state.profile })
+)
 
 @connect()
-@AuthenticationRequired
+@AuthRequired
+@RenderWhenProfileAvailable
 @Radium
 class Profile extends React.Component {
   render() {
-    let { match, session } = this.props;
+    let { match, profile } = this.props;
 
     return (
       <div>
-        <h1>Profile {session.id}</h1>
+        <h1>Profile {profile.username}</h1>
         <button onClick={this._redirectTo.bind(this, '/profile/me')}>My Profile</button>
         <Route path={`${match.path}/:id`} component={ProfileDetail} />
       </div>
@@ -30,7 +43,8 @@ class Profile extends React.Component {
 }
 
 @connect()
-@AuthenticationRequired
+@RenderWhenProfileAvailable
+@Radium
 class ProfileDetail extends React.Component {
   constructor(props) {
     super(props)
@@ -40,7 +54,7 @@ class ProfileDetail extends React.Component {
     let { params } = this.props.match
 
     return (
-      <div>My profile: {params.id}</div>
+      <div>Detail profile: {params.id}</div>
     )
   }
 }

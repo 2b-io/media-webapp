@@ -1,9 +1,13 @@
 import { combineReducers } from 'redux'
 
-import history from 'reducers/history'
+import error from 'reducers/error'
+import location from 'reducers/location'
+import profile from 'reducers/profile'
 import session from 'reducers/session'
 
 export default combineReducers({
-  history,
-  session: session
+  error,
+  location,
+  profile,
+  session
 })

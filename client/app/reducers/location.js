@@ -1,4 +1,4 @@
-import { HISTORY } from 'actions/history'
+import { LOCATION } from 'actions/location'
 
 let initialState = {
   pathname: '/',
@@ -8,7 +8,7 @@ let initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case HISTORY.CHANGED:
+    case LOCATION.CHANGED:
       return Object.assign({}, state, {
         pathname: action.pathname,
         type: action.method,

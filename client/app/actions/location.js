@@ -1,22 +1,21 @@
-import HISTORY from 'components/History/actions'
+import prefix from 'helpers/prefix-map'
 
-export function redirect(pathname) {
-  return {
-    type: HISTORY.PUSH,
-    pathname
-  }
-}
+export const LOCATION = prefix('location', {
+  PUSH: 'PUSH',
+  POP: 'POP',
+  CHANGED: 'CHANGED'
+})
 
 export function informHistoryPopManually(pathname) {
   return {
-    type: HISTORY.POP,
+    type: LOCATION.POP,
     pathname
   }
 }
 
 export function pushHistory(pathname) {
   return {
-    type: HISTORY.CHANGED,
+    type: LOCATION.CHANGED,
     method: 'push',
     pathname
   }
@@ -24,7 +23,7 @@ export function pushHistory(pathname) {
 
 export function popHistory(pathname) {
   return {
-    type: HISTORY.CHANGED,
+    type: LOCATION.CHANGED,
     method: 'pop',
     pathname
   }
@@ -32,14 +31,15 @@ export function popHistory(pathname) {
 
 export function replaceHistory(pathname) {
   return {
-    type: HISTORY.CHANGED,
+    type: LOCATION.CHANGED,
     method: 'replace',
     pathname
   }
 }
 
-export function getSession() {
+export function redirect(pathname) {
   return {
-    type: 'GET_SESSION'
+    type: LOCATION.PUSH,
+    pathname
   }
 }

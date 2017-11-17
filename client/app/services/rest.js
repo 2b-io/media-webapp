@@ -1,16 +1,13 @@
-import request from 'superagent'
+import Promise from 'bluebird'
 
-function get() {}
-
-function post() {}
-
-function put() {}
-
-function del() {}
-
-export default {
-  get,
-  post,
-  put,
-  del
+export function get() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => resolve({ username: 'demo' }), 1e3)
+  })
 }
+
+export function post() {}
+
+export function put() {}
+
+export function del() {}

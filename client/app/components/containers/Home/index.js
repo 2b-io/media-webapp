@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import styles from './styles'
 
-import { redirect } from 'actions/routing'
+import { redirect } from 'actions/location'
 
 @connect()
 @Radium
