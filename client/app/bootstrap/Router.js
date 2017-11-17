@@ -6,7 +6,7 @@ import { Router as BrowserRouter } from 'react-router'
 import { informHistoryPopManually } from 'actions/location'
 
 @connect(state => ({ location: state.location }))
-class Router extends React.PureComponent {
+class Router extends React.Component {
   constructor(props) {
     super(props)
 
