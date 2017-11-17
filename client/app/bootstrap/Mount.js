@@ -2,8 +2,8 @@ import React from 'react'
 import { Provider as ReduxProvider } from 'react-redux'
 
 // import History from 'components/History'
-import Router from 'components/core/Router'
-import Layout from 'components/containers/Layout'
+import Router from 'bootstrap/Router'
+import Layout from 'containers/Layout'
 
 import store from 'bootstrap/store'
 

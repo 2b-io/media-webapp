@@ -11,8 +11,6 @@ import { redirect } from 'actions/location'
 class HomePage extends React.Component {
   constructor(props) {
     super(props)
-
-    this.redirect = this.redirect.bind(this)
   }
 
   render() {
@@ -20,14 +18,14 @@ class HomePage extends React.Component {
       <div style={styles.container}>
         <h1>HomePage</h1>
         <div>
-          <button onClick={this.redirect.bind(this, '/sign-in')}>Sign In</button>
-          <button onClick={this.redirect.bind(this, '/profile')}>Profile</button>
+          <button onClick={this._redirect.bind(this, '/sign-in')}>Sign In</button>
+          <button onClick={this._redirect.bind(this, '/profile')}>Profile</button>
         </div>
       </div>
     )
   }
 
-  redirect(pathname) {
+  _redirect(pathname) {
     let { dispatch } = this.props
 
     dispatch(redirect(pathname))

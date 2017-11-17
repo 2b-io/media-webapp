@@ -6,7 +6,7 @@ import { Router as BrowserRouter } from 'react-router'
 import { informHistoryPopManually } from 'actions/location'
 
 @connect(state => ({ location: state.location }))
-class Router extends React.Component {
+class Router extends React.PureComponent {
   constructor(props) {
     super(props)
 
@@ -37,7 +37,6 @@ class Router extends React.Component {
   }
 
   render() {
-    console.log('Router:render')
     const { component: Component } = this.props
 
     return (

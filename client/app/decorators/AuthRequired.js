@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import Redirect from 'components/core/Redirect'
+import Redirect from 'components/Redirect'
 
 export default function(Component) {
 
@@ -12,13 +12,13 @@ export default function(Component) {
     }
 
     render() {
-      const { unauthorized, dispatch } = this.props
+      const { unauthorized } = this.props
 
-      if (unauthorized) {
-        return <Redirect path="/sign-in" />
-      }
-
-      return <Component { ...this.props } { ...this.state } />
+      return (
+        unauthorized ?
+          <Redirect path="/sign-in" /> :
+          <Component { ...this.props } { ...this.state } />
+      )
     }
   }
 

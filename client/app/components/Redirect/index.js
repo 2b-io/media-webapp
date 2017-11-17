@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { redirect } from 'actions/location'
 
 @connect()
-class Redirect extends React.Component {
+class Redirect extends React.PureComponent {
   constructor(props) {
     super(props)
   }
