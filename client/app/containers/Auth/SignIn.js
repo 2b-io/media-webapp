@@ -2,32 +2,26 @@ import Radium from 'radium'
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { redirect } from 'actions/location'
+import style from 'containers/Auth/SignIn.style'
+
+import LinkButton from 'components/decorated/LinkButton'
 
 @connect()
 @Radium
 class SignIn extends React.Component {
   constructor(props) {
     super(props)
-
-    this.redirectToHomePage = this.redirectToHomePage.bind(this)
   }
 
   render() {
     return (
-      <div>
+      <div style={style.container}>
         <h1>Sign In</h1>
         <div>
-          <button onClick={this.redirectToHomePage}>HomePage</button>
+          <LinkButton link="/">HomePage</LinkButton>
         </div>
       </div>
     )
-  }
-
-  redirectToHomePage() {
-    let { dispatch } = this.props
-
-    dispatch(redirect('/'))
   }
 }
 
