@@ -5,7 +5,7 @@ import { loadableContainer } from 'helpers/loadable'
 
 import DefaultLayout from 'containers/App/DefaultLayout'
 
-const SignIn = loadableContainer('Auth/SignIn')
+const SignIn = loadableContainer('SignIn')
 
 const Home = loadableContainer('Home')
 const Profile = loadableContainer('Profile')
