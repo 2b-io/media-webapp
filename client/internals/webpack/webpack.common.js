@@ -8,7 +8,9 @@ module.exports = ({
   entry = {
     app: [ path.join(rootDir, 'app/index.js') ]
   },
-  plugins = []
+  plugins = [],
+  rules = [],
+  resolve = {}
 }) => {
   return {
     entry: Object.assign({}, entry),
@@ -57,11 +59,11 @@ module.exports = ({
             use: ['css-loader', 'stylus-loader']
           })
         }
-      ]
+      ].concat(rules)
     },
-    resolve: {
+    resolve: Object.assign({
       modules: [ 'app', 'node_modules' ],
       extensions: [ '.js', '.jsx', '.styl' ]
-    }
+    }, resolve)
   }
 }
