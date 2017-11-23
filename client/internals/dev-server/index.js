@@ -2,6 +2,7 @@ import express from 'express'
 import path from 'path'
 import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
+import webpackHotMiddleware from 'webpack-hot-middleware'
 
 import webpackConfig from '../webpack/webpack.dev.js'
 
@@ -14,6 +15,7 @@ const devMiddleware = webpackDevMiddleware(compiler, {
 })
 
 app.use(devMiddleware)
+app.use(webpackHotMiddleware(compiler))
 
 app.use('*', (req, res, next) => {
   const filename = path.join(compiler.outputPath, '../index.html')

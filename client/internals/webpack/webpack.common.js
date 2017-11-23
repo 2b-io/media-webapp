@@ -4,11 +4,14 @@ const path = require('path')
 
 const rootDir = path.resolve(__dirname, '../..')
 
-module.exports = options => {
+module.exports = ({
+  entry = {
+    app: [ path.join(rootDir, 'app/index.js') ]
+  },
+  plugins = []
+}) => {
   return {
-    entry: {
-      app: path.join(rootDir, 'app/index.js')
-    },
+    entry: Object.assign({}, entry),
     output: {
       path: path.join(rootDir, 'build/assets'),
       publicPath: '/assets/',
@@ -21,7 +24,7 @@ module.exports = options => {
         filename: path.join(rootDir, 'build/index.html')
       }),
       new ExtractTextPlugin('css/global.[hash:5].css'),
-    ].concat(options.plugins || []),
+    ].concat(plugins),
     module: {
       rules: [
         {
