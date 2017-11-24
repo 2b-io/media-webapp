@@ -1,9 +1,11 @@
+import Radium from 'radium'
 import React from 'react'
-
 import BreakPoint from 'components/BreakPoint'
 import Orientation from 'components/Orientation'
-import SignInForPhone from './index.phone'
 
+import SignInForm from './SignInForm'
+
+@Radium
 class SignIn extends React.Component {
   constructor(props) {
     super(props)
@@ -12,25 +14,15 @@ class SignIn extends React.Component {
   render() {
     return (
       <div id="sign-in-container">
-        <BreakPoint name="phone">
-          <div>Top Menu</div>
-        </BreakPoint>
-        <SignInForPhone />
-        <BreakPoint name="medium">
-          <div>Left Menu</div>
-          <div>Extra content for tablet</div>
-        </BreakPoint>
-        <BreakPoint name="large">
-          <div>Extra content for desktop</div>
-        </BreakPoint>
-        <Orientation name="portrait">
-          <div>man hinh doc</div>
-        </Orientation>
-        <Orientation name="landspace">
-          <div>man hinh ngang</div>
-        </Orientation>
+        <div>
+          <SignInForm onSubmit={this._handleSubmit} />
+        </div>
       </div>
     )
+  }
+
+  _handleSubmit(form) {
+    console.log(form)
   }
 }
 
