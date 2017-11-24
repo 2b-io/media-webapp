@@ -9,6 +9,8 @@ import SignInForm from './SignInForm'
 class SignIn extends React.Component {
   constructor(props) {
     super(props)
+
+    this._handleSubmit = this._handleSubmit.bind(this)
   }
 
   render() {
