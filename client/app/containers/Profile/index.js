@@ -8,7 +8,7 @@ import conditionalRenderer from 'decorators/ConditionalRenderer'
 import AuthRequired from 'decorators/AuthRequired'
 
 import RelativeRoute from 'components/RelativeRoute'
-import LinkButton from 'components/decorated/LinkButton'
+import { LinkButton } from 'components/Button'
 
 const RenderWhenProfileAvailable = conditionalRenderer(
   props => {

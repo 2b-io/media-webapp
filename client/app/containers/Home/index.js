@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import styles from './styles'
 
-import LinkButton from 'components/decorated/LinkButton'
+import { LinkButton } from 'components/Button'
 
 @connect()
 @Radium
