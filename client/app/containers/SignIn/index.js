@@ -1,30 +1,37 @@
 import Radium from 'radium'
 import React from 'react'
-import BreakPoint from 'components/BreakPoint'
-import Orientation from 'components/Orientation'
+import { connect } from 'react-redux'
+
+import { signInRequest } from 'actions/session'
 
 import SignInForm from './SignInForm'
 
+@connect()
 @Radium
 class SignIn extends React.Component {
   constructor(props) {
     super(props)
 
-    this._handleSubmit = this._handleSubmit.bind(this)
+    this._processSignIn = this._processSignIn.bind(this)
   }
 
   render() {
     return (
       <div id="sign-in-container">
         <div>
-          <SignInForm onSubmit={this._handleSubmit} />
+          <SignInForm onSubmit={this._processSignIn} />
         </div>
       </div>
     )
   }
 
-  _handleSubmit(form) {
-    console.log(form)
+  _processSignIn({ username, password }) {
+    let { dispatch } = this.props
+
+    dispatch(signInRequest({
+      username,
+      password
+    }))
   }
 }
 

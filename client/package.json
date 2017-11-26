@@ -18,7 +18,7 @@
     "redux": "3.7.2",
     "redux-form": "7.1.2",
     "redux-saga": "0.16.0",
-    "rest-facade": "1.10.0"
+    "superagent": "^3.8.1"
   },
   "devDependencies": {
     "babel-core": "6.26.0",
