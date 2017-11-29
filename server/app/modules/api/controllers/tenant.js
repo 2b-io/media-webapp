@@ -1,3 +1,4 @@
+import slug from 'slug'
 import Tenant from 'models/Tenant'
 
 export function list(req, res, next) {
@@ -12,8 +13,18 @@ export function list(req, res, next) {
 }
 
 export function create(req, res, next) {
-  res.json({
-    blah: 'blah'
+  const { name } = req.body
+
+  new Tenant({
+    name: name,
+    slug: slug(name, { lower: true })
+  })
+  .save()
+  .then(tenant => {
+    res.status(201).json(tenant)
+  })
+  .catch(e => {
+    res.status(500).json(e)
   })
 }
 
