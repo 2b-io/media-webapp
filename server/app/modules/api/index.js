@@ -1,7 +1,8 @@
 import express from 'express'
+import initAllRoutes from './routes'
 
 const app = express()
 
-app.get('/', (req, res) => res.send('API Endpoint'))
+initAllRoutes(app)
 
 export default app

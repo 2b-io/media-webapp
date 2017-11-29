@@ -1,6 +1,6 @@
 import recursiveConfig from 'recursive-config'
 
-export const config = recursiveConfig.load({
+export default recursiveConfig.load({
   defaults: {
   }
 })
