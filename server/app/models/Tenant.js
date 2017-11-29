@@ -1,4 +1,4 @@
-import mongoose from 'core/mongoose'
+import mongoose from 'infrastructure/mongoose'
 
 const schema = mongoose.Schema({
   name: {

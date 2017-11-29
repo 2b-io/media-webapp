@@ -1,11 +1,11 @@
 import slug from 'slug'
-import Tenant from 'models/Tenant'
+import {
+  list as listAllTenants,
+  register as registerTenant
+} from 'services/tenant'
 
 export function list(req, res, next) {
-  Tenant
-    .find()
-    .lean()
-    .exec()
+  listAllTenants()
     .then(tenants => {
       res.json(tenants)
     })
@@ -13,18 +13,18 @@ export function list(req, res, next) {
 }
 
 export function create(req, res, next) {
-  const { name } = req.body
+  const { name, slug, email } = req.body
 
-  new Tenant({
-    name: name,
-    slug: slug(name, { lower: true })
-  })
-  .save()
-  .then(tenant => {
-    res.status(201).json(tenant)
-  })
-  .catch(e => {
-    res.status(500).json(e)
-  })
+  registerTenant({
+      name,
+      slug,
+      email
+    })
+    .then(tenant => {
+      res.status(201).json(tenant)
+    })
+    .catch(e => {
+      res.status(500).json(e)
+    })
 }
 

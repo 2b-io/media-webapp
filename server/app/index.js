@@ -1,8 +1,8 @@
 import express from 'express'
 import proxy from 'http-proxy-middleware'
 
-import { loadSystemModules } from 'services/module-loader'
-import config from 'core/config'
+import config from 'infrastructure/config'
+import { loadSystemModules } from 'modules/loader'
 
 const app = express()
 const port = config.systemPort
