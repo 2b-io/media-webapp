@@ -8,6 +8,10 @@ const schema = mongoose.Schema({
   tenant: {
     type: mongoose.Schema.Types.ObjectId,
     required: true
+  },
+  superUser: {
+    type: Boolean,
+    default: false
   }
 })
 

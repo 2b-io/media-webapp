@@ -18,7 +18,8 @@ export function register(tenantInfo) {
     .then(tenant => {
       const user = new User({
         tenant: tenant._id,
-        email: email
+        email: email,
+        superUser: true
       })
 
       return Bluebird.all([

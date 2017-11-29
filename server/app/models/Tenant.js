@@ -7,8 +7,11 @@ const schema = mongoose.Schema({
   },
   slug: {
     type: String,
-    unique: true
-  }
+    unique: true,
+    lowercase: true,
+    trim: true
+  },
+  origins: [ String ]
 })
 
 export default mongoose.model('Tenant', schema)
