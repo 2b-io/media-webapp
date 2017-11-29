@@ -18,7 +18,7 @@
     "install:server": "cd server/ && yarn && cd ..",
     "dev": "concurrently \"yarn dev:client:watch\" \"yarn dev:server:run\"",
     "dev:client:build": "cd client && webpack --config internals/webpack/webpack.dev.js && cd ..",
-    "dev:client:watch": "cd client && nodemon internals/dev-server --watch internals/dev-server --exec babel-node",
+    "dev:client:watch": "cd client/internals && nodemon dev-server --watch dev-server --watch webpack --exec babel-node",
     "dev:server:run": "cd server && nodemon app/index.js --watch app --watch internals --exec babel-node --CONFIG=internals/config.dev.js",
     "prod:build": "yarn prod:client:build && yarn prod:server:build",
     "prod:client:build": "cd client && webpack --config internals/webpack/webpack.prod.js && cd ..",
