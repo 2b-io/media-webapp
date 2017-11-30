@@ -4,6 +4,7 @@ export function get({ url }) {
   return request
     .post(url)
     .set('accept', 'json')
+    .then(response => response.body)
 }
 
 export function post({ url, data }) {
@@ -11,6 +12,7 @@ export function post({ url, data }) {
     .post(url)
     .send(data)
     .set('accept', 'json')
+    .then(response => response.body)
 }
 
 export function put({ url, data }) {
@@ -18,10 +20,12 @@ export function put({ url, data }) {
     .put(url)
     .send(data)
     .set('accept', 'json')
+    .then(response => response.body)
 }
 
 export function del({ url }) {
   return request
     .del(url)
     .set('accept', 'json')
+    .then(response => response.body)
 }

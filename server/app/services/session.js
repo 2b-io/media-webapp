@@ -11,8 +11,6 @@ export function create({ email, password }) {
     .lean()
     .exec()
     .then(user => {
-      console.log(user)
-
       if (!user) {
         throw new Error('Invalid email')
       }
