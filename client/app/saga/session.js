@@ -3,14 +3,17 @@ import { call, fork, put, select, take } from 'redux-saga/effects'
 
 import { SESSION } from 'actions/session'
 
-import Session from 'models/session'
+import { post } from 'services/rest'
 
 export function* watchSignInRequest() {
   while (true) {
     const action = yield take(SESSION.SIGN_IN_REQUEST)
 
     try {
-      const session = yield call(Session.create, action.payload)
+      const session = yield call(post, {
+        url: '/api/sessions',
+        data: action.payload
+      })
 
       yield put({
         type: SESSION.SIGN_IN_SUCCESS,

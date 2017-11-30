@@ -9,10 +9,6 @@ export function* watchRegisterTenantRequest() {
 
     const session = yield select(state => state.session)
 
-    console.log(session)
-
-    continue
-
     try {
       const result = yield call(post, {
         url: '/api/tenants',

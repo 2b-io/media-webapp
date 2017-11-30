@@ -27,11 +27,11 @@ class SignIn extends React.Component {
     )
   }
 
-  _processSignIn({ username, password }) {
+  _processSignIn({ email, password }) {
     let { dispatch } = this.props
 
     dispatch(signInRequest({
-      username,
+      email,
       password
     }))
   }

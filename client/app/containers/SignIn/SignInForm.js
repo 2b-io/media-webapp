@@ -14,8 +14,8 @@ class SignInForm extends React.Component {
     return (
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Username</label><br />
-          <Field name="username" component={TextBox} />
+          <label>Email</label><br />
+          <Field name="email" component={TextBox} />
         </div>
         <div>
           <label>Password</label><br />
