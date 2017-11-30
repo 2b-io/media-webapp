@@ -1,10 +1,9 @@
-import Promise from 'bluebird'
 import request from 'superagent'
 
-export function get() {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => resolve({ username: 'demo' }), 1e3)
-  })
+export function get({ url }) {
+  return request
+    .post(url)
+    .set('accept', 'json')
 }
 
 export function post({ url, data }) {
@@ -14,6 +13,15 @@ export function post({ url, data }) {
     .set('accept', 'json')
 }
 
-export function put() {}
+export function put({ url, data }) {
+  return request
+    .put(url)
+    .send(data)
+    .set('accept', 'json')
+}
 
-export function del() {}
+export function del({ url }) {
+  return request
+    .del(url)
+    .set('accept', 'json')
+}

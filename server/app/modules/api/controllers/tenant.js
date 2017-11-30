@@ -1,4 +1,3 @@
-import slug from 'slug'
 import {
   list as listAllTenants,
   register as registerTenant
