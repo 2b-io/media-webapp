@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import { reducer as form } from 'redux-form'
 
+import form from 'reducers/form'
 import error from 'reducers/error'
 import location from 'reducers/location'
 import profile from 'reducers/profile'

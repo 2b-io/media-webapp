@@ -4,10 +4,10 @@ import React from 'react'
 @Radium
 class PasswordBox extends React.Component {
   render() {
-    const { input: { value, onChange } } = this.props
+    const { input } = this.props
 
     return (
-      <input type="password" value={value} onChange={onChange} />
+      <input type="password" {...input} />
     )
   }
 }

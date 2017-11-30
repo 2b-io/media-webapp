@@ -2,6 +2,7 @@ import Radium from 'radium'
 import React from 'react'
 import { connect } from 'react-redux'
 
+import { LinkButton } from 'components/Button'
 import { signInRequest } from 'actions/session'
 
 import SignInForm from './SignInForm'
@@ -21,6 +22,7 @@ class SignIn extends React.Component {
         <div>
           <SignInForm onSubmit={this._processSignIn} />
         </div>
+        <LinkButton link="/sign-up">Sign Up</LinkButton>
       </div>
     )
   }

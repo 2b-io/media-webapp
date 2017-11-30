@@ -18,6 +18,7 @@
     "redux": "3.7.2",
     "redux-form": "7.1.2",
     "redux-saga": "0.16.0",
+    "slug": "0.9.1",
     "superagent": "^3.8.1"
   },
   "devDependencies": {

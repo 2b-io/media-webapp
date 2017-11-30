@@ -2,11 +2,14 @@ import Radium from 'radium'
 import React from 'react'
 import { connect } from 'react-redux'
 
+import AuthRequired from 'decorators/AuthRequired'
+
 import styles from './styles'
 
 import { LinkButton } from 'components/Button'
 
 @connect()
+@AuthRequired
 @Radium
 class HomePage extends React.Component {
   constructor(props) {
