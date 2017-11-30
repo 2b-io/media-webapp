@@ -1,4 +1,5 @@
 import Promise from 'bluebird'
+import request from 'superagent'
 
 export function get() {
   return new Promise((resolve, reject) => {
@@ -6,7 +7,12 @@ export function get() {
   })
 }
 
-export function post() {}
+export function post({ url, data }) {
+  return request
+    .post(url)
+    .send(data)
+    .set('accept', 'json')
+}
 
 export function put() {}
 

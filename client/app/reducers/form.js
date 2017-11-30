@@ -12,13 +12,13 @@ export default form.plugin({
   signUp: (state, action) => {
     if (action.type === '@@redux-form/CHANGE') {
       switch (action.meta.field) {
-        case 'tenantName':
-        case 'tenantSlug':
+        case 'name':
+        case 'slug':
           return {
             ...state,
             values: {
               ...state.values,
-              tenantSlug: normalizeSlug(action.payload)
+              slug: normalizeSlug(action.payload)
             }
           }
       }

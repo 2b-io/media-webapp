@@ -15,16 +15,16 @@ class SignUpForm extends React.Component {
       <form onSubmit={handleSubmit}>
         <div>
           <label>Tenant</label><br />
-          <Field name="tenantName" component={TextBox} />
+          <Field name="name" component={TextBox} />
         </div>
         <div>
           <label>Slug</label><br />
-          <Field name="tenantSlug" component={TextBox} />
+          <Field name="slug" component={TextBox} />
           <span>.mn-cdn.com</span>
         </div>
         <div>
           <label>Email</label><br />
-          <Field name="administratorEmail" component={TextBox} />
+          <Field name="email" component={TextBox} />
         </div>
         <Button type="submit">Register</Button>
       </form>
