@@ -2,6 +2,7 @@ import { delay } from 'redux-saga'
 import { call, fork, put, select, take } from 'redux-saga/effects'
 
 import { SESSION } from 'actions/session'
+import { redirect } from 'actions/location'
 
 import { head, post } from 'services/rest'
 
@@ -19,6 +20,8 @@ export function* watchSignInRequest() {
         type: SESSION.SIGN_IN_SUCCESS,
         payload: session
       })
+
+      yield put(redirect('/'))
     } catch (e) {
       yield put({
         type: SESSION.SIGN_IN_FAILURE,
@@ -62,7 +65,7 @@ export function* refreshJWT() {
     yield call(delay, 5e3)
     const session = yield select(state => state.session)
 
-    if (session.jwt) {
+    if (session.token) {
       console.log('JWT is expiring... refresh it')
     }
   }
@@ -70,5 +73,6 @@ export function* refreshJWT() {
 
 export default function* root() {
   yield fork(watchSignInRequest)
+  yield fork(watchVerifyRequest)
   yield fork(refreshJWT)
 }

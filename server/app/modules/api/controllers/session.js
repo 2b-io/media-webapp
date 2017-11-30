@@ -12,3 +12,9 @@ export function create(req, res, next) {
   .then(session => res.json(session))
   .catch(e => next(e))
 }
+
+export function verify(req, res, next) {
+  const { decoded } = req
+
+  res.sendStatus(decoded ? 200 : 401)
+}

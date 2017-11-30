@@ -8,9 +8,9 @@ export function* watchProfileFetching() {
     const action = yield take(PROFILE.FETCH)
 
     try {
-      const profile = yield call(get, action.id)
+      // const profile = yield call(get, action.id)
 
-      yield put(setProfile(profile))
+      yield put(setProfile({}))
     } catch (e) {
       yield put({ type: 'SET_UNAUTHORIZED_ERROR' })
     }
