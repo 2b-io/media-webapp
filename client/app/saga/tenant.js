@@ -1,4 +1,4 @@
-import { call, fork, put, take } from 'redux-saga/effects'
+import { call, fork, put, select, take } from 'redux-saga/effects'
 import { TENANT } from 'actions/tenant'
 
 import { post } from 'services/rest'
@@ -6,6 +6,12 @@ import { post } from 'services/rest'
 export function* watchRegisterTenantRequest() {
   while (true) {
     const action = yield take(TENANT.REGISTER_TENANT_REQUEST)
+
+    const session = yield select(state => state.session)
+
+    console.log(session)
+
+    continue
 
     try {
       const result = yield call(post, {
