@@ -4,12 +4,14 @@ export const SESSION = prefix('session', {
   SIGN_IN_REQUEST: 'SIGN_IN_REQUEST',
   SIGN_IN_FAILURE: 'SIGN_IN_FAILURE',
   SIGN_IN_SUCCESS: 'SIGN_IN_SUCCESS',
-  VERIFY: 'VERIFY'
+  VERIFY_REQUEST: 'VERIFY_REQUEST',
+  VERIFY_FAILURE: 'VERIFY_FAILURE',
+  VERIFY_SUCCESS: 'VERIFY_SUCCESS'
 })
 
 export function verifySession() {
   return {
-    type: SESSION.VERIFY
+    type: SESSION.VERIFY_REQUEST
   }
 }
 

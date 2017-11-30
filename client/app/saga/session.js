@@ -3,7 +3,7 @@ import { call, fork, put, select, take } from 'redux-saga/effects'
 
 import { SESSION } from 'actions/session'
 
-import { post } from 'services/rest'
+import { head, post } from 'services/rest'
 
 export function* watchSignInRequest() {
   while (true) {
@@ -22,6 +22,35 @@ export function* watchSignInRequest() {
     } catch (e) {
       yield put({
         type: SESSION.SIGN_IN_FAILURE,
+        error: e
+      })
+    }
+  }
+}
+
+export function* watchVerifyRequest() {
+  while (true) {
+    const action = yield take(SESSION.VERIFY_REQUEST)
+
+    try {
+      const session = yield select(state => state.session)
+
+      if (!session.token) {
+        throw new Error('No Token')
+      }
+
+      const verifyResult = yield call(head, {
+        url: '/api/sessions'
+      }, {
+        token: session.token
+      })
+
+      yield put({
+        type: SESSION.VERIFY_SUCCESS
+      })
+    } catch (e) {
+      yield put({
+        type: SESSION.VERIFY_FAILURE,
         error: e
       })
     }

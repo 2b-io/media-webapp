@@ -1,7 +1,7 @@
 import { SESSION } from 'actions/session'
 
 let initialState = {
-  token: 'xxx'
+  token: null
 }
 
 export default function(state = initialState, action) {

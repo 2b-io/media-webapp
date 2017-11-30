@@ -1,13 +1,19 @@
 import request from 'superagent'
 
-export function get({ url }) {
+export function head({ url }, { token = null }) {
   return request
-    .post(url)
+    .head(url)
+    .then(response => response.body)
+}
+
+export function get({ url }, { token = null }) {
+  return request
+    .get(url)
     .set('accept', 'json')
     .then(response => response.body)
 }
 
-export function post({ url, data }) {
+export function post({ url, data }, { token = null }) {
   return request
     .post(url)
     .send(data)
@@ -15,7 +21,7 @@ export function post({ url, data }) {
     .then(response => response.body)
 }
 
-export function put({ url, data }) {
+export function put({ url, data }, { token = null }) {
   return request
     .put(url)
     .send(data)
@@ -23,7 +29,7 @@ export function put({ url, data }) {
     .then(response => response.body)
 }
 
-export function del({ url }) {
+export function del({ url }, { token = null }) {
   return request
     .del(url)
     .set('accept', 'json')
