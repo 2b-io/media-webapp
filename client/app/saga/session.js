@@ -75,6 +75,24 @@ function* authorize(payload, token) {
   return response
 }
 
+function* verifySession(session) {
+  while (true) {
+    yield take(SESSION.VERIFY_REQUEST)
+
+    try {
+      yield head({
+        url: '/api/sessions'
+      }, {
+        token: session.token
+      })
+    } catch (e) {
+      yield put({
+        type: SESSION.DESTROY_REQUEST
+      })
+    }
+  }
+}
+
 export default function* root() {
   let token = yield get(TOKEN_STORAGE_KEY)
   let session
@@ -95,11 +113,12 @@ export default function* root() {
 
     if (!session) continue
 
+    const verifyTask = yield fork(verifySession, session)
+
     while (true) {
       const { expired, signOut, verify } = yield race({
         expired: delay((session.ttl > 5e3) ? (session.ttl - 5e3) : 0),
-        signOut: take(SESSION.DESTROY_REQUEST),
-        verify: take(SESSION.VERIFY_REQUEST)
+        signOut: take(SESSION.DESTROY_REQUEST)
       })
 
       if (verify) {
@@ -123,6 +142,7 @@ export default function* root() {
       }
 
       if (!session) {
+        yield cancel(verifyTask)
         break
       }
     }

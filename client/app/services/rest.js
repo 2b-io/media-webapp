@@ -1,8 +1,6 @@
 import request from 'superagent'
 
 export function head({ url }, { token } = { token: null }) {
-  console.log(url, token)
-
   return request
     .head(url)
     .set('Authorization', token ? `Bearer ${token}` : '')
