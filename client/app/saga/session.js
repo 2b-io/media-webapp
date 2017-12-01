@@ -2,6 +2,7 @@ import { delay } from 'redux-saga'
 import { cancel, call, fork, put, race, select, take } from 'redux-saga/effects'
 
 import { SESSION } from 'actions/session'
+import { redirect, replace } from 'actions/location'
 import { head, post } from 'services/rest'
 import { clear, get, set } from 'services/storage'
 
@@ -22,6 +23,11 @@ function* createSession({ data, token }) {
       payload: session
     })
 
+    if (!data.refresh) {
+      const lastLocation = yield select(state => state.location.last)
+      yield put(replace(lastLocation.pathname))
+    }
+
     return session
   } catch (e) {
     yield clear(TOKEN_STORAGE_KEY)
@@ -40,6 +46,7 @@ function* destroySession(reason) {
     type: SESSION.DESTROY_SUCCESS,
     payload: reason
   })
+  yield put(redirect('/'))
 
   return null
 }
@@ -88,8 +95,6 @@ export default function* root() {
 
     if (!session) continue
 
-    // const verifyTask = yield fork(verifySession)
-
     while (true) {
       const { expired, signOut, verify } = yield race({
         expired: delay((session.ttl > 5e3) ? (session.ttl - 5e3) : 0),
@@ -118,7 +123,6 @@ export default function* root() {
       }
 
       if (!session) {
-        // yield cancel(verifyTask)
         break
       }
     }

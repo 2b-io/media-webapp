@@ -11,7 +11,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         pathname: action.payload.pathname,
-        type: action.payload.method
+        type: action.payload.method,
+        last: {
+          pathname: state.pathname,
+          type: state.type
+        }
       }
   }
 
