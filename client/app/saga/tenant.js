@@ -1,27 +1,34 @@
 import { call, fork, put, select, take } from 'redux-saga/effects'
-import { TENANT } from 'actions/tenant'
 
+import { TENANT } from 'actions/tenant'
+import { redirect } from 'actions/location'
 import { post } from 'services/rest'
 
-export function* watchRegisterTenantRequest() {
+export function* registerTenant() {
   while (true) {
-    const action = yield take(TENANT.REGISTER_TENANT_REQUEST)
-
+    const action = yield take(TENANT.REGISTER_REQUEST)
     const session = yield select(state => state.session)
 
     try {
-      const result = yield call(post, {
+      const tenant = yield call(post, {
         url: '/api/tenants',
         data: action.payload
       })
 
-      console.log(result)
+      yield put({
+        type: TENANT.REGISTER_SUCCESS,
+        payload: tenant
+      })
+      yield put(redirect('/sign-in'))
     } catch (e) {
-      console.log(e)
+      yield put({
+        type: TENANT.REGISTER_FAILURE,
+        error: e
+      })
     }
   }
 }
 
 export default function* root() {
-  yield fork(watchRegisterTenantRequest)
+  yield fork(registerTenant)
 }
