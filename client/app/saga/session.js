@@ -34,41 +34,14 @@ function* createSession({ data, token }) {
   }
 }
 
-function* destroySession() {
+function* destroySession(reason) {
   yield clear(TOKEN_STORAGE_KEY)
   yield put({
-    type: SESSION.DESTROY_SUCCESS
+    type: SESSION.DESTROY_SUCCESS,
+    payload: reason
   })
 
   return null
-}
-
-export function* verifySession() {
-  while (true) {
-    const action = yield take(SESSION.VERIFY_REQUEST)
-
-    const session = yield select(state => state.session)
-
-    if (!session.token) continue
-
-    try {
-      yield call(head, {
-        url: '/api/sessions'
-      }, {
-        token: session.token
-      })
-
-      yield put({
-        type: SESSION.VERIFY_SUCCESS
-      })
-    } catch (e) {
-      yield clear(TOKEN_STORAGE_KEY)
-      yield put({
-        type: SESSION.VERIFY_FAILURE,
-        error: e
-      })
-    }
-  }
 }
 
 function* authorize(payload, token) {
@@ -115,26 +88,37 @@ export default function* root() {
 
     if (!session) continue
 
-    const verifyTask = yield fork(verifySession)
+    // const verifyTask = yield fork(verifySession)
 
     while (true) {
-      const { expired } = yield race({
+      const { expired, signOut, verify } = yield race({
         expired: delay((session.ttl > 5e3) ? (session.ttl - 5e3) : 0),
-        signOut: take(SESSION.DESTROY_REQUEST)
+        signOut: take(SESSION.DESTROY_REQUEST),
+        verify: take(SESSION.VERIFY_REQUEST)
       })
 
-      if (expired) {
+      if (verify) {
+        try {
+          yield call(head, {
+            url: '/api/sessions'
+          }, {
+            token: session.token
+          })
+        } catch (e) {
+          session = yield call(destroySession, e)
+        }
+      } else if (expired) {
         // refresh token
         session = yield call(authorize, {
           refresh: true
         })
-      } else {
+      } else if (signOut) {
         // sign out
         session = yield call(destroySession)
       }
 
       if (!session) {
-        yield cancel(verifyTask)
+        // yield cancel(verifyTask)
         break
       }
     }
