@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken'
+import User from 'models/User'
 
 const SECRET = 'xxx'
 
@@ -16,8 +17,20 @@ export function parseJWT(req, res, next) {
       return next()
     }
 
-    req.decoded = decoded
+    const { _id } = decoded
 
-    next()
+    User
+      .findById(_id)
+      .lean()
+      .then(user => {
+        if (!user) {
+          return next()
+        }
+
+        req._user = user
+
+        next()
+      })
+      .catch(e => next())
   })
 }

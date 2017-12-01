@@ -1,20 +1,27 @@
 import {
-  create as createSession
+  create as createSession,
+  refresh as refreshSession
 } from 'services/session'
 
 export function create(req, res, next) {
-  const { email, password } = req.body
+  const { refresh, email, password } = req.body
+  let make
 
-  createSession({
-    email,
-    password
-  })
-  .then(session => res.json(session))
-  .catch(e => next(e))
+  console.log(refresh, email, password, req._user)
+
+  if (refresh && req._user) {
+    make = refreshSession({ _id: req._user._id })
+  } else {
+    make = createSession({ email, password })
+  }
+
+  make
+    .then(session => res.json(session))
+    .catch(e => next(e))
 }
 
 export function verify(req, res, next) {
-  const { decoded } = req
+  const { _user } = req
 
-  res.sendStatus(decoded ? 200 : 401)
+  res.sendStatus(_user ? 200 : 401)
 }

@@ -11,17 +11,28 @@ export function* watchSignInRequest() {
     const action = yield take(SESSION.SIGN_IN_REQUEST)
 
     try {
-      const session = yield call(post, {
+      let session = yield select(state => state.session)
+
+      session = yield call(post, {
         url: '/api/sessions',
         data: action.payload
+      }, {
+        token: session.token
       })
+
+      const ttl = session.ttl
 
       yield put({
         type: SESSION.SIGN_IN_SUCCESS,
         payload: session
       })
 
-      yield put(redirect('/'))
+      if (!action.payload.refresh) {
+        yield put(redirect('/'))
+      }
+
+      // refresh token
+      yield fork(refreshJWT)
     } catch (e) {
       yield put({
         type: SESSION.SIGN_IN_FAILURE,
@@ -61,14 +72,22 @@ export function* watchVerifyRequest() {
 }
 
 export function* refreshJWT() {
-  while (true) {
-    yield call(delay, 5e3)
-    const session = yield select(state => state.session)
+  const session = yield select(state => state.session)
 
-    if (session.token) {
-      console.log('JWT is expiring... refresh it')
-    }
+  if (!session || !session.token || !session.ttl) {
+    console.log('Invalid state')
+
+    return
   }
+
+  yield call(delay, session.ttl - 5e3)
+
+  yield put({
+    type: SESSION.SIGN_IN_REQUEST,
+    payload: {
+      refresh: true
+    }
+  })
 }
 
 export default function* root() {
