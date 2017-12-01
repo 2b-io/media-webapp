@@ -12,15 +12,15 @@ export default function* root() {
     })
 
     if (push) {
-      yield put(pushHistory(push.pathname))
+      yield put(pushHistory(push.payload.pathname))
     }
 
     if (pop) {
-      yield put(popHistory(pop.pathname))
+      yield put(popHistory(pop.payload.pathname))
     }
 
     if (replace) {
-      yield put(replaceHistory(replace.pathname))
+      yield put(replaceHistory(replace.payload.pathname))
     }
 
     yield put(verifySession())

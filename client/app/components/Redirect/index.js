@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { redirect } from 'actions/location'
+import { redirect, replace } from 'actions/location'
 
 @connect()
 class Redirect extends React.PureComponent {
@@ -9,9 +9,13 @@ class Redirect extends React.PureComponent {
   }
 
   componentWillMount() {
-    let { path, dispatch } = this.props
+    let { mode, path, dispatch } = this.props
 
-    dispatch(redirect(path))
+    if (mode === 'replace') {
+      dispatch(replace(path))
+    } else {
+      dispatch(redirect(path))
+    }
   }
 
   render() {

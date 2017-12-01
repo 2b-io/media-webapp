@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { LinkButton } from 'components/Button'
-import { signInRequest } from 'actions/session'
+import { signIn } from 'actions/session'
 
 import SignInForm from './SignInForm'
 
@@ -30,7 +30,7 @@ class SignIn extends React.Component {
   _processSignIn({ email, password }) {
     let { dispatch } = this.props
 
-    dispatch(signInRequest({
+    dispatch(signIn({
       email,
       password
     }))

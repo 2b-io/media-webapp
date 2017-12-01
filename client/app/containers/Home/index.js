@@ -8,10 +8,9 @@ import styles from './styles'
 
 import { LinkButton } from 'components/Button'
 
-import { signInRequest, signOutRequest } from 'actions/session'
+import { signIn, signOut } from 'actions/session'
 
 @connect()
-@AuthRequired
 @Radium
 class HomePage extends React.Component {
   constructor(props) {
@@ -40,7 +39,7 @@ class HomePage extends React.Component {
   _fakeSignIn() {
     const { dispatch } = this.props
 
-    dispatch(signInRequest({
+    dispatch(signIn({
       email: 'contact@stuffs.cool'
     }))
   }
@@ -48,7 +47,7 @@ class HomePage extends React.Component {
   _fakeSignOut() {
     const { dispatch } = this.props
 
-    dispatch(signOutRequest())
+    dispatch(signOut())
   }
 }
 

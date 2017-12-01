@@ -19,14 +19,14 @@ export function verifySession() {
   }
 }
 
-export function signInRequest(credential) {
+export function signIn(credential) {
   return {
     type: SESSION.CREATE_REQUEST,
     payload: credential
   }
 }
 
-export function signOutRequest(credential) {
+export function signOut(credential) {
   return {
     type: SESSION.DESTROY_REQUEST,
   }

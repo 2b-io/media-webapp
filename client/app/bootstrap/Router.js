@@ -29,6 +29,8 @@ class Router extends React.Component {
 
     if (next.type === 'push') {
       this.history.push(next.pathname)
+    } else if (next.type === 'replace') {
+      this.history.replace(next.pathname)
     }
   }
 

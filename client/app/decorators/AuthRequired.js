@@ -5,7 +5,7 @@ import Redirect from 'components/Redirect'
 
 export default function(Component) {
 
-  @connect(state => ({ unauthorized: state.error.unauthorized }))
+  @connect(state => ({ unauthorized: !state.session.verified }))
   class AuthRequired extends React.Component {
     constructor(props) {
       super(props)
@@ -16,7 +16,7 @@ export default function(Component) {
 
       return (
         unauthorized ?
-          <Redirect path="/sign-in" /> :
+          <Redirect path="/sign-in" mode="replace" /> :
           <Component { ...this.props } { ...this.state } />
       )
     }

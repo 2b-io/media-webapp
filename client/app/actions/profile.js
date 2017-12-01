@@ -7,14 +7,12 @@ export const PROFILE = prefix('profile', {
 
 export function fetchProfile(id) {
   return {
-    type: PROFILE.FETCH,
-    id
+    type: PROFILE.FETCH
   }
 }
 
 export function setProfile(profile) {
   return {
-    type: PROFILE.SET,
-    profile: profile
+    type: PROFILE.SET
   }
 }
