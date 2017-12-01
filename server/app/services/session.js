@@ -3,7 +3,7 @@ import ms from 'ms'
 import User from 'models/User'
 
 const SECRET = 'xxx'
-const TTL = ms('20s')
+const TTL = ms('1h')
 
 export function create({ email, password }) {
   return User.

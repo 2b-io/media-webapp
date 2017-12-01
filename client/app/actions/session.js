@@ -1,9 +1,13 @@
 import prefix from 'helpers/prefix-map'
 
 export const SESSION = prefix('session', {
-  SIGN_IN_REQUEST: 'SIGN_IN_REQUEST',
-  SIGN_IN_FAILURE: 'SIGN_IN_FAILURE',
-  SIGN_IN_SUCCESS: 'SIGN_IN_SUCCESS',
+  INIT_SUCCESS: 'INIT_SUCCESS',
+  CREATE_REQUEST: 'CREATE_REQUEST',
+  CREATE_FAILURE: 'CREATE_FAILURE',
+  CREATE_SUCCESS: 'CREATE_SUCCESS',
+  DESTROY_REQUEST: 'DESTROY_REQUEST',
+  DESTROY_FAILURE: 'DESTROY_FAILURE',
+  DESTROY_SUCCESS: 'DESTROY_SUCCESS',
   VERIFY_REQUEST: 'VERIFY_REQUEST',
   VERIFY_FAILURE: 'VERIFY_FAILURE',
   VERIFY_SUCCESS: 'VERIFY_SUCCESS'
@@ -17,7 +21,14 @@ export function verifySession() {
 
 export function signInRequest(credential) {
   return {
-    type: SESSION.SIGN_IN_REQUEST,
+    type: SESSION.CREATE_REQUEST,
     payload: credential
   }
 }
+
+export function signOutRequest(credential) {
+  return {
+    type: SESSION.DESTROY_REQUEST,
+  }
+}
+

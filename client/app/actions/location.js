@@ -3,6 +3,7 @@ import prefix from 'helpers/prefix-map'
 export const LOCATION = prefix('location', {
   PUSH: 'PUSH',
   POP: 'POP',
+  REPLACE: 'REPLACE',
   CHANGED: 'CHANGED'
 })
 

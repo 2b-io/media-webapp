@@ -7,8 +7,6 @@ export function create(req, res, next) {
   const { refresh, email, password } = req.body
   let make
 
-  console.log(refresh, email, password, req._user)
-
   if (refresh && req._user) {
     make = refreshSession({ _id: req._user._id })
   } else {

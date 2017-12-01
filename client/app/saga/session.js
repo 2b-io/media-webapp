@@ -1,59 +1,58 @@
 import { delay } from 'redux-saga'
-import { call, fork, put, select, take } from 'redux-saga/effects'
+import { cancel, call, fork, put, race, select, take } from 'redux-saga/effects'
 
 import { SESSION } from 'actions/session'
-import { redirect } from 'actions/location'
-
 import { head, post } from 'services/rest'
+import { clear, get, set } from 'services/storage'
 
-export function* watchSignInRequest() {
-  while (true) {
-    const action = yield take(SESSION.SIGN_IN_REQUEST)
+const TOKEN_STORAGE_KEY = 'jwt'
 
-    try {
-      let session = yield select(state => state.session)
+function* createSession({ data, token }) {
+  try {
+    const session = yield call(post, {
+      url: '/api/sessions',
+      data: data
+    }, {
+      token: token
+    })
 
-      session = yield call(post, {
-        url: '/api/sessions',
-        data: action.payload
-      }, {
-        token: session.token
-      })
+    yield set(TOKEN_STORAGE_KEY, session.token)
+    yield put({
+      type: SESSION.CREATE_SUCCESS,
+      payload: session
+    })
 
-      const ttl = session.ttl
+    return session
+  } catch (e) {
+    yield clear(TOKEN_STORAGE_KEY)
+    yield put({
+      type: SESSION.CREATE_FAILURE,
+      error: e
+    })
 
-      yield put({
-        type: SESSION.SIGN_IN_SUCCESS,
-        payload: session
-      })
-
-      if (!action.payload.refresh) {
-        yield put(redirect('/'))
-      }
-
-      // refresh token
-      yield fork(refreshJWT)
-    } catch (e) {
-      yield put({
-        type: SESSION.SIGN_IN_FAILURE,
-        error: e
-      })
-    }
+    return null
   }
 }
 
-export function* watchVerifyRequest() {
+function* destroySession() {
+  yield clear(TOKEN_STORAGE_KEY)
+  yield put({
+    type: SESSION.DESTROY_SUCCESS
+  })
+
+  return null
+}
+
+export function* verifySession() {
   while (true) {
     const action = yield take(SESSION.VERIFY_REQUEST)
 
+    const session = yield select(state => state.session)
+
+    if (!session.token) continue
+
     try {
-      const session = yield select(state => state.session)
-
-      if (!session.token) {
-        throw new Error('No Token')
-      }
-
-      const verifyResult = yield call(head, {
+      yield call(head, {
         url: '/api/sessions'
       }, {
         token: session.token
@@ -63,6 +62,7 @@ export function* watchVerifyRequest() {
         type: SESSION.VERIFY_SUCCESS
       })
     } catch (e) {
+      yield clear(TOKEN_STORAGE_KEY)
       yield put({
         type: SESSION.VERIFY_FAILURE,
         error: e
@@ -71,27 +71,72 @@ export function* watchVerifyRequest() {
   }
 }
 
-export function* refreshJWT() {
-  const session = yield select(state => state.session)
+function* authorize(payload, token) {
+  // if there is no token, try get it from state
+  if (!token) {
+    let session = yield select(state => state.session)
 
-  if (!session || !session.token || !session.ttl) {
-    console.log('Invalid state')
-
-    return
+    token = session.token
   }
 
-  yield call(delay, session.ttl - 5e3)
-
-  yield put({
-    type: SESSION.SIGN_IN_REQUEST,
-    payload: {
-      refresh: true
-    }
+  const { response, signOut } = yield race({
+    response: call(createSession, {
+      data: payload,
+      token: token
+    }),
+    signOut: take(SESSION.DESTROY_REQUEST)
   })
+
+  if (signOut) {
+    yield call(destroySession)
+    return null
+  }
+
+  return response
 }
 
 export default function* root() {
-  yield fork(watchSignInRequest)
-  yield fork(watchVerifyRequest)
-  yield fork(refreshJWT)
+  let token = yield get(TOKEN_STORAGE_KEY)
+  let session
+
+  if (token) {
+    // refresh stored token
+    session = yield call(authorize, {
+      refresh: true
+    }, token)
+  }
+
+  while (true) {
+    if (!session) {
+      // wait for sign-in
+      const { payload } = yield take(SESSION.CREATE_REQUEST)
+      session = yield call(authorize, payload)
+    }
+
+    if (!session) continue
+
+    const verifyTask = yield fork(verifySession)
+
+    while (true) {
+      const { expired } = yield race({
+        expired: delay((session.ttl > 5e3) ? (session.ttl - 5e3) : 0),
+        signOut: take(SESSION.DESTROY_REQUEST)
+      })
+
+      if (expired) {
+        // refresh token
+        session = yield call(authorize, {
+          refresh: true
+        })
+      } else {
+        // sign out
+        session = yield call(destroySession)
+      }
+
+      if (!session) {
+        yield cancel(verifyTask)
+        break
+      }
+    }
+  }
 }

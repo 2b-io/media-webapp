@@ -1,22 +1,28 @@
-import { take, put } from 'redux-saga/effects'
+import { put, race, take } from 'redux-saga/effects'
 
 import { LOCATION, pushHistory, popHistory, replaceHistory } from 'actions/location'
 import { verifySession } from 'actions/session'
 
-export function *historyPush() {
+export default function* root() {
   while (true) {
-    let action = yield take(LOCATION.PUSH)
+    const { push, pop, replace } = yield race({
+      push: take(LOCATION.PUSH),
+      pop: take(LOCATION.POP),
+      replace: take(LOCATION.REPLACE)
+    })
 
-    yield put(pushHistory(action.pathname))
-    yield put(verifySession())
-  }
-}
+    if (push) {
+      yield put(pushHistory(push.pathname))
+    }
 
-export function *historyPop() {
-  while (true) {
-    let action = yield take(LOCATION.POP)
+    if (pop) {
+      yield put(popHistory(pop.pathname))
+    }
 
-    yield put(popHistory(action.pathname))
+    if (replace) {
+      yield put(replaceHistory(replace.pathname))
+    }
+
     yield put(verifySession())
   }
 }
