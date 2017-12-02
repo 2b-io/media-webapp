@@ -6,7 +6,7 @@ import { LinkButton } from 'components/Button'
 import { signIn } from 'actions/session'
 
 import SignInForm from './SignInForm'
-import { containerStyle } from './style'
+import { wrapperStyle, containerStyle } from './style'
 
 @connect()
 @Radium
@@ -19,7 +19,7 @@ class SignIn extends React.Component {
 
   render() {
     return (
-      <div id="sign-in-container">
+      <div style={wrapperStyle}>
         <div style={containerStyle}>
           <h1>Sign in to MediaOnDemand</h1>
           <SignInForm onSubmit={this._processSignIn} />
