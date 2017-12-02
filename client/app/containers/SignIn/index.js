@@ -6,6 +6,7 @@ import { LinkButton } from 'components/Button'
 import { signIn } from 'actions/session'
 
 import SignInForm from './SignInForm'
+import style from './style'
 
 @connect()
 @Radium
@@ -18,7 +19,8 @@ class SignIn extends React.Component {
 
   render() {
     return (
-      <div id="sign-in-container">
+      <div id="sign-in-container"
+        style={style.container}>
         <div>
           <SignInForm onSubmit={this._processSignIn} />
         </div>
