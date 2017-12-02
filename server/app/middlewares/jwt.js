@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import User from 'models/User'
 
-const SECRET = 'xxx'
+import config from 'infrastructure/config'
 
 export function parseJWT(req, res, next) {
   const authorization = req.get('Authorization')
@@ -12,7 +12,7 @@ export function parseJWT(req, res, next) {
 
   const token = authorization.replace('Bearer ', '')
 
-  jwt.verify(token, SECRET, (err, decoded) => {
+  jwt.verify(token, config.session.secret, (err, decoded) => {
     if (err) {
       return next()
     }

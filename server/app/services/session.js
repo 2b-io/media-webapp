@@ -1,9 +1,8 @@
 import jwt from 'jsonwebtoken'
 import ms from 'ms'
-import User from 'models/User'
 
-const SECRET = 'xxx'
-const TTL = ms('20s')
+import config from 'infrastructure/config'
+import User from 'models/User'
 
 export function create({ email, password }) {
   return User.
@@ -38,12 +37,12 @@ export function issueJWT(user) {
     _id: user._id
   }
 
-  const token = jwt.sign(payload, SECRET, {
-    expiresIn: TTL
+  const token = jwt.sign(payload, config.session.secret, {
+    expiresIn: config.session.ttl
   })
 
   return {
     token,
-    ttl: TTL
+    ttl: ms(config.session.ttl)
   }
 }
