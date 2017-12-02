@@ -3,10 +3,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { LinkButton } from 'components/Button'
+import { InternalLink } from 'components/Link'
 import { signIn } from 'actions/session'
 
 import SignInForm from './SignInForm'
-import { wrapperStyle, containerStyle } from './style'
+import { container, signInContainer, signUpPromotion } from './style'
 
 @connect()
 @Radium
@@ -19,11 +20,15 @@ class SignIn extends React.Component {
 
   render() {
     return (
-      <div style={wrapperStyle}>
-        <div style={containerStyle}>
+      <div style={container}>
+        <div style={signInContainer}>
           <h1>Sign in to MediaOnDemand</h1>
           <SignInForm onSubmit={this._processSignIn} />
-          <LinkButton link="/sign-up">Sign Up</LinkButton>
+
+        </div>
+        <div style={signUpPromotion}>
+          <p><b>Don't have an account on MediaOnDemand yet?</b></p>
+          <InternalLink link="/sign-up"><b>Create a new account</b></InternalLink>
         </div>
       </div>
     )

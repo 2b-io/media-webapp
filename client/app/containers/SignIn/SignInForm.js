@@ -33,7 +33,7 @@ class SignInForm extends React.Component {
           />
         </div>
         <div style={formRowStyle}>
-          <Button type="submit">Submit</Button>
+          <Button type="submit">Sign in</Button>
         </div>
       </form>
     )
