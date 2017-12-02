@@ -2,8 +2,12 @@ import Radium from 'radium'
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 
+import Button from 'components/Button'
 import TextBox from 'components/inputs/TextBox'
 import PasswordBox from 'components/inputs/PasswordBox'
+
+
+import { formRowStyle } from './style'
 
 @reduxForm({ form: 'signIn' })
 @Radium
@@ -13,15 +17,24 @@ class SignInForm extends React.Component {
 
     return (
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email</label><br />
-          <Field name="email" component={TextBox} />
+        <p style={formRowStyle}>
+          Enter your <b>email address</b> and <b>password</b>
+        </p>
+        <div style={formRowStyle}>
+          <Field component={TextBox}
+            name="email"
+            placeholder="you@example.com"
+          />
         </div>
-        <div>
-          <label>Password</label><br />
-          <Field name="password" component={PasswordBox} />
+        <div style={formRowStyle}>
+          <Field component={PasswordBox}
+            name="password"
+            placeholder="Password"
+          />
         </div>
-        <button type="submit">Submit</button>
+        <div style={formRowStyle}>
+          <Button type="submit">Submit</Button>
+        </div>
       </form>
     )
   }

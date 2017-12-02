@@ -3,11 +3,17 @@ import pick from 'object.pick'
 
 import HyperLink from 'decorators/HyperLink'
 
+import { buttonStyle } from './style'
+
 class Button extends React.PureComponent {
   render() {
-    const supportedProps = pick(this.props, ['onClick'])
+    const supportedProps = pick(this.props, ['onClick', 'type'])
 
-    return <button {...supportedProps}>{this.props.children}</button>
+    return (
+      <button style={buttonStyle}
+        {...supportedProps}
+      >{this.props.children}</button>
+    )
   }
 }
 
