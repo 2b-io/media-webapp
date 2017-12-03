@@ -25,6 +25,17 @@ class SignUpForm extends React.Component {
           />
         </div>
         <div style={formRowStyle}>
+          <label>
+            <Field component="input"
+              type="checkbox"
+              name="subscribed"
+            />
+            <span>&nbsp;</span>
+            <span>It's ok to send me (very occasional) emails about the MediaNetwork services.</span>
+          </label>
+
+        </div>
+        <div style={formRowStyle}>
           <Button type="submit">Next</Button>
         </div>
       </form>
