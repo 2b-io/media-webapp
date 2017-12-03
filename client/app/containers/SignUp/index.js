@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { registerTenant } from 'actions/tenant'
 
 import SignUpForm from './SignUpForm'
+import { container, signUpContainer } from './style'
 
 @connect()
 @Radium
@@ -16,8 +17,11 @@ class SignUp extends React.Component {
 
   render() {
     return (
-      <div id="sign-up-container">
-        <SignUpForm onSubmit={this._processSignUp} />
+      <div style={container}>
+        <div style={signUpContainer}>
+          <h1>Create a new account</h1>
+          <SignUpForm onSubmit={this._processSignUp} />
+        </div>
       </div>
     )
   }

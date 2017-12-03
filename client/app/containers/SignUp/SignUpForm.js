@@ -5,6 +5,8 @@ import { Field, reduxForm } from 'redux-form'
 import Button from 'components/Button'
 import TextBox from 'components/inputs/TextBox'
 
+import { formRowStyle } from './style'
+
 @reduxForm({ form: 'signUp' })
 @Radium
 class SignUpForm extends React.Component {
@@ -13,20 +15,18 @@ class SignUpForm extends React.Component {
 
     return (
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Tenant</label><br />
-          <Field name="name" component={TextBox} />
+        <p style={formRowStyle}>
+          Enter your <b>email address</b>
+        </p>
+        <div style={formRowStyle}>
+          <Field component={TextBox}
+            name="email"
+            placeholder="you@example.com"
+          />
         </div>
-        <div>
-          <label>Slug</label><br />
-          <Field name="slug" component={TextBox} />
-          <span>.mn-cdn.com</span>
+        <div style={formRowStyle}>
+          <Button type="submit">Next</Button>
         </div>
-        <div>
-          <label>Email</label><br />
-          <Field name="email" component={TextBox} />
-        </div>
-        <Button type="submit">Register</Button>
       </form>
     )
   }

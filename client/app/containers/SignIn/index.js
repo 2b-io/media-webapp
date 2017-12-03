@@ -22,12 +22,12 @@ class SignIn extends React.Component {
     return (
       <div style={container}>
         <div style={signInContainer}>
-          <h1>Sign in to MediaOnDemand</h1>
+          <h1>Sign in to MediaNetwork</h1>
           <SignInForm onSubmit={this._processSignIn} />
 
         </div>
         <div style={signUpPromotion}>
-          <p><b>Don't have an account on MediaOnDemand yet?</b></p>
+          <p><b>Don't have an account on MediaNetwork yet?</b></p>
           <InternalLink link="/sign-up"><b>Create a new account</b></InternalLink>
         </div>
       </div>

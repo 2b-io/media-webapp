@@ -6,7 +6,6 @@ import Button from 'components/Button'
 import TextBox from 'components/inputs/TextBox'
 import PasswordBox from 'components/inputs/PasswordBox'
 
-
 import { formRowStyle } from './style'
 
 @reduxForm({ form: 'signIn' })
