@@ -24,9 +24,7 @@ class DefaultLayout extends React.Component {
     return (matchProps) => (
       <div>
         <Header />
-        <div>
-          <Component {...matchProps} />
-        </div>
+        <Component {...matchProps} />
       </div>
     )
   }

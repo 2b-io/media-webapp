@@ -16,7 +16,9 @@ class Link extends React.PureComponent {
     }
 
     return (
-      <a style={style} {...supportedProps}>{this.props.children}</a>
+      <a style={style} {...supportedProps}>
+        {this.props.children}
+      </a>
     )
   }
 }

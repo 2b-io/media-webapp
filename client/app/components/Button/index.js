@@ -8,11 +8,15 @@ import { buttonStyle } from './style'
 class Button extends React.PureComponent {
   render() {
     const supportedProps = pick(this.props, ['onClick', 'type'])
+    const style = {
+      ...buttonStyle,
+      ...this.props.style
+    }
 
     return (
-      <button style={buttonStyle}
-        {...supportedProps}
-      >{this.props.children}</button>
+      <button style={style} {...supportedProps}>
+        {this.props.children}
+      </button>
     )
   }
 }

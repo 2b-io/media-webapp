@@ -1,6 +1,7 @@
 import color from 'color'
 
 const MENU_HEIGHT = 70
+const ICON_SIZE = 32
 
 export const sideMenuStyle = {
   bmMenu: {
@@ -10,9 +11,9 @@ export const sideMenuStyle = {
     padding: '0 4vw'
   },
   bmCrossButton: {
-    width: '32px',
-    height: '32px',
-    top: `${(MENU_HEIGHT - 32) / 2}px`,
+    width: `${ICON_SIZE}px`,
+    height: `${ICON_SIZE}px`,
+    top: `${(MENU_HEIGHT - ICON_SIZE) / 2}px`,
     right: '4vw'
   }
 }

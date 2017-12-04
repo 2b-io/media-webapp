@@ -15,10 +15,9 @@ class Drawer extends React.PureComponent {
   render() {
     return (
       <ReduxSlide right
-        disableOverlayClick
         width={'100%'}
         styles={sideMenuStyle}
-        customBurgerIcon={ false }
+        customBurgerIcon={false}
         customCrossIcon={this.renderCloseButton()}>
         <DrawerTop />
         <DrawerContent />

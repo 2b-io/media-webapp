@@ -33,6 +33,7 @@ class Header extends React.PureComponent {
   }
 
   _openMenu() {
+    console.log('xxx')
     const { dispatch } = this.props
 
     dispatch(toggleMenu(true))
