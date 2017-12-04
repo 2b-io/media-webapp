@@ -1,7 +1,10 @@
 import color from 'color'
 
+import { fontStyle } from 'styles/global'
+
 export const headerStyle = {
   wrapper: {
+    ...fontStyle,
     height: '70px',
     background: color('#ffffff'),
     borderBottom: `1px solid ${color('#ebebeb')}`
@@ -19,6 +22,7 @@ export const headerStyle = {
 
 export const footerStyle = {
   wrapper: {
+    ...fontStyle,
     paddingTop: '40px'
   },
   links: {
@@ -70,5 +74,6 @@ export const footerStyle = {
 }
 
 export const containerStyle = {
+  ...fontStyle,
   padding: '10px 4vw'
 }
