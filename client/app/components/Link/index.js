@@ -10,9 +10,13 @@ class Link extends React.PureComponent {
 
   render() {
     const supportedProps = pick(this.props, Link.NATIVE_PROPS)
+    const style = {
+      ...linkStyle,
+      ...this.props.style
+    }
 
     return (
-      <a style={linkStyle} {...supportedProps}>{this.props.children}</a>
+      <a style={style} {...supportedProps}>{this.props.children}</a>
     )
   }
 }

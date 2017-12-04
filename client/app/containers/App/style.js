@@ -16,9 +16,3 @@ export const headerStyle = {
     marginLeft: 'auto'
   }
 }
-
-export const sideMenuStyle = {
-  bmMenu: {
-    background: color('#373a47')
-  }
-}

@@ -62,7 +62,7 @@ module.exports = ({
       ].concat(rules)
     },
     resolve: Object.assign({
-      modules: [ 'app', 'node_modules' ],
+      modules: [ 'app', 'node_modules', 'assets' ],
       extensions: [ '.js', '.jsx', '.styl' ]
     }, resolve)
   }

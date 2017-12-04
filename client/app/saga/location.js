@@ -2,6 +2,7 @@ import { put, race, take } from 'redux-saga/effects'
 
 import { LOCATION, pushHistory, popHistory, replaceHistory } from 'actions/location'
 import { verifySession } from 'actions/session'
+import { toggleMenu } from 'actions/drawer'
 
 export default function* root() {
   while (true) {
@@ -23,6 +24,10 @@ export default function* root() {
       yield put(replaceHistory(replace.payload.pathname))
     }
 
+    // verify session when change location
     yield put(verifySession())
+
+    // close any drawer
+    yield put(toggleMenu(false))
   }
 }
