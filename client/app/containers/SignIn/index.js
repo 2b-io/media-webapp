@@ -2,6 +2,8 @@ import Radium from 'radium'
 import React from 'react'
 import { connect } from 'react-redux'
 
+import Layout, { FULLSCREEN_MODE } from 'decorators/Layout'
+
 import { LinkButton } from 'components/Button'
 import { InternalLink } from 'components/Link'
 import { signIn } from 'actions/session'
@@ -10,6 +12,7 @@ import SignInForm from './SignInForm'
 import { container, signInContainer, signUpPromotion } from './style'
 
 @connect()
+@Layout(FULLSCREEN_MODE)
 @Radium
 class SignIn extends React.Component {
   constructor(props) {
@@ -35,7 +38,7 @@ class SignIn extends React.Component {
   }
 
   _processSignIn({ email, password }) {
-    let { dispatch } = this.props
+    const { dispatch } = this.props
 
     dispatch(signIn({
       email,

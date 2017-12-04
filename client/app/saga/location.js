@@ -1,8 +1,8 @@
-import { put, race, take } from 'redux-saga/effects'
+import { put, race, select, take } from 'redux-saga/effects'
 
 import { LOCATION, pushHistory, popHistory, replaceHistory } from 'actions/location'
 import { verifySession } from 'actions/session'
-import { toggleMenu } from 'actions/drawer'
+import { toggleAppMenu } from 'actions/drawer'
 
 export default function* root() {
   while (true) {
@@ -27,7 +27,11 @@ export default function* root() {
     // verify session when change location
     yield put(verifySession())
 
-    // close any drawer
-    yield put(toggleMenu(false))
+    const appMenuIsOpen = yield select(state => !!(state.burgerMenu.app && state.burgerMenu.app.isOpen))
+
+    if (appMenuIsOpen) {
+      // close any drawer
+      yield put(toggleAppMenu(false))
+    }
   }
 }

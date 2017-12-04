@@ -9,7 +9,7 @@ import DrawerTop from './DrawerTop'
 import DrawerContent from './DrawerContent'
 import { sideMenuStyle } from './style'
 
-const ReduxSlide = reduxBurgerMenu(Menu)
+const ReduxSlide = reduxBurgerMenu(Menu, 'app')
 
 class Drawer extends React.PureComponent {
   render() {

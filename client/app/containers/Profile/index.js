@@ -4,8 +4,9 @@ import { connect } from 'react-redux'
 
 import { fetchProfile } from 'actions/profile'
 
-import conditionalRenderer from 'decorators/ConditionalRenderer'
 import AuthRequired from 'decorators/AuthRequired'
+import conditionalRenderer from 'decorators/ConditionalRenderer'
+import Layout, { SYSTEM_MODE } from 'decorators/Layout'
 
 import RelativeRoute from 'components/RelativeRoute'
 import { LinkButton } from 'components/Button'
@@ -21,6 +22,7 @@ const RenderWhenProfileAvailable = conditionalRenderer(
 )
 
 @connect()
+@Layout(SYSTEM_MODE)
 @AuthRequired
 @RenderWhenProfileAvailable
 @Radium

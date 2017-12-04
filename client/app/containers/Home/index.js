@@ -3,14 +3,15 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import AuthRequired from 'decorators/AuthRequired'
+import Layout, { SYSTEM_MODE } from 'decorators/Layout'
+
+import { LinkButton } from 'components/Button'
+import { signIn, signOut } from 'actions/session'
 
 import styles from './styles'
 
-import { LinkButton } from 'components/Button'
-
-import { signIn, signOut } from 'actions/session'
-
 @connect()
+@Layout(SYSTEM_MODE)
 @Radium
 class HomePage extends React.Component {
   constructor(props) {

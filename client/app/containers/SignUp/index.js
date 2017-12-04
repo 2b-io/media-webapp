@@ -1,12 +1,15 @@
 import Radium from 'radium'
 import React from 'react'
 import { connect } from 'react-redux'
+
 import { registerTenant } from 'actions/tenant'
+import Layout, { FULLSCREEN_MODE } from 'decorators/Layout'
 
 import SignUpForm from './SignUpForm'
 import { container, signUpContainer } from './style'
 
 @connect()
+@Layout(FULLSCREEN_MODE)
 @Radium
 class SignUp extends React.Component {
   constructor(props) {

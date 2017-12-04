@@ -5,12 +5,13 @@ import { connect } from 'react-redux'
 // icons
 import MdMenu from 'react-icons/lib/md/menu'
 
-import { toggleMenu } from 'actions/drawer';
+import { LAYOUT } from 'actions/layout'
+import { toggleAppMenu } from 'actions/drawer';
 import AppDrawer from 'containers/AppDrawer'
 
 import { headerStyle } from './style'
 
-@connect()
+@connect(state => ({ layout: state.layout }))
 @Radium
 class Header extends React.PureComponent {
   constructor(props) {
@@ -19,6 +20,20 @@ class Header extends React.PureComponent {
     this._openMenu = this._openMenu.bind(this)
   }
   render() {
+    const { mode } = this.props.layout
+
+    switch (mode) {
+      case LAYOUT.FULLSCREEN_MODE:
+        return null
+
+      case LAYOUT.SYSTEM_MODE:
+        return this._renderSystemHeader()
+    }
+
+    return null
+  }
+
+  _renderSystemHeader() {
     return (
       <div style={headerStyle.wrapper}>
         <AppDrawer />
@@ -33,10 +48,9 @@ class Header extends React.PureComponent {
   }
 
   _openMenu() {
-    console.log('xxx')
     const { dispatch } = this.props
 
-    dispatch(toggleMenu(true))
+    dispatch(toggleAppMenu(true))
   }
 }
 
