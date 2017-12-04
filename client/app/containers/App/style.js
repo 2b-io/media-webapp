@@ -7,6 +7,18 @@ export const headerStyle = {
     borderBottom: `1px solid ${color('#ebebeb')}`
   },
   container: {
-    padding: '0 4vw'
+    padding: '0 4vw',
+    display: 'flex',
+    alignItems: 'center',
+    height: '100%'
+  },
+  drawer: {
+    marginLeft: 'auto'
+  }
+}
+
+export const sideMenuStyle = {
+  bmMenu: {
+    background: color('#373a47')
   }
 }

@@ -27,10 +27,7 @@ class HomePage extends React.Component {
         <div>
           <LinkButton link="/sign-in">Sign In</LinkButton>
           <LinkButton link="/profile">Profile</LinkButton>
-        </div>
-        <div>
-          <button onClick={this._fakeSignIn}>Fake SignIn</button>
-          <button onClick={this._fakeSignOut}>Fake SignOut</button>
+          <LinkButton link="/dashboard">Dashboard</LinkButton>
         </div>
       </div>
     )
