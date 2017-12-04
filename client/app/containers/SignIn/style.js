@@ -11,7 +11,6 @@ export const signInContainer = {
   ...fontStyle,
   ...cardLayout.content,
   // size
-  minWidth: '320px',
   maxWidth: '480px',
 
   backgroundColor: color('#ffffff'),
@@ -22,7 +21,6 @@ export const signUpPromotion = {
   ...fontStyle,
   ...cardLayout.content,
   // size
-  minWidth: '320px',
   maxWidth: '480px',
   textAlign: 'center'
 }

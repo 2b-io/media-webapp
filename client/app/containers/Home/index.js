@@ -27,7 +27,11 @@ class HomePage extends React.Component {
         <h1>HomePage</h1>
         <div>
           <LinkButton link="/sign-in">Sign In</LinkButton>
+        </div>
+        <div>
           <LinkButton link="/profile">Profile</LinkButton>
+        </div>
+        <div>
           <LinkButton link="/dashboard">Dashboard</LinkButton>
         </div>
       </div>

@@ -3,7 +3,7 @@ import React from 'react'
 import {slide as Menu} from 'react-burger-menu'
 import {decorator as reduxBurgerMenu} from 'redux-burger-menu'
 
-import MdClose from 'react-icons/lib/md/close'
+import IconClose from 'react-icons/lib/io/android-close'
 
 import DrawerTop from './DrawerTop'
 import DrawerContent from './DrawerContent'
@@ -27,7 +27,7 @@ class Drawer extends React.PureComponent {
 
   renderCloseButton() {
     return (
-      <MdClose size={32} color="#fff" />
+      <IconClose size={32} color="#fff" />
     )
   }
 }

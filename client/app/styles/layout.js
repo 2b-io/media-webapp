@@ -2,7 +2,6 @@ import color from 'color'
 
 export const cardLayout = {
   wrapper: {
-    paddingTop: '50px'
   },
   content: {
     marginLeft: 'auto',

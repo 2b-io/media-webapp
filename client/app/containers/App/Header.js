@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 // icons
-import MdMenu from 'react-icons/lib/md/menu'
+import IconMenu from 'react-icons/lib/io/android-menu'
 
 import { LAYOUT } from 'actions/layout'
 import { toggleAppMenu } from 'actions/drawer';
@@ -40,7 +40,7 @@ class Header extends React.PureComponent {
         <div style={headerStyle.container}>
           <div style={headerStyle.drawer}
             onClick={this._openMenu}>
-            <MdMenu size={32} />
+            <IconMenu size={32} />
           </div>
         </div>
       </div>

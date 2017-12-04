@@ -2,7 +2,7 @@ import Radium from 'radium'
 import React from 'react'
 import { connect } from 'react-redux'
 
-import Layout, { FULLSCREEN_MODE } from 'decorators/Layout'
+import Layout, { SYSTEM_MODE } from 'decorators/Layout'
 
 import { LinkButton } from 'components/Button'
 import { InternalLink } from 'components/Link'
@@ -12,7 +12,7 @@ import SignInForm from './SignInForm'
 import { container, signInContainer, signUpPromotion } from './style'
 
 @connect()
-@Layout(FULLSCREEN_MODE)
+@Layout(SYSTEM_MODE)
 @Radium
 class SignIn extends React.Component {
   constructor(props) {

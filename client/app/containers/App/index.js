@@ -5,7 +5,9 @@ import { Route } from 'react-router'
 import { loadableContainer } from 'helpers/loadable'
 
 import Header from 'containers/App/Header'
-import DefaultLayout from 'containers/App/DefaultLayout'
+import Footer from 'containers/App/Footer'
+
+import { containerStyle } from './style'
 
 const SignIn = loadableContainer('SignIn')
 const SignUp = loadableContainer('SignUp')
@@ -18,13 +20,14 @@ class App extends React.Component {
     return (
       <div>
         <Header />
-        <div>
+        <div style={containerStyle}>
           <Route exact path="/sign-in" component={SignIn} />
           <Route exact path="/sign-up" component={SignUp} />
           <Route exact path="/" component={Home} />
           <Route exact path="/dashboard" component={Dashboard} />
           <Route path="/profile" component={Profile} />
         </div>
+        <Footer />
       </div>
     )
   }
