@@ -40,7 +40,7 @@ export const footerStyle = {
     fontWeight: 700,
     textTransform: 'uppercase',
     display: 'block',
-    borderBottom: `1px solid ${color('#000000').fade(0.4)}`,
+    borderBottom: `1px solid ${color('#717274')}`,
     marginBottom: '.75rem'
   },
   link: {

@@ -2,6 +2,7 @@ import Radium from 'radium'
 import React from 'react'
 import { connect } from 'react-redux'
 
+import IconHeart from 'react-icons/lib/io/heart'
 import IconFacebook from 'react-icons/lib/io/social-facebook'
 import IconTwitter from 'react-icons/lib/io/social-twitter'
 
@@ -31,7 +32,7 @@ class Footer extends React.PureComponent {
           <div style={footerStyle.linkSection}>
             <ul>
               <li style={footerStyle.linkSectionItems}>
-                <span style={footerStyle.linkSessionHeading}>Using Media On Demand</span>
+                <span style={footerStyle.linkSessionHeading}>Using MediaOnDemand</span>
               </li>
               <li style={footerStyle.linkSectionItems}>
                 <InternalLink link="/" style={footerStyle.link}>Product</InternalLink>
@@ -53,7 +54,7 @@ class Footer extends React.PureComponent {
           <div style={footerStyle.linkSection}>
             <ul>
               <li style={footerStyle.linkSectionItems}>
-                <span style={footerStyle.linkSessionHeading}>Media Nework</span>
+                <span style={footerStyle.linkSessionHeading}>MediaNework <IconHeart size={12} /></span>
               </li>
               <li style={footerStyle.linkSectionItems}>
                 <InternalLink link="/" style={footerStyle.link}>Jobs</InternalLink>
