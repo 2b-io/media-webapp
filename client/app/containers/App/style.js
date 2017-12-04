@@ -1,5 +1,6 @@
 import color from 'color'
 
+import { appLayout } from 'styles/layout'
 import { fontStyle } from 'styles/global'
 
 export const headerStyle = {
@@ -75,5 +76,10 @@ export const footerStyle = {
 
 export const containerStyle = {
   ...fontStyle,
+  ...appLayout.content,
   padding: '10px 4vw'
+}
+
+export const wrapperStyle = {
+  ...appLayout.wrapper
 }

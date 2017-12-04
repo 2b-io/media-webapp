@@ -7,7 +7,7 @@ import { loadableContainer } from 'helpers/loadable'
 import Header from 'containers/App/Header'
 import Footer from 'containers/App/Footer'
 
-import { containerStyle } from './style'
+import { containerStyle, wrapperStyle } from './style'
 
 const SignIn = loadableContainer('SignIn')
 const SignUp = loadableContainer('SignUp')
@@ -18,7 +18,7 @@ const Profile = loadableContainer('Profile')
 class App extends React.Component {
   render() {
     return (
-      <div>
+      <div style={wrapperStyle}>
         <Header />
         <div style={containerStyle}>
           <Route exact path="/sign-in" component={SignIn} />
