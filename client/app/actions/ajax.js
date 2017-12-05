@@ -1,9 +1,20 @@
 import prefix from 'helpers/prefix-map'
 
+export const SUFFIXS = {
+  REQUEST: 'REQUEST',
+  SUCCESS: 'SUCCESS',
+  FAILURE: 'FAILURE'
+}
+
 export const AJAX = prefix('ajax', {
   SUCCESS: 'SUCCESS',
   FAILURE: 'FAILURE',
   CLEAR: 'CLEAR'
+})
+
+export const KEYWORDS = prefix('@@ajax', {
+  IGNORE: 'ignore',
+  FORM: 'form'
 })
 
 export function ajaxSuccess(id, data) {

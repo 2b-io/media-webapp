@@ -1,20 +1,15 @@
+import { ajax, ignore } from 'helpers/ajax'
 import prefix from 'helpers/prefix-map'
 
 export const SESSION = prefix('session', {
-  CREATE_REQUEST: 'CREATE_REQUEST',
-  CREATE_FAILURE: 'CREATE_FAILURE',
-  CREATE_SUCCESS: 'CREATE_SUCCESS',
-  DESTROY_REQUEST: 'DESTROY_REQUEST',
-  DESTROY_FAILURE: 'DESTROY_FAILURE',
-  DESTROY_SUCCESS: 'DESTROY_SUCCESS',
-  VERIFY_REQUEST: 'VERIFY_REQUEST',
-  VERIFY_FAILURE: 'VERIFY_FAILURE',
-  VERIFY_SUCCESS: 'VERIFY_SUCCESS'
+  ...ajax('CREATE'),
+  ...ajax('DESTROY'),
+  ...ajax('VERIFY')
 })
 
 export function verifySession() {
   return {
-    type: SESSION.VERIFY_REQUEST
+    ...ignore(SESSION.VERIFY_REQUEST)
   }
 }
 

@@ -1,9 +1,8 @@
+import { ajax } from 'helpers/ajax'
 import prefix from 'helpers/prefix-map'
 
 export const ACCOUNT = prefix('account', {
-  CREATE_REQUEST: 'CREATE_REQUEST',
-  CREATE_SUCCESS: 'CREATE_SUCCESS',
-  CREATE_FAILURE: 'CREATE_FAILURE'
+  ...ajax('CREATE')
 })
 
 export function registerAccount(account) {
