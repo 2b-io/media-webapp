@@ -35,7 +35,7 @@ export function* watchAjaxSuccessResponse() {
     yield put({
       type: AJAX.SUCCESS,
       payload: {
-        id: action[KEYWORDS.ID],
+        id: action[KEYWORDS.ID] || '_lastest',
         data: action.payload
       }
     })
@@ -55,7 +55,7 @@ export function* watchAjaxFailureResponse() {
     yield put({
       type: AJAX.FAILURE,
       payload: {
-        id: action[KEYWORDS.ID],
+        id: action[KEYWORDS.ID] || '_lastest',
         error: action.error
       }
     })
