@@ -33,7 +33,11 @@ export function* watchAjaxSuccessResponse() {
     if (action[KEYWORDS.IGNORE]) continue
 
     yield put({
-      type: AJAX.SUCCESS
+      type: AJAX.SUCCESS,
+      payload: {
+        id: action[KEYWORDS.ID],
+        data: action.payload
+      }
     })
   }
 }
@@ -49,7 +53,11 @@ export function* watchAjaxFailureResponse() {
     if (action[KEYWORDS.IGNORE]) continue
 
     yield put({
-      type: AJAX.FAILURE
+      type: AJAX.FAILURE,
+      payload: {
+        id: action[KEYWORDS.ID],
+        error: action.error
+      }
     })
   }
 }

@@ -15,7 +15,7 @@ export const AJAX = prefix('ajax', {
 
 export const KEYWORDS = prefix('@@ajax', {
   IGNORE: 'ignore',
-  FORM: 'form'
+  ID: 'id'
 })
 
 export function ajaxSuccess(id, data) {

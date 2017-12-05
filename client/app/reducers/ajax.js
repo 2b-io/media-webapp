@@ -12,10 +12,28 @@ export default function(state = initialState, action) {
         requests: state.requests + 1
       }
     case AJAX.SUCCESS:
+      return {
+        ...state,
+        requests: state.requests - 1,
+        [action.payload.id]: {
+          data: action.payload.data,
+          error: null
+        }
+      }
     case AJAX.FAILURE:
       return {
         ...state,
-        requests: state.requests - 1
+        requests: state.requests - 1,
+        [action.payload.id]: {
+          data: null,
+          error: action.payload.error
+        }
+      }
+
+    case AJAX.CLEAR:
+      return {
+        ...state,
+        [action.payload.id]: {}
       }
   }
 

@@ -2,7 +2,6 @@ import Radium from 'radium'
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { fetchProfile } from 'actions/profile'
 
 import AuthRequired from 'decorators/AuthRequired'
 import conditionalRenderer from 'decorators/ConditionalRenderer'
@@ -14,8 +13,6 @@ import { LinkButton } from 'components/Button'
 const RenderWhenProfileAvailable = conditionalRenderer(
   props => {
     const { dispatch } = props
-
-    dispatch(fetchProfile('me'))
   },
   props => !!props.profile.username,
   state => ({ profile: state.profile })

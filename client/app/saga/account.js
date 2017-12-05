@@ -1,6 +1,7 @@
 import { call, fork, put, take } from 'redux-saga/effects'
 
 import { ACCOUNT } from 'actions/account'
+import { KEYWORDS } from 'actions/ajax'
 import { post } from 'services/rest'
 
 export function* createAccount() {
@@ -14,13 +15,15 @@ export function* createAccount() {
       })
 
       yield put({
+        [KEYWORDS.ID]: action[KEYWORDS.ID],
         type: ACCOUNT.CREATE_SUCCESS,
         payload: account
       })
-    } catch (e) {
+    } catch (error) {
       yield put({
+        [KEYWORDS.ID]: action[KEYWORDS.ID],
         type: ACCOUNT.CREATE_FAILURE,
-        error: e
+        error
       })
     }
   }
