@@ -65,7 +65,6 @@ export const footerStyle = {
   contactUs: {
     color: color('#717274'),
     fontSize: '.82rem',
-    textDecoration: 'none',
     display: 'inline-block'
   },
   contactItem: {
