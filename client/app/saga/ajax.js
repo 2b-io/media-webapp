@@ -16,7 +16,9 @@ export function* watchAjaxRequest() {
 
     if (action[KEYWORDS.IGNORE]) continue
 
-    console.log('ajax request', action)
+    yield put({
+      type: AJAX.REQUEST
+    })
   }
 }
 
@@ -30,7 +32,9 @@ export function* watchAjaxSuccessResponse() {
 
     if (action[KEYWORDS.IGNORE]) continue
 
-    console.log('ajax success', action)
+    yield put({
+      type: AJAX.SUCCESS
+    })
   }
 }
 
@@ -44,7 +48,9 @@ export function* watchAjaxFailureResponse() {
 
     if (action[KEYWORDS.IGNORE]) continue
 
-    console.log('ajax failure', action)
+    yield put({
+      type: AJAX.FAILURE
+    })
   }
 }
 

@@ -7,6 +7,7 @@ export const SUFFIXS = {
 }
 
 export const AJAX = prefix('ajax', {
+  REQUEST: 'REQUEST',
   SUCCESS: 'SUCCESS',
   FAILURE: 'FAILURE',
   CLEAR: 'CLEAR'

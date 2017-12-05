@@ -3,6 +3,7 @@ import { combineReducers } from 'redux'
 import {reducer as burgerMenu} from 'redux-burger-menu'
 
 import account from 'reducers/account'
+import ajax from 'reducers/ajax'
 import form from 'reducers/form'
 import error from 'reducers/error'
 import layout from 'reducers/layout'
@@ -11,6 +12,7 @@ import session from 'reducers/session'
 
 export default combineReducers({
   account,
+  ajax,
   burgerMenu,
   error,
   form,
