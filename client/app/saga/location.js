@@ -2,7 +2,7 @@ import { put, race, select, take } from 'redux-saga/effects'
 
 import { LOCATION, pushHistory, popHistory, replaceHistory } from 'actions/location'
 import { verifySession } from 'actions/session'
-import { toggleAppMenu } from 'actions/drawer'
+import { toggleAccountMenu, toggleSystemMenu } from 'actions/drawer'
 
 export default function* root() {
   while (true) {
@@ -31,7 +31,8 @@ export default function* root() {
 
     if (appMenuIsOpen) {
       // close any drawer
-      yield put(toggleAppMenu(false))
+      yield put(toggleAccountMenu(false))
+      yield put(toggleSystemMenu(false))
     }
   }
 }

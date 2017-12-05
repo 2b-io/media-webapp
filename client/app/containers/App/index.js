@@ -4,9 +4,11 @@ import { Route } from 'react-router'
 
 import { loadableContainer } from 'helpers/loadable'
 
-import SystemDrawer from 'containers/SystemDrawer'
+
 import Header from 'containers/App/Header'
 import Footer from 'containers/App/Footer'
+import AccountDrawer from 'containers/AccountDrawer'
+import SystemDrawer from 'containers/SystemDrawer'
 
 import { containerStyle, wrapperStyle } from './style'
 
@@ -20,6 +22,7 @@ class App extends React.Component {
   render() {
     return (
       <div style={wrapperStyle}>
+        <AccountDrawer />
         <SystemDrawer />
         <Header />
         <div style={containerStyle}>

@@ -1,7 +1,7 @@
 import React from 'react'
 
-import {slide as Menu} from 'react-burger-menu'
-import {decorator as reduxBurgerMenu} from 'redux-burger-menu'
+import { slide as Menu } from 'react-burger-menu'
+import { decorator as reduxBurgerMenu } from 'redux-burger-menu'
 
 import IconClose from 'react-icons/lib/io/close-round'
 
@@ -10,12 +10,12 @@ import DrawerContent from './DrawerContent'
 import DrawerBottom from './DrawerBottom'
 import { sideMenuStyle } from './style'
 
-const ReduxSlide = reduxBurgerMenu(Menu, 'app')
+const ReduxMenu = reduxBurgerMenu(Menu, 'system')
 
-class Drawer extends React.PureComponent {
+class SystemDrawer extends React.PureComponent {
   render() {
     return (
-      <ReduxSlide right
+      <ReduxMenu right
         width={'100%'}
         styles={sideMenuStyle}
         customBurgerIcon={false}
@@ -23,7 +23,7 @@ class Drawer extends React.PureComponent {
         <DrawerTop />
         <DrawerContent />
         <DrawerBottom />
-      </ReduxSlide>
+      </ReduxMenu>
     )
   }
 
@@ -34,4 +34,4 @@ class Drawer extends React.PureComponent {
   }
 }
 
-export default Drawer
+export default SystemDrawer

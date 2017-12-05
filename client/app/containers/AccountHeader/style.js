@@ -17,6 +17,6 @@ export default {
     height: '100%'
   },
   menuIcon: {
-    marginLeft: 'auto'
+    marginRight: 'auto'
   }
 }
