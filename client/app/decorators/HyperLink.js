@@ -14,10 +14,17 @@ export default function(Component) {
     }
 
     render() {
-      return <Component {...this.props} onClick={this._redirect} />
+      return (
+        <Component {...this.props}
+          href={this.props.link}
+          onClick={this._redirect}
+        />
+      )
     }
 
-    _redirect() {
+    _redirect(e) {
+      e.preventDefault()
+
       const { dispatch, link } = this.props
 
       dispatch(redirect(link))

@@ -28,7 +28,7 @@ class SignInForm extends React.Component {
         <div style={formRowStyle}>
           <Field component={PasswordBox}
             name="password"
-            placeholder="Password"
+            placeholder="password"
           />
         </div>
         <div style={formRowStyle}>

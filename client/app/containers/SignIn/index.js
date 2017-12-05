@@ -27,7 +27,7 @@ class SignIn extends React.Component {
         <div style={signInContainer}>
           <h1>Sign in to MediaNetwork</h1>
           <SignInForm onSubmit={this._processSignIn} />
-
+          <InternalLink link="/forgot">Forgot password?</InternalLink>
         </div>
         <div style={signUpPromotion}>
           <p><b>Don't have an account on MediaNetwork yet?</b></p>
