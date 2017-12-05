@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import { LAYOUT, changeLayout } from 'actions/layout'
 
+export const ACCOUNT_MODE = LAYOUT.ACCOUNT_MODE
 export const FULLSCREEN_MODE = LAYOUT.FULLSCREEN_MODE
 export const SYSTEM_MODE = LAYOUT.SYSTEM_MODE
 

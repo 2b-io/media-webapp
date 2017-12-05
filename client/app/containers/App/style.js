@@ -3,24 +3,6 @@ import color from 'color'
 import { appLayout } from 'styles/layout'
 import { fontStyle } from 'styles/global'
 
-export const headerStyle = {
-  wrapper: {
-    ...fontStyle,
-    height: '70px',
-    background: color('#ffffff'),
-    borderBottom: `1px solid ${color('#ebebeb')}`
-  },
-  container: {
-    padding: '0 4vw',
-    display: 'flex',
-    alignItems: 'center',
-    height: '100%'
-  },
-  drawer: {
-    marginLeft: 'auto'
-  }
-}
-
 export const footerStyle = {
   wrapper: {
     ...fontStyle,

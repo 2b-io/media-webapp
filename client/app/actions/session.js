@@ -1,6 +1,8 @@
 import { ajax, ignore } from 'helpers/ajax'
 import prefix from 'helpers/prefix-map'
 
+import { KEYWORDS } from 'actions/ajax'
+
 export const SESSION = prefix('session', {
   ...ajax('CREATE'),
   ...ajax('DESTROY'),
@@ -16,7 +18,8 @@ export function verifySession() {
 export function signIn(credential) {
   return {
     type: SESSION.CREATE_REQUEST,
-    payload: credential
+    payload: credential,
+    [KEYWORDS.ID]: 'signIn'
   }
 }
 

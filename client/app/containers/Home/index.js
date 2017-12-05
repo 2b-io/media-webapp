@@ -2,11 +2,8 @@ import Radium from 'radium'
 import React from 'react'
 import { connect } from 'react-redux'
 
-import AuthRequired from 'decorators/AuthRequired'
+import { InternalLink } from 'components/Link'
 import Layout, { SYSTEM_MODE } from 'decorators/Layout'
-
-import { LinkButton } from 'components/Button'
-import { signIn, signOut } from 'actions/session'
 
 import styles from './styles'
 
@@ -16,40 +13,17 @@ import styles from './styles'
 class HomePage extends React.Component {
   constructor(props) {
     super(props)
-
-    this._fakeSignIn = this._fakeSignIn.bind(this)
-    this._fakeSignOut = this._fakeSignOut.bind(this)
   }
 
   render() {
     return (
       <div style={styles.container}>
-        <h1>HomePage</h1>
-        <div>
-          <LinkButton link="/sign-in">Sign In</LinkButton>
-        </div>
-        <div>
-          <LinkButton link="/profile">Profile</LinkButton>
-        </div>
-        <div>
-          <LinkButton link="/dashboard">Dashboard</LinkButton>
-        </div>
+        <p>
+          <span>Already using MediaOnDemand? </span>
+          <InternalLink link="/sign-in">Sign in</InternalLink>
+        </p>
       </div>
     )
-  }
-
-  _fakeSignIn() {
-    const { dispatch } = this.props
-
-    dispatch(signIn({
-      email: 'contact@stuffs.cool'
-    }))
-  }
-
-  _fakeSignOut() {
-    const { dispatch } = this.props
-
-    dispatch(signOut())
   }
 }
 

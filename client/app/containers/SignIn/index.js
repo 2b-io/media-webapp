@@ -2,16 +2,19 @@ import Radium from 'radium'
 import React from 'react'
 import { connect } from 'react-redux'
 
-import Layout, { SYSTEM_MODE } from 'decorators/Layout'
-
+import { signIn } from 'actions/session'
 import { LinkButton } from 'components/Button'
 import { InternalLink } from 'components/Link'
-import { signIn } from 'actions/session'
+import Redirect from 'components/Redirect'
+import Layout, { SYSTEM_MODE } from 'decorators/Layout'
 
 import SignInForm from './SignInForm'
 import { container, signInContainer, signUpPromotion } from './style'
 
-@connect()
+@connect(state => ({
+  signIn: state.ajax.signIn,
+  session: state.session
+}))
 @Layout(SYSTEM_MODE)
 @Radium
 class SignIn extends React.Component {
@@ -22,8 +25,24 @@ class SignIn extends React.Component {
   }
 
   render() {
+    const { verified } = this.props.session
+
+    if (verified) {
+      // redirect to /dashboard if signed in
+      return <Redirect path="/dashboard" />
+    }
+
+    const { data, error } = (this.props.signIn || {})
+
+    if (data) {
+      // redirect to /dashboard if sign in success
+      // TODO redirect to last page
+      return <Redirect path="/dashboard" />
+    }
+
     return (
       <div style={container}>
+        {error ? <h1>Error</h1> : null}
         <div style={signInContainer}>
           <h1>Sign in to MediaNetwork</h1>
           <SignInForm onSubmit={this._processSignIn} />

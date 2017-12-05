@@ -1,54 +1,27 @@
-import Radium from 'radium'
 import React from 'react'
 import { connect } from 'react-redux'
 
-// icons
-import IconMenu from 'react-icons/lib/io/navicon-round'
-
+// internals
 import { LAYOUT } from 'actions/layout'
-import { toggleAppMenu } from 'actions/drawer';
+import { loadableContainer } from 'helpers/loadable'
 
-import { headerStyle } from './style'
+const AccountHeader = loadableContainer('AccountHeader')
+const SystemHeader = loadableContainer('SystemHeader')
 
 @connect(state => ({ layout: state.layout }))
-@Radium
 class Header extends React.PureComponent {
-  constructor(props) {
-    super(props)
-
-    this._openMenu = this._openMenu.bind(this)
-  }
   render() {
     const { mode } = this.props.layout
 
     switch (mode) {
-      case LAYOUT.FULLSCREEN_MODE:
-        return null
+      case LAYOUT.ACCOUNT_MODE:
+        return <AccountHeader />
 
       case LAYOUT.SYSTEM_MODE:
-        return this._renderSystemHeader()
+        return <SystemHeader />
     }
 
     return null
-  }
-
-  _renderSystemHeader() {
-    return (
-      <div style={headerStyle.wrapper}>
-        <div style={headerStyle.container}>
-          <div style={headerStyle.drawer}
-            onClick={this._openMenu}>
-            <IconMenu size={32} />
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  _openMenu() {
-    const { dispatch } = this.props
-
-    dispatch(toggleAppMenu(true))
   }
 }
 

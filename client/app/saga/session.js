@@ -1,6 +1,7 @@
 import { delay } from 'redux-saga'
 import { cancel, call, fork, put, race, select, take } from 'redux-saga/effects'
 
+import { KEYWORDS } from 'actions/ajax'
 import { SESSION } from 'actions/session'
 import { redirect, replace } from 'actions/location'
 import { head, post } from 'services/rest'
@@ -8,30 +9,27 @@ import { clear, get, set } from 'services/storage'
 
 const TOKEN_STORAGE_KEY = 'jwt'
 
-function* createSession({ data, token }) {
+function* createSession({ action, token }) {
   try {
     const session = yield call(post, {
       url: '/api/sessions',
-      data: data
+      data: action.payload
     }, {
       token: token
     })
 
     yield set(TOKEN_STORAGE_KEY, session.token)
     yield put({
+      [KEYWORDS.ID]: action[KEYWORDS.ID],
       type: SESSION.CREATE_SUCCESS,
       payload: session
     })
-
-    if (!data.refresh) {
-      const lastLocation = yield select(state => state.location.last)
-      yield put(replace(lastLocation.pathname))
-    }
 
     return session
   } catch (e) {
     yield clear(TOKEN_STORAGE_KEY)
     yield put({
+      [KEYWORDS.ID]: action[KEYWORDS.ID],
       type: SESSION.CREATE_FAILURE,
       error: e
     })
@@ -51,7 +49,7 @@ function* destroySession(reason) {
   return null
 }
 
-function* authorize(payload, token) {
+function* authorize(action, token) {
   // if there is no token, try get it from state
   if (!token) {
     let session = yield select(state => state.session)
@@ -61,7 +59,7 @@ function* authorize(payload, token) {
 
   const { response, signOut } = yield race({
     response: call(createSession, {
-      data: payload,
+      action: action,
       token: token
     }),
     signOut: take(SESSION.DESTROY_REQUEST)
@@ -100,15 +98,15 @@ export default function* root() {
   if (token) {
     // refresh stored token
     session = yield call(authorize, {
-      refresh: true
+      payload: { refresh: true }
     }, token)
   }
 
   while (true) {
     if (!session) {
       // wait for sign-in
-      const { payload } = yield take(SESSION.CREATE_REQUEST)
-      session = yield call(authorize, payload)
+      const action = yield take(SESSION.CREATE_REQUEST)
+      session = yield call(authorize, action)
     }
 
     if (!session) continue
@@ -134,7 +132,7 @@ export default function* root() {
       } else if (expired) {
         // refresh token
         session = yield call(authorize, {
-          refresh: true
+          payload: { refresh: true }
         })
       } else if (signOut) {
         // sign out
