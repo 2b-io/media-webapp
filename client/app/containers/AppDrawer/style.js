@@ -1,7 +1,7 @@
 import color from 'color'
 
 const MENU_HEIGHT = 70
-const ICON_SIZE = 32
+const ICON_SIZE = 24
 
 export const sideMenuStyle = {
   bmMenu: {
@@ -15,6 +15,10 @@ export const sideMenuStyle = {
     height: `${ICON_SIZE}px`,
     top: `${(MENU_HEIGHT - ICON_SIZE) / 2}px`,
     right: '4vw'
+  },
+  bmItemList: {
+    display: 'flex',
+    flexDirection: 'column'
   }
 }
 
@@ -25,7 +29,17 @@ export const topStyle = {
 }
 
 export const contentStyle = {
-  paddingTop: '1rem'
+  paddingTop: '1rem',
+  flexGrow: 1
+}
+
+export const bottomStyle = {
+  textAlign: 'center',
+  padding: '1rem'
+}
+
+export const linkStyle = {
+  color: color('#ffffff')
 }
 
 export const drawerItemStyle = {

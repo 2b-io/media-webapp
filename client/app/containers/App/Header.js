@@ -3,11 +3,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 // icons
-import IconMenu from 'react-icons/lib/io/android-menu'
+import IconMenu from 'react-icons/lib/io/navicon-round'
 
 import { LAYOUT } from 'actions/layout'
 import { toggleAppMenu } from 'actions/drawer';
-import AppDrawer from 'containers/AppDrawer'
 
 import { headerStyle } from './style'
 
@@ -36,7 +35,6 @@ class Header extends React.PureComponent {
   _renderSystemHeader() {
     return (
       <div style={headerStyle.wrapper}>
-        <AppDrawer />
         <div style={headerStyle.container}>
           <div style={headerStyle.drawer}
             onClick={this._openMenu}>

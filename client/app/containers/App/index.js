@@ -4,6 +4,7 @@ import { Route } from 'react-router'
 
 import { loadableContainer } from 'helpers/loadable'
 
+import AppDrawer from 'containers/AppDrawer'
 import Header from 'containers/App/Header'
 import Footer from 'containers/App/Footer'
 
@@ -19,6 +20,7 @@ class App extends React.Component {
   render() {
     return (
       <div style={wrapperStyle}>
+        <AppDrawer />
         <Header />
         <div style={containerStyle}>
           <Route exact path="/sign-in" component={SignIn} />

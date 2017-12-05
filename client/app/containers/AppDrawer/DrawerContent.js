@@ -1,8 +1,10 @@
+import Radium from 'radium'
 import React from 'react'
 
 import { drawerItemStyle, contentStyle } from './style'
 import { InternalLink } from 'components/Link'
 
+@Radium
 class DrawerContent extends React.Component {
   render() {
     return (
