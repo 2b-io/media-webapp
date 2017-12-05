@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 // icons
 import IconMenu from 'react-icons/lib/io/navicon-round'
+import IconAddProject from 'react-icons/lib/io/plus'
 
 // internal
 import { toggleAccountMenu } from 'actions/drawer';
@@ -17,7 +18,7 @@ class AccountHeader extends React.Component {
   constructor(props) {
     super(props)
 
-    this._openSystemMenu = this._openSystemMenu.bind(this)
+    this._openAccountMenu = this._openAccountMenu.bind(this)
   }
 
   render() {
@@ -25,15 +26,18 @@ class AccountHeader extends React.Component {
       <div style={style.wrapper}>
         <div style={style.container}>
           <div style={style.menuIcon}
-            onClick={this._openSystemMenu}>
+            onClick={this._openAccountMenu}>
             <IconMenu size={32} />
+          </div>
+          <div style={style.addProjectIcon}>
+            <IconAddProject size={32} />
           </div>
         </div>
       </div>
     )
   }
 
-  _openSystemMenu() {
+  _openAccountMenu() {
     const { dispatch } = this.props
 
     dispatch(toggleAccountMenu(true))

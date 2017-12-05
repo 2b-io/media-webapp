@@ -17,6 +17,11 @@ export default {
     height: '100%'
   },
   menuIcon: {
-    marginRight: 'auto'
+    marginRight: 'auto',
+    cursor: 'pointer'
+  },
+  addProjectIcon: {
+    marginLeft: 'auto',
+    cursor: 'pointer'
   }
 }
