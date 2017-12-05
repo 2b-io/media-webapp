@@ -2,39 +2,39 @@ import jwt from 'jsonwebtoken'
 import ms from 'ms'
 
 import config from 'infrastructure/config'
-import User from 'models/User'
+import Account from 'models/Account'
 
 export function create({ email, password }) {
-  return User.
+  return Account.
     findOne({
       email
     })
     .lean()
-    .then(user => {
-      if (!user) {
+    .then(account => {
+      if (!account) {
         throw new Error('Invalid email')
       }
 
-      return issueJWT(user)
+      return issueJWT(account)
     })
 }
 
 export function refresh({ _id }) {
-  return User
+  return Account
     .findById(_id)
     .lean()
-    .then(user => {
-      if (!user) {
+    .then(account => {
+      if (!account) {
         throw new Error('Invalid or expired JWT')
       }
 
-      return issueJWT(user)
+      return issueJWT(account)
     })
 }
 
-export function issueJWT(user) {
+export function issueJWT(account) {
   const payload = {
-    _id: user._id
+    _id: account._id
   }
 
   const token = jwt.sign(payload, config.session.secret, {

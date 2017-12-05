@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import User from 'models/User'
+import Account from 'models/Account'
 
 import config from 'infrastructure/config'
 
@@ -19,15 +19,15 @@ export function parseJWT(req, res, next) {
 
     const { _id } = decoded
 
-    User
+    Account
       .findById(_id)
       .lean()
-      .then(user => {
-        if (!user) {
+      .then(account => {
+        if (!account) {
           return next()
         }
 
-        req._user = user
+        req._account = account
 
         next()
       })

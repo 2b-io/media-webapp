@@ -1,7 +1,6 @@
 import prefix from 'helpers/prefix-map'
 
 export const SESSION = prefix('session', {
-  INIT_SUCCESS: 'INIT_SUCCESS',
   CREATE_REQUEST: 'CREATE_REQUEST',
   CREATE_FAILURE: 'CREATE_FAILURE',
   CREATE_SUCCESS: 'CREATE_SUCCESS',

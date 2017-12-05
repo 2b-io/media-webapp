@@ -7,8 +7,8 @@ export function create(req, res, next) {
   const { refresh, email, password } = req.body
   let make
 
-  if (refresh && req._user) {
-    make = refreshSession({ _id: req._user._id })
+  if (refresh && req._account) {
+    make = refreshSession({ _id: req._account._id })
   } else {
     make = createSession({ email, password })
   }
@@ -19,7 +19,7 @@ export function create(req, res, next) {
 }
 
 export function verify(req, res, next) {
-  const { _user } = req
+  const { _account } = req
 
-  res.sendStatus(_user ? 200 : 401)
+  res.sendStatus(_account ? 200 : 401)
 }

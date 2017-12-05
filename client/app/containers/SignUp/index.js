@@ -2,7 +2,7 @@ import Radium from 'radium'
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { registerTenant } from 'actions/tenant'
+import { registerAccount } from 'actions/account'
 import Layout, { FULLSCREEN_MODE } from 'decorators/Layout'
 
 import SignUpForm from './SignUpForm'
@@ -29,12 +29,10 @@ class SignUp extends React.Component {
     )
   }
 
-  _processSignUp({ name, slug, email }) {
+  _processSignUp({ email }) {
     const { dispatch } = this.props
 
-    dispatch(registerTenant({
-      name,
-      slug,
+    dispatch(registerAccount({
       email
     }))
   }

@@ -5,8 +5,10 @@ export function list() {
 }
 
 export function create(info) {
-  const { email } = info
   // TODO generate randomize password
+  // TODO send password via email
+
+  const { email } = info
   const password = '123456'
 
   const account = new Account({
