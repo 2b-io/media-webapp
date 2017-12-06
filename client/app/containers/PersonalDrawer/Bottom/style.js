@@ -6,6 +6,9 @@ export default {
     ...fontStyle,
     padding: '.5rem 1.5rem 1rem'
   },
+  linkMenu: {
+    marginBottom: '1.5rem'
+  },
   linkItem: {
   },
   linkIcon: {
@@ -18,5 +21,9 @@ export default {
     color: color('#717274'),
     fontSize: '.9rem',
     fontWeight: 700
+  },
+  signature: {
+    color: '#d72b3f',
+    fontSize: '.7rem'
   }
 }

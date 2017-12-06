@@ -3,6 +3,7 @@ import React from 'react'
 
 import IconSignOut from 'react-icons/lib/io/log-out'
 import IconAPI from 'react-icons/lib/io/link'
+import IconHeart from 'react-icons/lib/io/heart'
 
 import { InternalLink } from 'components/Link'
 
@@ -14,7 +15,7 @@ class Bottom extends React.Component {
   render() {
     return (
       <div style={style.wrapper}>
-        <ul>
+        <ul style={style.linkMenu}>
           <li style={style.linkItem}>
             <InternalLink link="/analytics" style={style.linkText}>Guides</InternalLink>
           </li>
@@ -42,6 +43,7 @@ class Bottom extends React.Component {
             <IconSignOut size={20} style={style.linkIcon} />
           </li>
         </ul>
+        <p style={style.signature}>Made with <IconHeart size={12} color={style.signature.color} /> by MediaNetwork</p>
       </div>
     )
   }
