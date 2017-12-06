@@ -3,16 +3,16 @@ import React from 'react'
 import { reveal as Menu } from 'react-burger-menu'
 import { decorator as reduxBurgerMenu } from 'redux-burger-menu'
 
-import IconClose from 'react-icons/lib/io/close-round'
+import { LAYOUT } from 'actions/layout'
 
-import style from './style'
 import Top from './Top'
 import Content from './Content'
 import Bottom from './Bottom'
+import style from './style'
 
-const ReduxMenu = reduxBurgerMenu(Menu, 'account')
+const ReduxMenu = reduxBurgerMenu(Menu, LAYOUT.PERSONAL_MODE)
 
-class AccountDrawer extends React.PureComponent {
+class PersonalDrawer extends React.PureComponent {
   render() {
     return (
       <ReduxMenu left
@@ -35,4 +35,4 @@ class AccountDrawer extends React.PureComponent {
   }
 }
 
-export default AccountDrawer
+export default PersonalDrawer

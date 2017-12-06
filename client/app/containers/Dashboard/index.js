@@ -2,10 +2,10 @@ import Radium from 'radium'
 import React from 'react'
 import { connect } from 'react-redux'
 
-import Layout, { ACCOUNT_MODE } from 'decorators/Layout'
+import Layout, { PERSONAL_MODE } from 'decorators/Layout'
 
 @connect()
-@Layout(ACCOUNT_MODE)
+@Layout(PERSONAL_MODE)
 @Radium
 class Dashboard extends React.Component {
   render() {

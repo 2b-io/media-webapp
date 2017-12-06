@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import IconMenu from 'react-icons/lib/io/navicon-round'
 
 // internal
-import { toggleSystemMenu } from 'actions/drawer';
+import { toggleSystemDrawer } from 'actions/drawer';
 
 // local
 import style from './style'
@@ -36,7 +36,7 @@ class SystemHeader extends React.Component {
   _openSystemMenu() {
     const { dispatch } = this.props
 
-    dispatch(toggleSystemMenu(true))
+    dispatch(toggleSystemDrawer(true))
   }
 }
 

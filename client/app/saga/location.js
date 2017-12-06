@@ -1,8 +1,15 @@
 import { put, race, select, take } from 'redux-saga/effects'
 
+import { LAYOUT } from 'actions/layout'
 import { LOCATION, pushHistory, popHistory, replaceHistory } from 'actions/location'
 import { verifySession } from 'actions/session'
-import { toggleAccountMenu, toggleSystemMenu } from 'actions/drawer'
+import { togglePersonalDrawer, toggleSystemDrawer } from 'actions/drawer'
+
+function drawerIsOpen(layout) {
+  return state => {
+    return !!(state.burgerMenu[layout] && state.burgerMenu[layout].isOpen)
+  }
+}
 
 export default function* root() {
   while (true) {
@@ -27,16 +34,16 @@ export default function* root() {
     // verify session when change location
     yield put(verifySession())
 
-    const systemMenuIsOpen = yield select(state => !!(state.burgerMenu.system && state.burgerMenu.system.isOpen))
+    const systemDrawerIsOpen = yield select(drawerIsOpen(LAYOUT.SYSTEM_MODE))
 
-    if (systemMenuIsOpen) {
-      yield put(toggleSystemMenu(false))
+    if (systemDrawerIsOpen) {
+      yield put(toggleSystemDrawer(false))
     }
 
-    const accountMenuIsOpen = yield select(state => !!(state.burgerMenu.account && state.burgerMenu.account.isOpen))
+    const personalDrawerIsOpen = yield select(drawerIsOpen(LAYOUT.PERSONAL_MODE))
 
-    if (accountMenuIsOpen) {
-      yield put(toggleAccountMenu(false))
+    if (personalDrawerIsOpen) {
+      yield put(togglePersonalDrawer(false))
     }
   }
 }

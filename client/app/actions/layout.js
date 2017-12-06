@@ -2,9 +2,9 @@ import prefix from 'helpers/prefix-map'
 
 export const LAYOUT = prefix('location', {
   CHANGE: 'CHANGE',
-  ACCOUNT_MODE: 'account',
-  FULLSCREEN_MODE: 'fullscreen',
-  SYSTEM_MODE: 'system'
+  PERSONAL_MODE: 'PERSONAL',
+  FULLSCREEN_MODE: 'FULLSCREEN',
+  SYSTEM_MODE: 'SYSTEM'
 })
 
 export function changeLayout(mode) {

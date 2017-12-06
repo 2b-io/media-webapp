@@ -6,7 +6,7 @@ import { loadableContainer } from 'helpers/loadable'
 
 import Header from 'containers/App/Header'
 import Footer from 'containers/App/Footer'
-import AccountDrawer from 'containers/AccountDrawer'
+import PersonalDrawer from 'containers/PersonalDrawer'
 import SystemDrawer from 'containers/SystemDrawer'
 
 import { bodyStyle, containerStyle, wrapperStyle } from './style'
@@ -20,7 +20,7 @@ const Profile = loadableContainer('Profile')
 class App extends React.Component {
   render() {
     return [
-      <AccountDrawer key="account-drawer" />,
+      <PersonalDrawer key="personal-drawer" />,
       <SystemDrawer key="system-drawer" />,
       <div id="page-wrap" style={wrapperStyle} key="page-wrap">
         <Header />

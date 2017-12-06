@@ -1,9 +1,11 @@
 import { action } from 'redux-burger-menu'
 
-export function toggleAccountMenu(isOpen) {
-  return action(isOpen, 'account')
+import { LAYOUT } from 'actions/layout'
+
+export function togglePersonalDrawer(isOpen) {
+  return action(isOpen, LAYOUT.PERSONAL_MODE)
 }
 
-export function toggleSystemMenu(isOpen) {
-  return action(isOpen, 'system')
+export function toggleSystemDrawer(isOpen) {
+  return action(isOpen, LAYOUT.SYSTEM_MODE)
 }

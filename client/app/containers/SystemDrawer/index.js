@@ -5,12 +5,14 @@ import { decorator as reduxBurgerMenu } from 'redux-burger-menu'
 
 import IconClose from 'react-icons/lib/io/close-round'
 
+import { LAYOUT } from 'actions/layout'
+
 import DrawerTop from './DrawerTop'
 import DrawerContent from './DrawerContent'
 import DrawerBottom from './DrawerBottom'
 import { sideMenuStyle } from './style'
 
-const ReduxMenu = reduxBurgerMenu(Menu, 'system')
+const ReduxMenu = reduxBurgerMenu(Menu, LAYOUT.SYSTEM_MODE)
 
 class SystemDrawer extends React.PureComponent {
   render() {

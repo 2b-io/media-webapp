@@ -7,7 +7,7 @@ import IconMenu from 'react-icons/lib/io/navicon-round'
 import IconAddProject from 'react-icons/lib/io/plus'
 
 // internal
-import { toggleAccountMenu } from 'actions/drawer';
+import { togglePersonalDrawer } from 'actions/drawer';
 
 // local
 import style from './style'
@@ -40,7 +40,7 @@ class AccountHeader extends React.Component {
   _openAccountMenu() {
     const { dispatch } = this.props
 
-    dispatch(toggleAccountMenu(true))
+    dispatch(togglePersonalDrawer(true))
   }
 }
 
