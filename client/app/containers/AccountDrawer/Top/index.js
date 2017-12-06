@@ -1,7 +1,7 @@
 import Radium from 'radium'
 import React from 'react'
 
-import IconAvatar from 'react-icons/lib/io/image'
+import Identicon from 'components/Identicon'
 
 import style from './style'
 
@@ -11,7 +11,7 @@ class Top extends React.PureComponent {
     return (
       <div style={style.wrapper}>
         <div style={style.accountAvatar}>
-          <IconAvatar size={48} />
+          <Identicon id="contact@medianetwork.io" size={48} />
         </div>
         <div style={style.accountInfo}>
           <h3 style={style.signedIn}>Signed in as</h3>
