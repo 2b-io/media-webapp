@@ -27,12 +27,16 @@ export default function* root() {
     // verify session when change location
     yield put(verifySession())
 
-    const appMenuIsOpen = yield select(state => !!(state.burgerMenu.app && state.burgerMenu.app.isOpen))
+    const systemMenuIsOpen = yield select(state => !!(state.burgerMenu.system && state.burgerMenu.system.isOpen))
 
-    if (appMenuIsOpen) {
-      // close any drawer
-      yield put(toggleAccountMenu(false))
+    if (systemMenuIsOpen) {
       yield put(toggleSystemMenu(false))
+    }
+
+    const accountMenuIsOpen = yield select(state => !!(state.burgerMenu.account && state.burgerMenu.account.isOpen))
+
+    if (accountMenuIsOpen) {
+      yield put(toggleAccountMenu(false))
     }
   }
 }

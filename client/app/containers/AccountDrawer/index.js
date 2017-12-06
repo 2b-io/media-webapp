@@ -1,11 +1,13 @@
 import React from 'react'
 
-import { slide as Menu } from 'react-burger-menu'
+import { reveal as Menu } from 'react-burger-menu'
 import { decorator as reduxBurgerMenu } from 'redux-burger-menu'
 
 import IconClose from 'react-icons/lib/io/close-round'
 
-import { sideMenuStyle } from './style'
+import style from './style'
+import Top from './Top'
+import Content from './Content'
 
 const ReduxMenu = reduxBurgerMenu(Menu, 'account')
 
@@ -13,11 +15,13 @@ class AccountDrawer extends React.PureComponent {
   render() {
     return (
       <ReduxMenu left
+        pageWrapId="page-wrap"
         width={'250px'}
-        styles={sideMenuStyle}
+        styles={style.drawer}
         customBurgerIcon={false}
-        customCrossIcon={this.renderCloseButton()}>
-
+        customCrossIcon={false}>
+        <Top />
+        <Content />
       </ReduxMenu>
     )
   }

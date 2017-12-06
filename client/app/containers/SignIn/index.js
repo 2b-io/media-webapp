@@ -29,7 +29,7 @@ class SignIn extends React.Component {
 
     if (verified) {
       // redirect to /dashboard if signed in
-      return <Redirect path="/dashboard" />
+      return <Redirect path="/dashboard" mode="replace" />
     }
 
     const { data, error } = (this.props.signIn || {})

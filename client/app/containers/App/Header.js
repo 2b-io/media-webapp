@@ -3,10 +3,8 @@ import { connect } from 'react-redux'
 
 // internals
 import { LAYOUT } from 'actions/layout'
-import { loadableContainer } from 'helpers/loadable'
-
-const AccountHeader = loadableContainer('AccountHeader')
-const SystemHeader = loadableContainer('SystemHeader')
+import AccountHeader from 'containers/AccountHeader'
+import SystemHeader from 'containers/SystemHeader'
 
 @connect(state => ({ layout: state.layout }))
 class Header extends React.PureComponent {

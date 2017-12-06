@@ -55,12 +55,18 @@ export const footerStyle = {
   }
 }
 
+export const bodyStyle = {
+
+  height: '100%'
+}
+
 export const containerStyle = {
-  ...fontStyle,
   ...appLayout.content,
-  padding: '10px 4vw'
+  padding: '10px 4vw',
+  background: color('#f9f9f9')
 }
 
 export const wrapperStyle = {
+  ...fontStyle,
   ...appLayout.wrapper
 }

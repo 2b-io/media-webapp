@@ -1,10 +1,12 @@
 import color from 'color'
+import { fontStyle } from 'styles/global'
 
 const MENU_HEIGHT = 70
 const ICON_SIZE = 24
 
 export const sideMenuStyle = {
   bmMenu: {
+    ...fontStyle,
     background: `url(${require('img/bg_halftone_black_30p.png')})`,
     backgroundRepeat: 'repeat',
     backgroundColor: color('#3f46ad'),
