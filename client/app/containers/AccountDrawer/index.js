@@ -8,6 +8,7 @@ import IconClose from 'react-icons/lib/io/close-round'
 import style from './style'
 import Top from './Top'
 import Content from './Content'
+import Bottom from './Bottom'
 
 const ReduxMenu = reduxBurgerMenu(Menu, 'account')
 
@@ -16,12 +17,13 @@ class AccountDrawer extends React.PureComponent {
     return (
       <ReduxMenu left
         pageWrapId="page-wrap"
-        width={'250px'}
+        width={'260px'}
         styles={style.drawer}
         customBurgerIcon={false}
         customCrossIcon={false}>
         <Top />
         <Content />
+        <Bottom />
       </ReduxMenu>
     )
   }

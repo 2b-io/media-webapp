@@ -1,3 +1,4 @@
+import Radium from 'radium'
 import React from 'react'
 import pick from 'object.pick'
 
@@ -5,6 +6,7 @@ import HyperLink from 'decorators/HyperLink'
 
 import { linkStyle } from './style'
 
+@Radium
 class Link extends React.PureComponent {
   static NATIVE_PROPS = ['href', 'alt', 'target', 'onClick']
 

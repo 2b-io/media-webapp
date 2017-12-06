@@ -4,7 +4,8 @@ import { fontStyle } from 'styles/global'
 export default {
   wrapper: {
     ...fontStyle,
-    padding: '.5rem 1.5rem 1rem'
+    padding: '.5rem 1.5rem 1rem',
+    flexGrow: 1
   },
   administrationHeading: {
     textTransform: 'uppercase',
@@ -18,9 +19,23 @@ export default {
     marginBottom: '1.5rem'
   },
   administratorMenu: {
-
+    marginBottom: '1.5rem'
   },
   menuItem: {
-    lineHeight: '1.8rem'
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  menuIcon: {
+    marginRight: '.75rem'
+  },
+  menuText: {
+    ':hover': {
+      textDecoration: 'underline'
+    },
+    fontWeight: 700,
+    color: color('#2c2d30'),
+    flexGrow: 1,
+    whiteSpace: 'nowrap'
   }
 }

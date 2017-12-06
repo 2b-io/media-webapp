@@ -7,7 +7,6 @@ import AuthRequired from 'decorators/AuthRequired'
 import conditionalRenderer from 'decorators/ConditionalRenderer'
 import Layout, { SYSTEM_MODE } from 'decorators/Layout'
 
-import RelativeRoute from 'components/RelativeRoute'
 import { LinkButton } from 'components/Button'
 
 const RenderWhenProfileAvailable = conditionalRenderer(
@@ -31,7 +30,6 @@ class Profile extends React.Component {
       <div>
         <h1>Profile {profile.username}</h1>
         <LinkButton link="/profile/me">My Profile</LinkButton>
-        <RelativeRoute path=":id" component={ProfileDetail} match={match} />
       </div>
     )
   }
