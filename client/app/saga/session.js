@@ -48,7 +48,7 @@ function* destroySession(reason) {
 function* authorize(action, token) {
   // if there is no token, try get it from state
   if (!token) {
-    let session = yield select(state => state.session)
+    let session = yield select(state => state.data.session)
 
     token = session.token
   }

@@ -3,8 +3,7 @@ import { SESSION } from 'actions/session'
 let initialState = {
   token: null,
   ttl: 0,
-  verified: false,
-  error: null
+  verified: false
 }
 
 export default function(state = initialState, action) {
@@ -18,21 +17,13 @@ export default function(state = initialState, action) {
         error: null
       }
     case SESSION.DESTROY_SUCCESS:
-      return {
-        ...state,
-        token: null,
-        ttl: 0,
-        verified: false,
-        error: null
-      }
     case SESSION.CREATE_FAILURE:
     case SESSION.VERIFY_FAILURE:
       return {
         ...state,
         token: null,
         ttl: 0,
-        verified: false,
-        error: action.error
+        verified: false
       }
   }
 

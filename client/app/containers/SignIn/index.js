@@ -7,11 +7,12 @@ import { LinkButton } from 'components/Button'
 import { InternalLink } from 'components/Link'
 import Redirect from 'components/Redirect'
 import Layout, { SYSTEM_MODE } from 'decorators/Layout'
+import UIState from 'decorators/UIState'
 
 import SignInForm from './SignInForm'
 import { container, signInContainer, signUpPromotion } from './style'
 
-@connect(state => ({
+@UIState('signIn', state => ({
   session: state.data.session
 }))
 @Layout(SYSTEM_MODE)
@@ -24,11 +25,21 @@ class SignIn extends React.Component {
   }
 
   render() {
-    const { verified, error } = this.props.session
+    const { payload, error } = this.props.signIn
+
+    if (payload) {
+      // redirect to /dashboard if sign in success
+      // TODO redirect to last page
+      console.log('sign in success')
+      return <Redirect path="/dashboard" />
+    }
+
+    const { verified } = this.props.session
 
     if (verified) {
       // redirect to /dashboard if sign in success
       // TODO redirect to last page
+      console.log('session verified')
       return <Redirect path="/dashboard" />
     }
 
