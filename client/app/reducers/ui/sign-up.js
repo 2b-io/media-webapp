@@ -1,12 +1,6 @@
 import { ACCOUNT } from 'actions/account'
-import { UI_STATE } from 'actions/ui-state'
 
-const initialState = {
-  payload: null,
-  error: null
-}
-
-export default function(state = initialState, action) {
+export default function(state, action) {
   switch (action.type) {
     case ACCOUNT.CREATE_SUCCESS:
       return {
@@ -20,11 +14,6 @@ export default function(state = initialState, action) {
         ...state,
         payload: null,
         error: action.error
-      }
-
-    case UI_STATE.CLEAR:
-      if (action.payload.id === 'signUp') {
-        return initialState
       }
   }
 
