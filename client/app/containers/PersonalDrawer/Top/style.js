@@ -11,7 +11,8 @@ export default {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    minHeight: 'fit-content'
   },
   accountAvatar: {
     margin: '0 1rem 0 1.5rem'

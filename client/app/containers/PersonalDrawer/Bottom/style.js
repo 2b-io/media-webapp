@@ -4,7 +4,8 @@ import { fontStyle } from 'styles/global'
 export default {
   wrapper: {
     ...fontStyle,
-    padding: '.5rem 1.5rem 1rem'
+    padding: '.5rem 1.5rem 1rem',
+    minHeight: 'fit-content'
   },
   linkMenu: {
     marginBottom: '1.5rem'

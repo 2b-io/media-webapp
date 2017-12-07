@@ -5,7 +5,8 @@ export default {
   wrapper: {
     ...fontStyle,
     padding: '.5rem 1.5rem 1rem',
-    flexGrow: 1
+    flexGrow: 1,
+    minHeight: 'fit-content'
   },
   administrationHeading: {
     textTransform: 'uppercase',

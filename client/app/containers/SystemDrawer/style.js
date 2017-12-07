@@ -27,7 +27,8 @@ export const sideMenuStyle = {
 export const topStyle = {
   borderBottom: `1px solid ${color('#ffffff').fade(0.9)}`,
   margin: '0 -4vw',
-  height: `${MENU_HEIGHT}px`
+  height: `${MENU_HEIGHT}px`,
+  minHeight: `${MENU_HEIGHT}px`
 }
 
 export const contentStyle = {

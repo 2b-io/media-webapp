@@ -1,12 +1,15 @@
 import color from 'color'
 
+const MENU_HEIGHT = 70
+
 // internal
 import { fontStyle } from 'styles/global'
 
 export default {
   wrapper: {
     ...fontStyle,
-    height: '70px',
+    height: `${MENU_HEIGHT}px`,
+    minHeight: `${MENU_HEIGHT}px`,
     background: color('#ffffff'),
     borderBottom: `1px solid ${color('#ebebeb')}`
   },
