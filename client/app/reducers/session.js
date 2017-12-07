@@ -3,7 +3,8 @@ import { SESSION } from 'actions/session'
 let initialState = {
   token: null,
   ttl: 0,
-  verified: false
+  verified: false,
+  error: null
 }
 
 export default function(state = initialState, action) {
@@ -13,16 +14,25 @@ export default function(state = initialState, action) {
         ...state,
         token: action.payload.token,
         ttl: action.payload.ttl,
-        verified: true
+        verified: true,
+        error: null
       }
     case SESSION.DESTROY_SUCCESS:
-    case SESSION.SIGN_IN_FAILURE:
+      return {
+        ...state,
+        token: null,
+        ttl: 0,
+        verified: false,
+        error: null
+      }
+    case SESSION.CREATE_FAILURE:
     case SESSION.VERIFY_FAILURE:
       return {
         ...state,
         token: null,
         ttl: 0,
-        verified: false
+        verified: false,
+        error: action.error
       }
   }
 

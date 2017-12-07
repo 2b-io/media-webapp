@@ -2,23 +2,18 @@ import Radium from 'radium'
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { ajaxClear } from 'actions/ajax'
 import { signIn } from 'actions/session'
 import { LinkButton } from 'components/Button'
 import { InternalLink } from 'components/Link'
 import Redirect from 'components/Redirect'
 import Layout, { SYSTEM_MODE } from 'decorators/Layout'
-import UnauthRequired from 'decorators/UnauthRequired'
 
 import SignInForm from './SignInForm'
 import { container, signInContainer, signUpPromotion } from './style'
 
-const EMPTY = {}
-
 @connect(state => ({
-  signIn: state.ajax.signIn || EMPTY
+  session: state.session
 }))
-@UnauthRequired
 @Layout(SYSTEM_MODE)
 @Radium
 class SignIn extends React.Component {
@@ -28,23 +23,13 @@ class SignIn extends React.Component {
     this._processSignIn = this._processSignIn.bind(this)
   }
 
-  // componentWillMount() {
-  //   console.log('componentWillMount')
-
-  //   const { dispatch } = this.props
-
-  //   dispatch(ajaxClear('signIn'))
-  // }
-
   render() {
-    const { data, error } = (this.props.signIn || {})
+    const { verified, error } = this.props.session
 
-    console.log('render', data, error)
-
-    if (data) {
+    if (verified) {
       // redirect to /dashboard if sign in success
       // TODO redirect to last page
-      return null
+      return <Redirect path="/dashboard" />
     }
 
     return (

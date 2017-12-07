@@ -1,7 +1,6 @@
 import { delay } from 'redux-saga'
 import { cancel, call, fork, put, race, select, take } from 'redux-saga/effects'
 
-import { KEYWORDS } from 'actions/ajax'
 import { SESSION } from 'actions/session'
 import { redirect, replace } from 'actions/location'
 import { head, post } from 'services/rest'
@@ -20,7 +19,6 @@ function* createSession({ action, token }) {
 
     yield set(TOKEN_STORAGE_KEY, session.token)
     yield put({
-      [KEYWORDS.ID]: action[KEYWORDS.ID],
       type: SESSION.CREATE_SUCCESS,
       payload: session
     })
@@ -29,7 +27,6 @@ function* createSession({ action, token }) {
   } catch (e) {
     yield clear(TOKEN_STORAGE_KEY)
     yield put({
-      [KEYWORDS.ID]: action[KEYWORDS.ID],
       type: SESSION.CREATE_FAILURE,
       error: e
     })

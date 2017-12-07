@@ -10,7 +10,7 @@ import Layout, { FULLSCREEN_MODE } from 'decorators/Layout'
 import SignUpForm from './SignUpForm'
 import { container, signUpContainer } from './style'
 
-@connect(state => ({ register: state.ajax.register }))
+@connect(state => ({ account: state.ajax.account }))
 @Layout(FULLSCREEN_MODE)
 @Radium
 class SignUp extends React.Component {
@@ -20,23 +20,23 @@ class SignUp extends React.Component {
     this._processSignUp = this._processSignUp.bind(this)
   }
 
-  componentDidMount() {
+  componentWillUnmount() {
     const { dispatch } = this.props
 
-    dispatch(ajaxClear('register'))
+    dispatch(ajaxClear('account'))
   }
 
   render() {
-    const { data, error } = (this.props.register || {})
+    const { account, error } = this.props.account
 
-    if (data) {
+    if (account) {
       // redirect to /sign-in if sign-up success
-      return <Redirect path="/sign-in" />
+      return <Redirect path="/sign-in?create=success" />
     }
 
     return (
       <div style={container}>
-        {error ? <h1>Error</h1> : null}
+        {error && <h1>Error</h1>}
         <div style={signUpContainer}>
           <h1>Create a new account</h1>
           <SignUpForm onSubmit={this._processSignUp} />

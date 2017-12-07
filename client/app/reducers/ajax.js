@@ -1,10 +1,17 @@
+import { combineReducers } from 'redux'
+
 import { AJAX } from 'actions/ajax'
+import account from './ajax/account'
+
+export default combineReducers({
+  account
+})
 
 const initialState = {
   requests: 0
 }
 
-export default function(state = initialState, action) {
+function reducer(state = initialState, action) {
   switch (action.type) {
     case AJAX.REQUEST:
       return {

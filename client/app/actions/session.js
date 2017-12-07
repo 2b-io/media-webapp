@@ -18,8 +18,7 @@ export function verifySession() {
 export function signIn(credential) {
   return {
     type: SESSION.CREATE_REQUEST,
-    payload: credential,
-    [KEYWORDS.ID]: 'signIn'
+    payload: credential
   }
 }
 

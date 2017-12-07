@@ -21,8 +21,6 @@ function* locationChanging() {
       changed: take(LOCATION.CHANGED)
     })
 
-    yield put(ajaxClear())
-
     // verify session when change location
     yield put(verifySession())
 
