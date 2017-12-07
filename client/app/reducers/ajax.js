@@ -31,10 +31,12 @@ export default function(state = initialState, action) {
       }
 
     case AJAX.CLEAR:
-      return {
-        ...state,
-        [action.payload.id]: {}
-      }
+      return action.payload.id ? {
+          ...state,
+          [action.payload.id]: {}
+        } : {
+          requests: state.requests
+        }
   }
 
   return state

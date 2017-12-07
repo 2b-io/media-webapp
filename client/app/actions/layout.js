@@ -1,6 +1,6 @@
 import prefix from 'helpers/prefix-map'
 
-export const LAYOUT = prefix('location', {
+export const LAYOUT = prefix('layout', {
   CHANGE: 'CHANGE',
   PERSONAL_MODE: 'PERSONAL',
   FULLSCREEN_MODE: 'FULLSCREEN',

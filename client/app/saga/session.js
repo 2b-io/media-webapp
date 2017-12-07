@@ -44,7 +44,6 @@ function* destroySession(reason) {
     type: SESSION.DESTROY_SUCCESS,
     payload: reason
   })
-  yield put(redirect('/'))
 
   return null
 }

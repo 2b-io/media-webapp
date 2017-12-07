@@ -1,17 +1,24 @@
 import Radium from 'radium'
 import React from 'react'
+import { connect } from 'react-redux'
 
 import IconSignOut from 'react-icons/lib/io/log-out'
 import IconAPI from 'react-icons/lib/io/link'
 import IconHeart from 'react-icons/lib/io/heart'
 
+import { signOut } from 'actions/session'
 import { InternalLink } from 'components/Link'
 
 import style from './style'
 
-
+@connect()
 @Radium
 class Bottom extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this._signOut = this._signOut.bind(this)
+  }
   render() {
     return (
       <div style={style.wrapper}>
@@ -39,13 +46,18 @@ class Bottom extends React.Component {
             <InternalLink link="/analytics" style={style.linkText}>Contact</InternalLink>
           </li>
           <li style={style.linkItem}>
-            <InternalLink link="/analytics" style={style.linkText}>Sign Out</InternalLink>
+            <span style={style.linkText} onClick={this._signOut}>Sign Out</span>
             <IconSignOut size={20} style={style.linkIcon} />
           </li>
         </ul>
         <p style={style.signature}>Made with <IconHeart size={12} color={style.signature.color} /> by MediaNetwork</p>
       </div>
     )
+  }
+  _signOut() {
+    const { dispatch } = this.props
+
+    dispatch(signOut())
   }
 }
 

@@ -21,7 +21,8 @@ export default {
     },
     color: color('#717274'),
     fontSize: '.9rem',
-    fontWeight: 700
+    fontWeight: 700,
+    cursor: 'pointer'
   },
   signature: {
     color: '#d72b3f',

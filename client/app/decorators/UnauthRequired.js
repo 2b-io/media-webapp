@@ -5,22 +5,22 @@ import Redirect from 'components/Redirect'
 
 export default function(Component) {
 
-  @connect(state => ({ unauthorized: !!(state.session && !state.session.verified) }))
-  class AuthRequired extends React.Component {
+  @connect(state => ({ authorized: !!(state.session && state.session.verified) }))
+  class UnauthRequired extends React.Component {
     constructor(props) {
       super(props)
     }
 
     render() {
-      const { unauthorized } = this.props
+      const { authorized } = this.props
 
       return (
-        unauthorized ?
-          <Redirect path="/sign-in" /> :
+        authorized ?
+          <Redirect path="/dashboard" /> :
           <Component { ...this.props } { ...this.state } />
       )
     }
   }
 
-  return AuthRequired
+  return UnauthRequired
 }

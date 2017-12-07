@@ -1,5 +1,6 @@
-import { put, race, select, take } from 'redux-saga/effects'
+import { fork, put, race, select, take } from 'redux-saga/effects'
 
+import { ajaxClear } from 'actions/ajax'
 import { LAYOUT } from 'actions/layout'
 import { LOCATION, pushHistory, popHistory, replaceHistory } from 'actions/location'
 import { verifySession } from 'actions/session'
@@ -11,13 +12,19 @@ function drawerIsOpen(layout) {
   }
 }
 
-export default function* root() {
+function* locationChanging() {
   while (true) {
-    const { push, pop, replace } = yield race({
+    const { push, pop, replace, changed } = yield race({
       push: take(LOCATION.PUSH),
       pop: take(LOCATION.POP),
-      replace: take(LOCATION.REPLACE)
+      replace: take(LOCATION.REPLACE),
+      changed: take(LOCATION.CHANGED)
     })
+
+    yield put(ajaxClear())
+
+    // verify session when change location
+    yield put(verifySession())
 
     if (push) {
       yield put(pushHistory(push.payload.pathname))
@@ -30,9 +37,12 @@ export default function* root() {
     if (replace) {
       yield put(replaceHistory(replace.payload.pathname))
     }
+  }
+}
 
-    // verify session when change location
-    yield put(verifySession())
+function* locationChanged() {
+  while (true) {
+    const action = yield take(LOCATION.CHANGED)
 
     const systemDrawerIsOpen = yield select(drawerIsOpen(LAYOUT.SYSTEM_MODE))
 
@@ -46,4 +56,9 @@ export default function* root() {
       yield put(togglePersonalDrawer(false))
     }
   }
+}
+
+export default function* root() {
+  yield fork(locationChanging)
+  yield fork(locationChanged)
 }
