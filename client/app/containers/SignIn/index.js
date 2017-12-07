@@ -12,7 +12,7 @@ import SignInForm from './SignInForm'
 import { container, signInContainer, signUpPromotion } from './style'
 
 @connect(state => ({
-  session: state.session
+  session: state.data.session
 }))
 @Layout(SYSTEM_MODE)
 @Radium

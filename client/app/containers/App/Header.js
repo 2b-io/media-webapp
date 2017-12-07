@@ -6,7 +6,7 @@ import { LAYOUT } from 'actions/layout'
 import PersonalHeader from 'containers/PersonalHeader'
 import SystemHeader from 'containers/SystemHeader'
 
-@connect(state => ({ layout: state.layout }))
+@connect(state => ({ layout: state.ui.layout }))
 class Header extends React.PureComponent {
   render() {
     const { mode } = this.props.layout

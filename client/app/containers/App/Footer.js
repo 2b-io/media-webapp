@@ -11,7 +11,7 @@ import { InternalLink } from 'components/Link'
 
 import { footerStyle } from './style'
 
-@connect(state => ({ layout: state.layout }))
+@connect(state => ({ layout: state.ui.layout }))
 @Radium
 class Footer extends React.PureComponent {
   render() {

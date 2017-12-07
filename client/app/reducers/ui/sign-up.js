@@ -1,8 +1,8 @@
 import { ACCOUNT } from 'actions/account'
-import { AJAX } from 'actions/ajax'
+import { UI_STATE } from 'actions/ui-state'
 
 const initialState = {
-  account: null,
+  payload: null,
   error: null
 }
 
@@ -11,19 +11,19 @@ export default function(state = initialState, action) {
     case ACCOUNT.CREATE_SUCCESS:
       return {
         ...state,
-        account: action.payload,
+        payload: action.payload,
         error: null
       }
 
     case ACCOUNT.CREATE_FAILURE:
       return {
         ...state,
-        account: null,
+        payload: null,
         error: action.error
       }
 
-    case AJAX.CLEAR:
-      if (action.payload.id === 'account') {
+    case UI_STATE.CLEAR:
+      if (action.payload.id === 'signUp') {
         return initialState
       }
   }

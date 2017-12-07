@@ -1,16 +1,15 @@
 import Radium from 'radium'
 import React from 'react'
-import { connect } from 'react-redux'
 
 import { registerAccount } from 'actions/account'
-import { ajaxClear } from 'actions/ajax'
 import Redirect from 'components/Redirect'
 import Layout, { FULLSCREEN_MODE } from 'decorators/Layout'
+import UIState from 'decorators/UIState'
 
 import SignUpForm from './SignUpForm'
 import { container, signUpContainer } from './style'
 
-@connect(state => ({ account: state.ajax.account }))
+@UIState('signUp')
 @Layout(FULLSCREEN_MODE)
 @Radium
 class SignUp extends React.Component {
@@ -20,16 +19,10 @@ class SignUp extends React.Component {
     this._processSignUp = this._processSignUp.bind(this)
   }
 
-  componentWillUnmount() {
-    const { dispatch } = this.props
-
-    dispatch(ajaxClear('account'))
-  }
-
   render() {
-    const { account, error } = this.props.account
+    const { payload, error } = this.props.signUp
 
-    if (account) {
+    if (payload) {
       // redirect to /sign-in if sign-up success
       return <Redirect path="/sign-in?create=success" />
     }
