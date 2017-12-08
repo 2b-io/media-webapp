@@ -13,7 +13,7 @@ import SignInForm from './SignInForm'
 import { container, signInContainer, signUpPromotion } from './style'
 
 @UIState('signIn', state => ({
-  session: state.data.session
+  session: state.app.session
 }))
 @Layout(SYSTEM_MODE)
 @Radium

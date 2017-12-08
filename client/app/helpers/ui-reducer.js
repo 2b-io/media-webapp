@@ -6,11 +6,13 @@ const initialState = {
 }
 
 export default function(id, reducer) {
-  return function(state = initialState, action) {
-    if (action.type === UI_STATE.CLEAR && action.payload.id === id) {
-      return initialState
-    }
+  return {
+    [id]: function(state = initialState, action) {
+      if (action.type === UI_STATE.CLEAR && action.payload.id === id) {
+        return initialState
+      }
 
-    return reducer(state, action)
+      return reducer(state, action)
+    }
   }
 }

@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 
 import {reducer as burgerMenu} from 'redux-burger-menu'
 
-import data from 'reducers/data'
+import app from 'reducers/app'
 import form from 'reducers/form'
 import ui from 'reducers/ui'
 
@@ -16,7 +16,7 @@ import ui from 'reducers/ui'
 
 export default combineReducers({
   burgerMenu,
-  data,
+  app,
   form,
   ui
 })

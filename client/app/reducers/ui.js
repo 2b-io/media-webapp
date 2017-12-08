@@ -10,6 +10,6 @@ import signUp from './ui/sign-up'
 export default combineReducers({
   layout,
   location,
-  signIn: uiReducer('signIn', signIn),
-  signUp: uiReducer('signUp', signUp)
+  ...uiReducer('signIn', signIn),
+  ...uiReducer('signUp', signUp)
 })

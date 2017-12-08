@@ -5,7 +5,7 @@ import Redirect from 'components/Redirect'
 
 export default function(Component) {
 
-  @connect(state => ({ unauthorized: !!(state.data.session && !state.data.session.verified) }))
+  @connect(state => ({ unauthorized: !!(state.app.session && !state.app.session.verified) }))
   class AuthRequired extends React.Component {
     constructor(props) {
       super(props)
