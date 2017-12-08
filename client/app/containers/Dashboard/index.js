@@ -5,6 +5,9 @@ import { connect } from 'react-redux'
 import AuthRequired from 'decorators/AuthRequired'
 import Layout, { PERSONAL_MODE } from 'decorators/Layout'
 
+import BillingWidget from './BillingWidget'
+import ProjectWidget from './ProjectWidget'
+
 @connect()
 @Layout(PERSONAL_MODE)
 @AuthRequired
@@ -12,7 +15,10 @@ import Layout, { PERSONAL_MODE } from 'decorators/Layout'
 class Dashboard extends React.Component {
   render() {
     return (
-      <h1>Dashboard</h1>
+      <div>
+        <ProjectWidget />
+        <BillingWidget />
+      </div>
     )
   }
 }
