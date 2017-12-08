@@ -1,5 +1,5 @@
 import color from 'color'
-import prefix from 'helpers/prefix'
+import prefix from 'helpers/vendor-prefix'
 import { fontStyle } from 'styles/global'
 
 const MENU_HEIGHT = 70

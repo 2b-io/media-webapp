@@ -1,5 +1,5 @@
 import color from 'color'
-import prefix from 'helpers/prefix'
+import prefix from 'helpers/vendor-prefix'
 
 export const fontStyle = prefix({
   fontFamily: 'Consolas,monaco,monospace',

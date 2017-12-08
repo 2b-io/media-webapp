@@ -1,4 +1,4 @@
-import prefix from 'helpers/prefix'
+import prefix from 'helpers/vendor-prefix'
 
 export default prefix({
   container: {

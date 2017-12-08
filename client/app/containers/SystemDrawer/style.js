@@ -1,5 +1,5 @@
 import color from 'color'
-import prefix from 'helpers/prefix'
+import prefix from 'helpers/vendor-prefix'
 import { fontStyle } from 'styles/global'
 
 const MENU_HEIGHT = 70
@@ -8,7 +8,7 @@ const ICON_SIZE = 24
 export const sideMenuStyle = prefix({
   bmMenu: {
     ...fontStyle,
-    background: `url(${require('img/bg_halftone_black_30p.png')})`,
+    backgroundImage: `url(${require('img/bg_halftone_black_30p.png')})`,
     backgroundRepeat: 'repeat',
     backgroundColor: color('#3f46ad'),
     padding: '0 4vw'
