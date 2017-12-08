@@ -1,8 +1,8 @@
-import color from 'color'
+import prefix from 'helpers/prefix'
 
-export default {
-  container: Object.assign({
+export default prefix({
+  container: {
     padding: '20px 4vw',
     display: 'flex'
-  })
-}
+  }
+})

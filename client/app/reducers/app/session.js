@@ -1,6 +1,7 @@
 import { SESSION } from 'actions/session'
 
 let initialState = {
+  account: null,
   token: null,
   ttl: 0,
   verified: false
@@ -11,8 +12,7 @@ export default function(state = initialState, action) {
     case SESSION.CREATE_SUCCESS:
       return {
         ...state,
-        token: action.payload.token,
-        ttl: action.payload.ttl,
+        ...action.payload,
         verified: true,
         error: null
       }
@@ -21,9 +21,7 @@ export default function(state = initialState, action) {
     case SESSION.VERIFY_FAILURE:
       return {
         ...state,
-        token: null,
-        ttl: 0,
-        verified: false
+        ...initialState
       }
   }
 

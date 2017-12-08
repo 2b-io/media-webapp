@@ -1,7 +1,8 @@
 import color from 'color'
+import prefix from 'helpers/prefix'
 import { fontStyle } from 'styles/global'
 
-export default {
+export default prefix({
   wrapper: {
     ':hover': {
       background: color('#e8e8e8')
@@ -12,13 +13,14 @@ export default {
     justifyContent: 'space-between',
     alignItems: 'center',
     cursor: 'pointer',
-    minHeight: 'fit-content'
+    minHeight: 'fit-content',
   },
   accountAvatar: {
     margin: '0 1rem 0 1.5rem'
   },
   accountInfo: {
-    flexGrow: 1
+    flexGrow: 1,
+    marginRight: '1.5rem'
   },
   signedIn: {
     textTransform: 'uppercase',
@@ -38,4 +40,4 @@ export default {
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap'
   }
-}
+})

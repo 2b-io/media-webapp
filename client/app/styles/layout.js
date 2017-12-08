@@ -1,6 +1,7 @@
 import color from 'color'
+import prefix from 'helpers/prefix'
 
-export const cardLayout = {
+export const cardLayout = prefix({
   wrapper: {
   },
   content: {
@@ -9,9 +10,9 @@ export const cardLayout = {
     borderRadius: '.25rem',
     padding: '2rem 2rem 1rem'
   }
-}
+})
 
-export const appLayout = {
+export const appLayout = prefix({
   wrapper: {
     minHeight: '100%',
     display: 'flex',
@@ -27,4 +28,4 @@ export const appLayout = {
   content: {
     flexGrow: 1
   }
-}
+})

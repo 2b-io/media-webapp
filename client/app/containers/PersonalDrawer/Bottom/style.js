@@ -1,7 +1,8 @@
 import color from 'color'
+import prefix from 'helpers/prefix'
 import { fontStyle } from 'styles/global'
 
-export default {
+export default prefix({
   wrapper: {
     ...fontStyle,
     padding: '.5rem 1.5rem 1rem',
@@ -28,4 +29,4 @@ export default {
     color: '#d72b3f',
     fontSize: '.7rem'
   }
-}
+})

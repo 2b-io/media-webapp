@@ -17,7 +17,7 @@ class PersonalDrawer extends React.PureComponent {
     return (
       <ReduxMenu left
         pageWrapId="page-wrap"
-        width={'260px'}
+        width={'280px'}
         styles={style.drawer}
         customBurgerIcon={false}
         customCrossIcon={false}>

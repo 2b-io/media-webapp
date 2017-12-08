@@ -43,6 +43,7 @@ export function issueJWT(account) {
 
   return {
     token,
+    account: account,
     ttl: ms(config.session.ttl)
   }
 }

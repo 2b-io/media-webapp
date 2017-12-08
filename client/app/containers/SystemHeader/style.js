@@ -1,11 +1,10 @@
 import color from 'color'
+import prefix from 'helpers/prefix'
+import { fontStyle } from 'styles/global'
 
 const MENU_HEIGHT = 70
 
-// internal
-import { fontStyle } from 'styles/global'
-
-export default {
+export default prefix({
   wrapper: {
     ...fontStyle,
     height: `${MENU_HEIGHT}px`,
@@ -22,4 +21,4 @@ export default {
   menuIcon: {
     marginLeft: 'auto'
   }
-}
+})

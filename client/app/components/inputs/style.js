@@ -1,7 +1,8 @@
 import color from 'color'
+import prefix from 'helpers/prefix'
 import { fontStyle } from 'styles/global'
 
-export const textInputStyle = {
+export const textInputStyle = prefix({
   ...fontStyle,
   ':focus': {
     outline: 'none'
@@ -15,4 +16,4 @@ export const textInputStyle = {
   WebkitAppearance: 'none',
   width: '100%',
   maxWidth: '100%'
-}
+})

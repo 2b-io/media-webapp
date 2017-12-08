@@ -1,9 +1,8 @@
 import color from 'color'
-
-// internal
+import prefix from 'helpers/prefix'
 import { fontStyle } from 'styles/global'
 
-export default {
+export default prefix({
   wrapper: {
     ...fontStyle,
     height: '70px',
@@ -24,4 +23,4 @@ export default {
     marginLeft: 'auto',
     cursor: 'pointer'
   }
-}
+})

@@ -1,7 +1,8 @@
 import color from 'color'
+import prefix from 'helpers/prefix'
 import { fontStyle } from 'styles/global'
 
-export const buttonStyle = {
+export const buttonStyle = prefix({
   ...fontStyle,
   width: '100%',
   color: color('#ffffff'),
@@ -15,4 +16,4 @@ export const buttonStyle = {
   fontWeight: 900,
   cursor: 'pointer',
   fontSize: '20px'
-}
+})

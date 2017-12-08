@@ -1,9 +1,9 @@
 import color from 'color'
-
+import prefix from 'helpers/prefix'
 import { appLayout } from 'styles/layout'
 import { fontStyle } from 'styles/global'
 
-export const footerStyle = {
+export const footerStyle = prefix({
   wrapper: {
     ...fontStyle,
     paddingTop: '40px'
@@ -53,20 +53,19 @@ export const footerStyle = {
     marginLeft: '.7rem',
     display: 'inline-block'
   }
-}
+})
 
-export const bodyStyle = {
-
+export const bodyStyle = prefix({
   height: '100%'
-}
+})
 
-export const containerStyle = {
+export const containerStyle = prefix({
   ...appLayout.content,
   padding: '10px 4vw',
   background: color('#f9f9f9')
-}
+})
 
-export const wrapperStyle = {
+export const wrapperStyle = prefix({
   ...fontStyle,
   ...appLayout.wrapper
-}
+})
