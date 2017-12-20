@@ -1,6 +1,7 @@
 {
   "license": "MIT",
   "dependencies": {
+    "centschbook-mono": "3.2.1",
     "color": "2.0.0",
     "history": "4.7.2",
     "immutable": "3.8.2",
@@ -27,7 +28,8 @@
     "redux-form": "7.1.2",
     "redux-saga": "0.16.0",
     "slug": "0.9.1",
-    "superagent": "^3.8.1"
+    "superagent": "^3.8.1",
+    "typeface-space-mono": "0.0.44"
   },
   "devDependencies": {
     "babel-core": "6.26.0",
