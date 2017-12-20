@@ -11,7 +11,10 @@ const port = 3001
 
 const compiler = webpack(webpackConfig)
 const devMiddleware = webpackDevMiddleware(compiler, {
-  publicPath: webpackConfig.output.publicPath
+  publicPath: webpackConfig.output.publicPath,
+  watchOptions: {
+    ignored: /node_modules/
+  }
 })
 
 app.use(devMiddleware)
