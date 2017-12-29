@@ -19,7 +19,6 @@ export default prefix({
     height: '100%'
   },
   menuIcon: {
-    marginLeft: 'auto',
     position: 'absolute',
     right: 0,
     top: 0,

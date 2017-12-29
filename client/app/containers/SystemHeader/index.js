@@ -1,10 +1,11 @@
 import Radium from 'radium'
 import React from 'react'
 import { connect } from 'react-redux'
+import { MorphReplace } from 'react-svg-morph'
 
 // icons
 import IconMenu from 'react-icons/lib/md/menu'
-import IconClose from 'react-icons/lib/md/close'
+import IconClose from 'react-icons/lib/md/chevron-right'
 
 // internal
 import { toggleSystemDrawer } from 'actions/drawer'
@@ -33,12 +34,13 @@ class SystemHeader extends React.Component {
 
     return (
       <nav style={style.wrapper}>
-        <figure style={style.menuIcon}
-          onClick={this._openSystemMenu(!showMenu)}>
-          { showMenu ?
-            <IconClose size={24} color={COLOR.light.string()} /> :
-            <IconMenu size={24} color={COLOR.light.string()} />
-          }
+        <figure style={style.menuIcon} onClick={this._openSystemMenu(!showMenu)}>
+          <MorphReplace width={24} height={24} fill={COLOR.light.string()}>
+            { showMenu ?
+              <IconClose key="IconClose" /> :
+              <IconMenu key="IconMenu" />
+            }
+          </MorphReplace>
         </figure>
       </nav>
     )
