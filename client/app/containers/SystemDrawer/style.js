@@ -1,54 +1,56 @@
-import color from 'color'
 import prefix from 'helpers/vendor-prefix'
+import { COLOR } from 'styles/constants'
 import { fontStyle } from 'styles/global'
-
-const MENU_HEIGHT = 70
-const ICON_SIZE = 24
 
 export const sideMenuStyle = prefix({
   bmMenu: {
     ...fontStyle,
-    backgroundImage: `url(${require('img/bg_halftone_black_30p.png')})`,
-    backgroundRepeat: 'repeat',
-    backgroundColor: color('#3f46ad'),
-    padding: '0 4vw'
-  },
-  bmCrossButton: {
-    width: `${ICON_SIZE}px`,
-    height: `${ICON_SIZE}px`,
-    top: `${(MENU_HEIGHT - ICON_SIZE) / 2}px`,
-    right: '4vw'
+    background: COLOR.light,
+    borderLeft: `1px solid ${COLOR.lightGray}`,
+    paddingTop: '60px',
+    paddingLeft: '10px',
+    paddingRight: '15px'
   },
   bmItemList: {
     display: 'flex',
     flexDirection: 'column'
+  },
+  bmOverlay: {
+    backgroundColor: 'transparent'
   }
 })
 
-export const topStyle = prefix({
-  borderBottom: `1px solid ${color('#ffffff').fade(0.9)}`,
-  margin: '0 -4vw',
-  height: `${MENU_HEIGHT}px`,
-  minHeight: `${MENU_HEIGHT}px`
+export const content = prefix({
+  wrapper: {
+    flexGrow: 1,
+    textAlign: 'right'
+  },
+  heading: {
+    color: COLOR.dark,
+    fontSize: '18px',
+    fontWeight: 900,
+    lineHeight: '35px',
+    marginTop: '10px',
+    display: 'block'
+  },
+  item: {
+    color: COLOR.darkGray,
+    fontSize: '18px',
+    fontWeight: 300,
+    lineHeight: '35px',
+    display: 'block'
+  }
 })
 
-export const contentStyle = prefix({
-  paddingTop: '1rem',
-  flexGrow: 1
-})
-
-export const bottomStyle = prefix({
-  textAlign: 'center',
-  padding: '1rem'
-})
-
-export const linkStyle = prefix({
-  color: color('#ffffff')
-})
-
-export const drawerItemStyle = prefix({
-  color: color('#ffffff'),
-  fontSize: '1.5rem',
-  display: 'block',
-  padding: '1rem'
+export const bottom = prefix({
+  wrapper: {
+    textAlign: 'right'
+  },
+  signature: {
+    color: COLOR.darkGray,
+    fontSize: '18px',
+    fontWeight: 300,
+    lineHeight: '35px',
+    display: 'block'
+  }
 })

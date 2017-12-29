@@ -3,15 +3,15 @@ import React from 'react'
 
 import { InternalLink } from 'components/Link'
 
-import { bottomStyle, linkStyle } from './style'
+import { bottom as style } from './style'
 
 @Radium
 class DrawerBottom extends React.Component {
   render() {
     return (
-      <div style={bottomStyle}>
-        <InternalLink link="/sign-up" style={linkStyle}>
-          Create new account
+      <div style={style.wrapper}>
+        <InternalLink link="/about" style={style.signature}>
+          @medianetwork
         </InternalLink>
       </div>
     )
