@@ -1,9 +1,12 @@
 import createHistory from 'history/createBrowserHistory'
+import nprogress from 'nprogress'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Router as BrowserRouter } from 'react-router'
 
 import { informHistoryPopManually } from 'actions/location'
+
+console.log(nprogress)
 
 @connect(state => ({ location: state.ui.location }))
 class Router extends React.Component {
@@ -18,14 +21,17 @@ class Router extends React.Component {
   }
 
   componentDidMount() {
-    const { dispatch } = this.props
     const { location } = this.history
 
-    dispatch(informHistoryPopManually(location.pathname))
+    this._handleForceChange(location)
   }
 
   componentWillReceiveProps(nextProps) {
     const { location:next } = nextProps
+
+    if (next.type !== 'pop') {
+      nprogress.start()
+    }
 
     if (next.type === 'push') {
       this.history.push(next.pathname)
@@ -50,10 +56,20 @@ class Router extends React.Component {
 
   _handleHistoryChange(location, action) {
     if (action === 'POP') {
-      const { dispatch } = this.props
-
-      dispatch(informHistoryPopManually(location.pathname))
+      this._handleForceChange(location)
     }
+
+    nprogress.done()
+  }
+
+  _handleForceChange(location) {
+    console.info('z')
+    const { dispatch } = this.props
+
+    dispatch(informHistoryPopManually(location.pathname))
+
+    nprogress.start()
+    setTimeout(() => nprogress.done(), 200)
   }
 }
 

@@ -13,15 +13,12 @@ export default function(id, mapStateToProps = state => null) {
     }))
     class UIState extends React.Component {
       componentDidMount() {
-        console.log('componentDidMount... clear state')
         const { dispatch } = this.props
 
         dispatch(clearState(id))
       }
 
       componentWillUnmount() {
-        console.log('componentWillUnmount... clear state')
-
         const { dispatch } = this.props
 
         dispatch(clearState(id))
