@@ -3,15 +3,23 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 // icons
-import IconMenu from 'react-icons/lib/io/navicon-round'
+import IconMenu from 'react-icons/lib/md/menu'
+import IconClose from 'react-icons/lib/md/close'
 
 // internal
-import { toggleSystemDrawer } from 'actions/drawer';
+import { toggleSystemDrawer } from 'actions/drawer'
+import { COLOR } from 'styles/constants'
 
 // local
 import style from './style'
 
-@connect()
+@connect(state => {
+  const menu = state.burgerMenu['layout/SYSTEM']
+
+  return {
+    showMenu: menu ? menu.isOpen : false
+  }
+})
 @Radium
 class SystemHeader extends React.Component {
   constructor(props) {
@@ -21,22 +29,25 @@ class SystemHeader extends React.Component {
   }
 
   render() {
+    const { showMenu } = this.props
+
     return (
-      <div style={style.wrapper}>
-        <div style={style.container}>
-          <div style={style.menuIcon}
-            onClick={this._openSystemMenu}>
-            <IconMenu size={32} />
-          </div>
-        </div>
-      </div>
+      <nav style={style.wrapper}>
+        <figure style={style.menuIcon}
+          onClick={this._openSystemMenu(!showMenu)}>
+          { showMenu ?
+            <IconClose size={24} color={COLOR.light.string()} /> :
+            <IconMenu size={24} color={COLOR.light.string()} />
+          }
+        </figure>
+      </nav>
     )
   }
 
-  _openSystemMenu() {
+  _openSystemMenu(showMenu) {
     const { dispatch } = this.props
 
-    dispatch(toggleSystemDrawer(true))
+    return () => dispatch(toggleSystemDrawer(showMenu))
   }
 }
 

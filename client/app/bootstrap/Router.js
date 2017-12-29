@@ -6,8 +6,6 @@ import { Router as BrowserRouter } from 'react-router'
 
 import { informHistoryPopManually } from 'actions/location'
 
-console.log(nprogress)
-
 @connect(state => ({ location: state.ui.location }))
 class Router extends React.Component {
   constructor(props) {
@@ -18,6 +16,8 @@ class Router extends React.Component {
     this.history.listen(
       this._handleHistoryChange.bind(this)
     )
+
+    nprogress.configure({ showSpinner: false })
   }
 
   componentDidMount() {
@@ -63,7 +63,6 @@ class Router extends React.Component {
   }
 
   _handleForceChange(location) {
-    console.info('z')
     const { dispatch } = this.props
 
     dispatch(informHistoryPopManually(location.pathname))

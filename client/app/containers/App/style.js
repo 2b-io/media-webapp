@@ -1,5 +1,6 @@
 import color from 'color'
 import prefix from 'helpers/vendor-prefix'
+import { COLOR } from 'styles/constants'
 import { appLayout } from 'styles/layout'
 import { fontStyle } from 'styles/global'
 
@@ -61,11 +62,11 @@ export const bodyStyle = prefix({
 
 export const containerStyle = prefix({
   ...appLayout.content,
-  padding: '10px 4vw',
-  background: color('#f9f9f9')
+  background: COLOR.light
 })
 
 export const wrapperStyle = prefix({
   ...fontStyle,
-  ...appLayout.wrapper
+  ...appLayout.wrapper,
+  position: 'relative'
 })

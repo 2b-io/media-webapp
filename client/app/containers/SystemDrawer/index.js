@@ -22,17 +22,11 @@ class SystemDrawer extends React.PureComponent {
         width={'100%'}
         styles={sideMenuStyle}
         customBurgerIcon={false}
-        customCrossIcon={this.renderCloseButton()}>
+        customCrossIcon={false}>
         <DrawerTop />
         <DrawerContent />
         <DrawerBottom />
       </ReduxMenu>
-    )
-  }
-
-  renderCloseButton() {
-    return (
-      <IconClose size={24} color="#fff" />
     )
   }
 }
