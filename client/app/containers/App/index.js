@@ -31,6 +31,7 @@ class App extends React.Component {
           <Route exact path="/dashboard" component={Dashboard} />
           <Route path="/profile" component={Profile} />
         </div>
+        <Footer />
       </div>
     ]
   }

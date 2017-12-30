@@ -8,6 +8,7 @@ import IconTwitter from 'react-icons/lib/io/social-twitter'
 
 import { LAYOUT } from 'actions/layout'
 import { InternalLink } from 'components/Link'
+import SystemFooter from 'containers/SystemFooter'
 
 import { footerStyle } from './style'
 
@@ -19,7 +20,7 @@ class Footer extends React.PureComponent {
 
     switch (mode) {
       case LAYOUT.SYSTEM_MODE:
-        return this._renderSystemFooter()
+        return <SystemFooter />
     }
 
     return null
