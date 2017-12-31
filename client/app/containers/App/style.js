@@ -62,10 +62,7 @@ export const bodyStyle = prefix({
 
 export const containerStyle = prefix({
   ...appLayout.content,
-  background: COLOR.light,
-  marginTop: '130px',
-  paddingLeft: '15px',
-  paddingRight: '15px'
+  background: COLOR.light
 })
 
 export const wrapperStyle = prefix({

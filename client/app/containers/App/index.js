@@ -24,13 +24,13 @@ class App extends React.Component {
       <SystemDrawer key="system-drawer" />,
       <div id="page-wrap" style={wrapperStyle} key="page-wrap">
         <Header />
-        <div style={containerStyle}>
+        <section style={containerStyle}>
           <Route exact path="/sign-in" component={SignIn} />
           <Route exact path="/sign-up" component={SignUp} />
           <Route exact path="/" component={Home} />
           <Route exact path="/dashboard" component={Dashboard} />
           <Route path="/profile" component={Profile} />
-        </div>
+        </section>
         <Footer />
       </div>
     ]

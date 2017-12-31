@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { InternalLink } from 'components/Link'
 import Layout, { SYSTEM_MODE } from 'decorators/Layout'
 
-import styles from './styles'
+import style from './style'
 
 @connect()
 @Layout(SYSTEM_MODE)
@@ -17,12 +17,25 @@ class HomePage extends React.Component {
 
   render() {
     return (
-      <div style={styles.container}>
-        <p>
-          <span>Already using MediaOnDemand? </span>
-          <InternalLink link="/sign-in">Sign in</InternalLink>
-        </p>
-      </div>
+      <section style={style.wrapper}>
+        <div style={style.about}>
+          <div style={style.homeHead}>
+          </div>
+          <h1 style={style.heading}>A blogging platform designed to help you think</h1>
+          <InternalLink link="/sign-up" style={style.signUp}>sign up</InternalLink>
+          <p style={style.description}><strong>MediaOnDemand</strong> is a writing and reading network designed from the ground up to work the same way your brain does. It helps you curate ideas and includes everything you need to develop and publish your thoughts to the world.</p>
+        </div>
+        <div style={style.features}>
+          <ul style={style.featuresList}>
+            <li>
+
+            </li>
+            <li>
+              <InternalLink link="/about">And lots more →</InternalLink>
+            </li>
+          </ul>
+        </div>
+      </section>
     )
   }
 }

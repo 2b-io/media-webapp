@@ -34,6 +34,7 @@ class SystemHeader extends React.Component {
 
     return (
       <nav style={style.wrapper}>
+        <figure style={style.logoIcon}></figure>
         <figure style={style.menuIcon} onClick={this._openSystemMenu(!showMenu)}>
           <MorphReplace width={24} height={24} fill={COLOR.light.string()} duration={200}>
             { showMenu ?

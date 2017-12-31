@@ -57,9 +57,9 @@ class Router extends React.Component {
   _handleHistoryChange(location, action) {
     if (action === 'POP') {
       this._handleForceChange(location)
+    } else {
+      nprogress.done()
     }
-
-    nprogress.done()
   }
 
   _handleForceChange(location) {
@@ -68,7 +68,9 @@ class Router extends React.Component {
     dispatch(informHistoryPopManually(location.pathname))
 
     nprogress.start()
-    setTimeout(() => nprogress.done(), 200)
+    setTimeout(() => {
+      nprogress.done()
+    }, 100)
   }
 }
 

@@ -32,5 +32,17 @@ export default prefix({
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 201
+  },
+  logoIcon: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    margin: '10px 0 0 10px',
+    width: '34px',
+    height: '34px',
+    border: `3px solid ${COLOR.dark}`,
+    borderRadius: '100%',
+    outline: 'none',
+    zIndex: 201
   }
 })
