@@ -38,9 +38,7 @@ class SystemHeader extends React.Component {
 
     return (
       <nav style={style.wrapper}>
-        <figure style={style.logoIcon} onClick={this._back(pathname)}>
-          {this._renderBackButton(pathname)}
-        </figure>
+        {this._renderBackButton(pathname)}
         <figure style={style.menuIcon} onClick={this._openSystemMenu(!showMenu)}>
           <MorphReplace width={24} height={24} fill={COLOR.light.string()} duration={200}>
             { showMenu ?
@@ -56,7 +54,11 @@ class SystemHeader extends React.Component {
   _renderBackButton(pathname) {
     if (pathname === '/') return null
 
-    return <IconBack size={24} />
+    return (
+      <figure style={style.logoIcon} onClick={this._back}>
+        <IconBack size={24} />
+      </figure>
+    )
   }
 
   _openSystemMenu(showMenu) {
@@ -65,10 +67,8 @@ class SystemHeader extends React.Component {
     return () => dispatch(toggleSystemDrawer(showMenu))
   }
 
-  _back(pathname) {
-    if (pathname === '/') return () => {}
-
-    return () => history.back()
+  _back() {
+    history.back()
   }
 }
 

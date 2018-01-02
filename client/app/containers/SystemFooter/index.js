@@ -9,8 +9,6 @@ class SystemFooter extends React.Component {
   render() {
     return (
       <footer style={style.wrapper}>
-        <figure style={style.logoWrapper}>
-        </figure>
         <section style={style.menuWrapper}>
           <ul style={style.menu}>
             <li style={style.itemWrapper}>

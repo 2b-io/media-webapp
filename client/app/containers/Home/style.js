@@ -6,7 +6,7 @@ export default prefix({
   wrapper: {
     display: 'flex',
     flexWrap: 'wrap',
-    marginTop: '200px'
+    marginTop: '100px'
   },
   about: {
     flex: 1,

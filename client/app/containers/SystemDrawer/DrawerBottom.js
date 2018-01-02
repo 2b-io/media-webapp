@@ -1,6 +1,5 @@
 import Radium from 'radium'
 import React from 'react'
-import IconCopyright from 'react-icons/lib/md/copyright'
 
 import { InternalLink } from 'components/Link'
 
@@ -12,7 +11,7 @@ class DrawerBottom extends React.Component {
     return (
       <div style={style.wrapper}>
         <InternalLink link="/about" style={style.signature}>
-          <IconCopyright size={20} />medianetwork.io
+          medianetwork.io&copy;
         </InternalLink>
       </div>
     )
