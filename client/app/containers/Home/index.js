@@ -20,6 +20,7 @@ class HomePage extends React.Component {
       <section style={style.wrapper}>
         <div style={style.about}>
           <div style={style.homeHead}>
+            <div id="logo" style={style.homeHeadAnimation}></div>
           </div>
           <h1 style={style.heading}>A blogging platform designed to help you think</h1>
           <InternalLink link="/sign-up" style={style.signUp}>sign up</InternalLink>

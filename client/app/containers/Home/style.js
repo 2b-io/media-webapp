@@ -1,5 +1,6 @@
 import prefix from 'helpers/vendor-prefix'
 import { COLOR } from 'styles/constants'
+import logoBg from 'img/black_cloud.svg'
 
 export default prefix({
   wrapper: {
@@ -15,7 +16,18 @@ export default prefix({
     width: '120px',
     height: '120px',
     border: `2px solid ${COLOR.dark}`,
-    borderRadius: '100px'
+    borderRadius: '100px',
+    overflow: 'hidden'
+  },
+  homeHeadAnimation: {
+    width: '240px',
+    height: '90px',
+    marginLeft: '-60px',
+    marginTop: '30px',
+    backgroundImage: `url(${logoBg})`,
+    backgroundRepeat: 'repeat-x',
+    backgroundSize: 'auto 90px',
+    animation: 'animatedLogo 90s linear infinite'
   },
   heading: {
     fontSize: '34px',
