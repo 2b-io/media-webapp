@@ -31,7 +31,8 @@ export default prefix({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 201
+    zIndex: 201,
+    cursor: 'pointer'
   },
   logoIcon: {
     position: 'absolute',
@@ -43,6 +44,10 @@ export default prefix({
     border: `2px solid ${COLOR.dark}`,
     borderRadius: '100%',
     outline: 'none',
-    zIndex: 201
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 201,
+    cursor: 'pointer'
   }
 })

@@ -4,11 +4,13 @@ import { connect } from 'react-redux'
 import { MorphReplace } from 'react-svg-morph'
 
 // icons
+import IconBack from 'react-icons/lib/md/arrow-back'
 import IconMenu from 'react-icons/lib/md/menu'
 import IconClose from 'react-icons/lib/md/chevron-right'
 
 // internal
 import { toggleSystemDrawer } from 'actions/drawer'
+import { back } from 'actions/location'
 import { COLOR } from 'styles/constants'
 
 // local
@@ -16,9 +18,11 @@ import style from './style'
 
 @connect(state => {
   const menu = state.burgerMenu['layout/SYSTEM']
+  const { pathname } = state.ui.location
 
   return {
-    showMenu: menu ? menu.isOpen : false
+    showMenu: menu ? menu.isOpen : false,
+    pathname
   }
 })
 @Radium
@@ -30,11 +34,13 @@ class SystemHeader extends React.Component {
   }
 
   render() {
-    const { showMenu } = this.props
+    const { showMenu, pathname } = this.props
 
     return (
       <nav style={style.wrapper}>
-        <figure style={style.logoIcon}></figure>
+        <figure style={style.logoIcon}>
+          {this._renderBackButton(pathname)}
+        </figure>
         <figure style={style.menuIcon} onClick={this._openSystemMenu(!showMenu)}>
           <MorphReplace width={24} height={24} fill={COLOR.light.string()} duration={200}>
             { showMenu ?
@@ -47,10 +53,20 @@ class SystemHeader extends React.Component {
     )
   }
 
+  _renderBackButton(pathname) {
+    if (pathname === '/') return null
+
+    return <IconBack size={24} onClick={this._back} />
+  }
+
   _openSystemMenu(showMenu) {
     const { dispatch } = this.props
 
     return () => dispatch(toggleSystemDrawer(showMenu))
+  }
+
+  _back() {
+    history.back()
   }
 }
 

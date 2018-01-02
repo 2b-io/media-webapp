@@ -3,14 +3,14 @@ import React from 'react'
 
 import { registerAccount } from 'actions/account'
 import Redirect from 'components/Redirect'
-import Layout, { FULLSCREEN_MODE } from 'decorators/Layout'
+import Layout, { SYSTEM_MODE } from 'decorators/Layout'
 import UIState from 'decorators/UIState'
 
 import SignUpForm from './SignUpForm'
 import { container, signUpContainer } from './style'
 
 @UIState('signUp')
-@Layout(FULLSCREEN_MODE)
+@Layout(SYSTEM_MODE)
 @Radium
 class SignUp extends React.Component {
   constructor(props) {

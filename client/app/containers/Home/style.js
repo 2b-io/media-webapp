@@ -28,7 +28,7 @@ export default prefix({
     backgroundImage: `url(${logoBg})`,
     backgroundRepeat: 'repeat-x',
     backgroundSize: 'auto 75px',
-    animation: 'animatedLogo 90s linear infinite'
+    animation: 'animatedLogo 30s linear infinite'
   },
   heading: {
     fontSize: '34px',

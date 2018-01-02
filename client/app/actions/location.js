@@ -63,3 +63,9 @@ export function replace(pathname) {
     }
   }
 }
+
+export function back() {
+  return {
+    type: 'back'
+  }
+}
