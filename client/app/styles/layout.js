@@ -26,6 +26,8 @@ export const appLayout = prefix({
 
   },
   content: {
-    flexGrow: 1
+    flexGrow: 1,
+    maxWidth: '900px',
+    margin: '0 auto'
   }
 })

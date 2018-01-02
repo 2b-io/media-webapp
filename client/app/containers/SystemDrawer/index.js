@@ -18,7 +18,7 @@ class SystemDrawer extends React.PureComponent {
     return (
       <ReduxMenu right
         pageWrapId="page-wrap"
-        width={200}
+        width={240}
         styles={sideMenuStyle}
         customBurgerIcon={false}
         customCrossIcon={false}>

@@ -21,12 +21,12 @@ export default prefix({
   },
   homeHeadAnimation: {
     width: '240px',
-    height: '90px',
+    height: '75px',
     marginLeft: '-60px',
-    marginTop: '30px',
+    marginTop: '45px',
     backgroundImage: `url(${logoBg})`,
     backgroundRepeat: 'repeat-x',
-    backgroundSize: 'auto 90px',
+    backgroundSize: 'auto 75px',
     animation: 'animatedLogo 90s linear infinite'
   },
   heading: {
