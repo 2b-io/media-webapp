@@ -1,21 +1,22 @@
-import color from 'color'
 import prefix from 'helpers/vendor-prefix'
-import { fontStyle } from 'styles/global'
-import { cardLayout } from 'styles/layout'
 
-export const container = prefix({
-  ...cardLayout.wrapper
+export default prefix({
+  wrapper: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    marginTop: '100px'
+  },
+  signUp: {
+    flex: 1,
+    minWidth: '300px',
+    margin: '0 30px'
+  }
 })
 
-export const signUpContainer = prefix({
-  ...fontStyle,
-  ...cardLayout.content,
-  // size
-  maxWidth: '480px',
-  backgroundColor: color('#ffffff'),
-  border: `1px solid ${color('#e8e8e8')}`,
-})
-
-export const formRowStyle = prefix({
-  margin: '0 0 1rem'
+export const form = prefix({
+  row: {
+    display: 'flex',
+    margin: '0 0 15px',
+    alignItems: 'center'
+  },
 })

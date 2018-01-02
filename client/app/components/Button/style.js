@@ -4,6 +4,12 @@ import { fontStyle } from 'styles/global'
 
 export default prefix({
   ...fontStyle,
+  ':focus': {
+    outline: 'none'
+  },
+  ':active': {
+    outline: 'none'
+  },
   ':hover': {
     color: COLOR.light,
     background: COLOR.dark

@@ -1,7 +1,4 @@
-import color from 'color'
 import prefix from 'helpers/vendor-prefix'
-import { fontStyle } from 'styles/global'
-import { cardLayout } from 'styles/layout'
 
 export default prefix({
   wrapper: {
@@ -21,16 +18,15 @@ export default prefix({
   }
 })
 
-export const form = {
-  row: prefix({
+export const form = prefix({
+  row: {
     display: 'flex',
     margin: '0 0 15px',
     alignItems: 'center'
-  }),
-  signIn: {
   },
+  signIn: {},
   forgot: {
     fontSize: '12px',
     marginLeft: '15px'
   }
-}
+})
