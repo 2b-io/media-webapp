@@ -28,10 +28,23 @@ class HomePage extends React.Component {
         </div>
         <div style={style.features}>
           <ul style={style.featuresList}>
-            <li>
-
+            <li style={style.feature}>
+              <span style={style.featureName}>An innovative dashboard</span>
+              <p style={style.featureDesc}>The Dashboard on MediaOnDemand is designed to help you curate ideas, slowly develop them, and then publish them to the world.</p>
             </li>
-            <li>
+            <li style={style.feature}>
+              <span style={style.featureName}>A blog forever</span>
+              <p style={style.featureDesc}>MediaOnDemand comes with a promise that your published content will remain online forever.</p>
+            </li>
+            <li style={style.feature}>
+              <span style={style.featureName}>The cleanest writing experience</span>
+              <p style={style.featureDesc}>The Svbtle editor is designed to help you write—there are no distractions, and you can format your posts using Markdown, which is easy to learn and easy to write.</p>
+            </li>
+            <li style={style.feature}>
+              <span style={style.featureName}>The best reading experience</span>
+              <p style={style.featureDesc}>MediaOnDemand is fast, simple, and beautiful. It’s designed to showcase your writing in the best way possible, with the fewest distractions to your readers.</p>
+            </li>
+            <li style={style.feature}>
               <InternalLink link="/about">And lots more →</InternalLink>
             </li>
           </ul>

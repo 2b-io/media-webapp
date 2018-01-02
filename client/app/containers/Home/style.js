@@ -6,11 +6,12 @@ export default prefix({
   wrapper: {
     display: 'flex',
     flexWrap: 'wrap',
-    margin: '200px 30px 0 30px'
+    marginTop: '200px'
   },
   about: {
     flex: 1,
-    minWidth: '300px'
+    minWidth: '300px',
+    margin: '0 30px'
   },
   homeHead: {
     width: '120px',
@@ -64,6 +65,21 @@ export default prefix({
   features: {
     flex: 1,
     minWidth: '300px',
-    marginTop: '80px'
+    margin: '80px 30px 0 30px'
+  },
+  featuresList: {
+  },
+  feature: {
+    margin: '30px 0',
+    fontSize: '18px',
+    lineHeight: '25px'
+  },
+  featureName: {
+    fontWeight: 700,
+    marginBottom: '5px',
+    display: 'block'
+  },
+  featureDesc: {
+    color: COLOR.darkGray
   }
 })
