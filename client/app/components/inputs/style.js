@@ -5,14 +5,17 @@ import { fontStyle } from 'styles/global'
 export const textInputStyle = prefix({
   ...fontStyle,
   ':focus': {
-    outline: 'none'
+    outline: 'none',
+    border: `1px solid ${COLOR.darkGray}`
   },
   ':hover': {
-    outline: 'none'
+    outline: 'none',
+    border: `1px solid ${COLOR.darkGray}`
   },
   padding: '.75rem',
   border: `1px solid ${COLOR.lightGray}`,
   WebkitAppearance: 'none',
   width: '100%',
-  maxWidth: '100%'
+  maxWidth: '100%',
+  transition: 'border .2s'
 })

@@ -34,7 +34,7 @@ class SignUpForm extends React.Component {
           </label>
         </div>
         <div style={style.row}>
-          <Button type="submit">Next</Button>
+          <Button type="submit">sign up</Button>
         </div>
       </form>
     )
