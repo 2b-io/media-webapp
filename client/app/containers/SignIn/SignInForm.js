@@ -5,8 +5,9 @@ import { Field, reduxForm } from 'redux-form'
 import Button from 'components/Button'
 import TextBox from 'components/inputs/TextBox'
 import PasswordBox from 'components/inputs/PasswordBox'
+import { InternalLink } from 'components/Link'
 
-import { formRowStyle } from './style'
+import { form as style } from './style'
 
 @reduxForm({ form: 'signIn' })
 @Radium
@@ -16,23 +17,24 @@ class SignInForm extends React.Component {
 
     return (
       <form onSubmit={handleSubmit}>
-        <p style={formRowStyle}>
-          Enter your <b>email address</b> and <b>password</b>
+        <p style={style.row}>
+          <span>Enter your <b>email address</b> and <b>password</b></span>
         </p>
-        <div style={formRowStyle}>
+        <div style={style.row}>
           <Field component={TextBox}
             name="email"
             placeholder="you@example.com"
           />
         </div>
-        <div style={formRowStyle}>
+        <div style={style.row}>
           <Field component={PasswordBox}
             name="password"
             placeholder="password"
           />
         </div>
-        <div style={formRowStyle}>
-          <Button type="submit">Sign in</Button>
+        <div style={style.row}>
+          <Button style={style.signIn} type="submit">sign in</Button>
+          <InternalLink style={style.forgot} link="/forgot">Forgot password?</InternalLink>
         </div>
       </form>
     )

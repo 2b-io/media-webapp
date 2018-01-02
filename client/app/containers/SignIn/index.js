@@ -10,7 +10,7 @@ import Layout, { SYSTEM_MODE } from 'decorators/Layout'
 import UIState from 'decorators/UIState'
 
 import SignInForm from './SignInForm'
-import { container, signInContainer, signUpPromotion } from './style'
+import style from './style'
 
 @UIState('signIn', state => ({
   session: state.app.session
@@ -43,6 +43,8 @@ class SignIn extends React.Component {
       return <Redirect path="/dashboard" />
     }
 
+    return this._renderLayout(error)
+
     return (
       <div style={container}>
         {error ? <h1>Error</h1> : null}
@@ -52,8 +54,22 @@ class SignIn extends React.Component {
           <InternalLink link="/forgot">Forgot password?</InternalLink>
         </div>
         <div style={signUpPromotion}>
+          <p><b>Don't have an account on MediaOnDemand yet?</b></p>
+          <InternalLink link="/sign-up">Create a new account</InternalLink>
+        </div>
+      </div>
+    )
+  }
+
+  _renderLayout(error) {
+    return (
+      <div style={style.wrapper}>
+        <div style={style.signIn}>
+          <SignInForm onSubmit={this._processSignIn} />
+        </div>
+        <div style={style.promoteSignUp}>
           <p><b>Don't have an account on MediaNetwork yet?</b></p>
-          <InternalLink link="/sign-up"><b>Create a new account</b></InternalLink>
+          <InternalLink link="/sign-up">Create a new account</InternalLink>
         </div>
       </div>
     )

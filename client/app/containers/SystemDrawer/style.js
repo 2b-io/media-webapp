@@ -53,6 +53,6 @@ export const bottom = prefix({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    marginBottom: '5px'
+    height: '50px'
   }
 })

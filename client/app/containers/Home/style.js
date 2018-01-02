@@ -2,6 +2,8 @@ import prefix from 'helpers/vendor-prefix'
 import { COLOR } from 'styles/constants'
 import logoBg from 'img/black_cloud.svg'
 
+import buttonStyle from 'components/Button/style'
+
 export default prefix({
   wrapper: {
     display: 'flex',
@@ -39,22 +41,8 @@ export default prefix({
     marginTop: '30px'
   },
   signUp: {
-    ':hover': {
-      color: COLOR.light,
-      background: COLOR.dark
-    },
-    color: COLOR.dark,
-    background: COLOR.light,
-    marginTop: '20px',
-    paddingLeft: '30px',
-    paddingRight: '30px',
-    border: `2px solid ${COLOR.dark}`,
-    borderRadius: '20px',
-    fontSize: '18px',
-    display: 'inline-block',
-    height: '40px',
-    lineHeight: '34px',
-    transition: 'color .2s, background .2s'
+    ...buttonStyle,
+    marginTop: '20px'
   },
   description: {
     fontSize: '20px',

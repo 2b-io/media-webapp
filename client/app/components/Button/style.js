@@ -1,19 +1,24 @@
-import color from 'color'
 import prefix from 'helpers/vendor-prefix'
+import { COLOR } from 'styles/constants'
 import { fontStyle } from 'styles/global'
 
-export const buttonStyle = prefix({
+export default prefix({
   ...fontStyle,
-  width: '100%',
-  color: color('#ffffff'),
-  background: color('#2ea664'),
-  border: 'none',
-  borderRadius:'.25rem',
-  padding: '.75rem',
-  WebkitAppearance: 'none',
-  textAlign: 'center',
-  userSelect: 'none',
-  fontWeight: 900,
+  ':hover': {
+    color: COLOR.light,
+    background: COLOR.dark
+  },
+  color: COLOR.dark,
+  background: COLOR.light,
+  paddingLeft: '30px',
+  paddingRight: '30px',
+  border: `2px solid ${COLOR.dark}`,
+  borderRadius: '20px',
+  fontSize: '18px',
+  display: 'inline-block',
+  height: '40px',
+  lineHeight: '34px',
+  transition: 'color .2s, background .2s',
   cursor: 'pointer',
-  fontSize: '20px'
+  whiteSpace: 'nowrap'
 })
