@@ -19,7 +19,8 @@ export default prefix({
   },
   menu: {
     whiteSpace: 'nowrap',
-    marginLeft: 'auto'
+    marginLeft: 'auto',
+    lineHeight: '24px'
   },
   itemWrapper: {
     display: 'inline-block',

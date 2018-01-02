@@ -40,7 +40,7 @@ export default prefix({
     margin: '10px 0 0 10px',
     width: '34px',
     height: '34px',
-    border: `3px solid ${COLOR.dark}`,
+    border: `2px solid ${COLOR.dark}`,
     borderRadius: '100%',
     outline: 'none',
     zIndex: 201

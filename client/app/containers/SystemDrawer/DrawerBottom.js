@@ -11,7 +11,7 @@ class DrawerBottom extends React.Component {
     return (
       <div style={style.wrapper}>
         <InternalLink link="/about" style={style.signature}>
-          @medianetwork
+          @medianetwork.io
         </InternalLink>
       </div>
     )

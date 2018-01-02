@@ -9,7 +9,7 @@ import Footer from 'containers/App/Footer'
 import PersonalDrawer from 'containers/PersonalDrawer'
 import SystemDrawer from 'containers/SystemDrawer'
 
-import { bodyStyle, containerStyle, wrapperStyle } from './style'
+import style from './style'
 
 const SignIn = loadableContainer('SignIn')
 const SignUp = loadableContainer('SignUp')
@@ -22,9 +22,9 @@ class App extends React.Component {
     return [
       <PersonalDrawer key="personal-drawer" />,
       <SystemDrawer key="system-drawer" />,
-      <div id="page-wrap" style={wrapperStyle} key="page-wrap">
+      <div id="page-wrap" style={style.wrapper} key="page-wrap">
         <Header />
-        <section style={containerStyle}>
+        <section style={style.content}>
           <Route exact path="/sign-in" component={SignIn} />
           <Route exact path="/sign-up" component={SignUp} />
           <Route exact path="/" component={Home} />
