@@ -48,9 +48,11 @@ export const bottom = prefix({
   },
   signature: {
     color: COLOR.darkGray,
-    fontSize: '18px',
+    fontSize: '16px',
     fontWeight: 300,
-    lineHeight: '35px',
-    display: 'block'
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    marginBottom: '5px'
   }
 })
