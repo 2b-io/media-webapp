@@ -6,14 +6,15 @@ export const textInputStyle = prefix({
   ...fontStyle,
   ':focus': {
     outline: 'none',
-    border: `1px solid ${COLOR.darkGray}`
+    borderBottom: `2px solid ${COLOR.darkGray}`
   },
   ':hover': {
     outline: 'none',
-    border: `1px solid ${COLOR.darkGray}`
+    borderBottom: `2px solid ${COLOR.darkGray}`
   },
   padding: '.75rem',
-  border: `1px solid ${COLOR.lightGray}`,
+  border: 'none',
+  borderBottom: `2px solid ${COLOR.lightGray}`,
   WebkitAppearance: 'none',
   width: '100%',
   maxWidth: '100%',

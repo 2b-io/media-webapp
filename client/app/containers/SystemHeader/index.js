@@ -52,7 +52,9 @@ class SystemHeader extends React.Component {
   }
 
   _renderBackButton(pathname) {
-    if (pathname === '/') return null
+    if (pathname === '/' || pathname === '/dashboard') {
+      return null
+    }
 
     return (
       <figure style={style.logoIcon} onClick={this._back}>

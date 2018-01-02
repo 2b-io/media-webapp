@@ -8,7 +8,11 @@ export const linkStyle = prefix({
   ':active': {
     outline: 'none'
   },
+  ':hover': {
+    color: COLOR.dark,
+  },
   color: COLOR.darkGray,
   textDecoration: 'none',
-  cursor: 'pointer'
+  cursor: 'pointer',
+  transition: 'color .2s'
 })

@@ -11,6 +11,7 @@ export default prefix({
   },
   content: {
     ...appLayout.content,
-    background: COLOR.light
+    background: COLOR.light,
+    marginTop: '100px'
   }
 })

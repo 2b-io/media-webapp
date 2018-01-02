@@ -1,19 +1,15 @@
 import prefix from 'helpers/vendor-prefix'
 import { COLOR } from 'styles/constants'
+import { columnLayout } from 'styles/layout'
 import logoBg from 'img/black_cloud.svg'
 
 import buttonStyle from 'components/Button/style'
 
 export default prefix({
-  wrapper: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    marginTop: '100px'
-  },
+  wrapper: { ...columnLayout.wrapper },
   about: {
-    flex: 1,
-    minWidth: '300px',
-    margin: '0 30px'
+    ...columnLayout.column,
+    minWidth: '300px'
   },
   homeHead: {
     width: '120px',
@@ -51,9 +47,9 @@ export default prefix({
     fontWeight: 200
   },
   features: {
-    flex: 1,
+    ...columnLayout.column,
     minWidth: '300px',
-    margin: '80px 30px 0 30px'
+    marginTop: '80px'
   },
   featuresList: {
   },

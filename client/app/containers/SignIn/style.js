@@ -1,20 +1,17 @@
 import prefix from 'helpers/vendor-prefix'
+import { columnLayout } from 'styles/layout'
 
 export default prefix({
   wrapper: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    marginTop: '100px'
+    ...columnLayout.wrapper
   },
   signIn: {
-    flex: 1,
+    ...columnLayout.column,
     minWidth: '300px',
-    margin: '0 30px 30px'
   },
   promoteSignUp: {
-    flex: 1,
-    minWidth: '300px',
-    margin: '0 30px'
+    ...columnLayout.column,
+    minWidth: '300px'
   }
 })
 
@@ -26,7 +23,7 @@ export const form = prefix({
   },
   signIn: {},
   forgot: {
-    fontSize: '12px',
+    fontSize: '14px',
     marginLeft: '15px'
   }
 })
