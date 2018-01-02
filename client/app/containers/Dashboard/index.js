@@ -8,6 +8,8 @@ import Layout, { SYSTEM_MODE } from 'decorators/Layout'
 import BillingWidget from './BillingWidget'
 import ProjectWidget from './ProjectWidget'
 
+import style from './style'
+
 @connect()
 @Layout(SYSTEM_MODE)
 @AuthRequired
@@ -15,9 +17,28 @@ import ProjectWidget from './ProjectWidget'
 class Dashboard extends React.Component {
   render() {
     return (
-      <div>
-        <ProjectWidget />
-        <BillingWidget />
+      <div style={style.wrapper}>
+        <div style={style.widget}>
+          <ProjectWidget />
+        </div>
+        <div style={style.widget}>
+          <ProjectWidget />
+        </div>
+        <div style={style.widget}>
+          <ProjectWidget />
+        </div>
+        <div style={style.widget}>
+          <ProjectWidget />
+        </div>
+        <div style={style.widget}>
+          <ProjectWidget />
+        </div>
+        <div style={style.widget}>
+          <ProjectWidget />
+        </div>
+        <div style={style.widget}>
+          <BillingWidget />
+        </div>
       </div>
     )
   }
