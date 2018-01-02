@@ -16,7 +16,7 @@ export default function(Component) {
 
       return (
         unauthorized ?
-          <Redirect path="/sign-in" /> :
+          <Redirect path="/" /> :
           <Component { ...this.props } { ...this.state } />
       )
     }
