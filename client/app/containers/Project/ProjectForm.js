@@ -29,7 +29,10 @@ class ProjectForm extends React.Component {
             placeholder="a-cool-project"
             {...inputProps}
           />
-          <p style={style.desc}>Please note that you will not able to change <b>your project's slug</b> afterward. This slug will be used as identifier of your project.</p>
+          { update ?
+            <p style={style.desc}>This slug is used as identifier of your project and cannot be changed</p> :
+            <p style={style.desc}>Please note that you will not able to change <b>your project's slug</b> afterward. This slug will be used as identifier of your project.</p>
+          }
         </div>
         <div style={style.row}>
           <label style={style.label}>Origins</label>
