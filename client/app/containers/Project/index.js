@@ -27,6 +27,8 @@ class Project extends React.Component {
 
     if (params.action === 'create') {
       //
+    } else if (params.action === 'view') {
+      console.log(params)
     }
   }
 

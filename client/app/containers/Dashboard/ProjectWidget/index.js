@@ -12,7 +12,7 @@ import { InternalLink } from 'components/Link'
 import style from './style'
 
 @connect(state => ({
-  projects: state.app.project.all
+  projects: state.app.projects
 }))
 @Radium
 class ProjectWidget extends React.Component {
@@ -54,7 +54,7 @@ class ProjectWidget extends React.Component {
   _renderContent() {
     const { projects } = this.props
 
-    if (!projects || projects.length === 0) {
+    if (!projects || Object.keys(projects).length === 0) {
       return (
         <p>
           <span>There is no project yet. </span><br />
@@ -69,14 +69,14 @@ class ProjectWidget extends React.Component {
   _renderProjectList(projects) {
     return (
       <ul>
-        { projects.map(p => (
-          <li key={p._id}>
+        { Object.keys(projects).map(slug => (
+          <li key={slug}>
             <InternalLink
-              link={`/projects/view/${p.slug}`}>
-              <span>{p.name}</span>
+              link={`/projects/view/${slug}`}>
+              <span>{projects[slug].name}</span>
             </InternalLink>
           </li>
-        ))}
+        )) }
       </ul>
     )
   }

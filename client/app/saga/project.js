@@ -30,7 +30,7 @@ export function* createProject() {
 
 export function* fetchProjects() {
   while (true) {
-    const action = yield take(PROJECT.FETCH_REQUEST)
+    const action = yield take(PROJECT.FETCH_ALL_REQUEST)
     const session = yield select(state => state.app.session)
 
     try {
@@ -41,12 +41,12 @@ export function* fetchProjects() {
       })
 
       yield put({
-        type: PROJECT.FETCH_SUCCESS,
+        type: PROJECT.FETCH_ALL_SUCCESS,
         payload: projects
       })
     } catch (error) {
       yield put({
-        type: PROJECT.FETCH_FAILURE,
+        type: PROJECT.FETCH_ALL_FAILURE,
         error
       })
     }

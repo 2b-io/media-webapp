@@ -36,7 +36,7 @@ class App extends React.Component {
             component={Dashboard} />
           <Route path="/profile"
             component={Profile} />
-          <Route exact path="/projects/:action/:id?"
+          <Route exact path="/projects/:action/:slug?"
             component={Project} />
         </section>
         <Footer />
