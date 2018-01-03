@@ -16,6 +16,7 @@ const SignUp = loadableContainer('SignUp')
 const Dashboard = loadableContainer('Dashboard')
 const Home = loadableContainer('Home')
 const Profile = loadableContainer('Profile')
+const Project = loadableContainer('Project')
 
 class App extends React.Component {
   render() {
@@ -30,6 +31,7 @@ class App extends React.Component {
           <Route exact path="/" component={Home} />
           <Route exact path="/dashboard" component={Dashboard} />
           <Route path="/profile" component={Profile} />
+          <Route path="/project/:action" component={Project} />
         </section>
         <Footer />
       </div>

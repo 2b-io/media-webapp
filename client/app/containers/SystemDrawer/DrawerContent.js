@@ -41,6 +41,11 @@ class DrawerContent extends React.Component {
           </InternalLink>
         </li>
         { signedIn ? [
+            <li key="dashboard">
+              <InternalLink link="/dashboard" style={style.item}>
+                <span>dashboard</span>
+              </InternalLink>
+            </li>,
             <li key="account">
               <InternalLink link="/account" style={style.item}>
                 <span>account</span>

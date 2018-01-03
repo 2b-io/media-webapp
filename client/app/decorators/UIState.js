@@ -8,7 +8,9 @@ export default function(id, mapStateToProps = state => null) {
   return function(Component) {
 
     @connect(state => ({
-      [id]: state.ui[id],
+      ui: {
+        [id]: state.ui[id]
+      },
       ...mapStateToProps(state)
     }))
     class UIState extends React.Component {
