@@ -1,7 +1,6 @@
-import color from 'color'
-import prefix from 'helpers/vendor-prefix'
+import { COLOR } from 'styles/constants'
 
-export const columnLayout = prefix({
+export const columnLayout = {
   wrapper: {
     display: 'flex',
     flexWrap: 'wrap'
@@ -12,35 +11,45 @@ export const columnLayout = prefix({
     marginRight: '30px',
     marginBottom: '15px'
   }
-})
+}
 
-export const cardLayout = prefix({
-  wrapper: {
-  },
-  content: {
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    borderRadius: '.25rem',
-    padding: '2rem 2rem 1rem'
-  }
-})
-
-export const appLayout = prefix({
+export const appLayout = {
   wrapper: {
     minHeight: '100%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between'
   },
-  header: {
-
-  },
-  footer: {
-
-  },
   content: {
     flexGrow: 1,
-    maxWidth: '900px',
-    margin: '0 auto'
+    marginLeft: 'auto',
+    marginRight: 'auto'
   }
-})
+}
+
+export const widgetLayout = {
+  wrapper: {
+    border: `2px solid ${COLOR.lightGray}`,
+    padding: '15px'
+  },
+  header: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  controls: {
+    marginLeft: 'auto'
+  },
+  button: {
+    display: 'inline-block',
+    marginLeft: '5px',
+    cursor: 'pointer'
+  },
+  title: {
+    color: COLOR.darkGray,
+    fontWeight: 700
+  },
+  content: {
+    marginTop: '15px',
+    fontSize: '14px'
+  }
+}

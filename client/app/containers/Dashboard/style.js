@@ -3,10 +3,13 @@ import { columnLayout } from 'styles/layout'
 
 export default prefix({
   wrapper: {
-    ...columnLayout.wrapper
+    display: 'flex',
+    flexWrap: 'wrap'
   },
   widget: {
-    ...columnLayout.column,
-    minWidth: '300px'
+    width: '100%',
+    marginLeft: '15px',
+    marginRight: '15px',
+    marginBottom: '15px'
   }
 })

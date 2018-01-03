@@ -3,7 +3,8 @@ import { columnLayout } from 'styles/layout'
 
 export default prefix({
   wrapper: {
-    ...columnLayout.wrapper
+    ...columnLayout.wrapper,
+    maxWidth: '900px'
   },
   signUp: {
     ...columnLayout.column

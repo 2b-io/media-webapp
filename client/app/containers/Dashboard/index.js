@@ -10,6 +10,7 @@ import ProjectWidget from './ProjectWidget'
 
 import style from './style'
 
+
 @connect()
 @Layout(SYSTEM_MODE)
 @AuthRequired
@@ -18,18 +19,6 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div style={style.wrapper}>
-        <div style={style.widget}>
-          <ProjectWidget />
-        </div>
-        <div style={style.widget}>
-          <ProjectWidget />
-        </div>
-        <div style={style.widget}>
-          <ProjectWidget />
-        </div>
-        <div style={style.widget}>
-          <ProjectWidget />
-        </div>
         <div style={style.widget}>
           <ProjectWidget />
         </div>

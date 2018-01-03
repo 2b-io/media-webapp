@@ -6,7 +6,10 @@ import logoBg from 'img/black_cloud.svg'
 import buttonStyle from 'components/Button/style'
 
 export default prefix({
-  wrapper: { ...columnLayout.wrapper },
+  wrapper: {
+    ...columnLayout.wrapper,
+    maxWidth: '900px'
+  },
   about: {
     ...columnLayout.column,
     minWidth: '300px'
