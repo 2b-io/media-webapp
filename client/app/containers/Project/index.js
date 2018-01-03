@@ -40,8 +40,6 @@ class Project extends React.Component {
     const { projects, match } = this.props
     const { action, slug } = match.params
 
-    console.log('render', projects)
-
     const project = projects[slug] || {}
 
     if (action === 'edit' && !project) return null
@@ -54,8 +52,11 @@ class Project extends React.Component {
     return (
       <div style={style.wrapper}>
         <div style={style.project}>
-          <ProjectForm initialValues={initialValues}
-            onSubmit={this._processSaveProject} />
+          <ProjectForm
+            initialValues={initialValues}
+            onSubmit={this._processSaveProject}
+            update={!!initialValues._id}
+          />
         </div>
       </div>
     )

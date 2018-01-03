@@ -10,6 +10,8 @@ function normalizeSlug(value) {
 
 export default form.plugin({
   project: (state, action) => {
+    if (state && state.values && state.values._id) return state
+
     if (action.type === '@@redux-form/CHANGE') {
       switch (action.meta.field) {
         case 'name':

@@ -10,7 +10,8 @@ import { form as style } from './style'
 @Radium
 class ProjectForm extends React.Component {
   render() {
-    const { handleSubmit } = this.props
+    const { handleSubmit, update } = this.props
+    const inputProps = update ? { readOnly: true } : {}
 
     return (
       <form onSubmit={handleSubmit}>
@@ -26,6 +27,7 @@ class ProjectForm extends React.Component {
           <Field component={TextBox}
             name="slug"
             placeholder="a-cool-project"
+            {...inputProps}
           />
           <p style={style.desc}>Please note that you will not able to change <b>your project's slug</b> afterward. This slug will be used as identifier of your project.</p>
         </div>
