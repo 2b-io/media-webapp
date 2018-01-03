@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import IconAdd from 'react-icons/lib/md/add'
 import IconRefresh from 'react-icons/lib/md/refresh'
 
+import { redirect } from 'actions/location'
 import { fetchProjects } from 'actions/project'
 import { InternalLink } from 'components/Link'
 
@@ -15,10 +16,16 @@ import style from './style'
 }))
 @Radium
 class ProjectWidget extends React.Component {
-  componentDidMount() {
-    const { dispatch } = this.props
+  constructor(props) {
+    super(props)
 
-    dispatch(fetchProjects())
+    this._processCreateProject = this._processCreateProject.bind(this)
+
+    this._processRefreshProjects = this._processRefreshProjects.bind(this)
+  }
+
+  componentDidMount() {
+    this._processRefreshProjects()
   }
 
   render() {
@@ -27,10 +34,12 @@ class ProjectWidget extends React.Component {
         <div style={style.header}>
           <div style={style.title}>Projects</div>
           <div style={style.controls}>
-            <div style={style.button}>
+            <div style={style.button}
+              onClick={this._processCreateProject}>
               <IconAdd size={16} />
             </div>
-            <div style={style.button}>
+            <div style={style.button}
+              onClick={this._processRefreshProjects}>
               <IconRefresh size={16} />
             </div>
           </div>
@@ -60,9 +69,28 @@ class ProjectWidget extends React.Component {
   _renderProjectList(projects) {
     return (
       <ul>
-        { projects.map(p => <li key={p._id}>{p.name}</li>)}
+        { projects.map(p => (
+          <li key={p._id}>
+            <InternalLink
+              link={`/projects/view/${p.slug}`}>
+              <span>{p.name}</span>
+            </InternalLink>
+          </li>
+        ))}
       </ul>
     )
+  }
+
+  _processCreateProject() {
+    const { dispatch } = this.props
+
+    dispatch(redirect('/projects/create'))
+  }
+
+  _processRefreshProjects() {
+    const { dispatch } = this.props
+
+    dispatch(fetchProjects())
   }
 }
 
