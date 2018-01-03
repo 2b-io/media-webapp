@@ -1,7 +1,8 @@
 import {
   getBySlug as getProjectBySlug,
   list as listAllProjects,
-  create as createProject
+  create as createProject,
+  update as updateProject
 } from 'services/project'
 
 export function get(req, res, next) {
@@ -21,11 +22,12 @@ export function list(req, res, next) {
 }
 
 export function create(req, res, next) {
-  const { name, slug } = req.body
+  const { name, slug, origins } = req.body
 
   createProject({
       name,
       slug,
+      origins
     }, req._account)
     .then(project => {
       res.status(201).json(project)
@@ -35,3 +37,10 @@ export function create(req, res, next) {
     })
 }
 
+export function update(req, res, next) {
+  const { name, slug, origins } = req.body
+
+  updateProject({ name, slug, origins })
+    .then(project => res.json(project))
+    .catch(e => next(e))
+}

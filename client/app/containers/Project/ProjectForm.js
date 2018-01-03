@@ -2,6 +2,7 @@ import Radium from 'radium'
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import Button from 'components/Button'
+import { InternalLink } from 'components/Link'
 import TextBox from 'components/inputs/TextBox'
 
 import { form as style } from './style'
@@ -30,7 +31,7 @@ class ProjectForm extends React.Component {
             {...inputProps}
           />
           { update ?
-            <p style={style.desc}>This slug is used as identifier of your project and cannot be changed</p> :
+            <p style={style.desc}>This slug is used as identifier of your project and cannot be changed. <InternalLink link="/projects/create">Create a new project</InternalLink> if you do not like this slug :)</p> :
             <p style={style.desc}>Please note that you will not able to change <b>your project's slug</b> afterward. This slug will be used as identifier of your project.</p>
           }
         </div>

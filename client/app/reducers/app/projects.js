@@ -13,6 +13,7 @@ export default function(state = initialState, action) {
       }, {})
 
     case PROJECT.FETCH_SUCCESS:
+    case PROJECT.UPDATE_SUCCESS:
       return {
         ...state,
         [action.payload.slug]: action.payload
