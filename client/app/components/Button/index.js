@@ -4,19 +4,19 @@ import pick from 'object.pick'
 
 import HyperLink from 'decorators/HyperLink'
 
-import { buttonStyle } from './style'
+import style from './style'
 
 @Radium
 class Button extends React.PureComponent {
   render() {
     const supportedProps = pick(this.props, ['onClick', 'type'])
-    const style = {
-      ...buttonStyle,
+    const mergedStyle = {
+      ...style,
       ...this.props.style
     }
 
     return (
-      <button style={style} {...supportedProps}>
+      <button style={mergedStyle} {...supportedProps}>
         {this.props.children}
       </button>
     )

@@ -1,19 +1,24 @@
-import color from 'color'
 import prefix from 'helpers/vendor-prefix'
+import { COLOR } from 'styles/constants'
 import { fontStyle } from 'styles/global'
 
-export const textInputStyle = prefix({
+export const text = prefix({
   ...fontStyle,
   ':focus': {
-    outline: 'none'
+    outline: 'none',
+    borderBottom: `2px solid ${COLOR.darkGray}`
   },
   ':hover': {
-    outline: 'none'
+    outline: 'none',
+    borderBottom: `2px solid ${COLOR.darkGray}`
   },
   padding: '.75rem',
-  border: `1px solid ${color('#a0a0a2')}`,
-  borderRadius: '.25rem',
+  borderTop: 'none',
+  borderLeft: 'none',
+  borderRight: 'none',
+  borderBottom: `2px solid ${COLOR.lightGray}`,
   WebkitAppearance: 'none',
   width: '100%',
-  maxWidth: '100%'
+  maxWidth: '100%',
+  transition: 'border .2s'
 })

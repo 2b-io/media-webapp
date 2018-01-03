@@ -1,8 +1,18 @@
 import prefix from 'helpers/vendor-prefix'
-import color from 'color'
+import { COLOR } from 'styles/constants'
 
 export const linkStyle = prefix({
-  color: color('#0576b9'),
+  ':focus': {
+    outline: 'none'
+  },
+  ':active': {
+    outline: 'none'
+  },
+  ':hover': {
+    color: COLOR.dark,
+  },
+  color: COLOR.darkGray,
   textDecoration: 'none',
-  cursor: 'pointer'
+  cursor: 'pointer',
+  transition: 'color .2s'
 })

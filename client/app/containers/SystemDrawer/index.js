@@ -7,7 +7,6 @@ import IconClose from 'react-icons/lib/io/close-round'
 
 import { LAYOUT } from 'actions/layout'
 
-import DrawerTop from './DrawerTop'
 import DrawerContent from './DrawerContent'
 import DrawerBottom from './DrawerBottom'
 import { sideMenuStyle } from './style'
@@ -19,20 +18,13 @@ class SystemDrawer extends React.PureComponent {
     return (
       <ReduxMenu right
         pageWrapId="page-wrap"
-        width={'100%'}
+        width={240}
         styles={sideMenuStyle}
         customBurgerIcon={false}
-        customCrossIcon={this.renderCloseButton()}>
-        <DrawerTop />
+        customCrossIcon={false}>
         <DrawerContent />
         <DrawerBottom />
       </ReduxMenu>
-    )
-  }
-
-  renderCloseButton() {
-    return (
-      <IconClose size={24} color="#fff" />
     )
   }
 }

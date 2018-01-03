@@ -1,17 +1,30 @@
 import Radium from 'radium'
 import React from 'react'
 import { connect } from 'react-redux'
+import { MorphReplace } from 'react-svg-morph'
 
 // icons
-import IconMenu from 'react-icons/lib/io/navicon-round'
+import IconBack from 'react-icons/lib/md/arrow-back'
+import IconMenu from 'react-icons/lib/md/menu'
+import IconClose from 'react-icons/lib/md/chevron-right'
 
 // internal
-import { toggleSystemDrawer } from 'actions/drawer';
+import { toggleSystemDrawer } from 'actions/drawer'
+import { back } from 'actions/location'
+import { COLOR } from 'styles/constants'
 
 // local
 import style from './style'
 
-@connect()
+@connect(state => {
+  const menu = state.burgerMenu['layout/SYSTEM']
+  const { pathname } = state.ui.location
+
+  return {
+    showMenu: menu ? menu.isOpen : false,
+    pathname
+  }
+})
 @Radium
 class SystemHeader extends React.Component {
   constructor(props) {
@@ -21,22 +34,43 @@ class SystemHeader extends React.Component {
   }
 
   render() {
+    const { showMenu, pathname } = this.props
+
     return (
-      <div style={style.wrapper}>
-        <div style={style.container}>
-          <div style={style.menuIcon}
-            onClick={this._openSystemMenu}>
-            <IconMenu size={32} />
-          </div>
-        </div>
-      </div>
+      <nav style={style.wrapper}>
+        {this._renderBackButton(pathname)}
+        <figure style={style.menuIcon} onClick={this._openSystemMenu(!showMenu)}>
+          <MorphReplace width={24} height={24} fill={COLOR.light.string()} duration={200}>
+            { showMenu ?
+              <IconClose key="IconClose" /> :
+              <IconMenu key="IconMenu" />
+            }
+          </MorphReplace>
+        </figure>
+      </nav>
     )
   }
 
-  _openSystemMenu() {
+  _renderBackButton(pathname) {
+    if (pathname === '/' || pathname === '/dashboard') {
+      return null
+    }
+
+    return (
+      <figure style={style.logoIcon} onClick={this._back}>
+        <IconBack size={24} />
+      </figure>
+    )
+  }
+
+  _openSystemMenu(showMenu) {
     const { dispatch } = this.props
 
-    dispatch(toggleSystemDrawer(true))
+    return () => dispatch(toggleSystemDrawer(showMenu))
+  }
+
+  _back() {
+    history.back()
   }
 }
 
