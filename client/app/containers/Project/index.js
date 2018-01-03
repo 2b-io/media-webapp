@@ -24,13 +24,12 @@ class Project extends React.Component {
   }
 
   render() {
-    console.log('render', this.props)
-    const { project } = this.props
+    const { project = { name: 'new project'} } = this.props
 
     return (
       <div style={style.wrapper}>
         <div style={style.project}>
-          <ProjectForm project={project} />
+          <ProjectForm initialValues={project} />
         </div>
       </div>
     )

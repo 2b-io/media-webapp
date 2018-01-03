@@ -26,30 +26,19 @@ class App extends React.Component {
       <div id="page-wrap" style={style.wrapper} key="page-wrap">
         <Header />
         <section style={style.content}>
-          <Route exact path="/sign-in" component={SignIn} />
-          <Route exact path="/sign-up" component={SignUp} />
-          <Route exact path="/" component={Home} />
-          <Route exact path="/dashboard" component={Dashboard} />
-          <Route path="/profile" component={Profile} />
-          <Route path="/project/:action" component={Project} />
+          <Route exact path="/sign-in"
+            component={SignIn} />
+          <Route exact path="/sign-up"
+            component={SignUp} />
+          <Route exact path="/"
+            component={Home} />
+          <Route exact path="/dashboard"
+            component={Dashboard} />
+          <Route path="/profile"
+            component={Profile} />
+          <Route exact path="/projects/:action/:id?"
+            component={Project} />
         </section>
-        <Footer />
-      </div>
-    ]
-  }
-  _render() {
-    return [
-      <PersonalDrawer key="personal-drawer" />,
-      <SystemDrawer key="system-drawer" />,
-      <div id="page-wrap" style={wrapperStyle} key="page-wrap">
-        <Header />
-        <div style={containerStyle}>
-          <Route exact path="/sign-in" component={SignIn} />
-          <Route exact path="/sign-up" component={SignUp} />
-          <Route exact path="/" component={Home} />
-          <Route exact path="/dashboard" component={Dashboard} />
-          <Route path="/profile" component={Profile} />
-        </div>
         <Footer />
       </div>
     ]
