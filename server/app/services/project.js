@@ -4,7 +4,7 @@ import Project from 'models/Project'
 
 export const list = async (id) => {
   if (!id) {
-    return await Project.find().lean().exec()
+    return await Project.find().lean()
   }
 
   const permissions = await Permission.find({
