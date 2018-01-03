@@ -22,3 +22,16 @@ export function fetchProjects() {
   }
 }
 
+export function fetchProject(slug) {
+  return {
+    type: PROJECT.FETCH_REQUEST,
+    payload: slug
+  }
+}
+
+export function updateProject(project) {
+  return {
+    type: PROJECT.UPDATE_REQUEST,
+    payload: project
+  }
+}

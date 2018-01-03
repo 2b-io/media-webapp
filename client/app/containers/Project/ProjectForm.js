@@ -6,7 +6,7 @@ import TextBox from 'components/inputs/TextBox'
 
 import { form as style } from './style'
 
-@reduxForm({ form: 'project' })
+@reduxForm({ form: 'project', enableReinitialize: true })
 @Radium
 class ProjectForm extends React.Component {
   render() {

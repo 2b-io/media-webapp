@@ -1,7 +1,8 @@
+import pick from 'object.pick'
 import Radium from 'radium'
 import React from 'react'
 
-import { createProject } from 'actions/project'
+import { createProject, fetchProject, updateProject } from 'actions/project'
 import AuthRequired from 'decorators/AuthRequired'
 import Layout, { PERSONAL_MODE } from 'decorators/Layout'
 import UIState from 'decorators/UIState'
@@ -9,9 +10,11 @@ import UIState from 'decorators/UIState'
 import ProjectForm from './ProjectForm'
 import style from './style'
 
-@UIState('project', state => ({
-  project: state.app.project
-}))
+@UIState('project', state => {
+  return {
+    projects: state.app.projects
+  }
+})
 @Layout(PERSONAL_MODE)
 @AuthRequired
 @Radium
@@ -23,32 +26,53 @@ class Project extends React.Component {
   }
 
   componentDidMount() {
-    const { params } = this.props.match
+    const { dispatch, match } = this.props
+    const { action, slug } = match.params
 
-    if (params.action === 'create') {
+    if (action === 'create') {
       //
-    } else if (params.action === 'view') {
-      console.log(params)
+    } else if (action === 'view') {
+      dispatch(fetchProject(slug))
     }
   }
 
   render() {
-    const { project } = this.props
+    const { projects, match } = this.props
+    const { action, slug } = match.params
+
+    console.log('render', projects)
+
+    const project = projects[slug] || {}
+
+    if (action === 'edit' && !project) return null
+
+    const initialValues = {
+      ...project,
+      origins: (project.origins || []).join(',')
+    }
 
     return (
       <div style={style.wrapper}>
         <div style={style.project}>
-          <ProjectForm initialValues={project}
+          <ProjectForm initialValues={initialValues}
             onSubmit={this._processSaveProject} />
         </div>
       </div>
     )
   }
 
-  _processSaveProject(project) {
+  _processSaveProject(form) {
     const { dispatch } = this.props
+    const project = {
+      ...form,
+      origins: form.origins.split(',').filter(Boolean)
+    }
 
-    dispatch(createProject(project))
+    if (project._id) {
+      dispatch(updateProject(project))
+    } else {
+      dispatch(createProject(project))
+    }
   }
 }
 

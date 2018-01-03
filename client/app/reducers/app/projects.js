@@ -11,6 +11,12 @@ export default function(state = initialState, action) {
 
         return nextState
       }, {})
+
+    case PROJECT.FETCH_SUCCESS:
+      return {
+        ...state,
+        [action.payload.slug]: action.payload
+      }
   }
 
   return state

@@ -1,6 +1,6 @@
 import { call, fork, put, select,   take } from 'redux-saga/effects'
 import { PROJECT } from 'actions/project'
-import { get, post } from 'services/rest'
+import { get, post, put as PUT } from 'services/rest'
 
 export function* createProject() {
   while (true) {
@@ -22,6 +22,31 @@ export function* createProject() {
     } catch (error) {
       yield put({
         type: PROJECT.CREATE_FAILURE,
+        error
+      })
+    }
+  }
+}
+
+export function* fetchProject() {
+  while (true) {
+    const action = yield take(PROJECT.FETCH_REQUEST)
+    const session = yield select(state => state.app.session)
+
+    try {
+      const projects = yield call(get, {
+        url: `/api/projects/${action.payload}`
+      }, {
+        token: session.token
+      })
+
+      yield put({
+        type: PROJECT.FETCH_SUCCESS,
+        payload: projects
+      })
+    } catch (error) {
+      yield put({
+        type: PROJECT.FETCH_FAILURE,
         error
       })
     }
@@ -53,7 +78,35 @@ export function* fetchProjects() {
   }
 }
 
+export function* updateProject() {
+  while (true) {
+    const action = yield take(PROJECT.UPDATE_REQUEST)
+    const session = yield select(state => state.app.session)
+
+    try {
+      const projects = yield call(PUT, {
+        url: `/api/projects/${action.payload.slug}`,
+        data: action.payload
+      }, {
+        token: session.token
+      })
+
+      yield put({
+        type: PROJECT.UPDATE_SUCCESS,
+        payload: projects
+      })
+    } catch (error) {
+      yield put({
+        type: PROJECT.UPDATE_FAILURE,
+        error
+      })
+    }
+  }
+}
+
 export default function* root() {
   yield fork(createProject)
+  yield fork(fetchProject)
   yield fork(fetchProjects)
+  yield fork(updateProject)
 }

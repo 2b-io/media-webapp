@@ -2,6 +2,12 @@ import Bluebird from 'bluebird'
 import Permission from 'models/Permission'
 import Project from 'models/Project'
 
+export const getBySlug = async (slug) => {
+  const project = await Project.findOne({ slug }).lean()
+
+  return project
+}
+
 export const list = async (id) => {
   if (!id) {
     return await Project.find().lean()
