@@ -2,7 +2,7 @@ import prefix from 'helpers/vendor-prefix'
 import { COLOR } from 'styles/constants'
 import { fontStyle } from 'styles/global'
 
-export const textInputStyle = prefix({
+export const text = prefix({
   ...fontStyle,
   ':focus': {
     outline: 'none',
@@ -13,7 +13,9 @@ export const textInputStyle = prefix({
     borderBottom: `2px solid ${COLOR.darkGray}`
   },
   padding: '.75rem',
-  border: 'none',
+  borderTop: 'none',
+  borderLeft: 'none',
+  borderRight: 'none',
   borderBottom: `2px solid ${COLOR.lightGray}`,
   WebkitAppearance: 'none',
   width: '100%',
