@@ -40,11 +40,16 @@ class DrawerContent extends React.Component {
             <span>help</span>
           </InternalLink>
         </li>
-        { signedIn ? (
-            <li>
+        { signedIn ? [
+            <li key="account">
+              <InternalLink link="/account" style={style.item}>
+                <span>account</span>
+              </InternalLink>
+            </li>,
+            <li key="sign-out">
               <span style={style.item} onClick={this._signOut}>sign out</span>
             </li>
-          ) : [
+          ] : [
             <li key="sign-up">
               <InternalLink link="/sign-up" style={style.item}>
                 <span>sign up</span>

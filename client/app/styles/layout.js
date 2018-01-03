@@ -29,12 +29,14 @@ export const appLayout = {
 
 export const widgetLayout = {
   wrapper: {
-    border: `2px solid ${COLOR.lightGray}`,
-    padding: '15px'
+    // borderLeft: `2px solid ${COLOR.lightGray}`,
+    // padding: '15px'
   },
   header: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingBottom: '5px',
+    borderBottom: `1px solid ${COLOR.lightGray}`
   },
   controls: {
     marginLeft: 'auto'

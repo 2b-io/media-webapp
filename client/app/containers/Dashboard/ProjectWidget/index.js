@@ -41,7 +41,7 @@ class ProjectWidget extends React.Component {
       return (
         <p>
           <span>There is no project yet. </span><br />
-          <span>Click <InternalLink path="/projects/create">here</InternalLink> to create your first project.</span>
+          <span>Click <InternalLink path="/create-project">here</InternalLink> to create your first project.</span>
         </p>
       )
     }
