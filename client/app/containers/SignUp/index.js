@@ -20,7 +20,7 @@ class SignUp extends React.Component {
   }
 
   render() {
-    const { payload, error } = this.props.ui.signUp
+    const { payload, error } = this.props['UI/signUp']
 
     if (payload) {
       // redirect to /sign-in if sign-up success

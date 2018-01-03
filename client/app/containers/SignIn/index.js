@@ -25,7 +25,7 @@ class SignIn extends React.Component {
   }
 
   render() {
-    const { payload, error } = this.props.ui.signIn
+    const { payload, error } = this.props['UI/signIn']
 
     if (payload) {
       // redirect to /dashboard if sign in success

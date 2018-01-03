@@ -9,7 +9,7 @@ function normalizeSlug(value) {
 }
 
 export default form.plugin({
-  signUp: (state, action) => {
+  project: (state, action) => {
     if (action.type === '@@redux-form/CHANGE') {
       switch (action.meta.field) {
         case 'name':

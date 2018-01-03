@@ -1,12 +1,16 @@
 import Radium from 'radium'
 import React from 'react'
-import { connect } from 'react-redux'
 
 import AuthRequired from 'decorators/AuthRequired'
 import Layout, { PERSONAL_MODE } from 'decorators/Layout'
 import UIState from 'decorators/UIState'
 
-@UIState('project')
+import ProjectForm from './ProjectForm'
+import style from './style'
+
+@UIState('project', state => ({
+  project: state.app.project
+}))
 @Layout(PERSONAL_MODE)
 @AuthRequired
 @Radium
@@ -20,10 +24,15 @@ class Project extends React.Component {
   }
 
   render() {
-    console.log(this.props)
+    console.log('render', this.props)
+    const { project } = this.props
 
     return (
-      <h1>Project</h1>
+      <div style={style.wrapper}>
+        <div style={style.project}>
+          <ProjectForm project={project} />
+        </div>
+      </div>
     )
   }
 }
