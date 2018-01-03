@@ -1,6 +1,6 @@
 import { call, fork, put, select,   take } from 'redux-saga/effects'
 import { PROJECT } from 'actions/project'
-import { post } from 'services/rest'
+import { get, post } from 'services/rest'
 
 export function* createProject() {
   while (true) {
@@ -28,6 +28,32 @@ export function* createProject() {
   }
 }
 
+export function* fetchProjects() {
+  while (true) {
+    const action = yield take(PROJECT.FETCH_REQUEST)
+    const session = yield select(state => state.app.session)
+
+    try {
+      const projects = yield call(get, {
+        url: '/api/projects'
+      }, {
+        token: session.token
+      })
+
+      yield put({
+        type: PROJECT.FETCH_SUCCESS,
+        payload: projects
+      })
+    } catch (error) {
+      yield put({
+        type: PROJECT.FETCH_FAILURE,
+        error
+      })
+    }
+  }
+}
+
 export default function* root() {
   yield fork(createProject)
+  yield fork(fetchProjects)
 }

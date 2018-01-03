@@ -4,16 +4,24 @@ import { connect } from 'react-redux'
 
 import IconAdd from 'react-icons/lib/md/add'
 import IconRefresh from 'react-icons/lib/md/refresh'
+
+import { fetchProjects } from 'actions/project'
 import { InternalLink } from 'components/Link'
 
 import style from './style'
 
-@connect()
+@connect(state => ({
+  projects: state.app.project.all
+}))
 @Radium
 class ProjectWidget extends React.Component {
+  componentDidMount() {
+    const { dispatch } = this.props
+
+    dispatch(fetchProjects())
+  }
+
   render() {
-
-
     return (
       <div style={style.wrapper}>
         <div style={style.header}>
@@ -28,13 +36,13 @@ class ProjectWidget extends React.Component {
           </div>
         </div>
         <div style={style.content}>
-          {this._renderProjects()}
+          {this._renderContent()}
         </div>
       </div>
     )
   }
 
-  _renderProjects() {
+  _renderContent() {
     const { projects } = this.props
 
     if (!projects || projects.length === 0) {
@@ -46,7 +54,15 @@ class ProjectWidget extends React.Component {
       )
     }
 
-    return null
+    return this._renderProjectList(projects)
+  }
+
+  _renderProjectList(projects) {
+    return (
+      <ul>
+        { projects.map(p => <li key={p._id}>{p.name}</li>)}
+      </ul>
+    )
   }
 }
 

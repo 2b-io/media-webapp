@@ -27,9 +27,14 @@ class ProjectForm extends React.Component {
             name="slug"
             placeholder="a-cool-project"
           />
+          <p style={style.desc}>Please note that you will not able to change <b>your project's slug</b> afterward. This slug will be used as identifier of your project.</p>
         </div>
         <div style={style.row}>
-          <p>Please note that you will not able to change <b>your project's slug</b> afterward. This slug will be used as identifier of your project.</p>
+          <label style={style.label}>Origins</label>
+          <Field component={TextBox}
+            name="origins"
+            placeholder="cdn.cool.com,img.cool.com"
+          />
         </div>
         <div style={style.row}>
           <div>

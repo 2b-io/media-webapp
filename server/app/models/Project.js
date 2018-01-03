@@ -14,4 +14,4 @@ const schema = mongoose.Schema({
   origins: [ String ]
 })
 
-export default mongoose.model('Tenant', schema)
+export default mongoose.model('Project', schema)

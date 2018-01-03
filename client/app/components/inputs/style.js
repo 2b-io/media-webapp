@@ -12,7 +12,7 @@ export const text = prefix({
     outline: 'none',
     borderBottom: `2px solid ${COLOR.darkGray}`
   },
-  padding: '.75rem',
+  padding: '15px',
   borderTop: 'none',
   borderLeft: 'none',
   borderRight: 'none',

@@ -11,6 +11,7 @@ export function get({ url }, { token } = { token: null }) {
   return request
     .get(url)
     .set('accept', 'json')
+    .set('Authorization', token ? `Bearer ${token}` : '')
     .then(response => response.body)
 }
 

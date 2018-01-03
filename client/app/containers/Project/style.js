@@ -20,5 +20,9 @@ export const form = prefix({
   },
   label: {
     marginRight: 'auto'
+  },
+  desc: {
+    marginTop: '5px',
+    fontSize: '16px'
   }
 })
