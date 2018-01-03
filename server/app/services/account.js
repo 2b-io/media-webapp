@@ -1,20 +1,18 @@
 import Account from 'models/Account'
 
-export function list() {
-  return Account.find().lean().exec()
+export const list = async () => {
+  return await Account.find().lean().exec()
 }
 
-export function create(info) {
+export const create = async (info) => {
   // TODO generate randomize password
   // TODO send password via email
 
   const { email } = info
   const password = '123456'
 
-  const account = new Account({
+  return await new Account({
     email,
     password
-  })
-
-  return account.save()
+  }).save()
 }
