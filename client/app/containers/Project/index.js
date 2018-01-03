@@ -1,6 +1,7 @@
 import Radium from 'radium'
 import React from 'react'
 
+import { createProject } from 'actions/project'
 import AuthRequired from 'decorators/AuthRequired'
 import Layout, { PERSONAL_MODE } from 'decorators/Layout'
 import UIState from 'decorators/UIState'
@@ -15,6 +16,12 @@ import style from './style'
 @AuthRequired
 @Radium
 class Project extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this._processSaveProject = this._processSaveProject.bind(this)
+  }
+
   componentDidMount() {
     const { params } = this.props.match
 
@@ -24,15 +31,22 @@ class Project extends React.Component {
   }
 
   render() {
-    const { project = { name: 'new project'} } = this.props
+    const { project } = this.props
 
     return (
       <div style={style.wrapper}>
         <div style={style.project}>
-          <ProjectForm initialValues={project} />
+          <ProjectForm initialValues={project}
+            onSubmit={this._processSaveProject} />
         </div>
       </div>
     )
+  }
+
+  _processSaveProject(project) {
+    const { dispatch } = this.props
+
+    dispatch(createProject(project))
   }
 }
 
