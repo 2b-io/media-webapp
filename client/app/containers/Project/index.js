@@ -3,6 +3,7 @@ import Radium from 'radium'
 import React from 'react'
 
 import IconError from 'react-icons/lib/md/error'
+import IconInfo from 'react-icons/lib/md/info'
 
 import { createProject, fetchProject, updateProject } from 'actions/project'
 import Redirect from 'components/Redirect'
@@ -45,12 +46,7 @@ class Project extends React.Component {
     const { action, slug } = match.params
 
     if (payload && action === 'create') {
-      return (
-        <Redirect
-          ui="project"
-          path={`/projects/view/${payload.slug}`}
-        />
-      )
+      return <Redirect path={`/projects/view/${payload.slug}`} />
     }
 
     const project = projects[slug] || {}
@@ -64,6 +60,7 @@ class Project extends React.Component {
 
     return (
       <div style={style.wrapper}>
+        {this._renderSuccess(action, payload)}
         {this._renderError(action, error)}
         <div style={style.project}>
           <ProjectForm
@@ -73,6 +70,19 @@ class Project extends React.Component {
           />
         </div>
         {this._renderUsage(project)}
+      </div>
+    )
+  }
+
+  _renderSuccess(action, payload) {
+    if (!payload) return null
+
+    return (
+      <div style={style.success}>
+        <IconInfo size={24} />
+        <span style={style.successMessage}>
+          {`Save the project successfully`}
+        </span>
       </div>
     )
   }

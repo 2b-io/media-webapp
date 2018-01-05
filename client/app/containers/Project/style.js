@@ -18,6 +18,16 @@ export default prefix({
   errorMessage: {
     marginLeft: '5px',
   },
+  success: {
+    ...columnLayout.column,
+    padding: '15px',
+    borderLeft: `5px solid ${COLOR.lightGray}`,
+    display: 'flex',
+    alignItems: 'center'
+  },
+  successMessage: {
+    marginLeft: '5px',
+  },
   project: {
     ...columnLayout.column,
     minWidth: '300px'
