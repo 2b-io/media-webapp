@@ -1,5 +1,5 @@
 import prefix from 'helpers/vendor-prefix'
-import { COLOR } from 'styles/constants'
+import { COLOR, FONT_SIZE } from 'styles/constants'
 import { columnLayout } from 'styles/layout'
 import logoBg from 'img/black_cloud.svg'
 
@@ -32,7 +32,7 @@ export default prefix({
     animation: 'animatedLogo 10s linear infinite'
   },
   heading: {
-    fontSize: '34px',
+    fontSize: FONT_SIZE.heading,
     lineHeight: '48px',
     fontWeight: 400,
     color: COLOR.dark,
@@ -44,7 +44,7 @@ export default prefix({
     marginTop: '20px'
   },
   description: {
-    fontSize: '20px',
+    fontSize: FONT_SIZE.large,
     lineHeight: '27px',
     marginTop: '40px',
     fontWeight: 200
@@ -58,7 +58,6 @@ export default prefix({
   },
   feature: {
     margin: '30px 0',
-    fontSize: '18px',
     lineHeight: '25px'
   },
   featureName: {

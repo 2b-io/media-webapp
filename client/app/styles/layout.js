@@ -1,4 +1,4 @@
-import { COLOR } from 'styles/constants'
+import { COLOR, FONT_SIZE } from 'styles/constants'
 
 export const columnLayout = {
   wrapper: {
@@ -52,6 +52,6 @@ export const widgetLayout = {
   },
   content: {
     marginTop: '15px',
-    fontSize: '14px'
+    fontSize: FONT_SIZE.smallx
   }
 }

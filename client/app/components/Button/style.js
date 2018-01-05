@@ -1,5 +1,5 @@
 import prefix from 'helpers/vendor-prefix'
-import { COLOR } from 'styles/constants'
+import { COLOR, FONT_SIZE } from 'styles/constants'
 import { fontStyle } from 'styles/global'
 
 export default prefix({
@@ -20,10 +20,10 @@ export default prefix({
   paddingRight: '30px',
   border: `2px solid ${COLOR.dark}`,
   borderRadius: '20px',
-  fontSize: '18px',
+  fontSize: FONT_SIZE.normal,
   display: 'inline-block',
   height: '40px',
-  lineHeight: '34px',
+  lineHeight: '35px',
   transition: 'color .2s, background .2s',
   cursor: 'pointer',
   whiteSpace: 'nowrap'

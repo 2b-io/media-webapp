@@ -1,4 +1,5 @@
 import prefix from 'helpers/vendor-prefix'
+import { FONT_SIZE } from 'styles/constants'
 import { columnLayout } from 'styles/layout'
 
 export default prefix({
@@ -24,7 +25,7 @@ export const form = prefix({
   },
   signIn: {},
   forgot: {
-    fontSize: '14px',
+    fontSize: FONT_SIZE.smallx,
     marginLeft: '15px'
   }
 })

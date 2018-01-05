@@ -29,7 +29,7 @@ class BillingWidget extends React.Component {
 
   _renderBilling() {
     return (
-      <p>There is no data yet.</p>
+      <p>This feature will be available soon.</p>
     )
   }
 }

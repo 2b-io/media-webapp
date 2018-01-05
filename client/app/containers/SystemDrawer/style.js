@@ -1,5 +1,5 @@
 import prefix from 'helpers/vendor-prefix'
-import { COLOR } from 'styles/constants'
+import { COLOR, FONT_SIZE } from 'styles/constants'
 import { fontStyle } from 'styles/global'
 
 export const sideMenuStyle = prefix({
@@ -27,7 +27,6 @@ export const content = prefix({
   },
   heading: {
     color: COLOR.dark,
-    fontSize: '18px',
     fontWeight: 900,
     lineHeight: '35px',
     marginTop: '10px',
@@ -35,7 +34,6 @@ export const content = prefix({
   },
   item: {
     color: COLOR.darkGray,
-    fontSize: '18px',
     fontWeight: 300,
     lineHeight: '35px',
     display: 'block'
@@ -48,7 +46,7 @@ export const bottom = prefix({
   },
   signature: {
     color: COLOR.darkGray,
-    fontSize: '16px',
+    fontSize: FONT_SIZE.small,
     fontWeight: 300,
     display: 'flex',
     alignItems: 'center',

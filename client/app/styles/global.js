@@ -1,9 +1,9 @@
 import prefix from 'helpers/vendor-prefix'
-import { COLOR } from 'styles/constants'
+import { COLOR, FONT_SIZE } from 'styles/constants'
 
 export const fontStyle = prefix({
   fontFamily: 'Space Mono',
   color: COLOR.dark,
-  fontSize: '18px',
+  fontSize: FONT_SIZE.normal,
   lineHeight: '25px'
 })

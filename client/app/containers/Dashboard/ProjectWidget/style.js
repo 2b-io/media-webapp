@@ -1,5 +1,5 @@
 import prefix from 'helpers/vendor-prefix'
-import { COLOR } from 'styles/constants'
+import { FONT_SIZE } from 'styles/constants'
 import { widgetLayout as layout } from 'styles/layout'
 
 export default prefix({
@@ -12,6 +12,6 @@ export default prefix({
 
   },
   projectOrigins: {
-    fontSize: '12px'
+    fontSize: FONT_SIZE.smallxx
   }
 })
