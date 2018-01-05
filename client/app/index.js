@@ -4,6 +4,8 @@ import { render } from 'react-dom'
 import 'css/global.styl'
 import Mount from 'bootstrap/Mount'
 
-const MOUNT_NODE = document.getElementById('root')
-
-render(<Mount />, MOUNT_NODE, () => console.log('Render completed'))
+render(
+  <Mount />,
+  document.getElementById('root'),
+  () => console.log('Render completed')
+)

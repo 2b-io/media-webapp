@@ -4,7 +4,7 @@ import pick from 'object.pick'
 
 import HyperLink from 'decorators/HyperLink'
 
-import { linkStyle } from './style'
+import style from './style'
 
 @Radium
 class Link extends React.PureComponent {
@@ -12,13 +12,13 @@ class Link extends React.PureComponent {
 
   render() {
     const supportedProps = pick(this.props, Link.NATIVE_PROPS)
-    const style = {
-      ...linkStyle,
+    const mergedStyle = {
+      ...style,
       ...this.props.style
     }
 
     return (
-      <a style={style} {...supportedProps}>
+      <a style={mergedStyle} {...supportedProps}>
         {this.props.children}
       </a>
     )

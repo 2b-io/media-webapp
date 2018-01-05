@@ -1,7 +1,7 @@
 import prefix from 'helpers/vendor-prefix'
 import { COLOR } from 'styles/constants'
 
-export const linkStyle = prefix({
+export default prefix({
   ':focus': {
     outline: 'none'
   },

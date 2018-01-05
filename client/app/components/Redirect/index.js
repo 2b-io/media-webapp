@@ -4,11 +4,7 @@ import { redirect, replace } from 'actions/location'
 
 @connect()
 class Redirect extends React.PureComponent {
-  constructor(props) {
-    super(props)
-  }
-
-  componentWillMount() {
+  componentDidMount() {
     let { mode, path, dispatch } = this.props
 
     if (mode === 'replace') {

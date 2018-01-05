@@ -8,7 +8,7 @@ import { text as style } from './style'
 class PasswordBox extends React.Component {
   render() {
     const { input:inputProps } = this.props
-    const nativeInputProps = pick(this.props, ['placeholder'])
+    const nativeInputProps = pick(this.props, ['placeholder', 'readOnly'])
     const mergedStyle = {
       ...style,
       ...this.props.style

@@ -1,6 +1,7 @@
 import prefix from 'helpers/vendor-prefix'
 import { COLOR, FONT_SIZE } from 'styles/constants'
 import { fontStyle } from 'styles/global'
+import linkStyle from 'components/Link/style'
 
 export const sideMenuStyle = prefix({
   bmMenu: {
@@ -33,6 +34,7 @@ export const content = prefix({
     display: 'block'
   },
   item: {
+    ...linkStyle,
     color: COLOR.darkGray,
     fontWeight: 300,
     lineHeight: '35px',
