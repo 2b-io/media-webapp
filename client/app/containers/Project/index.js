@@ -2,7 +2,10 @@ import pick from 'object.pick'
 import Radium from 'radium'
 import React from 'react'
 
+import IconError from 'react-icons/lib/md/error'
+
 import { createProject, fetchProject, updateProject } from 'actions/project'
+import Redirect from 'components/Redirect'
 import AuthRequired from 'decorators/AuthRequired'
 import Layout, { PERSONAL_MODE } from 'decorators/Layout'
 import UIState from 'decorators/UIState'
@@ -37,8 +40,18 @@ class Project extends React.Component {
   }
 
   render() {
+    const { payload, error } = this.props['UI/project']
     const { projects, match } = this.props
     const { action, slug } = match.params
+
+    if (payload && action === 'create') {
+      return (
+        <Redirect
+          ui="project"
+          path={`/projects/view/${payload.slug}`}
+        />
+      )
+    }
 
     const project = projects[slug] || {}
 
@@ -51,6 +64,7 @@ class Project extends React.Component {
 
     return (
       <div style={style.wrapper}>
+        {this._renderError(error)}
         <div style={style.project}>
           <ProjectForm
             initialValues={initialValues}
@@ -58,20 +72,39 @@ class Project extends React.Component {
             update={!!initialValues._id}
           />
         </div>
-        <div style={style.usage}>
-          <label>Change your code</label>
-          <code style={style.code}>
-            {`<img src="`}<b>YOUR_PUBLIC_IMAGE_URL</b>{`" />`}
-          </code>
-          <label>To</label>
-          <code style={style.code}>
-            {`<img src="https://server1.mn-cdn.com/p/${project.slug}/media?width=`}<b>YOUR_DESIRED_WIDTH</b>{`&url=`}<b>YOUR_PUBLIC_IMAGE_URL</b>{`" />`}
-          </code>
-          <p style={style.desc}>
-            Please note that <b>YOUR_PUBLIC_IMAGE_URL</b> should be a full URL of your public image. It should contain protocol and domain.<br />
-            For example: <b>https://yourdomain.com/your_image.jpg</b>
-          </p>
-        </div>
+        {this._renderUsage(project)}
+      </div>
+    )
+  }
+
+  _renderError(error) {
+    if (!error) return null
+
+    return (
+      <div style={style.error}>
+        <IconError size={32} />
+        <span> Error occurs when create/update project</span>
+      </div>
+    )
+  }
+
+  _renderUsage(project) {
+    if (!project._id) return null
+
+    return (
+      <div style={style.usage}>
+        <label>Change your code</label>
+        <code style={style.code}>
+          {`<img src="`}<b>YOUR_PUBLIC_IMAGE_URL</b>{`" />`}
+        </code>
+        <label>To</label>
+        <code style={style.code}>
+          {`<img src="https://server1.mn-cdn.com/p/${project.slug}/media?width=`}<b>YOUR_DESIRED_WIDTH</b>{`&url=`}<b>YOUR_PUBLIC_IMAGE_URL</b>{`" />`}
+        </code>
+        <p style={style.desc}>
+          Please note that <b>YOUR_PUBLIC_IMAGE_URL</b> should be a full URL of your public image. It should contain protocol and domain.<br />
+          For example: <b>https://yourdomain.com/your_image.jpg</b>
+        </p>
       </div>
     )
   }

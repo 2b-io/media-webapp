@@ -3,6 +3,12 @@ import Permission from 'models/Permission'
 import Project from 'models/Project'
 
 export const update = async (data) => {
+  const { name, slug, origins } = data
+
+  if (!name || !slug) {
+    throw new Error('Invalid Parameters')
+  }
+
   const project = await Project.findOneAndUpdate({
     slug: data.slug
   }, {
@@ -41,6 +47,10 @@ export const list = async (id) => {
 
 export const create = async (data, account) => {
   const { name, slug, origins = [] } = data
+
+  if (!name || !slug) {
+    throw new Error('Invalid parameters')
+  }
 
   const project = await new Project({
     name,

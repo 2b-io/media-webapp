@@ -8,6 +8,13 @@ export default prefix({
     maxWidth: '900px',
     flexDirection: 'column'
   },
+  error: {
+    ...columnLayout.column,
+    padding: '15px',
+    borderLeft: `5px solid ${COLOR.darkGray}`,
+    display: 'flex',
+    alignItems: 'center'
+  },
   project: {
     ...columnLayout.column,
     minWidth: '300px'
