@@ -8,8 +8,8 @@ export default prefix({
   },
   widget: {
     width: '100%',
-    marginLeft: '15px',
-    marginRight: '15px',
+    marginLeft: '30px',
+    marginRight: '30px',
     marginBottom: '30px'
   }
 })
