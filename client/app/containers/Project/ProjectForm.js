@@ -41,6 +41,7 @@ class ProjectForm extends React.Component {
             name="origins"
             placeholder="cdn.cool.com,img.cool.com"
           />
+          <p style={style.desc}>Multiple origins allowed. Use <code>,</code> to separate between origins.</p>
         </div>
         <div style={style.row}>
           <div>

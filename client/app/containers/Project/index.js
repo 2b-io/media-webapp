@@ -66,7 +66,7 @@ class Project extends React.Component {
     const { dispatch } = this.props
     const project = {
       ...form,
-      origins: form.origins.split(',').filter(Boolean)
+      origins: form.origins.split(',').filter(Boolean).map(o => o.trim())
     }
 
     if (project._id) {

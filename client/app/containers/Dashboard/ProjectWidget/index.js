@@ -69,14 +69,22 @@ class ProjectWidget extends React.Component {
   _renderProjectList(projects) {
     return (
       <ul>
-        { Object.keys(projects).map(slug => (
-          <li key={slug}>
-            <InternalLink
-              link={`/projects/view/${slug}`}>
-              <span>{projects[slug].name}</span>
-            </InternalLink>
-          </li>
-        )) }
+        { Object.keys(projects).map(slug => {
+          const project = projects[slug]
+
+          if (!project) return null
+
+          return (
+            <li key={slug} style={style.project}>
+              <InternalLink style={style.projectName}
+                link={`/projects/view/${slug}`}>
+                <span>{project.name}</span>
+              </InternalLink>
+              <span> ({slug})</span>
+              <p style={style.projectOrigins}>{project.origins.join(', ')}</p>
+            </li>
+          )
+        }) }
       </ul>
     )
   }
