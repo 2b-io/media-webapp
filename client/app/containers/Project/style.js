@@ -6,8 +6,7 @@ import { columnLayout } from 'styles/layout'
 export default prefix({
   wrapper: {
     ...columnLayout.wrapper,
-    maxWidth: '900px',
-    flexDirection: 'column'
+    maxWidth: '900px'
   },
   error: {
     ...columnLayout.column,
@@ -20,7 +19,9 @@ export default prefix({
     marginLeft: '5px',
   },
   success: {
-    ...columnLayout.column,
+    marginLeft: '30px',
+    marginRight: '30px',
+    marginBottom: '15px',
     padding: '15px',
     borderLeft: `5px solid ${COLOR.lightGray}`,
     display: 'flex',
@@ -30,11 +31,16 @@ export default prefix({
     marginLeft: '5px',
   },
   project: {
-    ...columnLayout.column,
+    marginLeft: '30px',
+    marginRight: '30px',
+    marginBottom: '15px',
     minWidth: '300px'
   },
   usage: {
-    ...columnLayout.column,
+    marginLeft: '30px',
+    marginRight: '30px',
+    marginBottom: '15px',
+    display: 'block',
     minWidth: '300px'
   },
   code: {
@@ -43,22 +49,26 @@ export default prefix({
     background: COLOR.lightGray,
     padding: '15px',
     marginBottom: '5px',
-    display: 'block'
+    display: 'block',
+    overflow: 'auto'
   },
   desc: {
     marginTop: '5px',
     fontSize: FONT_SIZE.smallx
   },
   other: {
-    ...columnLayout.column,
-    marginTop: '30px'
+    marginLeft: '30px',
+    marginRight: '30px',
+    marginBottom: '15px',
+    minWidth: '300px',
   },
   toggleDisable: {
     marginRight: '15px',
   },
   delete: {
     ...linkStyle,
-    fontSize: FONT_SIZE.smallx
+    fontSize: FONT_SIZE.smallx,
+    display: 'inline-block'
   }
 })
 
