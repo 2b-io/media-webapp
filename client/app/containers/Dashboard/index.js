@@ -22,9 +22,6 @@ class Dashboard extends React.Component {
           <ProjectWidget />
         </div>
         <div style={style.widget}>
-          <ProjectWidget />
-        </div>
-        <div style={style.widget}>
           <BillingWidget />
         </div>
       </div>

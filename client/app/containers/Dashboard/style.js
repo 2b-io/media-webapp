@@ -3,8 +3,7 @@ import { columnLayout } from 'styles/layout'
 
 export default prefix({
   wrapper: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    ...columnLayout.wrapper,
     maxWidth: '900px'
   },
   widget: {

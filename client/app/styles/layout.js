@@ -3,7 +3,9 @@ import { COLOR } from 'styles/constants'
 export const columnLayout = {
   wrapper: {
     display: 'flex',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    marginLeft: 'auto',
+    marginRight: 'auto'
   },
   column: {
     flex: 1,
@@ -21,9 +23,7 @@ export const appLayout = {
     justifyContent: 'space-between'
   },
   content: {
-    flexGrow: 1,
-    marginLeft: 'auto',
-    marginRight: 'auto'
+    flexGrow: 1
   }
 }
 
