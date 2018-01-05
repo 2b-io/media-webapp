@@ -15,6 +15,9 @@ export default prefix({
     display: 'flex',
     alignItems: 'center'
   },
+  errorMessage: {
+    marginLeft: '5px',
+  },
   project: {
     ...columnLayout.column,
     minWidth: '300px'

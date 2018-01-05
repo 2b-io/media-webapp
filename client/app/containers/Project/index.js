@@ -64,7 +64,7 @@ class Project extends React.Component {
 
     return (
       <div style={style.wrapper}>
-        {this._renderError(error)}
+        {this._renderError(action, error)}
         <div style={style.project}>
           <ProjectForm
             initialValues={initialValues}
@@ -77,13 +77,15 @@ class Project extends React.Component {
     )
   }
 
-  _renderError(error) {
+  _renderError(action, error) {
     if (!error) return null
 
     return (
       <div style={style.error}>
-        <IconError size={32} />
-        <span> Error occurs when create/update project</span>
+        <IconError size={24} />
+        <span style={style.errorMessage}>
+          {`Error occurs when ${action === 'create' ? 'create' : 'update'} project`}
+        </span>
       </div>
     )
   }
