@@ -6,6 +6,7 @@ import IconError from 'react-icons/lib/md/error'
 import IconInfo from 'react-icons/lib/md/info'
 
 import { createProject, fetchProject, updateProject } from 'actions/project'
+import Button from 'components/Button'
 import Redirect from 'components/Redirect'
 import AuthRequired from 'decorators/AuthRequired'
 import Layout, { PERSONAL_MODE } from 'decorators/Layout'
@@ -70,6 +71,19 @@ class Project extends React.Component {
           />
         </div>
         {this._renderUsage(project)}
+        {this._renderOtherControls(project)}
+      </div>
+    )
+  }
+
+  _renderOtherControls(project) {
+    if (!project._id) return null
+
+    return (
+      <div style={style.other}>
+        <Button type="button" style={style.toggleDisable}>disable</Button>
+
+        <span style={style.delete}>delete this project permanently?</span>
       </div>
     )
   }

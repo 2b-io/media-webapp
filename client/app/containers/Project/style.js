@@ -1,4 +1,5 @@
 import prefix from 'helpers/vendor-prefix'
+import linkStyle from 'components/Link/style'
 import { COLOR, FONT_SIZE } from 'styles/constants'
 import { columnLayout } from 'styles/layout'
 
@@ -46,6 +47,17 @@ export default prefix({
   },
   desc: {
     marginTop: '5px',
+    fontSize: FONT_SIZE.smallx
+  },
+  other: {
+    ...columnLayout.column,
+    marginTop: '30px'
+  },
+  toggleDisable: {
+    marginRight: '15px',
+  },
+  delete: {
+    ...linkStyle,
     fontSize: FONT_SIZE.smallx
   }
 })

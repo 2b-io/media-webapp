@@ -40,7 +40,7 @@ export const list = async (id) => {
     _id: {
       $in: permissions.map(p => p.project)
     }
-  }).lean()
+  }).sort('slug').lean()
 
   return projects
 }
