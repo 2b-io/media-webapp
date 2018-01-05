@@ -22,9 +22,9 @@ export default prefix({
     overflow: 'hidden'
   },
   homeHeadAnimation: {
-    width: '240px',
+    width: '120px',
     height: '75px',
-    marginLeft: '-60px',
+    marginLeft: '-2px',
     marginTop: '45px',
     backgroundImage: `url(${logoBg})`,
     backgroundRepeat: 'repeat-x',
