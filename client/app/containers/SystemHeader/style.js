@@ -35,6 +35,13 @@ export default prefix({
     cursor: 'pointer'
   },
   logoIcon: {
+    ':hover': {
+        backgroundColor: COLOR.dark,
+        color: COLOR.light
+    },
+    backgroundColor: COLOR.light,
+    color: COLOR.dark,
+    transition: 'background-color .2s, color .2s',
     position: 'absolute',
     left: 0,
     right: 0,

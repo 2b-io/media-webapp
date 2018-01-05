@@ -4,13 +4,15 @@ import { connect } from 'react-redux'
 import { MorphReplace } from 'react-svg-morph'
 
 // icons
-import IconBack from 'react-icons/lib/md/arrow-back'
-import IconMenu from 'react-icons/lib/md/menu'
 import IconClose from 'react-icons/lib/md/chevron-right'
+import IconDashboard from 'react-icons/lib/md/dashboard'
+import IconHome from 'react-icons/lib/md/home'
+import IconMenu from 'react-icons/lib/md/menu'
+
 
 // internal
 import { toggleSystemDrawer } from 'actions/drawer'
-import { back } from 'actions/location'
+import { redirect } from 'actions/location'
 import { COLOR } from 'styles/constants'
 
 // local
@@ -21,8 +23,9 @@ import style from './style'
   const { pathname } = state.ui.location
 
   return {
+    pathname,
     showMenu: menu ? menu.isOpen : false,
-    pathname
+    signedIn: !!(state.app.session && state.app.session.verified)
   }
 })
 @Radium
@@ -31,14 +34,15 @@ class SystemHeader extends React.Component {
     super(props)
 
     this._openSystemMenu = this._openSystemMenu.bind(this)
+    this._redirect = this._redirect.bind(this)
   }
 
   render() {
-    const { showMenu, pathname } = this.props
+    const { showMenu } = this.props
 
     return (
       <nav style={style.wrapper}>
-        {this._renderBackButton(pathname)}
+        {this._renderHomeButton()}
         <figure style={style.menuIcon} onClick={this._openSystemMenu(!showMenu)}>
           <MorphReplace width={24} height={24} fill={COLOR.light.string()} duration={200}>
             { showMenu ?
@@ -51,16 +55,26 @@ class SystemHeader extends React.Component {
     )
   }
 
-  _renderBackButton(pathname) {
-    if (pathname === '/' || pathname === '/dashboard') {
-      return null
+  _renderHomeButton() {
+    const { pathname, signedIn } = this.props
+
+    if (pathname === '/dashboard' || (!signedIn && pathname !== '/')) {
+      return (
+        <figure style={style.logoIcon} onClick={this._redirect('/')}>
+          <IconHome size={24} />
+        </figure>
+      )
     }
 
-    return (
-      <figure style={style.logoIcon} onClick={this._back}>
-        <IconBack size={24} />
-      </figure>
-    )
+    if (signedIn) {
+      return (
+        <figure style={style.logoIcon} onClick={this._redirect('/dashboard')}>
+          <IconDashboard size={24} />
+        </figure>
+      )
+    }
+
+    return null
   }
 
   _openSystemMenu(showMenu) {
@@ -69,8 +83,10 @@ class SystemHeader extends React.Component {
     return () => dispatch(toggleSystemDrawer(showMenu))
   }
 
-  _back() {
-    history.back()
+  _redirect(pathname) {
+    const { dispatch } = this.props
+
+    return () => dispatch(redirect(pathname))
   }
 }
 
