@@ -1,17 +1,26 @@
-import { fork, take, put } from 'redux-saga/effects'
+import { fork, take, put, select } from 'redux-saga/effects'
+import { ROUTING, redirect } from 'actions/routing'
+import { SESSION } from 'actions/session'
 
-import { END } from 'redux-saga'
 
-function* watchLocationChanged() {
+function* watchUnauthorizedAccesses() {
   while (true) {
-    const action = yield take('@@router/LOCATION_CHANGE')
+    const action = yield take(ROUTING.REJECT)
 
-    console.log('routing', action)
+    const token = yield select(state => state.app.session.token)
 
-    yield put(END)
+    if (token) {
+      yield put({
+        type: SESSION.DESTROY_REQUEST
+      })
+
+      yield take(SESSION.DESTROY_SUCCESS)
+    }
+
+    yield put(redirect('/sign-in'))
   }
 }
 
 export default function* root() {
-  yield fork(watchLocationChanged)
+  yield fork(watchUnauthorizedAccesses)
 }

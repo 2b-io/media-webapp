@@ -1,48 +1,68 @@
 import createBrowserHistory from 'history/createBrowserHistory'
 import createMemoryHistory from 'history/createMemoryHistory'
 
-import { accept } from 'actions/routing'
+import { accept, redirect, sync } from 'actions/routing'
 import store from './store'
 
-console.log('y')
+export default function(done) {
+  let lastLocation = {}
+  let isBooted = false
 
-let lastLocation = null
+  const browserHistory = createBrowserHistory({
+    initialEntries: ['/']
+  })
 
-const browserHistory = createBrowserHistory({
-  initialEntries: ['/']
-})
+  const memoryHistory = createMemoryHistory({
+    initialEntries: ['/splash']
+  })
 
-const memoryHistory = createMemoryHistory({
-  initialEntries: ['/splash']
-})
+  const select = state => select => select(state)
 
-const select = state => select => select(state)
+  const start = () => {
+     // sync browserHistory with memoryHistory
+      browserHistory.listen((location, type) => {
+        store.dispatch(accept(location))
+      })
 
-// listen redirecting, location
-store.subscribe(() => {
-  const selectState = select(store.getState())
+      // begin
+      store.dispatch(redirect(location.pathname))
 
-  const location = selectState(state => state.routing.location)
-
-  if (location && location !== lastLocation) {
-    lastLocation = location
-
-    memoryHistory.push(location.pathname, location.state)
+      done(memoryHistory)
   }
 
-  const redirecting = selectState(state => state.routing.redirecting)
+  // listen redirecting, location
+  store.subscribe(() => {
+    const selectState = select(store.getState())
 
-  if (redirecting) {
-    browserHistory.push(redirecting)
-  }
-})
+    const bootstrap = selectState(state => state.bootstrap)
 
-// sync browserHistory with memoryHistory
-browserHistory.listen((location, type) => {
-  store.dispatch(accept(location))
-})
+    if (!isBooted && bootstrap) {
+      isBooted = true
+      start()
+    }
+  })
 
-// begin
-store.dispatch(accept(location))
+  store.subscribe(() => {
+    const selectState = select(store.getState())
 
-export default memoryHistory
+    const acceptLocation = selectState(state => state.routing.location)
+
+    if (acceptLocation && acceptLocation !== lastLocation) {
+      lastLocation = acceptLocation
+
+      memoryHistory.push(acceptLocation.pathname, acceptLocation.key)
+    }
+
+    const requestLocation = selectState(state => state.routing.request)
+
+    if (requestLocation) {
+      store.dispatch(sync(requestLocation))
+    }
+
+    const syncLocation = selectState(state => state.routing.sync)
+
+    if (syncLocation) {
+      browserHistory.push(syncLocation.pathname, syncLocation.key)
+    }
+  })
+}

@@ -1,25 +1,35 @@
 import { ROUTING } from 'actions/routing'
 
 const initialState = {
-  redirecting: undefined,
-  location: undefined,
+  request: null,
+  sync: null,
+  location: null,
   splash: true
 }
 
-export default function(state = {}, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
-    case ROUTING.REQUEST_CHANGE: {
+    case ROUTING.REQUEST: {
       return {
         ...state,
-        redirecting: action.payload
+        request: action.payload
       }
     }
 
-    case ROUTING.ACCEPT_CHANGE:
+    case ROUTING.SYNC: {
+      return {
+        ...state,
+        request: null,
+        sync: action.payload
+      }
+    }
+
+    case ROUTING.ACCEPT:
       return {
         ...state,
         splash: false,
-        redirecting: undefined,
+        sync: null,
+        request: null,
         location: action.payload
       }
   }

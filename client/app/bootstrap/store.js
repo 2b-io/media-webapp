@@ -1,6 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import reduxCatch from 'redux-catch'
-import { routerMiddleware } from 'react-router-redux'
 import createSagaMiddleware from 'redux-saga'
 
 import auth from 'middlewares/auth'

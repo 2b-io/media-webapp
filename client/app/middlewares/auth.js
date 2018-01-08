@@ -1,34 +1,61 @@
 import nprogress from 'nprogress'
 import { ROUTING, redirect } from 'actions/routing'
 import { SESSION, verifySession } from 'actions/session'
+import { head } from 'services/rest'
 
 nprogress.configure({ showSpinner: false })
 
 const select = state => select => select(state)
-let verifying = false
 
-console.log('x')
+function checkPermission(pathname, token, done, reject) {
+  if (pathname === '/dashboard') {
+    return token ? done() : reject()
+  }
+
+  done()
+}
 
 export default [
   store => next => action => {
-    if (action.type !== ROUTING.ACCEPT_CHANGE) {
+    if (action.type !== ROUTING.REQUEST) {
       return next(action)
     }
 
     const selectState = select(store.getState())
-
     const token = selectState(state => state.app.session.token)
 
     if (!token) {
-      console.log('not sign in...')
-      return next(action)
+      return checkPermission(action.payload.pathname, null,
+        () => next(action),
+        () => next({
+          type: ROUTING.REJECT,
+          payload: action.payload
+        })
+      )
     }
 
-    console.log('verify token')
-    setTimeout(() => {
-      console.log('verify token done')
-
-      next(action)
-    }, 1e3)
+    head({
+      url: '/api/sessions'
+    }, {
+      token
+    })
+    .then(() => {
+      checkPermission(action.payload.pathname, token,
+        () => next(action),
+        () => next({
+          type: ROUTING.REJECT,
+          payload: action.payload
+        })
+      )
+    })
+    .catch(error => {
+      checkPermission(action.payload.pathname, null,
+        () => next(action),
+        () => next({
+          type: ROUTING.REJECT,
+          payload: action.payload
+        })
+      )
+    })
   }
 ]

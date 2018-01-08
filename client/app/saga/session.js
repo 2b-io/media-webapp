@@ -88,23 +88,14 @@ function* verifySession(session) {
 }
 
 export default function* root() {
-  let token = yield get(TOKEN_STORAGE_KEY)
-  let session
-
-  if (token) {
-    // refresh stored token
-    session = yield call(authorize, {
-      payload: { refresh: true }
-    }, token)
-  }
-
   while (true) {
-    if (!session) {
-      // wait for sign-in
-      const action = yield take(SESSION.CREATE_REQUEST)
-      session = yield call(authorize, action)
-    }
+    // wait for sign-in
+    const action = yield take(SESSION.CREATE_REQUEST)
+    const { token } = action.payload
 
+    let session = yield call(authorize, action, token)
+
+    // sign-in failure
     if (!session) continue
 
     const verifyTask = yield fork(verifySession, session)

@@ -4,13 +4,13 @@ import { Provider as ReduxProvider } from 'react-redux'
 import Router from 'bootstrap/Router'
 import App from 'containers/App'
 
-import store from 'bootstrap/store'
-
 class Mount extends React.Component {
   render() {
+    const { history, store } = this.props
+
     return (
       <ReduxProvider store={store}>
-        <Router component={App} />
+        <Router history={history} component={App} />
       </ReduxProvider>
     )
   }

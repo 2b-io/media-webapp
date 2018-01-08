@@ -1,6 +1,6 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Router as BrowserRouter } from 'react-router'
-import history from './history'
 
 class Router extends React.Component {
   constructor(props) {
@@ -8,7 +8,7 @@ class Router extends React.Component {
   }
 
   render() {
-    const { component: Component } = this.props
+    const { component: Component, history } = this.props
 
     return (
       <BrowserRouter history={history}>

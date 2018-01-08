@@ -1,13 +1,15 @@
 import prefix from 'helpers/prefix-map'
 
 export const ROUTING = prefix('routing', {
-  REQUEST_CHANGE: 'REQUEST_CHANGE',
-  ACCEPT_CHANGE: 'ACCEPT_CHANGE'
+  ACCEPT: 'ACCEPT',
+  REJECT: 'REJECT',
+  REQUEST: 'REQUEST',
+  SYNC: 'SYNC'
 })
 
 export function redirect(pathname, state) {
   return {
-    type: ROUTING.REQUEST_CHANGE,
+    type: ROUTING.REQUEST,
     payload: {
       pathname,
       state
@@ -15,9 +17,16 @@ export function redirect(pathname, state) {
   }
 }
 
+export function sync(location) {
+  return {
+    type: ROUTING.SYNC,
+    payload: location
+  }
+}
+
 export function accept(location) {
   return {
-    type: ROUTING.ACCEPT_CHANGE,
+    type: ROUTING.ACCEPT,
     payload: location
   }
 }
