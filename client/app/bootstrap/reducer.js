@@ -4,6 +4,7 @@ import {reducer as burgerMenu} from 'redux-burger-menu'
 
 import app from 'reducers/app'
 import form from 'reducers/form'
+import routing from 'reducers/routing'
 import ui from 'reducers/ui'
 
 // import account from 'reducers/account'
@@ -18,5 +19,6 @@ export default combineReducers({
   burgerMenu,
   app,
   form,
+  routing,
   ui
 })

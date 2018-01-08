@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { redirect } from 'actions/location'
+import { redirect } from 'actions/routing'
 
 export default function(Component) {
 

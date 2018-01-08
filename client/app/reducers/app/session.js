@@ -20,7 +20,6 @@ export default function(state = initialState, action) {
     case SESSION.CREATE_FAILURE:
     case SESSION.VERIFY_FAILURE:
       return {
-        ...state,
         ...initialState
       }
   }

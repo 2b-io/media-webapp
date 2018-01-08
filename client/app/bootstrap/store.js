@@ -1,9 +1,11 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import reduxCatch from 'redux-catch'
+import { routerMiddleware } from 'react-router-redux'
 import createSagaMiddleware from 'redux-saga'
 
-import reducer from 'bootstrap/reducer'
-import rootSaga from 'bootstrap/saga'
+import auth from 'middlewares/auth'
+import reducer from './reducer'
+import rootSaga from './saga'
 
 // support REDUX Chrome Extension
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -11,6 +13,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const sagaMiddleware = createSagaMiddleware();
 
 const middlewares = [
+  ...auth,
   sagaMiddleware,
   reduxCatch((error, getState, lastAction, dispatch) => {
     console.log(error, getState, lastAction, dispatch)
