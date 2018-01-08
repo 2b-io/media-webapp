@@ -1,5 +1,6 @@
 import createBrowserHistory from 'history/createBrowserHistory'
 import createMemoryHistory from 'history/createMemoryHistory'
+import nprogress from 'nprogress'
 
 import { accept, redirect, sync } from 'actions/routing'
 import store from './store'
@@ -50,12 +51,14 @@ export default function(done) {
     if (acceptLocation && acceptLocation !== lastLocation) {
       lastLocation = acceptLocation
 
+      nprogress.done()
       memoryHistory.push(acceptLocation.pathname, acceptLocation.key)
     }
 
     const requestLocation = selectState(state => state.routing.request)
 
     if (requestLocation) {
+      nprogress.start()
       store.dispatch(sync(requestLocation))
     }
 

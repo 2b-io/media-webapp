@@ -7,12 +7,11 @@ import { LinkButton } from 'components/Button'
 import { InternalLink } from 'components/Link'
 import Redirect from 'components/Redirect'
 import Layout, { SYSTEM_MODE } from 'decorators/Layout'
-import UIState from 'decorators/UIState'
 
 import SignInForm from './SignInForm'
 import style from './style'
 
-@UIState('signIn', state => ({
+@connect(state => ({
   session: state.app.session
 }))
 @Layout(SYSTEM_MODE)
@@ -25,15 +24,6 @@ class SignIn extends React.Component {
   }
 
   render() {
-    const { payload, error } = this.props['UI/signIn']
-
-    if (payload) {
-      // redirect to /dashboard if sign in success
-      // TODO redirect to last page
-      console.log('sign in success')
-      return <Redirect path="/dashboard" />
-    }
-
     const { verified } = this.props.session
 
     if (verified) {
@@ -43,25 +33,10 @@ class SignIn extends React.Component {
       return <Redirect path="/dashboard" />
     }
 
-    return this._renderLayout(error)
-
-    return (
-      <div style={container}>
-        {error ? <h1>Error</h1> : null}
-        <div style={signInContainer}>
-          <h1>Sign in to MediaNetwork</h1>
-          <SignInForm onSubmit={this._processSignIn} />
-          <InternalLink link="/forgot">Forgot password?</InternalLink>
-        </div>
-        <div style={signUpPromotion}>
-          <p><b>Don't have an account on MediaOnDemand yet?</b></p>
-          <InternalLink link="/sign-up">Create a new account</InternalLink>
-        </div>
-      </div>
-    )
+    return this._renderLayout()
   }
 
-  _renderLayout(error) {
+  _renderLayout() {
     return (
       <div style={style.wrapper}>
         <div style={style.signIn}>
