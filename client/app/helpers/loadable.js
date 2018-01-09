@@ -1,18 +1,16 @@
-import Loadable from 'react-loadable'
+import loadable from 'react-loadable'
 
 import reduxRoute from 'decorators/ReduxRoute'
 
 export function loadableContainer(module, path, exact = true) {
-  const LoadableComponent = Loadable({
+  return reduxRoute(path, exact)(loadable({
     loader: () => import(`containers/${module}`),
     loading: () => null
-  })
-
-  return reduxRoute(path, exact)(LoadableComponent)
+  }))
 }
 
 export function loadableComponent(module) {
-  return Loadable({
+  return loadable({
     loader: () => import(`components/${module}`),
     loading: () => null
   })

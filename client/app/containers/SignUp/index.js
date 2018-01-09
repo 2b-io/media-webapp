@@ -37,12 +37,10 @@ class SignUp extends React.Component {
     )
   }
 
-  _processSignUp({ email }) {
+  _processSignUp(credential) {
     const { dispatch } = this.props
 
-    dispatch(registerAccount({
-      email
-    }))
+    dispatch(registerAccount(credential))
   }
 }
 

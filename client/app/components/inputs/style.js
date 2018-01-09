@@ -20,5 +20,6 @@ export const text = prefix({
   WebkitAppearance: 'none',
   width: '100%',
   maxWidth: '100%',
-  transition: 'border .2s'
+  transition: 'border .2s',
+  color: COLOR.darkGray
 })

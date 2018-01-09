@@ -1,9 +1,6 @@
 import { UI_STATE } from 'actions/ui-state'
 
-const initialState = {
-  payload: null,
-  error: null
-}
+const initialState = {}
 
 export default function(id, reducer) {
   return {
