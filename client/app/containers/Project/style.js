@@ -8,28 +8,6 @@ export default prefix({
     ...columnLayout.wrapper,
     maxWidth: '900px'
   },
-  error: {
-    ...columnLayout.column,
-    padding: '15px',
-    borderLeft: `5px solid ${COLOR.darkGray}`,
-    display: 'flex',
-    alignItems: 'center'
-  },
-  errorMessage: {
-    marginLeft: '5px',
-  },
-  success: {
-    marginLeft: '30px',
-    marginRight: '30px',
-    marginBottom: '15px',
-    padding: '15px',
-    borderLeft: `5px solid ${COLOR.lightGray}`,
-    display: 'flex',
-    alignItems: 'center'
-  },
-  successMessage: {
-    marginLeft: '5px',
-  },
   project: {
     marginLeft: '30px',
     marginRight: '30px',

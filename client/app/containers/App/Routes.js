@@ -11,7 +11,8 @@ class Routes extends React.Component {
       dashboard: loadableContainer('Dashboard', '/dashboard'),
       home: loadableContainer('Home', '/'),
       profile: loadableContainer('Profile', '/profile', false),
-      project: loadableContainer('Project', '/projects/:action/:slug?'),
+      projectCreate: loadableContainer('Project', '/projects/:action'),
+      projectView: loadableContainer('Project', '/projects/:action/:slug'),
       signIn: loadableContainer('SignIn', '/sign-in'),
       signUp: loadableContainer('SignUp', '/sign-up')
     }

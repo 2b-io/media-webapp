@@ -1,5 +1,7 @@
 import React from 'react'
 
+import Message from 'components/Message'
+
 import PersonalDrawer from 'containers/PersonalDrawer'
 import SystemDrawer from 'containers/SystemDrawer'
 import Header from './Header'
@@ -15,6 +17,8 @@ class App extends React.Component {
       <div id="page-wrap" style={style.wrapper} key="page-wrap">
         <Header />
         <section style={style.content}>
+          <Message type="error">Error Message</Message>
+          <Message type="info">Info Message</Message>
           <Routes />
         </section>
         <Footer />

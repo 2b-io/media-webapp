@@ -5,5 +5,6 @@ export const fontStyle = prefix({
   fontFamily: 'Space Mono',
   color: COLOR.dark,
   fontSize: FONT_SIZE.normal,
-  lineHeight: '25px'
+  lineHeight: '25px',
+  wordBreak: 'break-word'
 })

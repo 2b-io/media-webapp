@@ -1,5 +1,6 @@
 import Radium from 'radium'
 import React from 'react'
+import { connect } from 'react-redux'
 import pick from 'object.pick'
 import splitLines from 'split-lines'
 
@@ -16,10 +17,9 @@ import UIState from 'decorators/UIState'
 import ProjectForm from './ProjectForm'
 import style from './style'
 
-@UIState('project', state => {
+@connect(state => {
   const url = state.routing.location.pathname
   const match = state.routing.matches[url]
-
   const { action, slug } = match.params
 
   return {
@@ -50,12 +50,7 @@ class Project extends React.Component {
   }
 
   render() {
-    const { payload, error } = this.props['UI/project']
     const { project, action, slug } = this.props
-
-    if (payload && action === 'create') {
-      return <Redirect path={`/projects/view/${payload.slug}`} />
-    }
 
     if (action === 'view' && !project) return null
 
@@ -66,8 +61,6 @@ class Project extends React.Component {
 
     return (
       <div style={style.wrapper}>
-        {this._renderSuccess(action, payload)}
-        {this._renderError(action, error)}
         <div style={style.project}>
           <ProjectForm
             initialValues={initialValues}
@@ -89,32 +82,6 @@ class Project extends React.Component {
         <Button type="button" style={style.toggleDisable}>disable</Button>
 
         <span style={style.delete}>delete this project permanently?</span>
-      </div>
-    )
-  }
-
-  _renderSuccess(action, payload) {
-    if (!payload) return null
-
-    return (
-      <div style={style.success}>
-        <IconInfo size={24} />
-        <span style={style.successMessage}>
-          {`Save the project successfully`}
-        </span>
-      </div>
-    )
-  }
-
-  _renderError(action, error) {
-    if (!error) return null
-
-    return (
-      <div style={style.error}>
-        <IconError size={24} />
-        <span style={style.errorMessage}>
-          {`Error occurs when ${action === 'create' ? 'create' : 'update'} project`}
-        </span>
       </div>
     )
   }
@@ -150,7 +117,7 @@ class Project extends React.Component {
           (origins, line) => [
             ...origins,
             ...line.split(',').filter(Boolean).map(o => o.trim())
-          ]
+          ], []
         )
     }
 
