@@ -12,7 +12,7 @@ import IconMenu from 'react-icons/lib/md/menu'
 
 // internal
 import { toggleSystemDrawer } from 'actions/drawer'
-import { redirect } from 'actions/location'
+import { redirect } from 'actions/routing'
 import { COLOR } from 'styles/constants'
 
 // local
@@ -20,7 +20,7 @@ import style from './style'
 
 @connect(state => {
   const menu = state.burgerMenu['layout/SYSTEM']
-  const { pathname } = state.ui.location
+  const { pathname } = state.routing.location || {}
 
   return {
     pathname,

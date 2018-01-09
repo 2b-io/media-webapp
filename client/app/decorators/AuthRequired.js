@@ -4,13 +4,9 @@ import { connect } from 'react-redux'
 import Redirect from 'components/Redirect'
 
 export default function(Component) {
-
   @connect(state => ({ unauthorized: !!(state.app.session && !state.app.session.verified) }))
-  class AuthRequired extends React.Component {
-    constructor(props) {
-      super(props)
-    }
 
+  class AuthRequired extends React.Component {
     render() {
       const { unauthorized } = this.props
 

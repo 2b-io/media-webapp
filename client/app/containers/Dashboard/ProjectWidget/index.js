@@ -5,8 +5,8 @@ import { connect } from 'react-redux'
 import IconAdd from 'react-icons/lib/md/add'
 import IconRefresh from 'react-icons/lib/md/refresh'
 
-import { redirect } from 'actions/location'
 import { fetchProjects } from 'actions/project'
+import { redirect } from 'actions/routing'
 import { InternalLink } from 'components/Link'
 
 import style from './style'

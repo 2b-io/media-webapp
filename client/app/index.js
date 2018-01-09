@@ -2,10 +2,13 @@ import React from 'react'
 import { render } from 'react-dom'
 
 import 'css/global.styl'
-import Mount from 'bootstrap/Mount'
+import boostrap from './bootstrap'
 
-render(
-  <Mount />,
-  document.getElementById('root'),
-  () => console.log('Render completed')
-)
+
+boostrap(mount => {
+  render(
+    mount,
+    document.getElementById('root'),
+    () => console.log('Render completed')
+  )
+})

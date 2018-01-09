@@ -28,5 +28,6 @@
     "prod:server:run": "NODE_ENV=production node server/prod.js",
     "client:clean": "rm -rf client/build",
     "server:clean": "rm server/prod.js"
-  }
+  },
+  "dependencies": {}
 }

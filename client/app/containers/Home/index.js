@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { InternalLink } from 'components/Link'
 import Layout, { SYSTEM_MODE } from 'decorators/Layout'
 
+
 import style from './style'
 
 @connect()

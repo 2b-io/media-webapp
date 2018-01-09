@@ -9,9 +9,12 @@ export const SESSION = prefix('session', {
   ...ajax('VERIFY')
 })
 
-export function verifySession() {
+export function verifySession(referer) {
   return {
-    ...ignore(SESSION.VERIFY_REQUEST)
+    ...ignore(SESSION.VERIFY_REQUEST),
+    payload: {
+      referer
+    }
   }
 }
 

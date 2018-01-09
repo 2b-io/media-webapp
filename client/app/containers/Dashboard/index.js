@@ -10,9 +10,7 @@ import ProjectWidget from './ProjectWidget'
 
 import style from './style'
 
-@connect()
 @Layout(PERSONAL_MODE)
-@AuthRequired
 @Radium
 class Dashboard extends React.Component {
   render() {

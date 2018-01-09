@@ -1,18 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { redirect, replace } from 'actions/location'
+import { redirect } from 'actions/routing'
+import { clearState } from 'actions/ui-state'
 
 @connect()
 class Redirect extends React.PureComponent {
   componentDidMount() {
-    let { mode, path, dispatch, ui } = this.props
+    let { path, dispatch } = this.props
 
-    if (mode === 'replace') {
-      dispatch(replace(path))
-    } else {
-      dispatch(redirect(path))
-    }
+    dispatch(clearState())
+    dispatch(redirect(path))
   }
 
   render() {
