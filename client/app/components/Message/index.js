@@ -8,14 +8,14 @@ import style from './style'
 @Radium
 class Message extends React.PureComponent {
   render() {
-    const { children, type, onDismiss } = this.props
+    const { children, type, onClick, onDismiss } = this.props
 
     const appliedStyle = style[type]
 
     return (
       <div style={appliedStyle.wrapper}>
         <div style={appliedStyle.content}>
-          <p style={appliedStyle.message}>
+          <p style={appliedStyle.message} onClick={onClick}>
             {children}
           </p>
           <div style={appliedStyle.icon} onClick={onDismiss}>

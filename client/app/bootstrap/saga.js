@@ -7,6 +7,7 @@ import bootstrap from 'saga/bootstrap'
 import project from 'saga/project'
 import routing from 'saga/routing'
 import session from 'saga/session'
+import userInteraction from 'saga/user-interaction'
 
 function *root() {
   // init
@@ -16,6 +17,7 @@ function *root() {
   // yield fork(ajax)
   yield fork(routing)
   yield fork(session)
+  yield fork(userInteraction)
 
   // data
   yield fork(account)

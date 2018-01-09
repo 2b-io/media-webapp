@@ -13,23 +13,6 @@ function drawerIsOpen(layout) {
   }
 }
 
-function* screenFlow() {
-  while (true) {
-    const action = yield race({
-      destroySession: take(SESSION.DESTROY_SUCCESS),
-      createProject: take(PROJECT.CREATE_SUCCESS)
-    })
-
-    if (action.destroySession) {
-      yield put(redirect('/sign-in'))
-    }
-
-    if (action.createProject) {
-      yield put(redirect(`/projects/view/${action.createProject.payload.slug}`))
-    }
-  }
-}
-
 function* watchUnauthorizedAccesses() {
   while (true) {
     const action = yield take(ROUTING.REJECT)
@@ -59,7 +42,6 @@ function* toggleDrawer() {
 }
 
 export default function* root() {
-  yield fork(screenFlow)
   yield fork(toggleDrawer)
   yield fork(watchUnauthorizedAccesses)
 }

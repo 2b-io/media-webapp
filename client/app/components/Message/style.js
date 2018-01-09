@@ -23,7 +23,8 @@ const content = {
 const message = {
   flex: 1,
   marginLeft: '5px',
-  fontSize: FONT_SIZE.smallx
+  fontSize: FONT_SIZE.small,
+  cursor: 'pointer'
 }
 
 const icon = {
