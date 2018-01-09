@@ -21,5 +21,6 @@ export const text = prefix({
   width: '100%',
   maxWidth: '100%',
   transition: 'border .2s',
-  color: COLOR.darkGray
+  color: COLOR.darkGray,
+  resize: 'none'
 })

@@ -1,6 +1,7 @@
-import pick from 'object.pick'
 import Radium from 'radium'
 import React from 'react'
+import pick from 'object.pick'
+import splitLines from 'split-lines'
 
 import IconError from 'react-icons/lib/md/error'
 import IconInfo from 'react-icons/lib/md/info'
@@ -143,7 +144,14 @@ class Project extends React.Component {
     const { dispatch } = this.props
     const project = {
       ...form,
-      origins: form.origins.split(',').filter(Boolean).map(o => o.trim())
+      origins: splitLines(form.origins)
+        .filter(Boolean)
+        .reduce(
+          (origins, line) => [
+            ...origins,
+            ...line.split(',').filter(Boolean).map(o => o.trim())
+          ]
+        )
     }
 
     if (project._id) {

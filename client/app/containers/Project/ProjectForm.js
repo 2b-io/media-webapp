@@ -3,6 +3,7 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import Button from 'components/Button'
 import { InternalLink } from 'components/Link'
+import TextArea from 'components/inputs/TextArea'
 import TextBox from 'components/inputs/TextBox'
 
 import { form as style } from './style'
@@ -37,11 +38,12 @@ class ProjectForm extends React.Component {
         </div>
         <div style={style.row}>
           <label style={style.label}>Origins</label>
-          <Field component={TextBox}
+          <Field component={TextArea}
             name="origins"
+            rows={3}
             placeholder="cdn.cool.com,img.cool.com"
           />
-          <p style={style.desc}>Multiple origins allowed. Use a comma (,) to separate origins.</p>
+          <p style={style.desc}>Multiple origins allowed. Use commas (,) or line breaks to separate origins.</p>
         </div>
         <div style={style.row}>
           <div>

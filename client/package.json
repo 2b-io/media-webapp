@@ -32,6 +32,7 @@
     "redux-form": "7.1.2",
     "redux-saga": "0.16.0",
     "slug": "0.9.1",
+    "split-lines": "1.1.0",
     "superagent": "^3.8.1",
     "typeface-space-mono": "0.0.44"
   },

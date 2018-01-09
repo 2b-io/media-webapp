@@ -4,7 +4,6 @@ import { render } from 'react-dom'
 import 'css/global.styl'
 import boostrap from './bootstrap'
 
-
 boostrap(mount => {
   render(
     mount,

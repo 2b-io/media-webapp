@@ -79,7 +79,8 @@ export const form = prefix({
     flexDirection: 'column'
   },
   label: {
-    marginRight: 'auto'
+    marginRight: 'auto',
+    marginBottom: '5px'
   },
   desc: {
     marginTop: '5px',
