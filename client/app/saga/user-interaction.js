@@ -1,10 +1,26 @@
+import { delay } from 'redux-saga'
 import { fork, put, race, take } from 'redux-saga/effects'
 
-import { append } from 'actions/message'
+import { append, dismiss } from 'actions/message'
 import { redirect } from 'actions/routing'
 
 import { PROJECT } from 'actions/project'
 import { SESSION } from 'actions/session'
+
+const DURATION = 10e3
+
+function* _autoDismissMessage(message) {
+  const key = Date.now()
+
+  yield put(append({
+    key,
+    ...message
+  }))
+
+  yield delay(DURATION)
+
+  yield put(dismiss(key))
+}
 
 function* project() {
   while (true) {
@@ -18,27 +34,27 @@ function* project() {
     if (action.createSuccess) {
       yield put(redirect('/dashboard'))
 
-      yield put(append({
+      yield fork(_autoDismissMessage, {
         type: 'info',
         link: `/projects/view/${action.createSuccess.payload.slug}`,
         value: `Create project [${action.createSuccess.payload.name}] successfully`
-      }))
+      })
     } else if (action.createFailure) {
-      yield put(append({
+      yield fork(_autoDismissMessage, {
         type: 'error',
         value: `Error occurs when creating a project`
-      }))
+      })
     } else if (action.updateSuccess) {
-      yield put(append({
+      yield fork(_autoDismissMessage, {
         type: 'info',
         link: `/projects/view/${action.updateSuccess.payload.slug}`,
         value: `Update project [${action.updateSuccess.payload.name}] successfully`
-      }))
+      })
     } else if (action.updateFailure) {
-      yield put(append({
+      yield fork(_autoDismissMessage, {
         type: 'error',
         value: `Error occurs when updating a project`
-      }))
+      })
     }
   }
 }
@@ -46,16 +62,22 @@ function* project() {
 function* session() {
   while (true) {
     const action = yield race({
+      createSuccess: take(SESSION.CREATE_SUCCESS),
       destroySuccess: take(SESSION.DESTROY_SUCCESS)
     })
 
-    if (action.destroySuccess) {
+    if (action.createSuccess) {
+      yield fork(_autoDismissMessage, {
+        type: 'info',
+        value: `Welcome back ${action.createSuccess.payload.account.email}`
+      })
+    } else if (action.destroySuccess) {
       yield put(redirect('/sign-in'))
 
-      yield put(append({
+      yield fork(_autoDismissMessage, {
         type: 'info',
         value: 'You have been signed out successfully'
-      }))
+      })
     }
   }
 }

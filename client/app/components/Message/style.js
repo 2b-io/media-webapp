@@ -12,7 +12,7 @@ const wrapper = {
 const content = {
   display: 'flex',
   alignItems: 'center',
-  margin: '0 30px 15px',
+  margin: '0 30px 30px',
   padding: '5px 0 5px 15px',
   transition: 'border .2s',
   ':hover': {
@@ -28,8 +28,6 @@ const message = {
 }
 
 const icon = {
-  width: '25px',
-  height: '25px',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

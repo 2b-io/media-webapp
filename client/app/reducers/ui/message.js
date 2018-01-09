@@ -14,7 +14,7 @@ export default function(state = initialState, action) {
     case MESSAGE.APPEND: {
       return {
         ...state,
-        [Date.now()]: action.payload
+        [action.payload.key]: action.payload
       }
     }
   }
