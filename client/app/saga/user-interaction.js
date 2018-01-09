@@ -8,9 +8,10 @@ import { PROJECT } from 'actions/project'
 import { SESSION } from 'actions/session'
 
 const DURATION = 10e3
+let counter = 0
 
 function* _autoDismissMessage(message) {
-  const key = Date.now()
+  const key = counter++
 
   yield put(append({
     key,
