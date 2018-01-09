@@ -4,7 +4,8 @@ const initialState = {
   request: null,
   sync: null,
   location: null,
-  splash: true
+  splash: true,
+  matches: {}
 }
 
 export default function(state = initialState, action) {
@@ -31,6 +32,15 @@ export default function(state = initialState, action) {
         sync: null,
         request: null,
         location: action.payload
+      }
+
+    case ROUTING.MATCH:
+      return {
+        ...state,
+        matches: {
+          ...state.matches,
+          [action.payload.path]: action.payload.match
+        }
       }
   }
 

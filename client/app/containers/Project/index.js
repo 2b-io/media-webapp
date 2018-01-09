@@ -16,8 +16,15 @@ import ProjectForm from './ProjectForm'
 import style from './style'
 
 @UIState('project', state => {
+  const url = state.routing.location.pathname
+  const match = state.routing.matches[url]
+
+  const { action, slug } = match.params
+
   return {
-    projects: state.app.projects
+    action,
+    slug,
+    project: (state.app.projects || {})[slug]
   }
 })
 @Layout(PERSONAL_MODE)
@@ -43,20 +50,17 @@ class Project extends React.Component {
 
   render() {
     const { payload, error } = this.props['UI/project']
-    const { projects, match } = this.props
-    const { action, slug } = match.params
+    const { project, action, slug } = this.props
 
     if (payload && action === 'create') {
       return <Redirect path={`/projects/view/${payload.slug}`} />
     }
 
-    const project = projects[slug] || {}
-
     if (action === 'view' && !project) return null
 
     const initialValues = {
       ...project,
-      origins: (project.origins || []).join(',')
+      origins: ((project && project.origins) || []).join(',')
     }
 
     return (
@@ -70,8 +74,8 @@ class Project extends React.Component {
             update={!!initialValues._id}
           />
         </div>
-        {this._renderUsage(project)}
-        {this._renderOtherControls(project)}
+        {this._renderUsage(initialValues)}
+        {this._renderOtherControls(initialValues)}
       </div>
     )
   }

@@ -4,7 +4,8 @@ export const ROUTING = prefix('routing', {
   ACCEPT: 'ACCEPT',
   REJECT: 'REJECT',
   REQUEST: 'REQUEST',
-  SYNC: 'SYNC'
+  SYNC: 'SYNC',
+  MATCH: 'MATCH'
 })
 
 export function redirect(pathname, state) {
