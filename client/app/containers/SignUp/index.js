@@ -1,15 +1,14 @@
 import Radium from 'radium'
 import React from 'react'
+import { connect } from 'react-redux'
 
 import { registerAccount } from 'actions/account'
-import Redirect from 'components/Redirect'
 import Layout, { SYSTEM_MODE } from 'decorators/Layout'
-import UIState from 'decorators/UIState'
 
 import SignUpForm from './SignUpForm'
 import style from './style'
 
-@UIState('signUp')
+@connect()
 @Layout(SYSTEM_MODE)
 @Radium
 class SignUp extends React.Component {
@@ -20,17 +19,9 @@ class SignUp extends React.Component {
   }
 
   render() {
-    const { payload, error } = this.props['UI/signUp']
-
-    if (payload) {
-      // redirect to /sign-in if sign-up success
-      return <Redirect path="/sign-in?create=success" />
-    }
-
     return (
       <div style={style.wrapper}>
         <div style={style.signUp}>
-          {error && <h1>Error</h1>}
           <SignUpForm onSubmit={this._processSignUp} />
         </div>
       </div>

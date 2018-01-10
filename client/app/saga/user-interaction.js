@@ -4,10 +4,11 @@ import { fork, put, race, take } from 'redux-saga/effects'
 import { append, dismiss } from 'actions/message'
 import { redirect } from 'actions/routing'
 
+import { ACCOUNT } from 'actions/account'
 import { PROJECT } from 'actions/project'
 import { SESSION } from 'actions/session'
 
-const DURATION = 5e3
+const DURATION = 10e3
 let counter = 0
 
 function* showMessage(message, duration = DURATION) {
@@ -24,6 +25,23 @@ function* showMessage(message, duration = DURATION) {
   yield delay(duration)
 
   yield put(dismiss(key))
+}
+
+function* account() {
+  while (true) {
+    const action = yield race({
+      createSuccess: take(ACCOUNT.CREATE_SUCCESS)
+    })
+
+    if (action.createSuccess) {
+      yield fork(showMessage, {
+        type: 'info',
+        value: `Thank you for creating account at MediaNetwork. An invitation email has been sent to ${action.createSuccess.payload.email}`
+      }, false)
+
+      yield put(redirect('/sign-in'))
+    }
+  }
 }
 
 function* project() {
@@ -87,6 +105,7 @@ function* session() {
 }
 
 export default function* root() {
+  yield fork(account)
   yield fork(project)
   yield fork(session)
 }

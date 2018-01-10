@@ -14,6 +14,9 @@ export default prefix({
   promoteSignUp: {
     ...columnLayout.column,
     minWidth: '300px'
+  },
+  signUpQuestion: {
+    marginBottom: '15px'
   }
 })
 

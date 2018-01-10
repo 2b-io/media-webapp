@@ -43,7 +43,9 @@ class SignIn extends React.Component {
           <SignInForm onSubmit={this._processSignIn} />
         </div>
         <div style={style.promoteSignUp}>
-          <p><b>Don't have an account on MediaNetwork yet?</b></p>
+          <p style={style.signUpQuestion}>
+            <b>Don't have an account on MediaNetwork yet?</b>
+          </p>
           <InternalLink link="/sign-up">Create a new account</InternalLink>
         </div>
       </div>
