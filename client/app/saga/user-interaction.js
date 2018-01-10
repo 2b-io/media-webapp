@@ -7,18 +7,21 @@ import { redirect } from 'actions/routing'
 import { PROJECT } from 'actions/project'
 import { SESSION } from 'actions/session'
 
-const DURATION = 10e3
+const DURATION = 5e3
 let counter = 0
 
-function* _autoDismissMessage(message) {
+function* showMessage(message, duration = DURATION) {
   const key = counter++
 
   yield put(append({
     key,
+    duration,
     ...message
   }))
 
-  yield delay(DURATION)
+  if (!duration) return
+
+  yield delay(duration)
 
   yield put(dismiss(key))
 }
@@ -33,29 +36,29 @@ function* project() {
     })
 
     if (action.createSuccess) {
-      yield put(redirect('/dashboard'))
-
-      yield fork(_autoDismissMessage, {
+      yield fork(showMessage, {
         type: 'info',
         link: `/projects/view/${action.createSuccess.payload.slug}`,
         value: `Create project [${action.createSuccess.payload.name}] successfully`
       })
+
+      yield put(redirect('/dashboard'))
     } else if (action.createFailure) {
-      yield fork(_autoDismissMessage, {
+      yield fork(showMessage, {
         type: 'error',
-        value: `Error occurs when creating a project`
-      })
+        value: 'Error occurs when creating a project'
+      }, false)
     } else if (action.updateSuccess) {
-      yield fork(_autoDismissMessage, {
+      yield fork(showMessage, {
         type: 'info',
         link: `/projects/view/${action.updateSuccess.payload.slug}`,
         value: `Update project [${action.updateSuccess.payload.name}] successfully`
       })
     } else if (action.updateFailure) {
-      yield fork(_autoDismissMessage, {
+      yield fork(showMessage, {
         type: 'error',
-        value: `Error occurs when updating a project`
-      })
+        value: 'Error occurs when updating the project'
+      }, false)
     }
   }
 }
@@ -68,17 +71,17 @@ function* session() {
     })
 
     if (action.createSuccess) {
-      yield fork(_autoDismissMessage, {
+      yield fork(showMessage, {
         type: 'info',
         value: `Welcome back ${action.createSuccess.payload.account.email}`
       })
     } else if (action.destroySuccess) {
-      yield put(redirect('/sign-in'))
-
-      yield fork(_autoDismissMessage, {
+      yield fork(showMessage, {
         type: 'info',
         value: 'You have been signed out successfully'
       })
+
+      yield put(redirect('/sign-in'))
     }
   }
 }
