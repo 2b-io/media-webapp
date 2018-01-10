@@ -85,13 +85,19 @@ function* session() {
   while (true) {
     const action = yield race({
       createSuccess: take(SESSION.CREATE_SUCCESS),
+      createFailure: take(SESSION.CREATE_FAILURE),
       destroySuccess: take(SESSION.DESTROY_SUCCESS)
     })
 
     if (action.createSuccess) {
       yield fork(showMessage, {
         type: 'info',
-        value: `Welcome back ${action.createSuccess.payload.account.email}`
+        value: `Welcome back ${action.createSuccess.payload.account.email}. Have a nice day!`
+      })
+    } else if (action.createFailure) {
+      yield fork(showMessage, {
+        type: 'error',
+        value: 'Error occurs when signing into your account. Please verify your email and password then try again.'
       })
     } else if (action.destroySuccess) {
       yield fork(showMessage, {

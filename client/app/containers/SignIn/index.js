@@ -29,7 +29,6 @@ class SignIn extends React.Component {
     if (verified) {
       // redirect to /dashboard if sign in success
       // TODO redirect to last page
-      console.log('session verified')
       return <Redirect path="/dashboard" />
     }
 
@@ -46,19 +45,16 @@ class SignIn extends React.Component {
           <p style={style.signUpQuestion}>
             <b>Don't have an account on MediaNetwork yet?</b>
           </p>
-          <InternalLink link="/sign-up">Create a new account</InternalLink>
+          <LinkButton link="/sign-up">create a new account</LinkButton>
         </div>
       </div>
     )
   }
 
-  _processSignIn({ email, password }) {
+  _processSignIn(credential) {
     const { dispatch } = this.props
 
-    dispatch(signIn({
-      email,
-      password
-    }))
+    dispatch(signIn(credential))
   }
 }
 

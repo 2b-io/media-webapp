@@ -31,44 +31,54 @@ class DrawerContent extends React.Component {
           </InternalLink>
         </li>
         <li>
-          <InternalLink link="/" style={style.item}>
+          <InternalLink link="/about" style={style.item}>
             <span>about</span>
           </InternalLink>
         </li>
         <li>
-          <InternalLink link="/" style={style.item}>
+          <InternalLink link="/help" style={style.item}>
             <span>help</span>
           </InternalLink>
         </li>
-        { signedIn ? [
-            <li key="dashboard">
-              <InternalLink link="/dashboard" style={style.item}>
-                <span>dashboard</span>
-              </InternalLink>
-            </li>,
-            <li key="account">
-              <InternalLink link="/account" style={style.item}>
-                <span>account</span>
-              </InternalLink>
-            </li>,
-            <li key="sign-out">
-              <span style={style.item} onClick={this._signOut}>sign out</span>
-            </li>
-          ] : [
-            <li key="sign-up">
-              <InternalLink link="/sign-up" style={style.item}>
-                <span>sign up</span>
-              </InternalLink>
-            </li>,
-            <li key="sign-in">
-              <InternalLink link="/sign-in" style={style.item}>
-                <span>sign in</span>
-              </InternalLink>
-            </li>
-          ]
+        { signedIn ?
+            this._renderPersonalMenu() :
+            this._renderPublicMenu()
         }
       </ul>
     )
+  }
+
+  _renderPublicMenu() {
+    return [
+      <li key="sign-up">
+        <InternalLink link="/sign-up" style={style.item}>
+          <span>sign up</span>
+        </InternalLink>
+      </li>,
+      <li key="sign-in">
+        <InternalLink link="/sign-in" style={style.item}>
+          <span>sign in</span>
+        </InternalLink>
+      </li>
+    ]
+  }
+
+  _renderPersonalMenu() {
+    return [
+      <li key="dashboard">
+        <InternalLink link="/dashboard" style={style.item}>
+          <span>dashboard</span>
+        </InternalLink>
+      </li>,
+      <li key="account">
+        <InternalLink link="/account" style={style.item}>
+          <span>account</span>
+        </InternalLink>
+      </li>,
+      <li key="sign-out">
+        <span style={style.item} onClick={this._signOut}>sign out</span>
+      </li>
+    ]
   }
 
   _signOut() {
