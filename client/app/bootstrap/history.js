@@ -8,6 +8,7 @@ import store from './store'
 export default function(done) {
   let lastLocation = {}
   let isBooted = false
+  let ignoreEvent = false
 
   const browserHistory = createBrowserHistory({
     initialEntries: ['/']
@@ -22,7 +23,12 @@ export default function(done) {
   const start = () => {
      // sync browserHistory with memoryHistory
       browserHistory.listen((location, type) => {
-        store.dispatch(accept(location))
+        if (ignoreEvent) {
+          ignoreEvent = false
+          return
+        }
+
+        store.dispatch(redirect(location.pathname))
       })
 
       // begin
@@ -52,6 +58,9 @@ export default function(done) {
       lastLocation = acceptLocation
 
       nprogress.done()
+
+      ignoreEvent = true
+      browserHistory.push(acceptLocation.pathname, acceptLocation.key)
       memoryHistory.push(acceptLocation.pathname, acceptLocation.key)
     }
 
@@ -59,13 +68,7 @@ export default function(done) {
 
     if (requestLocation) {
       nprogress.start()
-      store.dispatch(sync(requestLocation))
-    }
-
-    const syncLocation = selectState(state => state.routing.sync)
-
-    if (syncLocation) {
-      browserHistory.push(syncLocation.pathname, syncLocation.key)
+      store.dispatch(accept(requestLocation))
     }
   })
 }

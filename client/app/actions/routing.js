@@ -4,7 +4,6 @@ export const ROUTING = prefix('routing', {
   ACCEPT: 'ACCEPT',
   REJECT: 'REJECT',
   REQUEST: 'REQUEST',
-  SYNC: 'SYNC',
   MATCH: 'MATCH'
 })
 

@@ -2,7 +2,6 @@ import { delay } from 'redux-saga'
 import { cancel, call, fork, put, race, select, take } from 'redux-saga/effects'
 
 import { SESSION } from 'actions/session'
-import { redirect, replace } from 'actions/location'
 import { head, post } from 'services/rest'
 import { clear, get, set } from 'services/storage'
 

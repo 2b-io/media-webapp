@@ -2,7 +2,6 @@ import { ROUTING } from 'actions/routing'
 
 const initialState = {
   request: null,
-  sync: null,
   location: null,
   splash: true,
   matches: {}
@@ -17,19 +16,10 @@ export default function(state = initialState, action) {
       }
     }
 
-    case ROUTING.SYNC: {
-      return {
-        ...state,
-        request: null,
-        sync: action.payload
-      }
-    }
-
     case ROUTING.ACCEPT:
       return {
         ...state,
         splash: false,
-        sync: null,
         request: null,
         location: action.payload
       }

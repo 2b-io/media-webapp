@@ -36,7 +36,7 @@ function* account() {
     if (action.createSuccess) {
       yield fork(showMessage, {
         type: 'info',
-        value: `Thank you for creating account at MediaNetwork. An invitation email has been sent to ${action.createSuccess.payload.email}`
+        value: `Thank you for creating account at MediaNetwork. An invitation email has been sent to ${action.createSuccess.payload.email}.`
       }, false)
 
       yield put(redirect('/sign-in'))

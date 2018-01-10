@@ -8,6 +8,8 @@ nprogress.configure({ showSpinner: false })
 const select = state => select => select(state)
 
 function checkPermission(pathname, token, done, reject) {
+  console.log(`check permission of ${pathname}`)
+
   if (pathname === '/dashboard') {
     return token ? done() : reject()
   }

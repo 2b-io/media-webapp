@@ -12,7 +12,6 @@ import Button from 'components/Button'
 import Redirect from 'components/Redirect'
 import AuthRequired from 'decorators/AuthRequired'
 import Layout, { PERSONAL_MODE } from 'decorators/Layout'
-import UIState from 'decorators/UIState'
 
 import ProjectForm from './ProjectForm'
 import style from './style'
@@ -29,7 +28,6 @@ import style from './style'
   }
 })
 @Layout(PERSONAL_MODE)
-@AuthRequired
 @Radium
 class Project extends React.Component {
   constructor(props) {
