@@ -1,17 +1,11 @@
 import Radium from 'radium'
 import React from 'react'
-import { connect } from 'react-redux'
 
 import { signOut } from 'actions/session'
 import { InternalLink } from 'components/Link'
 
 import { content as style } from './style'
 
-@connect(state => {
-  return {
-    signedIn: !!(state.app.session && state.app.session.verified)
-  }
-})
 @Radium
 class DrawerContent extends React.Component {
   constructor(props) {

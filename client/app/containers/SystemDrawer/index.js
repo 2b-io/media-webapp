@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 import { slide as Menu } from 'react-burger-menu'
 import { decorator as reduxBurgerMenu } from 'redux-burger-menu'
@@ -13,8 +14,15 @@ import { sideMenuStyle } from './style'
 
 const ReduxMenu = reduxBurgerMenu(Menu, LAYOUT.SYSTEM_MODE)
 
+@connect(state => {
+  return {
+    signedIn: !!(state.app.session && state.app.session.verified)
+  }
+})
 class SystemDrawer extends React.PureComponent {
   render() {
+    const { dispatch, signedIn } = this.props
+
     return (
       <ReduxMenu right
         pageWrapId="page-wrap"
@@ -22,7 +30,7 @@ class SystemDrawer extends React.PureComponent {
         styles={sideMenuStyle}
         customBurgerIcon={false}
         customCrossIcon={false}>
-        <DrawerContent />
+        <DrawerContent signedIn={signedIn} dispatch={dispatch} />
         <DrawerBottom />
       </ReduxMenu>
     )
