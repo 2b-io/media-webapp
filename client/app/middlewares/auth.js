@@ -1,20 +1,35 @@
 import nprogress from 'nprogress'
+import pathToRegexp from 'path-to-regexp'
 
 import { ROUTING, redirect } from 'actions/routing'
-import { SESSION, verifySession } from 'actions/session'
 import { head } from 'services/rest'
 
 nprogress.configure({ showSpinner: false })
 const select = state => select => select(state)
 
-function checkPermission(pathname, token, done, reject) {
-  console.log(`check permission of ${pathname}`)
+const PRIVATE_ROUTES = [
+  '/dashboard',
+  '/profile',
+  '/projects/:action',
+  '/projects/:action/:slug'
+]
 
-  if (pathname === '/dashboard') {
-    return token ? done() : reject()
+function requiresAuthentication(pathname) {
+  const matched = PRIVATE_ROUTES.some(route => {
+    const regex = pathToRegexp(route)
+
+    return !!regex.exec(pathname)
+  })
+
+  return matched
+}
+
+function checkPermission(pathname, token, done, reject) {
+  if (!requiresAuthentication(pathname)) {
+    return done()
   }
 
-  done()
+  return token ? done() : reject()
 }
 
 export default [
