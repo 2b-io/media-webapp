@@ -8,6 +8,10 @@ export default (path, exact = true) => {
   return Component => {
 
     @connect(state => {
+      if (!state.routing.location) {
+        return {}
+      }
+
       const url = state.routing.location.pathname
 
       return {

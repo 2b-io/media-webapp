@@ -2,13 +2,12 @@ import { race, take, put } from 'redux-saga/effects'
 
 import { BOOTSTRAP } from 'actions/bootstrap'
 import { SESSION, signIn } from 'actions/session'
-import { clear, get, set } from 'services/storage'
+import { get } from 'services/storage'
 
 const TOKEN_STORAGE_KEY = 'jwt'
 
-
 export default function* root() {
-  yield take(BOOTSTRAP.BOOTSTRAP_REQUEST)
+  yield take(BOOTSTRAP.REQUEST)
 
   const token = yield get(TOKEN_STORAGE_KEY)
 
@@ -25,6 +24,6 @@ export default function* root() {
   }
 
   yield put({
-    type: BOOTSTRAP.BOOTSTRAP_SUCCESS
+    type: BOOTSTRAP.SUCCESS
   })
 }

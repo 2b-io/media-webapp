@@ -1,17 +1,22 @@
 import React from 'react'
+import { Provider as ReduxProvider } from 'react-redux'
 
-import { BOOTSTRAP } from 'actions/bootstrap'
-import createHistory from './history'
+import { bootstrap } from 'actions/bootstrap'
+import AppWrapper from 'containers/AppWrapper'
 import store from './store'
 
-import Mount from './Mount'
+class Bootstrap extends React.Component {
+  componentDidMount() {
+    store.dispatch(bootstrap())
+  }
 
-export default function(done) {
-  store.dispatch({
-    type: BOOTSTRAP.BOOTSTRAP_REQUEST
-  })
-
-  createHistory(history => {
-    done(<Mount store={store} history={history} />)
-  })
+  render() {
+    return (
+      <ReduxProvider store={store}>
+        <AppWrapper />
+      </ReduxProvider>
+    )
+  }
 }
+
+export default Bootstrap
