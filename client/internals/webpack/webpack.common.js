@@ -6,6 +6,7 @@ const path = require('path')
 const rootDir = path.resolve(__dirname, '../..')
 
 module.exports = ({
+  devtool,
   entry = {
     app: [ path.join(rootDir, 'app/index.js') ]
   },
@@ -14,6 +15,7 @@ module.exports = ({
   resolve = {}
 }) => {
   return {
+    devtool,
     entry: Object.assign({}, entry),
     output: {
       path: path.join(rootDir, 'build/assets'),

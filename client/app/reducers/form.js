@@ -1,10 +1,11 @@
 import { reducer as form } from 'redux-form'
-import slug from 'slug'
+import slugify from 'slugify'
 
 function normalizeSlug(value) {
-  return slug(value, {
-    lower: true,
-    symbols: false
+  return slugify(value, {
+    replacement: '-',
+    remove: null,
+    lower: true
   })
 }
 
