@@ -101,7 +101,7 @@ class Project extends React.Component {
         </code>
         <label>To</label>
         <code style={style.code}>
-          {`<img src="https://server1.mn-cdn.com/p/${project.slug}/media?width=`}<b>YOUR_DESIRED_WIDTH</b>{`&url=`}<b>YOUR_PUBLIC_IMAGE_URL</b>{`" />`}
+          {`<img src="https://server1.mn-cdn.com/p/`}<b>{project.slug}</b>{`/media?width=`}<b>YOUR_DESIRED_WIDTH</b>{`&url=`}<b>YOUR_PUBLIC_IMAGE_URL</b>{`" />`}
         </code>
         <p style={style.desc}>
           Please note that <b>YOUR_PUBLIC_IMAGE_URL</b> should be a full URL of your public image. It should contain protocol and domain.<br />
