@@ -5,6 +5,7 @@ import { Field, reduxForm } from 'redux-form'
 import Button from 'components/Button'
 import TextBox from 'components/inputs/TextBox'
 import PasswordBox from 'components/inputs/PasswordBox'
+import ResponsiveBox from 'components/ResponsiveBox'
 import { InternalLink } from 'components/Link'
 
 import { form as style } from './style'
@@ -33,8 +34,10 @@ class SignInForm extends React.Component {
           />
         </div>
         <div style={style.row}>
-          <Button style={style.signIn} type="submit">sign in</Button>
-          <InternalLink style={style.forgot} link="/forgot">Forgot password?</InternalLink>
+          <ResponsiveBox>
+            <Button style={style.signIn} type="submit">sign in</Button>
+            <InternalLink style={style.forgot} link="/forgot">Forgot password?</InternalLink>
+          </ResponsiveBox>
         </div>
       </form>
     )

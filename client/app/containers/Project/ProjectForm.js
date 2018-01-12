@@ -3,6 +3,7 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import Button from 'components/Button'
 import { InternalLink } from 'components/Link'
+import ResponsiveBox from 'components/ResponsiveBox'
 import TextArea from 'components/inputs/TextArea'
 import TextBox from 'components/inputs/TextBox'
 
@@ -46,9 +47,9 @@ class ProjectForm extends React.Component {
           <p style={style.desc}>Multiple origins allowed. Use commas (,) or line breaks to separate origins.</p>
         </div>
         <div style={style.row}>
-          <div>
+          <ResponsiveBox>
             <Button type="submit">save</Button>
-          </div>
+          </ResponsiveBox>
         </div>
       </form>
     )

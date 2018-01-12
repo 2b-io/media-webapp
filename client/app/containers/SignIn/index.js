@@ -6,6 +6,7 @@ import { signIn } from 'actions/session'
 import { LinkButton } from 'components/Button'
 import { InternalLink } from 'components/Link'
 import Redirect from 'components/Redirect'
+import ResponsiveBox from 'components/ResponsiveBox'
 import { SystemLayout } from 'decorators/Layout'
 
 import SignInForm from './SignInForm'
@@ -48,7 +49,7 @@ class SignIn extends React.Component {
           <p style={style.signUpQuestion}>
             <b>Don't have an account on MediaNetwork yet?</b>
           </p>
-          <LinkButton link="/sign-up">create a new account</LinkButton>
+          <InternalLink link="/sign-up">Create a new account</InternalLink>
         </div>
       </div>
     )

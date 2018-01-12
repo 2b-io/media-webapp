@@ -4,6 +4,7 @@ import { Field, reduxForm } from 'redux-form'
 
 import Button from 'components/Button'
 import TextBox from 'components/inputs/TextBox'
+import ResponsiveBox from 'components/ResponsiveBox'
 
 import { form as style } from './style'
 
@@ -34,7 +35,9 @@ class SignUpForm extends React.Component {
           </label>
         </div>
         <div style={style.row}>
-          <Button type="submit">sign up</Button>
+          <ResponsiveBox>
+            <Button type="submit">sign up</Button>
+          </ResponsiveBox>
         </div>
       </form>
     )

@@ -7,6 +7,7 @@ import splitLines from 'split-lines'
 import { dismissModal, openModal } from 'actions/modal'
 import { createProject, fetchProject, updateProject } from 'actions/project'
 import Button from 'components/Button'
+import ResponsiveBox from 'components/ResponsiveBox'
 import { SystemLayout } from 'decorators/Layout'
 
 import DeleteConfirmationModal from './DeleteConfirmationModal'
@@ -77,12 +78,11 @@ class Project extends React.Component {
     if (!project._id) return null
 
     return (
-      <div style={style.other}>
+      <ResponsiveBox style={style.other}>
         <Button type="button" style={style.toggleDisable}>disable</Button>
-
         <span style={style.delete}
           onClick={this._confirmDeleteProject(project)}>Delete this project permanently?</span>
-      </div>
+      </ResponsiveBox>
     )
   }
 

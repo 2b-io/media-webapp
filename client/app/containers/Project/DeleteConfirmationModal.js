@@ -4,6 +4,7 @@ import { Portal } from 'react-portal'
 import { connect } from 'react-redux'
 
 import Button from 'components/Button'
+import ResponsiveBox from 'components/ResponsiveBox'
 import modal from 'decorators/Modal'
 
 import { modal as style } from './style'
@@ -22,12 +23,12 @@ class DeleteConfirmationModal extends React.Component {
         <div style={style.content}>
           <p style={style.desc}>You are going to delete this project <b>permanently</b>. Do you wish to continue?</p>
 
-          <div style={style.control}>
+          <ResponsiveBox style={style.control}>
             <Button style={style.confirmButton}
               onClick={this._chooseAction('confirm')}>Continue</Button>
             <span style={style.cancelButton}
               onClick={this._chooseAction('cancel')}>I've changed my mind</span>
-          </div>
+          </ResponsiveBox>
         </div>
       </div>
     ]

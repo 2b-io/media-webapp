@@ -6,7 +6,7 @@ export const text = prefix({
   ...fontStyle,
   ':focus': {
     outline: 'none',
-    borderBottom: `2px solid ${COLOR.darkGray}`
+    borderBottom: `2px solid ${COLOR.dark}`
   },
   ':hover': {
     outline: 'none',
