@@ -9,7 +9,13 @@ export function get(req, res, next) {
   const { slug } = req.params
 
   getProjectBySlug(slug)
-    .then(project => res.json(project))
+    .then(project => {
+      if (!project) {
+        return res.sendStatus(404)
+      }
+
+      res.json(project)
+    })
     .catch(e => next(e))
 }
 

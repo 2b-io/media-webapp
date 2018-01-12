@@ -32,6 +32,12 @@ export default function(state = initialState, action) {
           [action.payload.path]: action.payload.match
         }
       }
+
+    case ROUTING.REJECT:
+      return {
+        ...state,
+        reject: action.payload.pathname
+      }
   }
 
   return state

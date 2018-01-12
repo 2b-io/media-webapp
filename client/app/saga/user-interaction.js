@@ -47,36 +47,43 @@ function* account() {
 function* project() {
   while (true) {
     const action = yield race({
-      createSuccess: take(PROJECT.CREATE_SUCCESS),
       createFailure: take(PROJECT.CREATE_FAILURE),
-      updateSuccess: take(PROJECT.UPDATE_SUCCESS),
-      updateFailure: take(PROJECT.UPDATE_FAILURE)
+      createSuccess: take(PROJECT.CREATE_SUCCESS),
+      fetchFailure: take(PROJECT.FETCH_FAILURE),
+      updateFailure: take(PROJECT.UPDATE_FAILURE),
+      updateSuccess: take(PROJECT.UPDATE_SUCCESS)
     })
 
-    if (action.createSuccess) {
-      yield fork(showMessage, {
-        type: 'info',
-        link: `/projects/view/${action.createSuccess.payload.slug}`,
-        value: `Create project [${action.createSuccess.payload.name}] successfully`
-      })
-
-      yield put(redirect('/dashboard'))
-    } else if (action.createFailure) {
+    if (action.createFailure) {
       yield fork(showMessage, {
         type: 'error',
         value: 'Error occurs when creating a project'
       }, false)
-    } else if (action.updateSuccess) {
+    } else if (action.createSuccess) {
       yield fork(showMessage, {
         type: 'info',
-        link: `/projects/view/${action.updateSuccess.payload.slug}`,
-        value: `Update project [${action.updateSuccess.payload.name}] successfully`
+        value: `Create project [${action.createSuccess.payload.name}] successfully`,
+        link: `/projects/view/${action.createSuccess.payload.slug}`
       })
+
+      yield put(redirect('/dashboard'))
+    } else if (action.fetchFailure) {
+      yield fork(showMessage, {
+        type: 'error',
+        value: 'The project you requested is not exist. Please click this message to go back to the dashboard.',
+        link: `/dashboard`
+      }, false)
     } else if (action.updateFailure) {
       yield fork(showMessage, {
         type: 'error',
         value: 'Error occurs when updating the project'
       }, false)
+    } else if (action.updateSuccess) {
+      yield fork(showMessage, {
+        type: 'info',
+        value: `Update project [${action.updateSuccess.payload.name}] successfully`,
+        link: `/projects/view/${action.updateSuccess.payload.slug}`
+      })
     }
   }
 }

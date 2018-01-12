@@ -12,7 +12,8 @@ import SignInForm from './SignInForm'
 import style from './style'
 
 @connect(state => ({
-  session: state.app.session
+  session: state.app.session,
+  reject: state.routing.reject,
 }))
 @Layout(SYSTEM_MODE)
 @Radium
@@ -24,12 +25,14 @@ class SignIn extends React.Component {
   }
 
   render() {
-    const { verified } = this.props.session
+    const { reject, session } = this.props
 
-    if (verified) {
+    if (session.verified) {
       // redirect to /dashboard if sign in success
       // TODO redirect to last page
-      return <Redirect path="/dashboard" />
+      const lastPathname = reject || '/dashboard'
+
+      return <Redirect path={lastPathname} />
     }
 
     return this._renderLayout()
