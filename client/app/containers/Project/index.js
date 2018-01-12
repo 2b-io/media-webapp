@@ -4,13 +4,9 @@ import { connect } from 'react-redux'
 import pick from 'object.pick'
 import splitLines from 'split-lines'
 
-import IconError from 'react-icons/lib/md/error'
-import IconInfo from 'react-icons/lib/md/info'
-
 import { dismissModal, openModal } from 'actions/modal'
 import { createProject, fetchProject, updateProject } from 'actions/project'
 import Button from 'components/Button'
-import Redirect from 'components/Redirect'
 import { SystemLayout } from 'decorators/Layout'
 
 import DeleteConfirmationModal from './DeleteConfirmationModal'
@@ -85,7 +81,7 @@ class Project extends React.Component {
         <Button type="button" style={style.toggleDisable}>disable</Button>
 
         <span style={style.delete}
-          onClick={this._confirmDeleteProject(project)}>delete this project permanently?</span>
+          onClick={this._confirmDeleteProject(project)}>Delete this project permanently?</span>
       </div>
     )
   }
