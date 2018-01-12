@@ -82,7 +82,7 @@ export const modal = prefix({
     position: 'fixed',
     marginLeft: 'auto',
     marginRight: 'auto',
-    top: '80px',
+    top: '100px',
     maxWidth: '900px',
     width: '100%',
     display: 'inline-block',
@@ -94,7 +94,7 @@ export const modal = prefix({
     marginRight: '15px',
     flex: 1,
     padding: '15px',
-    border: `1px solid ${COLOR.darkGray}`,
+    border: `2px solid ${COLOR.darkGray}`,
     background: COLOR.light,
   },
   desc: {

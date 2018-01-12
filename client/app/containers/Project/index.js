@@ -11,8 +11,7 @@ import { dismissModal, openModal } from 'actions/modal'
 import { createProject, fetchProject, updateProject } from 'actions/project'
 import Button from 'components/Button'
 import Redirect from 'components/Redirect'
-import AuthRequired from 'decorators/AuthRequired'
-import Layout, { PERSONAL_MODE } from 'decorators/Layout'
+import { SystemLayout } from 'decorators/Layout'
 
 import DeleteConfirmationModal from './DeleteConfirmationModal'
 import ProjectForm from './ProjectForm'
@@ -29,7 +28,7 @@ import style from './style'
     project: (state.domain.project || {})[slug]
   }
 })
-@Layout(PERSONAL_MODE)
+@SystemLayout
 @Radium
 class Project extends React.Component {
   constructor(props) {
@@ -47,9 +46,6 @@ class Project extends React.Component {
     } else if (action === 'view') {
       dispatch(fetchProject(slug))
     }
-
-
-    dispatch(openModal('project-delete-confirmation'))
   }
 
   render() {
