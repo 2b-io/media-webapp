@@ -12,7 +12,7 @@ import SignInForm from './SignInForm'
 import style from './style'
 
 @connect(state => ({
-  session: state.app.session,
+  session: state.domain.session,
   reject: state.routing.reject,
 }))
 @Layout(SYSTEM_MODE)

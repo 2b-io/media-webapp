@@ -25,7 +25,7 @@ import style from './style'
   return {
     pathname,
     showMenu: menu ? menu.isOpen : false,
-    signedIn: !!(state.app.session && state.app.session.verified)
+    signedIn: !!(state.domain.session && state.domain.session.verified)
   }
 })
 @Radium

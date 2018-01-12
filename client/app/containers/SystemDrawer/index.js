@@ -16,7 +16,7 @@ const ReduxMenu = reduxBurgerMenu(Menu, LAYOUT.SYSTEM_MODE)
 
 @connect(state => {
   return {
-    signedIn: !!(state.app.session && state.app.session.verified)
+    signedIn: !!(state.domain.session && state.domain.session.verified)
   }
 })
 class SystemDrawer extends React.PureComponent {

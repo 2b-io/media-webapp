@@ -17,7 +17,7 @@ function* watchUnauthorizedAccesses() {
   while (true) {
     const action = yield take(ROUTING.REJECT)
 
-    const token = yield select(state => state.app.session.token)
+    const token = yield select(state => state.domain.session.token)
 
     if (token) {
       yield put({

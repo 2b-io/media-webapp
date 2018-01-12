@@ -6,7 +6,7 @@ import Identicon from 'components/Identicon'
 
 import style from './style'
 
-@connect(state => ({ session: state.app.session }))
+@connect(state => ({ session: state.domain.session }))
 @Radium
 class Top extends React.PureComponent {
   render() {

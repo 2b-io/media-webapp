@@ -5,7 +5,7 @@ import { get, post, put as PUT } from 'services/rest'
 export function* createProject() {
   while (true) {
     const action = yield take(PROJECT.CREATE_REQUEST)
-    const session = yield select(state => state.app.session)
+    const session = yield select(state => state.domain.session)
 
     try {
       const project = yield call(post, {
@@ -31,7 +31,7 @@ export function* createProject() {
 export function* fetchProject() {
   while (true) {
     const action = yield take(PROJECT.FETCH_REQUEST)
-    const session = yield select(state => state.app.session)
+    const session = yield select(state => state.domain.session)
 
     try {
       const projects = yield call(get, {
@@ -56,7 +56,7 @@ export function* fetchProject() {
 export function* fetchProjects() {
   while (true) {
     const action = yield take(PROJECT.FETCH_ALL_REQUEST)
-    const session = yield select(state => state.app.session)
+    const session = yield select(state => state.domain.session)
 
     try {
       const projects = yield call(get, {
@@ -81,7 +81,7 @@ export function* fetchProjects() {
 export function* updateProject() {
   while (true) {
     const action = yield take(PROJECT.UPDATE_REQUEST)
-    const session = yield select(state => state.app.session)
+    const session = yield select(state => state.domain.session)
 
     try {
       const projects = yield call(PUT, {

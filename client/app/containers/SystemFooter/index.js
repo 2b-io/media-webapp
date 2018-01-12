@@ -8,7 +8,7 @@ import style from './style'
 
 @connect(state => {
   return {
-    signedIn: !!(state.app.session && state.app.session.verified)
+    signedIn: !!(state.domain.session && state.domain.session.verified)
   }
 })
 @Radium

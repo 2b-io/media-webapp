@@ -45,7 +45,7 @@ export default [
     nprogress.start()
 
     const selectState = select(store.getState())
-    const token = selectState(state => state.app.session.token)
+    const token = selectState(state => state.domain.session.token)
 
     if (!token) {
       return checkPermission(action.payload.pathname, null,

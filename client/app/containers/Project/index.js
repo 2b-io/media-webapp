@@ -24,7 +24,7 @@ import style from './style'
   return {
     action,
     slug,
-    project: (state.app.projects || {})[slug]
+    project: (state.domain.project || {})[slug]
   }
 })
 @Layout(PERSONAL_MODE)

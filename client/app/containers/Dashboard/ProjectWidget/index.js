@@ -12,7 +12,7 @@ import { InternalLink } from 'components/Link'
 import style from './style'
 
 @connect(state => ({
-  projects: state.app.projects
+  projects: state.domain.project
 }))
 @Radium
 class ProjectWidget extends React.Component {
