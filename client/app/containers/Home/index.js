@@ -3,13 +3,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { InternalLink } from 'components/Link'
-import Layout, { SYSTEM_MODE } from 'decorators/Layout'
-
+import { SystemLayout } from 'decorators/Layout'
 
 import style from './style'
 
 @connect()
-@Layout(SYSTEM_MODE)
+@SystemLayout
 @Radium
 class HomePage extends React.Component {
   constructor(props) {

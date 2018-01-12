@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { redirect } from 'actions/routing'
 
-export default function(Component) {
+export default Component => {
 
   @connect()
   class HyperLink extends React.Component {

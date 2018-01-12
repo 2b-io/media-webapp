@@ -2,25 +2,12 @@ import Radium from 'radium'
 import React from 'react'
 import { connect } from 'react-redux'
 
-
-import AuthRequired from 'decorators/AuthRequired'
-import conditionalRenderer from 'decorators/ConditionalRenderer'
-import Layout, { SYSTEM_MODE } from 'decorators/Layout'
+import { SystemLayout } from 'decorators/Layout'
 
 import { LinkButton } from 'components/Button'
 
-const RenderWhenProfileAvailable = conditionalRenderer(
-  props => {
-    const { dispatch } = props
-  },
-  props => !!props.profile.username,
-  state => ({ profile: state.profile })
-)
-
 @connect()
-@Layout(SYSTEM_MODE)
-@AuthRequired
-@RenderWhenProfileAvailable
+@SystemLayout
 @Radium
 class Profile extends React.Component {
   render() {
@@ -36,7 +23,6 @@ class Profile extends React.Component {
 }
 
 @connect()
-@RenderWhenProfileAvailable
 @Radium
 class ProfileDetail extends React.Component {
   constructor(props) {

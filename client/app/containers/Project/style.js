@@ -1,7 +1,7 @@
 import prefix from 'helpers/vendor-prefix'
 import linkStyle from 'components/Link/style'
 import { COLOR, FONT_SIZE } from 'styles/constants'
-import { columnLayout } from 'styles/layout'
+import { columnLayout, modalLayout } from 'styles/layout'
 
 export default prefix({
   wrapper: {
@@ -39,11 +39,13 @@ export default prefix({
   },
   toggleDisable: {
     marginRight: '15px',
+    marginBottom: '5px'
   },
   delete: {
     ...linkStyle,
-    fontSize: FONT_SIZE.small,
-    display: 'inline-block'
+    fontSize: FONT_SIZE.smallx,
+    display: 'inline-block',
+    whiteSpace: 'nowrap'
   }
 })
 
@@ -59,6 +61,32 @@ export const form = prefix({
   },
   desc: {
     marginTop: '5px',
+    fontSize: FONT_SIZE.smallx
+  }
+})
+
+export const modal = prefix({
+  ...modalLayout,
+  desc: {
+    fontSize: FONT_SIZE.small,
+    marginBottom: '30px',
+    textAlign: 'center'
+  },
+  control: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  confirmButton: {
+    marginLeft: '15px',
+    marginRight: '15px',
+    marginBottom: '5px'
+  },
+  cancelButton: {
+    ...linkStyle,
+    whiteSpace: 'nowrap',
+    display: 'inline-block',
     fontSize: FONT_SIZE.smallx
   }
 })

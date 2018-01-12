@@ -6,7 +6,7 @@ import { signIn } from 'actions/session'
 import { LinkButton } from 'components/Button'
 import { InternalLink } from 'components/Link'
 import Redirect from 'components/Redirect'
-import Layout, { SYSTEM_MODE } from 'decorators/Layout'
+import { SystemLayout } from 'decorators/Layout'
 
 import SignInForm from './SignInForm'
 import style from './style'
@@ -15,7 +15,7 @@ import style from './style'
   session: state.domain.session,
   reject: state.routing.reject,
 }))
-@Layout(SYSTEM_MODE)
+@SystemLayout
 @Radium
 class SignIn extends React.Component {
   constructor(props) {

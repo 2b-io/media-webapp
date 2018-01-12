@@ -4,15 +4,12 @@ import { connect } from 'react-redux'
 import pick from 'object.pick'
 import splitLines from 'split-lines'
 
-import IconError from 'react-icons/lib/md/error'
-import IconInfo from 'react-icons/lib/md/info'
-
+import { dismissModal, openModal } from 'actions/modal'
 import { createProject, fetchProject, updateProject } from 'actions/project'
 import Button from 'components/Button'
-import Redirect from 'components/Redirect'
-import AuthRequired from 'decorators/AuthRequired'
-import Layout, { PERSONAL_MODE } from 'decorators/Layout'
+import { SystemLayout } from 'decorators/Layout'
 
+import DeleteConfirmationModal from './DeleteConfirmationModal'
 import ProjectForm from './ProjectForm'
 import style from './style'
 
@@ -27,7 +24,7 @@ import style from './style'
     project: (state.domain.project || {})[slug]
   }
 })
-@Layout(PERSONAL_MODE)
+@SystemLayout
 @Radium
 class Project extends React.Component {
   constructor(props) {
@@ -68,6 +65,10 @@ class Project extends React.Component {
         </div>
         {this._renderUsage(initialValues)}
         {this._renderOtherControls(initialValues)}
+        <DeleteConfirmationModal
+          onOverlayClick={this._dismissDeleteConfirmation()}
+          onAction={this._handleConfirmAction()}
+        />
       </div>
     )
   }
@@ -79,7 +80,8 @@ class Project extends React.Component {
       <div style={style.other}>
         <Button type="button" style={style.toggleDisable}>disable</Button>
 
-        <span style={style.delete}>delete this project permanently?</span>
+        <span style={style.delete}
+          onClick={this._confirmDeleteProject(project)}>Delete this project permanently?</span>
       </div>
     )
   }
@@ -95,7 +97,7 @@ class Project extends React.Component {
         </code>
         <label>To</label>
         <code style={style.code}>
-          {`<img src="https://server1.mn-cdn.com/p/${project.slug}/media?width=`}<b>YOUR_DESIRED_WIDTH</b>{`&url=`}<b>YOUR_PUBLIC_IMAGE_URL</b>{`" />`}
+          {`<img src="https://server1.mn-cdn.com/p/`}<b>{project.slug}</b>{`/media?width=`}<b>YOUR_DESIRED_WIDTH</b>{`&url=`}<b>YOUR_PUBLIC_IMAGE_URL</b>{`" />`}
         </code>
         <p style={style.desc}>
           Please note that <b>YOUR_PUBLIC_IMAGE_URL</b> should be a full URL of your public image. It should contain protocol and domain.<br />
@@ -103,6 +105,28 @@ class Project extends React.Component {
         </p>
       </div>
     )
+  }
+
+  _dismissDeleteConfirmation() {
+    const { dispatch } = this.props
+
+    return () => dispatch(dismissModal('project-delete-confirmation'))
+  }
+
+  _confirmDeleteProject(project) {
+    const { dispatch } = this.props
+
+    return () => dispatch(openModal('project-delete-confirmation'))
+  }
+
+  _handleConfirmAction() {
+    const { dispatch } = this.props
+
+    return action => {
+      console.log(action)
+
+      dispatch(dismissModal('project-delete-confirmation'))
+    }
   }
 
   _processSaveProject(form) {

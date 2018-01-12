@@ -28,7 +28,7 @@ export const form = prefix({
   },
   signIn: {},
   forgot: {
-    fontSize: FONT_SIZE.small,
+    fontSize: FONT_SIZE.smallx,
     marginLeft: '15px'
   }
 })

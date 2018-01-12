@@ -3,12 +3,8 @@ import { connect } from 'react-redux'
 
 import { LAYOUT, changeLayout } from 'actions/layout'
 
-export const FULLSCREEN_MODE = LAYOUT.FULLSCREEN_MODE
-export const PERSONAL_MODE = LAYOUT.PERSONAL_MODE
-export const SYSTEM_MODE = LAYOUT.SYSTEM_MODE
-
-export default function(mode) {
-  return function(Component) {
+const layout = mode => {
+  return Component => {
     @connect()
     class Layout extends React.Component {
 
@@ -26,3 +22,6 @@ export default function(mode) {
     return Layout
   }
 }
+
+export default layout
+export const SystemLayout = layout(LAYOUT.SYSTEM_MODE)

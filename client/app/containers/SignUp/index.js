@@ -3,13 +3,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { registerAccount } from 'actions/account'
-import Layout, { SYSTEM_MODE } from 'decorators/Layout'
+import { SystemLayout } from 'decorators/Layout'
 
 import SignUpForm from './SignUpForm'
 import style from './style'
 
 @connect()
-@Layout(SYSTEM_MODE)
+@SystemLayout
 @Radium
 class SignUp extends React.Component {
   constructor(props) {
