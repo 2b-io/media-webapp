@@ -9,17 +9,15 @@ export default prefix({
     maxWidth: '900px'
   },
   project: {
-    marginLeft: '30px',
-    marginRight: '30px',
-    marginBottom: '15px',
-    minWidth: '300px'
+    marginLeft: '15px',
+    marginRight: '15px',
+    marginBottom: '15px'
   },
   usage: {
-    marginLeft: '30px',
-    marginRight: '30px',
-    marginBottom: '15px',
-    display: 'block',
-    minWidth: '300px'
+    marginLeft: '15px',
+    marginRight: '15px',
+    marginBottom: '30px',
+    display: 'block'
   },
   code: {
     fontFamily: 'monospace',
@@ -35,17 +33,16 @@ export default prefix({
     fontSize: FONT_SIZE.smallx
   },
   other: {
-    marginLeft: '30px',
-    marginRight: '30px',
-    marginBottom: '15px',
-    minWidth: '300px',
+    marginLeft: '15px',
+    marginRight: '15px',
+    marginBottom: '30px'
   },
   toggleDisable: {
     marginRight: '15px',
   },
   delete: {
     ...linkStyle,
-    fontSize: FONT_SIZE.smallx,
+    fontSize: FONT_SIZE.small,
     display: 'inline-block'
   }
 })

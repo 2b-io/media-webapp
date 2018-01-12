@@ -9,8 +9,8 @@ export const columnLayout = {
   },
   column: {
     flex: 1,
-    marginLeft: '30px',
-    marginRight: '30px',
+    marginLeft: '15px',
+    marginRight: '15px',
     marginBottom: '15px'
   }
 }

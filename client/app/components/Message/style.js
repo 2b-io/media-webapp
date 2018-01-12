@@ -12,19 +12,16 @@ const wrapper = {
 const content = {
   display: 'flex',
   alignItems: 'center',
-  margin: '0 30px 30px',
-  padding: '5px 0 5px 15px',
+  margin: '0 15px 15px',
+  padding: '15px 5px',
   transition: 'border .2s',
-  position: 'relative',
-  ':hover': {
-    borderLeft: `5px solid ${COLOR.dark}`,
-  },
+  position: 'relative'
 }
 
 const autoDismiss = {
   position: 'absolute',
   left: 0,
-  bottom: 0,
+  bottom: '-1px',
   height: '2px',
   width: '100%'
 }
@@ -40,18 +37,20 @@ const icon = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  cursor: 'pointer'
+  cursor: 'pointer',
+  marginLeft: '5px',
+  marginRight: '5px'
 }
 
 export default prefix({
   error: {
     content: {
       ...content,
-      borderLeft: `5px solid ${COLOR.darkGray}`
+      border: `1px solid ${COLOR.darkGray}`
     },
     autoDismiss: {
       ...autoDismiss,
-      background: COLOR.darkGray,
+      background: COLOR.dark,
     },
     wrapper,
     message,
@@ -60,11 +59,11 @@ export default prefix({
   info: {
     content: {
       ...content,
-      borderLeft: `5px solid ${COLOR.lightGray}`
+      border: `1px solid ${COLOR.lightGray}`
     },
     autoDismiss: {
       ...autoDismiss,
-      background: COLOR.lightGray,
+      background: COLOR.darkGray,
     },
     wrapper,
     message,

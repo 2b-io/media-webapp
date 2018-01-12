@@ -8,7 +8,7 @@ export default prefix({
     position: 'relative',
     marginTop: '40px',
     clear: 'both',
-    padding: '10px 30px',
+    padding: '5px 15px',
     display: 'flex',
     alignItems: 'center'
   },
