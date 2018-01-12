@@ -1,20 +1,14 @@
 import Radium from 'radium'
 import React from 'react'
-import { connect } from 'react-redux'
 
 import { InternalLink } from 'components/Link'
 import { SystemLayout } from 'decorators/Layout'
 
 import style from './style'
 
-@connect()
 @SystemLayout
 @Radium
 class HomePage extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     return (
       <section style={style.wrapper}>
