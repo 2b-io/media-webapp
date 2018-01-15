@@ -1,4 +1,3 @@
-import Bluebird from 'bluebird'
 import Permission from 'models/Permission'
 import Project from 'models/Project'
 
