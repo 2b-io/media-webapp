@@ -11,7 +11,15 @@ const schema = mongoose.Schema({
     lowercase: true,
     trim: true
   },
-  origins: [ String ]
+  origins: [ String ],
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  destroyed: {
+    type: Boolean,
+    default: false
+  }
 })
 
 export default mongoose.model('Project', schema)

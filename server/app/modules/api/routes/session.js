@@ -4,8 +4,6 @@ import {
 } from '../controllers/session'
 
 export default app => {
-  app.head('/sessions', (req, res, next) => {
-    setTimeout(() => next(), 500)
-  }, verifySession)
+  app.head('/sessions', verifySession)
   app.post('/sessions', createSession)
 }

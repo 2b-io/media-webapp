@@ -2,21 +2,12 @@ import Permission from 'models/Permission'
 import Preset from 'models/Preset'
 import Project from 'models/Project'
 
-export const update = async (data) => {
-  const { name, slug, origins } = data
-
-  if (!name || !slug) {
-    throw new Error('Invalid Parameters')
-  }
-
-  const project = await Project.findOneAndUpdate({
-    slug: data.slug
-  }, {
-    name: data.name,
-    origins: data.origins
-  }, {
-    new: true
-  })
+export const update = async (slug, data) => {
+  const project = await Project.findOneAndUpdate(
+    { slug },
+    data,
+    { new: true }
+  )
 
   return project
 }
@@ -69,6 +60,18 @@ export const create = async (data, account) => {
     name: 'default',
     isDefault: true
   }).save()
+
+  return project
+}
+
+export const destroy = async (slug) => {
+  const project = await Project.findOneAndUpdate({
+    slug: data.slug
+  }, {
+    destroyed: true
+  }, {
+    new: true
+  })
 
   return project
 }
