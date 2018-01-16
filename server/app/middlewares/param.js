@@ -1,7 +1,11 @@
+import permission from './param-resolvers/permission'
 import project from './param-resolvers/project'
+import session from './param-resolvers/session'
 
 const resolvers = {
-  project
+  permission,
+  project,
+  session
 }
 
 export default (...requiredParams) => (req, res, next) => {

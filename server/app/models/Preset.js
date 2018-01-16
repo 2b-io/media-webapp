@@ -19,6 +19,9 @@ const schema = mongoose.Schema({
       type: Number,
       default: 8
     }
+  },
+  isDefault: {
+    default: false
   }
 })
 

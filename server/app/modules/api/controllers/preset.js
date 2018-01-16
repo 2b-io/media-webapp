@@ -4,11 +4,11 @@ import {
 } from 'services/preset'
 
 export const list = [
-  param('project'),
+  param('session', 'project', 'permission'),
   (req, res, next) => {
     const { project } = req._params
 
-    listPresets(project.slug)
+    listPresets(project)
       .then(presets => {
         res.json(presets)
       })

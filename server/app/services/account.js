@@ -16,3 +16,7 @@ export const create = async (info) => {
     password
   }).save()
 }
+
+export const findById = async (id) => {
+  return await Account.findById(id).lean()
+}

@@ -1,3 +1,4 @@
+import param from 'middlewares/param'
 import {
   getBySlug as getProjectBySlug,
   list as listAllProjects,
@@ -5,48 +6,55 @@ import {
   update as updateProject
 } from 'services/project'
 
-export function get(req, res, next) {
-  const { slug } = req.params
+export const get = [
+  param('session', 'project', 'permission'),
+  (req, res, next) => {
+    const { project } = req._params
 
-  getProjectBySlug(slug)
-    .then(project => {
-      if (!project) {
-        return res.sendStatus(404)
-      }
+    res.json(project)
+  }
+]
 
-      res.json(project)
-    })
-    .catch(e => next(e))
-}
+export const list = [
+  param('session'),
+  (req, res, next) => {
+    const { session } = req._params
 
-export function list(req, res, next) {
-  listAllProjects(req._account ? req._account._id : null)
-    .then(projects => {
-      res.json(projects)
-    })
-    .catch(e => next(e))
-}
+    listAllProjects(session._id)
+      .then(projects => {
+        res.json(projects)
+      })
+      .catch(e => next(e))
+  }
+]
 
-export function create(req, res, next) {
-  const { name, slug, origins } = req.body
+export const create = [
+  param('session'),
+  (req, res, next) => {
+    const { session } = req._params
+    const { name, slug, origins } = req.body
 
-  createProject({
-      name,
-      slug,
-      origins
-    }, req._account)
-    .then(project => {
-      res.status(201).json(project)
-    })
-    .catch(e => {
-      res.status(500).json(e)
-    })
-}
+    createProject({
+        name,
+        slug,
+        origins
+      }, session)
+      .then(project => {
+        res.status(201).json(project)
+      })
+      .catch(e => {
+        res.status(500).json(e)
+      })
+  }
+]
 
-export function update(req, res, next) {
-  const { name, slug, origins } = req.body
+export const update = [
+  param('session', 'project', 'permission'),
+  (req, res, next) => {
+    const { name, slug, origins } = req.body
 
-  updateProject({ name, slug, origins })
-    .then(project => res.json(project))
-    .catch(e => next(e))
-}
+    updateProject({ name, slug, origins })
+      .then(project => res.json(project))
+      .catch(e => next(e))
+  }
+]

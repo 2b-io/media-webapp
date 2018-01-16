@@ -1,25 +1,39 @@
+import param from 'middlewares/param'
 import {
   create as createSession,
   refresh as refreshSession
 } from 'services/session'
 
-export function create(req, res, next) {
-  const { refresh, email, password } = req.body
-  let make
+export const create = [
+  param({
+    name: 'session',
+    required: false
+  }),
+  (req, res, next) => {
+    const { session } = req._params
+    const { refresh, email, password } = req.body
 
-  if (refresh && req._account) {
-    make = refreshSession({ _id: req._account._id })
-  } else {
-    make = createSession({ email, password })
+    let make
+
+    if (refresh && session) {
+      make = refreshSession({ _id: session._id })
+    } else if (email) {
+      make = createSession({ email, password })
+    } else {
+      return res.sendStatus(400)
+    }
+
+    make
+      .then(session => res.json(session))
+      .catch(e => next(e))
   }
+]
 
-  make
-    .then(session => res.json(session))
-    .catch(e => next(e))
-}
+export const verify = [
+  param('session'),
+  (req, res, next) => {
+    const { session } = req._params
 
-export function verify(req, res, next) {
-  const { _account } = req
-
-  res.sendStatus(_account ? 200 : 401)
-}
+    res.sendStatus(session ? 200 : 401)
+  }
+]

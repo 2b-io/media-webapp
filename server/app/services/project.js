@@ -1,4 +1,5 @@
 import Permission from 'models/Permission'
+import Preset from 'models/Preset'
 import Project from 'models/Project'
 
 export const update = async (data) => {
@@ -61,6 +62,12 @@ export const create = async (data, account) => {
     project: project._id,
     account: account._id,
     privilege: 'owner'
+  }).save()
+
+  const preset = await new Preset({
+    project: project._id,
+    name: 'default',
+    isDefault: true
   }).save()
 
   return project
