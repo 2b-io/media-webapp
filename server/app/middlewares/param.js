@@ -1,9 +1,11 @@
 import permission from './param-resolvers/permission'
+import preset from './param-resolvers/preset'
 import project from './param-resolvers/project'
 import session from './param-resolvers/session'
 
 const resolvers = {
   permission,
+  preset,
   project,
   session
 }

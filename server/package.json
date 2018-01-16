@@ -11,7 +11,8 @@
     "morgan": "1.9.0",
     "ms": "2.1.1",
     "recursive-config": "1.0.1",
-    "serialize-error": "2.1.0"
+    "serialize-error": "2.1.0",
+    "shorthash": "0.0.2"
   },
   "devDependencies": {
     "babel-plugin-module-resolver": "3.0.0",

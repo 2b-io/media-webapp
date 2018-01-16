@@ -1,3 +1,4 @@
+import shortHash from 'shorthash'
 import mongoose from 'infrastructure/mongoose'
 
 const schema = mongoose.Schema({
@@ -22,6 +23,23 @@ const schema = mongoose.Schema({
   },
   isDefault: {
     default: false
+  },
+  hash: {
+    type: String,
+    required: true,
+    unique: true
+  }
+})
+
+schema.pre('validate', function(next) {
+  try {
+    if (!this.hash) {
+      this.hash = shortHash.unique(this._id.toString())
+    }
+
+    next()
+  } catch (e) {
+    next(e)
   }
 })
 
