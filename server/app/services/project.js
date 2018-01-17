@@ -27,14 +27,14 @@ export const list = async (account) => {
   }
 
   const permissions = await Permission.find({
-    account,
-    removed: false
+    account
   }).lean()
 
   const projects = await Project.find({
     _id: {
       $in: permissions.map(p => p.project)
-    }
+    },
+    removed: false
   }).sort('slug').lean()
 
   return projects
