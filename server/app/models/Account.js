@@ -9,6 +9,11 @@ const schema = mongoose.Schema({
   password: {
     type: String,
     required: true
+  },
+  removed: {
+    type: Boolean,
+    default: false,
+    index: true
   }
 })
 

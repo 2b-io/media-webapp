@@ -13,18 +13,22 @@ export const update = async (slug, data) => {
 }
 
 export const getBySlug = async (slug) => {
-  const project = await Project.findOne({ slug }).lean()
+  const project = await Project.findOne({
+    slug,
+    removed: false
+  }).lean()
 
   return project
 }
 
-export const list = async (id) => {
-  if (!id) {
-    return await Project.find().lean()
+export const list = async (account) => {
+  if (!account) {
+    throw new Error('Invaid parameter')
   }
 
   const permissions = await Permission.find({
-    account: id
+    account,
+    removed: false
   }).lean()
 
   const projects = await Project.find({
@@ -43,32 +47,38 @@ export const create = async (data, account) => {
     throw new Error('Invalid parameters')
   }
 
-  const project = await new Project({
-    name,
-    slug,
-    origins
-  }).save()
+  let permission, preset, project
 
-  const permission = await new Permission({
-    project: project._id,
-    account: account._id,
-    privilege: 'owner'
-  }).save()
+  try {
+    const project = await new Project({
+      name,
+      slug,
+      origins
+    }).save()
 
-  const preset = await new Preset({
-    project: project._id,
-    name: 'default',
-    isDefault: true
-  }).save()
+    const permission = await new Permission({
+      project: project._id,
+      account: account._id,
+      privilege: 'owner'
+    }).save()
 
-  return project
+    const preset = await new Preset({
+      project: project._id,
+      name: 'default',
+      isDefault: true
+    }).save()
+
+    return project
+  } catch (error) {
+    throw error
+  }
 }
 
-export const destroy = async (slug) => {
+export const remove = async (slug) => {
   const project = await Project.findOneAndUpdate({
     slug: data.slug
   }, {
-    destroyed: true
+    removed: true
   }, {
     new: true
   })

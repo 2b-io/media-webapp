@@ -15,3 +15,12 @@ export const list = [
       .catch(e => next(e))
   }
 ]
+
+export const get = [
+  param('session', 'project', 'permission', 'preset'),
+  (req, res, next) => {
+    const { preset } = req._params
+
+    res.json(preset)
+  }
+]

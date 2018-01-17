@@ -1,9 +1,9 @@
 import param from 'middlewares/param'
 import {
-  getBySlug as getProjectBySlug,
-  destroy as destroyProject,
-  list as listAllProjects,
   create as createProject,
+  getBySlug as getProjectBySlug,
+  list as listAllProjects,
+  remove as removeProject,
   update as updateProject
 } from 'services/project'
 
@@ -61,12 +61,12 @@ export const update = [
   }
 ]
 
-export const destroy = [
+export const remove = [
   param('session', 'project', 'permission'),
   (req, res, next) => {
     const { project } = req._params
 
-    destroyProject(project.slug)
+    removeProject(project.slug)
       .then(() => res.sendStatus(204))
       .catch(e => next(e))
   }

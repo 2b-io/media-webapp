@@ -16,9 +16,10 @@ const schema = mongoose.Schema({
     type: Boolean,
     default: false
   },
-  destroyed: {
+  removed: {
     type: Boolean,
-    default: false
+    default: false,
+    index: true
   }
 })
 
