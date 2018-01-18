@@ -9,13 +9,16 @@ const app = express()
 const port = config.systemPort
 
 app.use(morgan('dev'))
+app.get('/favicon.ico', (req, res) => res.sendStatus(404))
+app.get('/robots.txt', (req, res) => res.sendStatus(404))
 
-loadSystemModules(app, [
-  {
-    mountPath: '/api',
-    moduleName: 'api'
-  }
-])
+loadSystemModules(app, [ {
+  mountPath: '/api',
+  moduleName: 'api'
+}, {
+  mountPath: '/graphql',
+  moduleName: 'graphql'
+} ])
 
 if (config.webpackDevServer) {
   app.use(proxy(config.webpackDevServer, { ws: true }))
