@@ -4,6 +4,7 @@ import {
 } from 'graphql'
 
 import accountSchema from './account'
+import sessionSchema from './session'
 
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
@@ -15,7 +16,8 @@ export default new GraphQLSchema({
   mutation: new GraphQLObjectType({
     name: 'RootMutationType',
     fields: {
-      ...accountSchema.mutation
+      ...accountSchema.mutation,
+      ...sessionSchema.mutation
     }
   })
 })
