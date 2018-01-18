@@ -1,28 +1,7 @@
-import {
-  GraphQLList,
-  GraphQLNonNull,
-  GraphQLString
-} from 'graphql'
-import {
-  findById as findAccountById,
-  list as listAccount
-} from 'services/account'
-
-import accountType from './type'
+import query from './query'
+import mutation from './mutation'
 
 export default {
-  account: {
-    type: accountType,
-    args: {
-      id: {
-        name: 'accountId',
-        type: new GraphQLNonNull(GraphQLString)
-      }
-    },
-    resolve: async (root, { id }, ...rest) => findAccountById(id)
-  },
-  accounts: {
-    type: new GraphQLList(accountType),
-    resolve: async () => listAccount()
-  }
+  query,
+  mutation
 }
