@@ -1,4 +1,5 @@
 import {
+  GraphQLBoolean,
   GraphQLNonNull,
   GraphQLObjectType,
   GraphQLString
@@ -26,15 +27,18 @@ export default {
       return session
     }
   },
-  refreshSession: {
+  verifySession: {
     args: {
       token: {
         type: new GraphQLNonNull(GraphQLString)
+      },
+      refresh: {
+        type: GraphQLBoolean
       }
     },
     type: Session,
-    resolve: async (rootValue, { token }, ctx) => {
-      const session = await verifySession(token, { refresh: true })
+    resolve: async (rootValue, { token, refresh }, ctx) => {
+      const session = await verifySession(token, { refresh })
 
       ctx._session = session
 
