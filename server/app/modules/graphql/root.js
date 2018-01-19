@@ -5,6 +5,7 @@ import {
   GraphQLObjectType
 } from 'graphql'
 
+import accountMutations from './mutations/account'
 import sessionMutations from './mutations/session'
 import sessionQueries from './queries/session'
 
@@ -18,6 +19,7 @@ export default new GraphQLSchema({
   mutation: new GraphQLObjectType({
     name: 'RootMutationType',
     fields: {
+      ...accountMutations,
       ...sessionMutations
     }
   })
