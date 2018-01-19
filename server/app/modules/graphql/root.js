@@ -1,23 +1,24 @@
 import {
+  GraphQLNonNull,
   GraphQLSchema,
+  GraphQLString,
   GraphQLObjectType
 } from 'graphql'
 
-import accountSchema from './account'
-import sessionSchema from './session'
+import sessionMutations from './mutations/session'
+import sessionQueries from './queries/session'
 
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
-      ...accountSchema.query
+      ...sessionQueries
     }
   }),
   mutation: new GraphQLObjectType({
     name: 'RootMutationType',
     fields: {
-      ...accountSchema.mutation,
-      ...sessionSchema.mutation
+      ...sessionMutations
     }
   })
 })

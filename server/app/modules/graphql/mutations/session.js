@@ -1,22 +1,26 @@
 import {
   GraphQLNonNull,
+  GraphQLObjectType,
   GraphQLString
 } from 'graphql'
-
 import { create as createSession } from 'services/session'
 
-import sessionType from './type'
+import Session from '../types/Session'
 
 export default {
   createSession: {
-    type: sessionType,
     args: {
       email: {
         type: new GraphQLNonNull(GraphQLString)
-      },
+      }
     },
-    resolve: async (root, { email }, ctx) => {
-      return createSession({ email })
+    type: Session,
+    resolve: async (rootValue, args, ctx) => {
+      const session = await createSession(args)
+
+      ctx._session = session
+
+      return session
     }
   }
 }

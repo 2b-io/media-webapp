@@ -1,7 +1,7 @@
 import express from 'express'
 import graphqlMiddleware from 'express-graphql'
 
-import rootSchema from './schemas'
+import rootSchema from './root'
 
 const app = express()
 

@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import ms from 'ms'
 
 import config from 'infrastructure/config'
-import Account from 'models/Account'
+import { findById as findAccountById } from 'services/account'
 
 export const create = async ({ email, password }) => {
   const account = await Account.findOne({
@@ -17,13 +17,31 @@ export const create = async ({ email, password }) => {
 }
 
 export const refresh = async ({ _id }) => {
-  const account = await Account.findById(_id).lean()
+  const account = await findAccountById(_id)
 
   if (!account) {
     throw new Error('Invalid or expired JWT')
   }
 
   return issueJWT(account)
+}
+
+export const verify = async (token) => {
+  const decoded = jwt.verify(token, config.session.secret)
+
+  const account = await findAccountById(decoded._id)
+
+  if (!account) {
+    throw new Error('Invalid or expired JWT')
+  }
+
+  return {
+    token,
+    ttl: ms(config.session.ttl),
+    $meta: {
+      account
+    }
+  }
 }
 
 export const issueJWT = (account) => {
@@ -37,7 +55,9 @@ export const issueJWT = (account) => {
 
   return {
     token,
-    account: account,
-    ttl: ms(config.session.ttl)
+    ttl: ms(config.session.ttl),
+    $meta: {
+      account
+    }
   }
 }
