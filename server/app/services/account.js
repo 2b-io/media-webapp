@@ -20,3 +20,7 @@ export const create = async (info) => {
 export const findById = async (id) => {
   return await Account.findById(id).lean()
 }
+
+export const findByEmail = async (email) => {
+  return await Account.findOne({ email }).lean()
+}

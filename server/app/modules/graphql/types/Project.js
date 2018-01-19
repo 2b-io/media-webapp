@@ -43,9 +43,7 @@ export default new GraphQLObjectType({
       },
       type: Preset,
       resolve: async (project, { hash }) => {
-        const preset = await getPreset(project, hash)
-
-        return preset
+        return await getPreset(project, hash)
       }
     }
   }

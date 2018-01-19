@@ -26,9 +26,7 @@ export default new GraphQLObjectType({
     projects: {
       type: new GraphQLList(Project),
       resolve: async (account, args, ctx) => {
-        const projects = await listProjectsByAccount(account._id)
-
-        return projects
+        return await listProjectsByAccount(account._id)
       }
     },
     project: {
@@ -39,9 +37,7 @@ export default new GraphQLObjectType({
       },
       type: Project,
       resolve: async (account, { slug }, ctx) => {
-        const project = await getProjectBySlug(slug)
-
-        return project
+        return await getProjectBySlug(slug)
       }
     }
   }

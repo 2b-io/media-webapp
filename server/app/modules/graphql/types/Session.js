@@ -16,10 +16,7 @@ export default new GraphQLObjectType({
       type: GraphQLInt
     },
     account: {
-      type: Account,
-      resolve: async (rootValue, args, ctx) => {
-        return ctx._session.$meta.account
-      }
+      type: Account
     }
   }
 })
