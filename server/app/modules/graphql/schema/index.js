@@ -3,13 +3,15 @@ import {
   GraphQLObjectType
 } from 'graphql'
 
-import publicActions from './public'
+import account from './account'
+import session from './session'
 
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
-      ...publicActions
+      ...account,
+      ...session
     }
   })
 })

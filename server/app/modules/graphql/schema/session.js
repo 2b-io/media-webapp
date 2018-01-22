@@ -9,24 +9,10 @@ import {
   verify as verifySession
 } from 'services/session'
 
-import Session from '../types/Session'
+import { AccountStruct } from '../types/Account'
+import { Session } from '../types/Session'
 
 export default {
-  createSession: {
-    args: {
-      email: {
-        type: new GraphQLNonNull(GraphQLString)
-      }
-    },
-    type: Session,
-    resolve: async (rootValue, args, ctx) => {
-      const session = await createSession(args)
-
-      ctx._session = session
-
-      return session
-    }
-  },
   session: {
     args: {
       token: {
@@ -46,5 +32,21 @@ export default {
 
       return session
     }
-  }
+  },
+  _createSession: {
+    args: {
+      account: {
+        type: new GraphQLNonNull(AccountStruct)
+      }
+    },
+    type: Session,
+    resolve: async (rootValue, { account }, ctx) => {
+      const session = await createSession(account)
+
+      ctx._session = session
+
+      return session
+    }
+  },
+
 }

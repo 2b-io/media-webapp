@@ -1,12 +1,12 @@
 import express from 'express'
 import graphqlMiddleware from 'express-graphql'
 
-import rootSchema from './root'
+import schema from './schema'
 
 const app = express()
 
 app.use('/', graphqlMiddleware({
-  schema: rootSchema,
+  schema: schema,
   graphiql: true
 }))
 

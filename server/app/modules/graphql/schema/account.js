@@ -1,20 +1,17 @@
 import {
-  GraphQLBoolean,
   GraphQLNonNull,
-  GraphQLObjectType,
-  GraphQLString
 } from 'graphql'
 import {
   create as createAccount
 } from 'services/account'
 
-import Account from '../types/Account'
+import { Account, AccountStruct } from '../types/Account'
 
 export default {
-  createAccount: {
+  _createAccount: {
     args: {
-      email: {
-        type: new GraphQLNonNull(GraphQLString)
+      account: {
+        type: new GraphQLNonNull(AccountStruct)
       }
     },
     type: Account,

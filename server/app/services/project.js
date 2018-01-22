@@ -76,7 +76,7 @@ export const create = async (data, account) => {
 
 export const remove = async (slug) => {
   const project = await Project.findOneAndUpdate({
-    slug: data.slug
+    slug
   }, {
     removed: true
   }, {
