@@ -27,7 +27,7 @@ export default {
       return session
     }
   },
-  verifySession: {
+  session: {
     args: {
       token: {
         type: new GraphQLNonNull(GraphQLString)
@@ -37,7 +37,9 @@ export default {
       }
     },
     type: Session,
-    resolve: async (rootValue, { token, refresh }, ctx) => {
+    resolve: async (rootValue, args, ctx) => {
+      const { token, refresh = false } = args
+
       const session = await verifySession(token, { refresh })
 
       ctx._session = session

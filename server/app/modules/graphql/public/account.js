@@ -1,4 +1,5 @@
 import {
+  GraphQLBoolean,
   GraphQLNonNull,
   GraphQLObjectType,
   GraphQLString
@@ -6,6 +7,7 @@ import {
 import {
   create as createAccount
 } from 'services/account'
+
 import Account from '../types/Account'
 
 export default {
