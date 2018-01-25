@@ -4,6 +4,7 @@
     "centschbook-mono": "3.2.1",
     "color": "2.0.0",
     "eases": "1.0.8",
+    "graphql-request": "1.4.1",
     "history": "4.7.2",
     "immutable": "3.8.2",
     "is-plain-object": "2.0.4",

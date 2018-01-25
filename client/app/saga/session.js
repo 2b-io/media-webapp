@@ -4,17 +4,13 @@ import { cancel, call, fork, put, race, select, take } from 'redux-saga/effects'
 import { SESSION } from 'actions/session'
 import { head, post } from 'services/rest'
 import { clear, get, set } from 'services/storage'
+import { create as createSession } from 'models/session'
 
 const TOKEN_STORAGE_KEY = 'jwt'
 
-function* createSession({ action, token }) {
+function* _createSession({ action, token }) {
   try {
-    const session = yield call(post, {
-      url: '/api/sessions',
-      data: action.payload
-    }, {
-      token: token
-    })
+    const session = yield call(createSession, action.payload)
 
     yield set(TOKEN_STORAGE_KEY, session.token)
     yield put({
@@ -34,7 +30,7 @@ function* createSession({ action, token }) {
   }
 }
 
-function* destroySession(reason) {
+function* _destroySession(reason) {
   yield clear(TOKEN_STORAGE_KEY)
   yield put({
     type: SESSION.DESTROY_SUCCESS,
@@ -53,7 +49,7 @@ function* authorize(action, token) {
   }
 
   const { response, signOut } = yield race({
-    response: call(createSession, {
+    response: call(_createSession, {
       action: action,
       token: token
     }),
@@ -61,14 +57,14 @@ function* authorize(action, token) {
   })
 
   if (signOut) {
-    yield call(destroySession)
+    yield call(_destroySession)
     return null
   }
 
   return response
 }
 
-function* verifySession(session) {
+function* _verifySession(session) {
   while (true) {
     yield take(SESSION.VERIFY_REQUEST)
 
@@ -97,7 +93,7 @@ export default function* root() {
     // sign-in failure
     if (!session) continue
 
-    const verifyTask = yield fork(verifySession, session)
+    const verifyTask = yield fork(_verifySession, session)
 
     while (true) {
       const { expired, signOut, verify } = yield race({
@@ -113,7 +109,7 @@ export default function* root() {
             token: session.token
           })
         } catch (e) {
-          session = yield call(destroySession, e)
+          session = yield call(_destroySession, e)
         }
       } else if (expired) {
         // refresh token
@@ -122,7 +118,7 @@ export default function* root() {
         })
       } else if (signOut) {
         // sign out
-        session = yield call(destroySession)
+        session = yield call(_destroySession)
       }
 
       if (!session) {

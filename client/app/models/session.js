@@ -1,11 +1,19 @@
-import request from 'superagent'
+import request from 'graphql-request'
 
-function create(credential) {
-  return request
-    .post('/api/sessions')
-    .send(credential)
-}
+export const create = async (credential) => {
+  const body = await request('/graphql', `
+    query signIn($credential: AccountStruct!) {
+      _createSession(account: $credential) {
+        token,
+        ttl,
+        account {
+          email
+        }
+      }
+    }
+  `, {
+    credential: credential
+  })
 
-export default {
-  create
+  return body._createSession
 }
