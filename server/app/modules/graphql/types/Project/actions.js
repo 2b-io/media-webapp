@@ -4,7 +4,11 @@ import {
 } from 'graphql'
 
 import {
-  remove as removeProject
+  create as createPreset
+} from 'services/preset'
+import {
+  remove as removeProject,
+  update as updateProject
 } from 'services/project'
 
 import { Preset, PresetStruct } from '../Preset'
@@ -18,7 +22,7 @@ export default (Project, ProjectStruct) => ({
     },
     type: Project,
     resolve: async (self, { project }, ctx) => {
-      return project
+      return await updateProject(self.slug, project)
     }
   },
   _destroy: {
@@ -37,7 +41,7 @@ export default (Project, ProjectStruct) => ({
     },
     type: Preset,
     resolve: async (project, { preset }, ctx) => {
-      return preset
+      return await createPreset(project, preset)
     }
   }
 })

@@ -35,6 +35,7 @@ const schema = mongoose.Schema({
     }
   },
   isDefault: {
+    type: Boolean,
     default: false
   },
   hash: {
@@ -57,11 +58,14 @@ schema.index({
 
 schema.pre('validate', function(next) {
   try {
+    console.log(this, !this.hash, this.isDefault)
     if (!this.hash) {
       this.hash = this.isDefault ?
         HASH_DEFAULT :
         generateHash(this)
     }
+
+    console.log(this)
 
     next()
   } catch (e) {

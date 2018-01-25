@@ -16,3 +16,13 @@ export const get = async (project, hash) => {
 
   return preset
 }
+
+export const create = async (project, data) => {
+  const preset = await new Preset({
+    ...data,
+    project: project._id,
+    isDefault: false
+  }).save()
+
+  return preset
+}
