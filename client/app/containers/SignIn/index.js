@@ -1,5 +1,6 @@
 import Radium from 'radium'
 import React from 'react'
+import { Helmet } from 'react-helmet'
 import { connect } from 'react-redux'
 
 import { signIn } from 'actions/session'
@@ -42,6 +43,9 @@ class SignIn extends React.Component {
   _renderLayout() {
     return (
       <div style={style.wrapper}>
+        <Helmet>
+          <title>Sign In</title>
+        </Helmet>
         <div style={style.signIn}>
           <SignInForm onSubmit={this._processSignIn} />
         </div>

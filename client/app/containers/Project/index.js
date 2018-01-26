@@ -1,5 +1,6 @@
 import Radium from 'radium'
 import React from 'react'
+import { Helmet } from 'react-helmet'
 import { connect } from 'react-redux'
 import pick from 'object.pick'
 import splitLines from 'split-lines'
@@ -57,6 +58,7 @@ class Project extends React.Component {
 
     return (
       <div style={style.wrapper}>
+        {this._renderPageTitle(action, project)}
         <div style={style.project}>
           <ProjectForm
             initialValues={initialValues}
@@ -71,6 +73,22 @@ class Project extends React.Component {
           onAction={this._handleConfirmAction()}
         />
       </div>
+    )
+  }
+
+  _renderPageTitle(action, project = {}) {
+    if (action === 'create') {
+      return (
+        <Helmet>
+          <title>Create New Project</title>
+        </Helmet>
+      )
+    }
+
+    return (
+      <Helmet>
+        <title>{`Update Project [${project.name}]`}</title>
+      </Helmet>
     )
   }
 

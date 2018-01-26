@@ -1,5 +1,6 @@
 import Radium from 'radium'
 import React from 'react'
+import { Helmet } from 'react-helmet'
 import { connect } from 'react-redux'
 
 import { registerAccount } from 'actions/account'
@@ -21,6 +22,9 @@ class SignUp extends React.Component {
   render() {
     return (
       <div style={style.wrapper}>
+        <Helmet>
+          <title>Sign Up</title>
+        </Helmet>
         <div style={style.signUp}>
           <SignUpForm onSubmit={this._processSignUp} />
         </div>

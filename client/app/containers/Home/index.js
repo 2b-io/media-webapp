@@ -1,5 +1,6 @@
 import Radium from 'radium'
 import React from 'react'
+import { Helmet } from 'react-helmet'
 
 import { InternalLink } from 'components/Link'
 import { SystemLayout } from 'decorators/Layout'
@@ -12,6 +13,9 @@ class HomePage extends React.Component {
   render() {
     return (
       <section style={style.wrapper}>
+        <Helmet>
+          <title>MediaNetwork</title>
+        </Helmet>
         <div style={style.about}>
           <div style={style.homeHead}>
             <div id="logo" style={style.homeHeadAnimation}></div>

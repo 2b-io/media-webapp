@@ -1,5 +1,6 @@
 import Radium from 'radium'
 import React from 'react'
+import { Helmet } from 'react-helmet'
 import { connect } from 'react-redux'
 
 import { SystemLayout } from 'decorators/Layout'
@@ -15,6 +16,9 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div style={style.wrapper}>
+        <Helmet key="helmet">
+          <title>Dashboard</title>
+        </Helmet>
         <div style={style.widget}>
           <ProjectWidget />
         </div>
