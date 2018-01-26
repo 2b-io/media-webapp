@@ -2,15 +2,16 @@ import { delay } from 'redux-saga'
 import { cancel, call, fork, put, race, select, take } from 'redux-saga/effects'
 
 import { SESSION } from 'actions/session'
-import { head, post } from 'services/rest'
 import { clear, get, set } from 'services/storage'
-import { create as createSession } from 'models/session'
+import Session from 'models/session'
 
 const TOKEN_STORAGE_KEY = 'jwt'
 
 function* _createSession({ action, token }) {
   try {
-    const session = yield call(createSession, action.payload)
+    const session = token ?
+      yield call(Session.refresh, token) :
+      yield call(Session.create, action.payload)
 
     yield set(TOKEN_STORAGE_KEY, session.token)
     yield put({
@@ -69,11 +70,7 @@ function* _verifySession(session) {
     yield take(SESSION.VERIFY_REQUEST)
 
     try {
-      yield head({
-        url: '/api/sessions'
-      }, {
-        token: session.token
-      })
+      yield call(Session.verify, session.token)
     } catch (e) {
       yield put({
         type: SESSION.DESTROY_REQUEST
@@ -103,11 +100,7 @@ export default function* root() {
 
       if (verify) {
         try {
-          yield call(head, {
-            url: '/api/sessions'
-          }, {
-            token: session.token
-          })
+          yield call(Session.verify, session)
         } catch (e) {
           session = yield call(_destroySession, e)
         }

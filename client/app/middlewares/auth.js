@@ -3,6 +3,7 @@ import pathToRegexp from 'path-to-regexp'
 
 import { ROUTING, redirect } from 'actions/routing'
 import { head } from 'services/rest'
+import Session from 'models/session'
 
 nprogress.configure({ showSpinner: false })
 const select = state => select => select(state)
@@ -57,28 +58,24 @@ export default [
       )
     }
 
-    head({
-      url: '/api/sessions'
-    }, {
-      token
-    })
-    .then(() => {
-      checkPermission(action.payload.pathname, token,
-        () => next(action),
-        () => next({
-          type: ROUTING.REJECT,
-          payload: action.payload
-        })
-      )
-    })
-    .catch(error => {
-      checkPermission(action.payload.pathname, null,
-        () => next(action),
-        () => next({
-          type: ROUTING.REJECT,
-          payload: action.payload
-        })
-      )
-    })
+    Session.verify(token)
+      .then(() => {
+        checkPermission(action.payload.pathname, token,
+          () => next(action),
+          () => next({
+            type: ROUTING.REJECT,
+            payload: action.payload
+          })
+        )
+      })
+      .catch(error => {
+        checkPermission(action.payload.pathname, null,
+          () => next(action),
+          () => next({
+            type: ROUTING.REJECT,
+            payload: action.payload
+          })
+        )
+      })
   }
 ]

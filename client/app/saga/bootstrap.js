@@ -1,4 +1,4 @@
-import { race, take, put } from 'redux-saga/effects'
+import { call, race, take, put } from 'redux-saga/effects'
 
 import { BOOTSTRAP } from 'actions/bootstrap'
 import { SESSION, signIn } from 'actions/session'
@@ -9,7 +9,7 @@ const TOKEN_STORAGE_KEY = 'jwt'
 export default function* root() {
   yield take(BOOTSTRAP.REQUEST)
 
-  const token = yield get(TOKEN_STORAGE_KEY)
+  const token = yield call(get, TOKEN_STORAGE_KEY)
 
   if (token) {
     yield put(signIn({
