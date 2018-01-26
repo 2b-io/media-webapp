@@ -2,7 +2,6 @@ import nprogress from 'nprogress'
 import pathToRegexp from 'path-to-regexp'
 
 import { ROUTING, redirect } from 'actions/routing'
-import { head } from 'services/rest'
 import Session from 'models/session'
 
 nprogress.configure({ showSpinner: false })

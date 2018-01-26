@@ -1,6 +1,6 @@
-import { call, fork, put, select,   take } from 'redux-saga/effects'
+import { call, fork, put, select, take } from 'redux-saga/effects'
 import { PROJECT } from 'actions/project'
-import { get, post, put as PUT } from 'services/rest'
+import Project from 'models/project'
 
 export function* createProject() {
   while (true) {
@@ -8,10 +8,8 @@ export function* createProject() {
     const session = yield select(state => state.domain.session)
 
     try {
-      const project = yield call(post, {
-        url: '/api/projects',
-        data: action.payload
-      }, {
+      const project = yield call(Project.create, {
+        project: action.payload,
         token: session.token
       })
 
@@ -34,15 +32,14 @@ export function* fetchProject() {
     const session = yield select(state => state.domain.session)
 
     try {
-      const projects = yield call(get, {
-        url: `/api/projects/${action.payload}`
-      }, {
+      const project = yield call(Project.fetch, {
+        slug: action.payload,
         token: session.token
       })
 
       yield put({
         type: PROJECT.FETCH_SUCCESS,
-        payload: projects
+        payload: project
       })
     } catch (error) {
       yield put({
@@ -59,9 +56,7 @@ export function* fetchProjects() {
     const session = yield select(state => state.domain.session)
 
     try {
-      const projects = yield call(get, {
-        url: '/api/projects'
-      }, {
+      const projects = yield call(Project.fetchAll, {
         token: session.token
       })
 
@@ -84,16 +79,14 @@ export function* updateProject() {
     const session = yield select(state => state.domain.session)
 
     try {
-      const projects = yield call(PUT, {
-        url: `/api/projects/${action.payload.slug}`,
-        data: action.payload
-      }, {
+      const project = yield call(Project.update, {
+        project: action.payload,
         token: session.token
       })
 
       yield put({
         type: PROJECT.UPDATE_SUCCESS,
-        payload: projects
+        payload: project
       })
     } catch (error) {
       yield put({

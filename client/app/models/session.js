@@ -1,3 +1,4 @@
+import pick from 'object.pick'
 import request from 'graphql-request'
 
 export default {
@@ -13,7 +14,7 @@ export default {
         }
       }
     `, {
-      credential: credential
+      credential: pick(credential, [ 'email', 'password' ])
     })
 
     return body._createSession
