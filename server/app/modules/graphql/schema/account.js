@@ -15,10 +15,8 @@ export default {
       }
     },
     type: Account,
-    resolve: async (rootValue, args, ctx) => {
-      const account = await createAccount(args)
-
-      return account
+    resolve: async (rootValue, { account }, ctx) => {
+      return await createAccount(account)
     }
   }
 }
