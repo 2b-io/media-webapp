@@ -25,7 +25,7 @@ import style from './style'
   return {
     action,
     slug,
-    project: (state.domain.project || {})[slug]
+    project: (state.domain.projects || {})[slug]
   }
 })
 @SystemLayout

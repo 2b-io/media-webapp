@@ -42,13 +42,13 @@ class PresetList extends React.Component {
   _renderPresetList(presets = []) {
     return (
       <ul>
-        {presets.map(preset => {
+        { Object.values(presets).map(preset => {
           return (
             <li key={preset._id}>
               <Preset preset={preset} />
             </li>
           )
-        })}
+        }) }
       </ul>
     )
   }

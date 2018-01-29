@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 
-import project from './domain/project'
+import projects from './domain/projects'
 import session from './domain/session'
 
 export default combineReducers({
-  project,
+  projects,
   session
 })
