@@ -2,7 +2,7 @@ import Radium from 'radium'
 import React from 'react'
 
 import IconAdd from 'react-icons/lib/md/add'
-
+import IconCode from 'react-icons/lib/md/code'
 
 import style from './style'
 
@@ -11,8 +11,15 @@ class Preset extends React.Component {
     const { preset, onClick } = this.props
 
     return (
-      <div>
-        <span onClick={onClick}>{preset.name}</span>
+      <div style={style.presetWrapper}>
+        <div style={style.preset}>
+          <span
+            style={style.presetName}
+            onClick={onClick}>{preset.name}</span>
+          <div style={style.toggleCode}>
+            <IconCode size={16} />
+          </div>
+        </div>
       </div>
     )
   }
