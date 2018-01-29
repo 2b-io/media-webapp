@@ -1,6 +1,5 @@
 import path from 'path'
-
-const APP_ROOT = path.resolve(__dirname, '..')
+import config from 'infrastructure/config'
 
 export function loadSystemModules(app, moduleDefs = []) {
   moduleDefs.forEach(({ mountPath, moduleName }) => {
@@ -11,7 +10,7 @@ export function loadSystemModules(app, moduleDefs = []) {
 }
 
 export function loadModule(relativePathFromAppRoot, __esModule = false) {
-  const modulePath = path.join(APP_ROOT, relativePathFromAppRoot)
+  const modulePath = path.join(config.__rootDir, relativePathFromAppRoot)
 
   return __esModule ?
     require(modulePath) :

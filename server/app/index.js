@@ -13,9 +13,6 @@ app.get('/favicon.ico', (req, res) => res.sendStatus(404))
 app.get('/robots.txt', (req, res) => res.sendStatus(404))
 
 loadSystemModules(app, [ {
-  mountPath: '/api',
-  moduleName: 'api'
-}, {
   mountPath: '/graphql',
   moduleName: 'graphql'
 } ])
