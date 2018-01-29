@@ -2364,6 +2364,12 @@ graceful-fs@^4.1.2:
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
 
+graphql-query-compress@0.9.7:
+  version "0.9.7"
+  resolved "https://registry.yarnpkg.com/graphql-query-compress/-/graphql-query-compress-0.9.7.tgz#be3a4cca24225a53fe3c917c7c8c990f205c4996"
+  dependencies:
+    tokenizr "~1.1.7"
+
 graphql-request@1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/graphql-request/-/graphql-request-1.4.1.tgz#0772743cfac8dfdd4d69d36106a96c9bdd191ce8"
@@ -4696,6 +4702,10 @@ to-space-case@^1.0.0:
   resolved "https://registry.yarnpkg.com/to-space-case/-/to-space-case-1.0.0.tgz#b052daafb1b2b29dc770cea0163e5ec0ebc9fc17"
   dependencies:
     to-no-case "^1.0.0"
+
+tokenizr@~1.1.7:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/tokenizr/-/tokenizr-1.1.7.tgz#92163d1656b26e04b100a4cba8d33243970d4785"
 
 toposort@^1.0.0:
   version "1.0.6"

@@ -1,5 +1,5 @@
 import pick from 'object.pick'
-import request from 'graphql-request'
+import request from 'services/graphql'
 
 const PROJECT_FRAGMENT = `
   _id,
@@ -17,7 +17,7 @@ const PROJECT_FRAGMENT = `
 
 export default {
   create: async ({ project, token }) => {
-    const body = await request('/graphql', `
+    const body = await request(`
       query createProject($project: ProjectStruct!, $token: String!) {
         session(token: $token) {
           account {
@@ -35,7 +35,7 @@ export default {
     return body.session.account._createProject
   },
   fetch: async ({ slug, token }) => {
-    const body = await request('/graphql', `
+    const body = await request(`
       query fetchProject($slug: String!, $token: String!) {
         session(token: $token) {
           account {
@@ -53,7 +53,7 @@ export default {
     return body.session.account.project
   },
   fetchAll: async ({ token }) => {
-    const body = await request('/graphql', `
+    const body = await request(`
       query fetchAllProjects($token: String!) {
         session(token: $token) {
           account {
@@ -70,7 +70,7 @@ export default {
     return body.session.account.projects
   },
   update: async ({ project, token }) => {
-    const body = await request('/graphql', `
+    const body = await request(`
       query updateProject($project: ProjectStruct!, $slug: String!, $token: String!) {
         session(token: $token) {
           account {
