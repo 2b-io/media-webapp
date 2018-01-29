@@ -3,14 +3,17 @@ import React from 'react'
 
 import IconAdd from 'react-icons/lib/md/add'
 
+
 import style from './style'
 
 class Preset extends React.Component {
   render() {
-    const { preset } = this.props
+    const { preset, onClick } = this.props
 
     return (
-      <div>{preset.name}</div>
+      <div>
+        <span onClick={onClick}>{preset.name}</span>
+      </div>
     )
   }
 }
@@ -18,7 +21,7 @@ class Preset extends React.Component {
 @Radium
 class PresetList extends React.Component {
   render() {
-    const { project } = this.props
+    const { project, onClick } = this.props
 
     if (!project._id) return null
 
@@ -45,12 +48,24 @@ class PresetList extends React.Component {
         { Object.values(presets).map(preset => {
           return (
             <li key={preset._id}>
-              <Preset preset={preset} />
+              <Preset preset={preset}
+                onClick={this._onClick(preset)}
+              />
             </li>
           )
         }) }
       </ul>
     )
+  }
+
+  _onClick(preset) {
+    const { onClick } = this.props
+
+    return () => {
+      if (!onClick) return
+
+      onClick(preset)
+    }
   }
 }
 

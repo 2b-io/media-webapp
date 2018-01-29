@@ -7,13 +7,13 @@ export default function(state = initialState, action) {
     case MODAL.OPEN:
       return {
         ...state,
-        [action.payload]: true
+        [action.payload.id]: action.payload.data || true
       }
 
     case MODAL.DISMISS:
       return action.payload ? {
         ...state,
-        [action.payload]: false
+        [action.payload.id]: false
       } : initialState
   }
 

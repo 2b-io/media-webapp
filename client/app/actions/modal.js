@@ -5,16 +5,21 @@ export const MODAL = prefix('modal', {
   DISMISS: 'DISMISS'
 })
 
-export function openModal(id) {
+export function openModal(id, data) {
   return {
     type: MODAL.OPEN,
-    payload: id
+    payload: {
+      id,
+      data
+    }
   }
 }
 
 export function dismissModal(id) {
   return {
     type: MODAL.DISMISS,
-    payload: id
+    payload: {
+      id
+    }
   }
 }

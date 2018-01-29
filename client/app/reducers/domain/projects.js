@@ -5,8 +5,6 @@ const initialState = {
 
 const restructPresets = (presets = []) => {
   return presets.reduce((combine, preset) => {
-    console.log(preset)
-
     combine[preset.hash] = preset
 
     return combine

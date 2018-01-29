@@ -12,6 +12,7 @@ import ResponsiveBox from 'components/ResponsiveBox'
 import { SystemLayout } from 'decorators/Layout'
 
 import DeleteConfirmationModal from './DeleteConfirmationModal'
+import PresetModal from './PresetModal'
 import Form from './Form'
 import PresetList from './PresetList'
 
@@ -55,7 +56,7 @@ class Project extends React.Component {
 
     const initialValues = {
       ...project,
-      origins: ((project && project.origins) || []).join(',')
+      origins: ((project && project.origins) || []).join('\n')
     }
 
     return (
@@ -66,30 +67,26 @@ class Project extends React.Component {
           onSubmit={this._processSaveProject}
           update={!!initialValues._id}
         />
-        <PresetList project={initialValues} />
+        <PresetList
+          project={initialValues}
+          onClick={this._openPresetModal()}
+        />
         {/* {this._renderUsage(initialValues)} */}
         {this._renderOtherControls(initialValues)}
         <DeleteConfirmationModal
           onOverlayClick={this._dismissDeleteConfirmation()}
           onAction={this._handleConfirmAction()}
         />
+        <PresetModal
+        />
       </div>
     )
   }
 
-  _renderPresetList(project) {
-    if (!project._id) return null
+  _openPresetModal() {
+    const { dispatch } = this.props
 
-    return (
-      <div style={style.presetList}>
-        <h2>Preset List</h2>
-        <ul>
-          {project.presets.map(preset => {
-            return <li key={preset._id}>{preset.name}</li>
-          })}
-        </ul>
-      </div>
-    )
+    return preset => dispatch(openModal('preset', preset))
   }
 
   _renderPageTitle(action, project = {}) {

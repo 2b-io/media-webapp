@@ -1,7 +1,5 @@
 import Radium from 'radium'
 import React from 'react'
-import { Portal } from 'react-portal'
-import { connect } from 'react-redux'
 
 import Button from 'components/Button'
 import ResponsiveBox from 'components/ResponsiveBox'
@@ -18,8 +16,7 @@ class DeleteConfirmationModal extends React.Component {
       <div key="overlay"
         style={style.overlay} onClick={onOverlayClick}>
       </div>,
-      <div key="modal"
-        style={style.wrapper}>
+      <div key="modal" style={style.wrapper}>
         <div style={style.content}>
           <p style={style.desc}>You are going to delete this project <b>permanently</b>. Do you wish to continue?</p>
 
