@@ -78,6 +78,7 @@ class Project extends React.Component {
           onAction={this._handleConfirmAction()}
         />
         <PresetModal
+          onOverlayClick={this._dismissPresetModal()}
         />
       </div>
     )
@@ -87,6 +88,12 @@ class Project extends React.Component {
     const { dispatch } = this.props
 
     return preset => dispatch(openModal('preset', preset))
+  }
+
+  _dismissPresetModal() {
+    const { dispatch } = this.props
+
+    return () => dispatch(dismissModal('preset'))
   }
 
   _renderPageTitle(action, project = {}) {
@@ -115,7 +122,7 @@ class Project extends React.Component {
         <Button type="button" style={style.toggleDisable}
           onClick={this._processToogleDisableProject(project)}>{ disabled ? 'enable' : 'disable'}</Button>
         <span style={style.delete}
-          onClick={this._confirmDeleteProject(project)}>Delete this project permanently?</span>
+          onClick={this._confirmDeleteProject(project)}>delete this project permanently</span>
       </ResponsiveBox>
     )
   }

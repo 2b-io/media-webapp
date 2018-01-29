@@ -7,11 +7,11 @@ export default id => {
 
     @connect(state => ({
       isOpenned: !!state.ui.modal[id],
-      data: state.ui.modal[id]
+      modalData: state.ui.modal[id]
     }))
     class Modal extends React.Component {
       render() {
-        const { isOpenned, data } = this.props
+        const { isOpenned } = this.props
 
         if (!isOpenned) {
           return null
@@ -19,7 +19,7 @@ export default id => {
 
         return (
           <Portal>
-            <Component {...this.props} data={data} />
+            <Component {...this.props} />
           </Portal>
         )
       }

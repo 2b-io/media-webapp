@@ -22,7 +22,7 @@ class DeleteConfirmationModal extends React.Component {
 
           <ResponsiveBox style={style.control}>
             <Button style={style.confirmButton}
-              onClick={this._chooseAction('confirm')}>Continue</Button>
+              onClick={this._chooseAction('confirm')}>continue</Button>
             <span style={style.cancelButton}
               onClick={this._chooseAction('cancel')}>I've changed my mind</span>
           </ResponsiveBox>

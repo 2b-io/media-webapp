@@ -26,5 +26,23 @@ export default prefix({
     whiteSpace: 'nowrap',
     display: 'inline-block',
     fontSize: FONT_SIZE.smallx
+  },
+  form: {
+    marginLeft: '15px',
+    marginRight: '15px',
+    marginBottom: '30px'
+  },
+  row: {
+    display: 'flex',
+    marginBottom: '15px',
+    flexDirection: 'column'
+  },
+  label: {
+    marginRight: 'auto',
+    marginBottom: '5px'
+  },
+  desc: {
+    marginTop: '5px',
+    fontSize: FONT_SIZE.smallx
   }
 })
