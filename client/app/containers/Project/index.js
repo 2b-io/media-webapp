@@ -12,7 +12,9 @@ import ResponsiveBox from 'components/ResponsiveBox'
 import { SystemLayout } from 'decorators/Layout'
 
 import DeleteConfirmationModal from './DeleteConfirmationModal'
-import ProjectForm from './ProjectForm'
+import Form from './Form'
+import PresetList from './PresetList'
+
 import style from './style'
 
 @connect(state => {
@@ -59,19 +61,33 @@ class Project extends React.Component {
     return (
       <div style={style.wrapper}>
         {this._renderPageTitle(action, project)}
-        <div style={style.project}>
-          <ProjectForm
-            initialValues={initialValues}
-            onSubmit={this._processSaveProject}
-            update={!!initialValues._id}
-          />
-        </div>
-        {this._renderUsage(initialValues)}
+        <Form
+          initialValues={initialValues}
+          onSubmit={this._processSaveProject}
+          update={!!initialValues._id}
+        />
+        <PresetList project={initialValues} />
+        {/* {this._renderUsage(initialValues)} */}
         {this._renderOtherControls(initialValues)}
         <DeleteConfirmationModal
           onOverlayClick={this._dismissDeleteConfirmation()}
           onAction={this._handleConfirmAction()}
         />
+      </div>
+    )
+  }
+
+  _renderPresetList(project) {
+    if (!project._id) return null
+
+    return (
+      <div style={style.presetList}>
+        <h2>Preset List</h2>
+        <ul>
+          {project.presets.map(preset => {
+            return <li key={preset._id}>{preset.name}</li>
+          })}
+        </ul>
       </div>
     )
   }
@@ -95,9 +111,12 @@ class Project extends React.Component {
   _renderOtherControls(project) {
     if (!project._id) return null
 
+    const { disabled = false } = project
+
     return (
       <ResponsiveBox style={style.other}>
-        <Button type="button" style={style.toggleDisable}>disable</Button>
+        <Button type="button" style={style.toggleDisable}
+          onClick={this._processToogleDisableProject(project)}>{ disabled ? 'enable' : 'disable'}</Button>
         <span style={style.delete}
           onClick={this._confirmDeleteProject(project)}>Delete this project permanently?</span>
       </ResponsiveBox>
@@ -165,6 +184,17 @@ class Project extends React.Component {
       dispatch(updateProject(project))
     } else {
       dispatch(createProject(project))
+    }
+  }
+
+  _processToogleDisableProject(project) {
+    const { dispatch } = this.props
+
+    return () => {
+      dispatch(updateProject({
+        ...project,
+        disabled: !project.disabled
+      }))
     }
   }
 }

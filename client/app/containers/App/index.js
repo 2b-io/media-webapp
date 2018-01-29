@@ -12,12 +12,12 @@ import style from './style'
 class App extends React.Component {
   render() {
     return [
+      <GlobalMessage key="global-message" />,
       <PersonalDrawer key="personal-drawer" />,
       <SystemDrawer key="system-drawer" />,
       <div id="page-wrap" style={style.wrapper} key="page-wrap">
         <Header />
         <section style={style.content}>
-          <GlobalMessage />
           <Routes />
         </section>
         <Footer />

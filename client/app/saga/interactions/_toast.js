@@ -4,6 +4,7 @@ import { put } from 'redux-saga/effects'
 import { append, dismiss } from 'actions/message'
 
 const DURATION = 5e3
+// const DURATION = 0
 let counter = 0
 
 export default function* toast(message, duration = DURATION) {

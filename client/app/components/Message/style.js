@@ -4,9 +4,8 @@ import { fontStyle } from 'styles/global'
 
 const wrapper = {
   ...fontStyle,
-  maxWidth: '900px',
   marginLeft: 'auto',
-  marginRight: 'auto',
+  marginRight: 'auto'
 }
 
 const content = {
@@ -15,7 +14,8 @@ const content = {
   margin: '0 15px 15px',
   padding: '15px 5px',
   transition: 'border .2s',
-  position: 'relative'
+  position: 'relative',
+  background: COLOR.light
 }
 
 const autoDismiss = {
@@ -46,7 +46,7 @@ export default prefix({
   error: {
     content: {
       ...content,
-      border: `1px solid ${COLOR.darkGray}`
+      border: `2px solid ${COLOR.darkGray}`
     },
     autoDismiss: {
       ...autoDismiss,
@@ -59,7 +59,7 @@ export default prefix({
   info: {
     content: {
       ...content,
-      border: `1px solid ${COLOR.lightGray}`
+      border: `2px solid ${COLOR.lightGray}`
     },
     autoDismiss: {
       ...autoDismiss,

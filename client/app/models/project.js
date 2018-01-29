@@ -1,6 +1,20 @@
 import pick from 'object.pick'
 import request from 'graphql-request'
 
+const PROJECT_FRAGMENT = `
+  _id,
+  name,
+  slug,
+  origins,
+  disabled,
+  presets {
+    _id,
+    name,
+    hash,
+    values
+  }
+`
+
 export default {
   create: async ({ project, token }) => {
     const body = await request('/graphql', `
@@ -8,16 +22,7 @@ export default {
         session(token: $token) {
           account {
             _createProject(project: $project) {
-              _id,
-              name,
-              slug,
-              origins,
-              presets {
-                _id,
-                name,
-                hash,
-                values
-              }
+              ${PROJECT_FRAGMENT}
             }
           }
         }
@@ -35,16 +40,7 @@ export default {
         session(token: $token) {
           account {
             project(slug: $slug) {
-              _id,
-              name,
-              slug,
-              origins,
-              presets {
-                _id,
-                name,
-                hash,
-                values
-              }
+              ${PROJECT_FRAGMENT}
             }
           }
         }
@@ -62,16 +58,7 @@ export default {
         session(token: $token) {
           account {
             projects {
-              _id,
-              name,
-              slug,
-              origins,
-              presets {
-                _id,
-                name,
-                hash,
-                values
-              }
+              ${PROJECT_FRAGMENT}
             }
           }
         }
@@ -89,23 +76,14 @@ export default {
           account {
             project(slug: $slug) {
               _update(project: $project) {
-                _id,
-                name,
-                slug,
-                origins,
-                presets {
-                  _id,
-                  name,
-                  hash,
-                  values
-                }
+                ${PROJECT_FRAGMENT}
               }
             }
           }
         }
       }
     `, {
-      project: pick(project, [ 'name', 'origins' ]),
+      project: pick(project, [ 'name', 'origins', 'disabled' ]),
       token,
       slug: project.slug
     })

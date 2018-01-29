@@ -6,7 +6,7 @@ export const PROJECT = prefix('project', {
   ...ajax('FETCH'),
   ...ajax('FETCH_ALL'),
   ...ajax('UPDATE'),
-  ...ajax('DELETE')
+  ...ajax('REMOVE')
 })
 
 export function createProject(project) {

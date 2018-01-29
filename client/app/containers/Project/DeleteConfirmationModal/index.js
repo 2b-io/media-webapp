@@ -7,7 +7,7 @@ import Button from 'components/Button'
 import ResponsiveBox from 'components/ResponsiveBox'
 import modal from 'decorators/Modal'
 
-import { modal as style } from './style'
+import style from './style'
 
 @modal('project-delete-confirmation')
 class DeleteConfirmationModal extends React.Component {

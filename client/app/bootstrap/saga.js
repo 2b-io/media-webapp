@@ -4,7 +4,7 @@ import account from 'saga/account'
 import ajax from 'saga/ajax'
 import bootstrap from 'saga/bootstrap'
 import interactions from 'saga/interactions'
-import modal from 'saga/modal'
+// import modal from 'saga/modal'
 import project from 'saga/project'
 import routing from 'saga/routing'
 import session from 'saga/session'
@@ -16,7 +16,7 @@ function *root() {
 
   // core
   yield fork(interactions)
-  yield fork(modal)
+  // yield fork(modal)
   yield fork(routing)
   yield fork(session)
 

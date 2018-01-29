@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route } from 'react-router'
+import { Route, Switch } from 'react-router'
 
 import { loadableContainer } from 'helpers/loadable'
 
@@ -19,8 +19,12 @@ class Routes extends React.Component {
   }
 
   render() {
-    return Object.keys(this.screens).map(key => {
-      const Component = this.screens[key]
+    return this._renderRoutes(this.screens)
+  }
+
+  _renderRoutes(screens) {
+    return Object.keys(screens).map(key => {
+      const Component = screens[key]
 
       return <Component key={key} />
     })

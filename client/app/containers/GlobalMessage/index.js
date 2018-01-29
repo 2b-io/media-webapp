@@ -6,13 +6,21 @@ import { redirect } from 'actions/routing'
 import { InternalLink } from 'components/Link'
 import Message from 'components/Message'
 
+import style from './style'
+
 @connect(state => ({ messages: state.ui.message }))
 class GlobalMessage extends React.Component {
   render() {
     const { messages } = this.props
 
-    return Object.keys(messages).map(
-      key => this._renderMessage(key, messages[key])
+    return (
+      <div style={style.wrapper}>
+        <div style={style.content}>
+          {Object.keys(messages).map(
+            key => this._renderMessage(key, messages[key])
+          )}
+        </div>
+      </div>
     )
   }
 
