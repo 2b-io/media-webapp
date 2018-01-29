@@ -70,10 +70,11 @@ export const modalLayout = {
   wrapper: {
     ...fontStyle,
     zIndex: 302,
-    position: 'fixed',
+    position: 'absolute',
     marginLeft: 'auto',
     marginRight: 'auto',
-    top: '100px',
+    marginBottom: '50px',
+    top: '50px',
     maxWidth: '900px',
     width: '100%',
     display: 'inline-block',
