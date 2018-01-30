@@ -79,6 +79,7 @@ class Project extends React.Component {
         />
         <PresetModal
           onOverlayClick={this._dismissPresetModal()}
+          onAction={this._handlePresetAction()}
         />
       </div>
     )
@@ -94,6 +95,19 @@ class Project extends React.Component {
     const { dispatch } = this.props
 
     return () => dispatch(dismissModal('preset'))
+  }
+
+  _handlePresetAction() {
+    const { dispatch } = this.props
+
+    return (action, preset) => {
+      dispatch(dismissModal('preset'))
+
+
+      if (action !== 'save') return null
+
+      console.log(preset)
+    }
   }
 
   _renderPageTitle(action, project = {}) {

@@ -45,6 +45,7 @@ class PresetList extends React.Component {
         <div style={style.content}>
           {this._renderPresetList(project.presets)}
         </div>
+        <p style={style.desc}>Click to each preset to modify its information.</p>
       </div>
     )
   }

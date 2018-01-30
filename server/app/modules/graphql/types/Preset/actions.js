@@ -1,5 +1,9 @@
 import { GraphQLBoolean, GraphQLNonNull } from 'graphql'
 
+import {
+  update as updatePreset
+} from 'services/preset'
+
 export default (Preset, PresetStruct) => ({
   _update: {
     args: {
@@ -9,7 +13,9 @@ export default (Preset, PresetStruct) => ({
     },
     type: Preset,
     resolve: async (self, { preset }, ctx) => {
-      return preset
+      console.log(self)
+
+      return await updatePreset(self._project, self.hash, preset)
     }
   },
   _destroy: {

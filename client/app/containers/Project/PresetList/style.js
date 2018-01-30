@@ -42,5 +42,9 @@ export default prefix({
   },
   toggleCode: {
     marginLeft: 'auto'
+  },
+  desc: {
+    marginTop: '5px',
+    fontSize: FONT_SIZE.smallx
   }
 })

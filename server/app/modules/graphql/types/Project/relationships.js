@@ -20,7 +20,14 @@ export default (Project, ProjectStruct) => ({
   presets: {
     type: new GraphQLList(Preset),
     resolve: async (project, args, ctx) => {
-      return await listPresetsInProject(project)
+      let presets = await listPresetsInProject(project)
+
+      return presets.map(preset => {
+        // add ref
+        preset._project = project
+
+        return preset
+      })
     }
   },
   preset: {
@@ -31,7 +38,12 @@ export default (Project, ProjectStruct) => ({
     },
     type: Preset,
     resolve: async (project, { hash }, ctx) => {
-      return await getPreset(project, hash)
+      const preset = await getPreset(project, hash)
+
+      // add ref
+      preset._project = project
+
+      return preset
     }
   }
 })

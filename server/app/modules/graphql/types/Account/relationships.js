@@ -13,7 +13,13 @@ export default (Account, AccountStruct) => ({
   projects: {
     type: new GraphQLList(Project),
     resolve: async (account, args, ctx) => {
-      return await listProjectsByAccount(account._id)
+      const projects = await listProjectsByAccount(account._id)
+
+      return projects.map(project => {
+        project._account = account
+
+        return project
+      })
     }
   },
   project: {
@@ -24,7 +30,12 @@ export default (Account, AccountStruct) => ({
     },
     type: Project,
     resolve: async (account, { slug }, ctx) => {
-      return await getProjectBySlug(slug)
+      const project = await getProjectBySlug(slug)
+
+      // add ref
+      project._account = account
+
+      return project
     }
   }
 })

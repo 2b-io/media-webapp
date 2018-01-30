@@ -26,3 +26,13 @@ export const create = async (project, data) => {
 
   return preset
 }
+
+export const update = async (project, hash, data) => {
+  const preset = await Preset.findOneAndUpdate(
+    { project: project._id, hash },
+    data,
+    { new: true }
+  )
+
+  return preset
+}
