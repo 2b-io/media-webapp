@@ -86,7 +86,8 @@ export const modalLayout = {
     marginLeft: '15px',
     marginRight: '15px',
     padding: '15px',
-    border: `2px solid ${COLOR.darkGray}`,
+    border: `1px solid ${COLOR.lightGray}`,
+    boxShadow: `0 0 10px ${COLOR.lightGray}`,
     background: COLOR.light
   }
 }

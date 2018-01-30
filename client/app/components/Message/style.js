@@ -22,7 +22,7 @@ const autoDismiss = {
   position: 'absolute',
   left: 0,
   bottom: '-1px',
-  height: '2px',
+  height: '3px',
   width: '100%'
 }
 
@@ -46,7 +46,8 @@ export default prefix({
   error: {
     content: {
       ...content,
-      border: `2px solid ${COLOR.darkGray}`
+      border: `1px solid ${COLOR.darkGray}`,
+      boxShadow: `0 0 10px ${COLOR.darkGray}`
     },
     autoDismiss: {
       ...autoDismiss,
@@ -59,11 +60,12 @@ export default prefix({
   info: {
     content: {
       ...content,
-      border: `2px solid ${COLOR.lightGray}`
+      border: `1px solid ${COLOR.lightGray}`,
+      boxShadow: `0 0 10px ${COLOR.lightGray}`
     },
     autoDismiss: {
       ...autoDismiss,
-      background: COLOR.darkGray,
+      background: COLOR.lightGray,
     },
     wrapper,
     message,

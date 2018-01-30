@@ -7,7 +7,7 @@ export const sideMenuStyle = prefix({
   bmMenu: {
     ...fontStyle,
     background: COLOR.light,
-    borderLeft: `2px solid ${COLOR.lightGray}`,
+    borderLeft: `1px solid ${COLOR.lightGray}`,
     paddingTop: '60px',
     paddingLeft: '10px',
     paddingRight: '15px'

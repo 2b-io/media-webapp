@@ -10,11 +10,13 @@ export default function(state = initialState, action) {
         [action.payload.id]: action.payload.data || true
       }
 
-    case MODAL.DISMISS:
-      return action.payload ? {
-        ...state,
-        [action.payload.id]: false
-      } : initialState
+    case MODAL.DISMISS: {
+      if (!action.payload) return initialState
+
+      let { [action.payload.id]:closingModal, ...nextState } = state
+
+      return nextState
+    }
   }
 
   return state
