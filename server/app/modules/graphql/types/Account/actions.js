@@ -36,7 +36,12 @@ export default (Account, AccountStruct) => ({
     },
     type: Project,
     resolve: async (account, { project }, ctx) => {
-      return await createProject(project, account)
+      const p = await createProject(project, account)
+
+      // add ref
+      p._account = account
+
+      return p
     }
   }
 })

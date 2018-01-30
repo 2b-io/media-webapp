@@ -22,7 +22,12 @@ export default (Project, ProjectStruct) => ({
     },
     type: Project,
     resolve: async (self, { project }, ctx) => {
-      return await updateProject(self.slug, project)
+      const p = await updateProject(self.slug, project)
+
+      // add ref
+      p._account = self._account
+
+      return p
     }
   },
   _destroy: {
@@ -41,7 +46,12 @@ export default (Project, ProjectStruct) => ({
     },
     type: Preset,
     resolve: async (project, { preset }, ctx) => {
-      return await createPreset(project, preset)
+      const p = await createPreset(project, preset)
+
+      // add ref
+      p._project = project
+
+      return p
     }
   }
 })

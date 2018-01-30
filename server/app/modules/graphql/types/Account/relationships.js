@@ -16,6 +16,7 @@ export default (Account, AccountStruct) => ({
       const projects = await listProjectsByAccount(account._id)
 
       return projects.map(project => {
+        // add ref
         project._account = account
 
         return project

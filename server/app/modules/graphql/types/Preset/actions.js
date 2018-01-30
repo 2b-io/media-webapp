@@ -13,9 +13,12 @@ export default (Preset, PresetStruct) => ({
     },
     type: Preset,
     resolve: async (self, { preset }, ctx) => {
-      console.log(self)
+      const p = await updatePreset(self._project, self.hash, preset)
 
-      return await updatePreset(self._project, self.hash, preset)
+      // add ref
+      p._project = self._project
+
+      return p
     }
   },
   _destroy: {

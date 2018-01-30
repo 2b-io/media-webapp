@@ -2,6 +2,14 @@ import { Account } from '../Account'
 
 export default (Session, SessionStruct) => ({
   account: {
-    type: Account
+    type: Account,
+    resolve: async (session) => {
+      const { account } = session
+
+      // add ref
+      account._session = session
+
+      return account
+    }
   }
 })
