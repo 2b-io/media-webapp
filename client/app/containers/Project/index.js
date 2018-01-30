@@ -104,10 +104,13 @@ class Project extends React.Component {
     return (action, preset) => {
       dispatch(dismissModal('preset'))
 
+      switch (action) {
+        case 'save':
+          return dispatch(updatePreset(this.props.project, preset))
 
-      if (action !== 'save') return null
-
-      dispatch(updatePreset(this.props.project, preset))
+        case 'delete':
+          return dispatch(removePreset(this.props.project, preset))
+      }
     }
   }
 

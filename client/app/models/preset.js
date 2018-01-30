@@ -5,7 +5,8 @@ export const PRESET_FRAGMENT = `
   _id,
   name,
   hash,
-  values
+  values,
+  isDefault
 `
 
 export default {
@@ -32,6 +33,28 @@ export default {
     })
 
     return body.session.account.project.preset._update
+  },
+
+  remove: async ({ project, hash, token }) => {
+    const body = await request(`
+      query removePreset($slug: String!, $hash: String!, $token: String!) {
+        session(token: $token) {
+          account {
+            project(slug: $slug) {
+              preset(hash: $hash) {
+                _destroy
+              }
+            }
+          }
+        }
+      }
+    `, {
+      slug: project.slug,
+      hash,
+      token
+    })
+
+    return body.session.account.project.preset._destroy
   }
 }
 

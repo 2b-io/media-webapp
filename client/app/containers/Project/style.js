@@ -55,6 +55,8 @@ export default prefix({
     ...linkStyle,
     fontSize: FONT_SIZE.smallx,
     display: 'inline-block',
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+    marginLeft: '15px',
+    marginRight: '15px'
   }
 })

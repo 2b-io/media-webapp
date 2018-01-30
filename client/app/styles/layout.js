@@ -73,7 +73,7 @@ export const modalLayout = {
     position: 'absolute',
     marginLeft: 'auto',
     marginRight: 'auto',
-    marginBottom: '10px',
+    marginBottom: '15px',
     top: '50px',
     maxWidth: '900px',
     width: '100%',

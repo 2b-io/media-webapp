@@ -17,12 +17,12 @@ export function updatePreset(project, preset) {
   }
 }
 
-export function removePreset(project, preset) {
+export function removePreset(project, hash) {
   return {
     type: PRESET.REMOVE_REQUEST,
     payload: {
       project,
-      preset
+      hash
     }
   }
 }

@@ -1,3 +1,4 @@
+
 import { PRESET } from 'actions/preset'
 import { PROJECT } from 'actions/project'
 
@@ -46,6 +47,18 @@ export default function(state = initialState, action) {
           }
         }
       }
+
+    case PRESET.REMOVE_SUCCESS: {
+      let { [action.payload.hash]:removedPreset, ...presets } = state[action.payload.project.slug].presets
+
+      return {
+        ...state,
+        [action.payload.project.slug]: {
+          ...state[action.payload.project.slug],
+          presets: presets
+        }
+      }
+    }
   }
 
   return state

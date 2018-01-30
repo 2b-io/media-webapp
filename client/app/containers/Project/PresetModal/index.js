@@ -18,6 +18,8 @@ class PresetForm extends React.Component {
   render() {
     const { handleSubmit, initialValues:preset } = this.props
 
+    console.log(preset)
+
     return (
       <div style={style.form}>
         <form ref="form" onSubmit={handleSubmit}>
@@ -89,8 +91,12 @@ class PresetModal extends React.Component {
           <ResponsiveBox style={style.control}>
             <Button style={style.confirmButton}
               onClick={this._submit()}>save</Button>
-            <span style={style.cancelButton}
-              onClick={this._chooseAction('cancel')}>delete</span>
+            {
+              preset.isDefault || !preset.hash ?
+                null :
+                <span style={style.cancelButton}
+                  onClick={this._chooseAction('delete', preset.hash)}>delete this preset</span>
+            }
             {/*<span style={style.cancelButton}
               onClick={this._chooseAction('cancel')}>cancel & close</span>*/}
           </ResponsiveBox>
@@ -107,7 +113,7 @@ class PresetModal extends React.Component {
     }
   }
 
-  _chooseAction(action) {
+  _chooseAction(action, hash) {
     const { onAction } = this.props
 
     return preset => {
@@ -115,7 +121,7 @@ class PresetModal extends React.Component {
         return
       }
 
-      onAction(action, preset)
+      onAction(action, hash || preset)
     }
   }
 }
