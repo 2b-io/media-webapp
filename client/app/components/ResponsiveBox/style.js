@@ -5,8 +5,7 @@ export default prefix({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    flexWrap: 'wrap',
-    width: '100%'
+    flexWrap: 'wrap'
   },
   medium: {}
 })

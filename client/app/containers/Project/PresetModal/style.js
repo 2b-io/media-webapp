@@ -25,6 +25,8 @@ export default prefix({
     ...linkStyle,
     whiteSpace: 'nowrap',
     display: 'inline-block',
+    marginLeft: '15px',
+    marginRight: '15px',
     fontSize: FONT_SIZE.smallx
   },
   form: {

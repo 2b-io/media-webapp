@@ -86,8 +86,13 @@ export const modalLayout = {
     marginLeft: '15px',
     marginRight: '15px',
     padding: '15px',
-    border: `1px solid ${COLOR.lightGray}`,
-    boxShadow: `0 0 10px ${COLOR.lightGray}`,
+    border: `1px solid ${COLOR.darkGray}`,
+    boxShadow: `0 0 20px ${COLOR.darkGray}`,
     background: COLOR.light
+  },
+  header: {
+    marginBottom: '5px',
+    display: 'flex',
+    justifyContent: 'flex-end'
   }
 }

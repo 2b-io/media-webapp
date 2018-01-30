@@ -47,7 +47,7 @@ export default prefix({
     content: {
       ...content,
       border: `1px solid ${COLOR.darkGray}`,
-      boxShadow: `0 0 10px ${COLOR.darkGray}`
+      boxShadow: `0 0 20px ${COLOR.darkGray}`
     },
     autoDismiss: {
       ...autoDismiss,
@@ -61,7 +61,7 @@ export default prefix({
     content: {
       ...content,
       border: `1px solid ${COLOR.lightGray}`,
-      boxShadow: `0 0 10px ${COLOR.lightGray}`
+      boxShadow: `0 0 20px ${COLOR.lightGray}`
     },
     autoDismiss: {
       ...autoDismiss,

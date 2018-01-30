@@ -2,6 +2,8 @@ import Radium from 'radium'
 import React from 'react'
 import { Field, reduxForm, submit } from 'redux-form'
 
+import IconClose from 'react-icons/lib/md/close'
+
 import Button from 'components/Button'
 import ResponsiveBox from 'components/ResponsiveBox'
 import TextBox from 'components/inputs/TextBox'
@@ -74,6 +76,11 @@ class PresetModal extends React.Component {
       </div>,
       <div key="modal" style={style.wrapper}>
         <div style={style.content}>
+          <div style={style.header}>
+            <div onClick={this._chooseAction('cancel')}>
+              <IconClose size={16} />
+            </div>
+          </div>
           <PresetForm
             ref="presetForm"
             initialValues={preset}
@@ -83,7 +90,9 @@ class PresetModal extends React.Component {
             <Button style={style.confirmButton}
               onClick={this._submit()}>save</Button>
             <span style={style.cancelButton}
-              onClick={this._chooseAction('cancel')}>cancel & close</span>
+              onClick={this._chooseAction('cancel')}>delete</span>
+            {/*<span style={style.cancelButton}
+              onClick={this._chooseAction('cancel')}>cancel & close</span>*/}
           </ResponsiveBox>
         </div>
       </div>

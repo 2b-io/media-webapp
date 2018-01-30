@@ -55,7 +55,7 @@ class PresetList extends React.Component {
       <ul>
         { Object.values(presets).map(preset => {
           return (
-            <li key={preset._id}>
+            <li key={preset.hash}>
               <Preset preset={preset}
                 onClick={this._onClick(preset)}
               />

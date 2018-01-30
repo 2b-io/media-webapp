@@ -58,19 +58,3 @@ export default prefix({
     whiteSpace: 'nowrap'
   }
 })
-
-export const form = prefix({
-  row: {
-    display: 'flex',
-    marginBottom: '15px',
-    flexDirection: 'column'
-  },
-  label: {
-    marginRight: 'auto',
-    marginBottom: '5px'
-  },
-  desc: {
-    marginTop: '5px',
-    fontSize: FONT_SIZE.smallx
-  }
-})
