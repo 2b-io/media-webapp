@@ -35,3 +35,10 @@ export function updateProject(project) {
     payload: project
   }
 }
+
+export function removeProject(project) {
+  return {
+    type: PROJECT.REMOVE_REQUEST,
+    payload: project
+  }
+}

@@ -1,17 +1,16 @@
 import pick from 'object.pick'
 import request from 'services/graphql'
 
-const PROJECT_FRAGMENT = `
+import { PRESET_FRAGMENT } from 'models/preset'
+
+export const PROJECT_FRAGMENT = `
   _id,
   name,
   slug,
   origins,
   disabled,
   presets {
-    _id,
-    name,
-    hash,
-    values
+    ${PRESET_FRAGMENT}
   }
 `
 

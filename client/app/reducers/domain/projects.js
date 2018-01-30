@@ -1,3 +1,4 @@
+import { PRESET } from 'actions/preset'
 import { PROJECT } from 'actions/project'
 
 const initialState = {
@@ -31,6 +32,18 @@ export default function(state = initialState, action) {
         [action.payload.slug]: {
           ...action.payload,
           presets: restructPresets(action.payload.presets)
+        }
+      }
+
+    case PRESET.UPDATE_SUCCESS:
+      return {
+        ...state,
+        [action.payload.project.slug]: {
+          ...state[action.payload.project.slug],
+          presets: {
+            ...state[action.payload.project.slug].presets,
+            [action.payload.preset.hash]: action.payload.preset
+          }
         }
       }
   }

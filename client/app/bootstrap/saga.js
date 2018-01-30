@@ -5,6 +5,7 @@ import ajax from 'saga/ajax'
 import bootstrap from 'saga/bootstrap'
 import interactions from 'saga/interactions'
 // import modal from 'saga/modal'
+import preset from 'saga/preset'
 import project from 'saga/project'
 import routing from 'saga/routing'
 import session from 'saga/session'
@@ -22,6 +23,7 @@ function *root() {
 
   // domain
   yield fork(account)
+  yield fork(preset)
   yield fork(project)
 }
 

@@ -6,7 +6,8 @@ import pick from 'object.pick'
 import splitLines from 'split-lines'
 
 import { dismissModal, openModal } from 'actions/modal'
-import { createProject, fetchProject, updateProject } from 'actions/project'
+import { removePreset, updatePreset } from 'actions/preset'
+import { createProject, fetchProject, removeProject, updateProject } from 'actions/project'
 import Button from 'components/Button'
 import ResponsiveBox from 'components/ResponsiveBox'
 import { SystemLayout } from 'decorators/Layout'
@@ -106,7 +107,7 @@ class Project extends React.Component {
 
       if (action !== 'save') return null
 
-      console.log(preset)
+      dispatch(updatePreset(this.props.project, preset))
     }
   }
 
