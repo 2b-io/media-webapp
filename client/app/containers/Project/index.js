@@ -13,6 +13,7 @@ import ResponsiveBox from 'components/ResponsiveBox'
 import { SystemLayout } from 'decorators/Layout'
 
 import DeleteConfirmationModal from './DeleteConfirmationModal'
+import IntegrateModal from './IntegrateModal'
 import PresetModal from './PresetModal'
 import Form from './Form'
 import PresetList from './PresetList'
@@ -71,6 +72,7 @@ class Project extends React.Component {
         <PresetList
           project={initialValues}
           onClick={this._openPresetModal()}
+          onShowCodeClick={this._openIntegrateModal(project)}
         />
         {/* {this._renderUsage(initialValues)} */}
         {this._renderOtherControls(initialValues)}
@@ -82,8 +84,28 @@ class Project extends React.Component {
           onOverlayClick={this._dismissPresetModal()}
           onAction={this._handlePresetAction(project)}
         />
+        <IntegrateModal
+          onOverlayClick={this._dismissModal('integrate')}
+        />
       </div>
     )
+  }
+
+  _openIntegrateModal(project) {
+    const { dispatch } = this.props
+
+    return preset => dispatch(
+      openModal('integrate', {
+        preset,
+        project
+      })
+    )
+  }
+
+  _dismissModal(name) {
+    const { dispatch } = this.props
+
+    return () => dispatch(dismissModal(name))
   }
 
   _openPresetModal() {

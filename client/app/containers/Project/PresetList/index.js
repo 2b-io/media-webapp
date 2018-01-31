@@ -1,4 +1,3 @@
-import Radium from 'radium'
 import React from 'react'
 
 import IconAdd from 'react-icons/lib/md/add'
@@ -8,7 +7,7 @@ import style from './style'
 
 class Preset extends React.Component {
   render() {
-    const { preset, onClick } = this.props
+    const { preset, onClick, onShowCodeClick } = this.props
 
     return (
       <div style={style.presetWrapper}>
@@ -16,7 +15,8 @@ class Preset extends React.Component {
           <span
             style={style.presetName}
             onClick={onClick}>{preset.name}</span>
-          <div style={style.toggleCode}>
+          <div style={style.toggleCode}
+            onClick={onShowCodeClick}>
             <IconCode size={16} />
           </div>
         </div>
@@ -25,7 +25,6 @@ class Preset extends React.Component {
   }
 }
 
-@Radium
 class PresetList extends React.Component {
   render() {
     const { project, onClick } = this.props
@@ -45,7 +44,7 @@ class PresetList extends React.Component {
         <div style={style.content}>
           {this._renderPresetList(project.presets)}
         </div>
-        <p style={style.desc}>Click to each preset to modify its information.</p>
+        <p style={style.desc}>Click to each preset to modify its settings</p>
       </div>
     )
   }
@@ -58,12 +57,23 @@ class PresetList extends React.Component {
             <li key={preset.hash}>
               <Preset preset={preset}
                 onClick={this._onClick(preset)}
+                onShowCodeClick={this._onShowCodeClick(preset)}
               />
             </li>
           )
         }) }
       </ul>
     )
+  }
+
+  _onShowCodeClick(preset) {
+    const { onShowCodeClick } = this.props
+
+    return () => {
+      if (!onShowCodeClick) return
+
+      onShowCodeClick(preset)
+    }
   }
 
   _onClick(preset) {

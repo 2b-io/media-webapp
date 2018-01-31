@@ -41,7 +41,8 @@ export default prefix({
     ...linkStyle
   },
   toggleCode: {
-    marginLeft: 'auto'
+    marginLeft: 'auto',
+    cursor: 'pointer'
   },
   desc: {
     marginTop: '5px',
