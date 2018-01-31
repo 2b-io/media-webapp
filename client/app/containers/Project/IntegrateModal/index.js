@@ -52,8 +52,8 @@ class IntegrateModal extends React.Component {
     const url = 'YOUR_PUBLIC_IMAGE_URL'
 
     return hash === 'default' ?
-      this._highlight`<img src="https://server1.mn-cdn.com/p/${slug}/media?width=${width}&url=${url} />` :
-      this._highlight`<img src="https://server1.mn-cdn.com/p/${slug}/${hash}/media?width=${width}&url=${url} />`
+      this._highlight`<img src="https://server1.mn-cdn.com/p/${slug}/media?width=${width}&url=${url}" />` :
+      this._highlight`<img src="https://server1.mn-cdn.com/p/${slug}/${hash}/media?width=${width}&url=${url}" />`
   }
 
   _highlight(strings, ...values) {

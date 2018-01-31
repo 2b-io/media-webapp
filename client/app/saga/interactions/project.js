@@ -29,7 +29,7 @@ export default {
   },
   [PROJECT.REMOVE_SUCCESS]: function* (action) {
     yield fork(showToast, {
-      type: 'error',
+      type: 'info',
       value: 'The project has been removed successfully.'
     })
 

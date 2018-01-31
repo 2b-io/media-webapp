@@ -44,7 +44,7 @@ class PresetList extends React.Component {
         <div style={style.content}>
           {this._renderPresetList(project.presets)}
         </div>
-        <p style={style.desc}>Click to each preset to modify its settings</p>
+        <p style={style.desc}>Click to each preset to modify its settings or <span style={style.createPreset} onClick={this._onClick()}>create a new preset</span>.</p>
       </div>
     )
   }

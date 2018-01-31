@@ -11,7 +11,7 @@ import modal from 'decorators/Modal'
 
 import style from './style'
 
-const toNumber = value => Number(value) || ''
+const toNumber = value => parseInt(value) || ''
 
 @reduxForm({ form: 'preset', enableReinitialize: true })
 class PresetForm extends React.Component {
@@ -33,7 +33,7 @@ class PresetForm extends React.Component {
             <label style={style.label}>Name</label>
             <Field component={TextBox}
               name="name"
-              placeholder="Resize"
+              placeholder="Resize Preferences"
               readOnly={preset.isDefault}
             />
           </div>
@@ -41,7 +41,7 @@ class PresetForm extends React.Component {
             <label style={style.label}>Quality</label>
             <Field component={TextBox}
               name="values.quality"
-              placeholder="Resize"
+              placeholder="75"
               normalize={toNumber}
             />
             <p style={style.desc}>Adjusts the jpeg|miff|png|tiff compression level. Value ranges from 0 to 100 (best).</p>
@@ -50,10 +50,10 @@ class PresetForm extends React.Component {
             <label style={style.label}>Step</label>
             <Field component={TextBox}
               name="values.step"
-              placeholder="Resize"
+              placeholder="8"
               normalize={toNumber}
             />
-            <p style={style.desc}>Adjusts the jpeg|miff|png|tiff compression level. Value ranges from 0 to 100 (best).</p>
+            <p style={style.desc}>Adjusts size of images after resizing. Value should be a multiple of 8.</p>
           </div>
         </form>
       </div>

@@ -20,7 +20,7 @@ export default {
   },
   [PRESET.REMOVE_SUCCESS]: function* (action) {
     yield fork(showToast, {
-      type: 'error',
+      type: 'info',
       value: 'The preset has been removed successfully.'
     })
   },

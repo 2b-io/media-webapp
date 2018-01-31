@@ -47,5 +47,8 @@ export default prefix({
   desc: {
     marginTop: '5px',
     fontSize: FONT_SIZE.smallx
+  },
+  createPreset: {
+    ...linkStyle
   }
 })
