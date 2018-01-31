@@ -1,6 +1,7 @@
 import { GraphQLBoolean, GraphQLNonNull } from 'graphql'
 
 import {
+  remove as removePreset,
   update as updatePreset
 } from 'services/preset'
 
@@ -24,6 +25,8 @@ export default (Preset, PresetStruct) => ({
   _destroy: {
     type: GraphQLBoolean,
     resolve: async (self, args, ctx) => {
+      await removePreset(self._project, self.hash)
+
       return true
     }
   }
