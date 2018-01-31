@@ -7,6 +7,16 @@ export const PRESET = prefix('preset', {
   ...ajax('REMOVE')
 })
 
+export function createPreset(project, preset) {
+  return {
+    type: PRESET.CREATE_REQUEST,
+    payload: {
+      project,
+      preset
+    }
+  }
+}
+
 export function updatePreset(project, preset) {
   return {
     type: PRESET.UPDATE_REQUEST,

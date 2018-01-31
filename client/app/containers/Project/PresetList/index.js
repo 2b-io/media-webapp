@@ -37,7 +37,7 @@ class PresetList extends React.Component {
         <div style={style.header}>
           <div style={style.title}>Presets</div>
           <div style={style.controls}>
-            <div style={style.button}>
+            <div style={style.button} onClick={this._onClick()}>
               <IconAdd size={16} />
             </div>
           </div>

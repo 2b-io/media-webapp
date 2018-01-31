@@ -6,7 +6,7 @@ import pick from 'object.pick'
 import splitLines from 'split-lines'
 
 import { dismissModal, openModal } from 'actions/modal'
-import { removePreset, updatePreset } from 'actions/preset'
+import { createPreset, removePreset, updatePreset } from 'actions/preset'
 import { createProject, fetchProject, removeProject, updateProject } from 'actions/project'
 import Button from 'components/Button'
 import ResponsiveBox from 'components/ResponsiveBox'
@@ -89,7 +89,7 @@ class Project extends React.Component {
   _openPresetModal() {
     const { dispatch } = this.props
 
-    return preset => dispatch(openModal('preset', preset))
+    return (preset = {}) => dispatch(openModal('preset', preset))
   }
 
   _dismissPresetModal() {
@@ -106,7 +106,9 @@ class Project extends React.Component {
 
       switch (action) {
         case 'save':
-          return dispatch(updatePreset(this.props.project, preset))
+          return preset.hash ?
+            dispatch(updatePreset(this.props.project, preset)) :
+            dispatch(createPreset(this.props.project, preset))
 
         case 'delete':
           return dispatch(removePreset(this.props.project, preset))

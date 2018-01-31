@@ -36,6 +36,7 @@ export default function(state = initialState, action) {
         }
       }
 
+    case PRESET.CREATE_SUCCESS:
     case PRESET.UPDATE_SUCCESS:
       return {
         ...state,

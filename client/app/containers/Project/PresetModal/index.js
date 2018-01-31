@@ -11,14 +11,12 @@ import modal from 'decorators/Modal'
 
 import style from './style'
 
-const toNumber = value => Number(value) || 8
+const toNumber = value => Number(value) || ''
 
 @reduxForm({ form: 'preset', enableReinitialize: true })
 class PresetForm extends React.Component {
   render() {
     const { handleSubmit, initialValues:preset } = this.props
-
-    console.log(preset)
 
     return (
       <div style={style.form}>
