@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 
 // internals
 import { LAYOUT } from 'actions/layout'
-import PersonalHeader from 'containers/PersonalHeader'
 import SystemHeader from 'containers/SystemHeader'
 
 @connect(state => ({ layout: state.ui.layout }))

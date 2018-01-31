@@ -59,8 +59,8 @@ class IntegrateModal extends React.Component {
   _highlight(strings, ...values) {
     return strings.reduce((children, s, index) => [
       ...children,
-      <span key={`s${index}`}>{s}</span>,
-      values[index] ? <b key={`v${index}`}>{values[index]}</b> : null
+      <span key={`s-${index}`}>{s}</span>,
+      values[index] ? <b key={`v-${index}`}>{values[index]}</b> : null
     ], [])
   }
 }

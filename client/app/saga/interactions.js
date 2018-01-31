@@ -1,6 +1,7 @@
 import { fork, race, take } from 'redux-saga/effects'
 
 import account from './interactions/account'
+import preset from './interactions/preset'
 import project from './interactions/project'
 import session from './interactions/session'
 
@@ -30,6 +31,7 @@ function* interact(interactions) {
 
 export default function* root() {
   yield fork(interact, account)
+  yield fork(interact, preset)
   yield fork(interact, project)
   yield fork(interact, session)
 }
