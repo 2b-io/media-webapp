@@ -77,11 +77,10 @@ class Project extends React.Component {
         {/* {this._renderUsage(initialValues)} */}
         {this._renderOtherControls(initialValues)}
         <DeleteConfirmationModal
-          onOverlayClick={this._dismissDeleteConfirmation()}
+          onOverlayClick={this._dismissModal('project-delete-confirmation')}
           onAction={this._handleConfirmAction(project)}
         />
         <PresetModal
-          onOverlayClick={this._dismissPresetModal()}
           onAction={this._handlePresetAction(project)}
         />
         <IntegrateModal
