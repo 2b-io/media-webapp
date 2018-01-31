@@ -51,21 +51,17 @@ class IntegrateModal extends React.Component {
     const width = 'YOUR_DESIRED_WIDTH'
     const url = 'YOUR_PUBLIC_IMAGE_URL'
 
-    console.log(hash === 'default')
-
     return hash === 'default' ?
       this._highlight`<img src="https://server1.mn-cdn.com/p/${slug}/media?width=${width}&url=${url} />` :
       this._highlight`<img src="https://server1.mn-cdn.com/p/${slug}/${hash}/media?width=${width}&url=${url} />`
   }
 
   _highlight(strings, ...values) {
-    return strings.reduce((children, s, index) => {
-      return [
-        ...children,
-        <span key={`s${index}`}>{s}</span>,
-        values[index] ? <b key={`v${index}`}>{values[index]}</b> : null
-      ]
-    }, [])
+    return strings.reduce((children, s, index) => [
+      ...children,
+      <span key={`s${index}`}>{s}</span>,
+      values[index] ? <b key={`v${index}`}>{values[index]}</b> : null
+    ], [])
   }
 }
 
