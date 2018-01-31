@@ -76,11 +76,11 @@ class Project extends React.Component {
         {this._renderOtherControls(initialValues)}
         <DeleteConfirmationModal
           onOverlayClick={this._dismissDeleteConfirmation()}
-          onAction={this._handleConfirmAction()}
+          onAction={this._handleConfirmAction(project)}
         />
         <PresetModal
           onOverlayClick={this._dismissPresetModal()}
-          onAction={this._handlePresetAction()}
+          onAction={this._handlePresetAction(project)}
         />
       </div>
     )
@@ -98,7 +98,7 @@ class Project extends React.Component {
     return () => dispatch(dismissModal('preset'))
   }
 
-  _handlePresetAction() {
+  _handlePresetAction(project) {
     const { dispatch } = this.props
 
     return (action, preset) => {
@@ -107,11 +107,11 @@ class Project extends React.Component {
       switch (action) {
         case 'save':
           return preset.hash ?
-            dispatch(updatePreset(this.props.project, preset)) :
-            dispatch(createPreset(this.props.project, preset))
+            dispatch(updatePreset(project, preset)) :
+            dispatch(createPreset(project, preset))
 
         case 'delete':
-          return dispatch(removePreset(this.props.project, preset))
+          return dispatch(removePreset(project, preset))
       }
     }
   }
@@ -180,13 +180,17 @@ class Project extends React.Component {
     return () => dispatch(openModal('project-delete-confirmation'))
   }
 
-  _handleConfirmAction() {
+  _handleConfirmAction(project) {
     const { dispatch } = this.props
 
     return action => {
       console.log(action)
 
       dispatch(dismissModal('project-delete-confirmation'))
+
+      if (action === 'confirm') {
+        dispatch(removeProject(project))
+      }
     }
   }
 

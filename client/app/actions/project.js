@@ -16,12 +16,6 @@ export function createProject(project) {
   }
 }
 
-export function fetchProjects() {
-  return {
-    type: PROJECT.FETCH_ALL_REQUEST
-  }
-}
-
 export function fetchProject(slug) {
   return {
     type: PROJECT.FETCH_REQUEST,
@@ -29,16 +23,22 @@ export function fetchProject(slug) {
   }
 }
 
-export function updateProject(project) {
+export function fetchProjects() {
   return {
-    type: PROJECT.UPDATE_REQUEST,
-    payload: project
+    type: PROJECT.FETCH_ALL_REQUEST
   }
 }
 
 export function removeProject(project) {
   return {
     type: PROJECT.REMOVE_REQUEST,
+    payload: project
+  }
+}
+
+export function updateProject(project) {
+  return {
+    type: PROJECT.UPDATE_REQUEST,
     payload: project
   }
 }

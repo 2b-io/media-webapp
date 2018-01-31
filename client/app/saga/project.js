@@ -2,7 +2,7 @@ import { call, fork, put, select, take } from 'redux-saga/effects'
 import { PROJECT } from 'actions/project'
 import Project from 'models/project'
 
-export function* createProject() {
+function* createProject() {
   while (true) {
     const action = yield take(PROJECT.CREATE_REQUEST)
     const session = yield select(state => state.domain.session)
@@ -26,7 +26,7 @@ export function* createProject() {
   }
 }
 
-export function* fetchProject() {
+function* fetchProject() {
   while (true) {
     const action = yield take(PROJECT.FETCH_REQUEST)
     const session = yield select(state => state.domain.session)
@@ -50,7 +50,7 @@ export function* fetchProject() {
   }
 }
 
-export function* fetchProjects() {
+function* fetchProjects() {
   while (true) {
     const action = yield take(PROJECT.FETCH_ALL_REQUEST)
     const session = yield select(state => state.domain.session)
@@ -73,7 +73,33 @@ export function* fetchProjects() {
   }
 }
 
-export function* updateProject() {
+function* removeProject() {
+  while (true) {
+    const action = yield take(PROJECT.REMOVE_REQUEST)
+    const session = yield select(state => state.domain.session)
+
+    try {
+      const result = yield call(Project.remove, {
+        project: action.payload,
+        token: session.token
+      })
+
+      if (!result) throw new Error('remove project failure')
+
+      yield put({
+        type: PROJECT.REMOVE_SUCCESS,
+        payload: action.payload
+      })
+    } catch (error) {
+      yield put({
+        type: PROJECT.REMOVE_FAILURE,
+        error
+      })
+    }
+  }
+}
+
+function* updateProject() {
   while (true) {
     const action = yield take(PROJECT.UPDATE_REQUEST)
     const session = yield select(state => state.domain.session)
@@ -101,5 +127,6 @@ export default function* root() {
   yield fork(createProject)
   yield fork(fetchProject)
   yield fork(fetchProjects)
+  yield fork(removeProject)
   yield fork(updateProject)
 }

@@ -27,6 +27,14 @@ export default {
       link: `/dashboard`
     }, false)
   },
+  [PROJECT.REMOVE_SUCCESS]: function* (action) {
+    yield fork(showToast, {
+      type: 'error',
+      value: 'The project has been removed successfully.'
+    })
+
+    yield put(redirect('/dashboard'))
+  },
   [PROJECT.UPDATE_FAILURE]: function* (action) {
     yield fork(showToast, {
       type: 'error',

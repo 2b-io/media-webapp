@@ -36,6 +36,12 @@ export default function(state = initialState, action) {
         }
       }
 
+    case PROJECT.REMOVE_SUCCESS: {
+      let { [action.payload.slug]:removedProject, ...nextState } = state
+
+      return nextState
+    }
+
     case PRESET.CREATE_SUCCESS:
     case PRESET.UPDATE_SUCCESS:
       return {

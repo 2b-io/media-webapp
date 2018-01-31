@@ -33,6 +33,7 @@ export default {
 
     return body.session.account._createProject
   },
+
   fetch: async ({ slug, token }) => {
     const body = await request(`
       query fetchProject($slug: String!, $token: String!) {
@@ -51,6 +52,7 @@ export default {
 
     return body.session.account.project
   },
+
   fetchAll: async ({ token }) => {
     const body = await request(`
       query fetchAllProjects($token: String!) {
@@ -68,6 +70,26 @@ export default {
 
     return body.session.account.projects
   },
+
+  remove: async ({ project, token }) => {
+    const body = await request(`
+      query removeProject($slug: String!, $token: String!) {
+        session(token: $token) {
+          account {
+            project(slug: $slug) {
+              _destroy
+            }
+          }
+        }
+      }
+    `, {
+      slug: project.slug,
+      token
+    })
+
+    return body.session.account.project._destroy
+  },
+
   update: async ({ project, token }) => {
     const body = await request(`
       query updateProject($project: ProjectStruct!, $slug: String!, $token: String!) {
