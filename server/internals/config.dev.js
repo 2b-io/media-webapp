@@ -1,5 +1,5 @@
 module.exports = {
-  systemPort: 3000,
+  systemPort: 3003,
   webpackDevServer: 'http://0.0.0.0:3001',
   mongodb: 'mongodb://localhost/myapp',
   session: {

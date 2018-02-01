@@ -6,6 +6,10 @@
   "plugins": [
     ["module-resolver", {
       "root": ["./app"],
+    }],
+    ["transform-runtime", {
+      "polyfill": false,
+      "regenerator": true
     }]
   ]
 }
