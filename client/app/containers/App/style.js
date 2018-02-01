@@ -7,7 +7,8 @@ export default prefix({
   wrapper: {
     ...fontStyle,
     ...appLayout.wrapper,
-    position: 'relative'
+    position: 'relative',
+    flex: 1
   },
   content: {
     ...appLayout.content,

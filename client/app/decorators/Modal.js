@@ -1,6 +1,8 @@
 import React from 'react'
 import { Portal } from 'react-portal'
 import { connect } from 'react-redux'
+import ScrollLock from 'react-scrolllock'
+import { modalLayout } from 'styles/layout'
 
 export default id => {
   return Component => {
@@ -19,7 +21,10 @@ export default id => {
 
         return (
           <Portal>
-            <Component {...this.props} />
+            <div style={modalLayout.portal}>
+              <Component {...this.props} />
+              <ScrollLock />
+            </div>
           </Portal>
         )
       }

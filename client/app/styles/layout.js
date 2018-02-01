@@ -58,8 +58,18 @@ export const widgetLayout = {
 }
 
 export const modalLayout = {
-  overlay: {
+  portal: {
     zIndex: 302,
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    overflowX: 'hidden',
+    overflowY: 'auto',
+    WebkitOverflowScrolling: 'touch'
+  },
+  overlay: {
     position: 'fixed',
     background: COLOR.light.fade(.2),
     top: 0,
@@ -69,7 +79,6 @@ export const modalLayout = {
   },
   wrapper: {
     ...fontStyle,
-    zIndex: 302,
     position: 'absolute',
     marginLeft: 'auto',
     marginRight: 'auto',

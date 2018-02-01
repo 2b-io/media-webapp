@@ -30,6 +30,7 @@
     "react-resize-aware": "2.7.0",
     "react-responsive": "4.0.0",
     "react-router": "4.2.0",
+    "react-scrolllock": "2.0.1",
     "react-svg-morph": "0.2.1",
     "redux": "3.7.2",
     "redux-burger-menu": "0.2.2",
