@@ -9,13 +9,14 @@ class TextBox extends React.Component {
   render() {
     const { input:inputProps } = this.props
     const nativeInputProps = pick(this.props, ['placeholder', 'readOnly', 'rows'])
+
     const mergedStyle = {
       ...style,
       ...this.props.style
     }
 
     return (
-      <textarea type="text"
+      <textarea
         style={mergedStyle}
         {...nativeInputProps}
         {...inputProps}

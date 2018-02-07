@@ -21,6 +21,7 @@ class SignUpForm extends React.Component {
         </p>
         <div style={style.row}>
           <Field component={TextBox}
+            type="email"
             name="email"
             placeholder="you@example.com"
           />

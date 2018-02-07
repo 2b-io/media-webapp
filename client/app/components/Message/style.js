@@ -39,7 +39,9 @@ const icon = {
   alignItems: 'center',
   cursor: 'pointer',
   marginLeft: '5px',
-  marginRight: '5px'
+  marginRight: '5px',
+  alignSelf: 'flex-start',
+  height: '25px'
 }
 
 export default prefix({

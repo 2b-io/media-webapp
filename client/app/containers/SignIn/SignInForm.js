@@ -4,7 +4,6 @@ import { Field, reduxForm } from 'redux-form'
 
 import Button from 'components/Button'
 import TextBox from 'components/inputs/TextBox'
-import PasswordBox from 'components/inputs/PasswordBox'
 import ResponsiveBox from 'components/ResponsiveBox'
 import { InternalLink } from 'components/Link'
 
@@ -23,14 +22,17 @@ class SignInForm extends React.Component {
         </p>
         <div style={style.row}>
           <Field component={TextBox}
+            type="email"
             name="email"
             placeholder="you@example.com"
           />
         </div>
         <div style={style.row}>
-          <Field component={PasswordBox}
+          <Field component={TextBox}
+            type="password"
             name="password"
             placeholder="password"
+            autoComplete="password"
           />
         </div>
         <div style={style.row}>
