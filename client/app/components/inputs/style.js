@@ -17,6 +17,7 @@ export const text = prefix({
   borderLeft: 'none',
   borderRight: 'none',
   borderBottom: `2px solid ${COLOR.lightGray}`,
+  borderRadius: '0px',
   WebkitAppearance: 'none',
   width: '100%',
   maxWidth: '100%',
