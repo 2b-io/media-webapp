@@ -13,17 +13,25 @@ export default id => {
     }))
     class Modal extends React.Component {
       render() {
+        console.log('render', id)
+
         const { isOpenned } = this.props
 
-        if (!isOpenned) {
-          return null
+        const style = {
+          ...modalLayout.portal,
+          display: isOpenned ? 'block' : 'none'
         }
 
         return (
           <Portal>
-            <div style={modalLayout.portal}>
-              <Component {...this.props} />
-              <ScrollLock />
+            <div style={style}
+              ref={ e => {
+                this._container = e
+              } }>
+              { isOpenned ? [
+                <Component key="modal" {...this.props} />,
+                <ScrollLock key="scrolllock" touchScrollTarget={this._container} />
+              ] : null }
             </div>
           </Portal>
         )
