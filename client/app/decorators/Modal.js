@@ -4,6 +4,10 @@ import { connect } from 'react-redux'
 import ScrollLock from 'react-scrolllock'
 import { modalLayout } from 'styles/layout'
 
+const INVISIBLE = {
+  display: 'none'
+}
+
 export default id => {
   return Component => {
 
@@ -13,21 +17,12 @@ export default id => {
     }))
     class Modal extends React.Component {
       render() {
-        console.log('render', id)
-
         const { isOpenned } = this.props
-
-        const style = {
-          ...modalLayout.portal,
-          display: isOpenned ? 'block' : 'none'
-        }
 
         return (
           <Portal>
-            <div style={style}
-              ref={ e => {
-                this._container = e
-              } }>
+            <div style={isOpenned ? modalLayout.portal : INVISIBLE}
+              ref={ e => this._container = e }>
               { isOpenned ? [
                 <Component key="modal" {...this.props} />,
                 <ScrollLock key="scrolllock" touchScrollTarget={this._container} />
