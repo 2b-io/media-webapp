@@ -27,7 +27,7 @@
     "prod:server:build": "cd server && babel app -d build && cd ..",
     "prod:server:run": "cd server && node build/index.js --CONFIG=internals/config.prod.js",
     "client:clean": "rm -rf client/build",
-    "server:clean": "rm server/prod.js"
+    "server:clean": "rm -rf server/build"
   },
   "dependencies": {}
 }
