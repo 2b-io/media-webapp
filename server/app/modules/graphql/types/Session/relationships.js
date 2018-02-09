@@ -7,7 +7,7 @@ export default (Session, SessionStruct) => ({
       const { account } = session
 
       // add ref
-      account._session = session
+      account.session = session
 
       return account
     }

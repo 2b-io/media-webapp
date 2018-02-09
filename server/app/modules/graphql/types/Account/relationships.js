@@ -7,9 +7,14 @@ import {
   getBySlug as getProjectBySlug,
   list as listProjectsByAccount
 } from 'services/project'
+
 import { Project } from '../Project'
+import { Session } from '../Session'
 
 export default (Account, AccountStruct) => ({
+  session: {
+    type: Session
+  },
   projects: {
     type: new GraphQLList(Project),
     resolve: async (account, args, ctx) => {
@@ -17,7 +22,7 @@ export default (Account, AccountStruct) => ({
 
       return projects.map(project => {
         // add ref
-        project._account = account
+        project.account = account
 
         return project
       })
@@ -34,7 +39,7 @@ export default (Account, AccountStruct) => ({
       const project = await getProjectBySlug(slug)
 
       // add ref
-      project._account = account
+      project.account = account
 
       return project
     }

@@ -8,9 +8,13 @@ import {
   list as listPresetsInProject
 } from 'services/preset'
 
+import { Account } from '../Account'
 import { Preset } from '../Preset'
 
 export default (Project, ProjectStruct) => ({
+  account: {
+    type: Account
+  },
   permission: {
     type: GraphQLString,
     resolve: async (project, args, ctx) => {
@@ -24,7 +28,7 @@ export default (Project, ProjectStruct) => ({
 
       return presets.map(preset => {
         // add ref
-        preset._project = project
+        preset.project = project
 
         return preset
       })
@@ -41,7 +45,7 @@ export default (Project, ProjectStruct) => ({
       const preset = await getPreset(project, hash)
 
       // add ref
-      preset._project = project
+      preset.project = project
 
       return preset
     }

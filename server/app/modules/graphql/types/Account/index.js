@@ -10,9 +10,9 @@ import relationships from './relationships'
 
 export const AccountStruct = new GraphQLInputObjectType({
   name: 'AccountStruct',
-  fields: {
+  fields: () => ({
     ...struct
-  }
+  })
 })
 
 export const Account = new GraphQLObjectType({

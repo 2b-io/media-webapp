@@ -7,7 +7,7 @@ import {
 
 import { Account, AccountStruct } from '../types/Account'
 
-export default {
+export default () => ({
   _createAccount: {
     args: {
       account: {
@@ -19,4 +19,4 @@ export default {
       return await createAccount(account)
     }
   }
-}
+})

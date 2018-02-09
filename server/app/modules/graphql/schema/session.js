@@ -12,7 +12,7 @@ import {
 import { AccountStruct } from '../types/Account'
 import { Session } from '../types/Session'
 
-export default {
+export default () => ({
   session: {
     args: {
       token: {
@@ -47,6 +47,5 @@ export default {
 
       return session
     }
-  },
-
-}
+  }
+})

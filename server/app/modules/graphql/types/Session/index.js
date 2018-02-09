@@ -9,16 +9,16 @@ import relationships from './relationships'
 
 export const SessionStruct = new GraphQLInputObjectType({
   name: 'SessionStruct',
-  fields: {
+  fields: () => ({
     ...struct
-  }
+  })
 })
 
 export const Session = new GraphQLObjectType({
   name: 'Session',
-  fields: {
+  fields: () => ({
     ...struct,
     ...actions(Session, SessionStruct),
     ...relationships(Session, SessionStruct)
-  }
+  })
 })

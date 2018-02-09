@@ -11,9 +11,9 @@ import relationships from './relationships'
 
 export const ProjectStruct = new GraphQLInputObjectType({
   name: 'ProjectStruct',
-  fields: {
+  fields: () => ({
     ...struct
-  }
+  })
 })
 
 export const Project = new GraphQLObjectType({
