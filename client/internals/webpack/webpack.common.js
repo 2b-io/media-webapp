@@ -43,13 +43,18 @@ module.exports = ({
             {
               loader: 'babel-loader',
               options: {
-                presets: [ 'env', 'react', 'stage-2' ],
+                presets: [
+                  [ 'env', {
+                    target: {
+                      browser: [ 'last 2 versions', 'safari >= 7' ]
+                    }
+                  } ],
+                  'react',
+                  'stage-2'
+                ],
                 plugins: [
                   'transform-decorators-legacy',
-                  [ 'transform-runtime', {
-                    polyfill: false,
-                    regenerator: true
-                  } ]
+                  'transform-runtime'
                 ]
               }
             }

@@ -57,17 +57,13 @@ schema.index({
 })
 
 schema.pre('validate', function(next) {
-  try {
-    if (!this.hash) {
-      this.hash = this.isDefault ?
-        HASH_DEFAULT :
-        generateHash(this)
-    }
-
-    next()
-  } catch (e) {
-    next(e)
+  if (!this.hash) {
+    this.hash = this.isDefault ?
+      HASH_DEFAULT :
+      generateHash(this)
   }
+
+  next()
 })
 
 export default mongoose.model('Preset', schema)

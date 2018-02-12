@@ -4,8 +4,14 @@ import { render } from 'react-dom'
 import 'css/global.styl'
 import Bootstrap from './bootstrap'
 
+const root = document.getElementById('root')
+
 render(
   <Bootstrap />,
-  document.getElementById('root'),
-  () => console.log('Render completed')
+  root,
+  () => {
+    setTimeout(() => root.style.opacity = 1)
+
+    console.log('Render completed')
+  }
 )
