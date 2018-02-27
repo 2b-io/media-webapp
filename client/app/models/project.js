@@ -7,6 +7,7 @@ export const PROJECT_FRAGMENT = `
   _id,
   name,
   slug,
+  prettyOrigin,
   origins,
   disabled,
   presets {
@@ -27,7 +28,7 @@ export default {
         }
       }
     `, {
-      project: pick(project, [ 'name', 'slug', 'origins' ]),
+      project: pick(project, [ 'name', 'slug', 'prettyOrigin', 'origins' ]),
       token
     })
 
@@ -104,7 +105,7 @@ export default {
         }
       }
     `, {
-      project: pick(project, [ 'name', 'origins', 'disabled' ]),
+      project: pick(project, [ 'name', 'origins', 'prettyOrigin', 'disabled' ]),
       token,
       slug: project.slug
     })

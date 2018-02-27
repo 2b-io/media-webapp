@@ -11,6 +11,7 @@ const schema = mongoose.Schema({
     lowercase: true,
     trim: true
   },
+  prettyOrigin: String,
   origins: [ String ],
   disabled: {
     type: Boolean,

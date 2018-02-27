@@ -41,7 +41,7 @@ export const list = async (account) => {
 }
 
 export const create = async (data, account) => {
-  const { name, slug, origins = [] } = data
+  const { name, slug, prettyOrigin, origins = [] } = data
 
   if (!name || !slug) {
     throw new Error('Invalid parameters')
@@ -53,6 +53,7 @@ export const create = async (data, account) => {
     const project = await new Project({
       name,
       slug,
+      prettyOrigin,
       origins
     }).save()
 

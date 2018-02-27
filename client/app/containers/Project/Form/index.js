@@ -39,6 +39,13 @@ class ProjectForm extends React.Component {
             }
           </div>
           <div style={style.row}>
+            <label style={style.label}>Pretty Origin</label>
+            <Field component={TextBox}
+              name="prettyOrigin"
+              placeholder="https://cdn.cool.com"
+            />
+          </div>
+          <div style={style.row}>
             <label style={style.label}>Origins</label>
             <Field component={TextArea}
               name="origins"

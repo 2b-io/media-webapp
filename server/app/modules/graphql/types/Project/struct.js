@@ -11,6 +11,9 @@ export default {
   slug: {
     type: GraphQLString
   },
+  prettyOrigin: {
+    type: GraphQLString
+  },
   origins: {
     type: new GraphQLList(GraphQLString)
   },
