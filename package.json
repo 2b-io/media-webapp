@@ -14,6 +14,8 @@
     "webpack": "3.8.1"
   },
   "scripts": {
+    "up": "docker-compose up -d && yarn remote",
+    "remote": "docker exec -it media.webapp bash",
     "start": "yarn dev",
     "install:all": "yarn && yarn install:client && yarn install:server",
     "install:client": "cd client/ && yarn && cd ..",

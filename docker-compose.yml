@@ -1,0 +1,17 @@
+version: '3'
+services:
+  media-webapp:
+    build: .
+    container_name: media.webapp
+    command: bash -c "yarn && tail -f /dev/null"
+    volumes:
+      - .:/usr/src
+      - /usr/src/node_modules
+    ports:
+      - "3003:3003"
+    networks:
+      - infra_webapp
+
+networks:
+  infra_webapp:
+    external: true
