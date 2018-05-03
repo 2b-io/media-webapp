@@ -10,7 +10,7 @@ export default common({
   mode: 'development',
   entry: {
     app: [
-      path.join(rootDir, 'app/index.js'),
+      path.join(rootDir, 'src/app/index.js'),
       'webpack-hot-middleware/client?reload=true'
     ]
   },
