@@ -1,11 +1,19 @@
 import webpack from 'webpack'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
+import CleanWebpackPlugin from 'clean-webpack-plugin'
 
 import common from './webpack.common'
 
 export default common({
   mode: 'production',
   plugins: [
+    new CleanWebpackPlugin([
+      path.join(rootDir, './build')
+    ], {
+      verbose: true,
+      watch: false,
+      allowExternal: true
+    }),
     new BundleAnalyzerPlugin({
       analyzerHost: '0.0.0.0'
     }),

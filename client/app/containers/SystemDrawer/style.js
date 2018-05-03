@@ -4,6 +4,9 @@ import { fontStyle } from 'styles/global'
 import linkStyle from 'components/Link/style'
 
 export const sideMenuStyle = prefix({
+  bmMenuWrap: {
+    zIndex: 19
+  },
   bmMenu: {
     ...fontStyle,
     background: COLOR.light,
@@ -17,7 +20,8 @@ export const sideMenuStyle = prefix({
     flexDirection: 'column'
   },
   bmOverlay: {
-    backgroundColor: COLOR.light.fade(.2)
+    backgroundColor: COLOR.light.fade(.2),
+    zIndex: 19
   }
 })
 
