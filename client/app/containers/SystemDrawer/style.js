@@ -5,7 +5,7 @@ import linkStyle from 'components/Link/style'
 
 export const sideMenuStyle = prefix({
   bmMenuWrap: {
-    zIndex: 19
+    zIndex: 101
   },
   bmMenu: {
     ...fontStyle,
@@ -21,7 +21,7 @@ export const sideMenuStyle = prefix({
   },
   bmOverlay: {
     backgroundColor: COLOR.light.fade(.2),
-    zIndex: 19
+    zIndex: 101
   }
 })
 
