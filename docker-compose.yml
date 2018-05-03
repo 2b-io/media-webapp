@@ -9,6 +9,7 @@ services:
       - /usr/src/node_modules
     ports:
       - "3003:3003"
+      - "8888:8888"
     networks:
       - infra_webapp
 

@@ -1,15 +1,14 @@
 {
   "license": "MIT",
   "dependencies": {
-    "bluebird": "3.5.1",
     "body-parser": "1.18.2",
-    "express": "4.16.2",
-    "express-graphql": "0.6.11",
-    "graphql": "0.12.3",
-    "graphql-type-json": "0.1.4",
-    "http-proxy-middleware": "0.17.4",
-    "jsonwebtoken": "8.1.0",
-    "mongoose": "4.13.5",
+    "express": "4.16.3",
+    "express-graphql": "0.6.12",
+    "graphql": "0.13.2",
+    "graphql-type-json": "0.2.1",
+    "http-proxy-middleware": "0.18.0",
+    "jsonwebtoken": "8.2.1",
+    "mongoose": "5.0.17",
     "morgan": "1.9.0",
     "ms": "2.1.1",
     "recursive-config": "1.0.1",
@@ -17,10 +16,15 @@
     "shorthash": "0.0.2"
   },
   "devDependencies": {
-    "babel-plugin-module-resolver": "3.0.0",
+    "babel-cli": "6.26.0",
+    "babel-plugin-module-resolver": "3.1.1",
     "babel-plugin-transform-runtime": "6.23.0",
     "babel-preset-env": "1.6.1",
     "babel-preset-stage-2": "6.24.1",
-    "slug": "^0.9.1"
+    "nodemon": "1.17.3"
+  },
+  "scripts": {
+    "start": "nodemon ./app --watch ./app --watch ./internals --exec babel-node --CONFIG=./internals/config.dev.js",
+    "build": "babel ./app -d ./build"
   }
 }
