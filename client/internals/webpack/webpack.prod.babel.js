@@ -1,8 +1,10 @@
-const webpack = require('webpack')
-const BabelMinifyWebpackPlugin = require('babel-minify-webpack-plugin')
+import webpack from 'webpack'
+import BabelMinifyWebpackPlugin from 'babel-minify-webpack-plugin'
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
-module.exports = require('./webpack.common')({
+import common from './webpack.common'
+
+export default common({
   devtool: 'cheap-module-source-map',
   plugins: [
     // new BundleAnalyzerPlugin({

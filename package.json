@@ -8,23 +8,21 @@
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "6.26.0",
-    "concurrently": "3.5.0",
-    "nodemon": "1.12.1",
-    "webpack": "3.8.1"
+    "clean-webpack-plugin": "0.1.19",
+    "concurrently": "3.5.1",
+    "nodemon": "1.17.3"
   },
   "scripts": {
-    "up": "docker-compose up -d && npm run remote",
-    "remote": "docker exec -it media.webapp bash",
     "start": "npm run dev",
     "install:all": "npm i && npm run install:client && npm run install:server",
     "install:client": "cd client/ && npm i && cd ..",
     "install:server": "cd server/ && npm i && cd ..",
     "dev": "concurrently \"npm run dev:client:watch\" \"npm run dev:server:run\"",
-    "dev:client:build": "cd client && webpack --config internals/webpack/webpack.dev.js && cd ..",
+    "dev:client:build": "cd client && npm run dev && cd ..",
     "dev:client:watch": "cd client/internals && nodemon dev-server --watch dev-server --watch webpack --exec babel-node",
     "dev:server:run": "cd server && nodemon app/index.js --watch app --watch internals --exec babel-node --CONFIG=internals/config.dev.js",
     "prod:build": "npm run prod:client:build && npm run prod:server:build",
-    "prod:client:build": "cd client && webpack --config internals/webpack/webpack.prod.js && cd ..",
+    "prod:client:build": "cd client && webpack --config internals/webpack/webpack.prod.babel.js && cd ..",
     "prod:server:build": "cd server && babel app -d build && cd ..",
     "prod:server:run": "cd server && node build/index.js --CONFIG=internals/config.prod.js",
     "clean:all": "npm run clean:client && npm run clean:server",

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   collapseWhitespace: true,
   decodeEntities: true,
   removeComments: true,

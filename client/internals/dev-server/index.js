@@ -4,7 +4,7 @@ import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
 
-import webpackConfig from '../webpack/webpack.dev.js'
+import webpackConfig from '../webpack/webpack.dev.babel.js'
 
 const app = express()
 const port = 3001

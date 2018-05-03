@@ -1,11 +1,13 @@
-const path = require('path')
-const webpack = require('webpack')
+import path from 'path'
+import webpack from 'webpack'
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+
+import common from './webpack.common'
 
 const rootDir = path.resolve(__dirname, '../..')
 
-module.exports = require('./webpack.common')({
-  devtool: 'devtool: "source-map',
+export default common({
+  mode: 'development',
   entry: {
     app: [
       path.join(rootDir, 'app/index.js'),
