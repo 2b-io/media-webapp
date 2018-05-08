@@ -17,5 +17,8 @@
     "dev": "concurrently --raw \"npm run dev:client\" \"npm run dev:server\"",
     "dev:client": "cd client && npm start && cd ..",
     "dev:server": "cd server && npm start && cd .."
+  },
+  "dependencies": {
+    "delay": "2.0.0"
   }
 }

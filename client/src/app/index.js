@@ -2,12 +2,13 @@ import 'stylus/global'
 
 import React from 'react'
 import { render } from 'react-dom'
-import App from 'containers/App'
+
+import Core from 'core'
 
 const root = document.getElementById('root')
 
 render(
-  <App />,
+  <Core />,
   root,
   () => setTimeout(() => root.style.opacity = 1)
 )
