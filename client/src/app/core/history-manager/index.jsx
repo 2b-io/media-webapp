@@ -3,7 +3,7 @@ import createMemoryHistory from 'history/createMemoryHistory'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { init, request } from 'state/location/actions'
+import { init, request } from 'state-logic/location/actions'
 
 @connect(state => ({
   current: state.location.current

@@ -1,5 +1,6 @@
 import delay from 'delay'
 import { put, race, take } from 'redux-saga/effects'
+import { accept } from 'state-logic/location/actions'
 
 export default function* root() {
   while (true) {
@@ -14,11 +15,8 @@ export default function* root() {
 
     // check auth here
 
-    yield put({
-      type: 'location.accept',
-      payload: {
-        pathname: (init || request).payload.pathname
-      }
-    })
+    yield put(
+      accept((init || request).payload.pathname)
+    )
   }
 }

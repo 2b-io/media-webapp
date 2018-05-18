@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
 
 export const reducer = combineReducers({
-  location: require('state/location/reducer').default
+  location: require('state-logic/location/reducer').default
 })

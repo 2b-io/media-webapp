@@ -1,3 +1,5 @@
+import { actions } from 'state-logic/location/actions'
+
 const initialState = {
   entries: [],
   last: null,
@@ -5,10 +7,8 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
-  console.log('reducer', action)
-
   switch (action.type) {
-    case 'location.accept':
+    case actions.accept:
       return {
         ...state,
         last: state.current,
