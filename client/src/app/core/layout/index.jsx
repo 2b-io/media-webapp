@@ -6,23 +6,36 @@ export class Layout extends Component {
     super(...args)
 
     this.state = {
-      shown: true
+      shown: true,
+      headerHeight: 0
     }
   }
 
   render() {
-    const { shown } = this.state
+    const { shown, headerHeight } = this.state
 
     return (
       <Fragment>
-        <Header shown={!shown} />
+        <Header
+          shown={!shown}
+          onComponentDidMount={this.updateHeaderHeight()}
+        />
         <Overlay
           onClick={() => this.setState({ shown: !shown })}
           shown={shown}
         />
-        <Wrapper shown={!shown} />
+        <Wrapper
+          shown={!shown}
+          headerHeight={headerHeight}
+        />
       </Fragment>
     )
+  }
+
+  updateHeaderHeight() {
+    return (element) => this.setState({
+      headerHeight: element.clientHeight
+    })
   }
 }
 
@@ -45,10 +58,22 @@ const StyledHeader = styled.div`
 `
 
 class Header extends Component {
+  componentDidMount() {
+    const { onComponentDidMount } = this.props
+
+    onComponentDidMount(this._element)
+  }
+
   render() {
     const { shown } = this.props
 
-    return <StyledHeader shown={shown}>Header</StyledHeader>
+    return (
+      <StyledHeader
+        shown={shown}
+        innerRef={element => this._element = element}>
+        Header
+      </StyledHeader>
+    )
   }
 }
 
@@ -69,12 +94,6 @@ const StyledOverlay = styled.div`
 `
 
 class Overlay extends Component {
-  constructor(...args) {
-    super(...args)
-
-    this.state = { shown: false }
-  }
-
   render() {
     const { shown, onClick } = this.props
 
@@ -82,7 +101,7 @@ class Overlay extends Component {
       <StyledOverlay shown={shown}>
         <div>
           <div>Overlay</div>
-          <button onClick={onClick}>Login</button>
+          <button onClick={onClick}>{shown ? 'Sign In' : 'Sign Out'}</button>
         </div>
       </StyledOverlay>
     )
@@ -91,7 +110,9 @@ class Overlay extends Component {
 
 const StyledWrapper = styled.div`
   position: absolute;
-  top: 50px;
+  top: ${
+    (props) => `${props.headerHeight}px`
+  };
   z-index: 1;
   left: 100px;
   right: 0;
@@ -106,25 +127,33 @@ class Wrapper extends Component {
   constructor(...args) {
     super(...args)
 
-    this.state = { height: 0 }
+    this.state = { stillHeight: 0 }
   }
 
   render() {
-    const { shown } = this.props
-    const { height } = this.state
+    const { shown, headerHeight } = this.props
+    const { stillHeight } = this.state
 
     return (
-      <StyledWrapper shown={shown}>
+      <StyledWrapper
+        shown={shown}
+        headerHeight={headerHeight}>
         <Still
           shown={shown}
-          onHeightCalculated={height => this.setState({ height })}
+          onComponentDidMount={this.updateStillHeight()}
         />
         <Content
           shown={shown}
-          height={height}
+          stillHeight={stillHeight}
         />
       </StyledWrapper>
     )
+  }
+
+  updateStillHeight() {
+    return (element) => this.setState({
+      stillHeight: element.clientHeight
+    })
   }
 }
 
@@ -134,18 +163,12 @@ const StyledStill = styled.div`
 
 class Still extends Component {
   componentDidMount() {
-    console.log('componentDidMount')
+    const { onComponentDidMount } = this.props
 
-    const { onHeightCalculated } = this.props
-
-    console.log(this._element.clientHeight)
-
-    onHeightCalculated(this._element.clientHeight)
+    onComponentDidMount(this._element)
   }
 
   render() {
-    console.log('render')
-
     const { shown } = this.props
 
     return (
@@ -165,7 +188,7 @@ const StyledContent = styled.div`
   right: 0;
   transition: top 1.2s cubic-bezier(0.4, 0.0, 0.2, 1);
   top: ${
-    (props) => props.shown ? `${props.height}px` : '100%'
+    (props) => props.shown ? `${props.stillHeight}px` : '100%'
   };
   ${
     (props) => props.shadow ? css`
@@ -176,12 +199,19 @@ const StyledContent = styled.div`
 
 class Content extends Component {
   render() {
-    const { height, shown } = this.props
+    const { stillHeight, shown } = this.props
 
     return (
       <Fragment>
-        <StyledContent shadow shown={shown} height={height}></StyledContent>
-        <StyledContent shown={shown} height={height}>Content</StyledContent>
+        <StyledContent shadow
+          shown={shown}
+          stillHeight={stillHeight}
+        />
+        <StyledContent
+          shown={shown}
+          stillHeight={stillHeight}>
+          Content
+        </StyledContent>
       </Fragment>
     )
   }
