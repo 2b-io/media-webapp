@@ -1,1 +1,3 @@
-export const isSignedIn = state => !!state.session
+export default {
+  isSignedIn: state => !!state.info
+}

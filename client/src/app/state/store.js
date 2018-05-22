@@ -3,6 +3,7 @@ import createSagaMiddleware from 'redux-saga'
 import { fork } from 'redux-saga/effects'
 
 import * as reducers from './ducks/reducers'
+import * as selectors from './ducks/selectors'
 import operations from './ducks/operations'
 
 export default (initialState) => {

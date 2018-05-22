@@ -1,1 +1,3 @@
-export const currentLocation = state => state.current
+export default {
+  currentLocation: state => state.current
+}
