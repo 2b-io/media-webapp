@@ -1,6 +1,6 @@
 import * as types from './types'
 
-export const create = (info) => ({
+export const create = info => ({
   type: types.CREATE,
   payload: { info },
   meta: {
