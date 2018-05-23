@@ -4,7 +4,7 @@ import * as selectors from './ducks/selectors'
 export default Object.keys(reducers).reduce(
   (combineSelectors, node) => ({
     ...combineSelectors,
-    [node]: selectors[node] ?
+    ...(selectors[node] ?
       Object.keys(selectors[node]).reduce(
         (o, f) => ({
           ...o,
@@ -12,6 +12,7 @@ export default Object.keys(reducers).reduce(
         }),
         {}
       ) : {}
+    )
   }),
   {}
 )

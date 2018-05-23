@@ -12,3 +12,8 @@ export const create = info => ({
 export const destroy = () => ({
   type: types.DESTROY
 })
+
+export const createCompleted = info => ({
+  type: types.CREATE_COMPLETED,
+  payload: { info }
+})
