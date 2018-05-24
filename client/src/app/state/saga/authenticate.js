@@ -8,5 +8,9 @@ export default function*() {
     yield take(types['SESSION/CREATE'])
 
     yield put(actions.createSessionCompleted('xxx'))
+
+    yield take(types['SESSION/DESTROY'])
+
+    yield put(actions.destroySessionCompleted())
   }
 }

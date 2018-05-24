@@ -2,11 +2,7 @@ import * as types from './types'
 
 export const createSession = info => ({
   type: types.CREATE,
-  payload: { info },
-  meta: {
-    async: true,
-    blocking: true
-  }
+  payload: { info }
 })
 
 export const destroySession = () => ({
@@ -16,4 +12,8 @@ export const destroySession = () => ({
 export const createSessionCompleted = info => ({
   type: types.CREATE_COMPLETED,
   payload: { info }
+})
+
+export const destroySessionCompleted = () => ({
+  type: types.DESTROY_COMPLETED
 })
