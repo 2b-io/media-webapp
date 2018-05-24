@@ -1,16 +1,16 @@
 import * as types from './types'
 
-export const accept = pathname => ({
+export const acceptLocation = pathname => ({
   type: types.ACCEPT,
   payload: { pathname }
 })
 
-export const init = pathname => ({
+export const initLocation = pathname => ({
   type: types.INIT,
   payload: { pathname }
 })
 
-export const request = pathname => ({
+export const requestLocation = pathname => ({
   type: types.REQUEST,
   payload: { pathname }
 })

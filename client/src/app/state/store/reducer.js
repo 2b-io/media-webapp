@@ -1,4 +1,4 @@
 import { combineReducers } from 'redux'
-import * as innerReducers from 'state/ducks'
+import { reducers } from 'state/ducks'
 
-export default combineReducers(innerReducers)
+export default combineReducers(reducers)

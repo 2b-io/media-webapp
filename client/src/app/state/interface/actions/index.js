@@ -1,3 +1,13 @@
-import { actions } from 'state/ducks/session'
+import { actions } from 'state/ducks'
 
-export const createSessionCompleted = (...args) => actions.createCompleted(...args)
+export default [
+  ...Object.values(actions)
+].reduce(
+  (combine, actions) => {
+    return {
+      ...combine,
+      ...actions
+    }
+  },
+  {}
+)

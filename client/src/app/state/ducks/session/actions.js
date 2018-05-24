@@ -1,6 +1,6 @@
 import * as types from './types'
 
-export const create = info => ({
+export const createSession = info => ({
   type: types.CREATE,
   payload: { info },
   meta: {
@@ -9,11 +9,11 @@ export const create = info => ({
   }
 })
 
-export const destroy = () => ({
+export const destroySession = () => ({
   type: types.DESTROY
 })
 
-export const createCompleted = info => ({
+export const createSessionCompleted = info => ({
   type: types.CREATE_COMPLETED,
   payload: { info }
 })
