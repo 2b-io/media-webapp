@@ -7,6 +7,6 @@ export default function*() {
   while (true) {
     yield take(types['SESSION/CREATE'])
 
-    yield put(actions.createSessionCompleted())
+    yield put(actions.createSessionCompleted('xxx'))
   }
 }
