@@ -1,5 +1,3 @@
-import actions from './actions'
-import selectors from './selectors'
-
-export { actions as actions }
-export { selectors as selectors }
+export { default as actions } from './actions'
+export { default as selectors } from './selectors'
+export { default as types } from './types'
