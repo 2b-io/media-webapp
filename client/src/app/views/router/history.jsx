@@ -64,8 +64,4 @@ export default class HistoryManager extends Component {
       history: this.memoryHistory
     })
   }
-
-  shouldComponentUpdate() {
-    return false
-  }
 }

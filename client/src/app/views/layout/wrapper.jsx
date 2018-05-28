@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-import Content from './content'
-import Still from './still'
-
 const StyledWrapper = styled.div`
   position: absolute;
   z-index: 1;
@@ -19,36 +16,12 @@ const StyledWrapper = styled.div`
   };
 `
 
-export default class Wrapper extends Component {
-  constructor(...args) {
-    super(...args)
+const Wrapper = ({ children, shown, headerHeight }) => (
+  <StyledWrapper
+    shown={ shown }
+    headerHeight= { headerHeight }>
+    { children }
+  </StyledWrapper>
+)
 
-    this.state = { stillHeight: 0 }
-  }
-
-  render() {
-    const { shown, headerHeight } = this.props
-    const { stillHeight } = this.state
-
-    return (
-      <StyledWrapper
-        shown={ shown }
-        headerHeight= { headerHeight }>
-        <Still
-          shown={ shown }
-          onComponentDidMount={ this.updateStillHeight() }
-        />
-        <Content
-          shown={ shown }
-          stillHeight={ this.state.stillHeight }
-        />
-      </StyledWrapper>
-    )
-  }
-
-  updateStillHeight() {
-    return element => this.setState({
-      stillHeight: element.clientHeight
-    })
-  }
-}
+export default Wrapper

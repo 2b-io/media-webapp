@@ -27,13 +27,13 @@ export default class Header extends Component {
   }
 
   render() {
-    const { shown } = this.props
+    const { children, shown } = this.props
 
     return (
       <StyledHeader
         shown={ shown }
         innerRef={ e => this._element = e }>
-        <span>Header</span>
+        { children }
       </StyledHeader>
     )
   }

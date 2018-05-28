@@ -13,9 +13,12 @@ export default class Still extends Component {
   }
 
   render() {
+    const { children } = this.props
+
     return (
       <StyledStill
         innerRef={ e => this._element = e }>
+        { children }
       </StyledStill>
     )
   }

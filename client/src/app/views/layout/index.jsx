@@ -1,40 +1,52 @@
 import React, { Component, Fragment } from 'react'
-import { connect } from 'react-redux'
-import { selectors } from 'state/interface'
 
 import Router from 'views/router'
 
+import Content from './content'
 import Header from './header'
 import Overlay from './overlay'
+import Still from './still'
 import Wrapper from './wrapper'
 
-@connect(state => ({
-  isSignedIn: selectors.isSignedIn(state)
-}))
 export default class Layout extends Component {
   constructor(...args) {
     super(...args)
 
-    this.state = { headerHeight: 0 }
+    this.state = {
+      headerHeight: 0,
+      stillHeight: 0
+    }
   }
 
   render() {
-    const { isSignedIn } = this.props
+    const { isSignedIn, history, render } = this.props
 
     return (
       <Fragment>
         <Header
           shown={ isSignedIn }
-          onComponentDidMount={ this.updateHeaderHeight() }
-        />
+          onComponentDidMount={ this.updateHeaderHeight() }>
+          { render.header(this.props) }
+        </Header>
         <Overlay
           shown={ !isSignedIn }
-          headerHeight={ this.state.headerHeight }
-        />
+          headerHeight={ this.state.headerHeight }>
+          { render.overlay(this.props) }
+        </Overlay>
         <Wrapper
           shown={ isSignedIn }
-          headerHeight={ this.state.headerHeight }
-        />
+          headerHeight={ this.state.headerHeight }>
+          <Still
+            shown={ isSignedIn }
+            onComponentDidMount={ this.updateStillHeight() }>
+            { render.still(this.props) }
+          </Still>
+          <Content
+            shown={ isSignedIn }
+            stillHeight={ this.state.stillHeight }>
+            { render.content(this.props) }
+          </Content>
+        </Wrapper>
       </Fragment>
     )
   }
@@ -42,6 +54,12 @@ export default class Layout extends Component {
   updateHeaderHeight() {
     return element => this.setState({
       headerHeight: element.clientHeight
+    })
+  }
+
+  updateStillHeight() {
+    return element => this.setState({
+      stillHeight: element.clientHeight
     })
   }
 }

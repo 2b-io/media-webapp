@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Overlay = styled.div`
+const StyledOverlay = styled.div`
   position: fixed;
   background-color: gray;
   z-index: 2;
@@ -19,11 +19,10 @@ const Overlay = styled.div`
     ({ headerHeight }) => `${headerHeight}px`
   };
 `
-
-export default ({ shown, headerHeight }) => (
-    <Overlay shown={ shown } headerHeight={ headerHeight }>
-      <div>
-        <span>Overlay</span>
-      </div>
-    </Overlay>
+const Overlay = ({ children, shown, headerHeight }) => (
+  <StyledOverlay shown={ shown } headerHeight={ headerHeight }>
+    { children }
+  </StyledOverlay>
 )
+
+export default Overlay

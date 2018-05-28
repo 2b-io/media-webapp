@@ -1,12 +1,4 @@
-import React from 'react'
+export { default as HistoryProvider } from './history'
+export { default as Redirect } from './redirect'
+export { default as Router } from './router'
 
-import BrowserRouter from './browser-router'
-import History from './history'
-
-import routes, { otherwise } from './routes'
-
-export default () => (
-  <History>
-    <BrowserRouter routes={routes} otherwise={otherwise} />
-  </History>
-)

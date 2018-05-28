@@ -16,7 +16,7 @@ const StyledContent = styled.div`
   }
 `
 
-export default ({ shown, stillHeight }) => (
+const Content = ({ children, shown, stillHeight }) => (
   <Fragment>
     <StyledContent shadow
       shown={ shown }
@@ -25,7 +25,9 @@ export default ({ shown, stillHeight }) => (
     <StyledContent
       shown={ shown }
       stillHeight={ stillHeight }>
-      Content
+      { children }
     </StyledContent>
   </Fragment>
 )
+
+export default Content
