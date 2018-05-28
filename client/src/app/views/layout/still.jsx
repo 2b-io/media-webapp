@@ -12,6 +12,12 @@ export default class Still extends Component {
     onComponentDidMount(this._element)
   }
 
+  componentDidUpdate() {
+    const { onComponentDidMount } = this.props
+
+    onComponentDidMount(this._element)
+  }
+
   render() {
     const { children } = this.props
 

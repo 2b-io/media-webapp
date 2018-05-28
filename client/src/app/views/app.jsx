@@ -74,7 +74,9 @@ const render = {
           {
             path: '/',
             exact: true,
-            component: render(() => <h1>Dashboard</h1>)
+            component: isSignedIn ?
+              () => <h1>Dashboard</h1> :
+              () => null
           }
         ] }
         otherwise={

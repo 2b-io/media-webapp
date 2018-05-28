@@ -26,6 +26,12 @@ export default class Header extends Component {
     onComponentDidMount(this._element)
   }
 
+  componentDidUpdate() {
+    const { onComponentDidMount } = this.props
+
+    onComponentDidMount(this._element)
+  }
+
   render() {
     const { children, shown } = this.props
 

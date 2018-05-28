@@ -52,14 +52,26 @@ export default class Layout extends Component {
   }
 
   updateHeaderHeight() {
-    return element => this.setState({
-      headerHeight: element.clientHeight
-    })
+    return element => {
+      if (this.state.headerHeight === element.clientHeight) {
+        return
+      }
+
+      this.setState({
+        headerHeight: element.clientHeight
+      })
+    }
   }
 
   updateStillHeight() {
-    return element => this.setState({
-      stillHeight: element.clientHeight
-    })
+    return element => {
+      if (this.state.stillHeight === element.clientHeight) {
+        return
+      }
+
+      this.setState({
+        stillHeight: element.clientHeight
+      })
+    }
   }
 }
