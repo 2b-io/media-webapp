@@ -5,9 +5,15 @@ import { connect } from 'react-redux'
 
 import { actions, selectors } from 'state/interface'
 
-@connect(state => ({
-  current: selectors.currentLocation(state)
-}))
+@connect(
+  state => ({
+    current: selectors.currentLocation(state)
+  }),
+  dispatch => ({
+    init: pathname => dispatch(actions.initLocation(pathname)),
+    request: pathname => dispatch(actions.requestLocation(pathname))
+  })
+)
 export default class HistoryManager extends Component {
   constructor(...args) {
     super(...args)
@@ -22,7 +28,7 @@ export default class HistoryManager extends Component {
   }
 
   componentDidMount() {
-    const { dispatch } = this.props
+    const { init, request } = this.props
 
     this.browserHistory.listen((location, type) => {
       if (this.ignoreChange) {
@@ -31,12 +37,10 @@ export default class HistoryManager extends Component {
         return
       }
 
-      dispatch(actions.requestLocation(location.pathname))
+      request(location.pathname)
     })
 
-    window.h = this.browserHistory
-
-    dispatch(actions.initLocation(this.browserHistory.location.pathname))
+    init(this.browserHistory.location.pathname)
   }
 
   componentWillReceiveProps(nextProps) {
