@@ -10,6 +10,11 @@ export const initLocation = pathname => ({
   payload: { pathname }
 })
 
+export const rejectLocation = (pathname, error) => ({
+  type: types.REQUEST,
+  payload: { pathname: '/', error }
+})
+
 export const requestLocation = pathname => ({
   type: types.REQUEST,
   payload: { pathname }

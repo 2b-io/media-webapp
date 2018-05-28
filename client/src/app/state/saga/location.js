@@ -12,18 +12,19 @@ export default function*() {
   )
 
   while (true) {
-    console.log(`wait for ${types['LOCATION/REQUEST']}`)
-
     const request = yield take(types['LOCATION/REQUEST'])
 
     const pathname = request.payload.pathname
 
     try {
       // TODO call API to check permission here
+      if (pathname === '/splash') {
+        throw new Error('Invalid pathname')
+      }
 
-      yield put(actions.acceptLocation(pathname))
-    } catch (e) {
-      yield put(actions.rejectLocation(pathname))
+      yield fork(put, actions.acceptLocation(pathname))
+    } catch (error) {
+      yield fork(put, actions.rejectLocation(pathname, error))
     }
   }
 }
