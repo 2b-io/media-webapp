@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
-import { Router, Route, Switch } from 'react-router'
+import { Router as BrowserRouter, Route, Switch } from 'react-router'
 
 const renderRoutes = routes => routes.map(route => (
   <Route {...route} key={route.path} />
 ))
 
-export default ({ history, routes, otherwise: Otherwise }) => (
-  <Router history={history}>
+const Router = ({ history, routes, otherwise: Otherwise }) => (
+  <BrowserRouter history={history}>
     <Switch>
       { renderRoutes(routes) }
       <Otherwise />
     </Switch>
-  </Router>
+  </BrowserRouter>
 )
+
+export default Router
