@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react'
+import { connect } from 'react-redux'
 
+import { selectors } from 'state/interface'
 import Router from 'views/router'
 
 import Content from './content'
@@ -11,6 +13,11 @@ import Wrapper from './wrapper'
 export { default as LeftMenu } from './left-menu'
 export { default as TopMenu } from './top-menu'
 
+@connect(
+  state => ({
+    isLayoutClosed: selectors.isLayoutClosed(state)
+  })
+)
 export default class Layout extends Component {
   constructor(...args) {
     super(...args)
