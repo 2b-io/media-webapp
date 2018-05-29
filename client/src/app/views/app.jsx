@@ -30,6 +30,8 @@ const render = {
   overlay: ({ history, isSignedIn }) => {
     const render = requireSignedOut(isSignedIn)
 
+    console.log('xxx', isSignedIn)
+
     return (
       <Fragment>
         <Router
@@ -74,8 +76,6 @@ const render = {
     )
   },
   still: ({ history, isSignedIn }) => {
-    const render = requireSignedIn(isSignedIn)
-
     return (
       <Router
         history={ history }
@@ -96,17 +96,19 @@ const render = {
   }
 }
 
+const ConnectedLayout = connect(
+  state => ({
+    isSignedIn: selectors.isSignedIn(state)
+  })
+)(Layout)
+
 const App = ({ isSignedIn }) => (
   <HistoryProvider>
-    <Layout
+    <ConnectedLayout
       isSignedIn={ isSignedIn }
       render={ render }
     />
   </HistoryProvider>
 )
 
-export default connect(
-  state => ({
-    isSignedIn: selectors.isSignedIn(state)
-  })
-)(App)
+export default App
