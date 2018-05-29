@@ -5,12 +5,29 @@ const renderRoutes = routes => routes.map(route => (
   <Route {...route} key={route.path} />
 ))
 
-const Router = ({ history, routes, otherwise: Otherwise }) => (
+const Router = ({
+  animation: Animation,
+  history,
+  routes,
+  otherwise: Otherwise
+}) => (
   <BrowserRouter history={history}>
-    <Switch>
-      { renderRoutes(routes) }
-      <Otherwise />
-    </Switch>
+    { Animation &&
+      (
+        <Animation>
+          <Switch>
+            { renderRoutes(routes) }
+            <Otherwise />
+          </Switch>
+        </Animation>
+      ) ||
+      (
+        <Switch>
+          { renderRoutes(routes) }
+          <Otherwise />
+        </Switch>
+      )
+    }
   </BrowserRouter>
 )
 
