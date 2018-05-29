@@ -1,7 +1,15 @@
 import React, { Component } from 'react'
+import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
 import { actions } from 'state/interface'
+
+import _SignInForm from './form'
+
+const SignInForm = reduxForm({
+  form: 'signIn',
+  enableReinitialize: true
+})(_SignInForm)
 
 @connect(
   null,
@@ -13,7 +21,7 @@ export default class SignIn extends Component {
   render() {
     return (
       <div>
-        <button onClick={ this.processSignIn() }>Sign In</button>
+        <SignInForm onSubmit={ this.processSignIn() } />
       </div>
     )
   }
@@ -21,10 +29,6 @@ export default class SignIn extends Component {
   processSignIn() {
     const { signIn } = this.props
 
-    return () => {
-      signIn({
-        email: 'd@dapps.me'
-      })
-    }
+    return signIn
   }
 }

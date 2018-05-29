@@ -9,7 +9,6 @@ const StyledOverlay = styled.div`
   left: 0;
   bottom: 0;
   transition: width 1.2s cubic-bezier(.4, 0, .2, 1);
-  display: flex;
   align-center: center;
   justify-content: center;
   width: ${
