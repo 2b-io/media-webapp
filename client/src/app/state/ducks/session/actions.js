@@ -1,8 +1,8 @@
 import * as types from './types'
 
-export const createSession = info => ({
+export const createSession = credential => ({
   type: types.CREATE,
-  payload: { info }
+  payload: { credential }
 })
 
 export const destroySession = () => ({

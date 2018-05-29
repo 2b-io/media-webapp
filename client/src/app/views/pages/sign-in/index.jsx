@@ -1,17 +1,30 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { actions } from 'state/interface'
 
-const SignIn = ({ signIn }) => (
-  <div>
-    <button onClick={ signIn }>Sign In</button>
-  </div>
-)
-
-export default connect(
+@connect(
   null,
   dispatch => ({
-    signIn: () => dispatch(actions.createSession('xxx'))
+    signIn: credential => dispatch(actions.createSession(credential))
   })
-)(SignIn)
+)
+export default class SignIn extends Component {
+  render() {
+    return (
+      <div>
+        <button onClick={ this.processSignIn() }>Sign In</button>
+      </div>
+    )
+  }
+
+  processSignIn() {
+    const { signIn } = this.props
+
+    return () => {
+      signIn({
+        email: 'd@dapps.me'
+      })
+    }
+  }
+}
