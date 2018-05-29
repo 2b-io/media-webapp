@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
+import preventDefault from 'services/prevent-default'
 import { actions } from 'state/interface'
 
 import _SignInForm from './form'
@@ -11,24 +12,19 @@ const SignInForm = reduxForm({
   enableReinitialize: true
 })(_SignInForm)
 
-@connect(
+const SignIn = ({ signIn, toSignUp }) => (
+  <div className="transition-item">
+    <SignInForm onSubmit={ signIn } />
+    <a href="/" onClick={ toSignUp }>Sign Up</a>
+  </div>
+)
+
+export default connect(
   null,
   dispatch => ({
-    signIn: credential => dispatch(actions.createSession(credential))
-  })
-)
-export default class SignIn extends Component {
-  render() {
-    return (
-      <div>
-        <SignInForm onSubmit={ this.processSignIn() } />
-      </div>
+    signIn: credential => dispatch(actions.createSession(credential)),
+    toSignUp: preventDefault(
+      () => dispatch(actions.requestLocation('/sign-up'))
     )
-  }
-
-  processSignIn() {
-    const { signIn } = this.props
-
-    return signIn
-  }
-}
+  })
+)(SignIn)

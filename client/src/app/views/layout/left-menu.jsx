@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { actions } from 'state/interface'
 
 const LeftMenu = ({ signOut }) => (
-  <div>
+  <div className="transition-item">
     <button onClick={ signOut }>Sign Out</button>
   </div>
 )

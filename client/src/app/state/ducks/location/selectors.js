@@ -1,3 +1,6 @@
 export default {
-  currentLocation: state => state.current
+  currentLocation: state => ({
+    pathname: state.current,
+    key: state.key
+  })
 }

@@ -19,3 +19,8 @@ export const requestLocation = pathname => ({
   type: types.REQUEST,
   payload: { pathname }
 })
+
+export const updateLocationKey = key => ({
+  type: types.UPDATE_KEY,
+  payload: { key }
+})

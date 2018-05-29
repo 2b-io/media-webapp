@@ -45,10 +45,4 @@ export default function*() {
   yield take('@@INITIALIZED')
 
   yield fork(loop)
-
-  const isSignedIn = yield select(selectors.isSignedIn)
-
-  if (!isSignedIn) {
-    yield put(actions.requestLocation('/sign-in'))
-  }
 }

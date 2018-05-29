@@ -1,34 +1,29 @@
 import React, { Component } from 'react'
-import { Router as BrowserRouter, Route, Switch } from 'react-router'
+import { Router as BrowserRouter, Route, Switch, withRouter } from 'react-router'
 
-const renderRoutes = routes => routes.map(route => (
-  <Route {...route} key={route.path} />
-))
+import { AnimatedSwitch } from 'react-router-transition'
+
+const renderRoutes = routes => routes.map(
+  route => <Route {...route} key={route.path} />
+)
 
 const Router = ({
-  animation: Animation,
   history,
   routes,
   otherwise: Otherwise
-}) => (
-  <BrowserRouter history={history}>
-    { Animation &&
-      (
-        <Animation>
-          <Switch>
-            { renderRoutes(routes) }
-            <Otherwise />
-          </Switch>
-        </Animation>
-      ) ||
-      (
-        <Switch>
-          { renderRoutes(routes) }
-          <Otherwise />
-        </Switch>
-      )
-    }
-  </BrowserRouter>
-)
+}) => {
+  return (
+    <BrowserRouter history={ history }>
+      <AnimatedSwitch
+        atEnter={ { opacity: 0 } }
+        atLeave={ { opacity: 0 } }
+        atActive={ { opacity: 1 } }
+        className="switch-wrapper">
+        { renderRoutes(routes) }
+        <Otherwise />
+      </AnimatedSwitch>
+    </BrowserRouter>
+  )
+}
 
 export default Router

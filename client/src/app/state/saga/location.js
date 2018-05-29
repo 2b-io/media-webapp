@@ -1,6 +1,9 @@
 import delay from 'delay'
-import { call, fork, put, take } from 'redux-saga/effects'
-import { actions, types } from 'state/interface'
+import { call, fork, put, select, take } from 'redux-saga/effects'
+import { actions, selectors, types } from 'state/interface'
+
+const UNAUTH_PATHNAMES = [ '/sign-in', '/sign-up' ]
+const AUTH_PATHNAMES = [ '/' ]
 
 const loop = function*() {
   while (true) {
@@ -12,6 +15,22 @@ const loop = function*() {
       // TODO call API to check permission here
       if (pathname === '/splash') {
         throw new Error('Invalid pathname')
+      }
+
+      const isSignedIn = yield select(selectors.isSignedIn)
+
+      if (isSignedIn) {
+        if (UNAUTH_PATHNAMES.includes(pathname)) {
+          yield fork(put, actions.acceptLocation('/'))
+
+          continue
+        }
+      } else {
+        if (AUTH_PATHNAMES.includes(pathname)) {
+          yield fork(put, actions.acceptLocation('/sign-in'))
+
+          continue
+        }
       }
 
       yield fork(put, actions.acceptLocation(pathname))

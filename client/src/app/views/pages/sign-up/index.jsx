@@ -1,7 +1,9 @@
 import React from 'react'
 
-export default () => (
+const SignUp = () => (
   <div className="transition-item">
-    <h1>Dashboard</h1>
+    <h1>Sign Up</h1>
   </div>
 )
+
+export default SignUp

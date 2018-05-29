@@ -11,7 +11,8 @@ import { actions, selectors } from 'state/interface'
   }),
   dispatch => ({
     init: pathname => dispatch(actions.initLocation(pathname)),
-    request: pathname => dispatch(actions.requestLocation(pathname))
+    request: pathname => dispatch(actions.requestLocation(pathname)),
+    updateKey: key => dispatch(actions.updateLocationKey(key))
   })
 )
 export default class HistoryManager extends Component {
@@ -28,9 +29,9 @@ export default class HistoryManager extends Component {
   }
 
   componentDidMount() {
-    const { init, request } = this.props
+    const { init, request, updateKey } = this.props
 
-    this.browserHistory.listen((location, type) => {
+    this.browserHistory.listen(location => {
       if (this.ignoreChange) {
         this.ignoreChange = false
 
@@ -38,6 +39,13 @@ export default class HistoryManager extends Component {
       }
 
       request(location.pathname)
+      updateKey(location.key)
+    })
+
+    this.memoryHistory.listen(location => {
+      console.log('yyy', location.key)
+
+      updateKey(location.key)
     })
 
     init(this.browserHistory.location.pathname)
@@ -46,13 +54,13 @@ export default class HistoryManager extends Component {
   componentWillReceiveProps(nextProps) {
     const { current } = nextProps
 
-    if (current) {
-      this.memoryHistory.push(current)
+    if (current.key !== this.memoryHistory.location.key) {
+      this.memoryHistory.push(current.pathname)
 
-      if (current !== this.browserHistory.location.pathname) {
+      if (current.pathname !== this.browserHistory.location.pathname) {
         this.ignoreChange = true
 
-        this.browserHistory.push(current)
+        this.browserHistory.push(current.pathname)
       }
     }
   }
