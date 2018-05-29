@@ -3,15 +3,15 @@ import { connect } from 'react-redux'
 
 import { actions } from 'state/interface'
 
-const SignIn = ({ signIn }) => (
+const LeftMenu = ({ signOut }) => (
   <div>
-    <button onClick={ signIn }>Sign In</button>
+    <button onClick={ signOut }>Sign Out</button>
   </div>
 )
 
 export default connect(
   null,
   dispatch => ({
-    signIn: () => dispatch(actions.createSession('xxx'))
+    signOut: () => dispatch(actions.destroySession())
   })
-)(SignIn)
+)(LeftMenu)

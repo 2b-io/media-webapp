@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 
 import { selectors } from 'state/interface'
 import { HistoryProvider, Redirect, Router } from 'views/router'
-import Layout from 'views/layout'
+import Layout, { LeftMenu, TopMenu } from 'views/layout'
+
+import SignIn from 'views/pages/sign-in'
 
 const requireSignedIn = isSignedIn => renderFunc => {
   return isSignedIn ?
@@ -18,31 +20,38 @@ const requireSignedOut = isSignedIn => renderFunc => {
 }
 
 const render = {
-  header: ({ history }) => (
-    <h1>Header</h1>
-  ),
+  header: ({ isSignedIn }) => {
+    if (!isSignedIn) {
+      return null
+    }
+
+    return <TopMenu />
+  },
   overlay: ({ history, isSignedIn }) => {
     const render = requireSignedOut(isSignedIn)
 
     return (
-      <Router
-        history={ history }
-        routes={ [
-          {
-            path: '/splash',
-            exact: true,
-            component: () => <h1>Loading...</h1>
-          },
-          {
-            path: '/sign-in',
-            exact: true,
-            component: render(() => <h1>Sign in</h1>)
+      <Fragment>
+        <Router
+          history={ history }
+          routes={ [
+            {
+              path: '/splash',
+              exact: true,
+              component: () => <h1>Loading...</h1>
+            },
+            {
+              path: '/sign-in',
+              exact: true,
+              component: render(SignIn)
+            }
+          ] }
+          otherwise={
+            () => null
           }
-        ] }
-        otherwise={
-          () => <h1>Menu</h1>
-        }
-      />
+        />
+        { isSignedIn && <LeftMenu /> }
+      </Fragment>
     )
   },
   content: ({ history, isSignedIn }) => {

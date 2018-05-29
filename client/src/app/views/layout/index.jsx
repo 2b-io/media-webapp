@@ -8,6 +8,9 @@ import Overlay from './overlay'
 import Still from './still'
 import Wrapper from './wrapper'
 
+export { default as LeftMenu } from './left-menu'
+export { default as TopMenu } from './top-menu'
+
 export default class Layout extends Component {
   constructor(...args) {
     super(...args)
