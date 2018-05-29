@@ -29,6 +29,6 @@ export default function*() {
   yield put(actions.requestLocation(initAction.payload.pathname))
 
   yield put({
-    type: '@@initialized'
+    type: '@@INITIALIZED'
   })
 }

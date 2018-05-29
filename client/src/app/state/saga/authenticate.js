@@ -1,8 +1,12 @@
+import delay from 'delay'
 import { all, call, fork, put, select, take } from 'redux-saga/effects'
 
 import { actions, selectors, types } from 'state/interface'
 
 const signIn = function*() {
+  // TODO call API in real life
+  yield call(delay, 500)
+
   yield all([
     put(actions.createSessionCompleted('xxx')),
     put(actions.requestLocation('/')),
@@ -11,13 +15,16 @@ const signIn = function*() {
 }
 
 const signOut = function*() {
+  // TODO call API in real life
+  yield call(delay, 500)
+
   yield all([
     put(actions.destroySessionCompleted()),
     put(actions.requestLocation('/sign-in'))
   ])
 }
 
-const authLoop = function*() {
+const loop = function*() {
   while (true) {
     yield take(types['SESSION/CREATE'])
 
@@ -30,9 +37,9 @@ const authLoop = function*() {
 }
 
 export default function*() {
-  yield take('@@initialized')
+  yield take('@@INITIALIZED')
 
-  yield fork(authLoop)
+  yield fork(loop)
 
   const isSignedIn = yield select(selectors.isSignedIn)
 

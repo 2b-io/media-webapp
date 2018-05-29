@@ -34,9 +34,7 @@ const render = {
 
 const App = () => (
   <HistoryProvider>
-    <Layout
-      render={ render }
-    />
+    <Layout render={ render } />
   </HistoryProvider>
 )
 
