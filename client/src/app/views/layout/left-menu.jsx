@@ -12,6 +12,6 @@ const LeftMenu = ({ signOut }) => (
 export default connect(
   null,
   dispatch => ({
-    signOut: () => dispatch(actions.destroySession())
+    signOut: () => dispatch(actions.closeLayout())
   })
 )(LeftMenu)

@@ -22,30 +22,30 @@ export default class Layout extends Component {
   }
 
   render() {
-    const { isSignedIn, history, render } = this.props
+    const { isLayoutClosed, history, render } = this.props
 
     return (
       <Fragment>
         <Header
-          shown={ isSignedIn }
+          shown={ !isLayoutClosed }
           onComponentDidMount={ this.updateHeaderHeight() }>
           { render.header(this.props) }
         </Header>
         <Overlay
-          shown={ !isSignedIn }
+          shown={ isLayoutClosed }
           headerHeight={ this.state.headerHeight }>
           { render.overlay(this.props) }
         </Overlay>
         <Wrapper
-          shown={ isSignedIn }
+          shown={ !isLayoutClosed }
           headerHeight={ this.state.headerHeight }>
           <Still
-            shown={ isSignedIn }
+            shown={ !isLayoutClosed }
             onComponentDidMount={ this.updateStillHeight() }>
             { render.still(this.props) }
           </Still>
           <Content
-            shown={ isSignedIn }
+            shown={ !isLayoutClosed }
             stillHeight={ this.state.stillHeight }>
             { render.content(this.props) }
           </Content>

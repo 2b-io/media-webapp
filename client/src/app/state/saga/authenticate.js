@@ -5,7 +5,8 @@ import { actions, selectors, types } from 'state/interface'
 const signIn = function*() {
   yield all([
     put(actions.createSessionCompleted('xxx')),
-    put(actions.requestLocation('/'))
+    put(actions.requestLocation('/')),
+    put(actions.openLayout())
   ])
 }
 

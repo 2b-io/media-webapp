@@ -7,32 +7,12 @@ import Layout, { LeftMenu, TopMenu } from 'views/layout'
 
 import SignIn from 'views/pages/sign-in'
 
-const requireSignedIn = isSignedIn => renderFunc => {
-  return isSignedIn ?
-    renderFunc :
-    () => <Redirect to="/sign-in" />
-}
-
-const requireSignedOut = isSignedIn => renderFunc => {
-  return isSignedIn ?
-    () => <Redirect to="/" /> :
-    renderFunc
-}
-
 const render = {
-  header: ({ isSignedIn }) => {
-    if (!isSignedIn) {
-      return null
-    }
-
+  header: ({ isLayoutClosed }) => {
     return <TopMenu />
   },
-  overlay: ({ history, isSignedIn }) => {
-    const render = requireSignedOut(isSignedIn)
-
-    console.log('xxx', isSignedIn)
-
-    if (isSignedIn) {
+  overlay: ({ history, isLayoutClosed }) => {
+    if (!isLayoutClosed) {
       return <LeftMenu />
     }
 
@@ -57,9 +37,7 @@ const render = {
       />
     )
   },
-  content: ({ history, isSignedIn }) => {
-    const render = requireSignedIn(isSignedIn)
-
+  content: ({ history, isLayoutClosed }) => {
     return (
       <Router
         history={ history }
@@ -76,7 +54,7 @@ const render = {
       />
     )
   },
-  still: ({ history, isSignedIn }) => {
+  still: ({ history, isLayoutClosed }) => {
     return (
       <Router
         history={ history }
@@ -97,14 +75,13 @@ const render = {
 
 const ConnectedLayout = connect(
   state => ({
-    isSignedIn: selectors.isSignedIn(state)
+    isLayoutClosed: selectors.isLayoutClosed(state)
   })
 )(Layout)
 
-const App = ({ isSignedIn }) => (
+const App = () => (
   <HistoryProvider>
     <ConnectedLayout
-      isSignedIn={ isSignedIn }
       render={ render }
     />
   </HistoryProvider>
