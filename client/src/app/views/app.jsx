@@ -32,28 +32,29 @@ const render = {
 
     console.log('xxx', isSignedIn)
 
+    if (isSignedIn) {
+      return <LeftMenu />
+    }
+
     return (
-      <Fragment>
-        <Router
-          history={ history }
-          routes={ [
-            {
-              path: '/splash',
-              exact: true,
-              component: () => <h1>Loading...</h1>
-            },
-            {
-              path: '/sign-in',
-              exact: true,
-              component: render(SignIn)
-            }
-          ] }
-          otherwise={
-            () => null
+      <Router
+        history={ history }
+        routes={ [
+          {
+            path: '/splash',
+            exact: true,
+            component: () => <h1>Loading...</h1>
+          },
+          {
+            path: '/sign-in',
+            exact: true,
+            component: SignIn
           }
-        />
-        { isSignedIn && <LeftMenu /> }
-      </Fragment>
+        ] }
+        otherwise={
+          () => null
+        }
+      />
     )
   },
   content: ({ history, isSignedIn }) => {
@@ -66,7 +67,7 @@ const render = {
           {
             path: '/',
             exact: true,
-            component: render(() => <h1>Dashboard content</h1>)
+            component: () => <h1>Dashboard content</h1>
           }
         ] }
         otherwise={
@@ -83,9 +84,7 @@ const render = {
           {
             path: '/',
             exact: true,
-            component: isSignedIn ?
-              () => <h1>Dashboard</h1> :
-              () => null
+            component: () => <h1>Dashboard</h1>
           }
         ] }
         otherwise={

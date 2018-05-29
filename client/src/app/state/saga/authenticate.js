@@ -1,16 +1,41 @@
-import { put, take } from 'redux-saga/effects'
+import { all, call, fork, put, select, take } from 'redux-saga/effects'
 
-import { types } from 'state/interface'
-import { actions } from 'state/interface'
+import { actions, selectors, types } from 'state/interface'
 
-export default function*() {
+const signIn = function*() {
+  yield all([
+    put(actions.createSessionCompleted('xxx')),
+    put(actions.requestLocation('/'))
+  ])
+}
+
+const signOut = function*() {
+  yield all([
+    put(actions.destroySessionCompleted()),
+    put(actions.requestLocation('/sign-in'))
+  ])
+}
+
+const authLoop = function*() {
   while (true) {
     yield take(types['SESSION/CREATE'])
 
-    yield put(actions.createSessionCompleted('xxx'))
+    yield call(signIn)
 
     yield take(types['SESSION/DESTROY'])
 
-    yield put(actions.destroySessionCompleted())
+    yield call(signOut)
+  }
+}
+
+export default function*() {
+  yield take('@@initialized')
+
+  yield fork(authLoop)
+
+  const isSignedIn = yield select(selectors.isSignedIn)
+
+  if (!isSignedIn) {
+    yield put(actions.requestLocation('/sign-in'))
   }
 }

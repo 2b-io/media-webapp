@@ -2,15 +2,7 @@ import delay from 'delay'
 import { call, fork, put, take } from 'redux-saga/effects'
 import { actions, types } from 'state/interface'
 
-export default function*() {
-  const initAction = yield take(types['LOCATION/INIT'])
-
-  yield call(delay, 2e3)
-
-  yield fork(
-    put, actions.requestLocation(initAction.payload.pathname)
-  )
-
+const loop = function*() {
   while (true) {
     const request = yield take(types['LOCATION/REQUEST'])
 
@@ -27,4 +19,16 @@ export default function*() {
       yield fork(put, actions.rejectLocation(pathname, error))
     }
   }
+}
+
+export default function*() {
+  yield fork(loop)
+
+  const initAction = yield take(types['LOCATION/INIT'])
+
+  yield put(actions.requestLocation(initAction.payload.pathname))
+
+  yield put({
+    type: '@@initialized'
+  })
 }
