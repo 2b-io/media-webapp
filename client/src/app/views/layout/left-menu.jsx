@@ -1,16 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { actions } from 'state/interface'
+import { actions, selectors } from 'state/interface'
+import { Identicon } from 'ui/elements'
 
-const LeftMenu = ({ signOut }) => (
+const LeftMenu = ({ isSignedIn, session, signOut }) => (
   <div className="transition-item">
+    { isSignedIn &&
+      <Identicon size={ 24 } id={ session.account.email } />
+    }
     <button onClick={ signOut }>Sign Out</button>
   </div>
 )
 
 export default connect(
-  null,
+  state => ({
+    isSignedIn: selectors.isSignedIn(state),
+    session: selectors.currentSession(state)
+  }),
   dispatch => ({
     signOut: () => dispatch(actions.closeLayout())
   })

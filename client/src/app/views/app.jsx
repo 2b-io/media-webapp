@@ -9,6 +9,7 @@ const render = {
   header: () => <TopMenu />,
   overlay: ({ history }) => (
     <Router
+      animated
       history={ history }
       routes={ overlay }
       otherwise={
@@ -20,14 +21,12 @@ const render = {
     <Router
       history={ history }
       routes={ content }
-      otherwise={ Nothing }
     />
   ),
   still: ({ history }) => (
     <Router
       history={ history }
       routes={ still }
-      otherwise={ Nothing }
     />
   )
 }

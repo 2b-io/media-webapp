@@ -13,10 +13,10 @@ const SignInForm = reduxForm({
 })(_SignInForm)
 
 const SignIn = ({ signIn, toSignUp }) => (
-  <div className="transition-item">
+  <main>
     <SignInForm onSubmit={ signIn } />
-    <a href="/" onClick={ toSignUp }>Sign Up</a>
-  </div>
+    <a href="/sign-in" onClick={ toSignUp }>Sign Up</a>
+  </main>
 )
 
 export default connect(

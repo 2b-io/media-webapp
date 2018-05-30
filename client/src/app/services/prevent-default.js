@@ -1,7 +1,7 @@
-export default func => e => {
+export default func => (e, ...args) => {
   if (e.preventDefault) {
     e.preventDefault()
   }
 
-  func()
+  func(e, ...args)
 }

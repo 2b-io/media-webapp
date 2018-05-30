@@ -1,28 +1,32 @@
 import React from 'react'
 
+import { TransactionItem } from 'ui/elements'
+
 import Dashboard from './dashboard'
 import SignIn from './sign-in'
 import SignUp from './sign-up'
+
+const withTransaction = Page => () => (
+  <TransactionItem><Page /></TransactionItem>
+)
 
 export const overlay = [
   {
     path: '/splash',
     exact: true,
     component: () => (
-      <div className="transition-item">
-        <h1>Loading...</h1>
-      </div>
+      <h1>Loading...</h1>
     )
   },
   {
     path: '/sign-in',
     exact: true,
-    component: SignIn
+    component: withTransaction(SignIn)
   },
   {
     path: '/sign-up',
     exact: true,
-    component: SignUp
+    component: withTransaction(SignUp)
   }
 ]
 
@@ -39,9 +43,7 @@ export const still = [
     path: '/',
     exact: true,
     component: () => (
-      <div className="transition-item">
-        <h1>DASHBOARD</h1>
-      </div>
+      <h1>DASHBOARD</h1>
     )
   }
 ]

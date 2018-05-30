@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default () => (
-  <div className="transition-item">
+  <main>
     <h1>Dashboard</h1>
-  </div>
+  </main>
 )

@@ -43,8 +43,6 @@ export default class HistoryManager extends Component {
     })
 
     this.memoryHistory.listen(location => {
-      console.log('yyy', location.key)
-
       updateKey(location.key)
     })
 

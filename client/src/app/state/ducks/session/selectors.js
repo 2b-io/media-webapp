@@ -1,3 +1,4 @@
 export default {
-  isSignedIn: state => !!state.info
+  isSignedIn: state => !!state.info,
+  currentSession: state => state.info
 }
