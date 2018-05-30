@@ -7,10 +7,19 @@ import {
 
 import { AnimatedSwitch } from 'react-router-transition'
 
+const mapStyles = styles => ({
+  opacity: styles.opacity,
+  ...(
+    styles.left !== undefined ? {
+      transform: `translateX(${ styles.left }%)`
+    } : {}
+  )
+})
+
 const effects = {
   slide: {
-    atEnter: { opacity: 0, left: -200 },
-    atLeave: { opacity: 0, left: 200 },
+    atEnter: { opacity: 0, left: -100 },
+    atLeave: { opacity: 0, left: 100 },
     atActive: { opacity: 1, left: 0 }
   },
   fade: {
@@ -32,7 +41,8 @@ const Switch = ({ animated, children }) => {
   return (
     <AnimatedSwitch
       className="switch-wrapper"
-      { ...effects[animated] }>
+      { ...effects[animated] }
+      mapStyles={ mapStyles }>
       { children }
     </AnimatedSwitch>
   )
