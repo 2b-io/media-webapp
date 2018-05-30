@@ -5,11 +5,12 @@ const TextBox = styled.input.attrs({
   type: ({ type }) => type
 })`
   border: none;
-  border-bottom: 2px solid gray;
+  border-bottom: 2px solid lightgray;
   outline: none;
   padding: 10px;
   width: 100%;
-  &:hover {
+  transition: border-bottom .6s linear;
+  &:hover, &:focus {
     border-bottom: 2px solid black;
   }
 `

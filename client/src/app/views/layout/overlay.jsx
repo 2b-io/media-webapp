@@ -34,6 +34,10 @@ const Header = styled.div`
   padding-top: 20px;
   padding-bottom: 20px;
   text-align: center;
+  transition: opacity 1.2s cubic-bezier(.4, 0, .2, 1);
+  opacity: ${
+    ({ shown }) => shown ? 0 : 1
+  };
 `
 
 const Content = styled.div`
@@ -52,7 +56,7 @@ const Overlay = ({ children, shown, headerHeight, width }) => (
     headerHeight={ headerHeight }
     width={ width }>
     <Wrapper>
-      <Header>
+      <Header shown={ shown }>
         <Identicon size={ 64 } id={ 'd@dapps.me' } circle />
       </Header>
       <Content>
