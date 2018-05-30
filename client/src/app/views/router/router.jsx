@@ -7,10 +7,17 @@ import {
 
 import { AnimatedSwitch } from 'react-router-transition'
 
-const fadeEffect = {
-  atEnter: { opacity: 0 },
-  atLeave: { opacity: 0 },
-  atActive: { opacity: 1 }
+const effects = {
+  slide: {
+    atEnter: { opacity: 0, left: -200 },
+    atLeave: { opacity: 0, left: 200 },
+    atActive: { opacity: 1, left: 0 }
+  },
+  fade: {
+    atEnter: { opacity: 0 },
+    atLeave: { opacity: 0 },
+    atActive: { opacity: 1 }
+  }
 }
 
 const renderRoutes = routes => routes.map(
@@ -25,7 +32,7 @@ const Switch = ({ animated, children }) => {
   return (
     <AnimatedSwitch
       className="switch-wrapper"
-      { ...fadeEffect }>
+      { ...effects[animated] }>
       { children }
     </AnimatedSwitch>
   )

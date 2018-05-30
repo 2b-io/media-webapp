@@ -12,14 +12,17 @@ const StyledOverlay = styled.div`
   align-center: center;
   justify-content: center;
   width: ${
-    ({ shown }) => shown ? '100%' : '100px'
+    ({ shown, width }) => shown ? '100%' : `${width}px`
   };
   padding-top: ${
     ({ headerHeight }) => `${headerHeight}px`
   };
 `
-const Overlay = ({ children, shown, headerHeight }) => (
-  <StyledOverlay shown={ shown } headerHeight={ headerHeight }>
+const Overlay = ({ children, shown, headerHeight, width }) => (
+  <StyledOverlay
+    shown={ shown }
+    headerHeight={ headerHeight }
+    width={ width }>
     { children }
   </StyledOverlay>
 )

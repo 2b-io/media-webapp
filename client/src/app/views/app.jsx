@@ -5,16 +5,30 @@ import { HistoryProvider, Redirect, Router } from 'views/router'
 import { content, overlay, still } from 'views/pages'
 import { Nothing } from 'ui/elements'
 
+const FullScreen = ({ history }) => (
+  <Router
+    animated="slide"
+    history={ history }
+    routes={ overlay }
+  />
+)
+
+const config = history => [
+  {
+    path: '/sign-*',
+    component: () => <FullScreen history={ history } />
+  }
+]
+
+
 const render = {
   header: () => <TopMenu />,
   overlay: ({ history }) => (
     <Router
-      animated
+      animated="fade"
       history={ history }
-      routes={ overlay }
-      otherwise={
-        () => <LeftMenu />
-      }
+      routes={ config(history) }
+      otherwise={ () => <LeftMenu width={ 50 } /> }
     />
   ),
   content: ({ history }) => (
@@ -33,7 +47,10 @@ const render = {
 
 const App = () => (
   <HistoryProvider>
-    <Layout render={ render } />
+    <Layout render={ render }
+      menuWidth={ 50 }
+      headerHeight={ 70 }
+    />
   </HistoryProvider>
 )
 

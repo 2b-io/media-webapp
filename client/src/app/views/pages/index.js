@@ -12,13 +12,6 @@ const withTransaction = Page => () => (
 
 export const overlay = [
   {
-    path: '/splash',
-    exact: true,
-    component: () => (
-      <h1>Loading...</h1>
-    )
-  },
-  {
     path: '/sign-in',
     exact: true,
     component: withTransaction(SignIn)

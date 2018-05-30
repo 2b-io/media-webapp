@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 const StyledHeader = styled.div`
@@ -7,10 +7,12 @@ const StyledHeader = styled.div`
   z-index: 3;
   left: 0;
   right: 0;
-  height: 50px;
+  height: ${
+    ({ height }) => `${height}px`
+  };
   color: #ffffff;
   top: ${
-    ({ shown }) => shown ? 0 : '-50px'
+    ({ height, shown }) => shown ? 0 : `-${height}px`
   };
   transition: ${
     ({ shown }) => shown ?
@@ -19,28 +21,12 @@ const StyledHeader = styled.div`
   };
 `
 
-export default class Header extends Component {
-  componentDidMount() {
-    const { onComponentDidMount } = this.props
+const Header = ({ children, height, shown }) => (
+  <StyledHeader
+    shown={ shown }
+    height={ height }>
+    { children }
+  </StyledHeader>
+)
 
-    onComponentDidMount(this._element)
-  }
-
-  componentDidUpdate() {
-    const { onComponentDidMount } = this.props
-
-    onComponentDidMount(this._element)
-  }
-
-  render() {
-    const { children, shown } = this.props
-
-    return (
-      <StyledHeader
-        shown={ shown }
-        innerRef={ e => this._element = e }>
-        { children }
-      </StyledHeader>
-    )
-  }
-}
+export default Header

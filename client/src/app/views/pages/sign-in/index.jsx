@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import preventDefault from 'services/prevent-default'
 import { actions } from 'state/interface'
+import { Container } from 'ui/elements'
 
 import _SignInForm from './form'
 
@@ -14,8 +15,10 @@ const SignInForm = reduxForm({
 
 const SignIn = ({ signIn, toSignUp }) => (
   <main>
-    <SignInForm onSubmit={ signIn } />
-    <a href="/sign-in" onClick={ toSignUp }>Sign Up</a>
+    <Container center size="small">
+      <SignInForm onSubmit={ signIn } />
+      <a href="/sign-in" onClick={ toSignUp }>Sign Up</a>
+    </Container>
   </main>
 )
 

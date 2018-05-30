@@ -7,7 +7,9 @@ const StyledWrapper = styled.div`
   top: ${
     ({ headerHeight }) => `${headerHeight}px`
   };
-  left: 100px;
+  left: ${
+    ({ menuWidth }) => `${menuWidth}px`
+  };
   right: 0;
   bottom: 0;
   -webkit-overflow-scrolling: touch;
@@ -16,10 +18,11 @@ const StyledWrapper = styled.div`
   };
 `
 
-const Wrapper = ({ children, shown, headerHeight }) => (
+const Wrapper = ({ children, shown, headerHeight, menuWidth }) => (
   <StyledWrapper
     shown={ shown }
-    headerHeight= { headerHeight }>
+    headerHeight= { headerHeight }
+    menuWidth={ menuWidth }>
     { children }
   </StyledWrapper>
 )

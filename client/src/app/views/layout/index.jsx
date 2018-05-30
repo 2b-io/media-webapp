@@ -30,22 +30,26 @@ export default class Layout extends Component {
 
   render() {
     const { isLayoutClosed, history, render } = this.props
+    const { menuWidth, headerHeight } = this.props
 
     return (
       <Fragment>
         <Header
           shown={ !isLayoutClosed }
-          onComponentDidMount={ this.updateHeaderHeight() }>
+          height={ headerHeight }
+          >
           { render.header(this.props) }
         </Header>
         <Overlay
           shown={ isLayoutClosed }
-          headerHeight={ this.state.headerHeight }>
+          headerHeight={ headerHeight }
+          width={ menuWidth }>
           { render.overlay(this.props) }
         </Overlay>
         <Wrapper
           shown={ !isLayoutClosed }
-          headerHeight={ this.state.headerHeight }>
+          headerHeight={ headerHeight }
+          menuWidth={ menuWidth }>
           <Still
             shown={ !isLayoutClosed }
             onComponentDidMount={ this.updateStillHeight() }>
@@ -59,18 +63,6 @@ export default class Layout extends Component {
         </Wrapper>
       </Fragment>
     )
-  }
-
-  updateHeaderHeight() {
-    return element => {
-      if (this.state.headerHeight === element.clientHeight) {
-        return
-      }
-
-      this.setState({
-        headerHeight: element.clientHeight
-      })
-    }
   }
 
   updateStillHeight() {
