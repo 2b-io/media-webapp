@@ -1,30 +1,47 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 import Layout, { LeftMenu, TopMenu } from 'views/layout'
-import { HistoryProvider, Redirect, Router } from 'views/router'
+import { HistoryProvider, Redirect, Router, Switch } from 'views/router'
 import { content, overlay, still } from 'views/pages'
-import { Nothing } from 'ui/elements'
+import { Identicon, Nothing } from 'ui/elements'
+
+import styled from 'styled-components'
+
+const HEADER_HEIGHT = 70
+const MENU_WIDTH = 100
+
+const CenterBox = styled.div`
+  padding: 20px;
+  width: ${ MENU_WIDTH }px;
+  margin: auto;
+`
 
 const render = {
   header: () => <TopMenu />,
-  overlay: ({ history }) => (
-    <Router
-      animated="fade"
-      history={ history }
-      routes={ [
-        {
-          path: '/sign-*',
-          component: () => (
-            <Router
-              animated="slide"
-              history={ history }
-              routes={ overlay }
-            />
-          )
+  overlay: ({ isLayoutClosed, history }) => (
+    <Fragment>
+      <CenterBox>
+        <Identicon size={ 60 } id={ 'd@dapps.me' } circle />
+      </CenterBox>
+      <Router
+        animated="slide"
+        history={ history }
+        routes={ overlay }
+      />
+      <Router
+        animated="fade"
+        history={ history }
+        routes={ [
+          {
+            path: '/sign-*',
+            component: Nothing
+          }
+        ] }
+        otherwise={
+          () => <LeftMenu width={ MENU_WIDTH } />
         }
-      ] }
-      otherwise={ () => <LeftMenu width={ 50 } /> }
-    />
+      />
+    </Fragment>
   ),
   content: ({ history }) => (
     <Router
@@ -43,8 +60,8 @@ const render = {
 const App = () => (
   <HistoryProvider>
     <Layout render={ render }
-      menuWidth={ 50 }
-      headerHeight={ 70 }
+      menuWidth={ MENU_WIDTH }
+      headerHeight={ HEADER_HEIGHT }
     />
   </HistoryProvider>
 )

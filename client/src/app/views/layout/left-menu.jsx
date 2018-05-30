@@ -2,8 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
-import { actions, selectors } from 'state/interface'
-import { Identicon } from 'ui/elements'
+import { actions } from 'state/interface'
 
 const Menu = styled.nav`
   display: flex;
@@ -16,19 +15,14 @@ const Menu = styled.nav`
   margin-right: auto;
 `
 
-const LeftMenu = ({ session, signOut, width }) => (
+const LeftMenu = ({ signOut, width }) => (
   <Menu width={ width }>
-    { session &&
-      <Identicon size={ 48 } id={ session.account.email } />
-    }
     <button onClick={ signOut }>Sign Out</button>
   </Menu>
 )
 
 export default connect(
-  state => ({
-    session: selectors.currentSession(state)
-  }),
+  null,
   dispatch => ({
     signOut: () => dispatch(actions.closeLayout())
   })

@@ -1,10 +1,30 @@
 import md5 from 'md5'
 import React from 'react'
+import styled, { css } from 'styled-components'
+
+const StyledIdenticon = styled.img`
+  display: inline-block;
+  ${
+    ({ size }) => css`
+      width: ${ size }px;
+      height: ${ size }px;
+    `
+  }
+  ${
+    ({ circle }) => circle ? css`
+      border-radius: 50%;
+    ` : null
+  }
+`
 
 const src = (id, size) => `//www.gravatar.com/avatar/${md5(id)}?d=identicon&f=y&s=${size}`
 
-const Identicon = ({ id, size }) => (
-  <img src={ src(id, size) } width={ size } height={ size } />
+const Identicon = ({ id, size, ...props }) => (
+  <StyledIdenticon
+    src={ src(id, size) }
+    size={ size }
+    { ...props }
+  />
 )
 
 export default Identicon

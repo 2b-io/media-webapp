@@ -1,52 +1,16 @@
 import React, { Component } from 'react'
 import {
   Router as BrowserRouter,
-  Route,
-  Switch as StaticSwitch
+  Route
 } from 'react-router'
 
-import { AnimatedSwitch } from 'react-router-transition'
-
-const mapStyles = styles => ({
-  opacity: styles.opacity,
-  ...(
-    styles.left !== undefined ? {
-      transform: `translateX(${ styles.left }%)`
-    } : {}
-  )
-})
-
-const effects = {
-  slide: {
-    atEnter: { opacity: 0, left: -100 },
-    atLeave: { opacity: 0, left: 100 },
-    atActive: { opacity: 1, left: 0 }
-  },
-  fade: {
-    atEnter: { opacity: 0 },
-    atLeave: { opacity: 0 },
-    atActive: { opacity: 1 }
-  }
-}
+import Switch from './switch'
 
 const renderRoutes = routes => routes.map(
-  route => <Route {...route} key={route.path} />
-)
-
-const Switch = ({ animated, children }) => {
-  if (!animated) {
-    return <StaticSwitch>{ children }</StaticSwitch>
-  }
-
-  return (
-    <AnimatedSwitch
-      className="switch-wrapper"
-      { ...effects[animated] }
-      mapStyles={ mapStyles }>
-      { children }
-    </AnimatedSwitch>
+  route => (
+    <Route { ...route } key={ route.path } />
   )
-}
+)
 
 const Router = ({
   animated = false,

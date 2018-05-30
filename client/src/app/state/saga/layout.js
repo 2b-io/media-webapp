@@ -7,7 +7,7 @@ const loop = function*() {
   while (true) {
     yield take(types['LAYOUT/CLOSE'])
 
-    yield call(delay, 1e3)
+    yield call(delay, 500)
 
     yield put(actions.destroySession())
   }
