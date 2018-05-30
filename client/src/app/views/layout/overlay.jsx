@@ -1,6 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import IconGithub from 'react-icons/lib/io/social-github'
+
+import { Identicon, Nothing } from 'ui/elements'
+
 const StyledOverlay = styled.div`
   position: fixed;
   background-color: white;
@@ -18,15 +22,46 @@ const StyledOverlay = styled.div`
   padding-top: ${
     ({ headerHeight }) => `${ headerHeight }px`
   };
-  border-left: 1px solid black;
-  border-right: 1px solid black;
+  border: 1px solid black;
 `
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`
+
+const Header = styled.div`
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: center;
+`
+
+const Content = styled.div`
+  flex-grow: 1;
+`
+
+const Footer = styled.div`
+  background: whitesmoke;
+  text-align: center;
+  padding: 10px;
+`
+
 const Overlay = ({ children, shown, headerHeight, width }) => (
   <StyledOverlay
     shown={ shown }
     headerHeight={ headerHeight }
     width={ width }>
-    { children }
+    <Wrapper>
+      <Header>
+        <Identicon size={ 64 } id={ 'd@dapps.me' } circle />
+      </Header>
+      <Content>
+        { children }
+      </Content>
+      <Footer>
+        <IconGithub size={ 24 } />
+      </Footer>
+    </Wrapper>
   </StyledOverlay>
 )
 
