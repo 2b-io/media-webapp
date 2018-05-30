@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const TextBox = styled.input.attrs({
-  type: 'text'
+  type: ({ type }) => type
 })`
   border: none;
   border-bottom: 2px solid gray;

@@ -9,6 +9,10 @@ const SignInForm = ({ handleSubmit }) => (
         name="email"
         placeholder="you@example.com"
       />
+      <TextBox
+        type="password"
+        name="password"
+      />
     </div>
     <div>
       <button type="submit">Sign In</button>

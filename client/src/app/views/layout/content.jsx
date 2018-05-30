@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 
 const StyledContent = styled.div`
   position: absolute;
-  background-color: whitesmoke;
+  background-color: gray;
   padding: 20px;
   transition: top 1.2s cubic-bezier(.4, 0, .2, 1);
   left: 0;

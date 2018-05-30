@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const StyledOverlay = styled.div`
   position: fixed;
-  background-color: gray;
+  background-color: white;
   z-index: 2;
   top: 0;
   left: 0;
@@ -11,12 +11,15 @@ const StyledOverlay = styled.div`
   transition: width 1.2s cubic-bezier(.4, 0, .2, 1);
   align-center: center;
   justify-content: center;
+  overflow: hidden;
   width: ${
-    ({ shown, width }) => shown ? '100%' : `${width}px`
+    ({ shown, width }) => shown ? '100%' : `${ width }px`
   };
   padding-top: ${
-    ({ headerHeight }) => `${headerHeight}px`
+    ({ headerHeight }) => `${ headerHeight }px`
   };
+  border-left: 1px solid black;
+  border-right: 1px solid black;
 `
 const Overlay = ({ children, shown, headerHeight, width }) => (
   <StyledOverlay

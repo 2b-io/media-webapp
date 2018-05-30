@@ -10,38 +10,57 @@ import styled from 'styled-components'
 const HEADER_HEIGHT = 70
 const MENU_WIDTH = 100
 
-const CenterBox = styled.div`
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`
+
+const Header = styled.div`
   padding: 20px;
-  width: ${ MENU_WIDTH }px;
-  margin: auto;
+  text-align: center;
+`
+
+const Content = styled.div`
+  flex-grow: 1;
+`
+
+const Footer = styled.div`
+  background: whitesmoke;
+  text-align: center;
 `
 
 const render = {
   header: () => <TopMenu />,
   overlay: ({ isLayoutClosed, history }) => (
-    <Fragment>
-      <CenterBox>
+    <Wrapper>
+      <Header>
         <Identicon size={ 60 } id={ 'd@dapps.me' } circle />
-      </CenterBox>
-      <Router
-        animated="slide"
-        history={ history }
-        routes={ overlay }
-      />
-      <Router
-        animated="fade"
-        history={ history }
-        routes={ [
-          {
-            path: '/sign-*',
-            component: Nothing
+      </Header>
+      <Content>
+        <Router
+          animated="slide"
+          history={ history }
+          routes={ overlay }
+        />
+        <Router
+          animated="fade"
+          history={ history }
+          routes={ [
+            {
+              path: '/sign-*',
+              component: Nothing
+            }
+          ] }
+          otherwise={
+            () => <LeftMenu width={ MENU_WIDTH } />
           }
-        ] }
-        otherwise={
-          () => <LeftMenu width={ MENU_WIDTH } />
-        }
-      />
-    </Fragment>
+        />
+      </Content>
+      <Footer>
+        <h1>Footer</h1>
+      </Footer>
+    </Wrapper>
   ),
   content: ({ history }) => (
     <Router
