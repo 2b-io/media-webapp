@@ -3,8 +3,17 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 
 import { actions } from 'state/interface'
+import preventDefault from 'services/prevent-default'
 
-const Menu = styled.nav`
+import {
+  BillingIcon,
+  DashboardIcon,
+  ProfileIcon,
+  ProjectListIcon,
+  SignOutIcon
+} from 'ui/icons'
+
+const MenuWrapper = styled.nav`
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -13,17 +22,74 @@ const Menu = styled.nav`
   };
   margin-left: auto;
   margin-right: auto;
+  padding: 10px;
+  font-size: 12px;
+`
+
+const Menu = styled.ul`
+`
+
+const MenuItem = styled.li`
+`
+
+const LinkButton = styled.a.attrs({
+  href: '#'
+})`
+  height: 40px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  text-decoration: none;
+  color: inherit;
+`
+
+const MenuItemLabel = styled.label`
+  margin-left: 10px;
+  flex-grow: 1;
 `
 
 const LeftMenu = ({ signOut, width }) => (
-  <Menu width={ width }>
-    <button onClick={ signOut }>Sign Out</button>
-  </Menu>
+  <MenuWrapper width={ width }>
+    <Menu>
+      <MenuItem>
+        <LinkButton onClick={ signOut }>
+          <DashboardIcon />
+          <MenuItemLabel>Dashboard</MenuItemLabel>
+        </LinkButton>
+      </MenuItem>
+      <MenuItem>
+        <LinkButton onClick={ signOut }>
+          <ProfileIcon />
+          <MenuItemLabel>Profile</MenuItemLabel>
+        </LinkButton>
+      </MenuItem>
+      <MenuItem>
+        <LinkButton onClick={ signOut }>
+          <ProjectListIcon />
+          <MenuItemLabel>Projects</MenuItemLabel>
+        </LinkButton>
+      </MenuItem>
+      <MenuItem>
+        <LinkButton onClick={ signOut }>
+          <BillingIcon />
+          <MenuItemLabel>Billing</MenuItemLabel>
+        </LinkButton>
+      </MenuItem>
+      <MenuItem>
+        <LinkButton onClick={ signOut }>
+          <SignOutIcon />
+          <MenuItemLabel>Sign Out</MenuItemLabel>
+        </LinkButton>
+      </MenuItem>
+    </Menu>
+  </MenuWrapper>
 )
 
 export default connect(
   null,
   dispatch => ({
-    signOut: () => dispatch(actions.closeLayout())
+    signOut: preventDefault(
+      () => dispatch(actions.closeLayout())
+    )
   })
 )(LeftMenu)

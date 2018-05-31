@@ -3,14 +3,14 @@ import styled from 'styled-components'
 
 const StyledHeader = styled.div`
   position: fixed;
-  background: #000000;
+  background: #333;
   z-index: 3;
   left: 0;
   right: 0;
   height: ${
     ({ height }) => `${height}px`
   };
-  color: #ffffff;
+  color: #fff;
   top: ${
     ({ height, shown }) => shown ? 0 : `-${height}px`
   };

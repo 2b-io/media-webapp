@@ -17,13 +17,15 @@ const SignInForm = ({ handleSubmit }) => (
       <TextBox
         type="email"
         name="email"
-        placeholder="you@example.com"
+        placeholder="your email"
+        autoFocus
       />
     </FormLine>
     <FormLine>
       <TextBox
         type="password"
         name="password"
+        placeholder="your password"
       />
     </FormLine>
     <FormLine>

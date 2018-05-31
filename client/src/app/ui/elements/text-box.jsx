@@ -2,10 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 
 const TextBox = styled.input.attrs({
-  type: ({ type }) => type
+  type: ({ type = 'text' }) => type
 })`
+  background-color: transparent;
   border: none;
   border-bottom: 2px solid lightgray;
+  border-radius: 0;
   outline: none;
   padding: 10px;
   width: 100%;

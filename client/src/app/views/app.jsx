@@ -5,11 +5,11 @@ import { HistoryProvider, Redirect, Router, Switch } from 'views/router'
 import { content, overlay, still } from 'views/pages'
 import { Nothing } from 'ui/elements'
 
-const HEADER_HEIGHT = 70
-const MENU_WIDTH = 100
+const HEADER_HEIGHT = 50
+const MENU_WIDTH = 120
 
 const render = {
-  header: () => <TopMenu />,
+  header: () => <TopMenu menuWidth={ MENU_WIDTH } />,
   overlay: ({ isLayoutClosed, history }) => (
     <Fragment>
       <Router

@@ -1,3 +1,4 @@
+export { default as ConditionalDisplay } from './conditional-display'
 export { default as Container } from './container'
 export { default as Identicon } from './identicon'
 export { default as Nothing } from './nothing'

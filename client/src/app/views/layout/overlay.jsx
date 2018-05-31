@@ -1,13 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import IconGithub from 'react-icons/lib/io/social-github'
+import { GithubIcon } from 'ui/icons'
 
 import { Identicon, Nothing } from 'ui/elements'
 
 const StyledOverlay = styled.div`
   position: fixed;
-  background-color: white;
+  background-color: whitesmoke;
   z-index: 2;
   top: 0;
   left: 0;
@@ -22,7 +22,7 @@ const StyledOverlay = styled.div`
   padding-top: ${
     ({ headerHeight }) => `${ headerHeight }px`
   };
-  border: 1px solid black;
+  border: 1px solid #333;
 `
 const Wrapper = styled.div`
   display: flex;
@@ -45,7 +45,7 @@ const Content = styled.div`
 `
 
 const Footer = styled.div`
-  background: whitesmoke;
+  background: #333;
   text-align: center;
   padding: 10px;
 `
@@ -57,13 +57,13 @@ const Overlay = ({ children, shown, headerHeight, width }) => (
     width={ width }>
     <Wrapper>
       <Header shown={ shown }>
-        <Identicon size={ 64 } id={ 'd@dapps.me' } circle />
+        <Identicon size={ 48 } id={ 'd@dapps.me' } circle />
       </Header>
       <Content>
         { children }
       </Content>
       <Footer>
-        <IconGithub size={ 24 } />
+        <GithubIcon inverted />
       </Footer>
     </Wrapper>
   </StyledOverlay>
