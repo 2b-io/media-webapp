@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 
 import { actions } from 'state/interface'
-import preventDefault from 'services/prevent-default'
+import { Link } from 'ui/elements'
 
 import {
   BillingIcon,
@@ -32,7 +32,7 @@ const Menu = styled.ul`
 const MenuItem = styled.li`
 `
 
-const LinkButton = styled.a.attrs({
+const LinkButton = styled(Link).attrs({
   href: '#'
 })`
   height: 40px;
@@ -89,8 +89,6 @@ const LeftMenu = ({ signOut, width }) => (
 export default connect(
   null,
   dispatch => ({
-    signOut: preventDefault(
-      () => dispatch(actions.closeLayout())
-    )
+    signOut: () => dispatch(actions.closeLayout())
   })
 )(LeftMenu)

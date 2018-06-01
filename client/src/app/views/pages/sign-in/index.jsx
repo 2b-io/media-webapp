@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
-import preventDefault from 'services/prevent-default'
 import { actions } from 'state/interface'
 import { Container, Link, Paragraph } from 'ui/elements'
 
