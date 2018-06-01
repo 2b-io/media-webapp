@@ -1,12 +1,5 @@
-import React from 'react'
-
-import { TransactionItem } from 'ui/elements'
 import authRoutes from './auth'
 import unauthRoutes from './unauth'
-
-const withTransaction = Page => () => (
-  <TransactionItem><Page /></TransactionItem>
-)
 
 export const overlay = []
 export const content = []
