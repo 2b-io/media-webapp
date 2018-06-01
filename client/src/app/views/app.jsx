@@ -5,8 +5,8 @@ import { HistoryProvider, Redirect, Router, Switch } from 'views/router'
 import { content, overlay, still } from 'views/pages'
 import { Nothing } from 'ui/elements'
 
-const HEADER_HEIGHT = 50
-const MENU_WIDTH = 120
+const HEADER_HEIGHT = 0
+const MENU_WIDTH = 44
 
 const render = {
   header: () => <TopMenu menuWidth={ MENU_WIDTH } />,

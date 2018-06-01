@@ -53,31 +53,31 @@ const LeftMenu = ({ signOut, width }) => (
     <Menu>
       <MenuItem>
         <LinkButton onClick={ signOut }>
-          <DashboardIcon />
+          <DashboardIcon medium />
           <MenuItemLabel>Dashboard</MenuItemLabel>
         </LinkButton>
       </MenuItem>
       <MenuItem>
         <LinkButton onClick={ signOut }>
-          <ProfileIcon />
+          <ProfileIcon medium />
           <MenuItemLabel>Profile</MenuItemLabel>
         </LinkButton>
       </MenuItem>
       <MenuItem>
         <LinkButton onClick={ signOut }>
-          <ProjectListIcon />
+          <ProjectListIcon medium />
           <MenuItemLabel>Projects</MenuItemLabel>
         </LinkButton>
       </MenuItem>
       <MenuItem>
         <LinkButton onClick={ signOut }>
-          <BillingIcon />
+          <BillingIcon medium />
           <MenuItemLabel>Billing</MenuItemLabel>
         </LinkButton>
       </MenuItem>
       <MenuItem>
         <LinkButton onClick={ signOut }>
-          <SignOutIcon />
+          <SignOutIcon medium />
           <MenuItemLabel>Sign Out</MenuItemLabel>
         </LinkButton>
       </MenuItem>

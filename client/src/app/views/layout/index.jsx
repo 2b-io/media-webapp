@@ -34,12 +34,14 @@ export default class Layout extends Component {
 
     return (
       <Fragment>
+        {/*
         <Header
           shown={ !isLayoutClosed }
           height={ headerHeight }
           >
           { render.header(this.props) }
         </Header>
+        */}
         <Overlay
           shown={ isLayoutClosed }
           headerHeight={ headerHeight }

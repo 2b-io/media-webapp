@@ -14,7 +14,6 @@ const LogoWrapper = styled.div`
     ({ menuWidth }) => `${ menuWidth }px`
   };
   text-align: center;
-  height: 100%;
   padding: 10px;
   flex-shrink: 0;
 `
@@ -22,7 +21,7 @@ const LogoWrapper = styled.div`
 const Logo = styled.img`
   display: inline-block;
   max-height: 100%;
-  height: 50px;
+  max-width: 100%;
 `
 
 const Menu = styled.ul`

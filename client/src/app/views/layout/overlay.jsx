@@ -15,14 +15,12 @@ const StyledOverlay = styled.div`
   transition: width 1.2s cubic-bezier(.4, 0, .2, 1);
   align-center: center;
   justify-content: center;
-  overflow: hidden;
   width: ${
     ({ shown, width }) => shown ? '100%' : `${ width }px`
   };
   padding-top: ${
     ({ headerHeight }) => `${ headerHeight }px`
   };
-  border: 1px solid #333;
 `
 const Wrapper = styled.div`
   display: flex;
@@ -31,13 +29,16 @@ const Wrapper = styled.div`
 `
 
 const Header = styled.div`
-  padding-top: 20px;
+  padding-top: 10px;
   padding-bottom: 20px;
   text-align: center;
   transition: opacity 1.2s cubic-bezier(.4, 0, .2, 1);
+  margin-left: -14px;
+  margin-right: -14px;
   opacity: ${
     ({ shown }) => shown ? 0 : 1
   };
+
 `
 
 const Content = styled.div`
@@ -57,7 +58,7 @@ const Overlay = ({ children, shown, headerHeight, width }) => (
     width={ width }>
     <Wrapper>
       <Header shown={ shown }>
-        <Identicon size={ 48 } id={ 'd@dapps.me' } circle />
+        <Identicon size={ 64 } id={ 'd@dapps.me' } circle />
       </Header>
       <Content>
         { children }
