@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
+import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
 import { Container, Link, Paragraph } from 'ui/elements'
 
@@ -30,8 +31,8 @@ const SignIn = ({ signIn, toSignUp }) => (
 
 export default connect(
   null,
-  dispatch => ({
-    signIn: credential => dispatch(actions.createSession(credential)),
-    toSignUp: () => dispatch(actions.requestLocation('/sign-up'))
+  mapDispatch({
+    signIn: credential => actions.createSession(credential),
+    toSignUp: () => actions.requestLocation('/sign-up')
   })
 )(SignIn)

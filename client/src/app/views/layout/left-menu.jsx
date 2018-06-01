@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
+import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
 import { Link } from 'ui/elements'
 
@@ -47,11 +48,11 @@ const MenuItemLabel = styled.label`
   flex-grow: 1;
 `
 
-const LeftMenu = ({ signOut, width }) => (
+const LeftMenu = ({ signOut, toDashboard, toProjectList, width }) => (
   <MenuWrapper width={ width }>
     <Menu>
       <MenuItem>
-        <LinkButton onClick={ signOut }>
+        <LinkButton onClick={ toDashboard }>
           <DashboardIcon medium />
           <MenuItemLabel>Dashboard</MenuItemLabel>
         </LinkButton>
@@ -65,7 +66,7 @@ const LeftMenu = ({ signOut, width }) => (
       </MenuItem>
       */}
       <MenuItem>
-        <LinkButton onClick={ signOut }>
+        <LinkButton onClick={ toProjectList }>
           <ProjectListIcon medium />
           <MenuItemLabel>Projects</MenuItemLabel>
         </LinkButton>
@@ -88,7 +89,9 @@ const LeftMenu = ({ signOut, width }) => (
 
 export default connect(
   null,
-  dispatch => ({
-    signOut: () => dispatch(actions.closeLayout())
+  mapDispatch({
+    toDashboard: () => actions.requestLocation('/'),
+    toProjectList: () => actions.requestLocation('/projects'),
+    signOut: () => actions.closeLayout()
   })
 )(LeftMenu)

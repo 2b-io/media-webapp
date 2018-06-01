@@ -1,24 +1,22 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
-import preventDefault from 'services/prevent-default'
-import { Container } from 'ui/elements'
+import { Container, Link } from 'ui/elements'
 
-const SignUp = ({ back }) => (
+const SignUp = ({ toSignIn }) => (
   <main>
     <Container center size="small">
       <h1>Sign Up</h1>
-      <a href="/sign-in" onClick={ back }>Back</a>
+      <Link href="/sign-in" onClick={ toSignIn }>Back</Link>
     </Container>
   </main>
 )
 
 export default connect(
   null,
-  dispatch => ({
-    back: preventDefault(
-      () => dispatch(actions.requestLocation('/sign-in'))
-    )
+  mapDispatch({
+    toSignIn: () => actions.requestLocation('/sign-in')
   })
 )(SignUp)
