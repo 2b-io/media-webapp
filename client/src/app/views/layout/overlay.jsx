@@ -29,8 +29,8 @@ const Wrapper = styled.div`
 `
 
 const Header = styled.div`
-  padding-top: 10px;
-  padding-bottom: 20px;
+  padding-top: 20px;
+  padding-bottom: 10px;
   text-align: center;
   transition: opacity 1.2s cubic-bezier(.4, 0, .2, 1);
   margin-left: -14px;
@@ -38,11 +38,12 @@ const Header = styled.div`
   opacity: ${
     ({ shown }) => shown ? 0 : 1
   };
-
 `
 
 const Content = styled.div`
   flex-grow: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
 `
 
 const Footer = styled.div`

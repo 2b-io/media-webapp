@@ -23,8 +23,8 @@ const effects = {
     atActive: { opacity: 1, left: 0 }
   },
   fade: {
-    atEnter: { opacity: 0, top: 25 },
-    atLeave: { opacity: 0, top: 25 },
+    atEnter: { opacity: 0, top: 50 },
+    atLeave: { opacity: 0, top: 50 },
     atActive: { opacity: 1, top: 0 }
   }
 }

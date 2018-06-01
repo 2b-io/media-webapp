@@ -38,7 +38,6 @@ const LinkButton = styled.a.attrs({
   height: 40px;
   display: flex;
   align-items: center;
-  margin-bottom: 5px;
   text-decoration: none;
   color: inherit;
 `
@@ -57,12 +56,14 @@ const LeftMenu = ({ signOut, width }) => (
           <MenuItemLabel>Dashboard</MenuItemLabel>
         </LinkButton>
       </MenuItem>
+      {/*
       <MenuItem>
         <LinkButton onClick={ signOut }>
           <ProfileIcon medium />
           <MenuItemLabel>Profile</MenuItemLabel>
         </LinkButton>
       </MenuItem>
+      */}
       <MenuItem>
         <LinkButton onClick={ signOut }>
           <ProjectListIcon medium />
