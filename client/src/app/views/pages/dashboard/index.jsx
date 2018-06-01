@@ -1,7 +1,2 @@
-import React from 'react'
-
-export default () => (
-  <main>
-    <h1>Dashboard</h1>
-  </main>
-)
+export { default as Content } from './content'
+export { default as Still } from './still'

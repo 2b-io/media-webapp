@@ -2,7 +2,7 @@ import React from 'react'
 
 import { TransactionItem } from 'ui/elements'
 
-import Dashboard from './dashboard'
+import * as Dashboard from './dashboard'
 import SignIn from './sign-in'
 import SignUp from './sign-up'
 
@@ -27,7 +27,7 @@ export const content = [
   {
     path: '/',
     exact: true,
-    component: Dashboard
+    component: Dashboard.Content
   }
 ]
 
@@ -35,8 +35,6 @@ export const still = [
   {
     path: '/',
     exact: true,
-    component: () => (
-      <h1 style={ { color: '#fff' } }>DASHBOARD</h1>
-    )
+    component: Dashboard.Still
   }
 ]
