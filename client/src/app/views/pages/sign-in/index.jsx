@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import preventDefault from 'services/prevent-default'
 import { actions } from 'state/interface'
-import { Container } from 'ui/elements'
+import { Container, Link, Paragraph } from 'ui/elements'
 
 import _SignInForm from './form'
 
@@ -17,7 +17,14 @@ const SignIn = ({ signIn, toSignUp }) => (
   <main>
     <Container center size="small">
       <SignInForm onSubmit={ signIn } />
-      <a href="/sign-in" onClick={ toSignUp }>Sign Up</a>
+      <Paragraph>
+        Don't have your account yet?<br />
+        <Link href="/sign-up" onClick={ toSignUp }>Try it for free!</Link>
+      </Paragraph>
+      <Paragraph>
+        Trouble at signing in?<br />
+        <Link href="/password-recover" onClick={ toSignUp }>We are here for help.</Link>
+      </Paragraph>
     </Container>
   </main>
 )
@@ -26,8 +33,6 @@ export default connect(
   null,
   dispatch => ({
     signIn: credential => dispatch(actions.createSession(credential)),
-    toSignUp: preventDefault(
-      () => dispatch(actions.requestLocation('/sign-up'))
-    )
+    toSignUp: () => dispatch(actions.requestLocation('/sign-up'))
   })
 )(SignIn)

@@ -15,7 +15,7 @@ const Container = styled.div`
         case 'large':
           return '1150px'
         case 'small':
-          return '320px'
+          return '360px'
       }
 
       return 'none'

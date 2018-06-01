@@ -4,6 +4,7 @@ import styled from 'styled-components'
 const TextBox = styled.input.attrs({
   type: ({ type = 'text' }) => type
 })`
+  appearance: none;
   background-color: transparent;
   border: none;
   border-bottom: 2px solid lightgray;

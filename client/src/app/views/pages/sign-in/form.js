@@ -1,14 +1,17 @@
 import React from 'react'
-import { TextBox  } from 'ui/redux-form'
-
 import styled from 'styled-components'
 
+import { Button } from 'ui/elements'
+import { TextBox  } from 'ui/redux-form'
+
 const Form = styled.form`
+  padding-bottom: 10px;
 `
 
 const FormLine = styled.div`
-  padding-bottom: 15px;
-  text-align: center;
+  padding-bottom: ${
+    ({ last = false }) => last ? 0 : '20px'
+  };
 `
 
 const SignInForm = ({ handleSubmit }) => (
@@ -28,8 +31,8 @@ const SignInForm = ({ handleSubmit }) => (
         placeholder="your password"
       />
     </FormLine>
-    <FormLine>
-      <button type="submit">Sign In</button>
+    <FormLine last>
+      <Button type="submit">Sign In</Button>
     </FormLine>
   </Form>
 )
