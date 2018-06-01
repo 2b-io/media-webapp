@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 const StyledStill = styled.div`
-  background: #666;
+  background: #333;
   padding: 20px;
 `
 

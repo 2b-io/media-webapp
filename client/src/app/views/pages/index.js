@@ -36,7 +36,7 @@ export const still = [
     path: '/',
     exact: true,
     component: () => (
-      <h1>DASHBOARD</h1>
+      <h1 style={ { color: '#fff' } }>DASHBOARD</h1>
     )
   }
 ]

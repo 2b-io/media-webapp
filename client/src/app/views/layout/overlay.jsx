@@ -7,7 +7,7 @@ import { Identicon, Nothing } from 'ui/elements'
 
 const StyledOverlay = styled.div`
   position: fixed;
-  background-color: whitesmoke;
+  background-color: #fff;
   z-index: 2;
   top: 0;
   left: 0;
