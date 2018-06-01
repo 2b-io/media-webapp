@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 
 import Layout, { LeftMenu, TopMenu } from 'views/layout'
 import { HistoryProvider, Redirect, Router, Switch } from 'views/router'
-import { content, overlay, still } from 'views/pages'
+import { content, overlay, still } from 'views/route-config'
 import { Nothing } from 'ui/elements'
 
 const HEADER_HEIGHT = 0
