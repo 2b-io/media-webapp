@@ -19,7 +19,6 @@ export default (Account, AccountStruct) => ({
     type: new GraphQLList(Project),
     resolve: async (account, args, ctx) => {
       const projects = await listProjectsByAccount(account._id)
-
       return projects.map(project => {
         // add ref
         project.account = account

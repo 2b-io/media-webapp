@@ -27,7 +27,7 @@ export default () => ({
       const { token, refresh = false } = args
 
       const session = await verifySession(token, { refresh })
-
+      console.log("session",session);
       ctx._session = session
 
       return session
