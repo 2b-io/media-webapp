@@ -2,26 +2,25 @@ import pick from 'object.pick'
 import request from 'services/graphql'
 
 const PROJECT_FRAGMENT = `
-  _id,
-  name,
-  slug,
   account {
     email
+    projects {
+       _id
+       name
+       slug
+     }
   }
 `
 
 export default {
   projectList: async (token) => {
-    console.log('token garpppp');
     const body = await request(`
       query projects($token: String!) {
-        projectList(token: $token) {
+        session(token: $token) {
           ${PROJECT_FRAGMENT}
         }
       }
-    `, {
-      token: token
-    })
-    return body.projectList
-  },
+    `, {token: token})
+    return body.session
+  }
 }

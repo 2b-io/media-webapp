@@ -1,9 +1,9 @@
 import * as types from './types'
 
-export const receiveProjects = projects => {
+export const receiveProjects = ({account}) => {
   return {
     type: types.RECEIVE_LIST,
-    payload: projects
+    payload: account.projects
   }
 }
 
