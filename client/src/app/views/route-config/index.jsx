@@ -4,6 +4,8 @@ import unauthRoutes from './unauth'
 export const overlay = []
 export const content = []
 export const still = []
+export { authRoutes as authRoutes }
+export { unauthRoutes as unauthRoutes }
 
 Object.entries(unauthRoutes).forEach(
   ([ path, component ]) => {
