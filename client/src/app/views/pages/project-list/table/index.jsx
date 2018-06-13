@@ -1,20 +1,33 @@
 import React from 'react'
-import Row from './row'
+import styled from 'styled-components'
+import Rows from './rows'
 import Col from './col'
 
-const table = ({dataCols,dataRows}) => {
-    let cols = dataCols.map((col,index)=> { console.log(`col+${index}`); return(<Col col ={col} key={`col+${index}`}/>)})
-    let rows = dataRows.map((row,index)=> (
-      <tr key={`tr+${index}`}>
-        {/* {Object.keys(row).map((el,indexEl)=>  <Row row ={el} key={`indexEl+${indexEl}`}/>)} */}
-      </tr>))
-    return  (
-      <table>
-        <tr>
-          {cols}
-        </tr>
-        {/* {rows} */}
-     </table>
-  )
+const table = ({dataRows}) => {
+  return (<Table >
+    <tbody>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Slug</th>
+      </tr>
+      <Rows dataRows={dataRows}/>
+    </tbody>
+  </Table>)
 }
 export default table
+
+const Table = styled.table `
+  { font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  tr:nth-child(even) {
+      background-color: #dddddd;
+  }
+`

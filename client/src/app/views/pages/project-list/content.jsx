@@ -18,6 +18,22 @@ class ProjectList extends React.Component {
     this.props.actions.getListProject(token)
   }
 
+  // displayProjects() {
+  //   if (this.props.data && this.props.data.length) {
+  //     const results = this.props.data.map((project) => {
+  //       return (
+  //
+  //       <li key={project._id}>
+  //         <h4>{project.name}</h4>
+  //         <p>{project.slug}</p>
+  //       </li>
+  //     )
+  //   })
+  //     return results;
+  //   } else {
+  //     return <h2>Loading...</h2>
+  //   }
+  // }
   displayProjects() {
     if (this.props.data && this.props.data.length) {
       const results = this.props.data.map((project) => {
@@ -29,16 +45,17 @@ class ProjectList extends React.Component {
         </li>
       )
     })
-      return results;
+      return     <Table dataRows={this.props.data}/>;
     } else {
       return <h2>Loading...</h2>
     }
   }
   render(){
     return (
-      <ul>
+       <div>
         {this.displayProjects()}
-      </ul>
+      </div>
+
     )
   }
 }
@@ -59,6 +76,7 @@ const mapStateToProps = ({session,project}) => {
         }, dispatch)
     }
   }
+
 
 export default connect(
   mapStateToProps,
