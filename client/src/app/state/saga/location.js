@@ -10,10 +10,6 @@ const loop = function*() {
     const pathname = request.payload.pathname
 
     try {
-      if (pathname === '/splash') {
-        throw new Error('Invalid pathname')
-      }
-
       const isSignedIn = yield select(selectors.isSignedIn)
       const checker = permissionChecker(isSignedIn)
 
