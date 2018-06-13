@@ -22,7 +22,6 @@ export default (Account, AccountStruct) => ({
       return projects.map(project => {
         // add ref
         project.account = account
-
         return project
       })
     }
@@ -36,10 +35,8 @@ export default (Account, AccountStruct) => ({
     type: Project,
     resolve: async (account, { slug }, ctx) => {
       const project = await getProjectBySlug(slug)
-
       // add ref
       project.account = account
-
       return project
     }
   }

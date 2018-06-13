@@ -10,7 +10,7 @@ class ProjectList extends React.Component {
     let {token} = this.props
     if (!token)
       return
-     this.props.getListProject(token)
+    this.props.getListProject(token)
   }
 
   displayProjects() {
@@ -34,7 +34,7 @@ const mapStateToProps = ({session, project}) => {
   return {data: project.projects, token}
 }
 
- const mapDispatchToProps = mapDispatch({
+const mapDispatchToProps = mapDispatch({
   getListProject: (token) => actions.getListProject(token)
 })
 

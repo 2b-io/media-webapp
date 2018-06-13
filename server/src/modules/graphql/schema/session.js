@@ -1,18 +1,10 @@
-import {
-  GraphQLBoolean,
-  GraphQLNonNull,
-  GraphQLObjectType,
-  GraphQLString
-} from 'graphql'
-import {
-  create as createSession,
-  verify as verifySession
-} from 'services/session'
+import {GraphQLBoolean, GraphQLNonNull, GraphQLObjectType, GraphQLString} from 'graphql'
+import {create as createSession, verify as verifySession} from 'services/session'
 
-import { AccountStruct } from '../types/Account'
-import { Session } from '../types/Session'
+import {AccountStruct} from '../types/Account'
+import {Session} from '../types/Session'
 
-export default () => ({
+export default() => ({
   session: {
     args: {
       token: {
@@ -24,10 +16,12 @@ export default () => ({
     },
     type: Session,
     resolve: async (rootValue, args, ctx) => {
-      const { token, refresh = false } = args
+      const {
+        token,
+        refresh = false
+      } = args
 
-      const session = await verifySession(token, { refresh })
-      console.log("session",session);
+      const session = await verifySession(token, {refresh})
       ctx._session = session
 
       return session
@@ -40,7 +34,9 @@ export default () => ({
       }
     },
     type: Session,
-    resolve: async (rootValue, { account }, ctx) => {
+    resolve: async (rootValue, {
+      account
+    }, ctx) => {
       const session = await createSession(account)
 
       ctx._session = session
