@@ -1,26 +1,31 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import styled from 'styled-components'
-import Rows from './rows'
-import Cols from './cols'
+import Body from './body'
+import Header from './header'
 
-const gridView = ({dataCols, dataRows}) => {
-  if (!dataCols.length || !dataRows.length)
+const gridView = ({dataHeader, dataBody}) => {
+  if (!dataHeader.length || !dataBody.length){
     return
-  return (<Table>
-    <tbody>
-      <Cols dataCols={dataCols}/>
-      <Rows dataRows={dataRows}/>
-    </tbody>
-  </Table>)
+  }
+  return (
+    <Table>
+     <thead>
+       <Header dataHeader={dataHeader}/>
+     </thead>
+      <tbody>
+        <Body dataBody={dataBody}/>
+      </tbody>
+    </Table>
+  )
 }
 gridView.propTypes = {
-  dataCols: PropTypes.arrayOf(PropTypes.string),
-  dataRows: PropTypes.arrayOf(PropTypes.object)
+  dataHeader: PropTypes.arrayOf(PropTypes.string),
+  dataBody: PropTypes.arrayOf(PropTypes.object)
 }
 gridView.defaultProps = {
-  dataCols: ['col1','col2','col3'],
-  dataRows: [{key1:'value1',key2:'value2',key3:'value3'}]
+  dataHeader: ['col1','col2','col3'],
+  dataBody: [{key1:'value1',key2:'value2',key3:'value3'}]
 }
 
 const Table = styled.table `

@@ -1,15 +1,14 @@
 import * as types from './types'
 
-export const receiveProjects = ({account}) => {
+export const receiveProjects = (projects) => {
   return {
-    type: types.RECEIVE_LIST,
-    payload: account.projects
+    type: types.RECEIVE_COMPLETED,
+    payload: projects
   }
 }
 
-export const getListProject = token => {
+export const getListProject = () => {
   return {
-    type: types.REQUEST_LIST,
-    payload: token
+    type: types.REQUEST_COMPLETED,
   }
 }

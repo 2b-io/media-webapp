@@ -5,7 +5,6 @@ import {
 
 import account from './account'
 import session from './session'
-import project from './project'
 
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
@@ -13,7 +12,6 @@ export default new GraphQLSchema({
     fields: () => ({
       ...account(),
       ...session(),
-      ...project()
     })
   })
 })

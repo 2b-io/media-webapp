@@ -13,14 +13,15 @@ const PROJECT_FRAGMENT = `
 `
 
 export default {
-  projectList: async (token) => {
+  getProjectList: async (token) => {
     const body = await request(`
       query projects($token: String!) {
         session(token: $token) {
           ${PROJECT_FRAGMENT}
         }
       }
-    `, {token: token})
-    return body.session
+    `, { token })
+    let {projects} = body.session.account
+    return projects
   }
 }

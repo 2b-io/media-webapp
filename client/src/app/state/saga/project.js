@@ -1,12 +1,11 @@
 import delay from 'delay'
-import {call, take, fork, put} from 'redux-saga/effects'
+import {call, take, fork, put, select} from 'redux-saga/effects'
 import Project from 'models/project'
-import {actions, types} from 'state/interface'
+import { actions, types, selectors } from 'state/interface'
 
 const projectList = function* (token) {
   try {
-    const projects = yield call(Project.projectList, token)
-    yield put(actions.receiveProjects(projects))
+    return yield call(Project.getProjectList, token)
   } catch (e) {
     throw e
   }
@@ -14,9 +13,11 @@ const projectList = function* (token) {
 
 const loop = function* () {
   while (true) {
-    const action = yield take(types['PROJECT/REQUEST_LIST'])
+    const action = yield take(types['PROJECT/REQUEST_COMPLETED'])
     try {
-      yield call(projectList, action.payload)
+      const session = yield select(selectors.currentSession)
+      let projects =  yield call(projectList, session.token)
+      yield put(actions.receiveProjects(projects))
     } catch (e) {
       continue
     }
