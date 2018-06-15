@@ -5,7 +5,6 @@ import * as types from './types'
 
 export default combineReducers({
   projects: createReducer(null)({
-    [types.RECEIVE_COMPLETED]: (state, action) => (action.payload),
-    [types.REQUEST_COMPLETED]: (state, action) => null
+    [types.FETCH_COMPLETED]: (state, action) => action.payload.projects,
   })
 })

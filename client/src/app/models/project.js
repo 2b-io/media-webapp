@@ -1,12 +1,10 @@
-import pick from 'object.pick'
 import request from 'services/graphql'
 
 const PROJECT_FRAGMENT = `
   account {
-    email
     projects {
-       _id
-       name
+       _id,
+       name,
        slug
      }
   }
@@ -21,7 +19,7 @@ export default {
         }
       }
     `, { token })
-    let {projects} = body.session.account
-    return projects
+
+    return body.session.account.projects
   }
 }

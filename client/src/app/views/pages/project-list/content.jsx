@@ -1,14 +1,14 @@
-import React, {Component} from 'react'
-import {mapDispatch} from 'services/redux-helpers'
-import {connect} from 'react-redux'
-import {actions} from 'state/interface'
-import {GridView} from 'ui/compounds'
-import {Modal} from 'ui/elements'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-class ProjectList extends React.Component {
+import { mapDispatch, mapState } from 'services/redux-helpers'
+import { actions, selectors } from 'state/interface'
+import { GridView } from 'ui/compounds'
+import {Modal} from 'ui/elements'
+class ProjectList extends Component {
   componentDidMount() {
-      // to do
-    this.props.getListProject()
+      // TODO request data from saga
+    this.props.fetchProjects()
   }
   state = {
     open:false
@@ -25,9 +25,18 @@ class ProjectList extends React.Component {
     } else {
       return <h2>No data ....</h2>
     }
+
+    return (
+      <GridView
+        dataHeader={ [ 'ID', 'Name', 'Slug' ] }
+        dataBody={ projects }
+      />
+    )
   }
 
   render() {
+    const { projects } = this.props
+
     return (
       <main>
         {this.displayProjects()}
@@ -57,12 +66,11 @@ class ProjectList extends React.Component {
   }
 }
 
-const mapStateToProps = ({ project }) => {
-  return {projects: project.projects}
-}
-
-const mapDispatchToProps = mapDispatch({
-  getListProject: () => actions.getListProject()
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectList)
+export default connect(
+  mapState({
+    projects: selectors.allProjects
+  }),
+  mapDispatch({
+    fetchProjects: () => actions.fetchProjects()
+  })
+)(ProjectList)
