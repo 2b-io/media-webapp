@@ -11,7 +11,7 @@ export default new GraphQLSchema({
     name: 'RootQueryType',
     fields: () => ({
       ...account(),
-      ...session()
+      ...session(),
     })
   })
 })

@@ -1,7 +1,8 @@
 import React from 'react'
 
-const ProjectList = () => (
-  <h1>Projects</h1>
+const ListProject = () => (
+  <div>
+    <h1>Projects</h1>
+  </div>
 )
-
-export default ProjectList
+export default ListProject
