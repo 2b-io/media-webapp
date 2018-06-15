@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { mapDispatch } from 'services/redux-helpers'
+import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { GridView } from 'ui/compounds'
 
@@ -36,8 +36,8 @@ class ProjectList extends Component {
 }
 
 export default connect(
-  state => ({
-    projects: selectors.allProjects(state)
+  mapState({
+    projects: selectors.allProjects
   }),
   mapDispatch({
     fetchProjects: () => actions.fetchProjects()
