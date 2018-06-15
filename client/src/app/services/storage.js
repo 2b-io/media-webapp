@@ -6,14 +6,8 @@ storage.config({
   storeName: 'webapp'
 })
 
-export function get(key) {
-  return storage.getItem(key)
-}
-
-export function set(key, value) {
-  return storage.setItem(key, value)
-}
-
-export function clear(key) {
-  return storage.removeItem(key)
+export default {
+  get: key => storage.getItem(key),
+  set: (key, value) => storage.setItem(key, value),
+  clear: key => storage.removeItem(key)
 }

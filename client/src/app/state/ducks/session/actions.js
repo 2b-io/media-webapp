@@ -17,3 +17,8 @@ export const createSessionCompleted = info => ({
 export const destroySessionCompleted = () => ({
   type: types.DESTROY_COMPLETED
 })
+
+export const restoreSession = session => ({
+  type: types.CREATE,
+  payload: { session }
+})

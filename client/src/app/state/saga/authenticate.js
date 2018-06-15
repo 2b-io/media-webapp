@@ -3,41 +3,51 @@ import { all, call, fork, put, select, take } from 'redux-saga/effects'
 
 import Session from 'models/session'
 import { actions, selectors, types } from 'state/interface'
+import storage from 'services/storage'
 
-const signIn = function*({ credential }) {
+const TOKEN = 'jwt'
+
+const restoreSession = function*() {
   try {
-    const session = yield call(Session.create, credential)
+    const token = yield call(storage.get, TOKEN)
 
-    yield all([
-      put(actions.createSessionCompleted(session)),
-      put(actions.requestLocation('/')),
-      put(actions.openLayout())
-    ])
+    if (token) {
+      const session = yield call(Session.refresh, token)
+
+      yield put(actions.restoreSession(session))
+    }
   } catch (e) {
-    throw e
+    yield call(storage.clear, TOKEN)
   }
-}
-
-const signOut = function*() {
-  yield all([
-    put(actions.destroySessionCompleted()),
-    put(actions.requestLocation('/sign-in'))
-  ])
 }
 
 const loop = function*() {
   while (true) {
     const action = yield take(types['SESSION/CREATE'])
+    const { credential } = action.payload
 
     try {
-      yield call(signIn, action.payload)
+      const session = credential ?
+        (yield call(Session.create, credential)) :
+        action.payload.session
+
+      yield all([
+        call(storage.set, TOKEN, session.token),
+        put(actions.createSessionCompleted(session)),
+        put(actions.requestLocation('/')),
+        put(actions.openLayout())
+      ])
     } catch(e) {
       continue
     }
 
     yield take(types['SESSION/DESTROY'])
 
-    yield call(signOut)
+    yield all([
+      call(storage.clear, TOKEN),
+      put(actions.destroySessionCompleted()),
+      put(actions.requestLocation('/sign-in'))
+    ])
   }
 }
 
@@ -45,4 +55,6 @@ export default function*() {
   yield take('@@INITIALIZED')
 
   yield fork(loop)
+
+  yield call(restoreSession)
 }
