@@ -1,44 +1,45 @@
-import React, {Component} from 'react'
-import {mapDispatch} from 'services/redux-helpers'
-import {connect} from 'react-redux'
-import {actions} from 'state/interface'
-import {GridView} from 'ui/compounds'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-class ProjectList extends React.Component {
+import { mapDispatch } from 'services/redux-helpers'
+import { actions, selectors } from 'state/interface'
+import { GridView } from 'ui/compounds'
+
+class ProjectList extends Component {
   componentDidMount() {
-      // to do
-    this.props.getListProject()
+      // TODO request data from saga
+    this.props.fetchProjects()
   }
 
-  displayProjects() {
-    let {projects} = this.props
-    if (projects && projects.length) {
-      return (
-        <GridView
-          dataHeader={['ID', 'Name', 'Slug']}
-          dataBody={projects}
-        />
-      )
-    } else {
+  renderProjects(projects) {
+    if (!projects || projects.length === 0) {
       return <h2>No data ....</h2>
     }
+
+    return (
+      <GridView
+        dataHeader={ [ 'ID', 'Name', 'Slug' ] }
+        dataBody={ projects }
+      />
+    )
   }
 
   render() {
+    const { projects } = this.props
+
     return (
       <main>
-        {this.displayProjects()}
+        { this.renderProjects(projects) }
       </main>
     )
   }
 }
 
-const mapStateToProps = ({ project }) => {
-  return {projects: project.projects}
-}
-
-const mapDispatchToProps = mapDispatch({
-  getListProject: () => actions.getListProject()
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectList)
+export default connect(
+  state => ({
+    projects: selectors.allProjects(state)
+  }),
+  mapDispatch({
+    fetchProjects: () => actions.fetchProjects()
+  })
+)(ProjectList)
