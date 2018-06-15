@@ -3,15 +3,10 @@ import React  from 'react'
 import ReactDOM  from 'react-dom'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import {x} from 'react-icons-kit/feather/x'
+import { Portal } from 'react-portal'
+import {XIcon} from 'ui/icons'
 
 class Modal extends React.Component {
-
-  constructor(props) {
-     super(props);
-     this.containerModal = document.createElement('div');
-     document.body.appendChild(this.containerModal);
-   }
 
   PropTypes = {
     position: PropTypes.string,
@@ -24,39 +19,35 @@ class Modal extends React.Component {
     fullWidth: PropTypes.bool
   }
 
-  componentWillUnmount() {
-    document.body.removeChild(this.containerModal)
-  }
   render() {
-    if (!this.containerModal) { return }
     let {open,dimmer,position,height,width,fullWidth} = this.props
-    let styleModal = {
-      height: fullWidth? '90%' : height,
-      width: fullWidth? '90%' : width,
-      left: fullWidth? '51%' : '',
-    }
-    const modal = open ?  <Overlay
-      style = {{backgroundColor: dimmer? 'rgba(0,0,0,0.3)':''}}
-      onClick={()=>{
-        this.props.onClickOutside? this.props.onClickOutside() : ''
-      }}
-      >
-      <ContentModal
-        onClick={(e)=>(e.stopPropagation())}
-        className={position}
-        style={styleModal}
-        >
-        <IconClose
-          onClick={()=>{
-              this.props.onClose? this.props.onClose() : ''
-          }}>
-          x
-        </IconClose>
-        {this.props.children({...this.props})}
-      </ContentModal>
-    </Overlay> : ''
 
-    return  ReactDOM.createPortal(modal, this.containerModal)
+    const modal = open ? <Portal>
+      <Overlay
+        dimmer={dimmer}
+        onClick={()=>{
+          this.props.onClickOutside? this.props.onClickOutside() : ''
+        }}
+        >
+        <ContentModal
+          onClick={(e)=>(e.stopPropagation())}
+          position={position}
+          width={width}
+          height={height}
+          fullWidth={fullWidth}
+          >
+          <IconClose
+            onClick={()=>{
+                this.props.onClose? this.props.onClose() : ''
+            }}>
+            <XIcon/>
+          </IconClose>
+          {this.props.children({...this.props})}
+        </ContentModal>
+      </Overlay>
+    </Portal>: null
+
+    return  modal
   }
 }
 Modal.defaultProps = {
@@ -74,21 +65,37 @@ const ContentModal = styled.div `
     margin: 20px auto;
     border-radius: 2px;
     align-self: flex-start;
+    height: ${({fullWidth,height}) => (fullWidth ? '90%' : height? height : '')};
+    width: ${({fullWidth,width}) => (fullWidth ? '90%' : width? width : '')};
+    left: ${({fullWidth}) => (fullWidth ? '51%' : '')};
+    overflow: hidden;
+    ${({position})=>{
+      let css
+      switch (position) {
+        case 'center' :
+          css = `position: absolute;
+          top: 50%;
+          left: 55%;
+          transform: translate(-50%, -50%);
+          transition: all 0.5s ease;
+          align-self: center;`
+          return css
+          break;
+       case 'top' :
+        css = `top: 0; left: 0;`
+        return css
+        break;
+      }
+    }}
+
+  @media (min-width: 600px) {
+    {
+      width:85%;
+    }
   }
-  &.center {
-    position: absolute;
-    top: 50%;
-    left: 55%;
-    transform: translate(-50%, -50%);
-    transition: all 0.5s ease;
-    align-self: center;
-  }
-  &.top {
-    top: 0;
-    left: 0;
-  }
-`
+}`
 const Overlay = styled.div `
+  background-color: ${props => props.dimmer ? 'rgba(0,0,0,0.3)' : ''}
   transition: all 0.3s ease;
   width: 50%;
   position: absolute;
@@ -104,10 +111,7 @@ const IconClose = styled.div `
   cursor: pointer;
   position: absolute;
   right: 0px;
-  top: 5px;
-  font-size: 20px;
-  width: 30px;
-  height: 30px;
+  top: 15px;
   color: #282c34;
 `
 export default Modal
