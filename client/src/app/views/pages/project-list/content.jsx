@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
-import { GridView } from 'ui/compounds'
-import {Modal} from 'ui/elements'
+import { GridView, Modal } from 'ui/compounds'
+
 class ProjectList extends Component {
   componentDidMount() {
       // TODO request data from saga
@@ -36,30 +36,29 @@ class ProjectList extends Component {
 
   render() {
     const { projects } = this.props
+
     return (
       <main>
-        {this.displayProjects()}
+        { this.displayProjects() }
         <Modal
-          open={this.state.open}
-          onClickOutside={(e)=>{
-           this.setState({open:false})
-        }}
-          onClose={(e)=>{
-           this.setState({open:false})
-        }}
-        >
-          {({open}) => {
-            const content =  open ? <div>
-            <p>
-              Test new modal
-            </p>
-            <button> New modal </button>
-            {this.displayProjects()}
-          </div> : <i/>
-          return content
-        }}
+          open={ this.state.open }
+          onClickOutside={ () => this.setState({ open: false }) }
+          onClose={ () => this.setState({ open: false }) }>
+          { ({ open }) => {
+            const content = open ? (
+              <div>
+                <p>
+                  Test new modal
+                </p>
+                <button>New modal</button>
+                { this.displayProjects() }
+              </div>
+            ) : <i />
+
+            return content
+          } }
         </Modal>
-        <button onClick={()=> { this.setState({open:true})} }>Open Modal</button>
+        <button onClick={ () => this.setState({ open: true }) }>Open Modal</button>
       </main>
     )
   }
