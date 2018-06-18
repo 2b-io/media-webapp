@@ -36,7 +36,6 @@ class ProjectList extends Component {
 
   render() {
     const { projects } = this.props
-
     return (
       <main>
         {this.displayProjects()}
@@ -56,7 +55,7 @@ class ProjectList extends Component {
             </p>
             <button> New modal </button>
             {this.displayProjects()}
-          </div> : ''
+          </div> : <i/>
           return content
         }}
         </Modal>

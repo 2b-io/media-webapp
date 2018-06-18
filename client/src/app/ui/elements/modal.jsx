@@ -4,29 +4,15 @@ import ReactDOM  from 'react-dom'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Portal } from 'react-portal'
-import {XIcon} from 'ui/icons'
+import { XIcon } from 'ui/icons'
 
-class Modal extends React.Component {
-
-  PropTypes = {
-    position: PropTypes.string,
-    dimmer: PropTypes.bool,
-    open: PropTypes.bool,
-    onClickOutside: PropTypes.func,
-    onClose: PropTypes.func,
-    height: PropTypes.oneOfType([ PropTypes.string, PropTypes.number]),
-    width: PropTypes.oneOfType([ PropTypes.string, PropTypes.number]),
-    fullWidth: PropTypes.bool
-  }
-
-  render() {
-    let {open,dimmer,position,height,width,fullWidth} = this.props
-
+const Modal = (props)=>{
+  let {children,onClickOutside,onClose,open,dimmer,position,height,width,fullWidth} = props
     const modal = open ? <Portal>
       <Overlay
         dimmer={dimmer}
         onClick={()=>{
-          this.props.onClickOutside? this.props.onClickOutside() : ''
+          props.onClickOutside? props.onClickOutside() : ''
         }}
         >
         <ContentModal
@@ -38,25 +24,36 @@ class Modal extends React.Component {
           >
           <IconClose
             onClick={()=>{
-                this.props.onClose? this.props.onClose() : ''
+                props.onClose? props.onClose() : ''
             }}>
             <XIcon/>
           </IconClose>
-          {this.props.children({...this.props})}
+          {children? children({open}):''}
         </ContentModal>
       </Overlay>
     </Portal>: null
-
     return  modal
-  }
 }
+
+Modal.propTypes = {
+  position: PropTypes.string,
+  dimmer: PropTypes.bool,
+  open: PropTypes.bool,
+  onClickOutside: PropTypes.func,
+  onClose: PropTypes.func,
+  height: PropTypes.oneOfType([ PropTypes.string, PropTypes.number]),
+  width: PropTypes.oneOfType([ PropTypes.string, PropTypes.number]),
+  fullWidth: PropTypes.bool
+}
+
 Modal.defaultProps = {
   position:'center',
   dimmer:true,
   open:false,
   fullWidth:false,
   width:'30%',
-  }
+}
+
 const ContentModal = styled.div `
   {
     background-color: #fff;
