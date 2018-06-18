@@ -1,5 +1,5 @@
 {
-  "name": "media-on-demand-webapp",
+  "name": "@media-network/media-webapp",
   "version": "1.0.0",
   "description": "A web app that allows tenants register and configure their MediaNetwork CDN presets.",
   "main": "index.js",
@@ -17,6 +17,5 @@
     "dev": "concurrently --raw \"npm run dev:client\" \"npm run dev:server\"",
     "dev:client": "cd client && npm start && cd ..",
     "dev:server": "cd server && npm start && cd .."
-  },
-  "dependencies": {}
+  }
 }
