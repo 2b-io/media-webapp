@@ -1,6 +1,7 @@
 export { default as Button } from './button'
 export { default as ConditionalDisplay } from './conditional-display'
 export { default as Container } from './container'
+export { default as FormLineBottom } from './form-line-bottom'
 export { default as Identicon } from './identicon'
 export { default as Link } from './link'
 export { default as Nothing } from './nothing'

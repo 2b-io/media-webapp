@@ -23,7 +23,7 @@ const SignIn = ({ signIn, toSignUp }) => (
       </Paragraph>
       <Paragraph>
         Trouble at signing in?<br />
-        <Link href="/password-recover" onClick={ toSignUp }>We are here for help.</Link>
+        <Link href="/forgot-password">We are here for help.</Link>
       </Paragraph>
     </Container>
   </main>
