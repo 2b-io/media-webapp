@@ -1,28 +1,29 @@
 # media-on-demand-webapp
 A web app that allows tenants register and configure their MediaNetwork CDN presets.
-# first  install--------------------
-# cd to project Infras
+
+## prerequisite
+Install [docker](https://docs.docker.com/install/) and [docker compose](https://docs.docker.com/compose/install/) on your development environment.
+
+## clone
 ```
-$ git clone git@github.com:media-network/media-infra.git
-$ ./start.sh
+$ cd /path/to/your/project
+/path/to/your/project$ git clone git@github.com:media-network/media-infra.git infra
+/path/to/your/project$ cd infra
+/path/to/your/project/infra$ chmod +x start.sh
+
+$ cd /path/to/your/project
+/path/to/your/project$ git clone git@github.com:media-network/media-webapp.git webapp
 ```
 
-# cd to project Development
+## run
 ```
-$ docker-compose up -d
-$ docker exec -it media.webapp bash
-$ npm install
-$ npm run install:all
-$ npm start
-```
-# Run----------------
-# cd to project Infras
-```
-$ docker-compose up -d
-```
-# cd to project Webapp
-```
-$ docker-compose up -d
-$ docker exec -it media.webapp bash
-$ npm start
+$ cd /path/to/your/project/infra
+/path/to/your/project/infra$ ./start.sh
+
+$ cd /path/to/your/project/webapp
+/path/to/your/project/webapp$ docker-compose up -d
+/path/to/your/project/webapp$ docker exec -it media.webapp bash
+
+/usr/src$ npm install & npm install:all
+/usr/src$ npm start
 ```
