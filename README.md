@@ -1,4 +1,4 @@
-# media-on-demand-webapp
+# media-network/media-webapp
 A web app that allows tenants register and configure their MediaNetwork CDN presets.
 
 ## prerequisite
@@ -24,6 +24,6 @@ $ cd /path/to/your/project/webapp
 /path/to/your/project/webapp$ docker-compose up -d
 /path/to/your/project/webapp$ docker exec -it media.webapp bash
 
-/usr/src$ npm install & npm install:all
+/usr/src$ npm install && npm install:all
 /usr/src$ npm start
 ```
