@@ -1,10 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
+import { TextBox  } from 'ui/redux-form'
 
+import { Button } from 'ui/elements'
 import { Form } from 'ui/compounds'
-import { Button ,TextBox } from 'ui/elements'
 
-const forgotPwForm = ({ handleSubmit }) => (
+const forgotPasswordForm = ({ handleSubmit }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Header> Forgot Password </Form.Header>
     <Form.Description> Enter your email address below and click on the 'Request reset password ' button </Form.Description>
@@ -24,4 +25,4 @@ const forgotPwForm = ({ handleSubmit }) => (
   </Form>
 )
 
-export default forgotPwForm
+export default forgotPasswordForm
