@@ -22,7 +22,7 @@ const render = {
         history={ history }
         routes={ [
           {
-            path: '/sign-*',
+            path: '/(sign-in|register|forgot-password|reset-password)',
             component: Nothing
           }
         ] }
