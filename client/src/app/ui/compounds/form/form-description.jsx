@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 
-const DescriptionForm = styled.p`
+const Description = styled.p`
     text-align: justify;
     font-size: : 14px;
     padding-bottom: 15px;
 `
-export default DescriptionForm
+export default Description

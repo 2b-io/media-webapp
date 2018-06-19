@@ -1,38 +1,34 @@
 import React from 'react'
-import styled from 'styled-components'
-import { Button ,TextBox, FormLineBottom } from 'ui/elements'
-import { FormLine } from 'ui/compounds'
 
-const Form = styled.form`
-  padding-bottom: 10px;
-`
+import { Button ,TextBox } from 'ui/elements'
+import { Form } from 'ui/compounds'
 
 const ResetPwForm = ({ handleSubmit }) => (
-  <FormLine
-    header={'Resset password' }
-    description={`Enter your new password `}
-    handleSubmit={handleSubmit}
-    >
-    <FormLineBottom>
+  <Form handleSubmit={ handleSubmit }>
+    <Form.Header> Reset Password </Form.Header>
+    <Form.Description> Enter your new password below and click on the 'Change password' button </Form.Description>
+    <Form.Line>
       <TextBox
         type="password"
         name="password"
         placeholder="New password"
         autoFocus
       />
-    </FormLineBottom>
-    <FormLineBottom>
+    </Form.Line>
+    <Form.Line>
       <TextBox
         type="password"
         name="rePassword"
         placeholder="Retype password"
         autoFocus
       />
-    </FormLineBottom>
-    <FormLineBottom last>
-      <Button type="submit">Request reset password</Button>
-    </FormLineBottom>
-  </FormLine>
+    </Form.Line>
+    <Form.Line last>
+      <Form.Align center>
+        <Button type="submit">Change password</Button>
+      </Form.Align>
+    </Form.Line>
+  </Form>
 )
 
 export default ResetPwForm
