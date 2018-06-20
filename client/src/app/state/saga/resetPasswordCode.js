@@ -6,8 +6,9 @@ const loop = function* () {
   while (true) {
     const action = yield take(types['RESETPASSWORDCODE/FETCH'])
     try {
-      const resetpass =  yield call(ResetPasswordCode.requestRessetPassword, action.payload.email)
-    } catch (e) {
+      const emailExist =  yield call(ResetPasswordCode.requestRessetPassword, action.payload.email)
+      yield put(actions.receiveEmailExist(emailExist))
+      } catch (e) {
       continue
     }
   }

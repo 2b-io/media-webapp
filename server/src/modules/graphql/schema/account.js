@@ -30,10 +30,8 @@ export default () => ({
       }
     },
     type: GraphQLBoolean,
-    resolve: async (rootValue,email, ctx) => {
-      console.log("email = >>>", email)
+    resolve: async (rootValue, email, ctx) => {
       return await requestResset(email)
     }
   }
-
 })
