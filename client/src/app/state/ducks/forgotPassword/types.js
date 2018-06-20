@@ -1,6 +1,6 @@
 import typePrefix from 'state/helpers/type-prefix'
 
-const prefix = typePrefix('forgotPassword')
+const prefix = typePrefix('forgotPass')
 
 export const FETCH = prefix('FETCH')
 export const FETCH_COMPLETED = prefix('FETCH_COMPLETED')

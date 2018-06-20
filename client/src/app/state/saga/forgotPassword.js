@@ -4,18 +4,11 @@ import { actions, types, selectors } from 'state/interface'
 
 const loop = function* () {
   while (true) {
-    const action = yield take(types['PROJECT/FETCH'])
+    const action = yield take(types['FORGOTPASS/FETCH'])
 
     try {
-      const session = yield select(selectors.currentSession)
 
-      if (!session) {
-        continue
-      }
 
-      const projects =  yield call(Project.getProjectList, session.token)
-
-      yield put(actions.receiveProjects(projects))
     } catch (e) {
       continue
     }
