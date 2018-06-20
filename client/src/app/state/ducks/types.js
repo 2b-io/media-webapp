@@ -1,4 +1,4 @@
-export { types as forgotPassword } from './forgotPassword'
+export { types as resetPasswordCode } from './resetPasswordCode'
 export { types as layout } from './layout'
 export { types as location } from './location'
 export { types as project } from './project'

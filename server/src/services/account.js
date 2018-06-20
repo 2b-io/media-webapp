@@ -22,5 +22,6 @@ export const findById = async (id) => {
 }
 
 export const findByEmail = async (email) => {
+  console.log('account find ', email);
   return await Account.findOne({ email }).lean()
 }

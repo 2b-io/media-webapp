@@ -1,4 +1,4 @@
-export { actions as forgotPassword } from './forgotPassword'
+export { actions as resetPasswordCode } from './resetPasswordCode'
 export { actions as layout } from './layout'
 export { actions as location } from './location'
 export { actions as project } from './project'

@@ -8,14 +8,14 @@ import { mapDispatch } from 'services/redux-helpers'
 import _ForgotPasswordForm from './forgotPasswordForm'
 
 const ForgotPasswordForm = reduxForm({
-  form: 'ForgotPass',
+  form: 'fetchEmail',
   enableReinitialize: true
 })(_ForgotPasswordForm)
 
-const ForgotPassword=({ ForgotPass }) => (
+const ForgotPassword=({ fetchEmail }) => (
   <main>
     <Container center size="small">
-      <ForgotPasswordForm onSubmit={ ForgotPass }/>
+      <ForgotPasswordForm onSubmit={ fetchEmail }/>
     </Container>
   </main>
 )
@@ -23,6 +23,6 @@ const ForgotPassword=({ ForgotPass }) => (
 export default connect(
   null,
   mapDispatch({
-    ForgotPass: email => actions.fetchForgotPassword(email),
+    fetchEmail: email => actions.fetchEmail(email),
   })
 )(ForgotPassword)

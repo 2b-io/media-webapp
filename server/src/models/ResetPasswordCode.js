@@ -3,14 +3,15 @@ import mongoose from 'infrastructure/mongoose'
 const schema = mongoose.Schema({
   code: {
     type: String,
-    required: true
+    unique: true
   },
   expired: String,
-  removed: {
+  used: {
     type: Boolean,
     default: false,
     index: true
   }
 })
 
-export default mongoose.model('ForgotPassword', schema)
+export default mongoose.model('ResetPasswordCode', schema)
+// ResetPasswordCode

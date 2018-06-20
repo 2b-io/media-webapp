@@ -1,4 +1,4 @@
-export { selectors as forgotPassword } from './forgotPassword'
+export { selectors as resetPasswordCode } from './resetPasswordCode'
 export { selectors as layout } from './layout'
 export { selectors as location } from './location'
 export { selectors as project } from './project'
