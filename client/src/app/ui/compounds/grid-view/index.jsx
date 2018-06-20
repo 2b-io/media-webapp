@@ -11,9 +11,9 @@ const GridView = ({ dataHeader, dataBody }) => {
 
   return (
     <Table>
-     <thead>
-       <Header dataHeader={ dataHeader } />
-     </thead>
+      <thead>
+        <Header dataHeader={ dataHeader } />
+      </thead>
       <tbody>
         <Body dataBody={ dataBody } />
       </tbody>

@@ -16,7 +16,8 @@ class ProjectList extends Component {
   }
 
   displayProjects() {
-    let { projects } = this.props
+    const { projects } = this.props
+
     if (!projects || !projects.length) {
       return <h2>No data ....</h2>
     }
@@ -30,8 +31,6 @@ class ProjectList extends Component {
   }
 
   render() {
-    const { projects } = this.props
-
     return (
       <main>
         { this.displayProjects() }
