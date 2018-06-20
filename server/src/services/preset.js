@@ -11,8 +11,8 @@ export const list = async (project) => {
 
 export const get = async (project, hash) => {
   const preset = await Preset.findOne({
+    hash,
     project: project._id,
-    hash: hash,
     removed: false
   }).lean()
 

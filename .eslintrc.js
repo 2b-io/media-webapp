@@ -5,6 +5,7 @@ module.exports = {
     "node": true
   },
   "extends": "eslint:recommended",
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
       "experimentalDecorators": true,
@@ -17,9 +18,6 @@ module.exports = {
   "plugins": [
     "react"
   ],
-  // "extends": [
-  //   "plugin:react/recommended"
-  // ],
   "rules": {
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
@@ -96,6 +94,7 @@ module.exports = {
       "error", {
         "args": "none"
       }
-    ]
+    ],
+    "object-shorthand": "error"
   }
 };

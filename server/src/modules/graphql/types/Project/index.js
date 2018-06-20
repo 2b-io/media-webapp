@@ -3,7 +3,6 @@ import {
   GraphQLInputObjectType,
   GraphQLObjectType,
 } from 'graphql'
-import GraphQLJSON from 'graphql-type-json'
 
 import actions from './actions'
 import struct from './struct'

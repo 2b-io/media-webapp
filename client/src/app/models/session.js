@@ -31,7 +31,7 @@ export default {
         }
       }
     `, {
-      token: token
+      token
     })
 
     return body.session
@@ -44,7 +44,7 @@ export default {
         }
       }
     `, {
-      token: token,
+      token,
       refresh: true
     })
 

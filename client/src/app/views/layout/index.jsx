@@ -2,10 +2,9 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 
 import { selectors } from 'state/interface'
-import Router from 'views/router'
 
 import Content from './content'
-import Header from './header'
+// import Header from './header'
 import Overlay from './overlay'
 import Still from './still'
 import Wrapper from './wrapper'
@@ -29,7 +28,7 @@ export default class Layout extends Component {
   }
 
   render() {
-    const { isLayoutClosed, history, render } = this.props
+    const { isLayoutClosed, render } = this.props
     const { menuWidth, headerHeight } = this.props
 
     return (

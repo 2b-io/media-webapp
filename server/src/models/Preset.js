@@ -2,7 +2,6 @@ import shortHash from 'shorthash'
 import mongoose from 'infrastructure/mongoose'
 
 const HASH_DEFAULT = 'default'
-const HASH_LENGTH = '8'
 
 const generateHash = preset => {
   let hash = shortHash.unique(preset._id.toString())
