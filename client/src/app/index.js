@@ -12,7 +12,7 @@ const store = initializeStore(window.REDUX_INITIAL_DATA)
 const root = document.getElementById('root')
 
 render(
-  <Provider store={store}>
+  <Provider store={ store }>
     <App />
   </Provider>,
   root,

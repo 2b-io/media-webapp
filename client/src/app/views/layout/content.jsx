@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Fragment } from 'react'
 import styled, { css } from 'styled-components'
 
 const StyledContent = styled.div`

@@ -1,5 +1,4 @@
-import delay from 'delay'
-import { call, fork, put, select, take } from 'redux-saga/effects'
+import { fork, put, select, take } from 'redux-saga/effects'
 import permissionChecker from 'services/permission-checker'
 import { actions, selectors, types } from 'state/interface'
 
@@ -14,7 +13,8 @@ const loop = function*() {
       const checker = permissionChecker(isSignedIn)
 
       if (!checker(pathname)) {
-        yield fork(put, actions.acceptLocation(
+        yield fork(put,
+          actions.acceptLocation(
             isSignedIn ? '/' : '/sign-in'
           )
         )

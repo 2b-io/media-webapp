@@ -34,7 +34,7 @@ app.use('*', (req, res, next) => {
     }
 
     res
-      .set('content-type','text/html')
+      .set('content-type', 'text/html')
       .send(result)
       .end()
   })

@@ -9,7 +9,6 @@ import { Link } from 'ui/elements'
 import {
   BillingIcon,
   DashboardIcon,
-  ProfileIcon,
   ProjectListIcon,
   SignOutIcon
 } from 'ui/icons'
@@ -18,9 +17,7 @@ const MenuWrapper = styled.nav`
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  width: ${
-    ({ width }) => `${width}px`
-  };
+  width: ${ ({ width }) => `${width}px` };
   margin-left: auto;
   margin-right: auto;
   padding: 10px;
@@ -57,14 +54,6 @@ const LeftMenu = ({ signOut, toDashboard, toProjectList, width }) => (
           <MenuItemLabel>Dashboard</MenuItemLabel>
         </LinkButton>
       </MenuItem>
-      {/*
-      <MenuItem>
-        <LinkButton onClick={ signOut }>
-          <ProfileIcon medium />
-          <MenuItemLabel>Profile</MenuItemLabel>
-        </LinkButton>
-      </MenuItem>
-      */}
       <MenuItem>
         <LinkButton onClick={ toProjectList }>
           <ProjectListIcon medium />

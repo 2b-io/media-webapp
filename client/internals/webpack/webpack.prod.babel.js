@@ -1,8 +1,11 @@
+import path from 'path'
 import webpack from 'webpack'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import CleanWebpackPlugin from 'clean-webpack-plugin'
 
 import common from './webpack.common'
+
+const rootDir = path.resolve(__dirname, '../..')
 
 export default common({
   mode: 'production',

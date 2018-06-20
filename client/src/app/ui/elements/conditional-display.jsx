@@ -1,5 +1,3 @@
-import React from 'react'
-
 const checkCondition = ({ condition, base, value }) => {
   switch (condition) {
     case '>':

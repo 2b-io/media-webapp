@@ -25,7 +25,7 @@ GridView.propTypes = {
   dataBody: PropTypes.arrayOf(PropTypes.object)
 }
 GridView.defaultProps = {
-  dataHeader: [ 'col1','col2','col3' ],
+  dataHeader: [ 'col1', 'col2', 'col3' ],
   dataBody: [ { key1: 'value1', key2: 'value2', key3: 'value3' } ]
 }
 

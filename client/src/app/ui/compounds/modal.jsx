@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React  from 'react'
-import ReactDOM  from 'react-dom'
 import { Portal } from 'react-portal'
 import styled, { css } from 'styled-components'
 
@@ -24,7 +23,7 @@ const Modal = ({
   return (
     <Portal>
       <Overlay
-        dimmer={dimmer}
+        dimmer={ dimmer }
         onClick={ onClickOutside }>
         <ContentModal
           onClick={ (e) => e.stopPropagation() }
@@ -61,7 +60,7 @@ Modal.defaultProps = {
   width: '30%'
 }
 
-const ContentModal = styled.div ` {
+const ContentModal = styled.div` {
   background-color: #fff;
   box-shadow: 3px 3px 3px rgba(0,0,0,0.2);
   padding: 40px 50px;
@@ -78,11 +77,11 @@ const ContentModal = styled.div ` {
     ({ fullWidth }) => (fullWidth ? '51%' : '')
   };
   overflow: hidden;
-  ${ 
+  ${
     ({ position }) => {
       switch (position) {
         case 'center':
-          return css `
+          return css`
             position: absolute;
             top: 50%;
             left: 55%;
@@ -91,21 +90,19 @@ const ContentModal = styled.div ` {
             align-self: center;
           `
         case 'top':
-          return css `
-            top: 0; 
+          return css`
+            top: 0;
             left: 0;
           `
       }
     }
   }
   @media (min-width: 600px) {
-    {
-      width: 85%;
-    }
+    width: 85%;
   }
 }`
 
-const Overlay = styled.div `
+const Overlay = styled.div`
   background-color: ${
     ({ dimmer }) => dimmer ? 'rgba(0,0,0,0.3)' : 'transparent'
   };
@@ -121,7 +118,7 @@ const Overlay = styled.div `
   z-index: 1;
 `
 
-const CloseIconWrapper = styled.div `
+const CloseIconWrapper = styled.div`
   cursor: pointer;
   position: absolute;
   right: 15px;

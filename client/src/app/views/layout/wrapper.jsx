@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 const StyledWrapper = styled.div`
@@ -21,7 +21,7 @@ const StyledWrapper = styled.div`
 const Wrapper = ({ children, shown, headerHeight, menuWidth }) => (
   <StyledWrapper
     shown={ shown }
-    headerHeight= { headerHeight }
+    headerHeight={ headerHeight }
     menuWidth={ menuWidth }>
     { children }
   </StyledWrapper>

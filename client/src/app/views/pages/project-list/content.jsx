@@ -7,22 +7,17 @@ import { GridView, Modal } from 'ui/compounds'
 
 class ProjectList extends Component {
   componentDidMount() {
-      // TODO request data from saga
+    this.state = {
+      open: false
+    }
+
+    // TODO request data from saga
     this.props.fetchProjects()
   }
-  state = {
-    open:false
-  }
+
   displayProjects() {
-    let {projects} = this.props
-    if (projects && projects.length) {
-      return (
-        <GridView
-          dataHeader={['ID', 'Name', 'Slug']}
-          dataBody={projects}
-        />
-      )
-    } else {
+    let { projects } = this.props
+    if (!projects || !projects.length) {
       return <h2>No data ....</h2>
     }
 
