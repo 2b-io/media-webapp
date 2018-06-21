@@ -13,8 +13,8 @@
     "ms": "2.1.1",
     "recursive-config": "1.0.1",
     "serialize-error": "2.1.0",
-    "shorthash": "0.0.2",
-    "uuid": "^3.2.1"
+    "sha256": "^0.2.0",
+    "shorthash": "0.0.2"
   },
   "devDependencies": {
     "babel-cli": "6.26.0",

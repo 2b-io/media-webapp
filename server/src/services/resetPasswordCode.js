@@ -1,21 +1,29 @@
-import uuidv5 from 'uuid'
+import sha256 from 'sha256'
 
 import Account from 'models/Account'
 import ResetPasswordCode from 'models/ResetPasswordCode'
 
 export const requestRessetPassword = async (email) => {
-  const account = await Account.findOne( email ).lean()
+  const account = await Account.findOne(email).lean()
   if (account) {
-    let { _id,removed } = account
+    let now = new Date()
+    const { _id,removed } = account
     if (_id && !removed) {
-      let code = uuidv5(_id)
-      let now = new Date()
+      const code = sha256(String(_id))
+      const dataExist = await ResetPasswordCode.findOne({code}).lean()
+      if (dataExist) {
+        const {expired,used} = dataExist
+        if (expired > now || used == false) {
+          return true
+        }
+      }
       let dateExpired = now.getDate()+1
-      let expired = new Date(now.setDate(dateExpired))
+      let newExpired = new Date(now.setDate(dateExpired))
       await new ResetPasswordCode({
         code,
-        expired
+        expired: newExpired
       }).save()
+      //to do send email
       return true
     }
   }
