@@ -13,9 +13,8 @@ const ResetPasswordForm = reduxForm({
     enableReinitialize: true
   })(_resetPasswordForm)
 const code = "c3c5d2fee07750004ed71d0bc9d6d5916f62054b51cf6b0ad2b848c602e77919"
-const id = "5b2a0e72269512008f29cc6c"
+const id = "U2FsdGVkX19OgvG3RKzmtuRJKKLBjyA8Kr51Pd3BuLOaBXEZYhDmtl4cMK+KzUIc"
 const ResetPassword=({ fetchResetPassword,match,toSignIn,statusResetPassword,error }) => {
-
   return (
     <main>
       <Container center size="small">
