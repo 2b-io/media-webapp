@@ -7,7 +7,8 @@ import {
   create as createAccount
 } from 'services/account'
 import {
-  requestRessetPassword as requestResset
+  requestRessetPassword as requestResset,
+  ressetPassword as ressetPassword
 } from 'services/resetPasswordCode'
 
 import { Account, AccountStruct } from '../types/Account'
@@ -26,12 +27,29 @@ export default () => ({
   _requestRessetPassword: {
     args: {
       email: {
-        type: GraphQLString
+        type: GraphQLNonNull(GraphQLString)
       }
     },
     type: GraphQLBoolean,
     resolve: async (rootValue, email, ctx) => {
       return await requestResset(email)
+    }
+  },
+  _ressetPassword: {
+    args: {
+      password: {
+        type: GraphQLNonNull(GraphQLString)
+      },
+      code: {
+        type: GraphQLNonNull(GraphQLString)
+      },
+      id: {
+        type: GraphQLNonNull(GraphQLString)
+      }
+    },
+    type: GraphQLBoolean,
+    resolve: async (rootValue, {password,code,id}, ctx) => {
+      return await ressetPassword(password,code,id)
     }
   }
 })

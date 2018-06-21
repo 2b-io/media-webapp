@@ -29,3 +29,19 @@ export const requestRessetPassword = async (email) => {
   }
   return false
 }
+export const ressetPassword = async (password,code,id) => {
+  let now = new Date()
+  const dataExist = await ResetPasswordCode.findOne({code}).lean()
+  if (dataExist) {
+    const {expired,used} = dataExist
+    if (expired > now || used == false) {
+      const account = await Account.findOneAndUpdate(
+        { _id: id },
+        { password },
+        { new: true }
+      ).lean()
+      return password === account.password ? true : false
+    }
+  }
+  return false
+}

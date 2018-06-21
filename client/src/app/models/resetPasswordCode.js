@@ -8,5 +8,13 @@ export default {
       }
     `, { email })
     return body._requestRessetPassword
+  },
+  ressetPassword: async (password,code,id) => {
+    const body = await request(`
+      query ressetPassword($password: String!,$code: String!,$id: String!) {
+        _ressetPassword(password: $password,code: $code,id: $id)
+      }
+    `, { password,code,id })
+    return body._ressetPassword
   }
 }

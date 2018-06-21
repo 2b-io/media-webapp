@@ -6,5 +6,6 @@ import * as types from './types'
 export default combineReducers({
   resetPasswordCode: createReducer(null)({
     [types.FETCH_COMPLETED]: (state, action) => action.payload,
+    [types.FETCH_PASSWORD_COMPLETED]: (state, action) => action.payload,
   })
 })
