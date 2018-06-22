@@ -13,7 +13,7 @@ const ForgotPasswordForm = reduxForm({
   enableReinitialize: true
 })(_ForgotPasswordForm)
 
-const ForgotPassword=({ fetchEmail, emailExist, toSignIn, openModal }) => {
+const ForgotPassword=({ fetchEmail, emailExist, toSignIn }) => {
   return (
     <main>
       <Container center size="small">
