@@ -27,13 +27,13 @@ export default function*() {
     const actions = regexes.filter(
       r => r.regex.test(pathname)
     ).map(
-      ({ keys, path }) => ({
+      ({ keys, path, regex }) => ({
         path,
         pathname,
         parameters: keys.reduce(
           (combine, key, index) => ({
             ...combine,
-            [key.name]: m.regex.exec(pathname)[index + 1]
+            [key.name]: regex.exec(pathname)[index + 1]
           }),
           {}
         )
