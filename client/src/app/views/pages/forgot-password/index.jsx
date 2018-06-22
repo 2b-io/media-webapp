@@ -13,26 +13,25 @@ const ForgotPasswordForm = reduxForm({
   enableReinitialize: true
 })(_ForgotPasswordForm)
 
-const ForgotPassword=({ fetchEmail, emailExist, toSignIn }) => {
+const ForgotPassword=({ fetchEmail, emailExist, toSignIn, openModal }) => {
   return (
     <main>
       <Container center size="small">
-        {!emailExist?<ForgotPasswordForm onSubmit={ fetchEmail } />:''}
+        <ForgotPasswordForm onSubmit={ fetchEmail } />
+        { emailExist===null?'':<p>Email not exist please check again</p> }
       </Container>
       { emailExist?  <Modal
         open={ true }
         zIndex={ 10 }
-        onClickOutside={ () => { toSignIn } }
-        onClose={ () => { toSignIn } }
+        onClickOutside={ toSignIn }
+        onClose={ toSignIn }
       >
         { () => (
-          <div>
-            <p>
-              Request reset password success! Please check your email and reset password during 24 hour
-            </p>
-          </div>
+          <p>
+            Request reset password success! Please check your email and reset password during 24 hour
+          </p>
         ) }
-      </Modal>:'' }
+      </Modal>:''}
     </main>
   ) }
 
@@ -42,6 +41,6 @@ export default connect(
   }),
   mapDispatch({
     fetchEmail: email => actions.fetchEmail(email),
-    toSignIn: () => actions.requestLocation('/sign-in')
+    toSignIn: () => actions.requestLocation('/sign-in'),
   })
 )(ForgotPassword)
