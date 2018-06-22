@@ -8,12 +8,10 @@ module.exports = {
   // "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
-      "experimentalDecorators": true,
-      "experimentalObjectRestSpread": true,
       "jsx": true
     },
     "sourceType": "module",
-    "ecmaVersion": 8
+    "ecmaVersion": 2018
   },
   "plugins": [
     "react"
