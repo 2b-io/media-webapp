@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { mapDispatch, mapState } from 'services/redux-helpers'
-import { actions, selectors } from 'state/interface'
+import { mapState } from 'services/redux-helpers'
+import { selectors } from 'state/interface'
 import { GridView, Modal } from 'ui/compounds'
 
-class ProjectList extends Component {
+@connect(
+  mapState({
+    projects: selectors.allProjects
+  })
+)
+export default class ProjectList extends Component {
   constructor(...args) {
     super(...args)
 
@@ -56,12 +61,3 @@ class ProjectList extends Component {
     )
   }
 }
-
-export default connect(
-  mapState({
-    projects: selectors.allProjects
-  }),
-  mapDispatch({
-    fetchProjects: () => actions.fetchProjects()
-  })
-)(ProjectList)
