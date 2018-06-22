@@ -89,9 +89,6 @@ module.exports = {
       "error",
       "never"
     ],
-    "no-unused-vars": [
-      "error"
-    ],
     "object-shorthand": "error"
   }
 };
