@@ -56,6 +56,6 @@ export default function*() {
   yield call(restoreSession)
 
   yield put({
-    type: '@@INITIALIZED'
+    type: '@@SESSION/INITIALIZED'
   })
 }

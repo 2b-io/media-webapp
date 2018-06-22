@@ -6,13 +6,12 @@ import { actions, selectors } from 'state/interface'
 import { GridView, Modal } from 'ui/compounds'
 
 class ProjectList extends Component {
-  componentDidMount() {
+  constructor(...args) {
+    super(...args)
+
     this.state = {
       open: false
     }
-
-    // TODO request data from saga
-    this.props.fetchProjects()
   }
 
   displayProjects() {
