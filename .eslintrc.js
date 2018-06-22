@@ -90,9 +90,7 @@ module.exports = {
       "never"
     ],
     "no-unused-vars": [
-      "error", {
-        "args": "none"
-      }
+      "error"
     ],
     "object-shorthand": "error"
   }
