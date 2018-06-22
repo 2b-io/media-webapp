@@ -52,7 +52,7 @@ export default class HistoryManager extends Component {
   componentWillReceiveProps(nextProps) {
     const { current } = nextProps
 
-    if (current.key !== this.memoryHistory.location.key) {
+    if (current.pathname && current.key !== this.memoryHistory.location.key) {
       this.memoryHistory.push(current.pathname)
 
       if (current.pathname !== this.browserHistory.location.pathname) {

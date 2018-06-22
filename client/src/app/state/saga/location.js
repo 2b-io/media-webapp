@@ -31,13 +31,11 @@ const loop = function*() {
 }
 
 export default function*() {
+  yield take('@@INITIALIZED')
+
   yield fork(loop)
 
-  const initAction = yield take(types['LOCATION/INIT'])
+  const { pathname } = yield select(selectors.currentLocation)
 
-  yield put(actions.requestLocation(initAction.payload.pathname))
-
-  yield put({
-    type: '@@INITIALIZED'
-  })
+  yield put(actions.requestLocation(pathname))
 }
