@@ -5,7 +5,8 @@ import * as types from './types'
 
 export default combineReducers({
   current: createReducer(null)({
-    [types.ACCEPT]: (state, action) => action.payload.pathname
+    [types.ACCEPT]: (state, action) => action.payload.pathname,
+    [types.INIT]: (state, action) => action.payload.pathname
   }),
   key: createReducer(null)({
     [types.ACCEPT]: (state, action) => null,

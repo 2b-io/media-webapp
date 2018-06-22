@@ -2,13 +2,7 @@ import { Component } from 'react'
 import { connect } from 'react-redux'
 import { actions } from 'state/interface'
 
-@connect(
-  state => ({}),
-  dispatch => ({
-    redirect: pathname => dispatch(actions.requestLocation(pathname))
-  })
-)
-export default class Redirect extends Component {
+class Redirect extends Component {
   componentDidMount() {
     this.props.redirect(this.props.to)
   }
@@ -17,3 +11,10 @@ export default class Redirect extends Component {
     return null
   }
 }
+
+export default connect(
+  state => ({}),
+  dispatch => ({
+    redirect: pathname => dispatch(actions.requestLocation(pathname))
+  })
+)(Redirect)

@@ -1,18 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { mapDispatch, mapState } from 'services/redux-helpers'
-import { actions, selectors } from 'state/interface'
+import { mapState } from 'services/redux-helpers'
+import { selectors } from 'state/interface'
 import { GridView, Modal } from 'ui/compounds'
 
 class ProjectList extends Component {
-  componentDidMount() {
+  constructor(...args) {
+    super(...args)
+
     this.state = {
       open: false
     }
-
-    // TODO request data from saga
-    this.props.fetchProjects()
   }
 
   displayProjects() {
@@ -61,8 +60,5 @@ class ProjectList extends Component {
 export default connect(
   mapState({
     projects: selectors.allProjects
-  }),
-  mapDispatch({
-    fetchProjects: () => actions.fetchProjects()
   })
 )(ProjectList)

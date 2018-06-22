@@ -1,9 +1,10 @@
 import React from 'react'
+import { withParams } from 'views/router'
 
-const Profile = () => (
+const Profile = ({ params: { username } }) => (
   <main>
-    <h1>Profile</h1>
+    <h1>Profile of { username }</h1>
   </main>
 )
 
-export default Profile
+export default withParams(Profile)

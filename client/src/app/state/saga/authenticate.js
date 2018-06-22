@@ -51,9 +51,11 @@ const loop = function*() {
 }
 
 export default function*() {
-  yield take('@@INITIALIZED')
-
   yield fork(loop)
 
   yield call(restoreSession)
+
+  yield put({
+    type: '@@SESSION/INITIALIZED'
+  })
 }

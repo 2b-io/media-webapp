@@ -3,19 +3,10 @@ import createMemoryHistory from 'history/createMemoryHistory'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 
-@connect(
-  state => ({
-    current: selectors.currentLocation(state)
-  }),
-  dispatch => ({
-    init: pathname => dispatch(actions.initLocation(pathname)),
-    request: pathname => dispatch(actions.requestLocation(pathname)),
-    updateKey: key => dispatch(actions.updateLocationKey(key))
-  })
-)
-export default class HistoryManager extends Component {
+class HistoryManager extends Component {
   constructor(...args) {
     super(...args)
 
@@ -52,7 +43,7 @@ export default class HistoryManager extends Component {
   componentWillReceiveProps(nextProps) {
     const { current } = nextProps
 
-    if (current.key !== this.memoryHistory.location.key) {
+    if (current.pathname && current.key !== this.memoryHistory.location.key) {
       this.memoryHistory.push(current.pathname)
 
       if (current.pathname !== this.browserHistory.location.pathname) {
@@ -71,3 +62,14 @@ export default class HistoryManager extends Component {
     })
   }
 }
+
+export default connect(
+  mapState({
+    current: selectors.currentLocation
+  }),
+  mapDispatch({
+    init: actions.initLocation,
+    request: actions.requestLocation,
+    updateKey: actions.updateLocationKey
+  })
+)(HistoryManager)

@@ -5,15 +5,13 @@ module.exports = {
     "node": true
   },
   "extends": "eslint:recommended",
-  "parser": "babel-eslint",
+  // "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
-      "experimentalDecorators": true,
-      "experimentalObjectRestSpread": true,
       "jsx": true
     },
     "sourceType": "module",
-    "ecmaVersion": 8
+    "ecmaVersion": 2018
   },
   "plugins": [
     "react"
@@ -39,8 +37,7 @@ module.exports = {
       2, {
         "closingSlash": "never",
         "beforeSelfClosing": "always",
-        "afterOpening": "never",
-        "beforeClosing": "allow"
+        "afterOpening": "never"
       }
     ],
     "indent": [
@@ -89,11 +86,6 @@ module.exports = {
     "template-tag-spacing": [
       "error",
       "never"
-    ],
-    "no-unused-vars": [
-      "error", {
-        "args": "none"
-      }
     ],
     "object-shorthand": "error"
   }
