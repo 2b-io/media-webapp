@@ -6,7 +6,7 @@ import schema from './schema'
 const app = express()
 
 app.use('/', graphqlMiddleware({
-  schema: schema,
+  schema,
   graphiql: true
 }))
 

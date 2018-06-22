@@ -16,7 +16,7 @@ const StyledIcon = styled(Icon)`
   }
 `
 
-const s = ({ small, medium, large, extraLarge }) => (
+const s = ({ medium, large, extraLarge }) => (
   extraLarge ? 48 : (large ? 32 : (medium ? 24 : 16))
 )
 

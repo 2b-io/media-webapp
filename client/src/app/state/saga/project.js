@@ -4,7 +4,7 @@ import { actions, types, selectors } from 'state/interface'
 
 const loop = function* () {
   while (true) {
-    const action = yield take(types['PROJECT/FETCH'])
+    yield take(types['PROJECT/FETCH'])
 
     try {
       const session = yield select(selectors.currentSession)

@@ -20,11 +20,11 @@ export default class HistoryManager extends Component {
     super(...args)
 
     this.browserHistory = createBrowserHistory({
-      initialEntries: ['/']
+      initialEntries: [ '/' ]
     })
 
     this.memoryHistory = createMemoryHistory({
-      initialEntries: ['/splash']
+      initialEntries: [ '/splash' ]
     })
   }
 

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { actions } from 'state/interface'
 import { mapDispatch } from 'services/redux-helpers'
-import { Identicon, Nothing } from 'ui/elements'
+import { Identicon } from 'ui/elements'
 import { GithubIcon } from 'ui/icons'
 
 const StyledOverlay = styled.div`

@@ -1,8 +1,7 @@
-import delay from 'delay'
-import { all, call, fork, put, select, take } from 'redux-saga/effects'
+import { all, call, fork, put, take } from 'redux-saga/effects'
 
 import Session from 'models/session'
-import { actions, selectors, types } from 'state/interface'
+import { actions, types } from 'state/interface'
 import storage from 'services/storage'
 
 const TOKEN = 'jwt'

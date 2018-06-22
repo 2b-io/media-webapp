@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 
 import Layout, { LeftMenu, TopMenu } from 'views/layout'
-import { HistoryProvider, Redirect, Router, Switch } from 'views/router'
+import { HistoryProvider, Router } from 'views/router'
 import { content, overlay, still } from 'views/route-config'
 import { Nothing } from 'ui/elements'
 
@@ -10,7 +10,7 @@ const MENU_WIDTH = 44
 
 const render = {
   header: () => <TopMenu menuWidth={ MENU_WIDTH } />,
-  overlay: ({ isLayoutClosed, history }) => (
+  overlay: ({ history }) => (
     <Fragment>
       <Router
         animated="slide"
@@ -26,9 +26,7 @@ const render = {
             component: Nothing
           }
         ] }
-        otherwise={
-          () => <LeftMenu width={ MENU_WIDTH } />
-        }
+        otherwise={ () => <LeftMenu width={ MENU_WIDTH } /> }
       />
     </Fragment>
   ),

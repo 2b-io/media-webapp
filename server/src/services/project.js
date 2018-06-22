@@ -47,8 +47,6 @@ export const create = async (data, account) => {
     throw new Error('Invalid parameters')
   }
 
-  let permission, preset, project
-
   try {
     const project = await new Project({
       name,
@@ -57,13 +55,13 @@ export const create = async (data, account) => {
       origins
     }).save()
 
-    const permission = await new Permission({
+    await new Permission({
       project: project._id,
       account: account._id,
       privilege: 'owner'
     }).save()
 
-    const preset = await new Preset({
+    await new Preset({
       project: project._id,
       name: 'default',
       isDefault: true

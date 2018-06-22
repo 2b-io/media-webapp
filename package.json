@@ -7,15 +7,21 @@
   "author": "LongLH <d@dapps.me>",
   "license": "MIT",
   "devDependencies": {
-    "concurrently": "3.5.1"
+    "babel-eslint": "8.2.3",
+    "concurrently": "3.5.1",
+    "eslint": "4.19.1",
+    "eslint-plugin-react": "7.9.1",
+    "eslint-watch": "3.1.5"
   },
   "scripts": {
     "start": "npm run dev",
     "install:all": "npm i && npm run install:client && npm run install:server",
     "install:client": "cd client/ && npm i && cd ..",
     "install:server": "cd server/ && npm i && cd ..",
-    "dev": "concurrently --raw \"npm run dev:client\" \"npm run dev:server\"",
+    "dev": "concurrently --raw \"npm run dev:client\" \"npm run dev:server\" \"npm run lint:watch\"",
     "dev:client": "cd client && npm start && cd ..",
-    "dev:server": "cd server && npm start && cd .."
+    "dev:server": "cd server && npm start && cd ..",
+    "lint": "esw --ext js --ext jsx .",
+    "lint:watch": "esw --ext js --ext jsx --watch ."
   }
 }
