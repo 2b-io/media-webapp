@@ -24,9 +24,9 @@ const Modal = ({
   return (
     <Portal>
       <Overlay
-        dimmer={dimmer}
+        dimmer={ dimmer }
         onClick={ onClickOutside }
-        zIndex={zIndex}>
+        zIndex={ zIndex }>
         <ContentModal
           onClick={ (e) => e.stopPropagation() }
           position={ position }
@@ -60,7 +60,7 @@ Modal.defaultProps = {
   open: false,
   fullWidth: false,
   width: '30%',
-  zIndex:1
+  zIndex: 1
 }
 
 const ContentModal = styled.div` {
@@ -93,7 +93,7 @@ const ContentModal = styled.div` {
             align-self: center;
           `
         case 'top':
-          return css `
+          return css`
             top: 0;
             left: 0;
           `

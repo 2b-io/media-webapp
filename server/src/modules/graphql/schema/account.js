@@ -48,8 +48,8 @@ export default () => ({
       }
     },
     type: GraphQLBoolean,
-    resolve: async (rootValue, {password,code,id}, ctx) => {
-      return await ressetPassword(password,code,id)
+    resolve: async (rootValue, { password, code, id }, ctx) => {
+      return await ressetPassword(password, code, id)
     }
   }
 })
