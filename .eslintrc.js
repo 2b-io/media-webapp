@@ -39,8 +39,7 @@ module.exports = {
       2, {
         "closingSlash": "never",
         "beforeSelfClosing": "always",
-        "afterOpening": "never",
-        "beforeClosing": "allow"
+        "afterOpening": "never"
       }
     ],
     "indent": [
