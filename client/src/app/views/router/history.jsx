@@ -6,17 +6,7 @@ import { connect } from 'react-redux'
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 
-@connect(
-  mapState({
-    current: selectors.currentLocation
-  }),
-  mapDispatch({
-    init: actions.initLocation,
-    request: actions.requestLocation,
-    updateKey: actions.updateLocationKey
-  })
-)
-export default class HistoryManager extends Component {
+class HistoryManager extends Component {
   constructor(...args) {
     super(...args)
 
@@ -72,3 +62,14 @@ export default class HistoryManager extends Component {
     })
   }
 }
+
+export default connect(
+  mapState({
+    current: selectors.currentLocation
+  }),
+  mapDispatch({
+    init: actions.initLocation,
+    request: actions.requestLocation,
+    updateKey: actions.updateLocationKey
+  })
+)(HistoryManager)

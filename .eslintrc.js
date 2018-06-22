@@ -5,7 +5,7 @@ module.exports = {
     "node": true
   },
   "extends": "eslint:recommended",
-  "parser": "babel-eslint",
+  // "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
       "experimentalDecorators": true,

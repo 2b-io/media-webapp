@@ -5,12 +5,7 @@ import { mapState } from 'services/redux-helpers'
 import { selectors } from 'state/interface'
 import { GridView, Modal } from 'ui/compounds'
 
-@connect(
-  mapState({
-    projects: selectors.allProjects
-  })
-)
-export default class ProjectList extends Component {
+class ProjectList extends Component {
   constructor(...args) {
     super(...args)
 
@@ -61,3 +56,9 @@ export default class ProjectList extends Component {
     )
   }
 }
+
+export default connect(
+  mapState({
+    projects: selectors.allProjects
+  })
+)(ProjectList)
