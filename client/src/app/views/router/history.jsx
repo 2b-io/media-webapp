@@ -3,16 +3,17 @@ import createMemoryHistory from 'history/createMemoryHistory'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 
 @connect(
-  state => ({
-    current: selectors.currentLocation(state)
+  mapState({
+    current: selectors.currentLocation
   }),
-  dispatch => ({
-    init: pathname => dispatch(actions.initLocation(pathname)),
-    request: pathname => dispatch(actions.requestLocation(pathname)),
-    updateKey: key => dispatch(actions.updateLocationKey(key))
+  mapDispatch({
+    init: actions.initLocation,
+    request: actions.requestLocation,
+    updateKey: actions.updateLocationKey
   })
 )
 export default class HistoryManager extends Component {

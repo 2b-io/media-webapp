@@ -6,17 +6,15 @@ import { actions } from 'state/interface'
 
 export default {
   '/': {
-    component: Dashboard,
+    component: Dashboard
   },
   '/@:username': {
-    component: Profile,
+    component: Profile
   },
   '/projects': {
     component: ProjectList,
-    onEnter: () => {
-      return [
-        actions.fetchProjects()
-      ]
-    }
+    onEnter: () => [
+      actions.fetchProjects()
+    ]
   }
 }
