@@ -11,7 +11,7 @@
     "concurrently": "3.5.1",
     "eslint": "4.19.1",
     "eslint-plugin-react": "7.9.1",
-    "eslint-watch": "3.1.5"
+    "nodemon": "1.17.5"
   },
   "scripts": {
     "start": "npm run dev",
@@ -21,7 +21,7 @@
     "dev": "concurrently --raw \"npm run dev:client\" \"npm run dev:server\" \"npm run lint:watch\"",
     "dev:client": "cd client && npm start && cd ..",
     "dev:server": "cd server && npm start && cd ..",
-    "lint": "esw --ext js --ext jsx .",
-    "lint:watch": "esw --ext js --ext jsx --watch ."
+    "lint": "eslint --ext js --ext jsx .",
+    "lint:watch": "nodemon --watch client --watch server --ext js,jsx --exec \"npm run lint\""
   }
 }
