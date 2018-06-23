@@ -9,7 +9,7 @@ export default combineReducers({
     [types.INIT]: (state, action) => action.payload.pathname
   }),
   key: createReducer(null)({
-    [types.ACCEPT]: (state, action) => null,
+    [types.ACCEPT]: () => null,
     [types.UPDATE_KEY]: (state, action) => action.payload.key || null
   })
 })

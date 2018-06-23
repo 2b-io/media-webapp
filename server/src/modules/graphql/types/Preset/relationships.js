@@ -1,6 +1,6 @@
 import { Project } from '../Project'
 
-export default (Preset, PresetStruct) => ({
+export default () => ({
   project: {
     type: Project
   }

@@ -11,13 +11,13 @@ import {
 import { Project } from '../Project'
 import { Session } from '../Session'
 
-export default (Account, AccountStruct) => ({
+export default () => ({
   session: {
     type: Session
   },
   projects: {
     type: new GraphQLList(Project),
-    resolve: async (account, args, ctx) => {
+    resolve: async (account) => {
       const projects = await listProjectsByAccount(account._id)
       return projects.map(project => {
         // add ref
@@ -33,7 +33,7 @@ export default (Account, AccountStruct) => ({
       }
     },
     type: Project,
-    resolve: async (account, { slug }, ctx) => {
+    resolve: async (account, { slug }) => {
       const project = await getProjectBySlug(slug)
       // add ref
       project.account = account

@@ -9,7 +9,7 @@ import {
 
 import { Project, ProjectStruct } from '../Project'
 
-export default (Account, AccountStruct) => ({
+export default ({ Account, AccountStruct }) => ({
   _update: {
     args: {
       account: {
@@ -17,13 +17,13 @@ export default (Account, AccountStruct) => ({
       },
     },
     type: Account,
-    resolve: async (self, { account }, ctx) => {
+    resolve: async (self, { account }) => {
       return account
     }
   },
   _destroy: {
     type: GraphQLBoolean,
-    resolve: async (self, args, ctx) => {
+    resolve: async () => {
       return true
     }
   },
@@ -34,7 +34,7 @@ export default (Account, AccountStruct) => ({
       }
     },
     type: Project,
-    resolve: async (account, { project }, ctx) => {
+    resolve: async (account, { project }) => {
       const p = await createProject(project, account)
 
       // add ref

@@ -22,7 +22,7 @@ export const Project = new GraphQLObjectType({
       type: GraphQLID
     },
     ...struct,
-    ...relationships(Project, ProjectStruct),
-    ...actions(Project, ProjectStruct),
+    ...relationships({ Project, ProjectStruct }),
+    ...actions({ Project, ProjectStruct }),
   })
 })

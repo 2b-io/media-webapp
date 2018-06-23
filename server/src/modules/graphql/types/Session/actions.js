@@ -1,10 +1,8 @@
 import { GraphQLBoolean } from 'graphql'
 
-export default (Session, SessionStruct) => ({
+export default () => ({
   _destroy: {
     type: GraphQLBoolean,
-    resolve: async (self, args, ctx) => {
-      return true
-    }
+    resolve: async () => true
   }
 })

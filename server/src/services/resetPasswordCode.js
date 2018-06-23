@@ -11,7 +11,7 @@ export const requestRessetPassword = async (email) => {
     const { _id, removed } = account
     if (_id && !removed) {
       const code = sha256(String(_id))
-      const cryp = crypto.AES.encrypt(String(_id), code).toString()
+      // const cryp = crypto.AES.encrypt(String(_id), code).toString()
       const dataExist = await ResetPasswordCode.findOne({ code }).lean()
       if (dataExist) {
         const { expired, used } = dataExist

@@ -13,7 +13,7 @@ import {
 
 import { Preset, PresetStruct } from '../Preset'
 
-export default (Project, ProjectStruct) => ({
+export default ({ Project, ProjectStruct }) => ({
   _update: {
     args: {
       project: {
@@ -21,7 +21,7 @@ export default (Project, ProjectStruct) => ({
       }
     },
     type: Project,
-    resolve: async (self, { project }, ctx) => {
+    resolve: async (self, { project }) => {
       const p = await updateProject(self.slug, project)
 
       // add ref
@@ -32,7 +32,7 @@ export default (Project, ProjectStruct) => ({
   },
   _destroy: {
     type: GraphQLBoolean,
-    resolve: async (self, args, ctx) => {
+    resolve: async (self) => {
       await removeProject(self.slug)
 
       return true
@@ -45,7 +45,7 @@ export default (Project, ProjectStruct) => ({
       }
     },
     type: Preset,
-    resolve: async (project, { preset }, ctx) => {
+    resolve: async (project, { preset }) => {
       const p = await createPreset(project, preset)
 
       // add ref

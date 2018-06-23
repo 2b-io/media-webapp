@@ -7,7 +7,7 @@ import {
   findById as findAccountById
 } from 'services/account'
 
-export const create = async ({ email, password }) => {
+export const create = async ({ email }) => {
   const account = await findByAccountEmail(email)
 
   if (!account) {

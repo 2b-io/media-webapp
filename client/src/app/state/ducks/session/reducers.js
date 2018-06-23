@@ -6,6 +6,6 @@ import * as types from './types'
 export default combineReducers({
   info: createReducer(null)({
     [types.CREATE_COMPLETED]: (state, action) => action.payload.info,
-    [types.DESTROY_COMPLETED]: (state, action) => null
+    [types.DESTROY_COMPLETED]: () => null
   })
 })

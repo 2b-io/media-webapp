@@ -20,7 +20,7 @@ export default () => ({
       }
     },
     type: Account,
-    resolve: async (rootValue, { account }, ctx) => {
+    resolve: async (rootValue, { account }) => {
       return await createAccount(account)
     }
   },
@@ -31,7 +31,7 @@ export default () => ({
       }
     },
     type: GraphQLBoolean,
-    resolve: async (rootValue, email, ctx) => {
+    resolve: async (rootValue, email) => {
       return await requestResset(email)
     }
   },
@@ -48,7 +48,7 @@ export default () => ({
       }
     },
     type: GraphQLBoolean,
-    resolve: async (rootValue, { password, code, id }, ctx) => {
+    resolve: async (rootValue, { password, code, id }) => {
       return await ressetPassword(password, code, id)
     }
   }

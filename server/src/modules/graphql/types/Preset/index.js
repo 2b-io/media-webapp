@@ -22,7 +22,7 @@ export const Preset = new GraphQLObjectType({
       type: GraphQLID
     },
     ...struct,
-    ...actions(Preset, PresetStruct),
-    ...relationships(Preset, PresetStruct)
+    ...actions({ Preset, PresetStruct }),
+    ...relationships({ Preset, PresetStruct })
   })
 })

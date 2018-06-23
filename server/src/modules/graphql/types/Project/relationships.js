@@ -11,19 +11,19 @@ import {
 import { Account } from '../Account'
 import { Preset } from '../Preset'
 
-export default (Project, ProjectStruct) => ({
+export default () => ({
   account: {
     type: Account
   },
   permission: {
     type: GraphQLString,
-    resolve: async (project, args, ctx) => {
+    resolve: async () => {
       return 'owner'
     }
   },
   presets: {
     type: new GraphQLList(Preset),
-    resolve: async (project, args, ctx) => {
+    resolve: async (project) => {
       let presets = await listPresetsInProject(project)
 
       return presets.map(preset => {
@@ -41,7 +41,7 @@ export default (Project, ProjectStruct) => ({
       }
     },
     type: Preset,
-    resolve: async (project, { hash }, ctx) => {
+    resolve: async (project, { hash }) => {
       const preset = await getPreset(project, hash)
 
       // add ref

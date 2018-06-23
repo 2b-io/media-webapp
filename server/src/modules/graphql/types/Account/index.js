@@ -22,7 +22,7 @@ export const Account = new GraphQLObjectType({
       type: GraphQLID
     },
     ...struct,
-    ...actions(Account, AccountStruct),
-    ...relationships(Account, AccountStruct)
+    ...actions({ Account, AccountStruct }),
+    ...relationships({ Account, AccountStruct })
   })
 })

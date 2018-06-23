@@ -1,6 +1,6 @@
 import { Account } from '../Account'
 
-export default (Session, SessionStruct) => ({
+export default () => ({
   account: {
     type: Account,
     resolve: async (session) => {

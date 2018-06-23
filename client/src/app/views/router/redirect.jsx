@@ -1,5 +1,7 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
+
+import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
 
 class Redirect extends Component {
@@ -13,8 +15,8 @@ class Redirect extends Component {
 }
 
 export default connect(
-  state => ({}),
-  dispatch => ({
-    redirect: pathname => dispatch(actions.requestLocation(pathname))
+  null,
+  mapDispatch({
+    redirect: actions.requestLocation
   })
 )(Redirect)

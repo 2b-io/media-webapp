@@ -18,7 +18,7 @@ export const Session = new GraphQLObjectType({
   name: 'Session',
   fields: () => ({
     ...struct,
-    ...actions(Session, SessionStruct),
-    ...relationships(Session, SessionStruct)
+    ...actions({ Session, SessionStruct }),
+    ...relationships({ Session, SessionStruct })
   })
 })
