@@ -14,7 +14,8 @@ const Modal = ({
   position,
   height,
   width,
-  fullWidth
+  fullWidth,
+  zIndex
 }) => {
   if (!open) {
     return null
@@ -24,7 +25,8 @@ const Modal = ({
     <Portal>
       <Overlay
         dimmer={ dimmer }
-        onClick={ onClickOutside }>
+        onClick={ onClickOutside }
+        zIndex={ zIndex }>
         <ContentModal
           onClick={ (e) => e.stopPropagation() }
           position={ position }
@@ -57,7 +59,8 @@ Modal.defaultProps = {
   dimmer: true,
   open: false,
   fullWidth: false,
-  width: '30%'
+  width: '30%',
+  zIndex: 1
 }
 
 const ContentModal = styled.div` {
@@ -115,7 +118,9 @@ const Overlay = styled.div`
   top: 0;
   left: 0;
   transform: scale(1);
-  z-index: 1;
+  z-index: ${
+    ({ zIndex }) => zIndex
+  };
 `
 
 const CloseIconWrapper = styled.div`
