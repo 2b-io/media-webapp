@@ -1,35 +1,26 @@
 {
-  "name": "media-on-demand-webapp",
+  "name": "@media-network/media-webapp",
   "version": "1.0.0",
-  "description": "A web app that allows tenants register and configure their media-on-demand presets.",
+  "description": "A web app that allows tenants register and configure their MediaNetwork CDN presets.",
   "main": "index.js",
-  "repository": "git@github.com:media-network/media-on-demand-webapp.git",
+  "repository": "git@github.com:media-network/media-webapp.git",
   "author": "LongLH <d@dapps.me>",
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "6.26.0",
-    "concurrently": "3.5.0",
-    "nodemon": "1.12.1",
-    "webpack": "3.8.1"
+    "concurrently": "3.5.1",
+    "eslint": "4.19.1",
+    "eslint-plugin-react": "7.9.1",
+    "nodemon": "1.17.5"
   },
   "scripts": {
-    "up": "docker-compose up -d && npm run remote",
-    "remote": "docker exec -it media.webapp bash",
     "start": "npm run dev",
     "install:all": "npm i && npm run install:client && npm run install:server",
     "install:client": "cd client/ && npm i && cd ..",
     "install:server": "cd server/ && npm i && cd ..",
-    "dev": "concurrently \"npm run dev:client:watch\" \"npm run dev:server:run\"",
-    "dev:client:build": "cd client && webpack --config internals/webpack/webpack.dev.js && cd ..",
-    "dev:client:watch": "cd client/internals && nodemon dev-server --watch dev-server --watch webpack --exec babel-node",
-    "dev:server:run": "cd server && nodemon app/index.js --watch app --watch internals --exec babel-node --CONFIG=internals/config.dev.js",
-    "prod:build": "npm run prod:client:build && npm run prod:server:build",
-    "prod:client:build": "cd client && webpack --config internals/webpack/webpack.prod.js && cd ..",
-    "prod:server:build": "cd server && babel app -d build && cd ..",
-    "prod:server:run": "cd server && node build/index.js --CONFIG=internals/config.prod.js",
-    "clean:all": "npm run clean:client && npm run clean:server",
-    "clean:client": "rm -rf client/build",
-    "clean:server": "rm -rf server/build"
-  },
-  "dependencies": {}
+    "dev": "concurrently --raw \"npm run dev:client\" \"npm run dev:server\" \"npm run lint:watch\"",
+    "dev:client": "cd client && npm start && cd ..",
+    "dev:server": "cd server && npm start && cd ..",
+    "lint": "eslint --ext js --ext jsx .",
+    "lint:watch": "nodemon --legacy-watch --watch client --watch server --ext js,jsx --exec \"npm run lint\""
+  }
 }

@@ -1,0 +1,47 @@
+@import 'animations/toast'
+@import 'fonts/space-mono'
+
+meyer-reset()
+box-sizing-reset()
+
+* {
+  font-family: inherit
+  font-size: 1rem
+}
+
+html, body
+  background: #333
+  font-size: 14px
+  height: 100%
+  font-family: Space Mono, Consolas, monaco, monospace
+
+body
+  overflow-x: hidden
+  overflow-y: auto
+  position: relative
+  -webkit-overflow-scrolling: touch
+
+#root
+  min-height: 100%
+  display: flex
+  flex-direction: column
+  transition: opacity 1.2s
+  opacity: 0
+
+*
+  -webkit-tap-highlight-color: rgba(0,0,0,0)
+
+  &::placeholder
+    color: #777
+    opacity: .5
+
+#nprogress
+  position: relative
+  z-index: 9999999
+
+.switch-wrapper
+  position: relative
+
+  & > div
+    position: absolute
+    width: 100%

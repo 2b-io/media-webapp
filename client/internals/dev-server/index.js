@@ -4,21 +4,27 @@ import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
 
-import webpackConfig from '../webpack/webpack.dev.js'
+import webpackConfig from '../webpack/webpack.dev.babel'
 
 const app = express()
 const port = 3001
+let started = false
 
 const compiler = webpack(webpackConfig)
-const devMiddleware = webpackDevMiddleware(compiler, {
-  publicPath: webpackConfig.output.publicPath,
-  watchOptions: {
-    ignored: /node_modules/
-  }
-})
 
-app.use(devMiddleware)
-app.use(webpackHotMiddleware(compiler))
+app.use(
+  webpackDevMiddleware(compiler, {
+    publicPath: webpackConfig.output.publicPath,
+    watchOptions: {
+      ignored: /node_modules/,
+      poll: true
+    },
+    logLevel: 'warn'
+  })
+)
+app.use(
+  webpackHotMiddleware(compiler)
+)
 
 app.use('*', (req, res, next) => {
   const filename = path.join(compiler.outputPath, '../index.html')
@@ -29,10 +35,22 @@ app.use('*', (req, res, next) => {
     }
 
     res
-      .set('content-type','text/html')
+      .set('content-type', 'text/html')
       .send(result)
       .end()
   })
 })
 
-app.listen(port, () => console.log(`dev-server started at ${port}`))
+compiler.hooks.emit.tap('done', () => {
+  if (started) {
+    return
+  }
+
+  app.listen(port, () => {
+    started = true
+
+    console.log(`dev-server started at ${port}`)
+  })
+})
+
+

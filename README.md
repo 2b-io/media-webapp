@@ -1,14 +1,29 @@
-# media-on-demand-webapp
-A web app that allows tenants register and configure their media-on-demand presets.
+# media-network/media-webapp
+A web app that allows tenants register and configure their MediaNetwork CDN presets.
 
-# Development
+## prerequisite
+Install [docker](https://docs.docker.com/install/) and [docker compose](https://docs.docker.com/compose/install/) on your development environment.
+
+## clone
 ```
-yarn install:all
-yarn dev
+$ cd /path/to/your/project
+/path/to/your/project$ git clone git@github.com:media-network/media-infra.git infra
+/path/to/your/project$ cd infra
+/path/to/your/project/infra$ chmod +x start.sh
+
+$ cd /path/to/your/project
+/path/to/your/project$ git clone git@github.com:media-network/media-webapp.git webapp
 ```
 
-# Production
+## run
 ```
-yarn prod:build
-yarn prod:server:run
+$ cd /path/to/your/project/infra
+/path/to/your/project/infra$ ./start.sh
+
+$ cd /path/to/your/project/webapp
+/path/to/your/project/webapp$ docker-compose up -d
+/path/to/your/project/webapp$ docker exec -it media.webapp bash
+
+/usr/src$ npm install && npm run install:all
+/usr/src$ npm start
 ```
