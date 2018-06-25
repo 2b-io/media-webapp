@@ -7,6 +7,7 @@ import { github } from 'react-icons-kit/feather/github'
 import { grid } from 'react-icons-kit/feather/grid'
 import { list } from 'react-icons-kit/feather/list'
 import { logOut } from 'react-icons-kit/feather/logOut'
+import { plus } from 'react-icons-kit/feather/plus'
 import { user } from 'react-icons-kit/feather/user'
 import { x } from 'react-icons-kit/feather/x'
 
@@ -34,4 +35,5 @@ export const DashboardIcon = icon(grid)
 export const GithubIcon = icon(github)
 export const ProfileIcon = icon(user)
 export const ProjectListIcon = icon(list)
+export const PlusIcon = icon(plus)
 export const SignOutIcon = icon(logOut)

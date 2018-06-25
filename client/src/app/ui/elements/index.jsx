@@ -1,4 +1,5 @@
 export { default as Button } from './button'
+export { default as ButtonCircle } from './buttonCircle'
 export { default as ConditionalDisplay } from './conditional-display'
 export { default as Container } from './container'
 export { default as Identicon } from './identicon'

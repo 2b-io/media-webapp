@@ -1,16 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { ButtonCircle, Button } from 'ui/elements'
 import { mapState } from 'services/redux-helpers'
-import { selectors } from 'state/interface'
 import { GridView, Modal } from 'ui/compounds'
+import { PlusIcon } from 'ui/icons'
+import  ProjectForm from './projectForm'
+import { selectors } from 'state/interface'
 
 class ProjectList extends Component {
   constructor(...args) {
     super(...args)
 
     this.state = {
-      open: false
+      openModal: false
     }
   }
 
@@ -30,29 +33,23 @@ class ProjectList extends Component {
   }
 
   render() {
+    console.log("openModal",this.state.openModal);
     return (
       <main>
         { this.displayProjects() }
-        <Modal
-          open={ this.state.open }
-          onClickOutside={ () => this.setState({ open: false }) }
-          onClose={ () => this.setState({ open: false }) }>
-          { ({ open }) => {
-            const content = open ? (
-              <div>
-                <p>
-                  Test new modal
-                </p>
-                <button>New modal</button>
-                { this.displayProjects() }
-              </div>
-            ) : <i />
-
-            return content
-          } }
+        <ButtonCircle
+          onClick={(e)=>{console.log('eeee'); this.setState({openModal:true})}}
+          size='large'
+        >
+          <PlusIcon large inverted />
+       </ButtonCircle>
+       <Button onClick={(e)=>{console.log('eeee'); this.setState({openModal:true})}}>
+         aaaa
+       </Button>
+         <Modal open={this.state.openModal}>
+          <ProjectForm/>
         </Modal>
-        <button onClick={ () => this.setState({ open: true }) }>Open Modal</button>
-      </main>
+     </main>
     )
   }
 }
