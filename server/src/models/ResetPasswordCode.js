@@ -5,6 +5,9 @@ const schema = mongoose.Schema({
     type: String,
     unique: true
   },
+  uid: {
+    type: String,
+  },
   expired: String,
   used: {
     type: Boolean,

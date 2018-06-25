@@ -18,7 +18,7 @@ const ForgotPassword=({ fetchEmail, emailExist, toSignIn }) => {
     <main>
       <Container center size="small">
         <ForgotPasswordForm onSubmit={ fetchEmail } />
-        { emailExist===null?'':<p>Email not exist please check again</p> }
+        { emailExist===null?'':<p>Email not exist, please check again</p> }
       </Container>
       { emailExist?  <Modal
         open={ true }

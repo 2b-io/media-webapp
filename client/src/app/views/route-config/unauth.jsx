@@ -7,7 +7,7 @@ export default {
   '/forgot-password': {
     component: ForgotPassword
   },
-  '/reset-password/:code/:id': {
+  '/reset-password/:code': {
     component: ResetPassword
   },
   '/sign-in': {

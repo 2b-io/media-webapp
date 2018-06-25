@@ -8,9 +8,9 @@ export const receiveEmailExist = emailExist => ({
   type: types.FETCH_COMPLETED,
   payload: emailExist
 })
-export const fetchResetPassword = (password, code, id) => ({
+export const fetchResetPassword = (password, code) => ({
   type: types.FETCH_PASSWORD,
-  payload: { password, code, id }
+  payload: { password, code }
 })
 export const receiveResetPassword = statusResetPassword => ({
   type: types.FETCH_PASSWORD_COMPLETED,
