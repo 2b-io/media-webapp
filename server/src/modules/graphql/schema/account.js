@@ -43,13 +43,11 @@ export default () => ({
       code: {
         type: GraphQLNonNull(GraphQLString)
       },
-      id: {
-        type: GraphQLNonNull(GraphQLString)
-      }
+
     },
     type: GraphQLBoolean,
-    resolve: async (rootValue, { password, code, id }) => {
-      return await ressetPassword(password, code, id)
+    resolve: async (rootValue, { password, code }) => {
+      return await ressetPassword(password, code)
     }
   }
 })
