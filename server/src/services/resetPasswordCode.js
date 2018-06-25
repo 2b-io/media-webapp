@@ -1,5 +1,5 @@
-import sha256 from 'sha256'
-import crypto from 'crypto-js'
+import shorthash from 'shorthash'
+import uuid from 'uuid'
 
 import Account from 'models/Account'
 import ResetPasswordCode from 'models/ResetPasswordCode'
@@ -10,8 +10,7 @@ export const requestRessetPassword = async (email) => {
     let now = new Date()
     const { _id, removed } = account
     if (_id && !removed) {
-      const code = sha256(String(_id))
-      // const cryp = crypto.AES.encrypt(String(_id), code).toString()
+      let code = shorthash.unique(uuid.v4())
       const dataExist = await ResetPasswordCode.findOne({ code }).lean()
       if (dataExist) {
         const { expired, used } = dataExist
@@ -23,29 +22,29 @@ export const requestRessetPassword = async (email) => {
       let newExpired = new Date(now.setDate(dateExpired))
       await new ResetPasswordCode({
         code,
+        uid: _id,
         expired: newExpired
       }).save()
-      //to do send email (/code/cryp)
+      //to do send email (/code)
       return true
     }
   }
   return false
 }
-export const ressetPassword = async (password, code, cryp) => {
+export const ressetPassword = async (password, code) => {
   let now = new Date()
   const dataExist = await ResetPasswordCode.findOne({ code }).lean()
   if (dataExist) {
-    const { expired, used } = dataExist
-    const deCode = crypto.AES.decrypt(cryp, code.toString())
-    const id = deCode.toString(crypto.enc.Utf8)
-    if (!id) { return false }
+    const { expired, used, uid } = dataExist
+    if (!uid) { return false }
     if (expired > now || used == false ) {
       const account = await Account.findOneAndUpdate(
-        { _id: id },
+        { _id: uid },
         { password },
         { new: true }
       ).lean()
-      return password === account.password ? true : false
+      let { ok } = await ResetPasswordCode.deleteOne({ code })
+      return password === account.password && ok === 1 ? true : false
     }
   }
   return false
