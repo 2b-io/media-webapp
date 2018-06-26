@@ -13,13 +13,13 @@ const SignInForm = reduxForm({
   enableReinitialize: true
 })(_SignInForm)
 
-const SignIn = ({ signIn, toForgotPassword, toSignUp }) => (
+const SignIn = ({ signIn, toForgotPassword, toRegister }) => (
   <main>
     <Container center size="small">
       <SignInForm onSubmit={ signIn } />
       <Paragraph>
         Don't have your account yet?<br />
-        <Link href="/sign-up" onClick={ toSignUp }>Try it for free!</Link>
+        <Link href="/register" onClick={ toRegister }>Try it for free!</Link>
       </Paragraph>
       <Paragraph>
         Trouble at signing in?<br />
@@ -34,6 +34,6 @@ export default connect(
   mapDispatch({
     signIn: credential => actions.createSession(credential),
     toForgotPassword: () => actions.requestLocation('/forgot-password'),
-    toSignUp: () => actions.requestLocation('/sign-up')
+    toRegister: () => actions.requestLocation('/register')
   })
 )(SignIn)

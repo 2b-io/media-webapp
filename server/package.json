@@ -23,7 +23,8 @@
     "babel-plugin-transform-runtime": "6.23.0",
     "babel-preset-env": "1.6.1",
     "babel-preset-stage-2": "6.24.1",
-    "nodemon": "1.17.3"
+    "nodemon": "1.17.3",
+    "uuid": "3.2.1"
   },
   "scripts": {
     "start": "nodemon ./src --legacy-watch --watch ./src --watch ./internals --exec babel-node --CONFIG=./internals/config.dev.js",
