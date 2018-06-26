@@ -5,7 +5,7 @@ import { Button } from 'ui/elements'
 import { TextBox  } from 'ui/redux-form'
 
 const SignInForm = ({ handleSubmit }) => (
-  <Form onSubmit={ handleSubmit }>
+  <Form handleSubmit={ handleSubmit }>
     <Form.Line>
       <TextBox
         type="email"
