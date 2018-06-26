@@ -1,24 +1,14 @@
 import React from 'react'
 import styled, { css }from 'styled-components'
 
-const buttonCircle = ({ children, size }) => (
-  <Button size={ size }>
-    {children}
-  </Button>
-)
-export default buttonCircle
-
-const Button = styled.div`
+const ButtonCircle = styled.div.attrs({
+  type: ({ type = 'button' }) => type
+})`
  &{
    border-radius:32px;
    background-color:#333333;
    cursor: pointer;
    overflow:hidden;
-   -webkit-transition:all 0.2s ease-in;
-   -moz-transition:all 0.2s ease-in;
-   -ms-transition:all 0.2s ease-in;
-   -o-transition:all 0.2s ease-in;
-   transition:all 0.2s ease-in;
    ${
      ({ size }) => {
        switch (size) {
@@ -49,3 +39,5 @@ const Button = styled.div`
 &:hover{
   background-color:#fa7584;
 } `
+
+export default ButtonCircle
