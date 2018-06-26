@@ -11,7 +11,7 @@ const Body = ({ dataBody }) => (
               }
 
               return (
-                <td key={ index }>{ data }</td>
+                <td key={ index }>{ String(data) }</td>
               )
             }
           )
