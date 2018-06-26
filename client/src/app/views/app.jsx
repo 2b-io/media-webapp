@@ -8,7 +8,9 @@ import { Nothing } from 'ui/elements'
 const HEADER_HEIGHT = 0
 const MENU_WIDTH = 44
 
-const overlayRoutesPattern = Object.keys(unauthRoutes).join('|')
+const overlayRoutesPattern = Object.keys(unauthRoutes)
+  .map(p => p.split(':')[0] + '*')
+  .join('|')
 
 const render = {
   header: () => <TopMenu menuWidth={ MENU_WIDTH } />,
