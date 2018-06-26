@@ -1,3 +1,4 @@
+export { types as account } from './account'
 export { types as resetPasswordCode } from './resetPasswordCode'
 export { types as layout } from './layout'
 export { types as location } from './location'

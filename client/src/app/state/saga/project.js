@@ -2,7 +2,7 @@ import { call, take, fork, put, select } from 'redux-saga/effects'
 import Project from 'models/project'
 import { actions, types, selectors } from 'state/interface'
 
-const loop = function* () {
+const loop = function*() {
   while (true) {
     yield take(types['PROJECT/FETCH'])
 
@@ -22,7 +22,7 @@ const loop = function* () {
   }
 }
 
-export default function* () {
+export default function*() {
   yield take('@@INITIALIZED')
   yield fork(loop)
 }

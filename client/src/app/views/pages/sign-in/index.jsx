@@ -16,9 +16,12 @@ const SignInForm = reduxForm({
 const SignIn = ({ signIn, toForgotPassword, toRegister }) => (
   <main>
     <Container center size="small">
+      <Paragraph>
+        Enter your email and password
+      </Paragraph>
       <SignInForm onSubmit={ signIn } />
       <Paragraph>
-        Don't have your account yet?<br />
+        Don&apos;t have your account yet?<br />
         <Link href="/register" onClick={ toRegister }>Try it for free!</Link>
       </Paragraph>
       <Paragraph>

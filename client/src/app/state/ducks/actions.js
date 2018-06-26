@@ -1,3 +1,4 @@
+export { actions as account } from './account'
 export { actions as resetPasswordCode } from './resetPasswordCode'
 export { actions as layout } from './layout'
 export { actions as location } from './location'

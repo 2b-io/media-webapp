@@ -1,15 +1,29 @@
 import React from 'react'
+import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
-import { Container, Link } from 'ui/elements'
+import { Container, Link, Paragraph } from 'ui/elements'
 
-const Register = ({ toSignIn }) => (
+import _RegisterForm from './form'
+
+const RegisterForm = reduxForm({
+  form: 'register',
+  enableReinitialized: true
+})(_RegisterForm)
+
+const Register = ({ register, toSignIn }) => (
   <main>
     <Container center size="small">
-      <h1>Sign Up</h1>
-      <Link href="/sign-in" onClick={ toSignIn }>Back</Link>
+      <Paragraph>
+        Enter your email address
+      </Paragraph>
+      <RegisterForm onSubmit={ register } />
+      <Paragraph>
+        Have an account already?<br />
+        <Link href="/sign-in" onClick={ toSignIn }>Sign in now!</Link>
+      </Paragraph>
     </Container>
   </main>
 )
@@ -17,6 +31,7 @@ const Register = ({ toSignIn }) => (
 export default connect(
   null,
   mapDispatch({
+    register: ({ email }) => actions.register(email),
     toSignIn: () => actions.requestLocation('/sign-in')
   })
 )(Register)
