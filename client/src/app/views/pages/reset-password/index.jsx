@@ -34,11 +34,9 @@ const ResetPassword=({ fetchResetPassword, match, toSignIn, statusResetPassword,
             zIndex={ 10 }
             onClickOutside={ toSignIn }
             onClose={ toSignIn }>
-            { () => (
-              <div>
-                <p>Reset password success!</p>
-              </div>
-            ) }
+            <div>
+              <p>Reset password success!</p>
+            </div>
           </Modal>
       }
     </main>

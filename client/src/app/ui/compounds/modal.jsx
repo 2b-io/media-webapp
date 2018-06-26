@@ -8,9 +8,7 @@ import { CloseIcon } from 'ui/icons'
 const Modal = ({
   children,
   onClickOutside,
-  clickOutside,
   onClose,
-  close,
   open,
   dimmer,
   position,
@@ -49,8 +47,6 @@ Modal.propTypes = {
   position: PropTypes.string,
   dimmer: PropTypes.bool,
   open: PropTypes.bool,
-  close: PropTypes.bool,
-  clickOutside: PropTypes.bool,
   onClickOutside: PropTypes.func,
   onClose: PropTypes.func,
   height: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),

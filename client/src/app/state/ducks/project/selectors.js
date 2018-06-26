@@ -1,3 +1,4 @@
 export default {
-  allProjects: state => state.projects
+  allProjects: state => state.projects,
+  project: state => state.project
 }
