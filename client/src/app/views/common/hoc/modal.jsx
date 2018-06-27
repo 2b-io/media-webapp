@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { Portal } from 'react-portal'
 import { connect } from 'react-redux'
@@ -78,6 +79,17 @@ export default ({
         </Overlay>
       </Portal>
     )
+  }
+
+  Modal.propTypes = {
+    hideOnClickOutside: PropTypes.bool,
+    showCloseButton: PropTypes.bool,
+    width: PropTypes.oneOf([ 'narrow', 'wide' ])
+  }
+
+  Modal.defaultProps = {
+    hideOnClickOutside: true,
+    showCloseButton: true
   }
 
   return connect(

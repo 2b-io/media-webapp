@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
@@ -12,23 +12,21 @@ const CreateProjectModal = modal({
 })(CreateProject)
 
 const ProjectList = ({ showModal }) => (
-  <div>
-    <span>Projects</span>
-    <ButtonCircle
-      onClick={ showModal }
-      size="large"
-      float='right'
-      margin='-10px 0 0 0'
-      color='#00D9C5'
-    >
-      <AddIcon large inverted />
-    </ButtonCircle>
-    <CreateProjectModal
-      hideOnClickOutside={ true }
-      showCloseButton={ true }
-      width="wide"
-    />
-  </div>
+  <Fragment>
+    <div>
+      <span>Projects</span>
+      <ButtonCircle
+        onClick={ showModal }
+        size="large"
+        float='right'
+        margin='-10px 0 0 0'
+        color='#00D9C5'
+      >
+        <AddIcon large inverted />
+      </ButtonCircle>
+    </div>
+    <CreateProjectModal width="wide" />
+  </Fragment>
 )
 
 export default connect(
