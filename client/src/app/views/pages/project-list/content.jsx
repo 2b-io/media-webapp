@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { ButtonCircle } from 'ui/elements'
 import { mapState } from 'services/redux-helpers'
-import { GridView, Modal } from 'ui/compounds'
-import { PlusIcon } from 'ui/icons'
-import  CreateProject from '../create-project'
 import { selectors } from 'state/interface'
+import { GridView, Modal } from 'ui/compounds'
+import { ButtonCircle } from 'ui/elements'
+import { AddIcon } from 'ui/icons'
+
+import CreateProject from 'views/common/modals/create-project'
+
+// import Project from './project'
 
 class ProjectList extends Component {
   constructor(...args) {
@@ -15,6 +18,27 @@ class ProjectList extends Component {
     this.state = {
       openModal: false
     }
+  }
+
+  renderProjectList(projects) {
+    // return (
+    //   <List
+    //     items={ projects }
+    //     renderItem={ project => <Project data={ project } /> }
+    //   />
+    // )
+
+    // return (
+    //   <List>
+    //     {
+    //       projects.map(project => (
+    //         <ListItem key={ project._id }>
+    //           <Project data={ project } />
+    //         </ListItem>
+    //       ))
+    //     }
+    //   </List>
+    // )
   }
 
   displayProjects() {
@@ -35,9 +59,9 @@ class ProjectList extends Component {
       <main>
         <ButtonCircle
           onMouseDown={ () => this.setState({ openModal: true }) }
-          size='large'
+          size="large"
         >
-          <PlusIcon large inverted />
+          <AddIcon large inverted />
         </ButtonCircle>
         { this.displayProjects() }
         <Modal

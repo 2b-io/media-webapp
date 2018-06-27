@@ -18,8 +18,8 @@ const fetchPassword = function* () {
   while (true) {
     const fetchPassword = yield take(types['RESETPASSWORDCODE/FETCH_PASSWORD'])
     try {
-      let { password, code, id } = fetchPassword.payload
-      const statusResetPassword =  yield call(ResetPasswordCode.ressetPassword, password, code, id)
+      let { password, code } = fetchPassword.payload
+      const statusResetPassword =  yield call(ResetPasswordCode.ressetPassword, password, code)
       yield put(actions.receiveResetPassword(statusResetPassword))
     } catch (e) {
       continue

@@ -1,3 +1,4 @@
+export { selectors as account } from './account'
 export { selectors as resetPasswordCode } from './resetPasswordCode'
 export { selectors as layout } from './layout'
 export { selectors as location } from './location'

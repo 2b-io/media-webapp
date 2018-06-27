@@ -4,7 +4,7 @@ import { Form } from 'ui/compounds'
 import { Button } from 'ui/elements'
 import { TextBox  } from 'ui/redux-form'
 
-const SignInForm = ({ handleSubmit }) => (
+const RegisterForm = ({ handleSubmit }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Line>
       <TextBox
@@ -14,17 +14,10 @@ const SignInForm = ({ handleSubmit }) => (
         autoFocus
       />
     </Form.Line>
-    <Form.Line>
-      <TextBox
-        type="password"
-        name="password"
-        placeholder="your password"
-      />
-    </Form.Line>
     <Form.Line last>
-      <Button type="submit">Sign In</Button>
+      <Button type="submit">Register</Button>
     </Form.Line>
   </Form>
 )
 
-export default SignInForm
+export default RegisterForm

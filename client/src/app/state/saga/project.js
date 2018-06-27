@@ -1,44 +1,55 @@
 import { call, take, fork, put, select } from 'redux-saga/effects'
+import serializeError from 'serialize-error'
+
 import Project from 'models/project'
 import { actions, types, selectors } from 'state/interface'
 
-const fetch = function* () {
-
+const fetchLoop = function*() {
   while (true) {
     yield take(types['PROJECT/FETCH'])
+
     try {
-      const { token } = yield select(selectors.currentSession)
-      if (!token) {
+      const session = yield select(selectors.currentSession)
+
+      if (!session) {
         continue
       }
-      const projects =  yield call(Project.getProjectList, token)
-      yield put(actions.receiveProjects(projects))
+
+      const projects = yield call(Project.getProjectList, session.token)
+
+      yield put(actions.fetchProjectsCompleted(projects))
     } catch (e) {
+      yield put(actions.fetchProjectsFailed(serializeError(e)))
       continue
     }
   }
 }
-const create = function* () {
 
+const createLoop = function*() {
   while (true) {
-    const projectInfo = yield take(types['PROJECT/CREATE'])
-    let project = projectInfo.payload
+    const action = yield take(types['PROJECT/CREATE'])
+    const { project } = action.payload
+
     try {
-      const { token } = yield select(selectors.currentSession)
-      if (!token) {
+      const session = yield select(selectors.currentSession)
+
+      if (!session) {
         continue
       }
-      const dataProject =  yield call(Project.create, { project, token })
-      yield put(actions.responseProject(dataProject))
-      yield put(actions.updateListProject(dataProject))
+
+      const newProject = yield call(Project.create, project, session.token)
+
+      yield put(actions.createProjectCompleted(newProject))
+      // yield put(actions.updateListProject(dataProject))
     } catch (e) {
+      yield put(actions.createProjectFailed(serializeError(e)))
       continue
     }
   }
 }
 
-export default function* () {
+export default function*() {
   yield take('@@INITIALIZED')
-  yield fork(fetch)
-  yield fork(create)
+  yield fork(fetchLoop)
+  yield fork(createLoop)
 }

@@ -6,14 +6,13 @@ import { Form } from 'ui/compounds'
 
 const projectForm = ({ handleSubmit }) => (
   <Form handleSubmit={ handleSubmit }>
-    <Form.Header> Create new project </Form.Header>
-    <Form.Description> Enter info your project and click to 'Add project ' button </Form.Description>
+    <Form.Header>Create new project</Form.Header>
+    <Form.Description>Enter info your project and click to 'Add project' button</Form.Description>
     <Form.Line>
       <TextBox
         type="TextBox"
         name="name"
         placeholder="Name project"
-        autoFocus
       />
     </Form.Line>
     <Form.Line>
@@ -21,20 +20,6 @@ const projectForm = ({ handleSubmit }) => (
         type="TextBox"
         name="slug"
         placeholder="Slug"
-      />
-    </Form.Line>
-    <Form.Line>
-      <TextBox
-        type="TextBox"
-        name="prettyOrigin"
-        placeholder="Pretty origin"
-      />
-    </Form.Line>
-    <Form.Line>
-      <TextBox
-        type="TextBox"
-        name="origins"
-        placeholder="Origin"
       />
     </Form.Line>
     <Form.Line last>

@@ -29,11 +29,11 @@ const icon = type => ({ inverted = 0, ...sizes }) => (
   />
 )
 
+export const AddIcon = icon(plus)
 export const BillingIcon = icon(dollarSign)
 export const CloseIcon = icon(x)
 export const DashboardIcon = icon(grid)
 export const GithubIcon = icon(github)
 export const ProfileIcon = icon(user)
 export const ProjectListIcon = icon(list)
-export const PlusIcon = icon(plus)
 export const SignOutIcon = icon(logOut)
