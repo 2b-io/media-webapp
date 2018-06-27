@@ -5,8 +5,9 @@ export const createSession = credential => ({
   payload: { credential }
 })
 
-export const destroySession = () => ({
-  type: types.DESTROY
+export const restoreSession = session => ({
+  type: types.CREATE,
+  payload: { session }
 })
 
 export const createSessionCompleted = info => ({
@@ -14,11 +15,15 @@ export const createSessionCompleted = info => ({
   payload: { info }
 })
 
-export const destroySessionCompleted = () => ({
-  type: types.DESTROY_COMPLETED
+export const createSessionFailed = reason => ({
+  type: types.CREATE_FAILED,
+  payload: { reason }
 })
 
-export const restoreSession = session => ({
-  type: types.CREATE,
-  payload: { session }
+export const destroySession = () => ({
+  type: types.DESTROY
+})
+
+export const destroySessionCompleted = () => ({
+  type: types.DESTROY_COMPLETED
 })

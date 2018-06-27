@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Form } from 'ui/compounds'
 import { Button } from 'ui/elements'
-import { TextBox } from 'ui/redux-form'
+import { TextBox } from 'views/common/form'
 
 const ResetPasswordForm = ({ handleSubmit, password, rePassword }) => (
   <Form handleSubmit={ handleSubmit }>

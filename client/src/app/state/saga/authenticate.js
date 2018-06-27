@@ -37,6 +37,8 @@ const loop = function*() {
         put(actions.openLayout())
       ])
     } catch(e) {
+      yield put(actions.createSessionFailed(e))
+
       continue
     }
 

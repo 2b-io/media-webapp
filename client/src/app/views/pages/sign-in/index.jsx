@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
 import { Container, Link, Paragraph } from 'ui/elements'
+import { stateful } from 'views/common/hoc'
 
 import _SignInForm from './form'
 
@@ -32,11 +33,15 @@ const SignIn = ({ signIn, toForgotPassword, toRegister }) => (
   </main>
 )
 
-export default connect(
-  null,
-  mapDispatch({
-    signIn: credential => actions.createSession(credential),
-    toForgotPassword: () => actions.requestLocation('/forgot-password'),
-    toRegister: () => actions.requestLocation('/register')
-  })
-)(SignIn)
+export default stateful({
+  component: 'SignIn'
+})(
+  connect(
+    null,
+    mapDispatch({
+      signIn: credential => actions.createSession(credential),
+      toForgotPassword: () => actions.requestLocation('/forgot-password'),
+      toRegister: () => actions.requestLocation('/register')
+    })
+  )(SignIn)
+)

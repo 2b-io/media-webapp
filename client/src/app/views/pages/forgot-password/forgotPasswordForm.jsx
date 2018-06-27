@@ -1,8 +1,8 @@
 import React from 'react'
-import { TextBox  } from 'ui/redux-form'
 
 import { Button } from 'ui/elements'
 import { Form } from 'ui/compounds'
+import { TextBox } from 'views/common/form'
 
 const forgotPasswordForm = ({ handleSubmit }) => (
   <Form handleSubmit={ handleSubmit }>
