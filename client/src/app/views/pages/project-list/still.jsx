@@ -1,41 +1,46 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
+import { mapDispatch } from 'services/redux-helpers'
 import { ButtonCircle } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
-import { Modal } from 'ui/compounds'
-
+import { modal } from 'views/common/hoc'
 import CreateProject from 'views/common/modals/create-project'
 
-class ListProject extends Component {
+const CreateProjectModal = modal({
+  name: 'CreateProject'
+})(CreateProject)
 
-  state = {
-    openModal: false
-  }
+const ProjectList = ({ showModal, hideModal }) => (
+  <div>
+    <span>Projects</span>
+    <ButtonCircle
+      onClick={ showModal }
+      size="large"
+      float='right'
+      margin='-10px 0 0 0'
+      color='#00D9C5'
+    >
+      <AddIcon large inverted />
+    </ButtonCircle>
+    <CreateProjectModal
+      hideOnClickOutside={ true }
+      showCloseButton={ true }
+      width="wide"
+    />
+  </div>
+)
 
-  render(){
-    return (
-      <div>
-        <span>Projects</span>
-        <ButtonCircle
-          onMouseDown={ () => this.setState({ openModal: true }) }
-          size="large"
-          float='right'
-          margin='-10px 0 0 0'
-          color='#00D9C5'
-        >
-          <AddIcon large inverted />
-        </ButtonCircle>
-        <Modal
-          open={ this.state.openModal }
-          onClickOutside={ () => { this.setState({ openModal: false }) } }
-          onClose={ () => { this.setState({ openModal: false }) } }
-          position='top'
-        >
-          <CreateProject />
-        </Modal>
-      </div>
-    )
-  }
-}
-
-export default ListProject
+export default connect(
+  null,
+  mapDispatch({
+    showModal: () => ({
+      type: '@@MODAL/SHOW',
+      payload: { modal: 'CreateProject' }
+    }),
+    hideModal: () => ({
+      type: '@@MODAL/HIDE',
+      payload: { modal: 'CreateProject' }
+    })
+  })
+)(ProjectList)
