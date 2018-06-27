@@ -1,7 +1,7 @@
 import React from 'react'
-// import { TextBox  } from 'ui/redux-form'
+import { TextBox  } from 'ui/redux-form'
 
-import { Button, TextBox } from 'ui/elements'
+import { Button } from 'ui/elements'
 import { Form } from 'ui/compounds'
 
 const projectForm = ({ handleSubmit }) => (
@@ -11,7 +11,7 @@ const projectForm = ({ handleSubmit }) => (
     <Form.Line>
       <TextBox
         type="TextBox"
-        name="projectName"
+        name="name"
         placeholder="Name project"
         autoFocus
       />
@@ -21,23 +21,20 @@ const projectForm = ({ handleSubmit }) => (
         type="TextBox"
         name="slug"
         placeholder="Slug"
-        autoFocus
       />
     </Form.Line>
     <Form.Line>
       <TextBox
         type="TextBox"
-        name="prettyOrigin:"
+        name="prettyOrigin"
         placeholder="Pretty origin"
-        autoFocus
       />
     </Form.Line>
     <Form.Line>
       <TextBox
         type="TextBox"
-        name="origin:"
+        name="origins"
         placeholder="Origin"
-        autoFocus
       />
     </Form.Line>
     <Form.Line last>
