@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
@@ -11,7 +11,7 @@ const CreateProjectModal = modal({
   name: 'CreateProject'
 })(CreateProject)
 
-const ProjectList = ({ showModal, hideModal }) => (
+const ProjectList = ({ showModal }) => (
   <div>
     <span>Projects</span>
     <ButtonCircle
@@ -36,10 +36,6 @@ export default connect(
   mapDispatch({
     showModal: () => ({
       type: '@@MODAL/SHOW',
-      payload: { modal: 'CreateProject' }
-    }),
-    hideModal: () => ({
-      type: '@@MODAL/HIDE',
       payload: { modal: 'CreateProject' }
     })
   })
