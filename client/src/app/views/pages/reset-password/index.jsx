@@ -27,10 +27,11 @@ const ResetPassword=({ fetchResetPassword, match, toForgotPassword, statusResetP
           <Modal
             open={ true }
             zIndex={ 10 }
-            onClickOutside={ toForgotPassword }
-            onClose={ toForgotPassword }>
-            { () => statusResetPassword===true? <p>Reset password success!</p> : <p>Reset password fail!</p>
-            }
+            onClickOutside={ toSignIn }
+            onClose={ toSignIn }>
+            <div>
+              <p>Reset password success!</p>
+            </div>
           </Modal>
         }
       </Container>

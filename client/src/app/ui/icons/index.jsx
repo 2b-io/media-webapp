@@ -7,6 +7,7 @@ import { github } from 'react-icons-kit/feather/github'
 import { grid } from 'react-icons-kit/feather/grid'
 import { list } from 'react-icons-kit/feather/list'
 import { logOut } from 'react-icons-kit/feather/logOut'
+import { plus } from 'react-icons-kit/feather/plus'
 import { user } from 'react-icons-kit/feather/user'
 import { x } from 'react-icons-kit/feather/x'
 
@@ -28,6 +29,7 @@ const icon = type => ({ inverted = 0, ...sizes }) => (
   />
 )
 
+export const AddIcon = icon(plus)
 export const BillingIcon = icon(dollarSign)
 export const CloseIcon = icon(x)
 export const DashboardIcon = icon(grid)

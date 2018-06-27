@@ -45,13 +45,14 @@
     "redux-form": "7.4.2",
     "redux-saga": "0.16.0",
     "semantic-ui-react": "0.80.2",
+    "serialize-error": "2.1.0",
     "slugify": "1.2.9",
     "smooth-ui": "4.1.2",
     "split-lines": "1.1.0",
     "styled-components": "3.2.6",
     "styled-transition-group": "1.0.0",
     "stylus": "0.54.5",
-    "superagent": "^3.8.1",
+    "superagent": "3.8.1",
     "typeface-space-mono": "0.0.54"
   },
   "devDependencies": {

@@ -26,11 +26,9 @@ const ForgotPassword=({ fetchEmail, emailExist, toSignIn }) => {
         onClickOutside={ toSignIn }
         onClose={ toSignIn }
       >
-        { () => (
-          <p>
-            Request reset password success! Please check your email and reset password during 24 hour
-          </p>
-        ) }
+        <p>
+          Request reset password success! Please check your email and reset password during 24 hour
+        </p>
       </Modal>:''}
     </main>
   ) }

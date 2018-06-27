@@ -36,7 +36,7 @@ const Modal = ({
           <CloseIconWrapper onClick={ onClose }>
             <CloseIcon />
           </CloseIconWrapper>
-          { children ? children({ open }) : null }
+          { children }
         </ContentModal>
       </Overlay>
     </Portal>
