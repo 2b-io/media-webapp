@@ -51,7 +51,8 @@ Modal.propTypes = {
   onClose: PropTypes.func,
   height: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
   width: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
-  fullWidth: PropTypes.bool
+  fullWidth: PropTypes.bool,
+  zIndex: PropTypes.number
 }
 
 Modal.defaultProps = {
@@ -60,10 +61,11 @@ Modal.defaultProps = {
   open: false,
   fullWidth: false,
   width: '30%',
-  zIndex: 1
+  zIndex: 10
 }
 
 const ContentModal = styled.div` {
+  position: absolute;
   background-color: #fff;
   box-shadow: 3px 3px 3px rgba(0,0,0,0.2);
   padding: 40px 50px;
@@ -77,7 +79,7 @@ const ContentModal = styled.div` {
     ({ fullWidth, width }) => (fullWidth ? '90%' : width ? width : '')
   };
   left: ${
-    ({ fullWidth }) => (fullWidth ? '51%' : '')
+    ({ fullWidth }) => (fullWidth ? '50%' : '')
   };
   overflow: hidden;
   ${
@@ -85,23 +87,28 @@ const ContentModal = styled.div` {
       switch (position) {
         case 'center':
           return css`
-            position: absolute;
             top: 50%;
-            left: 55%;
+            left: 50%;
             transform: translate(-50%, -50%);
             transition: all 0.5s ease;
             align-self: center;
           `
         case 'top':
           return css`
-            top: 0;
-            left: 0;
+            left: 50%;
+            transform: translate(-50%, 10%);
           `
       }
     }
   }
+  @media (min-width: 300px) {
+    width: 90%;
+  }
   @media (min-width: 600px) {
-    width: 85%;
+    width: 80%;
+  }
+  @media (min-width: 800px) {
+    width: 75%;
   }
 }`
 
