@@ -58,6 +58,11 @@ export default ({
   name,
   enableStateful = true
 }) => WrappedComponent => {
+  const ModalContent = enableStateful ?
+    stateful({
+      component: `modal/${ name }`
+    })(WrappedComponent) : WrappedComponent
+
   const Modal = ({ show, hide, hideOnClickOutside, showCloseButton, width }) => {
     if (!show) {
       return null
@@ -76,7 +81,7 @@ export default ({
                 )
               }
             </Header>
-            <WrappedComponent />
+            <ModalContent />
           </Wrapper>
         </Overlay>
       </Portal>
@@ -94,7 +99,7 @@ export default ({
     showCloseButton: true
   }
 
-  const ConnectedModal = connect(
+  return connect(
     state => ({
       show: state.modal[name]
     }),
@@ -105,12 +110,4 @@ export default ({
       })
     })
   )(Modal)
-
-  if (!enableStateful) {
-    return ConnectedModal
-  }
-
-  return stateful({
-    component: name
-  })(ConnectedModal)
 }
