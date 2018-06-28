@@ -28,7 +28,7 @@ const Wrapper = styled.div`
   margin-right: auto;
   padding: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, .2);
-  min-width: 600px;
+  min-width: 300px;
   max-width: ${
     ({ width }) => width === 'wide' ? '960px' : (width === 'narrow' ? '640px' : 'auto')
   };
