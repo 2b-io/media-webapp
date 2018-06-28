@@ -23,6 +23,6 @@
     "dev:client": "cd client && npm start && cd ..",
     "dev:server": "cd server && npm start && cd ..",
     "lint": "eslint --ext js --ext jsx .",
-    "lint:watch": "nodemon --legacy-watch --watch client --watch server --ext js,jsx --exec \"npm run lint\""
+    "lint:watch": "nodemon --legacy-watch --watch client --watch server --watch .eslintrc.js --ext js,jsx --exec \"npm run lint\""
   }
 }
