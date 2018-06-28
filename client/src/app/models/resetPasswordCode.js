@@ -1,7 +1,7 @@
 import request from 'services/graphql'
 
 export default {
-  requestRessetPassword: async (email) => {
+  requestResset: async (email) => {
     const body = await request(`
       query requestRessetPassword($email: String!) {
         _requestRessetPassword(email: $email)

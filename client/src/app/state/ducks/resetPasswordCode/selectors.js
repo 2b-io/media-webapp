@@ -1,4 +1,4 @@
 export default {
-  emailExist: state => state.resetPasswordCode,
-  statusResetPassword: state => state.resetPasswordCode
+  status: state => state.resetPasswordCode,
+  statusReset: state => state.resetPasswordCode
 }

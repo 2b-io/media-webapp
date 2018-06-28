@@ -2,10 +2,11 @@ import React from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
-import { actions, selectors } from 'state/interface'
-import { Container } from 'ui/elements'
 import { Modal } from 'ui/compounds'
+import { Container } from 'ui/elements'
+import { actions, selectors } from 'state/interface'
 import { mapDispatch, mapState } from 'services/redux-helpers'
+
 import _ForgotPasswordForm from './forgotPasswordForm'
 
 const ForgotPasswordForm = reduxForm({
@@ -13,14 +14,14 @@ const ForgotPasswordForm = reduxForm({
   enableReinitialize: true
 })(_ForgotPasswordForm)
 
-const ForgotPassword=({ fetchEmail, emailExist, toSignIn }) => {
+const ForgotPassword=({ fetchEmail, status, toSignIn }) => {
   return (
     <main>
       <Container center size="small">
         <ForgotPasswordForm onSubmit={ fetchEmail } />
-        { emailExist===null?'':<p>Email not exist, please check again</p> }
+        { status===null?'':<p>Email not exist, please check again</p> }
       </Container>
-      { emailExist?  <Modal
+      { status?  <Modal
         open={ true }
         zIndex={ 10 }
         onClickOutside={ toSignIn }
@@ -35,7 +36,7 @@ const ForgotPassword=({ fetchEmail, emailExist, toSignIn }) => {
 
 export default connect(
   mapState({
-    emailExist: selectors.emailExist
+    status: selectors.status
   }),
   mapDispatch({
     fetchEmail: email => actions.fetchEmail(email),
