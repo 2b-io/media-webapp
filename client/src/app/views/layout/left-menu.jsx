@@ -9,6 +9,7 @@ import { Link } from 'ui/elements'
 import {
   BillingIcon,
   DashboardIcon,
+  PaymentIcon,
   ProjectListIcon,
   SignOutIcon
 } from 'ui/icons'
@@ -64,6 +65,12 @@ const LeftMenu = ({ signOut, toDashboard, toProjectList, width }) => (
         <LinkButton onClick={ signOut }>
           <BillingIcon medium />
           <MenuItemLabel>Billing</MenuItemLabel>
+        </LinkButton>
+      </MenuItem>
+      <MenuItem>
+        <LinkButton onClick={ signOut }>
+          <PaymentIcon medium />
+          <MenuItemLabel>Payment Methods</MenuItemLabel>
         </LinkButton>
       </MenuItem>
       <MenuItem>

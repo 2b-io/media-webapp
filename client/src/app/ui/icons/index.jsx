@@ -2,6 +2,7 @@ import React from 'react'
 import Icon from 'react-icons-kit'
 import styled from 'styled-components'
 
+import { creditCard } from 'react-icons-kit/feather/creditCard'
 import { dollarSign } from 'react-icons-kit/feather/dollarSign'
 import { github } from 'react-icons-kit/feather/github'
 import { grid } from 'react-icons-kit/feather/grid'
@@ -43,6 +44,7 @@ export const DashboardIcon = icon(grid)
 export const GithubIcon = icon(github)
 export const HelpIcon = icon(helpCircle)
 export const MoreIcon = icon(moreVertical)
+export const PaymentIcon = icon(creditCard)
 export const ProfileIcon = icon(user)
 export const ProjectListIcon = icon(list)
 export const SignOutIcon = icon(logOut)
