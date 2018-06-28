@@ -55,7 +55,7 @@ class CollapsibleMenu extends Component {
           { children }
         </BreakPoint>
         <BreakPoint name="small">
-          <MoreIcon medium inverted
+          <MoreIcon size="medium" inverted
             onClick={ this.toggleMenu }
           />
           {
