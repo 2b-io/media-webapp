@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 
 import { mapState } from 'services/redux-helpers'
 import { selectors } from 'state/interface'
 import { GridView } from 'ui/compounds'
 
-const ProjectList = ({projects}) => (
+const ProjectList = ({ projects }) => (
 
   (!projects || !projects.length) ? <h2>No data ....</h2> :
     <main>

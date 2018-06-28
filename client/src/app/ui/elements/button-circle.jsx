@@ -7,7 +7,7 @@ const ButtonCircle = styled.div.attrs({
 })`
   & {
     border-radius: 32px;
-    background-color: ${ ( {color='#333333'} ) => color };
+    background-color: ${ ( { color='#333333' } ) => color };
     cursor: pointer;
     overflow: hidden;
     margin: ${ ({ margin }) => margin };

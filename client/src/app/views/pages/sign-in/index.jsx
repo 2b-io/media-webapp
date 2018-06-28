@@ -14,12 +14,20 @@ const SignInForm = reduxForm({
   enableReinitialize: true
 })(_SignInForm)
 
-const SignIn = ({ signIn, toForgotPassword, toRegister }) => (
+const SignIn = ({
+  signIn,
+  toForgotPassword,
+  toRegister,
+  ui: { error }
+}) => (
   <main>
     <Container center size="small">
-      <Paragraph>
-        Enter your email and password
-      </Paragraph>
+      {
+        error? <Paragraph>Account or password not match</Paragraph> :
+          <Paragraph>
+            Enter your email and password
+          </Paragraph>
+      }
       <SignInForm onSubmit={ signIn } />
       <Paragraph>
         Don&apos;t have your account yet?<br />
