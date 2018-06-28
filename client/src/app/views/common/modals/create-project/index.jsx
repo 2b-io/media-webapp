@@ -3,8 +3,9 @@ import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
-import { actions, selectors } from 'state/interface'
+import { actions } from 'state/interface'
 import { Container } from 'ui/elements'
+import { modal } from 'views/common/decorators'
 
 import _ProjectForm from './form'
 
@@ -21,9 +22,13 @@ const CreateProject = ({ createProject }) => {
   )
 }
 
-export default connect(
-  null,
-  mapDispatch({
-    createProject: actions.createProject
-  })
-)(CreateProject)
+export default modal({
+  name: 'CreateProject'
+})(
+  connect(
+    null,
+    mapDispatch({
+      createProject: actions.createProject
+    })
+  )(CreateProject)
+)

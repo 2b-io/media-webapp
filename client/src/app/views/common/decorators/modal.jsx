@@ -6,6 +6,7 @@ import styled from 'styled-components'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { CloseIcon } from 'ui/icons'
+import { stateful } from 'views/common/decorators'
 
 const Overlay = styled.div`
   position: fixed;
@@ -54,7 +55,8 @@ const CloseButton = styled.button.attrs({
 `
 
 export default ({
-  name
+  name,
+  enableStateful = true
 }) => WrappedComponent => {
   const Modal = ({ show, hide, hideOnClickOutside, showCloseButton, width }) => {
     if (!show) {
@@ -92,7 +94,7 @@ export default ({
     showCloseButton: true
   }
 
-  return connect(
+  const ConnectedModal = connect(
     state => ({
       show: state.modal[name]
     }),
@@ -103,4 +105,12 @@ export default ({
       })
     })
   )(Modal)
+
+  if (!enableStateful) {
+    return ConnectedModal
+  }
+
+  return stateful({
+    component: name
+  })(ConnectedModal)
 }

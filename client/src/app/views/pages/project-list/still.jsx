@@ -4,12 +4,7 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { ButtonCircle } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
-import { modal } from 'views/common/hoc'
 import CreateProject from 'views/common/modals/create-project'
-
-const CreateProjectModal = modal({
-  name: 'CreateProject'
-})(CreateProject)
 
 const ProjectList = ({ showModal }) => (
   <Fragment>
@@ -25,7 +20,7 @@ const ProjectList = ({ showModal }) => (
         <AddIcon large inverted />
       </ButtonCircle>
     </div>
-    <CreateProjectModal width="wide" />
+    <CreateProject width="wide" />
   </Fragment>
 )
 

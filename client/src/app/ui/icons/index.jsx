@@ -21,13 +21,17 @@ const s = ({ medium, large, extraLarge }) => (
   extraLarge ? 48 : (large ? 32 : (medium ? 24 : 16))
 )
 
-const icon = type => ({ inverted = 0, ...sizes }) => (
-  <StyledIcon
-    inverted={ Number(inverted) }
-    icon={ type }
-    size={ s(sizes) }
-  />
-)
+const icon = type => {
+  const Icon = ({ inverted = 0, ...sizes }) => (
+    <StyledIcon
+      inverted={ Number(inverted) }
+      icon={ type }
+      size={ s(sizes) }
+    />
+  )
+
+  return Icon
+}
 
 export const AddIcon = icon(plus)
 export const BillingIcon = icon(dollarSign)

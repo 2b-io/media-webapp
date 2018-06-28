@@ -1,20 +1,28 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 
 import { mapState } from 'services/redux-helpers'
 import { selectors } from 'state/interface'
 import { GridView } from 'ui/compounds'
 
-const ProjectList = ({projects}) => (
+const ProjectList = ({ projects }) => {
+  if (!projects || !projects.length) {
+    return (
+      <main>
+        <h2>No data ....</h2>
+      </main>
+    )
+  }
 
-  (!projects || !projects.length) ? <h2>No data ....</h2> :
+  return (
     <main>
       <GridView
         dataHeader={ [ 'ID', 'Name', 'Slug', 'Disabled' ] }
         dataBody={ projects }
       />
     </main>
-)
+  )
+}
 
 export default connect(
   mapState({
@@ -22,9 +30,7 @@ export default connect(
   })
 )(ProjectList)
 
-
-
-// todo
+// TODO
 //   <List
 //     items={ projects }
 //     renderItem={ project => <Project data={ project } /> }
