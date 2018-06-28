@@ -40,8 +40,8 @@ class HistoryManager extends Component {
     init(this.browserHistory.location.pathname)
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { current } = nextProps
+  componentDidUpdate() {
+    const { current } = this.props
 
     if (current.pathname && current.key !== this.memoryHistory.location.key) {
       this.memoryHistory.push(current.pathname)
