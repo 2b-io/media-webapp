@@ -69,7 +69,7 @@ export default ({
     }
 
     return (
-      <Portal>
+      <Portal node={ document && document.getElementById('root') }>
         <Overlay onClick={ hideOnClickOutside ? hide : null }>
           <Wrapper onClick={ e => e.stopPropagation() } width={ width }>
             <Header>

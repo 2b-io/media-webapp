@@ -20,6 +20,7 @@ const StyledWrapper = styled.div`
 
 const Wrapper = ({ children, shown, headerHeight, menuWidth }) => (
   <StyledWrapper
+    id="wrapper"
     shown={ shown }
     headerHeight={ headerHeight }
     menuWidth={ menuWidth }>

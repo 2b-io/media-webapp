@@ -2,24 +2,25 @@ import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
-import { ButtonCircle } from 'ui/elements'
-import { AddIcon } from 'ui/icons'
+import { CollapsibleMenu, TitleBar } from 'ui/compounds'
+import { Button } from 'ui/elements'
+import { AddIcon, HelpIcon } from 'ui/icons'
 import CreateProject from 'views/common/modals/create-project'
 
 const ProjectList = ({ showModal }) => (
   <Fragment>
-    <div>
-      <span>Projects</span>
-      <ButtonCircle
-        onClick={ showModal }
-        size="large"
-        float='right'
-        margin='-10px 0 0 0'
-        color='#00D9C5'
-      >
-        <AddIcon large inverted />
-      </ButtonCircle>
-    </div>
+    <TitleBar>
+      <TitleBar.Title>
+        <h1>Projects</h1>
+      </TitleBar.Title>
+
+      <TitleBar.Menu>
+        <CollapsibleMenu>
+          <AddIcon medium inverted onClick={ showModal } />
+          <HelpIcon medium inverted />
+        </CollapsibleMenu>
+      </TitleBar.Menu>
+    </TitleBar>
     <CreateProject width="wide" />
   </Fragment>
 )

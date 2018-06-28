@@ -1,3 +1,4 @@
+export { default as BreakPoint } from './break-point'
 export { default as Button } from './button'
 export { default as ButtonCircle } from './button-circle'
 export { default as ConditionalDisplay } from './conditional-display'
