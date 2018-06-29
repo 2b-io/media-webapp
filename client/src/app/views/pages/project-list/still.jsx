@@ -1,41 +1,40 @@
-import React, { Component } from 'react'
+import React, { Fragment } from 'react'
+import { connect } from 'react-redux'
 
-import { ButtonCircle } from 'ui/elements'
-import { AddIcon } from 'ui/icons'
-import { Modal } from 'ui/compounds'
-
+import { mapDispatch } from 'services/redux-helpers'
+import { TitleBar } from 'ui/compounds'
+import { Button, CollapsibleMenu } from 'ui/elements'
+import { AddIcon, HelpIcon } from 'ui/icons'
 import CreateProject from 'views/common/modals/create-project'
 
-class ListProject extends Component {
+const ProjectList = ({ showModal }) => (
+  <Fragment>
+    <TitleBar>
+      <TitleBar.Title>
+        <h1>Projects</h1>
+      </TitleBar.Title>
 
-  state = {
-    openModal: false
-  }
+      <TitleBar.Menu>
+        <CollapsibleMenu>
+          <Button plain onClick={ showModal }>
+            <AddIcon size="medium" inverted />
+          </Button>
+          <Button plain>
+            <HelpIcon size="medium" inverted />
+          </Button>
+        </CollapsibleMenu>
+      </TitleBar.Menu>
+    </TitleBar>
+    <CreateProject width="wide" />
+  </Fragment>
+)
 
-  render(){
-    return (
-      <div>
-        <span>Projects</span>
-        <ButtonCircle
-          onMouseDown={ () => this.setState({ openModal: true }) }
-          size="large"
-          float='right'
-          margin='-10px 0 0 0'
-          color='#00D9C5'
-        >
-          <AddIcon large inverted />
-        </ButtonCircle>
-        <Modal
-          open={ this.state.openModal }
-          onClickOutside={ () => { this.setState({ openModal: false }) } }
-          onClose={ () => { this.setState({ openModal: false }) } }
-          position='top'
-        >
-          <CreateProject />
-        </Modal>
-      </div>
-    )
-  }
-}
-
-export default ListProject
+export default connect(
+  null,
+  mapDispatch({
+    showModal: () => ({
+      type: '@@MODAL/SHOW',
+      payload: { modal: 'CreateProject' }
+    })
+  })
+)(ProjectList)

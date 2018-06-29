@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 const StyledStill = styled.div`
   background: #333;
-  padding: 20px;
   color: #fff;
 `
 

@@ -1,10 +1,11 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { selectors } from 'state/interface'
+import { mapDispatch } from 'services/redux-helpers'
+import { actions, selectors } from 'state/interface'
 
 import Content from './content'
-// import Header from './header'
+import Layer from './layer'
 import Overlay from './overlay'
 import Still from './still'
 import Wrapper from './wrapper'
@@ -23,23 +24,24 @@ class Layout extends Component {
   }
 
   render() {
-    const { isLayoutClosed, render } = this.props
-    const { menuWidth, headerHeight } = this.props
+    const {
+      isBackground,
+      isLayoutClosed,
+      menuWidth,
+      headerHeight,
+      render,
+      email,
+      toProfile
+    } = this.props
 
     return (
-      <Fragment>
-        {/*
-        <Header
-          shown={ !isLayoutClosed }
-          height={ headerHeight }
-          >
-          { render.header(this.props) }
-        </Header>
-        */}
+      <Layer isBackground={ isBackground }>
         <Overlay
           shown={ isLayoutClosed }
           headerHeight={ headerHeight }
-          width={ menuWidth }>
+          width={ menuWidth }
+          email={ email }
+          toProfile={ toProfile }>
           { render.overlay(this.props) }
         </Overlay>
         <Wrapper
@@ -57,7 +59,7 @@ class Layout extends Component {
             { render.content(this.props) }
           </Content>
         </Wrapper>
-      </Fragment>
+      </Layer>
     )
   }
 
@@ -75,7 +77,16 @@ class Layout extends Component {
 }
 
 export default connect(
-  state => ({
-    isLayoutClosed: selectors.isLayoutClosed(state)
+  state => {
+    const session = selectors.currentSession(state)
+
+    return {
+      email: session && session.account.email,
+      isLayoutClosed: selectors.isLayoutClosed(state),
+      isBackground: Object.values(state.modal).some(Boolean)
+    }
+  },
+  mapDispatch({
+    toProfile: () => actions.requestLocation('/@me')
   })
 )(Layout)

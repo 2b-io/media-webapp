@@ -40,8 +40,8 @@ class HistoryManager extends Component {
     init(this.browserHistory.location.pathname)
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { current } = nextProps
+  componentDidUpdate() {
+    const { current } = this.props
 
     if (current.pathname && current.key !== this.memoryHistory.location.key) {
       this.memoryHistory.push(current.pathname)
@@ -58,7 +58,8 @@ class HistoryManager extends Component {
     const { children } = this.props
 
     return React.cloneElement(children, {
-      history: this.memoryHistory
+      history: this.memoryHistory,
+      locationKey: this.memoryHistory.location.key
     })
   }
 }

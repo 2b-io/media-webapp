@@ -14,7 +14,8 @@ const ProjectList = ({ projects }) => (
         dataBody={ projects }
       />
     </main>
-)
+  )
+}
 
 export default connect(
   mapState({
@@ -22,9 +23,7 @@ export default connect(
   })
 )(ProjectList)
 
-
-
-// todo
+// TODO
 //   <List
 //     items={ projects }
 //     renderItem={ project => <Project data={ project } /> }

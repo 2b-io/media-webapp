@@ -1,6 +1,6 @@
 import { call, take, fork, put } from 'redux-saga/effects'
 import Account from 'models/account'
-import { actions, types, selectors } from 'state/interface'
+import { actions, types } from 'state/interface'
 
 const registerLoop = function*() {
   while (true) {

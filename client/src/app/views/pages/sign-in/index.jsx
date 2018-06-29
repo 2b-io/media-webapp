@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
 import { Container, Link, Paragraph } from 'ui/elements'
-import { stateful } from 'views/common/hoc'
+import { stateful } from 'views/common/decorators'
 
 import _SignInForm from './form'
 

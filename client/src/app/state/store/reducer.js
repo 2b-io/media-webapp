@@ -18,7 +18,8 @@ const uiReducer = combineReducers({
 
 export default combineReducers({
   ...duckReducers,
-  ui: (state, action) => {
+  form,
+  ui: (state = {}, action) => {
     if (action.type === '@@UI/CLEAR') {
       console.log('clearing...', action.payload.component)
 
@@ -32,5 +33,19 @@ export default combineReducers({
 
     return uiReducer(state, action)
   },
-  form
+  modal: (state = {}, action) => {
+    if (action.type === '@@MODAL/SHOW') {
+      return {
+        ...state,
+        [ action.payload.modal ]: true
+      }
+    } else if (action.type === '@@MODAL/HIDE') {
+      return {
+        ...state,
+        [ action.payload.modal ]: false
+      }
+    }
+
+    return state
+  }
 })

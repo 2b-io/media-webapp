@@ -13,13 +13,15 @@ const StyledWrapper = styled.div`
   right: 0;
   bottom: 0;
   -webkit-overflow-scrolling: touch;
-  overflow: ${
+  overflow-x: hidden;
+  overflow-y: ${
     ({ shown }) => shown ? 'auto' : 'hidden'
   };
 `
 
 const Wrapper = ({ children, shown, headerHeight, menuWidth }) => (
   <StyledWrapper
+    id="wrapper"
     shown={ shown }
     headerHeight={ headerHeight }
     menuWidth={ menuWidth }>

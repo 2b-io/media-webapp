@@ -1,17 +1,22 @@
 import PropTypes from 'prop-types'
-import React from 'react'
 import styled, { css }from 'styled-components'
 
 const ButtonCircle = styled.div.attrs({
   type: ({ type = 'button' }) => type
 })`
   & {
-    border-radius: 32px;
-    background-color: ${ ( { color='#333333' } ) => color };
+    border-radius: 100%;
+    background-color: ${
+      ({ color = '#333333' }) => color
+    };
     cursor: pointer;
     overflow: hidden;
-    margin: ${ ({ margin }) => margin };
-    float: ${ ({ float }) => float };
+    margin: ${
+      ({ margin }) => margin
+    };
+    float: ${
+      ({ float }) => float
+    };
     ${
       ({ size }) => {
         switch (size) {
