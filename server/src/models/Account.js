@@ -13,9 +13,6 @@ const schema = mongoose.Schema({
     type: String,
     required: true
   },
-  salt: {
-    type: Number,
-  },
   removed: {
     type: Boolean,
     default: false,
@@ -24,14 +21,14 @@ const schema = mongoose.Schema({
 })
 
 schema.methods = {
-  comparePassword({ plain, hashed }) {
+  comparePassword(plain, hashed) {
     return bcrypt.compareSync(plain, hashed)
   },
 }
 
 schema.virtual('password').set(function(password) {
-  this.salt = randomInt(8, 12)
-  this.hashedPassword = bcrypt.hashSync(password, this.salt)
+  const salt = randomInt(8, 12)
+  this.hashedPassword = bcrypt.hashSync(password, salt)
 })
 
 export default mongoose.model('Account', schema)
