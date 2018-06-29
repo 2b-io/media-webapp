@@ -1,22 +1,23 @@
 import jwt from 'jsonwebtoken'
 import ms from 'ms'
 
+import Account from 'models/Account'
 import config from 'infrastructure/config'
 import {
   findByEmail as findByAccountEmail,
   findById as findAccountById
 } from 'services/account'
 
-export const create = async ({ email }) => {
+export const create = async ({ email, password }) => {
+  const plainText = password
   const account = await findByAccountEmail(email)
 
   if (!account) {
     throw new Error('Invalid email')
   }
 
-  // TODO compare password
-
-  return issueJWT(account)
+  const { salt, hashedPassword } = account
+  return await Account().comparePassword({ plainText, salt, hashedPassword }) ? issueJWT(account) : null
 }
 
 export const verify = async (token, { refresh } = { refresh: false }) => {
