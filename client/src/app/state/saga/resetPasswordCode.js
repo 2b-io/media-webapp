@@ -29,7 +29,7 @@ const resetPasswordLoop = function*() {
       let { password, code } = action.payload
 
       const statusReset = yield call(ResetPasswordCode.ressetPassword, password, code)
-      console.log("statusResetPassword",statusReset)
+
       yield put(actions.fetchPasswordResetCompleted(statusReset))
 
     } catch (e) {

@@ -11,9 +11,9 @@ export const requestRessetPassword = async (email) => {
     const { _id, removed } = account
     if (_id && !removed) {
       let code = shorthash.unique(uuid.v4())
-      const dataExist = await ResetPasswordCode.findOne({ uid:_id }).lean()
+      const dataExist = await ResetPasswordCode.findOne({ uid: _id }).lean()
       if (dataExist) {
-        const { expired, used, uid } = dataExist
+        const { used, uid } = dataExist
         if (used == false && _id == uid) {
           return true
         }
