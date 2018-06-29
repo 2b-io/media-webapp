@@ -1,27 +1,39 @@
 import { call, take, fork, put } from 'redux-saga/effects'
 import ResetPasswordCode from 'models/resetPasswordCode'
 import { actions, types } from 'state/interface'
+import serializeError from 'serialize-error'
 
-const fetchEmail = function* () {
+const fetchEmailLoop = function*() {
   while (true) {
-    const fetchEmail = yield take(types['RESETPASSWORDCODE/FETCH'])
+
+    const action = yield take(types['RESETPASSWORDCODE/FETCH_EMAIL'])
+
     try {
-      const emailExist =  yield call(ResetPasswordCode.requestRessetPassword, fetchEmail.payload.email)
-      yield put(actions.receiveEmailExist(emailExist))
+      const status =  yield call(ResetPasswordCode.requestResset, action.payload.email)
+
+      yield put(actions.fetchEmailCompleted(status))
+
     } catch (e) {
+      yield put(actions.fetchEmailFailed(serializeError(e)))
       continue
     }
 
   }
 }
-const fetchPassword = function* () {
+const resetPasswordLoop = function*() {
   while (true) {
-    const fetchPassword = yield take(types['RESETPASSWORDCODE/FETCH_PASSWORD'])
+
+    const action = yield take(types['RESETPASSWORDCODE/FETCH_PASSWORD_RESET'])
+
     try {
-      let { password, code } = fetchPassword.payload
-      const statusResetPassword =  yield call(ResetPasswordCode.ressetPassword, password, code)
-      yield put(actions.receiveResetPassword(statusResetPassword))
+      let { password, code } = action.payload
+
+      const statusReset = yield call(ResetPasswordCode.ressetPassword, password, code)
+
+      yield put(actions.fetchPasswordResetCompleted(statusReset))
+
     } catch (e) {
+      yield put(actions.fetchPasswordResetFailed(serializeError(e)))
       continue
     }
 
@@ -30,6 +42,6 @@ const fetchPassword = function* () {
 
 export default function* () {
   yield take('@@INITIALIZED')
-  yield fork(fetchEmail)
-  yield fork(fetchPassword)
+  yield fork(fetchEmailLoop)
+  yield fork(resetPasswordLoop)
 }
