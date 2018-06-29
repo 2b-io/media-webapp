@@ -7,7 +7,7 @@ import { TextBox } from 'views/common/form'
 const forgotPasswordForm = ({ handleSubmit }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Header> Forgot Password </Form.Header>
-    <Form.Description> Enter your email address below and click on the 'Request reset password ' button </Form.Description>
+    <Form.Description> Enter your email address below and click on the {'Request reset password'} button </Form.Description>
     <Form.Line>
       <TextBox
         type="email"
