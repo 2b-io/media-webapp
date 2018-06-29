@@ -20,39 +20,6 @@ const ProjectList = ({ projects }) => {
         dataHeader={ [ 'ID', 'Name', 'Slug', 'Disabled' ] }
         dataBody={ projects }
       />
-      <GridView
-        dataHeader={ [ 'ID', 'Name', 'Slug', 'Disabled' ] }
-        dataBody={ projects }
-      />
-      <GridView
-        dataHeader={ [ 'ID', 'Name', 'Slug', 'Disabled' ] }
-        dataBody={ projects }
-      />
-
-      <GridView
-        dataHeader={ [ 'ID', 'Name', 'Slug', 'Disabled' ] }
-        dataBody={ projects }
-      />
-      <GridView
-        dataHeader={ [ 'ID', 'Name', 'Slug', 'Disabled' ] }
-        dataBody={ projects }
-      />
-      <GridView
-        dataHeader={ [ 'ID', 'Name', 'Slug', 'Disabled' ] }
-        dataBody={ projects }
-      />
-      <GridView
-        dataHeader={ [ 'ID', 'Name', 'Slug', 'Disabled' ] }
-        dataBody={ projects }
-      />
-      <GridView
-        dataHeader={ [ 'ID', 'Name', 'Slug', 'Disabled' ] }
-        dataBody={ projects }
-      />
-      <GridView
-        dataHeader={ [ 'ID', 'Name', 'Slug', 'Disabled' ] }
-        dataBody={ projects }
-      />
     </main>
   )
 }

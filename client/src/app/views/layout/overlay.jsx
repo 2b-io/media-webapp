@@ -2,9 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
-import { actions } from 'state/interface'
+import { actions, selectors } from 'state/interface'
 import { mapDispatch } from 'services/redux-helpers'
-import { Identicon } from 'ui/elements'
+import { Button, Identicon } from 'ui/elements'
 import { GithubIcon } from 'ui/icons'
 
 const StyledOverlay = styled.div`
@@ -54,15 +54,20 @@ const Footer = styled.div`
   padding: 10px;
 `
 
-const Overlay = ({ children, shown, headerHeight, width, toProfile }) => (
+const Overlay = ({ children, shown, headerHeight, width, toProfile, email }) => (
   <StyledOverlay
     shown={ shown }
     headerHeight={ headerHeight }
     width={ width }>
     <Wrapper>
       <Header shown={ shown }>
-        <Identicon size={ 64 } id={ 'd@dapps.me' } circle
-          onClick={ toProfile } />
+        <Button plain onClick={ toProfile }>
+          <Identicon
+            circle
+            size={ 64 }
+            id={ email }
+          />
+        </Button>
       </Header>
       <Content>
         { children }
@@ -75,7 +80,17 @@ const Overlay = ({ children, shown, headerHeight, width, toProfile }) => (
 )
 
 export default connect(
-  null,
+  state => {
+    const session = selectors.currentSession(state)
+
+    if (!session) {
+      return {}
+    }
+
+    return {
+      email: session.account.email
+    }
+  },
   mapDispatch({
     toProfile: () => actions.requestLocation('/@me')
   })
