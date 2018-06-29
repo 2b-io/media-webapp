@@ -12,7 +12,9 @@ const StyledContent = styled.div`
     ({ shown, stillHeight }) => shown ? `${stillHeight}px` : '100%'
   };
   ${
-    ({ shadow }) => shadow ? css`bottom: 0;` : null
+    ({ shadow }) => shadow && css`
+      bottom: 0;
+    `
   }
 `
 

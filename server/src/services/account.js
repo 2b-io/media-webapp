@@ -8,7 +8,7 @@ export const create = async (info) => {
   // TODO generate randomize password
   // TODO send password via email
 
-  const { email, password } = info
+  const { email, password = '123456' } = info
 
   return await new Account({
     email,

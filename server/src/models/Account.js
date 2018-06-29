@@ -23,13 +23,16 @@ const schema = mongoose.Schema({
 })
 
 schema.methods = {
-  hashPassword (password) {
-    if (!password) return
+  hashPassword(password) {
+    if (!password) {
+      return
+    }
+
     const cryp = crypto.AES.encrypt(String(password), String(this.salt))
     return cryp.toString()
   },
-  comparePassword ({ plainText, salt, hashedPassword }) {
-    var bytes = crypto.AES.decrypt(hashedPassword, salt)
+  comparePassword({ plainText, salt, hashedPassword }) {
+    const bytes = crypto.AES.decrypt(hashedPassword, salt)
     return plainText === bytes.toString(crypto.enc.Utf8)
   },
 }

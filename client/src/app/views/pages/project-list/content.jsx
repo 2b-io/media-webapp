@@ -5,9 +5,14 @@ import { mapState } from 'services/redux-helpers'
 import { selectors } from 'state/interface'
 import { GridView } from 'ui/compounds'
 
-const ProjectList = ({ projects }) => (
+const ProjectList = ({ projects }) => {
+  if (!projects || !projects.length) {
+    return (
+      <h2>No data ....</h2>
+    )
+  }
 
-  (!projects || !projects.length) ? <h2>No data ....</h2> :
+  return (
     <main>
       <GridView
         dataHeader={ [ 'ID', 'Name', 'Slug', 'Disabled' ] }
@@ -15,7 +20,7 @@ const ProjectList = ({ projects }) => (
       />
     </main>
   )
-
+}
 
 export default connect(
   mapState({
