@@ -15,7 +15,7 @@ const ProjectList = ({ projects }) => (
       />
     </main>
   )
-}
+
 
 export default connect(
   mapState({
