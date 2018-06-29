@@ -5,12 +5,14 @@ module.exports = {
     "node": true
   },
   "plugins": [
+    "jsx-a11y",
     "promise",
     "react",
     "security"
   ],
   "extends": [
     "eslint:recommended",
+    "plugin:jsx-a11y/recommended",
     "plugin:promise/recommended",
     "plugin:react/recommended",
     "plugin:security/recommended"
@@ -23,7 +25,6 @@ module.exports = {
     "sourceType": "module",
     "ecmaVersion": 2018
   },
-
   "rules": {
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
