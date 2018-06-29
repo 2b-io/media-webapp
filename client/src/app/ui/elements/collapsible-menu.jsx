@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Portal } from 'react-portal'
 import styled from 'styled-components'
 
-import { BreakPoint } from 'ui/elements'
+import { BreakPoint, Button } from 'ui/elements'
 import { MoreIcon } from 'ui/icons'
 
 const Wrapper = styled.nav`
@@ -55,9 +55,9 @@ class CollapsibleMenu extends Component {
           { children }
         </BreakPoint>
         <BreakPoint name="small">
-          <MoreIcon size="medium" inverted
-            onClick={ this.toggleMenu }
-          />
+          <Button plain onClick={ this.toggleMenu }>
+            <MoreIcon size="medium" inverted />
+          </Button>
           {
             showDropDownMenu && (
               <Portal node={ document && document.getElementById('wrapper') }>

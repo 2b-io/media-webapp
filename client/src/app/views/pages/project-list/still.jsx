@@ -2,8 +2,8 @@ import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
-import { CollapsibleMenu, TitleBar } from 'ui/compounds'
-import { Button } from 'ui/elements'
+import { TitleBar } from 'ui/compounds'
+import { Button, CollapsibleMenu } from 'ui/elements'
 import { AddIcon, HelpIcon } from 'ui/icons'
 import CreateProject from 'views/common/modals/create-project'
 
@@ -16,10 +16,12 @@ const ProjectList = ({ showModal }) => (
 
       <TitleBar.Menu>
         <CollapsibleMenu>
-          <AddIcon size="medium" inverted
-            onClick={ showModal }
-          />
-          <HelpIcon size="medium" inverted />
+          <Button plain onClick={ showModal }>
+            <AddIcon size="medium" inverted />
+          </Button>
+          <Button plain>
+            <HelpIcon size="medium" inverted />
+          </Button>
         </CollapsibleMenu>
       </TitleBar.Menu>
     </TitleBar>

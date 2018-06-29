@@ -24,6 +24,6 @@ $ cd /path/to/your/project/webapp
 /path/to/your/project/webapp$ docker-compose up -d
 /path/to/your/project/webapp$ docker exec -it media.webapp bash
 
-/usr/src$ npm install && npm run install:all
+/usr/src$ npm run install:all
 /usr/src$ npm start
 ```

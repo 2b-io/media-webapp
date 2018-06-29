@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 
 import { mapDispatch } from 'services/redux-helpers'
+import { Button } from 'ui/elements'
 import { CloseIcon } from 'ui/icons'
 import { stateful } from 'views/common/decorators'
 
@@ -27,7 +28,7 @@ const Wrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
   padding: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+  box-shadow: 0 10px 100px rgba(0, 0, 0, .8);
   min-width: 300px;
   max-width: ${
     ({ width }) => width === 'wide' ? '960px' : (width === 'narrow' ? '640px' : 'auto')
@@ -40,18 +41,6 @@ const Header = styled.div`
   justify-content: flex-end;
   align-items: flex-start;
   height: 30px;
-`
-
-const CloseButton = styled.button.attrs({
-  type: 'button'
-})`
-  appearance: 'none';
-  background: transparent;
-  border: none;
-  outline: none;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
 `
 
 export default ({
@@ -75,9 +64,9 @@ export default ({
             <Header>
               {
                 showCloseButton && (
-                  <CloseButton onClick={ hide }>
+                  <Button plain onClick={ hide }>
                     <CloseIcon />
-                  </CloseButton>
+                  </Button>
                 )
               }
             </Header>
