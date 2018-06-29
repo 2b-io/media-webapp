@@ -16,9 +16,8 @@ export const create = async ({ email, password }) => {
     throw new Error('Invalid email')
   }
 
-  const { salt } = account
-  const passwordHash = account.password
-  return await Account().comparePassword({ plainText, passwordHash, salt}) ?  issueJWT(account) : null
+  const { salt, hashedPassword } = account
+  return await Account().comparePassword({ plainText, salt, hashedPassword }) ? issueJWT(account) : null
 }
 
 export const verify = async (token, { refresh } = { refresh: false }) => {

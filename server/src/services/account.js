@@ -12,7 +12,7 @@ export const create = async (info) => {
 
   return await new Account({
     email,
-    passwordHash: password
+    password
   }).save()
 }
 

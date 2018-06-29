@@ -8,7 +8,7 @@ const schema = mongoose.Schema({
     required: true,
     unique: true
   },
-  password: {
+  hashedPassword: {
     type: String,
     required: true
   },
@@ -23,21 +23,21 @@ const schema = mongoose.Schema({
 })
 
 schema.methods = {
-  hashPassword: function(password) {
+  hashPassword (password) {
     if (!password) return
     const cryp = crypto.AES.encrypt(String(password), String(this.salt))
     return cryp.toString()
   },
-  comparePassword: function({ plainText, salt, passwordHash }) {
-    var bytes  = crypto.AES.decrypt(passwordHash, salt)
+  comparePassword ({ plainText, salt, passwordHash }) {
+    var bytes = crypto.AES.decrypt(passwordHash, salt)
     return plainText === bytes.toString(crypto.enc.Utf8)
   },
 }
 
-schema.virtual('passwordHash').set(function(password) {
+schema.virtual('password').set(function(password) {
   this._password = password
-  this.salt  = cryptoRandomString(10)
-  this.password = this.hashPassword({ password });
+  this.salt = cryptoRandomString(10)
+  this.hashedPassword = this.hashPassword({ password })
 })
 
 export default mongoose.model('Account', schema)
