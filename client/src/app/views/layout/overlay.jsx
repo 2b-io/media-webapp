@@ -1,9 +1,6 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import styled from 'styled-components'
 
-import { actions, selectors } from 'state/interface'
-import { mapDispatch } from 'services/redux-helpers'
 import { Button, Identicon } from 'ui/elements'
 import { GithubIcon } from 'ui/icons'
 
@@ -54,7 +51,14 @@ const Footer = styled.div`
   padding: 10px;
 `
 
-const Overlay = ({ children, shown, headerHeight, width, toProfile, email }) => (
+const Overlay = ({
+  children,
+  shown,
+  headerHeight,
+  width,
+  toProfile,
+  email
+}) => (
   <StyledOverlay
     shown={ shown }
     headerHeight={ headerHeight }
@@ -79,19 +83,4 @@ const Overlay = ({ children, shown, headerHeight, width, toProfile, email }) => 
   </StyledOverlay>
 )
 
-export default connect(
-  state => {
-    const session = selectors.currentSession(state)
-
-    if (!session) {
-      return {}
-    }
-
-    return {
-      email: session.account.email
-    }
-  },
-  mapDispatch({
-    toProfile: () => actions.requestLocation('/@me')
-  })
-)(Overlay)
+export default Overlay
