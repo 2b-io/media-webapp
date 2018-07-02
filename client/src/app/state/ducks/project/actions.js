@@ -29,7 +29,17 @@ export const createProjectFailed = reason => ({
   payload: { reason }
 })
 
-// export const updateListProject = (project) => ({
-//   type: types.UPDATE,
-//   payload: project
-// })
+export const getProject = slug => ({
+  type: types.GET,
+  payload: { slug }
+})
+
+export const getProjectCompleted = project => ({
+  type: types.GET_COMPLETED,
+  payload: { project }
+})
+
+export const getProjectFailed = reason => ({
+  type: types.GET_FAILED,
+  payload: { reason }
+})

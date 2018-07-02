@@ -17,7 +17,22 @@ const PROJECTS_FRAGMENT = `
 `
 
 export default {
-  getProjectList: async (token) => {
+  async get(slug, token) {
+    const body = await request(`
+      query getProject($slug: String!, $token: String!) {
+        session(token: $token) {
+          account {
+            project(slug: $slug) {
+              ${ PROJECT_FRAGMENT }
+            }
+          }
+        }
+      }
+    `, { slug, token })
+
+    return body.session.account.project
+  },
+  async fetch(token) {
     const body = await request(`
       query projects($token: String!) {
         session(token: $token) {
@@ -28,7 +43,7 @@ export default {
 
     return body.session.account.projects
   },
-  create: async (project, token) => {
+  async create(project, token) {
     const body = await request(`
       query createProject($project: ProjectStruct!, $token: String!) {
         session(token: $token) {
@@ -45,5 +60,5 @@ export default {
     })
 
     return body.session.account._createProject
-  },
+  }
 }

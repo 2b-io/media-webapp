@@ -1,4 +1,4 @@
 export default {
-  allProjects: state => state.projects
+  allProjects: state => Object.values(state.projects || {})
   // project: state => state.project
 }

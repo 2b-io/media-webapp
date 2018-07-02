@@ -1,11 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { mapState } from 'services/redux-helpers'
-import { selectors } from 'state/interface'
+import { mapDispatch, mapState } from 'services/redux-helpers'
+import { actions, selectors } from 'state/interface'
 import { GridView } from 'ui/compounds'
+import { Link } from 'ui/elements'
 
-const ProjectList = ({ projects }) => {
+const Project = ({ project, toProjectDetail }) => (
+  <div>
+    <Link href="/" onClick={ toProjectDetail }>{ project.name }</Link>
+  </div>
+)
+
+const ProjectList = ({ projects, toProjectDetail }) => {
   if (!projects || !projects.length) {
     return (
       <h2>No data ....</h2>
@@ -14,10 +21,16 @@ const ProjectList = ({ projects }) => {
 
   return (
     <main>
-      <GridView
-        dataHeader={ [ 'ID', 'Name', 'Slug', 'Disabled' ] }
-        dataBody={ projects }
-      />
+      {
+        projects.map(
+          project => (
+            <Project key={ project._id }
+              project={ project }
+              toProjectDetail={ toProjectDetail.bind(null, project.slug) }
+            />
+          )
+        )
+      }
     </main>
   )
 }
@@ -25,6 +38,9 @@ const ProjectList = ({ projects }) => {
 export default connect(
   mapState({
     projects: selectors.allProjects,
+  }),
+  mapDispatch({
+    toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`)
   })
 )(ProjectList)
 
