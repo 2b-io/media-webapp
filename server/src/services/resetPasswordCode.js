@@ -38,13 +38,15 @@ export const ressetPassword = async (password, code) => {
     const { expired, used, uid } = dataExist
     if (!uid) { return false }
     if (expired > now || used == false ) {
+      const hashedPassword = await Account().hashPassword({ password })
       const account = await Account.findOneAndUpdate(
         { _id: uid },
-        { password },
+        { hashedPassword },
         { new: true }
       ).lean()
+      
       let { ok } = await ResetPasswordCode.deleteOne({ code })
-      return password === account.password && ok === 1 ? true : false
+      return hashedPassword === account.hashedPassword && ok === 1 ? true : false
     }
   }
   return false
