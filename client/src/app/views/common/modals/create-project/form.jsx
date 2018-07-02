@@ -7,7 +7,7 @@ import { TextBox  } from 'views/common/form'
 const projectForm = ({ handleSubmit }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Header>Create new project</Form.Header>
-    <Form.Description>Enter info your project and click to 'Add project' button</Form.Description>
+    <Form.Description>Enter info your project and click to {'Add project'} button</Form.Description>
     <Form.Line>
       <TextBox
         type="TextBox"

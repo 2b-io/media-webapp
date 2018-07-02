@@ -14,7 +14,7 @@ const ResetPasswordForm = reduxForm({
   enableReinitialize: true
 })(_resetPasswordForm)
 
-const ResetPassword=({ fetchPasswordReset, match, toForgotPassword, statusReset }) => {
+const ResetPassword=({ fetchPasswordReset, match, toSignIn, statusReset }) => {
   const { code } = match.params
   if (!code ) {
     return null
@@ -23,7 +23,7 @@ const ResetPassword=({ fetchPasswordReset, match, toForgotPassword, statusReset 
   return (
     <main>
       <Container center size="small">
-        { statusReset===null? <ResetPasswordForm onSubmit={ ({ password })=>{ fetchPasswordReset({ password, code }) } } /> :
+        { statusReset === null? <ResetPasswordForm onSubmit={ ({ password })=>{ fetchPasswordReset({ password, code }) } } /> :
           <Modal
             open={ true }
             zIndex={ 10 }
@@ -44,6 +44,6 @@ export default connect(
   }),
   mapDispatch({
     fetchPasswordReset: ({ password, code }) => actions.fetchPasswordReset(password, code),
-    toForgotPassword: () => actions.requestLocation('/forgot-password')
+    toSignIn: () => actions.requestLocation('/sign-in')
   })
 )(ResetPassword)

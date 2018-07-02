@@ -7,7 +7,7 @@ import { TextBox } from 'views/common/form'
 const ResetPasswordForm = ({ handleSubmit, password, rePassword }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Header>Reset Password</Form.Header>
-    <Form.Description>Enter your new password below and click on the 'Change password' button.</Form.Description>
+    <Form.Description>Enter your new password below and click on the {'Change password'} button.</Form.Description>
     <Form.Line>
       <TextBox
         type="password"

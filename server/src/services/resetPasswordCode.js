@@ -32,19 +32,18 @@ export const requestRessetPassword = async (email) => {
   return false
 }
 export const ressetPassword = async (password, code) => {
-  let now = new Date()
-  const dataExist = await ResetPasswordCode.findOne({ code }).lean()
-  if (dataExist) {
-    const { expired, used, uid } = dataExist
+  const userInfo = await ResetPasswordCode.findOne({ code }).lean()
+  if (userInfo) {
+    const { used, uid } = userInfo
     if (!uid) { return false }
-    if (expired > now || used == false ) {
-      const account = await Account.findOneAndUpdate(
-        { _id: uid },
-        { password },
-        { new: true }
-      ).lean()
-      let { ok } = await ResetPasswordCode.deleteOne({ code })
-      return password === account.password && ok === 1 ? true : false
+    if ( used === false ) {
+      const account = await Account.findOne(
+        { _id: uid }
+      )
+      account.password = password
+      account.save()
+      const { ok } = await ResetPasswordCode.deleteOne({ code })
+      return ok === 1 ? true : false
     }
   }
   return false
