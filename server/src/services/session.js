@@ -9,15 +9,14 @@ import {
 } from 'services/account'
 
 export const create = async ({ email, password }) => {
-  const plainText = password
   const account = await findByAccountEmail(email)
 
   if (!account) {
     throw new Error('Invalid email')
   }
 
-  const { salt, hashedPassword } = account
-  return await Account().comparePassword({ plainText, salt, hashedPassword }) ? issueJWT(account) : null
+  const { hashedPassword } = account
+  return await Account().comparePassword(password, hashedPassword) ? issueJWT(account) : null
 }
 
 export const verify = async (token, { refresh } = { refresh: false }) => {

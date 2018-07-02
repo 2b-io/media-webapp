@@ -1,8 +1,8 @@
 {
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "2.0.1",
     "body-parser": "1.18.2",
-    "crypto-js": "3.1.9-1",
     "express": "4.16.3",
     "express-graphql": "0.6.12",
     "graphql": "0.13.2",
@@ -12,12 +12,12 @@
     "mongoose": "5.0.17",
     "morgan": "1.9.0",
     "ms": "2.1.1",
+    "random-int": "1.0.0",
     "recursive-config": "1.0.1",
     "serialize-error": "2.1.0",
     "sha256": "0.2.0",
     "shorthash": "0.0.2",
-    "uuid": "3.2.1",
-    "crypto-random-string":"1.0.0"
+    "uuid": "3.2.1"
   },
   "devDependencies": {
     "babel-cli": "6.26.0",

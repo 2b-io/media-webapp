@@ -1,5 +1,6 @@
-import cryptoRandomString from 'crypto-random-string'
-import crypto from 'crypto-js'
+import bcrypt from 'bcrypt'
+import randomInt from 'random-int'
+
 import mongoose from 'infrastructure/mongoose'
 
 const schema = mongoose.Schema({
@@ -12,9 +13,6 @@ const schema = mongoose.Schema({
     type: String,
     required: true
   },
-  salt: {
-    type: String,
-  },
   removed: {
     type: Boolean,
     default: false,
@@ -23,20 +21,14 @@ const schema = mongoose.Schema({
 })
 
 schema.methods = {
-  hashPassword (password) {
-    if (!password) return
-    const cryp = crypto.AES.encrypt(String(password), String(this.salt))
-    return cryp.toString()
-  },
-  comparePassword ({ plainText, salt, hashedPassword }) {
-    var bytes = crypto.AES.decrypt(hashedPassword, salt)
-    return plainText === bytes.toString(crypto.enc.Utf8)
+  comparePassword(plain, hashed) {
+    return bcrypt.compareSync(plain, hashed)
   },
 }
 
 schema.virtual('password').set(function(password) {
-  this.salt = cryptoRandomString(10)
-  this.hashedPassword = this.hashPassword(password)
+  const salt = randomInt(8, 12)
+  this.hashedPassword = bcrypt.hashSync(password, salt)
 })
 
 export default mongoose.model('Account', schema)
