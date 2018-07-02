@@ -8,7 +8,7 @@ export default {
       ...Object.entries(selectors || {}).reduce(
         (combine, [ name, func ]) => ({
           ...combine,
-          [name]: state => func(state[node])
+          [name]: (state, ...args) => func(state[node], ...args)
         }),
         {}
       )
