@@ -2,12 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
 import styled from 'styled-components'
-import { withParams } from 'views/router'
 
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
-
 import { ChangePassword } from 'views/common/form'
+import { withParams } from 'views/router'
+
 import UserInfo from './userInfo'
 
 const PasswordForm = reduxForm({
@@ -15,7 +15,7 @@ const PasswordForm = reduxForm({
   enableReinitialize: true
 })(ChangePassword)
 
-const Profile = ( { fetchPassword }) => (
+const Profile = ({ changePassword }) => (
   <main>
     {/* <h1>Profile of { username }</h1> */}
     <Layout>
@@ -35,7 +35,7 @@ const Profile = ( { fetchPassword }) => (
           <PasswordForm
             header={ 'Change password' }
             onSubmit={ ({ currentPassword, password }) => {
-              fetchPassword({ currentPassword, password }) } }
+              changePassword({ currentPassword, password }) } }
           />
         </PanelContent>
       </Panel>
@@ -48,7 +48,7 @@ export default connect(
     status: selectors.status
   }),
   mapDispatch({
-    fetchPassword: ({ currentPassword, password }) => actions.fetchPassword(currentPassword, password),
+    changePassword: ({ currentPassword, password }) => actions.changePassword(currentPassword, password),
   })
 )(Profile)
 

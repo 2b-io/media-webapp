@@ -17,22 +17,22 @@ export const create = async (info) => {
 }
 
 export const findById = async (id) => {
-  return await Account.findById(id).lean()
+  return await Account.findById(id)
 }
 
 export const findByEmail = async (email) => {
-  return await Account.findOne({ email }).lean()
+  return await Account.findOne({ email })
 }
-export const changePassword = async (currentPassword, newPassword, email) => {
-  let password = newPassword
-  let account = await Account.findOne({ email })
-  if (!account) { return false }
-  const checkPassword = await Account().comparePassword(currentPassword, account.hashedPassword)
-  if (checkPassword == true) {
-    account.password = password
-    account.save()
-    return true
-  }
-  return false
 
+export const changePassword = async (_id, currentPassword, newPassword) => {
+  const account = await Account.findOne({ _id })
+
+  if (!account.comparePassword(currentPassword)) {
+    throw new Error('Incorrect Password')
+  }
+
+  account.password = newPassword
+  await account.save()
+
+  return true
 }

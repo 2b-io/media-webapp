@@ -1,6 +1,32 @@
-import { call, take, fork, put } from 'redux-saga/effects'
+import { call, take, fork, put, select } from 'redux-saga/effects'
+import serializeError from 'serialize-error'
+
 import Account from 'models/account'
-import { actions, types } from 'state/interface'
+import { actions, selectors, types } from 'state/interface'
+
+const changePasswordLoop = function*() {
+  while (true) {
+    const { payload: { currentPassword, newPassword } } = yield take(types['ACCOUNT/CHANGE_PASSWORD'])
+
+    try {
+      const session = yield select(selectors.currentSession)
+
+      if (!session) {
+        continue
+      }
+
+      const result = yield call(Account.changePassword, currentPassword, newPassword, session.token)
+
+      if (!result) {
+        throw new Error('Change password failed')
+      }
+
+      yield put(actions.changePasswordCompleted())
+    } catch (e) {
+      yield put(actions.changePasswordFailed(serializeError(e)))
+    }
+  }
+}
 
 const registerLoop = function*() {
   while (true) {
@@ -20,5 +46,6 @@ const registerLoop = function*() {
 
 export default function*() {
   yield take('@@INITIALIZED')
+  yield fork(changePasswordLoop)
   yield fork(registerLoop)
 }
