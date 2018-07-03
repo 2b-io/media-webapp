@@ -6,7 +6,7 @@ import { actions, selectors, types } from 'state/interface'
 
 const changePasswordLoop = function*() {
   while (true) {
-    const { payload: { currentPassword, newPassword } } = yield take(types['ACCOUNT/CHANGE_PASSWORD'])
+    const { payload: { currentPassword, newPassword } } = yield take(types[ 'ACCOUNT/CHANGE_PASSWORD' ])
 
     try {
       const session = yield select(selectors.currentSession)
@@ -28,18 +28,36 @@ const changePasswordLoop = function*() {
   }
 }
 
+const getLoop = function*() {
+  while (true) {
+    const { payload: { id } } = yield take(types[ 'ACCOUNT/GET' ])
+
+    try {
+      const session = yield select(selectors.currentSession)
+
+      if (!session) {
+        continue
+      }
+
+      const account = yield call(Account.get, id === 'me' ? null : id, session.token)
+
+      yield put(actions.getAccountCompleted(account))
+    } catch (e) {
+      yield put(actions.getAccountFailed(serializeError(e)))
+    }
+  }
+}
+
 const registerLoop = function*() {
   while (true) {
-    const { payload: { email } } = yield take(types['ACCOUNT/REGISTER'])
+    const { payload: { email } } = yield take(types[ 'ACCOUNT/REGISTER' ])
 
     try {
       const account = yield call(Account.register, email)
 
       yield put(actions.registerCompleted(account))
     } catch (e) {
-      yield put(actions.registerFailed(e))
-
-      continue
+      yield put(actions.registerFailed(serializeError(e)))
     }
   }
 }
@@ -47,5 +65,6 @@ const registerLoop = function*() {
 export default function*() {
   yield take('@@INITIALIZED')
   yield fork(changePasswordLoop)
+  yield fork(getLoop)
   yield fork(registerLoop)
 }

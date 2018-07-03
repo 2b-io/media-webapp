@@ -3,54 +3,12 @@ import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
 import styled from 'styled-components'
 
-import { mapDispatch, mapState } from 'services/redux-helpers'
+import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { ChangePassword } from 'views/common/form'
 import { withParams } from 'views/router'
 
-import UserInfo from './userInfo'
-
-const PasswordForm = reduxForm({
-  form: 'changePassword',
-  enableReinitialize: true
-})(ChangePassword)
-
-const Profile = ({ changePassword }) => (
-  <main>
-    {/* <h1>Profile of { username }</h1> */}
-    <Layout>
-      <Panel>
-        <PanelHeader>
-          About me
-        </PanelHeader>
-        <PanelContent>
-          <UserInfo />
-        </PanelContent>
-      </Panel>
-      <Panel>
-        <PanelHeader>
-          Edit profile
-        </PanelHeader>
-        <PanelContent>
-          <PasswordForm
-            header={ 'Change password' }
-            onSubmit={ ({ currentPassword, password }) => {
-              changePassword({ currentPassword, password }) } }
-          />
-        </PanelContent>
-      </Panel>
-    </Layout>
-  </main>
-)
-
-export default connect(
-  mapState({
-    status: selectors.status
-  }),
-  mapDispatch({
-    changePassword: ({ currentPassword, password }) => actions.changePassword(currentPassword, password),
-  })
-)(Profile)
+import AccountInfo from './account-info'
 
 const Layout = styled.div`
   &{
@@ -88,3 +46,53 @@ const PanelHeader = styled.div`
     border-top-right-radius: 3px;
   }
 `
+
+const PasswordForm = reduxForm({
+  form: 'changePassword',
+  enableReinitialize: true
+})(ChangePassword)
+
+const Profile = ({ account, changePassword }) => (
+  <main>
+    {/* <h1>Profile of { username }</h1> */}
+    <Layout>
+      <Panel>
+        <PanelHeader>
+          About me
+        </PanelHeader>
+        <PanelContent>
+          <AccountInfo account={ account } />
+        </PanelContent>
+      </Panel>
+      <Panel>
+        <PanelHeader>
+          Edit profile
+        </PanelHeader>
+        <PanelContent>
+          <PasswordForm
+            header={ 'Change password' }
+            onSubmit={ ({ currentPassword, password }) => {
+              changePassword({ currentPassword, password }) } }
+          />
+        </PanelContent>
+      </Panel>
+    </Layout>
+  </main>
+)
+
+export default withParams(
+  connect(
+    (state, { params: { id } }) => ({
+      account: selectors.findAccountById(
+        state,
+        id,
+        selectors.currentSession(state)
+      )
+    }),
+    mapDispatch({
+      changePassword: ({ currentPassword, password }) => actions.changePassword(currentPassword, password),
+    })
+  )(Profile)
+)
+
+

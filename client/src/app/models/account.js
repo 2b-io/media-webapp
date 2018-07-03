@@ -1,5 +1,10 @@
 import request from 'services/graphql'
 
+export const ACCOUNT_FRAGMENT = `
+  _id,
+  email
+`
+
 export default {
   async changePassword(currentPassword, newPassword, token) {
     const body = await request(`
@@ -10,17 +15,37 @@ export default {
           }
         }
       }
-    `)
+    `, {
+      currentPassword,
+      newPassword,
+      token
+    })
 
     return body.session.account._changePassword
+  },
+
+  async get(id, token) {
+    const body = await request(`
+      query getAccount($id: String, $token: String!) {
+        session(token: $token) {
+          account(id: $id) {
+            ${ ACCOUNT_FRAGMENT }
+          }
+        }
+      }
+    `, {
+      id,
+      token
+    })
+
+    return body.session.account
   },
 
   async register(email) {
     const body = await request(`
       query register($account: AccountStruct!) {
         _createAccount(account: $account) {
-          _id,
-          email
+          ${ ACCOUNT_FRAGMENT }
         }
       }
     `, {

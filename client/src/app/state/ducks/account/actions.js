@@ -17,6 +17,21 @@ export const changePasswordFailed = reason => ({
   payload: { reason }
 })
 
+export const getAccount = id => ({
+  type: types.GET,
+  payload: { id }
+})
+
+export const getAccountCompleted = account => ({
+  type: types.GET_COMPLETED,
+  payload: { account }
+})
+
+export const getAccountFailed = reason => ({
+  type: types.GET_FAILED,
+  payload: { reason }
+})
+
 export const register = email => ({
   type: types.REGISTER,
   payload: { email }
