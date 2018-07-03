@@ -7,14 +7,14 @@ const userInfo = () => (
       <Layout>
         <span>User name</span>
         <input
-          readOnly={ true }
+          disabled={ true }
           defaultValue={ 'cuongtv' }
         />
       </Layout>
       <Layout>
         <span>Email</span>
         <input
-          readOnly={ true }
+          disabled={ true }
           defaultValue={ 'truongcuong@gmail.com' }
         />
       </Layout>
@@ -27,7 +27,7 @@ export default userInfo
 const Layout = styled.div`
   &{
     display: grid;
-    grid-template-columns: 30% auto auto auto;
+    grid-template-columns: 20% auto auto auto auto;
     padding: 10px 10px 10px 10px;
   }
   @media (max-width: 750px) {

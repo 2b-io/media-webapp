@@ -1,6 +1,5 @@
 import * as types from './types'
 
-
 export const fetchPassword = (currentPassword, newPassword) => ({
   type: types.FETCH_PASSWORD,
   payload: { currentPassword, newPassword }
