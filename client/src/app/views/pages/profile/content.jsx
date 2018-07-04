@@ -46,15 +46,13 @@ const PanelHeader = styled.div`
     border-top-right-radius: 3px;
   }
 `
-
 const PasswordForm = reduxForm({
   form: 'changePassword',
   enableReinitialize: true
 })(ChangePassword)
 
-const Profile = ({ account, changePassword }) => (
+const Profile = ({ account, changePassword, session }) => (
   <main>
-    {/* <h1>Profile of { username }</h1> */}
     <Layout>
       <Panel>
         <PanelHeader>
@@ -64,18 +62,20 @@ const Profile = ({ account, changePassword }) => (
           <AccountInfo account={ account } />
         </PanelContent>
       </Panel>
-      <Panel>
-        <PanelHeader>
-          Edit profile
-        </PanelHeader>
-        <PanelContent>
-          <PasswordForm
-            header={ 'Change password' }
-            onSubmit={ ({ currentPassword, password }) => {
-              changePassword({ currentPassword, password }) } }
-          />
-        </PanelContent>
-      </Panel>
+      { session.info && account?
+        session.info.account._id === account._id?
+          <Panel>
+            <PanelHeader>
+              Edit profile
+            </PanelHeader>
+            <PanelContent>
+              <PasswordForm
+                header={ 'Change password' }
+                onSubmit={ changePassword }
+              />
+            </PanelContent>
+          </Panel>:null:null
+      }
     </Layout>
   </main>
 )
@@ -87,12 +87,11 @@ export default withParams(
         state,
         id,
         selectors.currentSession(state)
-      )
+      ),
+      session: state.session
     }),
     mapDispatch({
       changePassword: ({ currentPassword, password }) => actions.changePassword(currentPassword, password),
     })
   )(Profile)
 )
-
-
