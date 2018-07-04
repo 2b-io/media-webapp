@@ -4,17 +4,13 @@ import styled from 'styled-components'
 import { TextBox } from 'ui/elements'
 
 const AccountInfo = ({ account }) => (
-  <div>
-    <div>
-      <Layout>
-        <span>Email</span>
-        <TextBox
-          disabled={ true }
-          defaultValue={ account && account.email }
-        />
-      </Layout>
-    </div>
-  </div>
+  <Layout>
+    <span>Email</span>
+    <TextBox
+      disabled={ true }
+      defaultValue={ account && account.email }
+    />
+  </Layout>
 )
 
 export default AccountInfo
