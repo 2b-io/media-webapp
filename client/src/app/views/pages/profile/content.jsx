@@ -62,8 +62,8 @@ const Profile = ({ account, changePassword, session }) => (
           <AccountInfo account={ account } />
         </PanelContent>
       </Panel>
-      { session.info && account?
-        session.info.account._id === account._id?
+      {
+        session && account && session.account._id === account._id &&
           <Panel>
             <PanelHeader>
               Edit profile
@@ -74,7 +74,7 @@ const Profile = ({ account, changePassword, session }) => (
                 onSubmit={ changePassword }
               />
             </PanelContent>
-          </Panel>:null:null
+          </Panel>
       }
     </Layout>
   </main>
@@ -88,7 +88,7 @@ export default withParams(
         id,
         selectors.currentSession(state)
       ),
-      session: state.session
+      session: selectors.currentSession(state)
     }),
     mapDispatch({
       changePassword: ({ currentPassword, password }) => actions.changePassword(currentPassword, password),
