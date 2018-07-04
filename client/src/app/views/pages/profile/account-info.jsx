@@ -1,28 +1,23 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const userInfo = () => (
+import { TextBox } from 'ui/elements'
+
+const AccountInfo = ({ account }) => (
   <div>
     <div>
       <Layout>
-        <span>User name</span>
-        <input
-          disabled={ true }
-          defaultValue={ 'cuongtv' }
-        />
-      </Layout>
-      <Layout>
         <span>Email</span>
-        <input
+        <TextBox
           disabled={ true }
-          defaultValue={ 'truongcuong@gmail.com' }
+          defaultValue={ account && account.email }
         />
       </Layout>
     </div>
   </div>
 )
 
-export default userInfo
+export default AccountInfo
 
 const Layout = styled.div`
   &{

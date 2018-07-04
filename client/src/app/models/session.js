@@ -1,11 +1,13 @@
 import pick from 'object.pick'
 import request from 'services/graphql'
 
+import { ACCOUNT_FRAGMENT } from './account'
+
 const SESSION_FRAGMENT = `
   token,
   ttl,
   account {
-    email
+    ${ ACCOUNT_FRAGMENT }
   }
 `
 

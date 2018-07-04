@@ -21,8 +21,8 @@ const schema = mongoose.Schema({
 })
 
 schema.methods = {
-  comparePassword(plain, hashed) {
-    return bcrypt.compareSync(plain, hashed)
+  comparePassword(plain) {
+    return bcrypt.compareSync(plain, this.hashedPassword)
   },
 }
 

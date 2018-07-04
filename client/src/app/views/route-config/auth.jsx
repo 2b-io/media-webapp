@@ -9,8 +9,11 @@ export default {
   '/': {
     component: Dashboard
   },
-  '/@:username': {
-    component: Profile
+  '/@:id': {
+    component: Profile,
+    onEnter: ({ id }) => [
+      actions.getAccount(id)
+    ]
   },
   '/projects': {
     component: ProjectList,

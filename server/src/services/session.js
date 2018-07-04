@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken'
 import ms from 'ms'
 
-import Account from 'models/Account'
 import config from 'infrastructure/config'
 import {
   findByEmail as findByAccountEmail,
@@ -15,8 +14,7 @@ export const create = async ({ email, password }) => {
     throw new Error('Invalid email')
   }
 
-  const { hashedPassword } = account
-  return await Account().comparePassword(password, hashedPassword) ? issueJWT(account) : null
+  return account.comparePassword(password) ? issueJWT(account) : null
 }
 
 export const verify = async (token, { refresh } = { refresh: false }) => {
