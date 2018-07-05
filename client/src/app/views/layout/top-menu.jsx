@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import logo from 'img/logo_white.png'
+import { LIGHT0 } from 'ui/color-palettes'
 
 const Wrapper = styled.nav`
   display: flex;
@@ -39,7 +40,7 @@ const MenuItem = styled.li`
 `
 
 const Link = styled.a`
-  color: #fff;
+  color: ${ LIGHT0 };
   text-decoration: none;
   font-size: 12px;
 `

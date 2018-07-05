@@ -2,9 +2,11 @@ import React from 'react'
 import Icon from 'react-icons-kit'
 import styled from 'styled-components'
 
+import { LIGHT0, LIGHT4 } from 'ui/color-palettes'
+
 const StyledIcon = styled(Icon)`
   color: ${
-    ({ inverted = false }) => inverted ? '#fff' : '#000'
+    ({ inverted = false }) => inverted ? LIGHT0 : LIGHT4
   }
 `
 

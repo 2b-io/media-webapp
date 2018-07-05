@@ -10,7 +10,8 @@ box-sizing-reset()
 }
 
 html, body
-  background: #333
+  background: #0b0b0c
+  color: #0b0b0c
   font-size: 14px
   height: 100%
   font-family: Space Mono, Consolas, monaco, monospace
@@ -29,11 +30,15 @@ body
   opacity: 0
 
 *
-  -webkit-tap-highlight-color: rgba(0,0,0,0)
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+  color: inherit
 
   &::placeholder
-    color: #777
+    color: #78736f
     opacity: .5
+
+  &:visited
+    color: inherit
 
 #nprogress
   position: relative

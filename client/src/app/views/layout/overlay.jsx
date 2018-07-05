@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { LIGHT0, LIGHT1, LIGHT4 } from 'ui/color-palettes'
 import { Button, Identicon } from 'ui/elements'
 import { GithubIcon } from 'ui/icons'
 
@@ -20,7 +21,7 @@ const StyledOverlay = styled.div`
     ({ headerHeight }) => `${ headerHeight }px`
   };
   background-color: ${
-    ({ shown }) => shown ? '#fff' : '#eee'
+    ({ shown }) => shown ? LIGHT0 : LIGHT1
   };
 `
 const Wrapper = styled.div`
@@ -48,7 +49,7 @@ const Content = styled.div`
 `
 
 const Footer = styled.div`
-  background: #333;
+  background: ${ LIGHT4 };
   text-align: center;
   padding: 10px;
 `

@@ -1,9 +1,11 @@
 import React, { Fragment } from 'react'
 import styled, { css } from 'styled-components'
 
+import { LIGHT0 } from 'ui/color-palettes'
+
 const StyledContent = styled.div`
   position: absolute;
-  background-color: #fff;
+  background-color: ${ LIGHT0 };
   padding: 20px;
   transition: top 1.2s cubic-bezier(.4, 0, .2, 1);
   left: 0;

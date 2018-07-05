@@ -1,16 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { LIGHT0, LIGHT_4 } from 'ui/color-palettes'
+
 const StyledHeader = styled.div`
   position: fixed;
-  background: #333;
+  background: ${ LIGHT_4 };
   z-index: 3;
   left: 0;
   right: 0;
   height: ${
     ({ height }) => `${height}px`
   };
-  color: #fff;
+  color: ${ LIGHT0 };
   top: ${
     ({ height, shown }) => shown ? 0 : `-${height}px`
   };

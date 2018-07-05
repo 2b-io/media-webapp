@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 
 import { mapDispatch } from 'services/redux-helpers'
+import { LIGHT0, LIGHT4_FADE0, LIGHT4_FADE1 } from 'ui/color-palettes'
 import { Button } from 'ui/elements'
 import { CloseIcon } from 'ui/icons'
 import { stateful } from 'views/common/decorators'
@@ -16,19 +17,19 @@ const Overlay = styled.div`
   right: 0;
   bottom: 0;
   z-index: 10;
-  background: rgba(0, 0, 0, .2);
+  background: ${ LIGHT4_FADE1 };
   padding-left: 20px;
   padding-right: 20px;
 `
 
 const Wrapper = styled.div`
-  background: #ffffff;
+  background: ${ LIGHT0 };
   position: relative;
   top: 100px;
   margin-left: auto;
   margin-right: auto;
   padding: 10px;
-  box-shadow: 0 10px 100px rgba(0, 0, 0, .8);
+  box-shadow: 0 10px 100px ${ LIGHT4_FADE0 };
   min-width: 300px;
   max-width: ${
     ({ width }) => width === 'wide' ? '960px' : (width === 'narrow' ? '640px' : 'auto')

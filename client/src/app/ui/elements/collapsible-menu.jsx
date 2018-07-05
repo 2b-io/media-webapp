@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Portal } from 'react-portal'
 import styled from 'styled-components'
 
+import { LIGHT4_FADE0 } from 'ui/color-palettes'
 import { BreakPoint, Button } from 'ui/elements'
 import { MoreIcon } from 'ui/icons'
 
@@ -22,7 +23,7 @@ const DropDownMenu = styled.div`
   right: 0;
   padding: 0 20px 20px;
   z-index: 9;
-  background: rgba(0, 0, 0, .6);
+  background: ${ LIGHT4_FADE0 };
 
   & > * {
     margin-top: 20px;
