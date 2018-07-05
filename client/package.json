@@ -80,7 +80,7 @@
     "webpack-hot-middleware": "2.22.1"
   },
   "scripts": {
-    "start": "nodemon ./internals/dev-server --legacy-watch --exec babel-node --watch ./internals/dev-server --watch ./internals/webpack",
+    "start": "nodemon ./internals/dev-server --exec babel-node --watch ./internals/dev-server --watch ./internals/webpack --delay 1000ms",
     "build": "webpack --config internals/webpack/webpack.prod.babel.js"
   }
 }

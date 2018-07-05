@@ -28,7 +28,7 @@
     "nodemon": "1.17.3"
   },
   "scripts": {
-    "start": "nodemon ./src --legacy-watch --watch ./src --watch ./internals --exec babel-node --CONFIG=./internals/config.dev.js",
+    "start": "nodemon ./src --watch ./src --watch ./internals --ignore ./node_modules --delay 1000ms --exec babel-node --CONFIG=./internals/config.dev.js",
     "build": "rm -rf ./build && babel ./src -d ./build"
   }
 }
