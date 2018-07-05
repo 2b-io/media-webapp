@@ -13,7 +13,6 @@ const forgotPasswordForm = ({ handleSubmit }) => (
         type="email"
         name="email"
         placeholder="Your email"
-        autoFocus
       />
     </Form.Line>
     <Form.Line last>

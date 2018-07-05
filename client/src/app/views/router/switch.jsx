@@ -18,14 +18,14 @@ const mapStyles = styles => ({
 
 const effects = {
   slide: {
-    atEnter: { opacity: 0, left: -50 },
-    atLeave: { opacity: 0, left: 50 },
+    atEnter: { opacity: 0, left: -10 },
+    atLeave: { opacity: 0, left: 10 },
     atActive: { opacity: 1, left: 0 }
   },
   fade: {
-    atEnter: { opacity: 0, top: 50 },
-    atLeave: { opacity: 0, top: 50 },
-    atActive: { opacity: 1, top: 0 }
+    atEnter: { opacity: 0 },
+    atLeave: { opacity: 0 },
+    atActive: { opacity: 1 }
   }
 }
 

@@ -13,7 +13,6 @@ const ResetPasswordForm = ({ handleSubmit, password, rePassword }) => (
         type="password"
         name="password"
         placeholder="New password"
-        autoFocus
         onChange={ (e) => { password = e.target.value } }
       />
     </Form.Line>

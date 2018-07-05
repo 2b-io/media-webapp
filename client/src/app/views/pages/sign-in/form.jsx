@@ -11,7 +11,6 @@ const SignInForm = ({ handleSubmit }) => (
         type="email"
         name="email"
         placeholder="your email"
-        autoFocus
       />
     </Form.Line>
     <Form.Line>
