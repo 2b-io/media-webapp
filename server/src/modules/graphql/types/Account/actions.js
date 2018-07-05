@@ -4,12 +4,8 @@ import {
   GraphQLString
 } from 'graphql'
 
-import {
-  create as createProject
-} from 'services/project'
-import {
-  changePassword as changePassword
-} from 'services/account'
+import { create as createProject } from 'services/project'
+import { changePassword } from 'services/account'
 
 import { Project, ProjectStruct } from '../Project'
 
@@ -25,22 +21,18 @@ export default ({ Account, AccountStruct }) => ({
       return account
     }
   },
-  _updatePassword: {
+  _changePassword: {
     args: {
       currentPassword: {
         type: GraphQLNonNull(GraphQLString)
       },
       newPassword: {
         type: GraphQLNonNull(GraphQLString)
-      },
-      email: {
-        type: GraphQLNonNull(GraphQLString)
       }
     },
     type: GraphQLBoolean,
-    resolve: async (self, { currentPassword, newPassword, email }) => {
-      const status =  await changePassword (currentPassword, newPassword, email)
-      return status
+    resolve: async (self, { currentPassword, newPassword }) => {
+      return await changePassword(self._id, currentPassword, newPassword)
     }
   },
   _destroy: {
