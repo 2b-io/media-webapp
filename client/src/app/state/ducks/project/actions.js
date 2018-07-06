@@ -43,3 +43,18 @@ export const getProjectFailed = reason => ({
   type: types.GET_FAILED,
   payload: { reason }
 })
+
+export const updateProject = project => ({
+  type: types.UPDATE,
+  payload: { project }
+})
+
+export const updateProjectCompleted = project => ({
+  type: types.UPDATE_COMPLETED,
+  payload: { project }
+})
+
+export const updateProjectFailed = reason => ({
+  type: types.UPDATE_FAILED,
+  payload: { reason }
+})

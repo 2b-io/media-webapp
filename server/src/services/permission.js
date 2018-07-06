@@ -1,8 +1,7 @@
 import Permission from 'models/Permission'
 
-export const get = async (account, project) => {
+export const get = async (project) => {
   const permission = await Permission.findOne({
-    account: account._id,
     project: project._id
   })
 

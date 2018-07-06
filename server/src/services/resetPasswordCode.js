@@ -24,7 +24,7 @@ export const requestRessetPassword = async (email) => {
   if (accountExists) {
     const { used, uid } = accountExists
 
-    if (!used && _id === uid) {
+    if (!used && String(_id) === String(uid)) {
       return true
     }
   }

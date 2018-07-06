@@ -16,8 +16,7 @@ app.use(
   webpackDevMiddleware(compiler, {
     publicPath: webpackConfig.output.publicPath,
     watchOptions: {
-      ignored: /node_modules/,
-      poll: true
+      ignored: /node_modules/
     },
     logLevel: 'warn'
   })
