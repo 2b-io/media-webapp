@@ -127,7 +127,7 @@ const ProjectDetail = reduxForm({
 
 const Project = ({ project, updateProject }) => (
   <div>
-    <ProjectDetail project={ project } onSubmit={ updateProject }/>
+    <ProjectDetail project={ project } onSubmit={ updateProject } />
   </div>
 )
 export default withParams(
@@ -138,6 +138,5 @@ export default withParams(
     mapDispatch({
       updateProject: ({ name, slug, prettyOrigin, origins }) => actions.updateProject({ name, slug, prettyOrigin, origins })
     })
-  )
-  (Project)
+  )(Project)
 )

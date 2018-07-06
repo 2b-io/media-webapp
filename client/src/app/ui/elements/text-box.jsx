@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 const TextBox = styled.input.attrs({
   type: ({ type = 'text' }) => type,
-  defaultValue: ({defaultValue}) => defaultValue
+  defaultValue: ({ defaultValue }) => defaultValue
 })`
   appearance: none;
   background-color: transparent;
