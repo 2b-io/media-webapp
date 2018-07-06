@@ -109,7 +109,6 @@ export default {
       token,
       slug: project.slug
     })
-
     return body.session.account.project._update
   }
 }

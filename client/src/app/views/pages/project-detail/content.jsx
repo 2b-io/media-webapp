@@ -6,7 +6,8 @@ import styled from 'styled-components'
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
 import { Form } from 'ui/compounds'
-import { Button, TextBox, TextArea } from 'ui/elements'
+import { TextBox } from 'views/common/form'
+import { Button } from 'ui/elements'
 import { withParams } from 'views/router'
 
 
@@ -36,7 +37,7 @@ const PanelRight = styled.div`
    height: auto;
    margin-top: 10px;
    min-width: 230px;
-   @media (max-width: 650px) {
+   @media (max-width: 700px) {
      width: auto;
    }
 
@@ -45,7 +46,7 @@ const PanelRight = styled.div`
 const ProjectForm = ({ project, handleSubmit }) => (
   <main>
     { project && project.name &&
-      <Form handleSubmit={ handleSubmit }>
+      <Form handleSubmit={ handleSubmit } >
         <Layout>
           <PanelLeft>
             <span>Name</span>
@@ -54,7 +55,7 @@ const ProjectForm = ({ project, handleSubmit }) => (
                 type="text"
                 name="name"
                 defaultValue={ project.name }
-                placeholder="Name"
+                placeholder={ project.name? project.name:'Name' }
               />
             </Form.Line>
             <Form.Line>
@@ -63,17 +64,17 @@ const ProjectForm = ({ project, handleSubmit }) => (
                 type="text"
                 name="slug"
                 defaultValue={ project.slug }
-                placeholder="Slug"
+                placeholder={ project.slug? project.slug:'Slug' }
               />
             </Form.Line>
             <Form.Line>
               <span>Pretty origin</span>
-              <TextArea
+              <TextBox
                 rows="3"
                 type="text"
                 name="prettyOrigin"
                 defaultValue={ project.prettyOrigin }
-                placeholder="Pretty origin"
+                placeholder={ project.prettyOrigin? project.prettyOrigin:'pretty origin' }
               />
             </Form.Line>
             <Form.Line>
@@ -82,7 +83,7 @@ const ProjectForm = ({ project, handleSubmit }) => (
                 type="text"
                 name="origins"
                 defaultValue={ project.origin }
-                placeholder="Origins"
+                placeholder={ project.origin? project.origin:'origin' }
               />
             </Form.Line>
             <Form.Line>
@@ -98,7 +99,7 @@ const ProjectForm = ({ project, handleSubmit }) => (
                 type="text"
                 name="presets"
                 defaultValue={ project.preset? project.preset.name : '' }
-                placeholder="Presets"
+                placeholder={ project.preset?  project.preset.name:'preset' }
               />
             </Form.Line>
             <Form.Line>
@@ -107,7 +108,7 @@ const ProjectForm = ({ project, handleSubmit }) => (
                 type="text"
                 name="collaborators"
                 defaultValue={ project.permission? project.permission.privilege : '' }
-                placeholder="collaborators"
+                placeholder={ project.permission?  project.permission.privilege:'collaborators' }
               />
             </Form.Line>
             <Form.Line>
@@ -124,14 +125,19 @@ const ProjectDetail = reduxForm({
   enableReinitialize: true
 })(ProjectForm)
 
+const Project = ({ project, updateProject }) => (
+  <div>
+    <ProjectDetail project={ project } onSubmit={ updateProject }/>
+  </div>
+)
 export default withParams(
   connect(
     (state, { params: { slug } }) => ({
       project: selectors.findProjectBySlug(state, slug),
     }),
     mapDispatch({
-      handleSubmit: ({ name, slug, prettyOrigin, origins }) =>  actions.updateProject(name, slug, prettyOrigin, origins)
+      updateProject: ({ name, slug, prettyOrigin, origins }) => actions.updateProject({ name, slug, prettyOrigin, origins })
     })
   )
-  (ProjectDetail)
+  (Project)
 )

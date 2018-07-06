@@ -68,10 +68,31 @@ const fetchLoop = function*() {
     }
   }
 }
+const updateLoop = function*() {
+  while (true) {
+    const action = yield take(types['PROJECT/UPDATE'])
+
+    try {
+      const session = yield select(selectors.currentSession)
+
+      if (!session) {
+        continue
+      }
+
+      const project = yield call(Project.update, action.payload.project, session.token)
+
+      yield put(actions.updateProjectCompleted(project))
+    } catch (e) {
+      yield put(actions.updateProjectFailed(serializeError(e)))
+      continue
+    }
+  }
+}
 
 export default function*() {
   yield take('@@INITIALIZED')
   yield fork(createLoop)
   yield fork(fetchLoop)
   yield fork(getLoop)
+  yield fork(updateLoop)
 }
