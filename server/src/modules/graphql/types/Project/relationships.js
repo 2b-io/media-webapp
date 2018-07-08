@@ -8,17 +8,24 @@ import {
   list as listPresetsInProject
 } from 'services/preset'
 
+import {
+  get as getPermission
+} from 'services/permission'
+
 import { Account } from '../Account'
 import { Preset } from '../Preset'
+import { Permission } from '../Permission'
 
 export default () => ({
   account: {
     type: Account
   },
   permission: {
-    type: GraphQLString,
-    resolve: async () => {
-      return 'owner'
+    type: Permission,
+    resolve: async (project) => {
+      let permission = await getPermission(project)
+      permission.project = project
+      return permission
     }
   },
   presets: {
@@ -42,8 +49,7 @@ export default () => ({
     },
     type: Preset,
     resolve: async (project, { hash }) => {
-      const preset = await getPreset(project, hash)
-
+      const preset = await getPreset(project)
       // add ref
       preset.project = project
 

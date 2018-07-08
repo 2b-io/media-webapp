@@ -2,12 +2,12 @@ import Permission from 'models/Permission'
 import Preset from 'models/Preset'
 import Project from 'models/Project'
 
-export const update = async (slug, data) => {
+export const update = async ( slug, data ) => {
+  
   const project = await Project.findOneAndUpdate(
-    { slug },
-    data,
+    { slug }, { ...data },
     { new: true }
-  )
+  ).lean()
 
   return project
 }

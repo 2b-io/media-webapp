@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import { LIGHT3, LIGHT4 } from 'ui/color-palettes'
 
 const TextBox = styled.input.attrs({
-  type: ({ type = 'text' }) => type
+  type: ({ type = 'text' }) => type,
+  defaultValue: ({ defaultValue }) => defaultValue
 })`
   appearance: none;
   background-color: transparent;

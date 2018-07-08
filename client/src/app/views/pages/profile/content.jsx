@@ -24,11 +24,6 @@ const Panel = styled.div`
   &{
     margin-bottom: 20px;
     margin-left: 10px;
-    background-color: #fff;
-    border: 1px solid;
-    border-color: #ddd;
-    border-radius: 3px;
-    box-shadow: 0 1px 1px rgba(0,0,0,.05);
   }
 `
 const PanelContent = styled.div`
@@ -42,8 +37,6 @@ const PanelHeader = styled.div`
     border-color: #ddd;
     padding: 10px 15px;
     border-bottom: 1px solid transparent;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
   }
 `
 const PasswordForm = reduxForm({

@@ -1,11 +1,27 @@
 import request from 'services/graphql'
 import pick from 'object.pick'
 
+const PRESET_FRAGMENT = `
+  name,
+  hash,
+  values
+`
+const PERMISSION_FRAGMENT = `
+  account,
+  privilege
+`
 export const PROJECT_FRAGMENT = `
   _id,
   name,
   slug,
-  disabled
+  disabled,
+  prettyOrigin,
+  preset {
+    ${ PRESET_FRAGMENT }
+  },
+  permission {
+    ${ PERMISSION_FRAGMENT }
+  }
 `
 
 const PROJECTS_FRAGMENT = `
@@ -60,5 +76,25 @@ export default {
     })
 
     return body.session.account._createProject
+  },
+  async update(project, token) {
+    const body = await request(`
+      query updateProject($project: ProjectStruct!, $token: String!, $slug:  String!) {
+        session(token: $token) {
+          account {
+            project(slug: $slug) {
+              _update(project: $project) {
+                ${ PROJECT_FRAGMENT }
+              }
+            }
+          }
+        }
+      }
+    `, {
+      project: pick(project, [ 'name', 'origins', 'prettyOrigin', 'disabled' ]),
+      token,
+      slug: project.slug
+    })
+    return body.session.account._updateProject
   }
 }
