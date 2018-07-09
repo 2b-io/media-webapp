@@ -12,40 +12,50 @@ const overlayRoutesPattern = Object.keys(unauthRoutes)
   .map(p => p.split(':')[0] + '*')
   .join('|')
 
+const Header = () => (
+  <TopMenu menuWidth={ MENU_WIDTH } />
+)
+
+const Overlay = ({ history }) => (
+  <Fragment>
+    <Router
+      animated="slide"
+      history={ history }
+      routes={ overlay }
+    />
+    <Router
+      animated="fade"
+      history={ history }
+      routes={ [
+        {
+          path: `(${ overlayRoutesPattern })`,
+          component: Nothing
+        }
+      ] }
+      otherwise={ () => <LeftMenu width={ MENU_WIDTH } /> }
+    />
+  </Fragment>
+)
+
+const Content = ({ history }) => (
+  <Router
+    history={ history }
+    routes={ content }
+  />
+)
+
+const Still = ({ history }) => (
+  <Router
+    history={ history }
+    routes={ still }
+  />
+)
+
 const render = {
-  header: () => <TopMenu menuWidth={ MENU_WIDTH } />,
-  overlay: ({ history }) => (
-    <Fragment>
-      <Router
-        animated="slide"
-        history={ history }
-        routes={ overlay }
-      />
-      <Router
-        animated="fade"
-        history={ history }
-        routes={ [
-          {
-            path: `(${ overlayRoutesPattern })`,
-            component: Nothing
-          }
-        ] }
-        otherwise={ () => <LeftMenu width={ MENU_WIDTH } /> }
-      />
-    </Fragment>
-  ),
-  content: ({ history }) => (
-    <Router
-      history={ history }
-      routes={ content }
-    />
-  ),
-  still: ({ history }) => (
-    <Router
-      history={ history }
-      routes={ still }
-    />
-  )
+  header: Header,
+  overlay: Overlay,
+  content: Content,
+  still: Still
 }
 
 const App = () => (

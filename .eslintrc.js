@@ -97,6 +97,7 @@ module.exports = {
       "error",
       "never"
     ],
-    "object-shorthand": "error"
+    "object-shorthand": "error",
+    "security/detect-object-injection": "off"
   }
 };

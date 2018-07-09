@@ -9,23 +9,24 @@ import {
 } from 'services/preset'
 
 import {
-  get as getPermission
+  get as getPermission,
+  list as listPermissions
 } from 'services/permission'
 
 import { Account } from '../Account'
+import { Collaborator } from '../Collaborator'
 import { Preset } from '../Preset'
-import { Permission } from '../Permission'
 
 export default () => ({
   account: {
     type: Account
   },
-  permission: {
-    type: Permission,
+  collaborators: {
+    type: new GraphQLList(Collaborator),
     resolve: async (project) => {
-      let permission = await getPermission(project)
-      permission.project = project
-      return permission
+      const collaborators = await listPermissions(project)
+
+      return collaborators
     }
   },
   presets: {
@@ -49,7 +50,7 @@ export default () => ({
     },
     type: Preset,
     resolve: async (project, { hash }) => {
-      const preset = await getPreset(project)
+      const preset = await getPreset(project, hash)
       // add ref
       preset.project = project
 

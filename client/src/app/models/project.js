@@ -1,26 +1,29 @@
 import request from 'services/graphql'
 import pick from 'object.pick'
 
-const PRESET_FRAGMENT = `
+import { ACCOUNT_FRAGMENT } from './account'
+
+export const PRESET_FRAGMENT = `
   name,
   hash,
   values
 `
-const PERMISSION_FRAGMENT = `
-  account,
-  privilege
-`
+
 export const PROJECT_FRAGMENT = `
   _id,
   name,
   slug,
   disabled,
   prettyOrigin,
-  preset {
+  presets {
     ${ PRESET_FRAGMENT }
   },
-  permission {
-    ${ PERMISSION_FRAGMENT }
+  collaborators {
+    _id,
+    account {
+      ${ ACCOUNT_FRAGMENT }
+    },
+    privilege
   }
 `
 

@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
-import { GridView } from 'ui/compounds'
 import { Link } from 'ui/elements'
 
 const Project = ({ project, toProjectDetail }) => (
