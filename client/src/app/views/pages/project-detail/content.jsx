@@ -5,130 +5,49 @@ import styled from 'styled-components'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
-import { Form } from 'ui/compounds'
-import { TextBox } from 'views/common/form'
-import { Button } from 'ui/elements'
 import { withParams } from 'views/router'
 
+import CollaboratorList from './collaborator-list'
+import _ProjectForm from './form'
+import PresetList from './preset-list'
 
-const Layout = styled.div`
-   padding: 0;
-   margin: 0;
-   font-weight: bold;
-   list-style: none;
-   display: -webkit-box;
-   display: -moz-box;
-   display: -ms-flexbox;
-   display: -webkit-flex;
-   display: flex;
-   -webkit-flex-flow: row wrap;
-   justify-content: space-around;
-`
-const PanelLeft = styled.div`
-   width: 60%;
-   margin-top: 10px;
-   min-width: 60%;
-   @media (min-width: 230px) {
-     width: auto;
-   }
-`
-const PanelRight = styled.div`
-   width: 30%;
-   height: auto;
-   margin-top: 10px;
-   min-width: 230px;
-   @media (max-width: 700px) {
-     width: auto;
-   }
-
-`
-
-const ProjectForm = ({ project, handleSubmit }) => (
-  <main>
-    { project && project.name &&
-      <Form handleSubmit={ handleSubmit } >
-        <Layout>
-          <PanelLeft>
-            <span>Name</span>
-            <Form.Line>
-              <TextBox
-                type="text"
-                name="name"
-                defaultValue={ project.name }
-                placeholder={ project.name? project.name:'Name' }
-              />
-            </Form.Line>
-            <Form.Line>
-              <span>Slug</span>
-              <TextBox
-                type="text"
-                name="slug"
-                defaultValue={ project.slug }
-                placeholder={ project.slug? project.slug:'Slug' }
-              />
-            </Form.Line>
-            <Form.Line>
-              <span>Pretty origin</span>
-              <TextBox
-                rows="3"
-                type="text"
-                name="prettyOrigin"
-                defaultValue={ project.prettyOrigin }
-                placeholder={ project.prettyOrigin? project.prettyOrigin:'pretty origin' }
-              />
-            </Form.Line>
-            <Form.Line>
-              <span>Origins</span>
-              <TextBox
-                type="text"
-                name="origins"
-                defaultValue={ project.origin }
-                placeholder={ project.origin? project.origin:'origin' }
-              />
-            </Form.Line>
-            <Form.Line>
-              <Form.Align>
-                <Button type="submit">Save</Button>
-              </Form.Align>
-            </Form.Line>
-          </PanelLeft>
-          <PanelRight>
-            <Form.Line>
-              <span>Presets</span>
-              <TextBox
-                type="text"
-                name="presets"
-                defaultValue={ project.preset? project.preset.name : '' }
-                placeholder={ project.preset?  project.preset.name:'preset' }
-              />
-            </Form.Line>
-            <Form.Line>
-              <span>Collaborators</span>
-              <TextBox
-                type="text"
-                name="collaborators"
-                defaultValue={ project.permission? project.permission.privilege : '' }
-                placeholder={ project.permission?  project.permission.privilege:'collaborators' }
-              />
-            </Form.Line>
-            <Form.Line>
-              <Button>{ !project.disabled?'disabled':'enabled' }</Button>
-            </Form.Line>
-          </PanelRight>
-        </Layout>
-      </Form>
-    }
-  </main>
-)
-const ProjectDetail = reduxForm({
+const ProjectForm = reduxForm({
   form: 'project',
   enableReinitialize: true
-})(ProjectForm)
+})(_ProjectForm)
+
+const Section = styled.section`
+  padding-bottom: 30px;
+`
 
 const Project = ({ project, updateProject }) => (
-  <div>
-    <ProjectDetail project={ project } onSubmit={ updateProject } />
-  </div>
+  <main>
+    <Section>
+      <h2>Project Info</h2>
+      <ProjectForm
+        initialValues={ project }
+        onSubmit={ updateProject }
+      />
+    </Section>
+    <Section>
+      <h2>Presets</h2>
+      {
+        project &&
+          <PresetList
+            presets={ project.presets }
+          />
+      }
+    </Section>
+    <Section>
+      <h2>Collaborators</h2>
+      {
+        project &&
+          <CollaboratorList
+            collaborators={ project.collaborators }
+          />
+      }
+    </Section>
+  </main>
 )
 export default withParams(
   connect(

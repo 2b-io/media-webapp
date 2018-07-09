@@ -11,6 +11,7 @@ const TextArea = styled.textarea.attrs({
   outline: none;
   padding: 10px;
   width: 100%;
+  resize: none;
   transition: border-bottom .6s linear;
   &:hover, &:focus {
     border-bottom: 2px solid black;
