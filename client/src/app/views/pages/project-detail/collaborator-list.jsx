@@ -5,7 +5,7 @@ const CollaboratorList = ({ collaborators }) => (
     {
       collaborators.map(
         collaborator => (
-          <li key={ collaborator._id }>{ collaborator.account.email }</li>
+          <li key={ collaborator._id }>{ collaborator.account.email } - { collaborator.privilege }</li>
         )
       )
     }

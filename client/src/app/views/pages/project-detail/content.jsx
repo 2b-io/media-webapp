@@ -55,7 +55,7 @@ export default withParams(
       project: selectors.findProjectBySlug(state, slug),
     }),
     mapDispatch({
-      updateProject: ({ name, slug, prettyOrigin, origins }) => actions.updateProject({ name, slug, prettyOrigin, origins })
+      updateProject: actions.updateProject
     })
   )(Project)
 )

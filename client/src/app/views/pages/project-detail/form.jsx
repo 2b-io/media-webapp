@@ -10,24 +10,28 @@ const ProjectForm = ({ handleSubmit }) => (
       <TextBox
         type="text"
         name="name"
+        placeholder="Project Name"
       />
     </Form.Line>
     <Form.Line>
       <TextBox
         type="text"
         name="slug"
+        disabled
       />
     </Form.Line>
     <Form.Line>
       <TextBox
         type="text"
         name="prettyOrigin"
+        placeholder="Pretty Origins"
       />
     </Form.Line>
     <Form.Line>
       <TextArea
         type="text"
         name="origins"
+        placeholder="Origins"
       />
     </Form.Line>
     <Form.Line>
