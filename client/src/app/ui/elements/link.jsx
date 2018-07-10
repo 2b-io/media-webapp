@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import preventDefault from 'services/prevent-default'
 
 const StyledLink = styled.a`
-  text-decoration: none;
+  text-decoration: underline;
 `
 
 const Link = ({ onClick, ...props }) => (

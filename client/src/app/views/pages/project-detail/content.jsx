@@ -20,7 +20,7 @@ const Section = styled.section`
   padding-bottom: 30px;
 `
 
-const Project = ({ project, updateProject }) => (
+const Project = ({ project, updateProject, toProfile }) => (
   <main>
     <Section>
       <h2>Project Info</h2>
@@ -44,6 +44,7 @@ const Project = ({ project, updateProject }) => (
         project &&
           <CollaboratorList
             collaborators={ project.collaborators }
+            toProfile={ toProfile }
           />
       }
     </Section>
@@ -55,7 +56,8 @@ export default withParams(
       project: selectors.findProjectBySlug(state, slug),
     }),
     mapDispatch({
-      updateProject: actions.updateProject
+      updateProject: actions.updateProject,
+      toProfile: (id) => actions.requestLocation(`/@${ id }`)
     })
   )(Project)
 )

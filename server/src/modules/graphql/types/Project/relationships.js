@@ -9,7 +9,6 @@ import {
 } from 'services/preset'
 
 import {
-  get as getPermission,
   list as listPermissions
 } from 'services/permission'
 
