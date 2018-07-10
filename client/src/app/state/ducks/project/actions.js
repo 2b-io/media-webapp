@@ -58,3 +58,18 @@ export const updateProjectFailed = reason => ({
   type: types.UPDATE_FAILED,
   payload: { reason }
 })
+
+export const createPreset = preset => ({
+  type: types.CREATE_PRESET,
+  payload: { preset }
+})
+
+export const createPresetCompleted = preset => ({
+  type: types.CREATE_PRESET_COMPLETED,
+  payload: { preset }
+})
+
+export const createPresetFailed = reason => ({
+  type: types.CREATE_PRESET_FAILED,
+  payload: { reason }
+})

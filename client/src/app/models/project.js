@@ -99,5 +99,27 @@ export default {
       slug: project.slug
     })
     return body.session.account._updateProject
+  },
+  async createPreset(preset, slug, token) {
+    const body = await request(`
+      query createPreset($preset: PresetStruct!, $token: String!, $slug: String!) {
+        session(token: $token) {
+          account {
+            project (slug: $slug) {
+              _createPreset(preset: $preset) {
+                ${ PRESET_FRAGMENT }
+              }
+            }
+
+          }
+        }
+      }
+    `, {
+      preset: pick(preset, [ 'name', 'values' ]),
+      slug,
+      token
+    })
+    
+    return body.session.account.project._createPreset
   }
 }

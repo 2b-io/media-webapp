@@ -26,6 +26,30 @@ const createLoop = function*() {
   }
 }
 
+const createPresetLoop = function*() {
+  while (true) {
+    const action = yield take(types['PROJECT/CREATE_PRESET'])
+    const { preset } = action.payload
+
+    try {
+      const session = yield select(selectors.currentSession)
+      const currentLocation = yield select(selectors.currentLocation)
+      const { pathname } = currentLocation
+      const slug = pathname.replace(/^.*[\\\/]/, '')
+      if (!session) {
+        continue
+      }
+
+      const newPreset = yield call(Project.createPreset, preset, slug, session.token)
+
+      yield put(actions.createPresetCompleted(newPreset))
+    } catch (e) {
+      yield put(actions.createPresetFailed(serializeError(e)))
+      continue
+    }
+  }
+}
+
 const getLoop = function*() {
   while (true) {
     const action = yield take(types['PROJECT/GET'])
@@ -92,6 +116,7 @@ const updateLoop = function*() {
 export default function*() {
   yield take('@@INITIALIZED')
   yield fork(createLoop)
+  yield fork(createPresetLoop)
   yield fork(fetchLoop)
   yield fork(getLoop)
   yield fork(updateLoop)

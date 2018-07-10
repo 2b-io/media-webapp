@@ -14,6 +14,9 @@ export default combineReducers({
     [ types.GET_COMPLETED ]: (state, action) => ({
       ...state,
       [ action.payload.project.slug ]: action.payload.project
+    }),
+    [ types.CREATE_PRESET_COMPLETED ]: (state, action) => ({
+      ...state
     })
   })
 })

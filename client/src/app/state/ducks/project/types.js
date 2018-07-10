@@ -17,3 +17,7 @@ export const GET_FAILED = prefix('GET_FAILED')
 export const UPDATE = prefix('UPDATE')
 export const UPDATE_COMPLETED = prefix('UPDATE_COMPLETED')
 export const UPDATE_FAILED = prefix('UPDATE_FAILED')
+
+export const CREATE_PRESET = prefix('CREATE_PRESET')
+export const CREATE_PRESET_COMPLETED = prefix('CREATE_PRESET_COMPLETED')
+export const CREATE_PRESET_FAILED = prefix('CREATE_PRESET_FAILED')
