@@ -9,21 +9,16 @@ import color from 'color'
 import nameThisColor from 'name-this-color'
 import palx from 'palx'
 
-const base = '#07c'
-const palettes = palx(base)
-
-console.log(palettes)
-
-const categories = Object.keys(palettes)
+const base = '#0ff'
+const p = palx(base)
+const palettes = Object.keys(p)
   .filter(
-    name => Array.isArray(palettes[name])
+    name => Array.isArray(p[name])
   )
   .map(name => ({
     name,
-    colors: nameThisColor(palettes[name])
+    colors: nameThisColor(p[name])
   }))
-
-console.log(categories)
 
 const Palette = styled.section`
   display: flex;
@@ -47,10 +42,10 @@ const Color = styled.div`
   justify-content: center;
   align-items: center;
   background: ${
-    ({ value }) => value
+    ({ hex }) => hex
   };
   color: ${
-    ({ value }) => color(value).isDark() ? '#fff' : '#000'
+    ({ hex }) => color(hex).isDark() ? '#fff' : '#000'
   };
 `
 
@@ -63,20 +58,20 @@ const UI = () => (
     </TitleBar>
     <div>
       <Palette>
-        <Color value={ base }>Base Color<br />{ base }</Color>
+        <Color hex={ base }>Base Color<br />{ base }</Color>
       </Palette>
       {
-        categories.map(
-          cat => (
-            <Fragment key={ cat.name }>
-              <PaletteName>{ cat.name }</PaletteName>
+        palettes.map(
+          palette => (
+            <Fragment key={ palette.name }>
+              <PaletteName>{ palette.name }</PaletteName>
               <Palette>
                 {
-                  cat.colors.map(
+                  palette.colors.map(
                     ({ hex, name }) => (
                       <Color
                         key={ hex }
-                        value={ hex }
+                        hex={ hex }
                       >
                         <span>{ name }<br />{ hex }</span>
                       </Color>
