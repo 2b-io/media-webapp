@@ -1,11 +1,16 @@
 import React from 'react'
 
-const PresetList = ({ presets }) => (
+const PresetList = ({ presets, toPresetDetail }) => (
   <ul>
     {
       presets.map(
         preset => (
-          <li key={ preset.hash }>{ preset.name }</li>
+          <li
+            onClick={ ()=> toPresetDetail(preset.hash) }
+            key={ preset.hash }
+          >
+            { preset.name }
+          </li>
         )
       )
     }

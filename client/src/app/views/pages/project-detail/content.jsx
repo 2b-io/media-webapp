@@ -11,6 +11,7 @@ import { withParams } from 'views/router'
 
 import CollaboratorList from './collaborator-list'
 import CreatePreset from 'views/common/modals/create-preset'
+import UpdatePreset from 'views/common/modals/update-preset'
 import _ProjectForm from './form'
 import PresetList from './preset-list'
 
@@ -23,7 +24,7 @@ const Section = styled.section`
   padding-bottom: 30px;
 `
 
-const Project = ({ project, updateProject, toProfile, showModal }) => (
+const Project = ({ project, updateProject, toProfile, showModal, showPresetDetail }) => (
   <main>
     <Section>
       <h2>Project Info</h2>
@@ -41,6 +42,10 @@ const Project = ({ project, updateProject, toProfile, showModal }) => (
         project &&
           <PresetList
             presets={ project.presets }
+            toPresetDetail={ (hash) => {
+              const preset = project.presets.find((obj) => obj.hash === hash)
+              showPresetDetail({ preset })
+            } }
           />
       }
     </Section>
@@ -55,6 +60,7 @@ const Project = ({ project, updateProject, toProfile, showModal }) => (
       }
     </Section>
     <CreatePreset width="wide" />
+    <UpdatePreset width="wide" preset={ true } />
   </main>
 )
 export default withParams(
@@ -68,6 +74,10 @@ export default withParams(
       showModal: () => ({
         type: '@@MODAL/SHOW',
         payload: { modal: 'CreatePreset' }
+      }),
+      showPresetDetail: (params) => ({
+        type: '@@MODAL/SHOW',
+        payload: { modal: 'UpdatePreset', params }
       })
     })
   )(Project)

@@ -6,7 +6,10 @@ import { ACCOUNT_FRAGMENT } from './account'
 export const PRESET_FRAGMENT = `
   name,
   hash,
-  values
+  values,
+  project {
+    slug
+  }
 `
 
 export const PROJECT_FRAGMENT = `
@@ -100,6 +103,7 @@ export default {
     })
     return body.session.account._updateProject
   },
+
   async createPreset(preset, slug, token) {
     const body = await request(`
       query createPreset($preset: PresetStruct!, $token: String!, $slug: String!) {
@@ -119,7 +123,32 @@ export default {
       slug,
       token
     })
-    
+
     return body.session.account.project._createPreset
-  }
+  },
+
+  async updatePreset(preset, token) {
+
+    const body = await request(`
+      query updatePreset($preset: PresetStruct!, $token: String!, $slug: String!) {
+        session(token: $token) {
+          account {
+            project(slug: $slug) {
+              preset {
+                _update(preset: $preset) {
+                  ${ PRESET_FRAGMENT }
+                }
+              }
+            }
+          }
+        }
+      }
+    `, {
+      preset: pick(preset, [ 'name', 'hash', 'values' ]),
+      token,
+      slug: preset.project.slug
+    })
+
+    return body.session.account._updatePreset
+  },
 }

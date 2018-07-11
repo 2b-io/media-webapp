@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { Component } from 'react'
 import { Portal } from 'react-portal'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
@@ -46,36 +46,57 @@ const Header = styled.div`
 
 export default ({
   name,
-  enableStateful = true
+  enableStateful = true,
+  onEnter = () => {},
+  onExit = () => {},
 }) => WrappedComponent => {
   const ModalContent = enableStateful ?
     stateful({
       component: `modal/${ name }`
     })(WrappedComponent) : WrappedComponent
 
-  const Modal = ({ show, hide, hideOnClickOutside, showCloseButton, width }) => {
-    if (!show) {
-      return null
+  class Modal extends Component {
+    componentWillReceiveProps(nextProps) {
+      const { dispatch, modal } = this.props
+      const { modal: nextModal } = nextProps
+
+      if (modal === nextModal) {
+        return
+      }
+
+      if (nextModal) {
+        onEnter(dispatch, nextModal)
+      } else {
+        onExit(dispatch)
+      }
     }
 
-    return (
-      <Portal node={ document && document.getElementById('root') }>
-        <Overlay onClick={ hideOnClickOutside ? hide : null }>
-          <Wrapper onClick={ e => e.stopPropagation() } width={ width }>
-            <Header>
-              {
-                showCloseButton && (
-                  <Button plain onClick={ hide }>
-                    <CloseIcon />
-                  </Button>
-                )
-              }
-            </Header>
-            <ModalContent />
-          </Wrapper>
-        </Overlay>
-      </Portal>
-    )
+    render() {
+      const { modal, hide, hideOnClickOutside, showCloseButton, width } = this.props
+
+      if (!modal) {
+        return null
+      }
+
+      return (
+        <Portal node={ document && document.getElementById('root') }>
+          <Overlay onClick={ hideOnClickOutside ? hide : null }>
+            <Wrapper onClick={ e => e.stopPropagation() } width={ width }>
+              <Header>
+                {
+                  showCloseButton && (
+                    <Button plain onClick={ hide }>
+                      <CloseIcon />
+                    </Button>
+                  )
+                }
+              </Header>
+              <ModalContent modal={ modal } />
+            </Wrapper>
+          </Overlay>
+        </Portal>
+      )
+    }
   }
 
   Modal.propTypes = {
@@ -91,7 +112,7 @@ export default ({
 
   return connect(
     state => ({
-      show: state.modal[name]
+      modal: state.modal[name]
     }),
     mapDispatch({
       hide: () => ({

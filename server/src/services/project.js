@@ -20,6 +20,15 @@ export const getBySlug = async (slug) => {
 
   return project
 }
+export const getById = async (id) => {
+
+  const project = await Project.findOne({
+    _id: id,
+    removed: false
+  }).lean()
+
+  return project
+}
 
 export const list = async (account) => {
   if (!account) {

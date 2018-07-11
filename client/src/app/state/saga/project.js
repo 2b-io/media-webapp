@@ -113,6 +113,27 @@ const updateLoop = function*() {
   }
 }
 
+const updatePresetLoop = function*() {
+  while (true) {
+    const action = yield take(types['PROJECT/UPDATE_PRESET'])
+
+    try {
+      const session = yield select(selectors.currentSession)
+
+      if (!session) {
+        continue
+      }
+
+      const preset = yield call(Project.updatePreset, action.payload.preset, session.token)
+
+      yield put(actions.updateProjectCompleted(preset))
+    } catch (e) {
+      yield put(actions.updateProjectFailed(serializeError(e)))
+      continue
+    }
+  }
+}
+
 export default function*() {
   yield take('@@INITIALIZED')
   yield fork(createLoop)
@@ -120,4 +141,5 @@ export default function*() {
   yield fork(fetchLoop)
   yield fork(getLoop)
   yield fork(updateLoop)
+  yield fork(updatePresetLoop)
 }

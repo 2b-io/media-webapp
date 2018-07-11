@@ -15,8 +15,15 @@ export default combineReducers({
       ...state,
       [ action.payload.project.slug ]: action.payload.project
     }),
-    [ types.CREATE_PRESET_COMPLETED ]: (state, action) => ({
-      ...state
-    })
+    [ types.CREATE_PRESET_COMPLETED ]: (state, action) => {
+      const { slug }  = action.payload.preset.project
+      state[ slug ].presets = [ ...state[slug].presets, action.payload.preset ]
+      return { ...state }
+    },
+    [ types.UPDATE_PRESET_COMPLETED ]: (state, action) => {
+      const { slug }  = action.payload.preset.project
+      state[ slug ].presets = [ ...state[slug].presets, action.payload.preset ]
+      return { ...state }
+    }
   })
 })

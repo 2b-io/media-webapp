@@ -4,7 +4,7 @@ import {
 } from 'graphql'
 
 import {
-  get as getPreset,
+  getPresetByProject as getPresetByProject,
   list as listPresetsInProject
 } from 'services/preset'
 
@@ -48,9 +48,10 @@ export default () => ({
       }
     },
     type: Preset,
-    resolve: async (project, { hash }) => {
-      const preset = await getPreset(project, hash)
-      // add ref
+    resolve: async (project) => {
+
+      const preset = await getPresetByProject(project)
+
       preset.project = project
 
       return preset
