@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
@@ -11,7 +11,8 @@ import {
   DashboardIcon,
   PaymentIcon,
   ProjectListIcon,
-  SignOutIcon
+  SignOutIcon,
+  UiIcon
 } from 'ui/icons'
 
 const MenuWrapper = styled.nav`
@@ -21,7 +22,7 @@ const MenuWrapper = styled.nav`
   width: ${ ({ width }) => `${width}px` };
   margin-left: auto;
   margin-right: auto;
-  padding: 10px;
+  padding: 10px 5px;
   font-size: 12px;
 `
 
@@ -29,54 +30,61 @@ const Menu = styled.ul`
 `
 
 const MenuItem = styled.li`
+    text-align: center;
+    ${
+      ({ separator }) => separator && css`
+        border-top: 1px solid black;
+      `
+    }
 `
 
 const LinkButton = styled(Link).attrs({
   href: '#'
 })`
   height: 40px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   text-decoration: none;
   color: inherit;
 `
 
-const MenuItemLabel = styled.label`
-  margin-left: 10px;
-  flex-grow: 1;
-`
-
-const LeftMenu = ({ signOut, toDashboard, toProjectList, width }) => (
+const LeftMenu = ({
+  signOut,
+  toDashboard,
+  toProjectList,
+  toUI,
+  width
+}) => (
   <MenuWrapper width={ width }>
     <Menu>
       <MenuItem>
         <LinkButton onClick={ toDashboard }>
           <DashboardIcon size="medium" />
-          <MenuItemLabel>Dashboard</MenuItemLabel>
         </LinkButton>
       </MenuItem>
       <MenuItem>
         <LinkButton onClick={ toProjectList }>
           <ProjectListIcon size="medium" />
-          <MenuItemLabel>Projects</MenuItemLabel>
         </LinkButton>
       </MenuItem>
       <MenuItem>
         <LinkButton onClick={ signOut }>
           <BillingIcon size="medium" />
-          <MenuItemLabel>Billing</MenuItemLabel>
         </LinkButton>
       </MenuItem>
       <MenuItem>
         <LinkButton onClick={ signOut }>
           <PaymentIcon size="medium" />
-          <MenuItemLabel>Payment Methods</MenuItemLabel>
         </LinkButton>
       </MenuItem>
       <MenuItem>
         <LinkButton onClick={ signOut }>
           <SignOutIcon size="medium" />
-          <MenuItemLabel>Sign Out</MenuItemLabel>
+        </LinkButton>
+      </MenuItem>
+      <MenuItem separator={ true }>
+        <LinkButton onClick={ toUI }>
+          <UiIcon size="medium" />
         </LinkButton>
       </MenuItem>
     </Menu>
@@ -88,6 +96,7 @@ export default connect(
   mapDispatch({
     toDashboard: () => actions.requestLocation('/'),
     toProjectList: () => actions.requestLocation('/projects'),
+    toUI: () => actions.requestLocation('/ui'),
     signOut: () => actions.closeLayout()
   })
 )(LeftMenu)

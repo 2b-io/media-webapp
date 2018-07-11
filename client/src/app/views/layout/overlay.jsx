@@ -80,7 +80,7 @@ const Overlay = ({
         { children }
       </Content>
       <Footer>
-        <GithubIcon inverted />
+        <GithubIcon inverted size="medium" />
       </Footer>
     </Wrapper>
   </StyledOverlay>
