@@ -2,10 +2,10 @@ import color from 'color'
 
 // refer http://oivo.pw/ color palettes
 const light0 = color('#ffffff')
-const light1 = color('#ebece4')
+const light1 = color('#1f88ff')
 const light2 = color('#aaaa67')
 const light3 = color('#78736f')
-const light4 = color('#0b0b0c')
+const light4 = color('#394049')
 
 export const LIGHT0 = light0.string()
 export const LIGHT1 = light1.string()
