@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 // color
 import color from 'color'
-import nameThisColor from 'name-this-color'
+import ntc from 'ntc'
 import palx from 'palx'
 
 const mainColors = [ 'gray', 'red', 'orange', 'green', 'cyan', 'blue', 'indigo' ]
@@ -20,46 +20,84 @@ const palettes = Object.keys(p)
   )
   .map(name => ({
     name,
-    colors: nameThisColor(p[name])
+    colors: p[name].map(color => {
+      const [ hex, name ] = ntc.name(color)
+
+      return {
+        origin: color,
+        hex: hex.toLowerCase(),
+        name
+      }
+    })
   }))
 
 const Palette = styled.section`
   display: flex;
   justify-content: space-between;
+  border: 1px solid black;
 `
 
 const PaletteName = styled.h2`
   padding: 10px 0;
 `
 
-console.log(p)
-
 const Color = styled.div`
   flex-basis: 30px;
   flex-grow: 1;
   flex-shrink: 0;
-  margin: 5px;
-  padding: 5px;
   min-height: 60px;
-  text-align: center;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  font-size: 11px;
+  flex-direction: column;
+  align-items: stretch;
+
+  &:after {
+    padding: 5px;
+    text-align: center;
+    content: "${ ({ name }) => name }";
+    user-select: all;
+    flex-grow: 1;
+  }
+`
+
+const Variant = styled.div`
+  padding: 5px;
   background: ${
     ({ hex }) => hex
   };
   color: ${
     ({ hex }) => color(hex).isDark() ? '#fff' : '#000'
   };
-  border: 1px solid #000;
+  height: 30px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:after {
+    content: "${ ({ hex }) => hex }";
+    user-select: all;
+  }
+`
+
+const ColorName = styled.div`
+  padding: 5px;
+  text-align: center;
 `
 
 const ColorSection = () => (
   <section>
     <Palette>
-      <Color hex={ primary.base }>base<br />{ primary.base }</Color>
-      <Color hex={ primary.white }>white<br />{ primary.white }</Color>
-      <Color hex={ primary.black }>black<br />{ primary.black }</Color>
+      <Color name="White">
+        <Variant hex={ primary.white } />
+      </Color>
+      <Color name="Base">
+        <Variant hex={ primary.base } />
+      </Color>
+      <Color name="Black">
+        <Variant hex={ primary.black } />
+      </Color>
     </Palette>
     {
       palettes.map(
@@ -69,12 +107,10 @@ const ColorSection = () => (
             <Palette>
               {
                 palette.colors.map(
-                  ({ hex, name }) => (
-                    <Color
-                      key={ hex }
-                      hex={ hex }
-                    >
-                      <span>{ name }<br />{ hex }</span>
+                  ({ origin, hex, name }) => (
+                    <Color key={ origin } name={ name }>
+                      <Variant hex={ origin } />
+                      <Variant hex={ hex } />
                     </Color>
                   )
                 )
