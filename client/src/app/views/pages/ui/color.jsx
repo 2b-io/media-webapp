@@ -8,7 +8,7 @@ import palx from 'palx'
 
 const mainColors = [ 'gray', 'red', 'orange', 'green', 'cyan', 'blue', 'indigo' ]
 const primary = {
-  base: '#07f',
+  base: '#00f',
   white: '#fff',
   black: '#000'
 }
@@ -16,7 +16,7 @@ const primary = {
 const p = palx(primary.base)
 const palettes = Object.keys(p)
   .filter(
-    name => Array.isArray(p[name]) && mainColors.includes(name)
+    name => Array.isArray(p[name]) && (mainColors.length === 0 || mainColors.includes(name))
   )
   .map(name => ({
     name,
@@ -33,7 +33,7 @@ const palettes = Object.keys(p)
 
 const Palette = styled.section`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   border: 1px solid black;
 `
 
@@ -45,23 +45,29 @@ const Color = styled.div`
   flex-basis: 30px;
   flex-grow: 1;
   flex-shrink: 0;
-  min-height: 60px;
   display: flex;
   justify-content: flex-start;
   font-size: 11px;
   flex-direction: column;
   align-items: stretch;
 
+  &:before {
+    padding: 5px;
+    text-align: center;
+    content: "${ ({ index }) => index }";
+  }
+
   &:after {
     padding: 5px;
     text-align: center;
     content: "${ ({ name }) => name }";
-    user-select: all;
     flex-grow: 1;
   }
 `
 
-const Variant = styled.div`
+const Variant = styled.div.attrs({
+  children: ({ hex }) => hex
+})`
   padding: 5px;
   background: ${
     ({ hex }) => hex
@@ -69,21 +75,11 @@ const Variant = styled.div`
   color: ${
     ({ hex }) => color(hex).isDark() ? '#fff' : '#000'
   };
-  height: 30px;
+  height: 20px;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  &:after {
-    content: "${ ({ hex }) => hex }";
-    user-select: all;
-  }
-`
-
-const ColorName = styled.div`
-  padding: 5px;
-  text-align: center;
 `
 
 const ColorSection = () => (
@@ -107,8 +103,11 @@ const ColorSection = () => (
             <Palette>
               {
                 palette.colors.map(
-                  ({ origin, hex, name }) => (
-                    <Color key={ origin } name={ name }>
+                  ({ origin, hex, name }, index) => (
+                    <Color key={ origin }
+                      name={ name }
+                      index={ index }
+                    >
                       <Variant hex={ origin } />
                       <Variant hex={ hex } />
                     </Color>

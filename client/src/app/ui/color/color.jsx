@@ -1,24 +1,119 @@
 import Color from 'color'
 
-const c = hex => {
-  const color = new Color(hex)
+const cache = {}
 
-  return {
-    _: color,
-    toString: () => color.string(),
-    // base color
-    base: color.string(),
-    // negative color
-    negate: color.negate().string(),
-    // variations - lightness
-    lighter: color.lighten(.2).string(),
-    darker: color.darken(.2).string(),
-    // variations - alpha
-    fade: color.fade(.3).string(),
-    // variations - color
-    grayscale: color.grayscale().string()
+const toRgba = code => {
+  if (cache[ code ]) {
+    return cache[ code ]
   }
+
+  cache[ code ] = new Color(code)
+
+  return cache[ code ]
 }
 
-export const white = c('#FFFFFF')
-export const woodsmoke = c('#0B0B0C')
+export default ({ palettes, base, black, white }) => {
+  const color = ({
+    autoGenerateVariants,
+    plain,
+    palette,
+    value,
+    alpha,
+    variants,
+    on
+  }) => {
+    const c = { ...plain }
+
+    c.base = toRgba(
+      c.base ||
+      (
+        (palette && value !== undefined) ?
+          palettes[ palette ].colors[ value ].hex :
+          base
+      )
+    )
+
+    if (alpha) {
+      c.base = c.base.alpha(alpha)
+    }
+
+    if (variants) {
+      if (variants.light && !c.light) {
+        c.light = color({
+          palette,
+          value,
+          ...variants.light
+        })
+      }
+
+      if (variants.dark && !c.dark) {
+        c.dark = color({
+          palette,
+          value,
+          ...variants.dark
+        })
+      }
+
+      if (variants.limpid && !c.limpid) {
+        c.limpid = c.limpid || color({
+          palette,
+          value,
+          ...variants.limpid
+        })
+      }
+
+      if (variants.opaque && !c.opaque) {
+        c.opaque = c.opaque || color({
+          palette,
+          value,
+          ...variants.opaque
+        })
+      }
+    }
+
+    if (autoGenerateVariants) {
+      c.light = c.light || color({
+        palette,
+        value: value -1
+      })
+
+      c.dark = c.dark || color({
+        palette,
+        value: value + 1
+      })
+
+      c.limpid = c.limpid || color({
+        palette,
+        value,
+        alpha: .2
+      })
+
+      c.opaque = c.opaque || color({
+        palette,
+        value,
+        alpha: .8
+      })
+    }
+
+    if (on) {
+      c.on = c.on || color({
+        palette,
+        value,
+        ...on
+      })
+    } else {
+      c.on = c.on || {
+        base: toRgba(
+          new Color(c.base).isDark() ? white : black
+        ).string()
+      }
+    }
+
+    c.base = c.base.string()
+
+    return c
+  }
+
+  return color
+}
+

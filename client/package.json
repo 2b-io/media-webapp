@@ -55,6 +55,7 @@
     "styled-transition-group": "1.0.0",
     "stylus": "0.54.5",
     "superagent": "3.8.1",
+    "treeify": "1.1.0",
     "typeface-space-mono": "0.0.54"
   },
   "devDependencies": {
