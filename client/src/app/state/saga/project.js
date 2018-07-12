@@ -72,6 +72,30 @@ const getLoop = function*() {
   }
 }
 
+const getPresetLoop = function*() {
+  while (true) {
+
+    const action = yield take(types['PROJECT/GET_PRESET'])
+
+    const { hash, project } = action.payload.preset
+
+    try {
+      const session = yield select(selectors.currentSession)
+
+      if (!session || !hash || !project) {
+        continue
+      }
+
+      const preset = yield call(Project.getPreset, session.token, project, hash)
+
+      yield put(actions.getPresetCompleted(preset))
+    } catch (e) {
+      yield put(actions.getPresetFailed(serializeError(e)))
+      continue
+    }
+  }
+}
+
 const fetchLoop = function*() {
   while (true) {
     yield take(types['PROJECT/FETCH'])
@@ -92,6 +116,7 @@ const fetchLoop = function*() {
     }
   }
 }
+
 const updateLoop = function*() {
   while (true) {
     const action = yield take(types['PROJECT/UPDATE'])
@@ -126,9 +151,31 @@ const updatePresetLoop = function*() {
 
       const preset = yield call(Project.updatePreset, action.payload.preset, session.token)
 
-      yield put(actions.updateProjectCompleted(preset))
+      yield put(actions.updatePresetCompleted(preset))
     } catch (e) {
-      yield put(actions.updateProjectFailed(serializeError(e)))
+      yield put(actions.updatePresetFailed(serializeError(e)))
+      continue
+    }
+  }
+}
+
+const deletePresetLoop = function*() {
+  while (true) {
+    const action = yield take(types['PROJECT/DELETE_PRESET'])
+
+    try {
+      const session = yield select(selectors.currentSession)
+
+      if (!session) {
+        continue
+      }
+
+      const destroy = yield call(Project.deletePreset, action.payload.preset, session.token)
+      if (destroy) {
+        yield put(actions.deletePresetCompleted(action.payload.preset))
+      }
+    } catch (e) {
+      yield put(actions.deletePresetFailed(serializeError(e)))
       continue
     }
   }
@@ -140,6 +187,8 @@ export default function*() {
   yield fork(createPresetLoop)
   yield fork(fetchLoop)
   yield fork(getLoop)
+  yield fork(getPresetLoop)
   yield fork(updateLoop)
   yield fork(updatePresetLoop)
+  yield fork(deletePresetLoop)
 }

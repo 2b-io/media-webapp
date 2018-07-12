@@ -74,6 +74,21 @@ export const createPresetFailed = reason => ({
   payload: { reason }
 })
 
+export const getPreset = preset => ({
+  type: types.GET_PRESET,
+  payload: { preset }
+})
+
+export const getPresetCompleted = preset => ({
+  type: types.GET_PRESET_COMPLETED,
+  payload: { preset }
+})
+
+export const getPresetFailed = reason => ({
+  type: types.GET_PRESET_FAILED,
+  payload: { reason }
+})
+
 export const updatePreset = preset => ({
   type: types.UPDATE_PRESET,
   payload: { preset }
@@ -86,5 +101,20 @@ export const updatePresetCompleted = preset => ({
 
 export const updatePresetFailed = reason => ({
   type: types.UPDATE_PRESET_FAILED,
+  payload: { reason }
+})
+
+export const deletePreset = preset => ({
+  type: types.DELETE_PRESET,
+  payload: { preset }
+})
+
+export const deletePresetCompleted = preset => ({
+  type: types.DELETE_PRESET_COMPLETED,
+  payload: { preset }
+})
+
+export const deletePresetFailed = reason => ({
+  type: types.DELETE_PRESET_FAILED,
   payload: { reason }
 })

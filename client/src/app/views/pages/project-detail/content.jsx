@@ -24,7 +24,7 @@ const Section = styled.section`
   padding-bottom: 30px;
 `
 
-const Project = ({ project, updateProject, toProfile, showModal, showPresetDetail }) => (
+const Project = ({ project, updateProject, toProfile, showModal, showPresetDetail, getPreset }) => (
   <main>
     <Section>
       <h2>Project Info</h2>
@@ -43,8 +43,9 @@ const Project = ({ project, updateProject, toProfile, showModal, showPresetDetai
           <PresetList
             presets={ project.presets }
             toPresetDetail={ (hash) => {
-              const preset = project.presets.find((obj) => obj.hash === hash)
-              showPresetDetail({ preset })
+              const preset = Object.values(project.presets).find((obj) => obj.hash === hash)
+              getPreset(preset)
+              showPresetDetail(preset)
             } }
           />
       }
@@ -71,6 +72,7 @@ export default withParams(
     mapDispatch({
       updateProject: actions.updateProject,
       toProfile: (id) => actions.requestLocation(`/@${ id }`),
+      getPreset: actions.getPreset,
       showModal: () => ({
         type: '@@MODAL/SHOW',
         payload: { modal: 'CreatePreset' }

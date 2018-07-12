@@ -3,11 +3,11 @@ import React from 'react'
 const PresetList = ({ presets, toPresetDetail }) => (
   <ul>
     {
-      presets.map(
-        preset => (
-          <li
-            onClick={ ()=> toPresetDetail(preset.hash) }
-            key={ preset.hash }
+      Object.values(presets).map(
+        (preset, index) => (
+          !preset.removed && <li
+            onClick={ () => toPresetDetail(preset.hash) }
+            key={ index }
           >
             { preset.name }
           </li>

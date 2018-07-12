@@ -7,6 +7,7 @@ export const PRESET_FRAGMENT = `
   name,
   hash,
   values,
+  removed,
   project {
     slug
   }
@@ -127,14 +128,37 @@ export default {
     return body.session.account.project._createPreset
   },
 
+  async getPreset(token, project, hash) {
+    const body = await request(`
+      query getPreset($token: String!, $slug: String!, $hash: String!) {
+        session(token: $token) {
+          account {
+            project (slug: $slug) {
+              preset(hash: $hash) {
+                ${ PRESET_FRAGMENT }
+              }
+            }
+
+          }
+        }
+      }
+    `, {
+      token,
+      slug: project.slug,
+      hash
+    })
+
+    return body.session.account.project.preset
+  },
+
   async updatePreset(preset, token) {
 
     const body = await request(`
-      query updatePreset($preset: PresetStruct!, $token: String!, $slug: String!) {
+      query updatePreset($token: String!, $slug: String!, $hash: String!, $preset: PresetStruct!) {
         session(token: $token) {
           account {
             project(slug: $slug) {
-              preset {
+              preset(hash: $hash){
                 _update(preset: $preset) {
                   ${ PRESET_FRAGMENT }
                 }
@@ -144,11 +168,35 @@ export default {
         }
       }
     `, {
-      preset: pick(preset, [ 'name', 'hash', 'values' ]),
       token,
-      slug: preset.project.slug
+      slug: preset.project.slug,
+      hash: preset.hash,
+      preset: pick(preset, [ 'name', 'hash', 'values' ])
     })
 
-    return body.session.account._updatePreset
+    return body.session.account.project.preset._update
   },
+
+  async deletePreset(preset, token) {
+
+    const body = await request(`
+      query deletePreset($token: String!, $slug: String!, $hash: String!) {
+        session(token: $token) {
+          account {
+            project(slug: $slug) {
+              preset(hash: $hash){
+                _destroy
+              }
+            }
+          }
+        }
+      }
+    `, {
+      token,
+      slug: preset.project.slug,
+      hash: preset.hash
+    })
+
+    return body.session.account.project.preset._destroy
+  }
 }

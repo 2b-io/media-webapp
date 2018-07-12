@@ -18,15 +18,6 @@ export const get = async (project, hash) => {
 
   return preset
 }
-export const getPresetByProject = async (project) => {
-
-  const preset = await Preset.findOne({
-    project: project._id,
-    removed: false
-  }).lean()
-
-  return preset
-}
 
 export const create = async (project, data) => {
   const preset = await new Preset({
@@ -38,10 +29,9 @@ export const create = async (project, data) => {
   return preset
 }
 
-export const update = async (data) => {
-
+export const update = async (project, hash, data) => {
   const preset = await Preset.findOneAndUpdate(
-    { hash: data.hash },
+    { project: project._id, hash },
     data,
     { new: true }
   ).lean()
