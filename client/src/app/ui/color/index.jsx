@@ -20,13 +20,14 @@ export default ({
   selector = 'hex'
 }) => {
   const color = ({
-    autoGenerateVariants,
-    plain,
-    palette,
-    value,
+    accent,
     alpha,
-    variants,
-    on
+    autoGenerateVariants,
+    palette,
+    plain,
+    on,
+    value,
+    variants
   }) => {
     const c = { ...plain }
 
@@ -115,6 +116,20 @@ export default ({
       c.on = c.on || {
         base: toRgba(
           new Color(c.base).isDark() ? white : black
+        ).string()
+      }
+    }
+
+    if (accent) {
+      c.accent = c.accent || color({
+        palette,
+        value,
+        ...accent
+      })
+    } else {
+      c.accent = c.accent || {
+        base: toRgba(
+          new Color(c.base).negate()
         ).string()
       }
     }
