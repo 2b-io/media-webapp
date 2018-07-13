@@ -4,11 +4,9 @@ import styled from 'styled-components'
 const StyledWrapper = styled.div`
   position: absolute;
   z-index: 1;
-  top: ${
-    ({ headerHeight }) => `${headerHeight}px`
-  };
+  top: 0;
   left: ${
-    ({ menuWidth }) => `${menuWidth}px`
+    ({ menuWidth }) => `${ menuWidth }px`
   };
   right: 0;
   bottom: 0;
@@ -23,7 +21,6 @@ const Wrapper = ({ children, shown, headerHeight, menuWidth }) => (
   <StyledWrapper
     id="wrapper"
     shown={ shown }
-    headerHeight={ headerHeight }
     menuWidth={ menuWidth }>
     { children }
   </StyledWrapper>

@@ -18,7 +18,7 @@ const DropDownMenu = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 40px;
+  top: ${ ({ dock }) => `${ dock }px` };
   right: 0;
   padding: 0 20px 20px;
   z-index: 9;
@@ -47,7 +47,7 @@ class CollapsibleMenu extends Component {
   }
 
   render() {
-    const { children } = this.props
+    const { children, dock } = this.props
     const { showDropDownMenu } = this.state
 
     return (
@@ -62,7 +62,7 @@ class CollapsibleMenu extends Component {
           {
             showDropDownMenu && (
               <Portal node={ document && document.getElementById('wrapper') }>
-                <DropDownMenu>
+                <DropDownMenu dock={ dock }>
                   { children }
                 </DropDownMenu>
               </Portal>

@@ -69,12 +69,12 @@ const LeftMenu = ({
         </LinkButton>
       </MenuItem>
       <MenuItem>
-        <LinkButton onClick={ signOut }>
+        <LinkButton onClick={ () => {} }>
           <BillingIcon size="medium" />
         </LinkButton>
       </MenuItem>
       <MenuItem>
-        <LinkButton onClick={ signOut }>
+        <LinkButton onClick={ () => {} }>
           <PaymentIcon size="medium" />
         </LinkButton>
       </MenuItem>

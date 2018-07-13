@@ -15,7 +15,7 @@ const TextBox = styled.input.attrs({
   width: 100%;
   transition: border-bottom .3s linear;
   &:hover, &:focus {
-    border-bottom: 2px solid ${ ({ theme }) => theme.primary.light.base };
+    border-bottom: 2px solid ${ ({ theme }) => theme.primary.dark.base };
   }
 `
 

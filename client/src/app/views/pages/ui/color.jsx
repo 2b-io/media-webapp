@@ -4,12 +4,12 @@ import styled from 'styled-components'
 // color
 import color from 'color'
 
-import defaultTheme, { base, black, white, palettes } from 'views/themes/default'
+import { base, black, white, palettes } from 'views/themes/default'
 
 const Palette = styled.section`
   display: flex;
   justify-content: center;
-  border: 1px solid black;
+  border: 1px solid ${ ({ theme }) => theme.secondary.base };
 `
 
 const PaletteName = styled.h2`
@@ -48,7 +48,7 @@ const Variant = styled.div.attrs({
     ({ hex }) => hex
   };
   color: ${
-    ({ hex }) => color(hex).isDark() ? '#fff' : '#000'
+    ({ hex }) => color(hex).isDark() ? white : black
   };
   height: 20px;
   text-align: center;

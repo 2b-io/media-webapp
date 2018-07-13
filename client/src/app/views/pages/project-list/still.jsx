@@ -1,13 +1,14 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 
-import { mapDispatch } from 'services/redux-helpers'
+import { selectors } from 'state/interface'
+import { mapDispatch, mapState } from 'services/redux-helpers'
 import { TitleBar } from 'ui/compounds'
 import { Button, CollapsibleMenu } from 'ui/elements'
 import { AddIcon, HelpIcon } from 'ui/icons'
 import CreateProject from 'views/common/modals/create-project'
 
-const ProjectList = ({ showModal }) => (
+const ProjectList = ({ showModal, stillHeight }) => (
   <Fragment>
     <TitleBar>
       <TitleBar.Title>
@@ -15,7 +16,7 @@ const ProjectList = ({ showModal }) => (
       </TitleBar.Title>
 
       <TitleBar.Menu>
-        <CollapsibleMenu>
+        <CollapsibleMenu dock={ stillHeight }>
           <Button plain onClick={ showModal }>
             <AddIcon size="medium" />
           </Button>
@@ -30,7 +31,9 @@ const ProjectList = ({ showModal }) => (
 )
 
 export default connect(
-  null,
+  mapState({
+    stillHeight: selectors.stillHeight
+  }),
   mapDispatch({
     showModal: () => ({
       type: '@@MODAL/SHOW',
