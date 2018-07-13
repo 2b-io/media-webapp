@@ -16,5 +16,8 @@ export default {
   },
   values: {
     type: GraphQLJSON
+  },
+  removed: {
+    type: GraphQLBoolean
   }
 }

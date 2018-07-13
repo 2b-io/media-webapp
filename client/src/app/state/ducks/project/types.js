@@ -17,3 +17,19 @@ export const GET_FAILED = prefix('GET_FAILED')
 export const UPDATE = prefix('UPDATE')
 export const UPDATE_COMPLETED = prefix('UPDATE_COMPLETED')
 export const UPDATE_FAILED = prefix('UPDATE_FAILED')
+
+export const CREATE_PRESET = prefix('CREATE_PRESET')
+export const CREATE_PRESET_COMPLETED = prefix('CREATE_PRESET_COMPLETED')
+export const CREATE_PRESET_FAILED = prefix('CREATE_PRESET_FAILED')
+
+export const GET_PRESET = prefix('GET_PRESET')
+export const GET_PRESET_COMPLETED = prefix('GET_PRESET_COMPLETED')
+export const GET_PRESET_FAILED = prefix('GET_PRESET_FAILED')
+
+export const UPDATE_PRESET = prefix('UPDATE_PRESET')
+export const UPDATE_PRESET_COMPLETED = prefix('UPDATE_PRESET_COMPLETED')
+export const UPDATE_PRESET_FAILED = prefix('UPDATE_PRESET_FAILED')
+
+export const DELETE_PRESET = prefix('DELETE_PRESET')
+export const DELETE_PRESET_COMPLETED = prefix('DELETE_PRESET_COMPLETED')
+export const DELETE_PRESET_FAILED = prefix('DELETE_PRESET_FAILED')

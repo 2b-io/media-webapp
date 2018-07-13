@@ -8,7 +8,8 @@ const Button = styled.button.attrs({
   appearance: none;
   cursor: pointer;
   display: inline-flex;
-
+  margin-right: 5px;
+  margin-left: 5px;
   &:focus {
     outline: none;
   }

@@ -37,12 +37,14 @@ export default combineReducers({
     if (action.type === '@@MODAL/SHOW') {
       return {
         ...state,
-        [ action.payload.modal ]: true
+        [ action.payload.modal ]: {
+          params: action.payload.params 
+        }
       }
     } else if (action.type === '@@MODAL/HIDE') {
       return {
         ...state,
-        [ action.payload.modal ]: false
+        [ action.payload.modal ]: null
       }
     }
 

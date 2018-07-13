@@ -49,6 +49,7 @@ export default () => ({
     },
     type: Preset,
     resolve: async (project, { hash }) => {
+      
       const preset = await getPreset(project, hash)
       // add ref
       preset.project = project
