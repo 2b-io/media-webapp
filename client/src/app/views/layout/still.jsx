@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 const StyledStill = styled.div`
-  background: ${ ({ theme }) => theme.secondary.base };
-  color: ${ ({ theme }) => theme.secondary.on.base };
+  background: ${ ({ theme }) => theme.primary.base };
+  color: ${ ({ theme }) => theme.primary.on.base };
 `
 
 export default class Still extends Component {

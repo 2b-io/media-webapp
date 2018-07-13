@@ -18,12 +18,12 @@ const DropDownMenu = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 36px;
+  top: 40px;
   right: 0;
   padding: 0 20px 20px;
   z-index: 9;
-  background: ${ ({ theme }) => theme.secondary.limpid.base };
-  color: ${ ({ theme }) => theme.secondary.limpid.on.base };
+  background: ${ ({ theme }) => theme.primary.limpid.base };
+  color: ${ ({ theme }) => theme.primary.limpid.on.base };
 
   & > * {
     margin-top: 20px;

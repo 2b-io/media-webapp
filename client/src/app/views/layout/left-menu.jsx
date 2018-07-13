@@ -32,9 +32,10 @@ const Menu = styled.ul`
 const MenuItem = styled.li`
     text-align: center;
     ${
-      ({ separator }) => separator && css`
-        border-top: 1px solid black;
-      `
+      ({ separator, theme }) => separator &&
+        css`
+          border-top: 1px dashed ${ theme.secondary.on.base };
+        `
     }
 `
 

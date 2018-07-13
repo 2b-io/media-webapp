@@ -12,9 +12,13 @@ const toRgba = code => {
   return cache[ code ]
 }
 
-export default ({ palettes, base, black, white }) => {
-  console.log(palettes.gray)
-
+export default ({
+  palettes,
+  base,
+  black,
+  white,
+  selector = 'hex'
+}) => {
   const color = ({
     autoGenerateVariants,
     plain,
@@ -30,7 +34,7 @@ export default ({ palettes, base, black, white }) => {
       c.base ||
       (
         (palette && value !== undefined) ?
-          palettes[ palette ].colors[ value ].hex :
+          palettes[ palette ].colors[ value ][ selector ] :
           base
       )
     )

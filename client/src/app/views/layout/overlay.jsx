@@ -20,10 +20,10 @@ const StyledOverlay = styled.div`
     ({ headerHeight }) => `${ headerHeight }px`
   };
   background-color: ${
-    ({ shown, theme }) => shown ? theme.background.base : theme.primary.base
+    ({ shown, theme }) => shown ? theme.background.base : theme.secondary.base
   };
   color: ${
-    ({ shown, theme }) => shown ? theme.background.on.base : theme.primary.on.base
+    ({ shown, theme }) => shown ? theme.background.on.base : theme.secondary.on.base
   }
 `
 const Wrapper = styled.div`
@@ -51,8 +51,8 @@ const Content = styled.div`
 `
 
 const Footer = styled.div`
-  background: ${ ({ theme }) => theme.secondary.base };
-  color: ${ ({ theme }) => theme.secondary.on.base };
+  background: ${ ({ theme }) => theme.primary.base };
+  color: ${ ({ theme }) => theme.primary.on.base };
   text-align: center;
   padding: 10px;
 `

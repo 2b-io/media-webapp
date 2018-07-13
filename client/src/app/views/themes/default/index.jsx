@@ -4,7 +4,7 @@ import treeify from 'treeify'
 
 import makeColor from 'ui/color'
 
-const base = '#00f'
+const base = '#09f'
 const black = '#111'
 const white = '#fff'
 
@@ -33,18 +33,19 @@ const color = makeColor({
   palettes,
   base,
   black,
-  white
+  white,
+  selector: 'closest'
 })
 
 const theme = {
   // brand colors
   primary: color({
     palette: 'blue',
-    value: 8,
+    value: 7,
     autoGenerateVariants: true
   }),
   secondary: color({
-    palette: 'gray',
+    palette: 'cyan',
     value: 9,
     autoGenerateVariants: true
   }),
