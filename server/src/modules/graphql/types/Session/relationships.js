@@ -1,8 +1,11 @@
-import { GraphQLString } from 'graphql'
+import { GraphQLString, GraphQLList } from 'graphql'
 
 import { Account } from '../Account'
 
-import { findById as findAccountById } from 'services/account'
+import {
+  findById as findAccountById,
+  findByEmail as findAccountByEmail
+} from 'services/account'
 
 export default () => ({
   account: {
@@ -23,6 +26,20 @@ export default () => ({
       }
 
       return await findAccountById(id)
+    }
+  },
+  accounts: {
+    args: {
+      email: {
+        type: GraphQLString
+      }
+    },
+    type: new GraphQLList(Account),
+    resolve: async (session, { email }) => {
+
+      const account = await findAccountByEmail(email)
+
+      return [ account ]
     }
   }
 })

@@ -12,6 +12,7 @@ import { withParams } from 'views/router'
 import CollaboratorList from './collaborator-list'
 import CreatePreset from 'views/common/modals/create-preset'
 import UpdatePreset from 'views/common/modals/update-preset'
+import InviteCollaborator from 'views/common/modals/invite-collaborator'
 import _ProjectForm from './form'
 import PresetList from './preset-list'
 
@@ -24,7 +25,7 @@ const Section = styled.section`
   padding-bottom: 30px;
 `
 
-const Project = ({ project, updateProject, toProfile, showModal, showPresetDetail, getPreset }) => (
+const Project = ({ project, updateProject, toProfile, showCreatePreset, showPresetDetail, showInviteCollaborator, getPreset }) => (
   <main>
     <Section>
       <h2>Project Info</h2>
@@ -35,7 +36,7 @@ const Project = ({ project, updateProject, toProfile, showModal, showPresetDetai
     </Section>
     <Section>
       <h2>Presets</h2>
-      <Button plain onClick={ showModal }>
+      <Button plain onClick={ showCreatePreset }>
         <AddIcon size="medium" />
       </Button>
       {
@@ -52,6 +53,9 @@ const Project = ({ project, updateProject, toProfile, showModal, showPresetDetai
     </Section>
     <Section>
       <h2>Collaborators</h2>
+      <Button plain onClick={ showInviteCollaborator }>
+        <AddIcon size="medium" />
+      </Button>
       {
         project &&
           <CollaboratorList
@@ -62,6 +66,7 @@ const Project = ({ project, updateProject, toProfile, showModal, showPresetDetai
     </Section>
     <CreatePreset width="wide" />
     <UpdatePreset width="wide" preset={ true } />
+    <InviteCollaborator width="wide" />
   </main>
 )
 export default withParams(
@@ -73,13 +78,17 @@ export default withParams(
       updateProject: actions.updateProject,
       toProfile: (id) => actions.requestLocation(`/@${ id }`),
       getPreset: actions.getPreset,
-      showModal: () => ({
+      showCreatePreset: () => ({
         type: '@@MODAL/SHOW',
         payload: { modal: 'CreatePreset' }
       }),
       showPresetDetail: (params) => ({
         type: '@@MODAL/SHOW',
         payload: { modal: 'UpdatePreset', params }
+      }),
+      showInviteCollaborator: () => ({
+        type: '@@MODAL/SHOW',
+        payload: { modal: 'InviteCollaborator' }
       })
     })
   )(Project)

@@ -181,6 +181,33 @@ const deletePresetLoop = function*() {
   }
 }
 
+const inviteCollaboratorLoop = function*() {
+  while (true) {
+    const action = yield take(types['PROJECT/INVITE_COLLABORATOR'])
+
+    const currentLocation = yield select(selectors.currentLocation)
+    const { pathname } = currentLocation
+    const slug = pathname.replace(/^.*[\\\/]/, '')
+    try {
+      const session = yield select(selectors.currentSession)
+
+      if (!session) {
+        continue
+      }
+
+      const collaborator = yield call(Project.inviteCollaborator, session.token, slug, action.payload.email )
+
+      if (invite) {
+        yield put(actions.inviteCollaboratorCompleted({ collaborator, email: action.payload.email  }))
+      }
+
+    } catch (e) {
+      yield put(actions.inviteCollaboratorFailed(serializeError(e)))
+      continue
+    }
+  }
+}
+
 export default function*() {
   yield take('@@INITIALIZED')
   yield fork(createLoop)
@@ -191,4 +218,5 @@ export default function*() {
   yield fork(updateLoop)
   yield fork(updatePresetLoop)
   yield fork(deletePresetLoop)
+  yield fork(inviteCollaboratorLoop)
 }

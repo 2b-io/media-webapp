@@ -1,4 +1,5 @@
 import Permission from 'models/Permission'
+import { findByEmail as findAccountByEmail } from 'services/account'
 
 export const get = async (project) => {
   const permission = await Permission.findOne({
@@ -14,4 +15,14 @@ export const list = async (project) => {
   }).lean()
 
   return permissions
+}
+
+export const invite = async (project, email) => {
+  const account = await findAccountByEmail(email)
+  return await new Permission({
+    project: project._id,
+    account: account._id,
+    privilege: 'owner'
+  }).save()
+
 }

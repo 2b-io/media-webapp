@@ -118,3 +118,18 @@ export const deletePresetFailed = reason => ({
   type: types.DELETE_PRESET_FAILED,
   payload: { reason }
 })
+
+export const inviteCollaborator = email => ({
+  type: types.INVITE_COLLABORATOR,
+  payload: email
+})
+
+export const inviteCollaboratorCompleted = collaborator => ({
+  type: types.INVITE_COLLABORATOR_COMPLETED,
+  payload: { collaborator }
+})
+
+export const inviteCollaboratorFailed = reason => ({
+  type: types.INVITE_COLLABORATOR_FAILED,
+  payload: { reason }
+})
