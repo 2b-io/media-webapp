@@ -4,6 +4,6 @@ module.exports = {
   mongodb: 'mongodb://mongo/myapp',
   session: {
     secret: 'mysupersecret',
-    ttl: '1h'
+    ttl: '1d'
   }
 }

@@ -2,6 +2,7 @@ import * as Dashboard from 'views/pages/dashboard'
 import * as Profile from 'views/pages/profile'
 import * as ProjectDetail from 'views/pages/project-detail'
 import * as ProjectList from 'views/pages/project-list'
+import * as UI from 'views/pages/ui'
 
 import { actions } from 'state/interface'
 
@@ -26,5 +27,8 @@ export default {
     onEnter: ({ slug }) => [
       actions.getProject(slug)
     ]
+  },
+  '/ui': {
+    component: UI
   }
 }

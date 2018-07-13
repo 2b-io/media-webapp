@@ -21,8 +21,6 @@ export default combineReducers({
   form,
   ui: (state = {}, action) => {
     if (action.type === '@@UI/CLEAR') {
-      console.log('clearing...', action.payload.component)
-
       const {
         [ action.payload.component ]: removed,
         ...nextState

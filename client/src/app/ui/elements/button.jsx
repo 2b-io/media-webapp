@@ -1,7 +1,5 @@
 import styled, { css } from 'styled-components'
 
-import { LIGHT0, LIGHT1, LIGHT3 } from 'ui/color-palettes'
-
 const Button = styled.button.attrs({
   type: ({ type = 'button' }) => type
 })`
@@ -24,15 +22,16 @@ const Button = styled.button.attrs({
         margin: 0;
       ` :
       css`
-        border: 1px solid ${ LIGHT3 };
         padding: 0 15px;
         line-height: 2.5em;
-        border-radius: 5px;
-        background: ${ LIGHT0 };
+        border: none;
+        background: ${ ({ theme }) => theme.primary.base };
+        color: ${ ({ theme }) => theme.primary.on.base };
         transition: background .3s linear;
 
         &:hover {
-          background: ${ LIGHT1 };
+          background: ${ ({ theme }) => theme.primary.light.base };
+          color: ${ ({ theme }) => theme.primary.light.on.base };
         }
       `
   }

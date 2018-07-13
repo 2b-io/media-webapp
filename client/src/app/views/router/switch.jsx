@@ -39,7 +39,7 @@ const Switch = ({ animated, children }) => {
       className="switch-wrapper"
       { ...effects[animated] }
       mapStyles={ mapStyles }
-      runOnMount={ false }>
+      runOnMount={ true }>
       { children }
     </AnimatedSwitch>
   )

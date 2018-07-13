@@ -1,5 +1,6 @@
 import React from 'react'
 
+import textCompare from 'services/text-compare'
 import { Form } from 'ui/compounds'
 import { Button } from 'ui/elements'
 import { TextBox } from 'views/common/form'
@@ -28,7 +29,7 @@ const ResetPasswordForm = ({ handleSubmit, password, rePassword }) => (
       <Button
         type="submit"
         onClick={ (e)=>{
-          if (password !== rePassword) {
+          if (!textCompare(password, rePassword)) {
             e.preventDefault()
           }
         } }>

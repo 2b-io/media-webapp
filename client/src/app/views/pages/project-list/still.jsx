@@ -17,10 +17,10 @@ const ProjectList = ({ showModal }) => (
       <TitleBar.Menu>
         <CollapsibleMenu>
           <Button plain onClick={ showModal }>
-            <AddIcon size="medium" inverted />
+            <AddIcon size="medium" />
           </Button>
           <Button plain>
-            <HelpIcon size="medium" inverted />
+            <HelpIcon size="medium" />
           </Button>
         </CollapsibleMenu>
       </TitleBar.Menu>

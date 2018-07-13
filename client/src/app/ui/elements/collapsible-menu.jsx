@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Portal } from 'react-portal'
 import styled from 'styled-components'
 
-import { LIGHT4_FADE0 } from 'ui/color-palettes'
 import { BreakPoint, Button } from 'ui/elements'
 import { MoreIcon } from 'ui/icons'
 
@@ -19,11 +18,12 @@ const DropDownMenu = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 36px;
+  top: 40px;
   right: 0;
   padding: 0 20px 20px;
   z-index: 9;
-  background: ${ LIGHT4_FADE0 };
+  background: ${ ({ theme }) => theme.primary.limpid.base };
+  color: ${ ({ theme }) => theme.primary.limpid.on.base };
 
   & > * {
     margin-top: 20px;
@@ -57,7 +57,7 @@ class CollapsibleMenu extends Component {
         </BreakPoint>
         <BreakPoint name="small">
           <Button plain onClick={ this.toggleMenu }>
-            <MoreIcon size="medium" inverted />
+            <MoreIcon size="medium" />
           </Button>
           {
             showDropDownMenu && (
