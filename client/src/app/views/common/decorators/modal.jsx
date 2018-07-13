@@ -29,7 +29,7 @@ const Wrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
   padding: 10px;
-  box-shadow: 0 10px 100px ${ ({ theme }) => theme.primary.limpid.base };
+  box-shadow: 0 30px 80px ${ ({ theme }) => theme.primary.limpid.base };
   min-width: 300px;
   max-width: ${
     ({ width }) => width === 'wide' ? '960px' : (width === 'narrow' ? '640px' : 'auto')

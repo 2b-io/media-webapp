@@ -5,15 +5,19 @@ import SignIn from 'views/pages/sign-in'
 
 export default {
   '/forgot-password': {
-    component: ForgotPassword
+    component: ForgotPassword,
+    exact: true
   },
   '/register': {
-    component: Register
+    component: Register,
+    exact: true
   },
   '/reset-password/:code': {
-    component: ResetPassword
+    component: ResetPassword,
+    exact: true
   },
   '/sign-in': {
-    component: SignIn
+    component: SignIn,
+    exact: true
   }
 }

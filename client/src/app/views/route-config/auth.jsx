@@ -8,27 +8,32 @@ import { actions } from 'state/interface'
 
 export default {
   '/': {
-    component: Dashboard
+    component: Dashboard,
+    exact: true
   },
   '/@:id': {
     component: Profile,
+    exact: true,
     onEnter: ({ id }) => [
       actions.getAccount(id)
     ]
   },
   '/projects': {
     component: ProjectList,
+    exact: true,
     onEnter: () => [
       actions.fetchProjects()
     ]
   },
   '/projects/:slug': {
     component: ProjectDetail,
+    exact: false,
     onEnter: ({ slug }) => [
       actions.getProject(slug)
     ]
   },
   '/ui': {
-    component: UI
+    component: UI,
+    exact: true
   }
 }
