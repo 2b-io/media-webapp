@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { LIGHT0, LIGHT1, LIGHT4 } from 'ui/color-palettes'
 import { Button, Identicon } from 'ui/elements'
 import { GithubIcon } from 'ui/icons'
 
@@ -11,7 +10,7 @@ const StyledOverlay = styled.div`
   top: 0;
   left: 0;
   bottom: 0;
-  transition: width 1.2s cubic-bezier(.4, 0, .2, 1), background 1.2s cubic-bezier(.4, 0, .2, 1);
+  transition: width 1.2s cubic-bezier(.4, 0, .2, 1), background 1.2s cubic-bezier(.4, 0, .2, 1), color 1.2s cubic-bezier(.4, 0, .2, 1);
   align-center: center;
   justify-content: center;
   width: ${
@@ -21,8 +20,11 @@ const StyledOverlay = styled.div`
     ({ headerHeight }) => `${ headerHeight }px`
   };
   background-color: ${
-    ({ shown }) => shown ? LIGHT0 : LIGHT1
+    ({ shown, theme }) => shown ? theme.background.base : theme.primary.base
   };
+  color: ${
+    ({ shown, theme }) => shown ? theme.background.on.base : theme.primary.on.base
+  }
 `
 const Wrapper = styled.div`
   display: flex;
@@ -49,7 +51,8 @@ const Content = styled.div`
 `
 
 const Footer = styled.div`
-  background: ${ LIGHT4 };
+  background: ${ ({ theme }) => theme.secondary.base };
+  color: ${ ({ theme }) => theme.secondary.on.base };
   text-align: center;
   padding: 10px;
 `
@@ -80,7 +83,7 @@ const Overlay = ({
         { children }
       </Content>
       <Footer>
-        <GithubIcon inverted size="medium" />
+        <GithubIcon size="medium" />
       </Footer>
     </Wrapper>
   </StyledOverlay>

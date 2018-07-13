@@ -59,32 +59,32 @@ const LeftMenu = ({
     <Menu>
       <MenuItem>
         <LinkButton onClick={ toDashboard }>
-          <DashboardIcon size="medium" inverted />
+          <DashboardIcon size="medium" />
         </LinkButton>
       </MenuItem>
       <MenuItem>
         <LinkButton onClick={ toProjectList }>
-          <ProjectListIcon size="medium" inverted />
+          <ProjectListIcon size="medium" />
         </LinkButton>
       </MenuItem>
       <MenuItem>
         <LinkButton onClick={ signOut }>
-          <BillingIcon size="medium" inverted />
+          <BillingIcon size="medium" />
         </LinkButton>
       </MenuItem>
       <MenuItem>
         <LinkButton onClick={ signOut }>
-          <PaymentIcon size="medium" inverted />
+          <PaymentIcon size="medium" />
         </LinkButton>
       </MenuItem>
       <MenuItem>
         <LinkButton onClick={ signOut }>
-          <SignOutIcon size="medium" inverted />
+          <SignOutIcon size="medium" />
         </LinkButton>
       </MenuItem>
       <MenuItem separator={ true }>
         <LinkButton onClick={ toUI }>
-          <UiIcon size="medium" inverted />
+          <UiIcon size="medium" />
         </LinkButton>
       </MenuItem>
     </Menu>

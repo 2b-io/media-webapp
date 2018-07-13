@@ -2,10 +2,10 @@ import ntc from 'ntc'
 import palx from 'palx'
 import treeify from 'treeify'
 
-import makeColor from 'ui/color/color'
+import makeColor from 'ui/color'
 
 const base = '#00f'
-const black = '#000'
+const black = '#111'
 const white = '#fff'
 
 const p = palx(base)
@@ -40,32 +40,22 @@ const theme = {
   // brand colors
   primary: color({
     palette: 'blue',
-    value: 7,
-    variants: {
-      light: {
-        value: 5
-      }
-    },
+    value: 8,
     autoGenerateVariants: true
   }),
   secondary: color({
-    plain: {
-      base: black
-    },
+    palette: 'gray',
+    value: 9,
     autoGenerateVariants: true
   }),
 
   // background colors
   background: color({
-    plain: {
-      base: white
-    },
+    plain: { base: white },
     autoGenerateVariants: true
   }),
   surface: color({
-    plain: {
-      base: white
-    },
+    plain: { base: white },
     autoGenerateVariants: true
   }),
 

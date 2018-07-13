@@ -1,3 +1,124 @@
-import * as usage from './usage'
+import Color from 'color'
 
-export default usage
+const cache = {}
+
+const toRgba = code => {
+  if (cache[ code ]) {
+    return cache[ code ]
+  }
+
+  cache[ code ] = new Color(code)
+
+  return cache[ code ]
+}
+
+export default ({ palettes, base, black, white }) => {
+  console.log(palettes.gray)
+
+  const color = ({
+    autoGenerateVariants,
+    plain,
+    palette,
+    value,
+    alpha,
+    variants,
+    on
+  }) => {
+    const c = { ...plain }
+
+    c.base = toRgba(
+      c.base ||
+      (
+        (palette && value !== undefined) ?
+          palettes[ palette ].colors[ value ].hex :
+          base
+      )
+    )
+
+    if (alpha) {
+      c.base = c.base.alpha(alpha)
+    }
+
+    if (variants) {
+      if (variants.light && !c.light) {
+        c.light = color({
+          palette,
+          value,
+          ...variants.light
+        })
+      }
+
+      if (variants.dark && !c.dark) {
+        c.dark = color({
+          palette,
+          value,
+          ...variants.dark
+        })
+      }
+
+      if (variants.limpid && !c.limpid) {
+        c.limpid = c.limpid || color({
+          palette,
+          value,
+          ...variants.limpid
+        })
+      }
+
+      if (variants.opaque && !c.opaque) {
+        c.opaque = c.opaque || color({
+          palette,
+          value,
+          ...variants.opaque
+        })
+      }
+    }
+
+    if (autoGenerateVariants) {
+      c.light = c.light || color({
+        plain,
+        palette,
+        value: (value <= 0) ? value : (value - 1)
+      })
+
+      c.dark = c.dark || color({
+        plain,
+        palette,
+        value: (value >= 9) ? value : (value + 1)
+      })
+
+      c.limpid = c.limpid || color({
+        plain,
+        palette,
+        value,
+        alpha: .8
+      })
+
+      c.opaque = c.opaque || color({
+        plain,
+        palette,
+        value,
+        alpha: .2
+      })
+    }
+
+    if (on) {
+      c.on = c.on || color({
+        palette,
+        value,
+        ...on
+      })
+    } else {
+      c.on = c.on || {
+        base: toRgba(
+          new Color(c.base).isDark() ? white : black
+        ).string()
+      }
+    }
+
+    c.base = c.base.string()
+
+    return c
+  }
+
+  return color
+}

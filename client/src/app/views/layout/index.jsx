@@ -11,7 +11,6 @@ import Still from './still'
 import Wrapper from './wrapper'
 
 export { default as LeftMenu } from './left-menu'
-export { default as TopMenu } from './top-menu'
 
 class Layout extends Component {
   constructor(...args) {

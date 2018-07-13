@@ -3,33 +3,8 @@ import styled from 'styled-components'
 
 // color
 import color from 'color'
-import ntc from 'ntc'
-import palx from 'palx'
 
-const mainColors = [ 'gray', 'red', 'orange', 'green', 'cyan', 'blue', 'indigo' ]
-const primary = {
-  base: '#00f',
-  white: '#fff',
-  black: '#000'
-}
-
-const p = palx(primary.base)
-const palettes = Object.keys(p)
-  .filter(
-    name => Array.isArray(p[name]) && (mainColors.length === 0 || mainColors.includes(name))
-  )
-  .map(name => ({
-    name,
-    colors: p[name].map(color => {
-      const [ hex, name ] = ntc.name(color)
-
-      return {
-        origin: color,
-        hex: hex.toLowerCase(),
-        name
-      }
-    })
-  }))
+import defaultTheme, { base, black, white, palettes } from 'views/themes/default'
 
 const Palette = styled.section`
   display: flex;
@@ -86,30 +61,30 @@ const ColorSection = () => (
   <section>
     <Palette>
       <Color name="White">
-        <Variant hex={ primary.white } />
+        <Variant hex={ white } />
       </Color>
       <Color name="Base">
-        <Variant hex={ primary.base } />
+        <Variant hex={ base } />
       </Color>
       <Color name="Black">
-        <Variant hex={ primary.black } />
+        <Variant hex={ black } />
       </Color>
     </Palette>
     {
-      palettes.map(
+      Object.values(palettes).map(
         palette => (
           <Fragment key={ palette.name }>
             <PaletteName>{ palette.name }</PaletteName>
             <Palette>
               {
                 palette.colors.map(
-                  ({ origin, hex, name }, index) => (
-                    <Color key={ origin }
+                  ({ closest, hex, name }, index) => (
+                    <Color key={ hex }
                       name={ name }
                       index={ index }
                     >
-                      <Variant hex={ origin } />
                       <Variant hex={ hex } />
+                      <Variant hex={ closest } />
                     </Color>
                   )
                 )

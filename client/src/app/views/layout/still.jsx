@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-import { LIGHT0, LIGHT4 } from 'ui/color-palettes'
-
 const StyledStill = styled.div`
-  background: ${ LIGHT4 };
-  color: ${ LIGHT0 };
+  background: ${ ({ theme }) => theme.secondary.base };
+  color: ${ ({ theme }) => theme.secondary.on.base };
 `
 
 export default class Still extends Component {

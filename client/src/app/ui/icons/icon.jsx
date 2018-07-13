@@ -1,14 +1,5 @@
 import React from 'react'
 import Icon from 'react-icons-kit'
-import styled from 'styled-components'
-
-import { LIGHT0, LIGHT4 } from 'ui/color-palettes'
-
-const StyledIcon = styled(Icon)`
-  color: ${
-    ({ inverted = false }) => inverted ? LIGHT0 : LIGHT4
-  }
-`
 
 const toPixel = size => (
   size === 'extra-large' ?
@@ -20,18 +11,17 @@ const toPixel = size => (
 )
 
 export default type => {
-  const Icon = ({ inverted = 0, size, ...props }) => (
-    <StyledIcon
-      inverted={ Number(inverted) }
+  const IconWrapper = ({ size, ...props }) => (
+    <Icon
       icon={ type }
       size={ toPixel(size) }
       { ...props }
     />
   )
 
-  Icon.propTypes = {
+  IconWrapper.propTypes = {
 
   }
 
-  return Icon
+  return IconWrapper
 }
