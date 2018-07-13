@@ -76,14 +76,12 @@ export default combineReducers({
       const { slug }  = action.payload.preset.project
       const project = state[ slug ]
       const presets = project.presets
+      const { [ action.payload.preset.hash ]: removedPreset, ...remainPresets } = presets
       return {
         ...state,
         [ slug ]: {
           ...project,
-          presets: {
-            ...presets,
-            [ action.payload.preset.hash ]: { ...action.payload.preset, removed: true }
-          }
+          presets: remainPresets
         }
       }
     }

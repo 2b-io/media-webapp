@@ -5,7 +5,7 @@ const PresetList = ({ presets, toPresetDetail }) => (
     {
       Object.values(presets).map(
         (preset, index) => (
-          !preset.removed && <li
+          <li
             onClick={ () => toPresetDetail(preset.hash) }
             key={ index }
           >
