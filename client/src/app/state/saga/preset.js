@@ -4,21 +4,55 @@ import serializeError from 'serialize-error'
 import Project from 'models/project'
 import { actions, types, selectors } from 'state/interface'
 
+const createLoop = function*() {
+  while (true) {
+    const action = yield take(types['PROJECT/CREATE_PRESET'])
+
+    try {
+      const session = yield select(selectors.currentSession)
+
+      if (!session) {
+        continue
+      }
+
+      const { preset, slug } = action.payload
+
+      const newPreset = yield call(
+        Project.createPreset,
+        { preset, slug },
+        session.token
+      )
+
+      yield put(actions.createPresetCompleted({
+        preset: newPreset,
+        slug
+      }))
+    } catch (e) {
+      yield put(actions.createPresetFailed(serializeError(e)))
+      continue
+    }
+  }
+}
+
 const getLoop = function*() {
   while (true) {
     const action = yield take(types['PROJECT/GET_PRESET'])
 
-    const { hash, slug } = action.payload
-
     try {
       const session = yield select(selectors.currentSession)
+
+      if (!session) {
+        continue
+      }
+
+      const { hash, slug } = action.payload
 
       const preset = yield call(Project.getPreset,
         { hash, slug },
         session.token
       )
 
-      yield put(actions.getPresetCompleted(slug, preset))
+      yield put(actions.getPresetCompleted({ preset, slug }))
     } catch (e) {
       yield put(actions.getPresetFailed(serializeError(e)))
       continue
@@ -26,7 +60,40 @@ const getLoop = function*() {
   }
 }
 
+const updateLoop = function*() {
+  while (true) {
+    const action = yield take(types['PROJECT/UPDATE_PRESET'])
+
+    try {
+      const session = yield select(selectors.currentSession)
+
+      if (!session) {
+        continue
+      }
+
+      const { preset, slug } = action.payload
+
+      const newPreset = yield call(
+        Project.updatePreset,
+        { preset, slug },
+        session.token
+      )
+
+      yield put(actions.updatePresetCompleted({
+        preset: newPreset,
+        slug
+      }))
+    } catch (e) {
+      yield put(actions.updatePresetFailed(serializeError(e)))
+      continue
+    }
+  }
+}
+
+
 export default function*() {
   yield take('@@INITIALIZED')
+  yield fork(createLoop)
   yield fork(getLoop)
+  yield fork(updateLoop)
 }

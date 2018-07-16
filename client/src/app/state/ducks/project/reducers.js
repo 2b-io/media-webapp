@@ -23,50 +23,42 @@ export default combineReducers({
     }),
     [ types.GET_PRESET_COMPLETED ]: (state, action) => {
       const { preset, slug }  = action.payload
-      const project = state[ slug ]
 
       return {
         ...state,
         [ slug ]: {
-          ...project,
+          ...state[ slug ],
           presets: {
-            ...project.presets,
+            ...state[ slug ].presets,
             [ preset.hash ]: preset
           }
         }
       }
     },
     [ types.CREATE_PRESET_COMPLETED ]: (state, action) => {
-      const { slug }  = action.payload.preset.project
-      const project = state[ slug ]
-      const presets = project.presets
+      const { preset, slug } = action.payload
 
       return {
         ...state,
         [ slug ]: {
-          ...project,
+          ...state[ slug ],
           presets: {
-            ...presets,
-            [ action.payload.preset.hash ]: action.payload.preset
+            ...state[ slug ].presets,
+            [ preset.hash ]: preset
           }
         }
       }
-
-      // state[ slug ].presets = [ ...state[slug].presets, action.payload.preset ]
-      // return { ...state }
     },
     [ types.UPDATE_PRESET_COMPLETED ]: (state, action) => {
-      const { slug }  = action.payload.preset.project
-      const project = state[ slug ]
-      const presets = project.presets
+      const { preset, slug } = action.payload
 
       return {
         ...state,
         [ slug ]: {
-          ...project,
+          ...state[ slug ],
           presets: {
-            ...presets,
-            [ action.payload.preset.hash ]: action.payload.preset
+            ...state[ slug ].presets,
+            [ preset.hash ]: preset
           }
         }
       }

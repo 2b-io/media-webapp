@@ -15,11 +15,13 @@ const PresetForm = reduxForm({
   enableReinitialize: true
 })(_PresetForm)
 
-const CreatePreset = ({ preset = {} }) => {
+const CreatePreset = ({ preset = {}, savePreset, slug }) => {
   return (
     <Container center>
       <PresetForm
+        onSubmit={ preset => savePreset({ preset, slug }) }
         initialValues={ preset }
+        isEditing={ !!preset.hash }
       />
     </Container>
   )
@@ -33,11 +35,14 @@ export default withParams(
     connect(
       (state, { params: { slug, hash } }) => {
         return {
-          preset: selectors.findPreset(state, { hash, slug })
+          preset: selectors.findPreset(state, { hash, slug }) || {},
+          slug
         }
       },
-      mapDispatch({
-        createPreset: actions.createPreset
+      dispatch => ({
+        savePreset: ({ preset, slug }) => preset.hash ?
+          dispatch(actions.updatePreset({ preset, slug })) :
+          dispatch(actions.createPreset({ preset, slug }))
       })
     )(CreatePreset)
   // )

@@ -41,7 +41,7 @@ const Project = ({
     </Section>
     <Section>
       <h2>Presets</h2>
-      <Button plain onClick={ () => toPresetDetail(project.slug, '_') }>
+      <Button plain onClick={ () => toPresetDetail(project.slug, 'new') }>
         <AddIcon size="medium" />
       </Button>
       {

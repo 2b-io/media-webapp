@@ -59,14 +59,14 @@ export const updateProjectFailed = reason => ({
   payload: { reason }
 })
 
-export const createPreset = preset => ({
+export const createPreset = ({ preset, slug }) => ({
   type: types.CREATE_PRESET,
-  payload: { preset }
+  payload: ({ preset, slug })
 })
 
-export const createPresetCompleted = preset => ({
+export const createPresetCompleted = ({ preset, slug }) => ({
   type: types.CREATE_PRESET_COMPLETED,
-  payload: { preset }
+  payload: ({ preset, slug })
 })
 
 export const createPresetFailed = reason => ({
@@ -79,9 +79,9 @@ export const getPreset = ({ hash, slug }) => ({
   payload: { hash, slug }
 })
 
-export const getPresetCompleted = (slug, preset) => ({
+export const getPresetCompleted = ({ preset, slug }) => ({
   type: types.GET_PRESET_COMPLETED,
-  payload: { slug, preset }
+  payload: { preset, slug }
 })
 
 export const getPresetFailed = reason => ({
@@ -89,14 +89,14 @@ export const getPresetFailed = reason => ({
   payload: { reason }
 })
 
-export const updatePreset = preset => ({
+export const updatePreset = ({ preset, slug }) => ({
   type: types.UPDATE_PRESET,
-  payload: { preset }
+  payload: { preset, slug }
 })
 
-export const updatePresetCompleted = preset => ({
+export const updatePresetCompleted = ({ preset, slug }) => ({
   type: types.UPDATE_PRESET_COMPLETED,
-  payload: { preset }
+  payload: { preset, slug }
 })
 
 export const updatePresetFailed = reason => ({
@@ -104,14 +104,14 @@ export const updatePresetFailed = reason => ({
   payload: { reason }
 })
 
-export const deletePreset = preset => ({
+export const deletePreset = (slug, preset) => ({
   type: types.DELETE_PRESET,
-  payload: { preset }
+  payload: { preset, slug }
 })
 
-export const deletePresetCompleted = preset => ({
+export const deletePresetCompleted = (slug, preset) => ({
   type: types.DELETE_PRESET_COMPLETED,
-  payload: { preset }
+  payload: { preset, slug }
 })
 
 export const deletePresetFailed = reason => ({
