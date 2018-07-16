@@ -88,12 +88,11 @@ export default withParams(
       toPresetDetail: (slug, hash) => actions.requestLocation(`/projects/${ slug }/presets/${ hash }`),
       toProfile: id => actions.requestLocation(`/@${ id }`),
       toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
-      updateProject: actions.updateProject,
-      toProfile: (id) => actions.requestLocation(`/@${ id }`),
       showInviteCollaborator: () => ({
         type: '@@MODAL/SHOW',
         payload: { modal: 'InviteCollaborator' }
-      })
+      }),
+      updateProject: actions.updateProject
     })
   )(Project)
 )

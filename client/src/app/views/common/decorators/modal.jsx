@@ -74,7 +74,6 @@ export default ({
     render() {
       const {
         modal,
-        hide,
         hideOnClickOutside,
         showCloseButton,
         width
