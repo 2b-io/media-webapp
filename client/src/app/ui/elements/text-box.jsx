@@ -11,11 +11,11 @@ const TextBox = styled.input.attrs({
   border-bottom: 2px solid ${ ({ theme }) => theme.primary.base };
   border-radius: 0;
   outline: none;
-  padding: 10px;
+  padding: ${ ({ theme }) => theme.spacing.small };
   width: 100%;
   transition: border-bottom .3s linear;
   &:hover, &:focus {
-    border-bottom: 2px solid ${ ({ theme }) => theme.primary.dark.base };
+    border-bottom: 2px solid ${ ({ theme }) => theme.primary.light.base };
   }
 `
 

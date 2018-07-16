@@ -80,7 +80,13 @@ const theme = {
     palette: 'green',
     value: 2,
     autoGenerateVariants: true
-  })
+  }),
+  spacing: {
+    tiny: '5px',
+    small: '10px',
+    medium: '20px',
+    big: '30px'
+  }
 }
 
 console.debug(treeify.asTree(theme, true))

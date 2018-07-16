@@ -22,7 +22,7 @@ const ProjectForm = reduxForm({
 })(_ProjectForm)
 
 const Section = styled.section`
-  padding-bottom: 30px;
+  padding-bottom: ${ ({ theme }) => theme.spacing.big };
 `
 
 const Project = ({ project, updateProject, toProfile, showModal, showPresetDetail, getPreset }) => (

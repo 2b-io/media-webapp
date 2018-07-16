@@ -21,7 +21,7 @@ const Button = styled.button.attrs({
         padding: 0;
       ` :
       css`
-        padding: 0 15px;
+        padding: ${ ({ theme }) => `0 ${ theme.spacing.medium }` };
         line-height: 2.5em;
         border: none;
         background: ${ ({ theme }) => theme.primary.base };

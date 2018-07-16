@@ -17,8 +17,8 @@ const Overlay = styled.div`
   bottom: 0;
   z-index: 10;
   background: ${ ({ theme }) => theme.secondary.opaque.base };
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: ${ ({ theme }) => theme.spacing.medium };
+  padding-right: ${ ({ theme }) => theme.spacing.medium };
 `
 
 const Wrapper = styled.div`
@@ -28,7 +28,7 @@ const Wrapper = styled.div`
   top: 100px;
   margin-left: auto;
   margin-right: auto;
-  padding: 10px;
+  padding: ${ ({ theme }) => theme.spacing.medium };
   box-shadow: 0 30px 80px ${ ({ theme }) => theme.primary.limpid.base };
   min-width: 300px;
   max-width: ${
@@ -37,7 +37,7 @@ const Wrapper = styled.div`
 `
 
 const Header = styled.div`
-  margin-bottom: 10px;
+  margin-bottom: ${ ({ theme }) => theme.spacing.small };
   display: flex;
   justify-content: flex-end;
   align-items: flex-start;

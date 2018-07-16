@@ -33,8 +33,8 @@ const Wrapper = styled.div`
 `
 
 const Header = styled.div`
-  padding-top: 20px;
-  padding-bottom: 10px;
+  padding-top: ${ ({ theme }) => theme.spacing.medium };
+  padding-bottom: ${ ({ theme }) => theme.spacing.small };
   text-align: center;
   transition: opacity 1.2s cubic-bezier(.4, 0, .2, 1);
   margin-left: -14px;
@@ -54,7 +54,7 @@ const Footer = styled.div`
   background: ${ ({ theme }) => theme.primary.base };
   color: ${ ({ theme }) => theme.primary.on.base };
   text-align: center;
-  padding: 10px;
+  padding: ${ ({ theme }) => theme.spacing.small };
 `
 
 const Overlay = ({
