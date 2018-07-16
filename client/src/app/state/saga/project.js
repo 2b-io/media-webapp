@@ -198,7 +198,7 @@ const inviteCollaboratorLoop = function*() {
       const invite = yield call(Project.inviteCollaborator, session.token, slug, action.payload.email )
 
       if (invite) {
-        yield put(actions.inviteCollaboratorCompleted({ collaborator, email: action.payload.email  }))
+        yield put(actions.inviteCollaboratorCompleted({ invite }))
       }
 
     } catch (e) {
