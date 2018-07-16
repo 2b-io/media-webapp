@@ -3,10 +3,10 @@ import styled, { css } from 'styled-components'
 const Container = styled.div`
   padding: ${ ({ theme }) => theme.spacing.normal };
   ${
-    ({ center }) => center ? css`
+    ({ center }) => center && css`
       margin-left: auto;
       margin-right: auto;
-    ` : null
+    `
   }
   max-width: ${
     ({ size = 'auto' }) => {

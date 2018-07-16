@@ -2,7 +2,6 @@ import React from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
-import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Container } from 'ui/elements'
 import { modal } from 'views/common/decorators'
@@ -22,7 +21,7 @@ const CreatePreset = ({
   slug
 }) => {
   return (
-    <Container center>
+    <Container>
       <PresetForm
         onSubmit={ preset => savePreset({ preset, slug }) }
         initialValues={ preset }
