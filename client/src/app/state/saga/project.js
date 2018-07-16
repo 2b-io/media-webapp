@@ -195,7 +195,7 @@ const inviteCollaboratorLoop = function*() {
         continue
       }
 
-      const collaborator = yield call(Project.inviteCollaborator, session.token, slug, action.payload.email )
+      const invite = yield call(Project.inviteCollaborator, session.token, slug, action.payload.email )
 
       if (invite) {
         yield put(actions.inviteCollaboratorCompleted({ collaborator, email: action.payload.email  }))
@@ -203,6 +203,30 @@ const inviteCollaboratorLoop = function*() {
 
     } catch (e) {
       yield put(actions.inviteCollaboratorFailed(serializeError(e)))
+      continue
+    }
+  }
+}
+
+const findCollaboratorLoop = function*() {
+  while (true) {
+    const action = yield take(types['PROJECT/FIND_COLLABORATOR'])
+
+    try {
+      const session = yield select(selectors.currentSession)
+
+      if (!session) {
+        continue
+      }
+
+      const collaborators = yield call(Project.findCollaborator, session.token, action.payload )
+
+      if (collaborators[0] !== null) {
+        yield put(actions.findCollaboratorCompleted({ collaborators }))
+      }
+
+    } catch (e) {
+      yield put(actions.findCollaboratorFailed(serializeError(e)))
       continue
     }
   }
@@ -219,4 +243,5 @@ export default function*() {
   yield fork(updatePresetLoop)
   yield fork(deletePresetLoop)
   yield fork(inviteCollaboratorLoop)
+  yield fork(findCollaboratorLoop)
 }
