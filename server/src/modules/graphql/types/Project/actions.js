@@ -1,17 +1,22 @@
 import {
   GraphQLBoolean,
-  GraphQLNonNull
+  GraphQLNonNull,
+  GraphQLString
 } from 'graphql'
 
 import {
   create as createPreset
 } from 'services/preset'
 import {
+  invite as inviteCollaborator
+} from 'services/permission'
+import {
   remove as removeProject,
   update as updateProject
 } from 'services/project'
 
 import { Preset, PresetStruct } from '../Preset'
+
 
 export default ({ Project, ProjectStruct }) => ({
   _update: {
@@ -50,6 +55,23 @@ export default ({ Project, ProjectStruct }) => ({
 
       // add ref
       p._project = project
+
+      return p
+    }
+  },
+  _inviteCollaborator: {
+    args: {
+      email: {
+        type: GraphQLNonNull(GraphQLString)
+      }
+    },
+    type: GraphQLBoolean,
+    resolve: async (project, { email }) => {
+
+      const p = await inviteCollaborator(project, email)
+
+      // add ref
+      p.project = project
 
       return p
     }

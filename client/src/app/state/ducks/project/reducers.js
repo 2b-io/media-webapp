@@ -52,9 +52,6 @@ export default combineReducers({
           }
         }
       }
-
-      // state[ slug ].presets = [ ...state[slug].presets, action.payload.preset ]
-      // return { ...state }
     },
     [ types.UPDATE_PRESET_COMPLETED ]: (state, action) => {
       const { slug }  = action.payload.preset.project
@@ -84,6 +81,31 @@ export default combineReducers({
           presets: remainPresets
         }
       }
+    },
+    [ types.INVITE_COLLABORATOR_COMPLETED ]: (state, action) => {
+      const { slug }  = action.payload.preset.project
+      const project = state[ slug ]
+      const collaborators = project.collaborators
+
+      return {
+        ...state,
+        [ slug ]: {
+          ...project,
+          collaborators: {
+            ...collaborators,
+            [ action.payload.collaborators._id ]: action.payload.collaborators
+          }
+        }
+      }
+
+      // state[ slug ].presets = [ ...state[slug].presets, action.payload.preset ]
+      // return { ...state }
     }
+  }),
+  collaborators: createReducer({})({
+    [ types.FIND_COLLABORATOR_COMPLETED ]: (state, action) => action.payload.collaborator.collaborators
+  }),
+  emailCollaborator: createReducer({})({
+    [ types.SELECT_EMAIL_COLLABORATOR ]: (state, action) => action.payload.email
   })
 })
