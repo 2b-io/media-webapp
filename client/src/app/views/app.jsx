@@ -12,6 +12,22 @@ injectGlobal`
     background: ${ defaultTheme.primary.base };
     color: ${ defaultTheme.primary.on.base};
   }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: ${ defaultTheme.secondary.base };
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: ${ defaultTheme.primary.base };
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: ${ defaultTheme.primary.dark.base };
+  }
 `
 
 const HEADER_HEIGHT = 0
