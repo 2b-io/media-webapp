@@ -19,7 +19,7 @@ const schema = mongoose.Schema({
     index: true
   }
 })
-
+schema.index({ email: 'text' })
 schema.methods = {
   comparePassword(plain) {
     return bcrypt.compareSync(plain, this.hashedPassword)

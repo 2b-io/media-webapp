@@ -11,6 +11,7 @@ import { AddIcon } from 'ui/icons'
 import { Route, withParams } from 'views/router'
 
 import CollaboratorList from './collaborator-list'
+import InviteCollaborator from 'views/common/modals/invite-collaborator'
 import _ProjectForm from './form'
 import PresetList from './preset-list'
 import PresetModal from './preset-modal'
@@ -29,6 +30,7 @@ const Project = ({
   toPresetDetail,
   toProfile,
   toProjectDetail,
+  showInviteCollaborator,
   updateProject
 }) => (
   <main>
@@ -56,6 +58,9 @@ const Project = ({
     </Section>
     <Section>
       <h2>Collaborators</h2>
+      <Button plain onClick={ showInviteCollaborator }>
+        <AddIcon size="medium" />
+      </Button>
       {
         project &&
           <CollaboratorList
@@ -71,6 +76,7 @@ const Project = ({
         onHide={ () => toProjectDetail(project.slug) }
       />
     </Route>
+    <InviteCollaborator width="wide" />
   </main>
 )
 export default withParams(
@@ -83,6 +89,11 @@ export default withParams(
       toProfile: id => actions.requestLocation(`/@${ id }`),
       toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
       updateProject: actions.updateProject,
+      toProfile: (id) => actions.requestLocation(`/@${ id }`),
+      showInviteCollaborator: () => ({
+        type: '@@MODAL/SHOW',
+        payload: { modal: 'InviteCollaborator' }
+      })
     })
   )(Project)
 )

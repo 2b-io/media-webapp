@@ -3,6 +3,12 @@ import pick from 'object.pick'
 
 import { ACCOUNT_FRAGMENT } from './account'
 
+export const PERMISSION_FRAGMENT = `
+  _id,
+  project,
+  account,
+  privilege
+`
 export const PRESET_FRAGMENT = `
   name,
   hash,
@@ -192,5 +198,42 @@ export default {
     })
 
     return body.session.account.project.preset._destroy
+  },
+
+  async inviteCollaborator(token, slug, email) {
+    const body = await request(`
+      query inviteCollaborator($token: String!, $slug: String!, $email: String!) {
+        session(token: $token) {
+          account {
+            project(slug: $slug) {
+              _inviteCollaborator(email: $email)
+            }
+          }
+        }
+      }
+    `, {
+      token,
+      slug,
+      email
+    })
+
+    return body.session.account.project._inviteCollaborator
+  },
+
+  async findCollaborator(token, email) {
+    const body = await request(`
+      query findCollaborator($token: String!, $email: String!) {
+        session(token: $token) {
+          accounts(email: $email) {
+            ${ ACCOUNT_FRAGMENT }
+          }
+        }
+      }
+    `, {
+      token,
+      email
+    })
+    return body.session.accounts
   }
+
 }
