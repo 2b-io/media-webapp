@@ -186,11 +186,11 @@ const deletePresetLoop = function*() {
 export default function*() {
   yield take('@@INITIALIZED')
   yield fork(createLoop)
-  yield fork(createPresetLoop)
+  // yield fork(createPresetLoop)
   yield fork(fetchLoop)
   yield fork(getLoop)
-  yield fork(getPresetLoop)
+  // yield fork(getPresetLoop)
   yield fork(updateLoop)
-  yield fork(updatePresetLoop)
-  yield fork(deletePresetLoop)
+  // yield fork(updatePresetLoop)
+  // yield fork(deletePresetLoop)
 }

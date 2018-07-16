@@ -46,9 +46,7 @@ const Header = styled.div`
 
 export default ({
   name,
-  enableStateful = true,
-  onEnter = () => {},
-  onExit = () => {},
+  enableStateful = true
 }) => WrappedComponent => {
   const ModalContent = enableStateful ?
     stateful({
@@ -56,23 +54,31 @@ export default ({
     })(WrappedComponent) : WrappedComponent
 
   class Modal extends Component {
-    componentWillReceiveProps(nextProps) {
-      const { dispatch, modal } = this.props
-      const { modal: nextModal } = nextProps
+    componentWillUnmount() {
+      this.props.hide()
+    }
 
-      if (modal === nextModal) {
-        return
-      }
+    hide() {
+      return () => {
+        const { onHide } = this.props
+        const allowHide = onHide ? (onHide() === false) : true
 
-      if (nextModal) {
-        onEnter(dispatch, nextModal)
-      } else {
-        onExit(dispatch)
+        if (!allowHide) {
+          return
+        }
+
+        this.props.hide()
       }
     }
 
     render() {
-      const { modal, hide, hideOnClickOutside, showCloseButton, width } = this.props
+      const {
+        modal,
+        hide,
+        hideOnClickOutside,
+        showCloseButton,
+        width
+      } = this.props
 
       if (!modal) {
         return null
@@ -80,18 +86,18 @@ export default ({
 
       return (
         <Portal node={ document && document.getElementById('root') }>
-          <Overlay onClick={ hideOnClickOutside ? hide : null }>
+          <Overlay onClick={ hideOnClickOutside ? this.hide() : null }>
             <Wrapper onClick={ e => e.stopPropagation() } width={ width }>
               <Header>
                 {
                   showCloseButton && (
-                    <Button plain onClick={ hide }>
+                    <Button plain onClick={ this.hide() }>
                       <CloseIcon />
                     </Button>
                   )
                 }
               </Header>
-              <ModalContent modal={ modal } />
+              <ModalContent modal={ modal } { ...this.props } />
             </Wrapper>
           </Overlay>
         </Portal>

@@ -128,24 +128,23 @@ export default {
     return body.session.account.project._createPreset
   },
 
-  async getPreset(token, project, hash) {
+  async getPreset({ hash, slug }, token) {
     const body = await request(`
-      query getPreset($token: String!, $slug: String!, $hash: String!) {
+      query getPreset($hash: String!, $slug: String!, $token: String!) {
         session(token: $token) {
           account {
-            project (slug: $slug) {
+            project(slug: $slug) {
               preset(hash: $hash) {
                 ${ PRESET_FRAGMENT }
               }
             }
-
           }
         }
       }
     `, {
-      token,
-      slug: project.slug,
-      hash
+      hash,
+      slug,
+      token
     })
 
     return body.session.account.project.preset

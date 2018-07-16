@@ -74,14 +74,14 @@ export const createPresetFailed = reason => ({
   payload: { reason }
 })
 
-export const getPreset = preset => ({
+export const getPreset = ({ hash, slug }) => ({
   type: types.GET_PRESET,
-  payload: { preset }
+  payload: { hash, slug }
 })
 
-export const getPresetCompleted = preset => ({
+export const getPresetCompleted = (slug, preset) => ({
   type: types.GET_PRESET_COMPLETED,
-  payload: { preset }
+  payload: { slug, preset }
 })
 
 export const getPresetFailed = reason => ({

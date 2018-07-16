@@ -23,11 +23,7 @@ export default {
     exact: true,
     onEnter: () => [
       actions.fetchProjects()
-    ],
-    onLeave: () => [ {
-      type: '@@MODAL/HIDE',
-      payload: { modal: 'CreateProject' }
-    } ]
+    ]
   },
   '/projects/:slug': {
     component: ProjectDetail,
@@ -38,14 +34,13 @@ export default {
   },
   '/projects/:slug/presets/:hash': {
     partial: true,
-    onEnter: () => [ {
-      type: '@@MODAL/SHOW',
-      payload: { modal: 'CreatePreset' }
-    } ],
-    onLeave: () => [ {
-      type: '@@MODAL/HIDE',
-      payload: { modal: 'CreatePreset' }
-    } ]
+    onEnter: ({ hash, slug }) => [
+      actions.getPreset({ hash, slug }),
+      {
+        type: '@@MODAL/SHOW',
+        payload: { modal: 'CreatePreset' }
+      }
+    ]
   },
   '/ui': {
     component: UI,

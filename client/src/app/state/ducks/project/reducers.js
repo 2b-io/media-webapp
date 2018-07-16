@@ -22,17 +22,16 @@ export default combineReducers({
       }
     }),
     [ types.GET_PRESET_COMPLETED ]: (state, action) => {
-      const { slug }  = action.payload.preset.project
+      const { preset, slug }  = action.payload
       const project = state[ slug ]
-      const presets = project.presets
 
       return {
         ...state,
         [ slug ]: {
           ...project,
           presets: {
-            ...presets,
-            [ action.payload.preset.hash ]: action.payload.preset
+            ...project.presets,
+            [ preset.hash ]: preset
           }
         }
       }
