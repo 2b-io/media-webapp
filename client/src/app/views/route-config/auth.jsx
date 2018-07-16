@@ -23,7 +23,11 @@ export default {
     exact: true,
     onEnter: () => [
       actions.fetchProjects()
-    ]
+    ],
+    onLeave: () => [ {
+      type: '@@MODAL/HIDE',
+      payload: { modal: 'CreateProject' }
+    } ]
   },
   '/projects/:slug': {
     component: ProjectDetail,
