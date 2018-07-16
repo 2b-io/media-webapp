@@ -22,7 +22,7 @@ const MenuWrapper = styled.nav`
   width: ${ ({ width }) => `${width}px` };
   margin-left: auto;
   margin-right: auto;
-  padding: 10px 5px;
+  padding: ${ ({ theme: { spacing } }) => `${ spacing.small } ${ spacing.tiny }`  };
   font-size: 12px;
 `
 

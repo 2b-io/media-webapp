@@ -6,7 +6,7 @@ import Title from './title'
 const TitleBar = styled.div`
   display: flex;
   align-items: center;
-  padding: 5px 20px;
+  padding: ${ ({ theme: { spacing } }) => `${ spacing.tiny } ${ spacing.medium }` };
   min-height: 36px;
   flex-wrap: nowrap;
 `

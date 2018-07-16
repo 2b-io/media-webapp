@@ -80,10 +80,16 @@ const theme = {
     palette: 'green',
     value: 2,
     autoGenerateVariants: true
-  })
+  }),
+  spacing: {
+    tiny: '5px',
+    small: '10px',
+    medium: '20px',
+    big: '30px'
+  }
 }
 
-console.log(treeify.asTree(theme, true))
+console.debug(treeify.asTree(theme, true))
 
 export { base, black, white, palettes }
 export default theme

@@ -13,7 +13,7 @@ const Palette = styled.section`
 `
 
 const PaletteName = styled.h2`
-  padding: 10px 0;
+  padding: ${ ({ theme }) => `${ theme.spacing.small } 0` };
 `
 
 const Color = styled.div`
@@ -27,13 +27,13 @@ const Color = styled.div`
   align-items: stretch;
 
   &:before {
-    padding: 5px;
+    padding: ${ ({ theme }) => theme.spacing.tiny };;
     text-align: center;
     content: "${ ({ index }) => index }";
   }
 
   &:after {
-    padding: 5px;
+    padding:  ${ ({ theme }) => theme.spacing.tiny };
     text-align: center;
     content: "${ ({ name }) => name }";
     flex-grow: 1;
@@ -43,7 +43,7 @@ const Color = styled.div`
 const Variant = styled.div.attrs({
   children: ({ hex }) => hex
 })`
-  padding: 5px;
+  padding: ${ ({ theme }) => theme.spacing.tiny };;
   background: ${
     ({ hex }) => hex
   };

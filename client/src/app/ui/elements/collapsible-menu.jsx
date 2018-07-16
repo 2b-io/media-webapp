@@ -20,13 +20,13 @@ const DropDownMenu = styled.div`
   position: absolute;
   top: ${ ({ dock }) => `${ dock }px` };
   right: 0;
-  padding: 0 20px 20px;
+  padding: ${ ({ theme: { spacing: { medium } } }) => `0 ${ medium } ${ medium }}` };
   z-index: 9;
   background: ${ ({ theme }) => theme.primary.limpid.base };
   color: ${ ({ theme }) => theme.primary.limpid.on.base };
 
   & > * {
-    margin-top: 20px;
+    margin-top: ${ ({ theme }) => theme.spacing.medium };
   }
 `
 // TODO fix stateful

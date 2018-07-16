@@ -17,7 +17,7 @@ const ProjectForm = ({ handleSubmit }) => (
       <TextBox
         type="text"
         name="slug"
-        disabled
+        readOnly
       />
     </Form.Line>
     <Form.Line>
@@ -34,7 +34,7 @@ const ProjectForm = ({ handleSubmit }) => (
         placeholder="Origins"
       />
     </Form.Line>
-    <Form.Line>
+    <Form.Line last={ true }>
       <Button type="submit">Save</Button>
     </Form.Line>
   </Form>

@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+
 import { reduxForm } from 'redux-form'
 import styled from 'styled-components'
 
@@ -7,14 +8,13 @@ import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
 import { Button } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
-import { withParams } from 'views/router'
+import { Route, withParams } from 'views/router'
 
 import CollaboratorList from './collaborator-list'
-import CreatePreset from 'views/common/modals/create-preset'
-import UpdatePreset from 'views/common/modals/update-preset'
 import InviteCollaborator from 'views/common/modals/invite-collaborator'
 import _ProjectForm from './form'
 import PresetList from './preset-list'
+import PresetModal from './preset-modal'
 
 const ProjectForm = reduxForm({
   form: 'project',
@@ -22,10 +22,17 @@ const ProjectForm = reduxForm({
 })(_ProjectForm)
 
 const Section = styled.section`
-  padding-bottom: 30px;
+  padding-bottom: ${ ({ theme }) => theme.spacing.big };
 `
 
-const Project = ({ project, updateProject, toProfile, showCreatePreset, showPresetDetail, showInviteCollaborator, getPreset }) => (
+const Project = ({
+  project,
+  toPresetDetail,
+  toProfile,
+  toProjectDetail,
+  showInviteCollaborator,
+  updateProject
+}) => (
   <main>
     <Section>
       <h2>Project Info</h2>
@@ -36,17 +43,15 @@ const Project = ({ project, updateProject, toProfile, showCreatePreset, showPres
     </Section>
     <Section>
       <h2>Presets</h2>
-      <Button plain onClick={ showCreatePreset }>
+      <Button plain onClick={ () => toPresetDetail(project.slug, 'new') }>
         <AddIcon size="medium" />
       </Button>
       {
         project &&
           <PresetList
             presets={ project.presets }
-            toPresetDetail={ (hash) => {
-              const preset = Object.values(project.presets).find((obj) => obj.hash === hash)
-              getPreset(preset)
-              showPresetDetail(preset)
+            onPresetSelected={ hash => {
+              toPresetDetail(project.slug, hash)
             } }
           />
       }
@@ -64,8 +69,13 @@ const Project = ({ project, updateProject, toProfile, showCreatePreset, showPres
           />
       }
     </Section>
-    <CreatePreset width="wide" />
-    <UpdatePreset width="wide" preset={ true } />
+    <Route path="/projects/:slug/presets/:hash">
+      <PresetModal
+        width="wide"
+        hideOnClickOutside={ false }
+        onHide={ () => toProjectDetail(project.slug) }
+      />
+    </Route>
     <InviteCollaborator width="wide" />
   </main>
 )
@@ -75,21 +85,14 @@ export default withParams(
       project: selectors.findProjectBySlug(state, slug),
     }),
     mapDispatch({
-      updateProject: actions.updateProject,
-      toProfile: (id) => actions.requestLocation(`/@${ id }`),
-      getPreset: actions.getPreset,
-      showCreatePreset: () => ({
-        type: '@@MODAL/SHOW',
-        payload: { modal: 'CreatePreset' }
-      }),
-      showPresetDetail: (params) => ({
-        type: '@@MODAL/SHOW',
-        payload: { modal: 'UpdatePreset', params }
-      }),
+      toPresetDetail: (slug, hash) => actions.requestLocation(`/projects/${ slug }/presets/${ hash }`),
+      toProfile: id => actions.requestLocation(`/@${ id }`),
+      toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
       showInviteCollaborator: () => ({
         type: '@@MODAL/SHOW',
         payload: { modal: 'InviteCollaborator' }
-      })
+      }),
+      updateProject: actions.updateProject
     })
   )(Project)
 )

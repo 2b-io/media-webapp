@@ -22,62 +22,54 @@ export default combineReducers({
       }
     }),
     [ types.GET_PRESET_COMPLETED ]: (state, action) => {
-      const { slug }  = action.payload.preset.project
-      const project = state[ slug ]
-      const presets = project.presets
+      const { preset, slug }  = action.payload
 
       return {
         ...state,
         [ slug ]: {
-          ...project,
+          ...state[ slug ],
           presets: {
-            ...presets,
-            [ action.payload.preset.hash ]: action.payload.preset
+            ...state[ slug ].presets,
+            [ preset.hash ]: preset
           }
         }
       }
     },
     [ types.CREATE_PRESET_COMPLETED ]: (state, action) => {
-      const { slug }  = action.payload.preset.project
-      const project = state[ slug ]
-      const presets = project.presets
+      const { preset, slug } = action.payload
 
       return {
         ...state,
         [ slug ]: {
-          ...project,
+          ...state[ slug ],
           presets: {
-            ...presets,
-            [ action.payload.preset.hash ]: action.payload.preset
+            ...state[ slug ].presets,
+            [ preset.hash ]: preset
           }
         }
       }
     },
     [ types.UPDATE_PRESET_COMPLETED ]: (state, action) => {
-      const { slug }  = action.payload.preset.project
-      const project = state[ slug ]
-      const presets = project.presets
+      const { preset, slug } = action.payload
 
       return {
         ...state,
         [ slug ]: {
-          ...project,
+          ...state[ slug ],
           presets: {
-            ...presets,
-            [ action.payload.preset.hash ]: action.payload.preset
+            ...state[ slug ].presets,
+            [ preset.hash ]: preset
           }
         }
       }
     },
     [ types.DELETE_PRESET_COMPLETED ]: (state, action) => {
-      const { slug }  = action.payload.preset.project
-      const project = state[ slug ]
-      const presets = project.presets
-      const { [ action.payload.preset.hash ]: removedPreset, ...remainPresets } = presets
+      const { preset: { hash }, slug } = action.payload
+      const { [ hash ]: removedPreset, ...remainPresets } = state[ slug ].presets
       return {
         ...state,
         [ slug ]: {
-          ...project,
+          ...state[ slug ],
           presets: remainPresets
         }
       }

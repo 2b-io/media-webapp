@@ -21,7 +21,7 @@ const Button = styled.button.attrs({
         padding: 0;
       ` :
       css`
-        padding: 0 15px;
+        padding: ${ ({ theme }) => `0 ${ theme.spacing.medium }` };
         line-height: 2.5em;
         border: none;
         background: ${ ({ theme }) => theme.primary.base };
@@ -38,6 +38,14 @@ const Button = styled.button.attrs({
           color: ${ ({ theme }) => theme.primary.dark.on.base };
         }
       `
+  }
+`
+
+Button.Group = styled.div`
+  display: inline-flex;
+
+  & > ${ Button } {
+    margin-right: ${ ({ theme }) => theme.spacing.small };
   }
 `
 

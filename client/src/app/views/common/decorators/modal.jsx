@@ -17,8 +17,8 @@ const Overlay = styled.div`
   bottom: 0;
   z-index: 10;
   background: ${ ({ theme }) => theme.secondary.opaque.base };
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: ${ ({ theme }) => theme.spacing.medium };
+  padding-right: ${ ({ theme }) => theme.spacing.medium };
 `
 
 const Wrapper = styled.div`
@@ -28,7 +28,7 @@ const Wrapper = styled.div`
   top: 100px;
   margin-left: auto;
   margin-right: auto;
-  padding: 10px;
+  padding: ${ ({ theme }) => theme.spacing.medium };
   box-shadow: 0 30px 80px ${ ({ theme }) => theme.primary.limpid.base };
   min-width: 300px;
   max-width: ${
@@ -37,7 +37,7 @@ const Wrapper = styled.div`
 `
 
 const Header = styled.div`
-  margin-bottom: 10px;
+  margin-bottom: ${ ({ theme }) => theme.spacing.small };
   display: flex;
   justify-content: flex-end;
   align-items: flex-start;
@@ -46,9 +46,7 @@ const Header = styled.div`
 
 export default ({
   name,
-  enableStateful = true,
-  onEnter = () => {},
-  onExit = () => {},
+  enableStateful = true
 }) => WrappedComponent => {
   const ModalContent = enableStateful ?
     stateful({
@@ -56,23 +54,30 @@ export default ({
     })(WrappedComponent) : WrappedComponent
 
   class Modal extends Component {
-    componentWillReceiveProps(nextProps) {
-      const { dispatch, modal } = this.props
-      const { modal: nextModal } = nextProps
+    componentWillUnmount() {
+      this.props.hide()
+    }
 
-      if (modal === nextModal) {
-        return
-      }
+    hide() {
+      return () => {
+        const { onHide } = this.props
+        const allowHide = onHide ? (onHide() === false) : true
 
-      if (nextModal) {
-        onEnter(dispatch, nextModal)
-      } else {
-        onExit(dispatch)
+        if (!allowHide) {
+          return
+        }
+
+        this.props.hide()
       }
     }
 
     render() {
-      const { modal, hide, hideOnClickOutside, showCloseButton, width } = this.props
+      const {
+        modal,
+        hideOnClickOutside,
+        showCloseButton,
+        width
+      } = this.props
 
       if (!modal) {
         return null
@@ -80,18 +85,18 @@ export default ({
 
       return (
         <Portal node={ document && document.getElementById('root') }>
-          <Overlay onClick={ hideOnClickOutside ? hide : null }>
+          <Overlay onClick={ hideOnClickOutside ? this.hide() : null }>
             <Wrapper onClick={ e => e.stopPropagation() } width={ width }>
               <Header>
                 {
                   showCloseButton && (
-                    <Button plain onClick={ hide }>
+                    <Button plain onClick={ this.hide() }>
                       <CloseIcon />
                     </Button>
                   )
                 }
               </Header>
-              <ModalContent modal={ modal } />
+              <ModalContent modal={ modal } { ...this.props } />
             </Wrapper>
           </Overlay>
         </Portal>
