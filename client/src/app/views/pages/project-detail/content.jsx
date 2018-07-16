@@ -11,8 +11,8 @@ import { AddIcon } from 'ui/icons'
 import { Route, withParams } from 'views/router'
 
 import CollaboratorList from './collaborator-list'
-import InviteCollaborator from 'views/common/modals/invite-collaborator'
 import _ProjectForm from './form'
+import InviteModal from './invite-modal'
 import PresetList from './preset-list'
 import PresetModal from './preset-modal'
 
@@ -27,10 +27,10 @@ const Section = styled.section`
 
 const Project = ({
   project,
+  toInviteModal,
   toPresetDetail,
   toProfile,
   toProjectDetail,
-  showInviteCollaborator,
   updateProject
 }) => (
   <main>
@@ -58,7 +58,7 @@ const Project = ({
     </Section>
     <Section>
       <h2>Collaborators</h2>
-      <Button plain onClick={ showInviteCollaborator }>
+      <Button plain onClick={ () => toInviteModal(project.slug) }>
         <AddIcon size="medium" />
       </Button>
       {
@@ -76,7 +76,11 @@ const Project = ({
         onHide={ () => toProjectDetail(project.slug) }
       />
     </Route>
-    <InviteCollaborator width="wide" />
+    <Route path="/projects/:slug/invite">
+      <InviteModal width="wide"
+        onHide={ () => toProjectDetail(project.slug) }
+      />
+    </Route>
   </main>
 )
 export default withParams(
@@ -85,13 +89,10 @@ export default withParams(
       project: selectors.findProjectBySlug(state, slug),
     }),
     mapDispatch({
+      toInviteModal: slug => actions.requestLocation(`/projects/${ slug }/invite`),
       toPresetDetail: (slug, hash) => actions.requestLocation(`/projects/${ slug }/presets/${ hash }`),
       toProfile: id => actions.requestLocation(`/@${ id }`),
       toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
-      showInviteCollaborator: () => ({
-        type: '@@MODAL/SHOW',
-        payload: { modal: 'InviteCollaborator' }
-      }),
       updateProject: actions.updateProject
     })
   )(Project)

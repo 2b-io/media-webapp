@@ -10,7 +10,6 @@ import { modal } from 'views/common/decorators'
 
 import _InviteCollaboratorForm from './form'
 
-
 const ListItem = styled.div`
   background-color: #efefef;
   padding: 10px;
@@ -24,7 +23,7 @@ const Item = styled.div`
 `
 
 const InviteCollaboratorForm = reduxForm({
-  form: 'inviteCollaborator',
+  form: 'invite',
   enableReinitialize: true
 })(_InviteCollaboratorForm)
 

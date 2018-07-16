@@ -42,6 +42,13 @@ export default {
       }
     ]
   },
+  '/projects/:slug/invite': {
+    partial: true,
+    onEnter: () => [ {
+      type: '@@MODAL/SHOW',
+      payload: { modal: 'InviteCollaborator' }
+    } ]
+  },
   '/ui': {
     component: UI,
     exact: true

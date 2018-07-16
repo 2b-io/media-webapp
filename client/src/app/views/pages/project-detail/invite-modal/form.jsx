@@ -1,10 +1,10 @@
 import React from 'react'
 
-import { Button } from 'ui/elements'
 import { Form } from 'ui/compounds'
-import { TextBox  } from 'views/common/form'
+import { Button } from 'ui/elements'
+import { TextBox } from 'views/common/form'
 
-const InviteCollaboratorForm = ({ handleSubmit, findCollaborator,  }) => (
+const InviteForm = ({ handleSubmit, findCollaborator }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Header>Invite Collaborator</Form.Header>
     <Form.Description>Enter Email and click to {'Invite'} button</Form.Description>
@@ -12,16 +12,14 @@ const InviteCollaboratorForm = ({ handleSubmit, findCollaborator,  }) => (
       <TextBox
         type="Email"
         name="email"
-        placeholder="Email Invite"
+        placeholder="Email"
         onChange={ (e) => { findCollaborator(e.target.value) } }
       />
     </Form.Line>
     <Form.Line last>
-      <Form.Align center>
-        <Button type="submit">Invite</Button>
-      </Form.Align>
+      <Button type="submit">Invite</Button>
     </Form.Line>
   </Form>
 )
 
-export default InviteCollaboratorForm
+export default InviteForm
