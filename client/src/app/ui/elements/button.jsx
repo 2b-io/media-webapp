@@ -41,4 +41,12 @@ const Button = styled.button.attrs({
   }
 `
 
+Button.Group = styled.div`
+  display: inline-flex;
+
+  & > ${ Button } {
+    margin-right: ${ ({ theme }) => theme.spacing.small };
+  }
+`
+
 export default Button

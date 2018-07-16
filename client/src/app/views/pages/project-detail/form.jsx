@@ -17,7 +17,7 @@ const ProjectForm = ({ handleSubmit }) => (
       <TextBox
         type="text"
         name="slug"
-        disabled
+        readOnly
       />
     </Form.Line>
     <Form.Line>

@@ -34,6 +34,37 @@ const createLoop = function*() {
   }
 }
 
+const deleteLoop = function*() {
+  while (true) {
+    const action = yield take(types['PROJECT/DELETE_PRESET'])
+
+    try {
+      const session = yield select(selectors.currentSession)
+
+      if (!session) {
+        continue
+      }
+
+      const { preset, slug } = action.payload
+
+      const destroyed = yield call(
+        Project.deletePreset,
+        { preset, slug },
+        session.token
+      )
+
+      if (!destroyed) {
+        throw new Error('Cannot delete preset')
+      }
+
+      yield put(actions.deletePresetCompleted({ preset, slug }))
+    } catch (e) {
+      yield put(actions.deletePresetFailed(serializeError(e)))
+      continue
+    }
+  }
+}
+
 const getLoop = function*() {
   while (true) {
     const action = yield take(types['PROJECT/GET_PRESET'])
@@ -94,6 +125,7 @@ const updateLoop = function*() {
 export default function*() {
   yield take('@@INITIALIZED')
   yield fork(createLoop)
+  yield fork(deleteLoop)
   yield fork(getLoop)
   yield fork(updateLoop)
 }

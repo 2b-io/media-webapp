@@ -8,9 +8,7 @@ export const PRESET_FRAGMENT = `
   hash,
   values,
   removed,
-  project {
-    slug
-  }
+  isDefault
 `
 
 export const PROJECT_FRAGMENT = `
@@ -174,10 +172,9 @@ export default {
     return body.session.account.project.preset._update
   },
 
-  async deletePreset(preset, token) {
-
+  async deletePreset({ preset, slug }, token) {
     const body = await request(`
-      query deletePreset($token: String!, $slug: String!, $hash: String!) {
+      query deletePreset($hash: String!, $slug: String!, $token: String!) {
         session(token: $token) {
           account {
             project(slug: $slug) {
@@ -189,9 +186,9 @@ export default {
         }
       }
     `, {
-      token,
-      slug: preset.project.slug,
-      hash: preset.hash
+      hash: preset.hash,
+      slug,
+      token
     })
 
     return body.session.account.project.preset._destroy

@@ -15,13 +15,20 @@ const PresetForm = reduxForm({
   enableReinitialize: true
 })(_PresetForm)
 
-const CreatePreset = ({ preset = {}, savePreset, slug }) => {
+const CreatePreset = ({
+  deletePreset,
+  preset,
+  savePreset,
+  slug
+}) => {
   return (
     <Container center>
       <PresetForm
         onSubmit={ preset => savePreset({ preset, slug }) }
         initialValues={ preset }
+        isDefault={ !!preset.isDefault }
         isEditing={ !!preset.hash }
+        onDelete={ () => deletePreset({ preset, slug }) }
       />
     </Container>
   )
@@ -42,7 +49,8 @@ export default withParams(
       dispatch => ({
         savePreset: ({ preset, slug }) => preset.hash ?
           dispatch(actions.updatePreset({ preset, slug })) :
-          dispatch(actions.createPreset({ preset, slug }))
+          dispatch(actions.createPreset({ preset, slug })),
+        deletePreset: ({ preset, slug }) => dispatch(actions.deletePreset({ preset, slug }))
       })
     )(CreatePreset)
   // )

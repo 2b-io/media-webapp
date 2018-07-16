@@ -4,7 +4,12 @@ import { Button } from 'ui/elements'
 import { Form } from 'ui/compounds'
 import { TextBox  } from 'views/common/form'
 
-const PresetForm = ({ handleSubmit, isEditing }) => (
+const PresetForm = ({
+  handleSubmit,
+  isDefault,
+  isEditing,
+  onDelete
+}) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Line>
       { isEditing &&
@@ -27,7 +32,12 @@ const PresetForm = ({ handleSubmit, isEditing }) => (
       />
     </Form.Line>
     <Form.Line last>
-      <Button type="submit">{ isEditing ? 'Save' : 'Create' }</Button>
+      <Button.Group>
+        <Button type="submit">{ isEditing ? 'Save' : 'Create' }</Button>
+        { !isDefault && isEditing &&
+          <Button onClick={ onDelete }>Delete</Button>
+        }
+      </Button.Group>
     </Form.Line>
   </Form>
 )

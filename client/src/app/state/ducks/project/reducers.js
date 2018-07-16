@@ -64,14 +64,12 @@ export default combineReducers({
       }
     },
     [ types.DELETE_PRESET_COMPLETED ]: (state, action) => {
-      const { slug }  = action.payload.preset.project
-      const project = state[ slug ]
-      const presets = project.presets
-      const { [ action.payload.preset.hash ]: removedPreset, ...remainPresets } = presets
+      const { preset: { hash }, slug } = action.payload
+      const { [ hash ]: removedPreset, ...remainPresets } = state[ slug ].presets
       return {
         ...state,
         [ slug ]: {
-          ...project,
+          ...state[ slug ],
           presets: remainPresets
         }
       }

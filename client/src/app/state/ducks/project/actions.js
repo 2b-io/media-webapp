@@ -104,12 +104,12 @@ export const updatePresetFailed = reason => ({
   payload: { reason }
 })
 
-export const deletePreset = (slug, preset) => ({
+export const deletePreset = ({ preset, slug }) => ({
   type: types.DELETE_PRESET,
   payload: { preset, slug }
 })
 
-export const deletePresetCompleted = (slug, preset) => ({
+export const deletePresetCompleted = ({ preset, slug }) => ({
   type: types.DELETE_PRESET_COMPLETED,
   payload: { preset, slug }
 })
