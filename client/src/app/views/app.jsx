@@ -1,9 +1,18 @@
 import React, { Fragment } from 'react'
+import { injectGlobal, ThemeProvider } from 'styled-components'
 
 import Layout, { LeftMenu, TopMenu } from 'views/layout'
 import { HistoryProvider, Router } from 'views/router'
 import { content, overlay, still, unauthRoutes } from 'views/route-config'
+import defaultTheme from 'views/themes/default'
 import { Nothing } from 'ui/elements'
+
+injectGlobal`
+  body {
+    background: ${ defaultTheme.primary.base };
+    color: ${ defaultTheme.primary.on.base};
+  }
+`
 
 const HEADER_HEIGHT = 0
 const MENU_WIDTH = 44
@@ -59,12 +68,14 @@ const render = {
 }
 
 const App = () => (
-  <HistoryProvider>
-    <Layout render={ render }
-      menuWidth={ MENU_WIDTH }
-      headerHeight={ HEADER_HEIGHT }
-    />
-  </HistoryProvider>
+  <ThemeProvider theme={ defaultTheme }>
+    <HistoryProvider>
+      <Layout render={ render }
+        menuWidth={ MENU_WIDTH }
+        headerHeight={ HEADER_HEIGHT }
+      />
+    </HistoryProvider>
+  </ThemeProvider>
 )
 
 export default App

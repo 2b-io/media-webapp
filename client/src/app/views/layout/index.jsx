@@ -11,26 +11,16 @@ import Still from './still'
 import Wrapper from './wrapper'
 
 export { default as LeftMenu } from './left-menu'
-export { default as TopMenu } from './top-menu'
 
 class Layout extends Component {
-  constructor(...args) {
-    super(...args)
-
-    this.state = {
-      headerHeight: 0,
-      stillHeight: 0
-    }
-  }
-
   render() {
     const {
       isBackground,
       isLayoutClosed,
-      menuWidth,
-      headerHeight,
-      render,
       email,
+      menuWidth,
+      render,
+      stillHeight,
       toProfile
     } = this.props
 
@@ -38,7 +28,6 @@ class Layout extends Component {
       <Layer isBackground={ isBackground }>
         <Overlay
           shown={ isLayoutClosed }
-          headerHeight={ headerHeight }
           width={ menuWidth }
           email={ email }
           toProfile={ toProfile }>
@@ -46,7 +35,6 @@ class Layout extends Component {
         </Overlay>
         <Wrapper
           shown={ !isLayoutClosed }
-          headerHeight={ headerHeight }
           menuWidth={ menuWidth }>
           <Still
             shown={ !isLayoutClosed }
@@ -55,7 +43,7 @@ class Layout extends Component {
           </Still>
           <Content
             shown={ !isLayoutClosed }
-            stillHeight={ this.state.stillHeight }>
+            stillHeight={ stillHeight }>
             { render.content(this.props) }
           </Content>
         </Wrapper>
@@ -64,14 +52,10 @@ class Layout extends Component {
   }
 
   updateStillHeight() {
-    return element => {
-      if (this.state.stillHeight === element.clientHeight) {
-        return
-      }
+    const { updateStillHeight } = this.props
 
-      this.setState({
-        stillHeight: element.clientHeight
-      })
+    return element => {
+      updateStillHeight(element.clientHeight)
     }
   }
 }
@@ -83,10 +67,12 @@ export default connect(
     return {
       email: session && session.account.email,
       isLayoutClosed: selectors.isLayoutClosed(state),
-      isBackground: Object.values(state.modal).some(Boolean)
+      isBackground: Object.values(state.modal).some(Boolean),
+      stillHeight: selectors.stillHeight(state)
     }
   },
   mapDispatch({
-    toProfile: () => actions.requestLocation('/@me')
+    toProfile: () => actions.requestLocation('/@me'),
+    updateStillHeight: actions.updateStillHeight
   })
 )(Layout)

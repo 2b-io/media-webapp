@@ -15,6 +15,5 @@ render(
   <Provider store={ store }>
     <App />
   </Provider>,
-  root,
-  () => setTimeout(() => root.style.opacity = 1)
+  root
 )
