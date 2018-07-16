@@ -9,10 +9,10 @@ const allPaths = {
   ...unauthRoutes
 }
 
-const regexes = Object.keys(allPaths).map(
-  path => {
+const regexes = Object.entries(allPaths).map(
+  ([ path, options ]) => {
     const keys = []
-    const regex = pathToRegexp(path, keys)
+    const regex = pathToRegexp(path, keys, { end: options.exact })
 
     return { keys, path, regex }
   }
@@ -22,39 +22,71 @@ export default function*() {
   while (true) {
     yield take(types['LOCATION/ACCEPT'])
 
-    const { pathname } = yield select(selectors.currentLocation)
+    const { pathname: current } = yield select(selectors.currentLocation)
 
-    const actions = regexes.filter(
-      r => r.regex.test(pathname)
-    ).map(
-      ({ keys, path, regex }) => ({
-        path,
-        pathname,
-        parameters: keys.reduce(
-          (combine, key, index) => ({
-            ...combine,
-            [key.name]: regex.exec(pathname)[index + 1]
-          }),
-          {}
-        )
-      })
-    ).reduce(
-      (actions, { path, parameters }) => {
-        const { onEnter } = allPaths[path] || {}
+    const { pathname: previous } = yield select(selectors.previousLocation)
 
-        if (!onEnter) {
-          return actions
-        }
+    const actions = regexes
+      // check enter & leave
+      .map(
+        r => ({
+          ...r,
+          enter: r.regex.test(current),
+          leave: current !== previous && r.regex.test(previous),
+        })
+      )
+      // filter unmatched regexes
+      .filter(({ enter, leave }) => enter || leave)
+      // analyze parameters
+      .map(
+        r => ({
+          ...r,
+          leave: r.enter ? false : r.leave,
+          regexFrags: r.regex.exec(r.enter ? current : previous)
+        })
+      )
+      // extract parameters from pathname
+      .map(
+        r => ({
+          ...r,
+          parameters: r.keys.reduce(
+            (combine, key, index) => ({
+              ...combine,
+              [ key.name ]: r.regexFrags[ index + 1 ]
+            }), {}
+          ),
+          onEnter: (allPaths[ r.path ] || {}).onEnter,
+          onLeave: (allPaths[ r.path ] || {}).onLeave
+        })
+      )
+      // call onEnter * onLeave
+      .reduce(
+        (actions, r) => {
+          let enteringActions = []
+          let leavingActions = []
 
-        return [
-          ...actions,
-          ...[
-            ...(onEnter(parameters) || [])
+          if (r.enter) {
+            console.log(`Entering ${ current } [${ r.path }]`)
+
+            if (r.onEnter) {
+              enteringActions = r.onEnter(r.parameters)
+            }
+
+          } else if (r.leave) {
+            console.log(`Leaving ${ previous } [${ r.path }]`)
+
+            if (r.onLeave) {
+              leavingActions = r.onLeave(r.parameters)
+            }
+          }
+
+          return [
+            ...actions,
+            ...leavingActions,
+            ...enteringActions
           ]
-        ]
-      },
-      []
-    )
+        }, []
+      )
 
     yield all(actions.map(action => put(action)))
   }

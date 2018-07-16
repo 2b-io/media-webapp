@@ -32,6 +32,17 @@ export default {
       actions.getProject(slug)
     ]
   },
+  '/projects/:slug/presets/:hash': {
+    partial: true,
+    onEnter: () => [ {
+      type: '@@MODAL/SHOW',
+      payload: { modal: 'CreatePreset' }
+    } ],
+    onLeave: () => [ {
+      type: '@@MODAL/HIDE',
+      payload: { modal: 'CreatePreset' }
+    } ]
+  },
   '/ui': {
     component: UI,
     exact: true

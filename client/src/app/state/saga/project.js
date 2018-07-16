@@ -33,12 +33,14 @@ const createPresetLoop = function*() {
 
     try {
       const session = yield select(selectors.currentSession)
-      const currentLocation = yield select(selectors.currentLocation)
-      const { pathname } = currentLocation
-      const slug = pathname.replace(/^.*[\\\/]/, '')
+
       if (!session) {
         continue
       }
+
+      const currentLocation = yield select(selectors.currentLocation)
+      const { pathname } = currentLocation
+      const slug = pathname.replace(/^.*[\\\/]/, '')
 
       const newPreset = yield call(Project.createPreset, preset, slug, session.token)
 

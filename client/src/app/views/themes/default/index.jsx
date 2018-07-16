@@ -83,7 +83,7 @@ const theme = {
   })
 }
 
-console.log(treeify.asTree(theme, true))
+console.debug(treeify.asTree(theme, true))
 
 export { base, black, white, palettes }
 export default theme

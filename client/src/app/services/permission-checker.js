@@ -1,12 +1,12 @@
 import pathToRegexp from 'path-to-regexp'
 import { authRoutes, unauthRoutes } from 'views/route-config'
 
-const authRegexes = Object.keys(authRoutes).map(
-  p => pathToRegexp(p)
+const authRegexes = Object.entries(authRoutes).map(
+  ([ path ]) => pathToRegexp(path, null, { end: true })
 )
 
-const unauthRegexes = Object.keys(unauthRoutes).map(
-  p => pathToRegexp(p)
+const unauthRegexes = Object.entries(unauthRoutes).map(
+  ([ path ]) => pathToRegexp(path, null, { end: true })
 )
 
 export default isSignedIn => {
