@@ -6,6 +6,7 @@ const Button = styled.button.attrs({
   appearance: none;
   cursor: pointer;
   display: inline-flex;
+  align-items: center;
   margin: 0;
 
   &:focus {
@@ -70,6 +71,10 @@ Button.Group = styled.div`
 
   & > ${ Button } {
     margin-right: ${ ({ theme }) => theme.spacing.small };
+
+    &:last-child {
+      margin-right: 0;
+    }
   }
 `
 

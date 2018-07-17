@@ -1,15 +1,14 @@
 import styled from 'styled-components'
 
 const TextBox = styled.input.attrs({
-  type: ({ type = 'text' }) => type,
-  defaultValue: ({ defaultValue }) => defaultValue
+  type: ({ type = 'text' }) => type
 })`
   appearance: none;
   background-color: inherit;
   color: inherit;
   border: none;
   border-bottom: 2px solid ${
-    ({ readOnly, disabled, theme }) => (readOnly || disabled) ?
+    ({ disabled, readOnly, theme }) => (disabled || readOnly) ?
       theme.secondary.base :
       theme.primary.base
   };
@@ -20,7 +19,7 @@ const TextBox = styled.input.attrs({
   transition: border-bottom .3s linear;
   &:hover, &:focus {
     border-bottom: 2px solid ${
-      ({ readOnly, theme }) => readOnly ?
+      ({ disabled, readOnly, theme }) => (disabled || readOnly) ?
         theme.secondary.light.base :
         theme.primary.light.base
     };
