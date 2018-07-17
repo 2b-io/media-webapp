@@ -14,8 +14,8 @@ import { ic_info } from 'react-icons-kit/md/ic_info'
 import { ic_library_books } from 'react-icons-kit/md/ic_library_books'
 import { ic_more_vert } from 'react-icons-kit/md/ic_more_vert'
 import { ic_receipt } from 'react-icons-kit/md/ic_receipt'
+import { ic_report } from 'react-icons-kit/md/ic_report'
 import { ic_view_quilt } from 'react-icons-kit/md/ic_view_quilt'
-import { ic_warning } from 'react-icons-kit/md/ic_warning'
 
 import icon from './icon'
 
@@ -33,4 +33,4 @@ export const ProjectListIcon = icon(ic_library_books)
 export const SignOutIcon = icon(ic_exit_to_app)
 export const SuccessIcon = icon(ic_done)
 export const UiIcon = icon(ic_view_quilt)
-export const WarningIcon = icon(ic_warning)
+export const WarningIcon = icon(ic_report)

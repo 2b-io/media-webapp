@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
+import { CircularCountdown } from 'ui/elements'
 import { InfoIcon } from 'ui/icons'
 
 const Wrapper = styled.div`
@@ -45,12 +46,18 @@ const Wrapper = styled.div`
 `
 
 const Icon = styled.div`
-  display: inline-flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 0;
+  flex-shrink: 0;
+  position: relative;
+  white-space: nowrap;
+  width: 32px;
+  height: 32px;
   margin-right: ${
     ({ theme }) => theme.spacing.small
   };
-  flex-grow: 0;
-  white-space: nowrap;
 `
 
 const Message = styled.div`
@@ -58,10 +65,24 @@ const Message = styled.div`
   flex-grow: 1;
 `
 
-const InfoBox = ({ children, interactable }) => (
+const Countdown = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+`
+
+const InfoBox = ({ children, expiring, interactable }) => (
   <Wrapper interactable={ interactable }>
     <Icon>
-      <InfoIcon size="large" />
+      <InfoIcon size="medium" />
+      { expiring &&
+        <Countdown>
+          <CircularCountdown
+            expiring={ expiring }
+            size={ 32 }
+          />
+        </Countdown>
+      }
     </Icon>
     <Message>
       { children }

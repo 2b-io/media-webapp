@@ -22,7 +22,7 @@ const Wrapper = styled.section`
 const ToastList = styled.div`
 `
 
-const Toast = ({ toast: { id, message, type } }) => {
+const Toast = ({ toast: { expiring, message, type } }) => {
   const DisplayComponent = (
     type === 'error' ?
       ErrorBox : (
@@ -35,7 +35,9 @@ const Toast = ({ toast: { id, message, type } }) => {
   )
 
   return (
-    <DisplayComponent interactable>
+    <DisplayComponent interactable
+      expiring={ expiring }
+    >
       { message }
     </DisplayComponent>
   )
