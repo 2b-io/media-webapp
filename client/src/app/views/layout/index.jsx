@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
@@ -26,30 +26,32 @@ class Layout extends Component {
     } = this.props
 
     return (
-      <Layer isBackground={ isBackground }>
-        <Overlay
-          shown={ isLayoutClosed }
-          width={ menuWidth }
-          email={ email }
-          toProfile={ toProfile }>
-          { render.overlay(this.props) }
-        </Overlay>
-        <Wrapper
-          shown={ !isLayoutClosed }
-          menuWidth={ menuWidth }>
-          <Still
+      <Fragment>
+        <Layer isBackground={ isBackground }>
+          <Overlay
+            shown={ isLayoutClosed }
+            width={ menuWidth }
+            email={ email }
+            toProfile={ toProfile }>
+            { render.overlay(this.props) }
+          </Overlay>
+          <Wrapper
             shown={ !isLayoutClosed }
-            onComponentDidMount={ this.updateStillHeight() }>
-            { render.still(this.props) }
-          </Still>
-          <Content
-            shown={ !isLayoutClosed }
-            stillHeight={ stillHeight }>
-            { render.content(this.props) }
-          </Content>
-        </Wrapper>
+            menuWidth={ menuWidth }>
+            <Still
+              shown={ !isLayoutClosed }
+              onComponentDidMount={ this.updateStillHeight() }>
+              { render.still(this.props) }
+            </Still>
+            <Content
+              shown={ !isLayoutClosed }
+              stillHeight={ stillHeight }>
+              { render.content(this.props) }
+            </Content>
+          </Wrapper>
+        </Layer>
         <Toast />
-      </Layer>
+      </Fragment>
     )
   }
 

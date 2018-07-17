@@ -24,5 +24,6 @@ export const invite = async (project, email) => {
     account: account._id,
     privilege: 'owner'
   }).save()
- return permission
+
+  return permission
 }

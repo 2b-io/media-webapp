@@ -45,7 +45,7 @@ const Header = styled.div`
 `
 
 const Avatar = styled(Identicon)`
-  box-shadow: 0 5px 10px ${ ({ theme }) => theme.secondary.limpid.base };
+  box-shadow: 0 5px 20px ${ ({ theme }) => theme.secondary.limpid.base };
 `
 
 const Content = styled.div`

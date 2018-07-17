@@ -39,7 +39,7 @@ const loop = function*() {
         put(actions.openLayout()),
         fork(addToast, {
           type: 'success',
-          message: `Welcome back, ${ session.account.email }`
+          message: `Welcome back, ${ session.account.email }.`
         })
       ])
     } catch(e) {

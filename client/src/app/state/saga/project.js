@@ -24,7 +24,7 @@ const createLoop = function*() {
         put(actions.createProjectCompleted(newProject)),
         fork(addToast, {
           type: 'success',
-          message: 'Project created'
+          message: 'Project created.'
         })
       ])
     } catch (e) {
@@ -94,7 +94,7 @@ const updateLoop = function*() {
         put(actions.updateProjectCompleted(project)),
         fork(addToast, {
           type: 'success',
-          message: 'Project updated'
+          message: 'Project updated.'
         })
       ])
     } catch (e) {

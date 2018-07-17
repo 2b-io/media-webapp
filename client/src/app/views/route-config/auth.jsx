@@ -38,7 +38,7 @@ export default {
       actions.getPreset({ hash, slug }),
       {
         type: '@@MODAL/SHOW',
-        payload: { modal: 'CreatePreset' }
+        payload: { modal: 'Preset' }
       }
     ]
   },

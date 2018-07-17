@@ -6,6 +6,7 @@ import { TextBox  } from 'views/common/form'
 
 const PresetForm = ({
   handleSubmit,
+  idle,
   isDefault,
   isEditing,
   onDelete
@@ -23,19 +24,25 @@ const PresetForm = ({
       <TextBox
         name="name"
         placeholder="Preset name"
+        disabled={ !idle }
       />
     </Form.Line>
     <Form.Line>
       <TextBox
         name="values.quality"
         placeholder="Quality"
+        disabled={ !idle }
       />
     </Form.Line>
     <Form.Line last>
       <Button.Group>
-        <Button type="submit">{ isEditing ? 'Save' : 'Create' }</Button>
+        <Button type="submit" disabled={ !idle }>
+          { isEditing ? 'Save' : 'Create' }
+        </Button>
         { !isDefault && isEditing &&
-          <Button onClick={ onDelete }>Delete</Button>
+          <Button onClick={ onDelete } disabled={ !idle }>
+            Delete
+          </Button>
         }
       </Button.Group>
     </Form.Line>

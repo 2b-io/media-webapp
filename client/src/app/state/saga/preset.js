@@ -1,8 +1,10 @@
-import { call, take, fork, put, select } from 'redux-saga/effects'
+import { all, call, take, fork, put, select } from 'redux-saga/effects'
 import serializeError from 'serialize-error'
 
 import Project from 'models/project'
 import { actions, types, selectors } from 'state/interface'
+
+import { addToast } from './toast'
 
 const createLoop = function*() {
   while (true) {
@@ -23,10 +25,16 @@ const createLoop = function*() {
         session.token
       )
 
-      yield put(actions.createPresetCompleted({
-        preset: newPreset,
-        slug
-      }))
+      yield all([
+        put(actions.createPresetCompleted({
+          preset: newPreset,
+          slug
+        })),
+        fork(addToast, {
+          type: 'success',
+          message: 'Preset created.'
+        })
+      ])
     } catch (e) {
       yield put(actions.createPresetFailed(serializeError(e)))
       continue
@@ -57,7 +65,13 @@ const deleteLoop = function*() {
         throw new Error('Cannot delete preset')
       }
 
-      yield put(actions.deletePresetCompleted({ preset, slug }))
+      yield all([
+        put(actions.deletePresetCompleted({ preset, slug })),
+        fork(addToast, {
+          type: 'success',
+          message: 'Preset deleted.'
+        })
+      ])
     } catch (e) {
       yield put(actions.deletePresetFailed(serializeError(e)))
       continue
@@ -110,10 +124,16 @@ const updateLoop = function*() {
         session.token
       )
 
-      yield put(actions.updatePresetCompleted({
-        preset: newPreset,
-        slug
-      }))
+      yield all([
+        put(actions.updatePresetCompleted({
+          preset: newPreset,
+          slug
+        })),
+        fork(addToast, {
+          type: 'success',
+          message: 'Preset updated.'
+        })
+      ])
     } catch (e) {
       yield put(actions.updatePresetFailed(serializeError(e)))
       continue

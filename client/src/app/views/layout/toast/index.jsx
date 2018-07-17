@@ -22,6 +22,10 @@ const Wrapper = styled.section`
 const ToastList = styled.div`
 `
 
+const Shadow = styled.div`
+  box-shadow: 0 5px 20px ${ ({ theme }) => theme.secondary.limpid.base };
+`
+
 const Toast = ({ toast: { expiring, message, type } }) => {
   const DisplayComponent = (
     type === 'error' ?
@@ -35,11 +39,13 @@ const Toast = ({ toast: { expiring, message, type } }) => {
   )
 
   return (
-    <DisplayComponent interactable
-      expiring={ expiring }
-    >
-      { message }
-    </DisplayComponent>
+    <Shadow>
+      <DisplayComponent interactable
+        expiring={ expiring }
+      >
+        { message }
+      </DisplayComponent>
+    </Shadow>
   )
 }
 
