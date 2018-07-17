@@ -94,10 +94,4 @@ export default combineReducers({
       // return { ...state }
     }
   }),
-  collaborators: createReducer({})({
-    [ types.FIND_COLLABORATOR_COMPLETED ]: (state, action) => action.payload.collaborator.collaborators
-  }),
-  emailCollaborator: createReducer({})({
-    [ types.SELECT_EMAIL_COLLABORATOR ]: (state, action) => action.payload.email
-  })
 })

@@ -30,17 +30,16 @@ const InviteCollaboratorForm = reduxForm({
 const InviteCollaborator = ({
   inviteCollaborator,
   findCollaborator,
-  collaborators,
   email,
   selectEmaiCollaborator,
-  ui: { results }
+  ui: { collaborators }
 }) => {
   return (
     <Container center>
       <InviteCollaboratorForm onSubmit={ inviteCollaborator } findCollaborator={ findCollaborator } email={ email } />
-      { results.length &&
+      { collaborators &&
         <List>
-        { results.map( (email, index) => (
+        { collaborators.map( (email, index) => (
           <Item key={ index } onClick={ () => { selectEmaiCollaborator(email) } }>
             { email }
           </Item>
@@ -54,10 +53,7 @@ export default modal({
   name: 'InviteCollaborator'
 })(
   connect(
-    mapState({
-      collaborators: selectors.collaborators,
-      email: selectors.emailCollaborator
-    }),
+    null,
     mapDispatch({
       inviteCollaborator: actions.inviteCollaborator,
       findCollaborator: actions.findCollaborator,

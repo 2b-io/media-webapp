@@ -119,7 +119,8 @@ const inviteCollaboratorLoop = function*() {
 
 const findCollaboratorLoop = function*() {
   while (true) {
-    const action = yield take(types['PROJECT/FIND_COLLABORATOR'])
+    
+    const action = yield take(types['ACCOUNT/SEARCH'])
 
     try {
       const session = yield select(selectors.currentSession)

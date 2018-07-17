@@ -13,3 +13,7 @@ export const GET_FAILED = prefix('GET_FAILED')
 export const REGISTER = prefix('REGISTER')
 export const REGISTER_COMPLETED = prefix('REGISTER_COMPLETED')
 export const REGISTER_FAILED = prefix('REGISTER_FAILED')
+
+export const SEARCH = prefix('SEARCH')
+export const SEARCH_COMPLETED = prefix('SEARCH_COMPLETED')
+export const SEARCH_FAILED = prefix('SEARCH_FAILED')
