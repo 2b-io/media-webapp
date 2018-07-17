@@ -9,7 +9,7 @@ const TextBox = styled.input.attrs({
   color: inherit;
   border: none;
   border-bottom: 2px solid ${
-    ({ readOnly, theme }) => readOnly ?
+    ({ readOnly, disabled, theme }) => (readOnly || disabled) ?
       theme.secondary.base :
       theme.primary.base
   };
