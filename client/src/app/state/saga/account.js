@@ -61,10 +61,36 @@ const registerLoop = function*() {
     }
   }
 }
+const searchAccountLoop = function*() {
+  while (true) {
+
+    const action = yield take(types['ACCOUNT/SEARCH_ACCOUNT'])
+
+    try {
+      const session = yield select(selectors.currentSession)
+
+      if (!session) {
+        continue
+      }
+
+      const accounts = yield call(Account.search, session.token, action.payload )
+
+      if (accounts[0] !== null) {
+        yield put(actions.searchAccountCompleted({ accounts }))
+      }
+
+    } catch (e) {
+      yield put(actions.searchAccountFailed(serializeError(e)))
+      continue
+    }
+  }
+}
+
 
 export default function*() {
   yield take('@@INITIALIZED')
   yield fork(changePasswordLoop)
   yield fork(getLoop)
   yield fork(registerLoop)
+  yield fork(searchAccountLoop)
 }

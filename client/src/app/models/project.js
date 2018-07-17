@@ -219,21 +219,4 @@ export default {
 
     return body.session.account.project._inviteCollaborator
   },
-
-  async findCollaborator(token, email) {
-    const body = await request(`
-      query findCollaborator($token: String!, $email: String!) {
-        session(token: $token) {
-          accounts(email: $email) {
-            ${ ACCOUNT_FRAGMENT }
-          }
-        }
-      }
-    `, {
-      token,
-      email
-    })
-    return body.session.accounts
-  }
-
 }

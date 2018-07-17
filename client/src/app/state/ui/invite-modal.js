@@ -7,17 +7,17 @@ export default {
   component: 'modal/InviteCollaborator',
   reducer: combineReducers({
     idle: createReducer(true)({
-      [ types.FIND ]: () => false,
-      [ types.FIND_COMPLETED ]: () => true,
-      [ types.FIND_FAILED ]: () => true,
+      [ types.SEARCH_ACCOUNT ]: () => false,
+      [ types.SEARCH_ACCOUNT_COMPLETED ]: () => true,
+      [ types.SEARCH_ACCOUNT_FAILED ]: () => true,
     }),
     error: createReducer(null)({
-      [ types.FIND_COMPLETED ]: () => null,
-      [ types.FIND_FAILED ]: (state, action) => action.payload.reason
+      [ types.SEARCH_ACCOUNT_COMPLETED ]: () => null,
+      [ types.SEARCH_ACCOUNT_FAILED ]: (state, action) => action.payload.reason
     }),
     result: createReducer(null)({
-      [ types.FIND_COMPLETED ]: (state, action) => action.payload.collaborators,
-      [ types.FIND_FAILED ]: () => null
+      [ types.SEARCH_ACCOUNT_COMPLETED ]: (state, action) => action.payload.account.accounts,
+      [ types.SEARCH_ACCOUNT_FAILED ]: () => null
     })
   })
 }

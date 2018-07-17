@@ -47,17 +47,17 @@ export const registerFailed = reason => ({
   payload: { reason }
 })
 
-export const find = email => ({
-  type: types.FIND,
+export const searchAccount = email => ({
+  type: types.SEARCH_ACCOUNT,
   payload: email
 })
 
-export const findCompleted = account => ({
-  type: types.FIND_COMPLETED,
+export const searchAccountCompleted = account => ({
+  type: types.SEARCH_ACCOUNT_COMPLETED,
   payload: { account }
 })
 
-export const findFailed = reason => ({
-  type: types.FIND_FAILED,
+export const searchAccountFailed = reason => ({
+  type: types.SEARCH_ACCOUNT_FAILED,
   payload: { reason }
 })

@@ -133,23 +133,3 @@ export const inviteCollaboratorFailed = reason => ({
   type: types.INVITE_COLLABORATOR_FAILED,
   payload: { reason }
 })
-
-export const findCollaborator = email => ({
-  type: types.FIND_COLLABORATOR,
-  payload: email
-})
-
-export const findCollaboratorCompleted = collaborator => ({
-  type: types.FIND_COLLABORATOR_COMPLETED,
-  payload: { collaborator }
-})
-
-export const findCollaboratorFailed = reason => ({
-  type: types.FIND_COLLABORATOR_FAILED,
-  payload: { reason }
-})
-
-export const selectEmaiCollaborator = email => ({
-  type: types.SELECT_EMAIL_COLLABORATOR,
-  payload: { email }
-})
