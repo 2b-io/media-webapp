@@ -16,6 +16,8 @@ const Overlay = styled.div`
   right: 0;
   bottom: 0;
   z-index: 10;
+  overflow-x: hidden;
+  overflow-y: auto;
   background: ${ ({ theme }) => theme.secondary.opaque.base };
   padding-left: ${ ({ theme }) => theme.spacing.medium };
   padding-right: ${ ({ theme }) => theme.spacing.medium };
@@ -25,9 +27,9 @@ const Wrapper = styled.div`
   background: ${ ({ theme }) => theme.background.base };
   color: ${ ({ theme }) => theme.background.on.base };
   position: relative;
-  top: 100px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: ${
+    ({ theme: { spacing } }) => `${ spacing.huge } auto ${spacing.big }`
+  };
   padding: ${ ({ theme }) => theme.spacing.medium };
   box-shadow: 0 30px 80px ${ ({ theme }) => theme.secondary.limpid.base };
   min-width: 280px; /* support iphone5s */

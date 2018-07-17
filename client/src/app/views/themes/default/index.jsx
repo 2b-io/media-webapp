@@ -85,7 +85,8 @@ const theme = {
     tiny: '5px',
     small: '10px',
     medium: '20px',
-    big: '30px'
+    big: '30px',
+    huge: '90px'
   }
 }
 
