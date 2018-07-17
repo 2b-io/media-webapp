@@ -36,7 +36,7 @@ const InviteCollaborator = ({
   return (
     <Container center>
       <InviteCollaboratorForm
-        searchAccount={ Debounce(searchAccount, 1000) }
+        searchAccount={ Debounce(searchAccount, 500) }
       />
       { result &&
         <List>
