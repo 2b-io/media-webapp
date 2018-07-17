@@ -2,7 +2,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { CircularCountdown } from 'ui/elements'
-import { ErrorIcon } from 'ui/icons'
+import { WarningIcon } from 'ui/icons'
 
 const Wrapper = styled.div`
   display: flex;
@@ -14,10 +14,10 @@ const Wrapper = styled.div`
     ({ theme }) => theme.spacing.medium
   };
   background: ${
-    ({ theme }) => theme.error.base
+    ({ theme }) => theme.warning.base
   };
   color: ${
-    ({ theme }) => theme.error.on.base
+    ({ theme }) => theme.warning.on.base
   };
 
   ${
@@ -26,19 +26,19 @@ const Wrapper = styled.div`
 
       &:hover {
         background: ${
-          ({ theme }) => theme.error.light.base
+          ({ theme }) => theme.warning.light.base
         };
         color: ${
-          ({ theme }) => theme.error.light.on.base
+          ({ theme }) => theme.warning.light.on.base
         };
       }
 
       &:active {
         background: ${
-          ({ theme }) => theme.error.dark.base
+          ({ theme }) => theme.warning.dark.base
         };
         color: ${
-          ({ theme }) => theme.error.dark.on.base
+          ({ theme }) => theme.warning.dark.on.base
         };
       }
     `
@@ -65,7 +65,8 @@ const Message = styled.div`
   flex-grow: 1;
   padding-right: ${
     ({ theme: { spacing } }) => `${ spacing.small }`
-  };`
+  };
+`
 
 const Countdown = styled.div`
   position: absolute;
@@ -73,10 +74,10 @@ const Countdown = styled.div`
   left: 0;
 `
 
-const ErrorBox = ({ children, expiring, interactable }) => (
+const WarningBox = ({ children, expiring, interactable }) => (
   <Wrapper interactable={ interactable }>
     <Icon>
-      <ErrorIcon size="medium" />
+      <WarningIcon size="medium" />
       { expiring &&
         <Countdown>
           <CircularCountdown
@@ -92,4 +93,4 @@ const ErrorBox = ({ children, expiring, interactable }) => (
   </Wrapper>
 )
 
-export default ErrorBox
+export default WarningBox
