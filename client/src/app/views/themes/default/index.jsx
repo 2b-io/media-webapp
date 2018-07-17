@@ -63,22 +63,22 @@ const theme = {
   // semantic colors
   error: color({
     palette: 'red',
-    value: 6,
+    value: 8,
     autoGenerateVariants: true
   }),
   warning: color({
     palette: 'orange',
-    value: 5,
+    value: 6,
     autoGenerateVariants: true
   }),
   info: color({
     palette: 'blue',
-    value: 2,
+    value: 3,
     autoGenerateVariants: true
   }),
   success: color({
     palette: 'green',
-    value: 2,
+    value: 3,
     autoGenerateVariants: true
   }),
   spacing: {

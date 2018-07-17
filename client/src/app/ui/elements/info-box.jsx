@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { ErrorIcon } from 'ui/icons'
+import { InfoIcon } from 'ui/icons'
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,10 +13,10 @@ const Wrapper = styled.div`
     ({ theme }) => theme.spacing.medium
   };
   background: ${
-    ({ theme }) => theme.error.base
+    ({ theme }) => theme.info.base
   };
   color: ${
-    ({ theme }) => theme.error.on.base
+    ({ theme }) => theme.info.on.base
   };
 
   ${
@@ -25,19 +25,19 @@ const Wrapper = styled.div`
 
       &:hover {
         background: ${
-          ({ theme }) => theme.error.light.base
+          ({ theme }) => theme.info.light.base
         };
         color: ${
-          ({ theme }) => theme.error.light.on.base
+          ({ theme }) => theme.info.light.on.base
         };
       }
 
       &:active {
         background: ${
-          ({ theme }) => theme.error.dark.base
+          ({ theme }) => theme.info.dark.base
         };
         color: ${
-          ({ theme }) => theme.error.dark.on.base
+          ({ theme }) => theme.info.dark.on.base
         };
       }
     `
@@ -58,10 +58,10 @@ const Message = styled.div`
   flex-grow: 1;
 `
 
-const ErrorBox = ({ children, interactable }) => (
+const InfoBox = ({ children, interactable }) => (
   <Wrapper interactable={ interactable }>
     <Icon>
-      <ErrorIcon size="large" />
+      <InfoIcon size="large" />
     </Icon>
     <Message>
       { children }
@@ -69,4 +69,4 @@ const ErrorBox = ({ children, interactable }) => (
   </Wrapper>
 )
 
-export default ErrorBox
+export default InfoBox

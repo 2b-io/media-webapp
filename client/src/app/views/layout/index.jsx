@@ -8,6 +8,7 @@ import Content from './content'
 import Layer from './layer'
 import Overlay from './overlay'
 import Still from './still'
+import Toast from './toast'
 import Wrapper from './wrapper'
 
 export { default as LeftMenu } from './left-menu'
@@ -47,6 +48,7 @@ class Layout extends Component {
             { render.content(this.props) }
           </Content>
         </Wrapper>
+        <Toast />
       </Layer>
     )
   }
