@@ -1,10 +1,12 @@
 import React from 'react'
 
 import ColorSession from './color'
+import ElementSection from './element'
 
 const UI = () => (
   <main>
-    <ColorSession />
+    <ElementSection />
+    {/* <ColorSession /> */}
   </main>
 )
 

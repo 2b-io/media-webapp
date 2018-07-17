@@ -4,6 +4,8 @@ import serializeError from 'serialize-error'
 import Project from 'models/project'
 import { actions, types, selectors } from 'state/interface'
 
+import delay from 'delay'
+
 const createLoop = function*() {
   while (true) {
     const action = yield take(types['PROJECT/CREATE'])
@@ -15,6 +17,8 @@ const createLoop = function*() {
       if (!session) {
         continue
       }
+
+      yield call(delay, 1e3)
 
       const newProject = yield call(Project.create, project, session.token)
 

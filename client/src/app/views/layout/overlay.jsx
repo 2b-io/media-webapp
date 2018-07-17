@@ -44,6 +44,10 @@ const Header = styled.div`
   };
 `
 
+const Avatar = styled(Identicon)`
+  box-shadow: 0 5px 10px ${ ({ theme }) => theme.secondary.limpid.base };
+`
+
 const Content = styled.div`
   flex-grow: 1;
   overflow-x: hidden;
@@ -72,7 +76,7 @@ const Overlay = ({
     <Wrapper>
       <Header shown={ shown }>
         <Button plain onClick={ toProfile }>
-          <Identicon
+          <Avatar
             circle
             size={ 64 }
             id={ email }

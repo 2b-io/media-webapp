@@ -6,7 +6,7 @@ const StyledContent = styled.div`
   background-color: ${ ({ theme }) => theme.background.base };
   color: ${ ({ theme }) => theme.background.on.base };
   padding: ${ ({ theme }) => theme.spacing.medium };
-  transition: top 1.2s cubic-bezier(.4, 0, .2, 1);
+  transition: top 1.2s .3s cubic-bezier(.4, 0, .2, 1);
   left: 0;
   right: 0;
   top: ${

@@ -4,28 +4,28 @@ import { Button } from 'ui/elements'
 import { Form } from 'ui/compounds'
 import { TextBox  } from 'views/common/form'
 
-const projectForm = ({ handleSubmit }) => (
+const projectForm = ({ handleSubmit, idle }) => (
   <Form handleSubmit={ handleSubmit }>
-    <Form.Header>Create new project</Form.Header>
-    <Form.Description>Enter info your project and click to {'Add project'} button</Form.Description>
     <Form.Line>
       <TextBox
-        type="TextBox"
         name="name"
         placeholder="Name project"
+        disabled={ !idle }
       />
     </Form.Line>
     <Form.Line>
       <TextBox
-        type="TextBox"
         name="slug"
         placeholder="Slug"
+        disabled={ !idle }
       />
     </Form.Line>
     <Form.Line last>
-      <Form.Align center>
-        <Button type="submit">Add project</Button>
-      </Form.Align>
+      <Button
+        type="submit"
+        disabled={ !idle }>
+        Create
+      </Button>
     </Form.Line>
   </Form>
 )

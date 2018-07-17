@@ -66,14 +66,14 @@ export default function*() {
           let leavingActions = []
 
           if (r.enter) {
-            console.log(`Entering ${ current } [${ r.path }]`)
+            console.debug(`Entering ${ current } [${ r.path }]`)
 
             if (r.onEnter) {
               enteringActions = r.onEnter(r.parameters)
             }
 
           } else if (r.leave) {
-            console.log(`Leaving ${ previous } [${ r.path }]`)
+            console.debug(`Leaving ${ previous } [${ r.path }]`)
 
             if (r.onLeave) {
               leavingActions = r.onLeave(r.parameters)
