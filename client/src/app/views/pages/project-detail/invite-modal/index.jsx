@@ -10,7 +10,7 @@ import { modal } from 'views/common/decorators'
 
 import _InviteCollaboratorForm from './form'
 
-const ListItem = styled.div`
+const List = styled.div`
   background-color: #efefef;
   padding: 10px;
   margin: 20px auto;
@@ -27,17 +27,25 @@ const InviteCollaboratorForm = reduxForm({
   enableReinitialize: true
 })(_InviteCollaboratorForm)
 
-const InviteCollaborator = ({ inviteCollaborator, findCollaborator, collaborators, email, selectEmaiCollaborator }) => {
+const InviteCollaborator = ({
+  inviteCollaborator,
+  findCollaborator,
+  collaborators,
+  email,
+  selectEmaiCollaborator,
+  ui: { results }
+}) => {
   return (
     <Container center>
       <InviteCollaboratorForm onSubmit={ inviteCollaborator } findCollaborator={ findCollaborator } email={ email } />
-      { collaborators.length && <ListItem>
-        { collaborators.map( (collaborator, index) => (
-          <Item key={ index } onClick={ () => { selectEmaiCollaborator(collaborator.email) } }>
-            { collaborator.email }
+      { results.length &&
+        <List>
+        { results.map( (email, index) => (
+          <Item key={ index } onClick={ () => { selectEmaiCollaborator(email) } }>
+            { email }
           </Item>
         )) }
-      </ListItem> }
+      </List> }
     </Container>
   )
 }
