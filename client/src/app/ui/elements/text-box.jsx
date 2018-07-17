@@ -17,6 +17,7 @@ const TextBox = styled.input.attrs({
   padding: ${ ({ theme }) => theme.spacing.small };
   width: 100%;
   transition: border-bottom .3s linear;
+
   &:hover, &:focus {
     border-bottom: 2px solid ${
       ({ disabled, readOnly, theme }) => (disabled || readOnly) ?

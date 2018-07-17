@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
-import { Container } from 'ui/elements'
+import { Container, ErrorBox } from 'ui/elements'
 import { modal } from 'views/common/decorators'
 import { Redirect } from 'views/router'
 
@@ -27,6 +27,9 @@ const CreateProject = ({
 
   return (
     <Container>
+      { error &&
+        <ErrorBox>An error happens when creating the new project!</ErrorBox>
+      }
       <ProjectForm
         onSubmit={ createProject }
         idle={ idle }

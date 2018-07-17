@@ -4,14 +4,12 @@ const Button = styled.button.attrs({
   type: ({ type = 'button' }) => type
 })`
   appearance: none;
-  cursor: pointer;
   display: inline-flex;
   align-items: center;
   margin: 0;
-
-  &:focus {
-    outline: none;
-  }
+  cursor: ${
+    ({ disabled }) => disabled ? 'not-allowed' : 'pointer'
+  };
 
   ${
     ({ plain }) => plain ?
@@ -63,6 +61,10 @@ const Button = styled.button.attrs({
           };
         }
       `
+  }
+
+  &:focus {
+    outline: none;
   }
 `
 
