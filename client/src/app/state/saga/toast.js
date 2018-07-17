@@ -16,7 +16,7 @@ const toast = function*({ message, type }) {
     type,
   }))
 
-  yield call(delay, ms(expiring) + 500)
+  yield call(delay, ms(expiring) + 200)
 
   yield put(actions.removeToast(id))
 }

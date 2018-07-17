@@ -37,7 +37,7 @@ const loop = function*() {
         put(actions.createSessionCompleted(session)),
         put(actions.requestLocation('/')),
         put(actions.openLayout()),
-        call(addToast, {
+        fork(addToast, {
           type: 'success',
           message: `Welcome back, ${ session.account.email }`
         })

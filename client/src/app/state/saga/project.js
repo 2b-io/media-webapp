@@ -1,10 +1,10 @@
-import { call, take, fork, put, select } from 'redux-saga/effects'
+import { all, call, take, fork, put, select } from 'redux-saga/effects'
 import serializeError from 'serialize-error'
 
 import Project from 'models/project'
 import { actions, types, selectors } from 'state/interface'
 
-import delay from 'delay'
+import { addToast } from './toast'
 
 const createLoop = function*() {
   while (true) {
@@ -18,11 +18,15 @@ const createLoop = function*() {
         continue
       }
 
-      yield call(delay, 1e3)
-
       const newProject = yield call(Project.create, project, session.token)
 
-      yield put(actions.createProjectCompleted(newProject))
+      yield all([
+        put(actions.createProjectCompleted(newProject)),
+        fork(addToast, {
+          type: 'success',
+          message: 'Project created'
+        })
+      ])
     } catch (e) {
       yield put(actions.createProjectFailed(serializeError(e)))
       continue
@@ -86,7 +90,13 @@ const updateLoop = function*() {
 
       const project = yield call(Project.update, action.payload.project, session.token)
 
-      yield put(actions.updateProjectCompleted(project))
+      yield all([
+        put(actions.updateProjectCompleted(project)),
+        fork(addToast, {
+          type: 'success',
+          message: 'Project updated'
+        })
+      ])
     } catch (e) {
       yield put(actions.updateProjectFailed(serializeError(e)))
       continue
