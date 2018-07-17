@@ -8,7 +8,6 @@ const projectForm = ({ handleSubmit, idle }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Line>
       <TextBox
-        type="TextBox"
         name="name"
         placeholder="Name project"
         disabled={ !idle }
@@ -16,7 +15,6 @@ const projectForm = ({ handleSubmit, idle }) => (
     </Form.Line>
     <Form.Line>
       <TextBox
-        type="TextBox"
         name="slug"
         placeholder="Slug"
         disabled={ !idle }
