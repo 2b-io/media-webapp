@@ -18,17 +18,20 @@ const SignIn = ({
   signIn,
   toForgotPassword,
   toRegister,
-  ui: { error }
+  ui: { error, idle }
 }) => (
   <main>
     <Container center size="small">
       { error &&
-        <ErrorBox>Account or password not match</ErrorBox>
+        <ErrorBox>Email and password do not match.</ErrorBox>
       }
       <Paragraph>
         Enter your email and password
       </Paragraph>
-      <SignInForm onSubmit={ signIn } />
+      <SignInForm
+        onSubmit={ signIn }
+        idle={ idle }
+      />
       <Paragraph>
         Don&apos;t have your account yet?<br />
         <Link href="/register" onClick={ toRegister }>Try it for free!</Link>
