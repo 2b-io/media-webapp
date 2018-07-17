@@ -98,7 +98,7 @@ const inviteCollaboratorLoop = function*() {
   while (true) {
     const action = yield take(types['PROJECT/INVITE_COLLABORATOR'])
     const currentLocation = yield select(selectors.currentLocation)
-    const slug = currentLocation.pathname.split("/")[2]
+    const slug = currentLocation.pathname.split('/')[2]
     try {
       const session = yield select(selectors.currentSession)
 
