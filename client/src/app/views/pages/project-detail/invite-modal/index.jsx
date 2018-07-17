@@ -1,11 +1,12 @@
+import Debounce from 'lodash.debounce'
 import React from 'react'
 import { reduxForm } from 'redux-form'
 import styled  from 'styled-components'
 import { connect } from 'react-redux'
 
-import { mapDispatch, mapState } from 'services/redux-helpers'
-import { actions, selectors } from 'state/interface'
-import { Container } from 'ui/elements'
+import { mapDispatch } from 'services/redux-helpers'
+import { actions } from 'state/interface'
+import { Container, Button, Layout } from 'ui/elements'
 import { modal } from 'views/common/decorators'
 
 import _InviteCollaboratorForm from './form'
@@ -29,23 +30,34 @@ const InviteCollaboratorForm = reduxForm({
 
 const InviteCollaborator = ({
   inviteCollaborator,
-  findCollaborator,
-  collaborators,
-  email,
-  selectEmaiCollaborator,
-  ui: { results }
+  searchAccount,
+  ui: { error, result }
 }) => {
   return (
     <Container center>
-      <InviteCollaboratorForm onSubmit={ inviteCollaborator } findCollaborator={ findCollaborator } email={ email } />
-      { results.length &&
+      <InviteCollaboratorForm
+        searchAccount={ Debounce(searchAccount, 1000) }
+      />
+      { result &&
         <List>
-        { results.map( (email, index) => (
-          <Item key={ index } onClick={ () => { selectEmaiCollaborator(email) } }>
-            { email }
-          </Item>
-        )) }
-      </List> }
+          { result.map( ({ email }, index) => (
+            <Item key={ index }>
+              <Layout>
+                <Layout.Fixed>
+                  <span>{ email }</span>
+                </Layout.Fixed>
+                <Layout.Fluid>
+                  <Button
+                    type="submit"
+                    onClick={ () => { inviteCollaborator(email) } }>
+                      Invite
+                  </Button>
+                </Layout.Fluid>
+              </Layout>
+            </Item>
+          )) }
+        </List> }
+      { error && <p> Error search account please try again </p> }
     </Container>
   )
 }
@@ -54,14 +66,10 @@ export default modal({
   name: 'InviteCollaborator'
 })(
   connect(
-    mapState({
-      collaborators: selectors.collaborators,
-      email: selectors.emailCollaborator
-    }),
+    null,
     mapDispatch({
-      inviteCollaborator: actions.inviteCollaborator,
-      findCollaborator: actions.findCollaborator,
-      selectEmaiCollaborator: actions.selectEmaiCollaborator
+      inviteCollaborator: (email) => actions.inviteCollaborator(email),
+      searchAccount: actions.searchAccount
     })
   )(InviteCollaborator)
 )

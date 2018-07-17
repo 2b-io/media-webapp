@@ -97,10 +97,8 @@ const updateLoop = function*() {
 const inviteCollaboratorLoop = function*() {
   while (true) {
     const action = yield take(types['PROJECT/INVITE_COLLABORATOR'])
-
     const currentLocation = yield select(selectors.currentLocation)
-    const { pathname } = currentLocation
-    const slug = pathname.replace(/^.*[\\\/]/, '')
+    const slug = currentLocation.pathname.split("/")[2]
     try {
       const session = yield select(selectors.currentSession)
 
@@ -108,38 +106,14 @@ const inviteCollaboratorLoop = function*() {
         continue
       }
 
-      const invite = yield call(Project.inviteCollaborator, session.token, slug, action.payload.email )
-
-      if (invite) {
-        yield put(actions.inviteCollaboratorCompleted({ invite }))
+      const collaborator = yield call(Project.inviteCollaborator, session.token, slug, action.payload )
+      collaborator.slug = slug
+      if (collaborator) {
+        yield put(actions.inviteCollaboratorCompleted(collaborator))
       }
 
     } catch (e) {
       yield put(actions.inviteCollaboratorFailed(serializeError(e)))
-      continue
-    }
-  }
-}
-
-const findCollaboratorLoop = function*() {
-  while (true) {
-    const action = yield take(types['PROJECT/FIND_COLLABORATOR'])
-
-    try {
-      const session = yield select(selectors.currentSession)
-
-      if (!session) {
-        continue
-      }
-
-      const collaborators = yield call(Project.findCollaborator, session.token, action.payload )
-
-      if (collaborators[0] !== null) {
-        yield put(actions.findCollaboratorCompleted({ collaborators }))
-      }
-
-    } catch (e) {
-      yield put(actions.findCollaboratorFailed(serializeError(e)))
       continue
     }
   }
@@ -152,5 +126,4 @@ export default function*() {
   yield fork(getLoop)
   yield fork(updateLoop)
   yield fork(inviteCollaboratorLoop)
-  yield fork(findCollaboratorLoop)
 }

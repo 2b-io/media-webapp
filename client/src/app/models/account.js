@@ -54,4 +54,19 @@ export default {
 
     return body._createAccount
   },
+  async search(token, email) {
+    const body = await request(`
+      query search($token: String!, $email: String!) {
+        session(token: $token) {
+          accounts(email: $email) {
+            ${ ACCOUNT_FRAGMENT }
+          }
+        }
+      }
+    `, {
+      token,
+      email
+    })
+    return body.session.accounts
+  }
 }

@@ -9,7 +9,5 @@ export default {
     }
 
     return project.presets[ hash ]
-  },
-  collaborators: state => state.collaborators,
-  emailCollaborator: state => state.emailCollaborator
+  }
 }

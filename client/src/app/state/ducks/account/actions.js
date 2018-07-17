@@ -46,3 +46,18 @@ export const registerFailed = reason => ({
   type: types.REGISTER_FAILED,
   payload: { reason }
 })
+
+export const searchAccount = email => ({
+  type: types.SEARCH_ACCOUNT,
+  payload: email
+})
+
+export const searchAccountCompleted = account => ({
+  type: types.SEARCH_ACCOUNT_COMPLETED,
+  payload: { account }
+})
+
+export const searchAccountFailed = reason => ({
+  type: types.SEARCH_ACCOUNT_FAILED,
+  payload: { reason }
+})
