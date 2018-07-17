@@ -14,7 +14,7 @@ injectGlobal`
   }
 
   ::-webkit-scrollbar {
-    width: 4px;
+    width: ${ defaultTheme.spacing.small };
   }
 
   ::-webkit-scrollbar-track {
@@ -26,6 +26,10 @@ injectGlobal`
   }
 
   ::-webkit-scrollbar-thumb:hover {
+    background: ${ defaultTheme.primary.light.base };
+  }
+
+  ::-webkit-scrollbar-thumb:active {
     background: ${ defaultTheme.primary.dark.base };
   }
 `

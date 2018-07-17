@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { AddIcon } from 'ui/icons'
-import { Button, TextArea, TextBox } from 'ui/elements'
+import { Button, ErrorBox, TextArea, TextBox } from 'ui/elements'
 
 const Wrapper = styled.section`
 `
@@ -17,8 +17,11 @@ const Sep = styled.span`
   height: 1px;
 `
 
-const InputSection = () => (
+const ElementSection = () => (
   <Wrapper>
+    <Box>
+      <ErrorBox>Error message here!</ErrorBox>
+    </Box>
     <Box>
       <TextBox defaultValue="Normal TextBox" />
       <TextBox defaultValue="Disabled TextBox" disabled />
@@ -48,4 +51,4 @@ const InputSection = () => (
   </Wrapper>
 )
 
-export default InputSection
+export default ElementSection

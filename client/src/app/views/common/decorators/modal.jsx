@@ -30,7 +30,7 @@ const Wrapper = styled.div`
   margin-right: auto;
   padding: ${ ({ theme }) => theme.spacing.medium };
   box-shadow: 0 30px 80px ${ ({ theme }) => theme.secondary.limpid.base };
-  min-width: 300px;
+  min-width: 280px; /* support iphone5s */
   max-width: ${
     ({ width }) => width === 'wide' ? '960px' : (width === 'narrow' ? '640px' : 'auto')
   };
