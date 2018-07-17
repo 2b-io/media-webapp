@@ -102,10 +102,10 @@ const inviteCollaboratorLoop = function*() {
         continue
       }
 
-      const invite = yield call(Project.inviteCollaborator, session.token, slug, action.payload )
-
-      if (invite) {
-        yield put(actions.inviteCollaboratorCompleted({ invite }))
+      const collaborator = yield call(Project.inviteCollaborator, session.token, slug, action.payload )
+      collaborator.slug = slug
+      if (collaborator) {
+        yield put(actions.inviteCollaboratorCompleted(collaborator))
       }
 
     } catch (e) {

@@ -15,6 +15,7 @@ import {
   update as updateProject
 } from 'services/project'
 
+import { Collaborator } from '../Collaborator'
 import { Preset, PresetStruct } from '../Preset'
 
 
@@ -65,9 +66,8 @@ export default ({ Project, ProjectStruct }) => ({
         type: GraphQLNonNull(GraphQLString)
       }
     },
-    type: GraphQLBoolean,
+    type: Collaborator,
     resolve: async (project, { email }) => {
-
       const p = await inviteCollaborator(project, email)
 
       // add ref

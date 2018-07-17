@@ -1,3 +1,4 @@
+import Debounce from 'lodash.debounce'
 import React from 'react'
 import { reduxForm } from 'redux-form'
 import styled  from 'styled-components'
@@ -35,7 +36,7 @@ const InviteCollaborator = ({
   return (
     <Container center>
       <InviteCollaboratorForm
-        searchAccount={ searchAccount }
+        searchAccount={ Debounce(searchAccount, 1000) }
       />
       { result &&
         <List>
@@ -56,7 +57,7 @@ const InviteCollaborator = ({
             </Item>
           )) }
         </List> }
-        { error && <p> Error search account please try again </p> }
+      { error && <p> Error search account please try again </p> }
     </Container>
   )
 }

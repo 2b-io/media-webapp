@@ -5,9 +5,10 @@ import { ACCOUNT_FRAGMENT } from './account'
 
 export const PERMISSION_FRAGMENT = `
   _id,
-  project,
-  account,
-  privilege
+  account {
+    ${ ACCOUNT_FRAGMENT }
+  }
+  privilege,
 `
 export const PRESET_FRAGMENT = `
   name,
@@ -206,7 +207,9 @@ export default {
         session(token: $token) {
           account {
             project(slug: $slug) {
-              _inviteCollaborator(email: $email)
+              _inviteCollaborator(email: $email){
+                ${ PERMISSION_FRAGMENT }
+              }
             }
           }
         }
@@ -216,7 +219,6 @@ export default {
       slug,
       email
     })
-
     return body.session.account.project._inviteCollaborator
   },
 }

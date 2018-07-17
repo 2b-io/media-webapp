@@ -5,7 +5,7 @@ import { Link } from 'ui/elements'
 const CollaboratorList = ({ collaborators, toProfile }) => (
   <ul>
     {
-      collaborators.map(
+      Object.values(collaborators).map(
         collaborator => (
           <li key={ collaborator._id }>
             <Link href="#"

@@ -19,10 +19,10 @@ export const list = async (project) => {
 
 export const invite = async (project, email) => {
   const account = await findAccountByEmail(email)
-  return await new Permission({
+  const permission = await new Permission({
     project: project._id,
     account: account._id,
     privilege: 'owner'
   }).save()
-
+ return permission
 }

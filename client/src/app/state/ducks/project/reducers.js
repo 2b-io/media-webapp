@@ -18,7 +18,9 @@ export default combineReducers({
       ...state,
       [ action.payload.project.slug ]: {
         ...action.payload.project,
-        presets: arrayToMap(action.payload.project.presets, 'hash')
+        presets: arrayToMap(action.payload.project.presets, 'hash'),
+        collaborators: arrayToMap(action.payload.project.collaborators, '_id'),
+
       }
     }),
     [ types.GET_PRESET_COMPLETED ]: (state, action) => {
@@ -75,23 +77,20 @@ export default combineReducers({
       }
     },
     [ types.INVITE_COLLABORATOR_COMPLETED ]: (state, action) => {
-      const { slug }  = action.payload.preset.project
+      const { slug }  = action.payload.collaborator
+      const { collaborator } = action.payload
       const project = state[ slug ]
-      const collaborators = project.collaborators
-
+      
       return {
         ...state,
         [ slug ]: {
           ...project,
           collaborators: {
-            ...collaborators,
-            [ action.payload.collaborators._id ]: action.payload.collaborators
+            ...state[ slug ].collaborators,
+            [ collaborator._id ]: collaborator
           }
         }
       }
-
-      // state[ slug ].presets = [ ...state[slug].presets, action.payload.preset ]
-      // return { ...state }
     }
   }),
 })
