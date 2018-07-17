@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   padding: ${
-    ({ theme: { spacing } }) => `${ spacing.tiny } ${ spacing.small }`
+    ({ theme: { spacing } }) => `${ spacing.tiny }`
   };
   margin-bottom: ${
     ({ theme }) => theme.spacing.medium
@@ -63,7 +63,9 @@ const Icon = styled.div`
 const Message = styled.div`
   display: inline-flex;
   flex-grow: 1;
-`
+  padding-right: ${
+    ({ theme: { spacing } }) => `${ spacing.small }`
+  };`
 
 const Countdown = styled.div`
   position: absolute;

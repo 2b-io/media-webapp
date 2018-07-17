@@ -5,7 +5,7 @@ export const addToast = toast => ({
   payload: { toast }
 })
 
-export const remove = id => ({
+export const removeToast = id => ({
   type: types.REMOVE,
   payload: { id }
 })

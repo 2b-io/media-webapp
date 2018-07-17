@@ -4,6 +4,8 @@ import Session from 'models/session'
 import { actions, types } from 'state/interface'
 import storage from 'services/storage'
 
+import { addToast } from './toast'
+
 const TOKEN = 'jwt'
 
 const restoreSession = function*() {
@@ -34,7 +36,11 @@ const loop = function*() {
         call(storage.set, TOKEN, session.token),
         put(actions.createSessionCompleted(session)),
         put(actions.requestLocation('/')),
-        put(actions.openLayout())
+        put(actions.openLayout()),
+        call(addToast, {
+          type: 'success',
+          message: `Welcome back, ${ session.account.email }`
+        })
       ])
     } catch(e) {
       yield put(actions.createSessionFailed(e))

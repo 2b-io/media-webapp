@@ -3,35 +3,8 @@ import createReducer from 'state/helpers/create-reducer'
 
 import * as types from './types'
 
-const initialToasts = {
-  1: {
-    id: 1,
-    type: 'error',
-    message: 'If you receive a message like this it means that your last action was completed successfully and no additional actions are required (such as Restart Server).',
-    expiring: '10s'
-  },
-  2: {
-    id: 2,
-    type: 'info',
-    message: 'If you receive a message like this it means that your last action was completed successfully and no additional actions are required (such as Restart Server).',
-    expiring: '10s'
-  },
-  3: {
-    id: 3,
-    type: 'success',
-    message: 'If you receive a message like this it means that your last action was completed successfully and no additional actions are required (such as Restart Server).',
-    expiring: '10s'
-  },
-  4: {
-    id: 4,
-    type: 'warn',
-    message: 'If you receive a message like this it means that your last action was completed successfully and no additional actions are required (such as Restart Server).',
-    expiring: '10s'
-  }
-}
-
 export default combineReducers({
-  toasts: createReducer(initialToasts)({
+  toasts: createReducer({})({
     [ types.ADD ]: (state, action) => ({
       ...state,
       [ action.payload.toast.id ]: action.payload.toast
