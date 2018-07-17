@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
-import { Container, Link, Paragraph } from 'ui/elements'
+import { Container, ErrorBox, Link, Paragraph } from 'ui/elements'
 import { stateful } from 'views/common/decorators'
 
 import _SignInForm from './form'
@@ -22,12 +22,12 @@ const SignIn = ({
 }) => (
   <main>
     <Container center size="small">
-      {
-        error? <Paragraph>Account or password not match</Paragraph> :
-          <Paragraph>
-            Enter your email and password
-          </Paragraph>
+      { error &&
+        <ErrorBox>Account or password not match</ErrorBox>
       }
+      <Paragraph>
+        Enter your email and password
+      </Paragraph>
       <SignInForm onSubmit={ signIn } />
       <Paragraph>
         Don&apos;t have your account yet?<br />
