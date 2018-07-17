@@ -28,7 +28,7 @@ const CreateProject = ({
   return (
     <Container>
       { error &&
-        <ErrorBox>An error happens when creating the new project!</ErrorBox>
+        <ErrorBox>An error happens when creating the new project.</ErrorBox>
       }
       <ProjectForm
         onSubmit={ createProject }

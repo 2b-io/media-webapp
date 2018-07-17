@@ -6,8 +6,9 @@ import styled from 'styled-components'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
-import { Button } from 'ui/elements'
+import { Button, ErrorBox } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
+import { stateful } from 'views/common/decorators'
 import { Route, withParams } from 'views/router'
 
 import CollaboratorList from './collaborator-list'
@@ -31,18 +32,21 @@ const Project = ({
   toPresetDetail,
   toProfile,
   toProjectDetail,
-  updateProject
+  updateProject,
+  ui: { error, idle }
 }) => (
   <main>
     <Section>
-      <h2>Project Info</h2>
+      { error &&
+        <ErrorBox>An error happens when updating the project.</ErrorBox>
+      }
       <ProjectForm
+        idle={ idle }
         initialValues={ project }
         onSubmit={ updateProject }
       />
     </Section>
     <Section>
-      <h2>Presets</h2>
       <Button plain onClick={ () => toPresetDetail(project.slug, 'new') }>
         <AddIcon size="medium" />
       </Button>
@@ -57,7 +61,6 @@ const Project = ({
       }
     </Section>
     <Section>
-      <h2>Collaborators</h2>
       <Button plain onClick={ () => toInviteModal(project.slug) }>
         <AddIcon size="medium" />
       </Button>
@@ -84,16 +87,20 @@ const Project = ({
   </main>
 )
 export default withParams(
-  connect(
-    (state, { params: { slug } }) => ({
-      project: selectors.findProjectBySlug(state, slug),
-    }),
-    mapDispatch({
-      toInviteModal: slug => actions.requestLocation(`/projects/${ slug }/invite`),
-      toPresetDetail: (slug, hash) => actions.requestLocation(`/projects/${ slug }/presets/${ hash }`),
-      toProfile: id => actions.requestLocation(`/@${ id }`),
-      toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
-      updateProject: actions.updateProject
-    })
-  )(Project)
+  stateful({
+    component: 'ProjectDetail'
+  })(
+    connect(
+      (state, { params: { slug } }) => ({
+        project: selectors.findProjectBySlug(state, slug),
+      }),
+      mapDispatch({
+        toInviteModal: slug => actions.requestLocation(`/projects/${ slug }/invite`),
+        toPresetDetail: (slug, hash) => actions.requestLocation(`/projects/${ slug }/presets/${ hash }`),
+        toProfile: id => actions.requestLocation(`/@${ id }`),
+        toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
+        updateProject: actions.updateProject
+      })
+    )(Project)
+  )
 )

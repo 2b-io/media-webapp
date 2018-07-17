@@ -107,7 +107,8 @@ export default {
       token,
       slug: project.slug
     })
-    return body.session.account._updateProject
+
+    return body.session.account.project._update
   },
 
   async createPreset({ preset, slug }, token) {
