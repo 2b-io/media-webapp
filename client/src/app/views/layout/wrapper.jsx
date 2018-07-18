@@ -10,6 +10,7 @@ const StyledWrapper = styled.div`
   };
   right: 0;
   bottom: 0;
+  transition: left 1.2s cubic-bezier(.4, 0, .2, 1);
   -webkit-overflow-scrolling: touch;
   overflow-x: hidden;
   overflow-y: ${

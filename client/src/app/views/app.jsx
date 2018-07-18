@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { injectGlobal, ThemeProvider } from 'styled-components'
 
-import Layout, { LeftMenu, TopMenu } from 'views/layout'
+import Layout, { LeftMenu } from 'views/layout'
 import { HistoryProvider, Router } from 'views/router'
 import { content, overlay, still, unauthRoutes } from 'views/route-config'
 import defaultTheme from 'views/themes/default'
@@ -34,18 +34,11 @@ injectGlobal`
   }
 `
 
-const HEADER_HEIGHT = 0
-const MENU_WIDTH = 44
-
 const overlayRoutesPattern = Object.keys(unauthRoutes)
   .map(p => p.split(':')[0] + '*')
   .join('|')
 
-const Header = () => (
-  <TopMenu menuWidth={ MENU_WIDTH } />
-)
-
-const Overlay = ({ history }) => (
+const Overlay = ({ history, width }) => (
   <Fragment>
     <Router
       animated="slide"
@@ -61,7 +54,7 @@ const Overlay = ({ history }) => (
           component: Nothing
         }
       ] }
-      otherwise={ () => <LeftMenu width={ MENU_WIDTH } /> }
+      otherwise={ () => <LeftMenu width={ width } /> }
     />
   </Fragment>
 )
@@ -81,7 +74,6 @@ const Still = ({ history }) => (
 )
 
 const render = {
-  header: Header,
   overlay: Overlay,
   content: Content,
   still: Still
@@ -90,10 +82,7 @@ const render = {
 const App = () => (
   <ThemeProvider theme={ defaultTheme }>
     <HistoryProvider>
-      <Layout render={ render }
-        menuWidth={ MENU_WIDTH }
-        headerHeight={ HEADER_HEIGHT }
-      />
+      <Layout render={ render } />
     </HistoryProvider>
   </ThemeProvider>
 )

@@ -8,6 +8,9 @@ export default combineReducers({
     [ types.CLOSE ]: () => true,
     [ types.OPEN ]: () => false
   }),
+  menuWidth: createReducer(44)({
+    [ types.UPDATE_MENU_WIDTH ]: (state, action) => action.payload.width
+  }),
   stillHeight: createReducer(0)({
     [ types.UPDATE_STILL_HEIGHT ]: (state, action) => action.payload.height
   })
