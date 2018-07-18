@@ -23,6 +23,7 @@ const MenuWrapper = styled.nav`
   margin-left: auto;
   margin-right: auto;
   padding: ${ ({ theme: { spacing } }) => `${ spacing.small } ${ spacing.tiny }`  };
+  padding: 0;
   font-size: 12px;
 `
 
@@ -30,23 +31,53 @@ const Menu = styled.ul`
 `
 
 const MenuItem = styled.li`
-    text-align: center;
-    ${
-      ({ separator, theme }) => separator &&
-        css`
-          border-top: 1px dashed ${ theme.secondary.on.base };
-        `
-    }
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  ${
+    ({ separator, theme }) => separator &&
+      css`
+        border-top: 1px dashed ${ theme.secondary.on.base };
+      `
+  }
 `
 
 const LinkButton = styled(Link).attrs({
   href: '#'
 })`
-  height: 40px;
-  display: inline-flex;
+  width: 100%;
+  padding: ${ ({ theme }) => `${ theme.spacing.tiny } 0` };
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
   align-items: center;
   text-decoration: none;
   color: inherit;
+
+  &:hover {
+    background: ${ ({ theme }) => theme.secondary.light.base };
+    color: ${ ({ theme }) => theme.secondary.light.on.base };
+  }
+
+  &:active {
+    background: ${ ({ theme }) => theme.secondary.dark.base };
+    color: ${ ({ theme }) => theme.secondary.dark.on.base };
+  }
+`
+
+const MenuIcon = styled.div`
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 44px;
+  text-align: center;
+`
+
+const MenuTitle = styled.div`
+  flex-grow: 1;
+  font-size: 1.15em;
+  padding-left: ${ ({ theme }) => theme.spacing.small };
 `
 
 const LeftMenu = ({
@@ -59,33 +90,51 @@ const LeftMenu = ({
   <MenuWrapper width={ width }>
     <Menu>
       <MenuItem>
-        <LinkButton onClick={ toDashboard }>
-          <DashboardIcon size="medium" />
+        <LinkButton href="/" onClick={ toDashboard }>
+          <MenuIcon>
+            <DashboardIcon size="medium" />
+          </MenuIcon>
+          <MenuTitle>Dashboard</MenuTitle>
         </LinkButton>
       </MenuItem>
       <MenuItem>
-        <LinkButton onClick={ toProjectList }>
-          <ProjectListIcon size="medium" />
+        <LinkButton href="/projects"  onClick={ toProjectList }>
+          <MenuIcon>
+            <ProjectListIcon size="medium" />
+          </MenuIcon>
+          <MenuTitle>Projects</MenuTitle>
         </LinkButton>
       </MenuItem>
       <MenuItem>
         <LinkButton onClick={ () => {} }>
-          <BillingIcon size="medium" />
+          <MenuIcon>
+            <BillingIcon size="medium" />
+          </MenuIcon>
+          <MenuTitle>Billing</MenuTitle>
         </LinkButton>
       </MenuItem>
       <MenuItem>
         <LinkButton onClick={ () => {} }>
-          <PaymentIcon size="medium" />
+          <MenuIcon>
+            <PaymentIcon size="medium" />
+          </MenuIcon>
+          <MenuTitle>Payment</MenuTitle>
         </LinkButton>
       </MenuItem>
       <MenuItem>
         <LinkButton onClick={ signOut }>
-          <SignOutIcon size="medium" />
+          <MenuIcon>
+            <SignOutIcon size="medium" />
+          </MenuIcon>
+          <MenuTitle>Sign Out</MenuTitle>
         </LinkButton>
       </MenuItem>
       <MenuItem separator={ true }>
         <LinkButton onClick={ toUI }>
-          <UiIcon size="medium" />
+          <MenuIcon>
+            <UiIcon size="medium" />
+          </MenuIcon>
+          <MenuTitle>Elements</MenuTitle>
         </LinkButton>
       </MenuItem>
     </Menu>

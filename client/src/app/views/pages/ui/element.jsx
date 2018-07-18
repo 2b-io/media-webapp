@@ -2,7 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { AddIcon } from 'ui/icons'
-import { Button, ErrorBox, TextArea, TextBox } from 'ui/elements'
+import { Button, TextArea, TextBox } from 'ui/elements'
+import { ErrorBox, InfoBox, SuccessBox, WarningBox } from 'ui/elements'
 
 const Wrapper = styled.section`
 `
@@ -13,7 +14,7 @@ const Box = styled.div`
 `
 
 const Sep = styled.span`
-  margin-right: ${ ({ theme }) => theme.spacing.medium };
+  margin-right: ${ ({ theme }) => theme.spacing.small };
   height: 1px;
 `
 
@@ -21,6 +22,9 @@ const ElementSection = () => (
   <Wrapper>
     <Box>
       <ErrorBox>Error message here!</ErrorBox>
+      <InfoBox>Info message here!</InfoBox>
+      <SuccessBox>Success message here!</SuccessBox>
+      <WarningBox>Warning message here!</WarningBox>
     </Box>
     <Box>
       <TextBox defaultValue="Normal TextBox" />
@@ -33,11 +37,13 @@ const ElementSection = () => (
       <TextArea defaultValue="Disabled TextArea" disabled />
     </Box>
     <Box>
-      <Button><AddIcon /><Sep />Click me, a button!</Button><Sep />
-      <Button plain>Plain button!</Button><Sep />
+      <Button>
+        <AddIcon /><Sep />Click me, a button!
+      </Button>
+      <Sep />
       <Button plain>
-        <AddIcon />
-      </Button><Sep />
+        <AddIcon /><Sep />Plain button!
+      </Button>
     </Box>
     <Box>
       <Button.Group>

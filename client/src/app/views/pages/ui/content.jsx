@@ -6,7 +6,7 @@ import ElementSection from './element'
 const UI = () => (
   <main>
     <ElementSection />
-    {/* <ColorSession /> */}
+    <ColorSession />
   </main>
 )
 

@@ -10,7 +10,10 @@ const StyledOverlay = styled.div`
   top: 0;
   left: 0;
   bottom: 0;
-  transition: width 1.2s cubic-bezier(.4, 0, .2, 1), background 1.2s cubic-bezier(.4, 0, .2, 1), color 1.2s cubic-bezier(.4, 0, .2, 1);
+  transition:
+    width 1.2s cubic-bezier(.4, 0, .2, 1),
+    background 1.2s cubic-bezier(.4, 0, .2, 1),
+    color 1.2s cubic-bezier(.4, 0, .2, 1);
   align-center: center;
   justify-content: center;
   width: ${
@@ -19,11 +22,15 @@ const StyledOverlay = styled.div`
   padding-top: ${
     ({ headerHeight }) => `${ headerHeight }px`
   };
-  background-color: ${
-    ({ shown, theme }) => shown ? theme.background.base : theme.secondary.base
+  background: ${
+    ({ shown, theme }) => shown ?
+      theme.background.base :
+      theme.secondary.base
   };
   color: ${
-    ({ shown, theme }) => shown ? theme.background.on.base : theme.secondary.on.base
+    ({ shown, theme }) => shown ?
+      theme.background.on.base :
+      theme.secondary.on.base
   }
 `
 const Wrapper = styled.div`

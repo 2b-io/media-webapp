@@ -43,7 +43,6 @@ const Header = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: flex-start;
-  height: 30px;
 `
 
 export default ({
@@ -93,7 +92,7 @@ export default ({
                 {
                   showCloseButton && (
                     <Button plain onClick={ this.hide() }>
-                      <CloseIcon />
+                      <CloseIcon size="medium" />
                     </Button>
                   )
                 }

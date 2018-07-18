@@ -3,12 +3,15 @@ import createReducer from 'state/helpers/create-reducer'
 
 import * as types from './types'
 
+const MINIMAL_WIDTH = 44
+const FULL_WIDTH = 150
+
 export default combineReducers({
   closed: createReducer(true)({
     [ types.CLOSE ]: () => true,
     [ types.OPEN ]: () => false
   }),
-  menuWidth: createReducer(44)({
+  menuWidth: createReducer(MINIMAL_WIDTH)({
     [ types.UPDATE_MENU_WIDTH ]: (state, action) => action.payload.width
   }),
   stillHeight: createReducer(0)({

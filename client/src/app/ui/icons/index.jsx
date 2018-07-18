@@ -2,7 +2,7 @@
 import { github } from 'react-icons-kit/entypo/github'
 
 // APPLICATION ICON: http://wmira.github.io/react-icons-kit/#/iconset/md
-import { ic_add_circle_outline } from 'react-icons-kit/md/ic_add_circle_outline'
+import { ic_add } from 'react-icons-kit/md/ic_add'
 import { ic_close } from 'react-icons-kit/md/ic_close'
 import { ic_credit_card } from 'react-icons-kit/md/ic_credit_card'
 import { ic_dashboard } from 'react-icons-kit/md/ic_dashboard'
@@ -19,7 +19,7 @@ import { ic_view_quilt } from 'react-icons-kit/md/ic_view_quilt'
 
 import icon from './icon'
 
-export const AddIcon = icon(ic_add_circle_outline)
+export const AddIcon = icon(ic_add)
 export const BillingIcon = icon(ic_receipt)
 export const CloseIcon = icon(ic_close)
 export const DashboardIcon = icon(ic_dashboard)
