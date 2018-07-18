@@ -24,7 +24,6 @@ const MenuWrapper = styled.nav`
   margin-right: auto;
   padding: ${ ({ theme: { spacing } }) => `${ spacing.small } ${ spacing.tiny }`  };
   padding: 0;
-  font-size: 12px;
 `
 
 const Menu = styled.ul`
@@ -78,6 +77,9 @@ const MenuTitle = styled.div`
   flex-grow: 1;
   font-size: 1.15em;
   padding-left: ${ ({ theme }) => theme.spacing.small };
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `
 
 const LeftMenu = ({
