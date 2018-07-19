@@ -10,7 +10,7 @@ const Wrapper = styled.section`
 
 const Box = styled.div`
   flex-basis: 50%;
-  padding: ${ ({ theme }) => theme.spacing.tiny };
+  padding: ${ ({ theme }) => `${ theme.spacing.tiny } 0` };
 `
 
 const Sep = styled.span`
