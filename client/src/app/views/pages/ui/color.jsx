@@ -8,8 +8,9 @@ import { base, black, white, palettes } from 'views/themes/default'
 
 const Palette = styled.section`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   border: 1px solid ${ ({ theme }) => theme.secondary.base };
+  overflow: hidden;
 `
 
 const PaletteName = styled.h2`

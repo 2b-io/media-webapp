@@ -20,8 +20,8 @@ const Overlay = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
   background: ${ ({ theme }) => theme.secondary.opaque.base };
-  padding-left: ${ ({ theme }) => theme.spacing.medium };
-  padding-right: ${ ({ theme }) => theme.spacing.medium };
+  padding-left: ${ ({ theme }) => theme.spacing.small };
+  padding-right: ${ ({ theme }) => theme.spacing.small };
 `
 
 const Wrapper = styled.div`
@@ -31,7 +31,6 @@ const Wrapper = styled.div`
   margin: ${
     ({ theme: { spacing } }) => `${ spacing.huge } auto ${spacing.big }`
   };
-  padding: ${ ({ theme }) => theme.spacing.medium };
   box-shadow: 0 30px 80px ${ ({ theme }) => theme.secondary.limpid.base };
   min-width: 280px; /* support iphone5s */
   max-width: ${
@@ -40,10 +39,10 @@ const Wrapper = styled.div`
 `
 
 const Header = styled.div`
-  margin-bottom: ${ ({ theme }) => theme.spacing.small };
   display: flex;
   justify-content: flex-end;
   align-items: flex-start;
+  padding: ${ ({ theme }) => theme.spacing.tiny };
 `
 
 export default ({

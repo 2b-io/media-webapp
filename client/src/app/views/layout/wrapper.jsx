@@ -4,6 +4,7 @@ import styled from 'styled-components'
 const StyledWrapper = styled.div`
   position: absolute;
   z-index: 1;
+  min-width: 270px;
   top: 0;
   left: ${
     ({ menuWidth }) => `${ menuWidth }px`

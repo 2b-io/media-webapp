@@ -1,13 +1,15 @@
 import React from 'react'
 
+import { Container } from 'ui/elements'
+
 import ColorSession from './color'
 import ElementSection from './element'
 
 const UI = () => (
-  <main>
+  <Container>
     <ElementSection />
     <ColorSession />
-  </main>
+  </Container>
 )
 
 export default UI

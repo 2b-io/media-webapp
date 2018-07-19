@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
-import { Button, ErrorBox } from 'ui/elements'
+import { Button, Container, ErrorBox } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 import { stateful } from 'views/common/decorators'
 import { Route, withParams } from 'views/router'
@@ -35,7 +35,7 @@ const Project = ({
   updateProject,
   ui: { error, idle }
 }) => (
-  <main>
+  <Container>
     <Section>
       { error &&
         <ErrorBox>An error happens when updating the project.</ErrorBox>
@@ -84,7 +84,7 @@ const Project = ({
         onHide={ () => toProjectDetail(project.slug) }
       />
     </Route>
-  </main>
+  </Container>
 )
 export default withParams(
   stateful({
