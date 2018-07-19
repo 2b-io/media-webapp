@@ -92,17 +92,17 @@ const Resize = styled.div.attrs({
     `
   };
 
-  background: ${ ({ theme }) => theme.primary.base };
-  color: ${ ({ theme }) => theme.primary.on.base };
+  background: ${ ({ theme }) => theme.secondary.base };
+  color: ${ ({ theme }) => theme.secondary.on.base };
 
   &:hover {
-    background: ${ ({ theme }) => theme.primary.light.base };
-    color: ${ ({ theme }) => theme.primary.light.on.base };
+    background: ${ ({ theme }) => theme.secondary.light.base };
+    color: ${ ({ theme }) => theme.secondary.light.on.base };
   }
 
   &:active {
-    background: ${ ({ theme }) => theme.primary.dark.base };
-    color: ${ ({ theme }) => theme.primary.dark.on.base };
+    background: ${ ({ theme }) => theme.secondary.dark.base };
+    color: ${ ({ theme }) => theme.secondary.dark.on.base };
   }
 `
 
