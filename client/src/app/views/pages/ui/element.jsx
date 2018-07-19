@@ -21,7 +21,7 @@ const Sep = styled.span`
 const ElementSection = () => (
   <Wrapper>
     <Box>
-      <ErrorBox>Error message here!</ErrorBox>
+      <ErrorBox interactable>Error message here!</ErrorBox>
       <InfoBox>Info message here!</InfoBox>
       <SuccessBox>Success message here!</SuccessBox>
       <WarningBox>Warning message here!</WarningBox>

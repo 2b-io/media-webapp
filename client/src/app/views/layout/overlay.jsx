@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { Button, Identicon } from 'ui/elements'
-import { GithubIcon } from 'ui/icons'
+import { GithubIcon, MaximizeIcon } from 'ui/icons'
 
 const StyledOverlay = styled.div`
   position: fixed;
@@ -68,13 +68,48 @@ const Footer = styled.div`
   padding: ${ ({ theme }) => theme.spacing.small };
 `
 
+const Resize = styled.div`
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: transform .6s linear;
+  transform: ${
+    ({ rotated }) => `
+      translate3d(50%, -50%, 0)
+      rotate(${ rotated ? '-180deg' : '0' })
+    `
+  };
+
+  background: ${ ({ theme }) => theme.secondary.base };
+  color: ${ ({ theme }) => theme.secondary.on.base };
+
+  &:hover {
+    background: ${ ({ theme }) => theme.secondary.light.base };
+    color: ${ ({ theme }) => theme.secondary.light.on.base };
+  }
+
+  &:active {
+    background: ${ ({ theme }) => theme.secondary.dark.base };
+    color: ${ ({ theme }) => theme.secondary.dark.on.base };
+  }
+`
+
 const Overlay = ({
   children,
-  shown,
+  email,
   headerHeight,
-  width,
+  sidebarMaximized,
+  shown,
+  toggleSidebar,
   toProfile,
-  email
+  width
 }) => (
   <StyledOverlay
     shown={ shown }
@@ -97,6 +132,14 @@ const Overlay = ({
         <GithubIcon size="medium" />
       </Footer>
     </Wrapper>
+    { !shown &&
+      <Resize
+        onClick={ toggleSidebar }
+        rotated={ sidebarMaximized }
+      >
+        <MaximizeIcon size="medium" />
+      </Resize>
+    }
   </StyledOverlay>
 )
 
