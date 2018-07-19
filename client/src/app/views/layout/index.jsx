@@ -37,9 +37,7 @@ class Layout extends Component {
             email={ email }
             toProfile={ toProfile }
             sidebarMaximized={ sidebarMaximized }
-            toggleSidebar={ sidebarMaximized ?
-              minimizeSidebar : maximizeSidebar
-            }
+            toggleSidebar={ sidebarMaximized ? minimizeSidebar : maximizeSidebar }
           >
             { render.overlay(this.props) }
           </Overlay>

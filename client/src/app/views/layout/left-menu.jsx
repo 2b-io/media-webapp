@@ -9,7 +9,6 @@ import { Link } from 'ui/elements'
 import {
   BillingIcon,
   DashboardIcon,
-  MaximizeIcon,
   PaymentIcon,
   ProjectListIcon,
   SignOutIcon,

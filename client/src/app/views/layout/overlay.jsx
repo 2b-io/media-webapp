@@ -68,9 +68,7 @@ const Footer = styled.div`
   padding: ${ ({ theme }) => theme.spacing.small };
 `
 
-const Resize = styled.div.attrs({
-  children: () => <MaximizeIcon size="medium" />
-})`
+const Resize = styled.div`
   width: 24px;
   height: 24px;
   display: flex;
@@ -85,10 +83,7 @@ const Resize = styled.div.attrs({
   transform: ${
     ({ rotated }) => `
       translate3d(50%, -50%, 0)
-      ${ rotated ?
-        `rotate(-180deg)` :
-        `rotate(0deg)`
-      }
+      rotate(${ rotated ? '-180deg' : '0' })
     `
   };
 
@@ -141,7 +136,9 @@ const Overlay = ({
       <Resize
         onClick={ toggleSidebar }
         rotated={ sidebarMaximized }
-      />
+      >
+        <MaximizeIcon size="medium" />
+      </Resize>
     }
   </StyledOverlay>
 )
