@@ -8,6 +8,7 @@ import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
 import { Container, Button, Layout } from 'ui/elements'
 import { modal } from 'views/common/decorators'
+import { validateEmail } from 'views/common/validate'
 
 import _InviteCollaboratorForm from './form'
 
@@ -25,7 +26,8 @@ const Item = styled.div`
 
 const InviteCollaboratorForm = reduxForm({
   form: 'invite',
-  enableReinitialize: true
+  enableReinitialize: true,
+  validate: validateEmail
 })(_InviteCollaboratorForm)
 
 const InviteCollaborator = ({
@@ -36,7 +38,7 @@ const InviteCollaborator = ({
   return (
     <Container center>
       <InviteCollaboratorForm
-        searchAccount={ Debounce(searchAccount, 1000) }
+        searchAccount={ Debounce(searchAccount, 500) }
       />
       { result &&
         <List>
