@@ -30,22 +30,5 @@ export default combineReducers({
     }
 
     return uiReducer(state, action)
-  },
-  modal: (state = {}, action) => {
-    if (action.type === '@@MODAL/SHOW') {
-      return {
-        ...state,
-        [ action.payload.modal ]: {
-          params: action.payload.params 
-        }
-      }
-    } else if (action.type === '@@MODAL/HIDE') {
-      return {
-        ...state,
-        [ action.payload.modal ]: null
-      }
-    }
-
-    return state
   }
 })

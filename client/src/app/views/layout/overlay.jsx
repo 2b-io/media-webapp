@@ -40,12 +40,11 @@ const Wrapper = styled.div`
 `
 
 const Header = styled.div`
+  display: flex;
+  justify-content: center;
   padding-top: ${ ({ theme }) => theme.spacing.medium };
   padding-bottom: ${ ({ theme }) => theme.spacing.small };
-  text-align: center;
   transition: opacity 1.2s cubic-bezier(.4, 0, .2, 1);
-  margin-left: -14px;
-  margin-right: -14px;
   opacity: ${
     ({ shown }) => shown ? 0 : 1
   };

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 
-import { selectors } from 'state/interface'
+import { actions, selectors } from 'state/interface'
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { TitleBar } from 'ui/compounds'
 import { Button, CollapsibleMenu } from 'ui/elements'
@@ -35,9 +35,8 @@ export default connect(
     stillHeight: selectors.stillHeight
   }),
   mapDispatch({
-    showModal: () => ({
-      type: '@@MODAL/SHOW',
-      payload: { modal: 'CreateProject' }
+    showModal: () => actions.showModal({
+      modal: 'CreateProject'
     })
   })
 )(ProjectList)

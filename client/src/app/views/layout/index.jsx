@@ -77,8 +77,8 @@ export default connect(
 
     return {
       email: session && session.account.email,
+      isBackground: selectors.hasShownModals(state),
       isLayoutClosed: selectors.isLayoutClosed(state),
-      isBackground: Object.values(state.modal).some(Boolean),
       menuWidth: selectors.menuWidth(state),
       sidebarMaximized: selectors.sidebarMaximized(state),
       stillHeight: selectors.stillHeight(state)
