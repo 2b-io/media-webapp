@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
-import { Link } from 'ui/elements'
+import { Container, Link } from 'ui/elements'
 
 const Project = ({ project, toProjectDetail }) => (
   <div>
@@ -19,7 +19,7 @@ const ProjectList = ({ projects, toProjectDetail }) => {
   }
 
   return (
-    <main>
+    <Container>
       {
         projects.map(
           project => (
@@ -30,7 +30,7 @@ const ProjectList = ({ projects, toProjectDetail }) => {
           )
         )
       }
-    </main>
+    </Container>
   )
 }
 

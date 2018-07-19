@@ -1,9 +1,11 @@
 import React from 'react'
 
+import { Container } from 'ui/elements'
+
 const Dashboard = () => (
-  <main>
+  <Container>
     <h1>Dashboard</h1>
-  </main>
+  </Container>
 )
 
 export default Dashboard
