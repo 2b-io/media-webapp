@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 
 import { mapDispatch } from 'services/redux-helpers'
+import { actions, selectors } from 'state/interface'
 import { Button } from 'ui/elements'
 import { CloseIcon } from 'ui/icons'
 import { stateful } from 'views/common/decorators'
@@ -118,12 +119,11 @@ export default ({
 
   return connect(
     state => ({
-      modal: state.modal[name]
+      modal: selectors.modal(state, name)
     }),
     mapDispatch({
-      hide: () => ({
-        type: '@@MODAL/HIDE',
-        payload: { modal: name }
+      hide: () => actions.hideModal({
+        modal: name
       })
     })
   )(Modal)

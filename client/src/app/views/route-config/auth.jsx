@@ -36,18 +36,14 @@ export default {
     partial: true,
     onEnter: ({ hash, slug }) => [
       actions.getPreset({ hash, slug }),
-      {
-        type: '@@MODAL/SHOW',
-        payload: { modal: 'Preset' }
-      }
+      actions.showModal({ modal: 'Preset' })
     ]
   },
   '/projects/:slug/invite': {
     partial: true,
-    onEnter: () => [ {
-      type: '@@MODAL/SHOW',
-      payload: { modal: 'InviteCollaborator' }
-    } ]
+    onEnter: () => [
+      actions.showModal({ modal: 'InviteCollaborator' })
+    ]
   },
   '/ui': {
     component: UI,
