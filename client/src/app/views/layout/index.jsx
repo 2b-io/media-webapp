@@ -19,8 +19,11 @@ class Layout extends Component {
       isBackground,
       isLayoutClosed,
       email,
+      maximizeSidebar,
+      minimizeSidebar,
       menuWidth,
       render,
+      sidebarMaximized,
       stillHeight,
       toProfile
     } = this.props
@@ -32,7 +35,12 @@ class Layout extends Component {
             shown={ isLayoutClosed }
             width={ menuWidth }
             email={ email }
-            toProfile={ toProfile }>
+            toProfile={ toProfile }
+            sidebarMaximized={ sidebarMaximized }
+            toggleSidebar={ sidebarMaximized ?
+              minimizeSidebar : maximizeSidebar
+            }
+          >
             { render.overlay(this.props) }
           </Overlay>
           <Wrapper
@@ -40,7 +48,8 @@ class Layout extends Component {
             menuWidth={ menuWidth }>
             <Still
               shown={ !isLayoutClosed }
-              onComponentDidMount={ this.updateStillHeight() }>
+              onComponentDidMount={ this.updateStillHeight() }
+            >
               { render.still(this.props) }
             </Still>
             <Content
@@ -73,10 +82,13 @@ export default connect(
       isLayoutClosed: selectors.isLayoutClosed(state),
       isBackground: Object.values(state.modal).some(Boolean),
       menuWidth: selectors.menuWidth(state),
+      sidebarMaximized: selectors.sidebarMaximized(state),
       stillHeight: selectors.stillHeight(state)
     }
   },
   mapDispatch({
+    maximizeSidebar: actions.maximizeSidebar,
+    minimizeSidebar: actions.minimizeSidebar,
     toProfile: () => actions.requestLocation('/@me'),
     updateStillHeight: actions.updateStillHeight
   })

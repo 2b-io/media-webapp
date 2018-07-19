@@ -46,7 +46,7 @@ const theme = {
   }),
   secondary: color({
     palette: 'cyan',
-    value: 9,
+    value: 8,
     autoGenerateVariants: true
   }),
 

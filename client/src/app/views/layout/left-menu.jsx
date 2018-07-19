@@ -9,6 +9,7 @@ import { Link } from 'ui/elements'
 import {
   BillingIcon,
   DashboardIcon,
+  MaximizeIcon,
   PaymentIcon,
   ProjectListIcon,
   SignOutIcon,
@@ -37,7 +38,7 @@ const MenuItem = styled.li`
   ${
     ({ separator, theme }) => separator &&
       css`
-        border-top: 1px dashed ${ theme.secondary.on.base };
+        border-top: 1px solid ${ theme.secondary.on.base };
       `
   }
 `
@@ -48,7 +49,7 @@ const LinkButton = styled(Link).attrs({
   width: 100%;
   padding: ${ ({ theme }) => `${ theme.spacing.tiny } 0` };
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   flex-wrap: nowrap;
   justify-content: flex-start;
   align-items: center;
@@ -76,9 +77,8 @@ const MenuIcon = styled.div`
 const MenuTitle = styled.div`
   flex-grow: 1;
   font-size: 1.15em;
-  padding-left: ${ ({ theme }) => theme.spacing.small };
+  padding-right: ${ ({ theme }) => theme.spacing.small };
   white-space: nowrap;
-  text-overflow: ellipsis;
   overflow: hidden;
 `
 
