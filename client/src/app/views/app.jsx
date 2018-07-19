@@ -19,18 +19,26 @@ injectGlobal`
 
   ::-webkit-scrollbar-track {
     background: ${ defaultTheme.secondary.limpid.base };
+
+    &:hover {
+      background: ${ defaultTheme.secondary.light.base };
+    }
+
+    &:active {
+      background: ${ defaultTheme.secondary.dark.base };
+    }
   }
 
   ::-webkit-scrollbar-thumb {
     background: ${ defaultTheme.primary.base };
-  }
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: ${ defaultTheme.primary.light.base };
-  }
+    &:hover {
+      background: ${ defaultTheme.primary.light.base };
+    }
 
-  ::-webkit-scrollbar-thumb:active {
-    background: ${ defaultTheme.primary.dark.base };
+    &:active {
+      background: ${ defaultTheme.primary.dark.base };
+    }
   }
 `
 

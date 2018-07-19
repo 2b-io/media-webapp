@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 
 const Container = styled.div`
-  padding: ${ ({ theme }) => theme.spacing.normal };
+  padding: ${ ({ theme }) => theme.spacing.medium };
   ${
     ({ center }) => center && css`
       margin-left: auto;
@@ -19,7 +19,7 @@ const Container = styled.div`
 
       return 'none'
     }
-  }
+  };
 `
 
 export default Container
