@@ -1,6 +1,10 @@
 import React from 'react'
+import styled from 'styled-components'
 import { Field } from 'redux-form'
 
+const Message = styled.div`
+  padding: 10px;
+`
 export default WrappedComponent => {
   const Input = ({ input, meta: { error, valid, touched }, ...props }) => (
     <div>
@@ -8,10 +12,10 @@ export default WrappedComponent => {
         { ...props }
         { ...input }
         valid={ valid && touched }
-        error={ error && touched }
+        invalid={ error && touched }
       />
       { error && touched &&
-        <p>{ error }</p>
+        <Message>{ error }</Message>
       }
     </div>
   )
