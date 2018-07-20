@@ -13,6 +13,7 @@ const InviteForm = ({ handleSubmit, searchAccount }) => (
         placeholder="Email"
         onChange={ e => { searchAccount(e.target.value) } }
         name="email"
+        isValid={true}
       />
     </Form.Line>
   </Form>

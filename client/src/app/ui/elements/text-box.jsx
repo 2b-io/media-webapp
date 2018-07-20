@@ -61,7 +61,7 @@ const TextArea = styled.textarea.attrs({
 
 const TextBox = ({ valid, invalid, multiline, ...props }) => (
   <Container valid={ valid } invalid={ invalid } >
-    { multiline ? <TextArea rows={ multiline } { ...props } /> : <Input { ...props }/> }
+    { multiline ? <TextArea rows={ multiline } { ...props } /> : <Input { ...props } /> }
     <Icon invalid={ invalid }>
       { invalid && <ErrorIcon size="medium" /> }
       { valid && <SuccessIcon size="medium" /> }

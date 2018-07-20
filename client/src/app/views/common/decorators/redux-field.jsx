@@ -6,13 +6,13 @@ const Message = styled.div`
   padding: 10px;
 `
 export default WrappedComponent => {
-  const Input = ({ input, meta: { error, valid, touched }, ...props }) => (
+  const Input = ({ input, meta: { error, valid, touched }, isValid, ...props }) => (
     <div>
       <WrappedComponent
         { ...props }
         { ...input }
-        valid={ valid && touched }
-        invalid={ error && touched }
+        valid={ valid && touched && isValid }
+        invalid={ error && touched && isValid }
       />
       { error && touched &&
         <Message>{ error }</Message>
