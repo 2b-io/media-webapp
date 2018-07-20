@@ -1,23 +1,23 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { SuccessIcon, ErrorIcon } from 'ui/icons'
 
 const Container = styled.div`
   position: relative;
   border-bottom: 2px solid ${
-    ({ disabled, readOnly, theme, error, valid }) => (disabled || readOnly) ?
+    ({ disabled, readOnly, theme, invalid, valid }) => (disabled || readOnly) ?
       theme.secondary.base : (
-        error ? theme.error.base : (
+        invalid ? theme.error.base : (
           valid ? theme.success.base : theme.primary.base
         )
       )
   };
   &:hover, &:focus {
     border-bottom: 2px solid ${
-      ({ disabled, readOnly, theme, error, valid }) => (disabled || readOnly) ?
+      ({ disabled, readOnly, theme, invalid, valid }) => (disabled || readOnly) ?
         theme.secondary.light.base : (
-          error ? theme.error.light.base : (
+          invalid ? theme.error.light.base : (
             valid ? theme.success.light.base : theme.primary.light.base
           )
         )
@@ -30,12 +30,10 @@ const Icon = styled.div`
   top: 50%;
   right: ${ ({ theme }) => theme.spacing.small };
   color: ${
-    ({ theme, error }) => error ? theme.error.base : theme.success.base
+    ({ theme, invalid }) => invalid ? theme.error.base : theme.success.base
   }
 `
-const Input = styled.input.attrs({
-  type: ({ type = 'text' }) => type,
-})`
+const commonStyle = css`
   appearance: none;
   background-color: inherit;
   color: inherit;
@@ -43,16 +41,30 @@ const Input = styled.input.attrs({
   border-radius: 0;
   outline: none;
   padding: ${ ({ theme }) => theme.spacing.small };
-  padding-right: ${ ({ valid, error }) => valid || error && '44px' };
+  padding-right: ${ ({ valid, invalid }) => valid || invalid && '44px' };
   width: 100%;
   transition: border-bottom .3s linear;
 `
-const TextBox = (props) => (
-  <Container { ...props } >
-    <Input { ...props } />
-    <Icon error={ props.error }>
-      { props.error && <ErrorIcon size="medium" /> }
-      { props.valid && <SuccessIcon size="medium" /> }
+
+const Input = styled.input.attrs({
+  type: ({ type = 'text' }) => type
+})`
+  ${ commonStyle }
+`
+const TextArea = styled.textarea.attrs({
+  type: ({ type = 'text' }) => type,
+  rows: ({ rows = 5 }) => rows
+})`
+  ${ commonStyle }
+  resize: none;
+`
+
+const TextBox = ({ valid, invalid, multiline, ...props }) => (
+  <Container valid={ valid } invalid={ invalid } >
+    { multiline ? <TextArea rows={ multiline } { ...props } /> : <Input { ...props } /> }
+    <Icon invalid={ invalid }>
+      { invalid && <ErrorIcon size="medium" /> }
+      { valid && <SuccessIcon size="medium" /> }
     </Icon>
   </Container>
 )

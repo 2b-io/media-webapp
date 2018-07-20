@@ -12,6 +12,7 @@ const RegisterForm = ({ handleSubmit, idle }) => (
         name="email"
         placeholder="your email"
         disabled={ !idle }
+        needValidation={ true }
       />
     </Form.Line>
     <Form.Line last>

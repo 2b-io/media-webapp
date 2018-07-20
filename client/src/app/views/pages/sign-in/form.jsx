@@ -12,6 +12,7 @@ const SignInForm = ({ handleSubmit, idle }) => (
         name="email"
         placeholder="your email"
         disabled={ !idle }
+        needValidation={ true }
       />
     </Form.Line>
     <Form.Line>
