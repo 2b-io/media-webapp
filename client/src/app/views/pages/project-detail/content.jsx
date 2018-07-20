@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 
 import { reduxForm } from 'redux-form'
-import styled from 'styled-components'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
+import { Layout } from 'ui/compounds'
 import { Button, Container, ErrorBox } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 import { stateful } from 'views/common/decorators'
@@ -22,10 +22,6 @@ const ProjectForm = reduxForm({
   enableReinitialize: true
 })(_ProjectForm)
 
-const Section = styled.section`
-  padding-bottom: ${ ({ theme }) => theme.spacing.big };
-`
-
 const Project = ({
   project,
   toInviteModal,
@@ -35,43 +31,52 @@ const Project = ({
   updateProject,
   ui: { error, idle }
 }) => (
-  <Container>
-    <Section>
-      { error &&
-        <ErrorBox>An error happens when updating the project.</ErrorBox>
-      }
-      <ProjectForm
-        idle={ idle }
-        initialValues={ project }
-        onSubmit={ updateProject }
-      />
-    </Section>
-    <Section>
-      <Button plain onClick={ () => toPresetDetail(project.slug, 'new') }>
-        <AddIcon size="medium" />
-      </Button>
-      {
-        project &&
-          <PresetList
-            presets={ project.presets }
-            onPresetSelected={ hash => {
-              toPresetDetail(project.slug, hash)
-            } }
+  <Fragment>
+    <Layout>
+      <Layout.Fluid size="small">
+        <Container>
+          <h2>Project Info</h2>
+          { error &&
+            <ErrorBox>An error happens when updating the project.</ErrorBox>
+          }
+          <ProjectForm
+            idle={ idle }
+            initialValues={ project }
+            onSubmit={ updateProject }
           />
-      }
-    </Section>
-    <Section>
-      <Button plain onClick={ () => toInviteModal(project.slug) }>
-        <AddIcon size="medium" />
-      </Button>
-      {
-        project &&
-          <CollaboratorList
-            collaborators={ project.collaborators }
-            toProfile={ toProfile }
-          />
-      }
-    </Section>
+        </Container>
+      </Layout.Fluid>
+      <Layout.Fixed size="small">
+        <Container>
+          <h2>Presets</h2>
+          <Button plain onClick={ () => toPresetDetail(project.slug, 'new') }>
+            <AddIcon size="medium" />
+          </Button>
+          {
+            project &&
+              <PresetList
+                presets={ project.presets }
+                onPresetSelected={ hash => {
+                  toPresetDetail(project.slug, hash)
+                } }
+              />
+          }
+        </Container>
+        <Container>
+          <h2>Collaborators</h2>
+          <Button plain onClick={ () => toInviteModal(project.slug) }>
+            <AddIcon size="medium" />
+          </Button>
+          {
+            project &&
+              <CollaboratorList
+                collaborators={ project.collaborators }
+                toProfile={ toProfile }
+              />
+          }
+        </Container>
+      </Layout.Fixed>
+    </Layout>
     <Route path="/projects/:slug/presets/:hash">
       <PresetModal
         width="wide"
@@ -84,7 +89,7 @@ const Project = ({
         onHide={ () => toProjectDetail(project.slug) }
       />
     </Route>
-  </Container>
+  </Fragment>
 )
 export default withParams(
   stateful({
