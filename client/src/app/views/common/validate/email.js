@@ -1,13 +1,5 @@
+const email = value =>
+  value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ?
+    'Invalid email address' : undefined
 
-const validateEmail = values => {
-
-  const errors = {}
-  if (!values.email) {
-    errors.email = 'Required'
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = 'Invalid email address'
-  }
-  return errors
-}
-
-export default validateEmail
+export default email

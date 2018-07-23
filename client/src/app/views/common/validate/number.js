@@ -1,12 +1,4 @@
 
-const validateNumber = values => {
-  const errors = {}
-  if (!values.number) {
-    errors.number = 'Required'
-  } else if (!/^[0-9]+$/.test(values.number)) {
-    errors.number = 'Invalid number'
-  }
-  return errors
-}
+const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined
 
-export default validateNumber
+export default number
