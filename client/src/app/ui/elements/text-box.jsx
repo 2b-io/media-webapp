@@ -41,7 +41,7 @@ const commonStyle = css`
   border-radius: 0;
   outline: none;
   padding: ${ ({ theme }) => theme.spacing.small };
-  padding-right: ${ ({ valid, invalid }) => valid || invalid && '44px' };
+  padding-right: ${ ({ valid, invalid }) => valid && '44px' || invalid && '44px' };
   width: 100%;
   transition: border-bottom .3s linear;
 `
@@ -61,7 +61,18 @@ const TextArea = styled.textarea.attrs({
 
 const TextBox = ({ valid, invalid, multiline, ...props }) => (
   <Container valid={ valid } invalid={ invalid } >
-    { multiline ? <TextArea rows={ multiline } { ...props } /> : <Input { ...props } /> }
+    { multiline ?
+      <TextArea
+        valid={ valid }
+        invalid={ invalid }
+        rows={ multiline }
+        { ...props } />
+      :
+      <Input
+        valid={ valid }
+        invalid={ invalid }
+        { ...props } />
+    }
     <Icon invalid={ invalid }>
       { invalid && <ErrorIcon size="medium" /> }
       { valid && <SuccessIcon size="medium" /> }
