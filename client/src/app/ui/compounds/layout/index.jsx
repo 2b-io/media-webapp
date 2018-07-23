@@ -66,7 +66,7 @@ class Layout extends Component {
         {
           React.Children.map(
             this.props.children,
-            child => React.cloneElement(child, {
+            child => child && React.cloneElement(child, {
               innerRef: e => this.addLayoutItem(e),
               layout: tops.length === 1 ? 'horizontal' : 'vertical'
             })
