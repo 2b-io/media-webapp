@@ -13,24 +13,25 @@ const ErrorMessage = styled.div`
   background: ${ ({ theme }) => theme.error.base };
   color: ${ ({ theme }) => theme.error.on.base };
 `
+
 export default WrappedComponent => {
-  const Input = ({ input, meta: { error, valid, touched }, needValidation, ...props }) => (
+  const Input = ({ input, meta: { error, valid, touched }, hasValidator, ...props }) => (
     <Fragment>
       <WrappedComponent
         { ...props }
         { ...input }
-        valid={ valid && touched && needValidation }
-        invalid={ error && touched && needValidation }
+        valid={ hasValidator && valid && touched }
+        invalid={ error && touched }
       />
       { error && touched &&
         <ErrorMessage>{ error }</ErrorMessage>
       }
     </Fragment>
   )
-
   const ReduxField = props => (
     <Field
       component={ Input }
+      hasValidator={ props.validate }
       { ...props }
     />
   )

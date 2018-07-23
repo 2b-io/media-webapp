@@ -1,2 +1,5 @@
+export { default as validateRequired } from './required'
 export { default as validateEmail } from './email'
 export { default as validateNumber } from './number'
+export { default as validateConfirmPassword } from './confirmPassword'
+export { default as validateMinvalue } from './minvalue'
