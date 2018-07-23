@@ -1,44 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
-import styled from 'styled-components'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
+import { Layout } from 'ui/compounds'
+import { Container } from 'ui/elements'
 import { ChangePassword } from 'views/common/form'
 import { withParams } from 'views/router'
 
 import AccountInfo from './account-info'
 
-const Layout = styled.div`
-  &{
-    display: grid;
-    grid-template-columns: auto 30%;
-    padding-top: 10px;
-  }
-  @media (max-width: 750px) {
-    grid-template-columns: auto;
-  }
-`
-const Panel = styled.div`
-  &{
-    margin-bottom: 20px;
-    margin-left: 10px;
-  }
-`
-const PanelContent = styled.div`
-  &{
-    padding: 10px
-  }
-`
-const PanelHeader = styled.div`
-  &{
-    background-color: #e6e6e6;
-    border-color: #ddd;
-    padding: 10px 15px;
-    border-bottom: 1px solid transparent;
-  }
-`
 const PasswordForm = reduxForm({
   form: 'changePassword',
   enableReinitialize: true
@@ -47,27 +19,20 @@ const PasswordForm = reduxForm({
 const Profile = ({ account, changePassword, session }) => (
   <main>
     <Layout>
-      <Panel>
-        <PanelHeader>
-          About me
-        </PanelHeader>
-        <PanelContent>
+      <Layout.Fluid size="small">
+        <Container>
           <AccountInfo account={ account } />
-        </PanelContent>
-      </Panel>
-      {
-        session && account && session.account._id === account._id &&
-          <Panel>
-            <PanelHeader>
-              Edit profile
-            </PanelHeader>
-            <PanelContent>
-              <PasswordForm
-                header={ 'Change password' }
-                onSubmit={ changePassword }
-              />
-            </PanelContent>
-          </Panel>
+        </Container>
+      </Layout.Fluid>
+      { session && account && session.account._id === account._id &&
+        <Layout.Fixed size="small">
+          <Container>
+            <PasswordForm
+              header={ 'Change password' }
+              onSubmit={ changePassword }
+            />
+          </Container>
+        </Layout.Fixed>
       }
     </Layout>
   </main>
