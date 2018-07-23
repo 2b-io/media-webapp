@@ -33,6 +33,8 @@ const Icon = styled.div`
 const Container = styled.div`
   position: relative;
   transition: border .3s linear;
+  background: ${ ({ theme }) => theme.surface.base };
+  color: ${ ({ theme }) => theme.surface.on.base };
   ${
     ({ disabled, readOnly, theme, invalid, valid }) => (disabled || readOnly) ?
       border(theme.secondary) : (
@@ -66,6 +68,10 @@ const commonStyle = css`
   cursor: ${
     ({ disabled, readOnly }) => (disabled || readOnly) ? 'not-allowed' : 'inherit'
   };
+
+  &::placeholder {
+    color: ${ ({ theme }) => theme.secondary.limpid.base };
+  }
 `
 
 const Input = styled.input.attrs({
