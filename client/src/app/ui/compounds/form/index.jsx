@@ -14,13 +14,15 @@ const Form = ({ handleSubmit, children }) => (
 )
 
 Form.Label = styled.div`
-  font-size: 0.8em;
+  font-size: 0.9em;
   position: absolute;
   z-index: 1;
   top: 0;
   left: 6px;
   background: white;
-  padding: ${ ({ theme }) => theme.spacing.tiny };
+  line-height: ${ ({ theme }) => theme.spacing.medium };
+  height: ${ ({ theme }) => theme.spacing.medium };
+  padding: ${ ({ theme }) => `0 ${ theme.spacing.tiny }` };
 `
 
 Form.Align = Align
