@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { Button } from 'ui/elements'
 import { Form } from 'ui/compounds'
-import { TextBox  } from 'views/common/form'
+import { Button } from 'ui/elements'
+import { TextBox } from 'views/common/form'
 
 const PresetForm = ({
   handleSubmit,
@@ -15,6 +15,7 @@ const PresetForm = ({
     <Form.Line>
       { isEditing &&
         <TextBox
+          label="Hash"
           name="hash"
           readOnly={ true }
         />
@@ -22,15 +23,17 @@ const PresetForm = ({
     </Form.Line>
     <Form.Line>
       <TextBox
+        label="Preset Name"
         name="name"
-        placeholder="Preset name"
+        placeholder="Default quality"
         disabled={ !idle }
       />
     </Form.Line>
     <Form.Line>
       <TextBox
+        label="Image Quality"
         name="values.quality"
-        placeholder="Quality"
+        placeholder="75"
         disabled={ !idle }
       />
     </Form.Line>

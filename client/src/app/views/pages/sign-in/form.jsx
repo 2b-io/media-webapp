@@ -9,6 +9,7 @@ const SignInForm = ({ handleSubmit, idle }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Line>
       <TextBox
+        label="Email"
         type="email"
         name="email"
         placeholder="your email"
@@ -18,6 +19,7 @@ const SignInForm = ({ handleSubmit, idle }) => (
     </Form.Line>
     <Form.Line>
       <TextBox
+        label="Password"
         type="password"
         name="password"
         placeholder="your password"

@@ -38,6 +38,16 @@ const color = makeColor({
 })
 
 const theme = {
+  // base
+  black: color({
+    plain: { base: black },
+    autoGenerateVariants: true
+  }),
+  white: color({
+    plain: { base: white },
+    autoGenerateVariants: true
+  }),
+
   // brand colors
   primary: color({
     palette: 'blue',
@@ -56,7 +66,8 @@ const theme = {
     autoGenerateVariants: true
   }),
   surface: color({
-    plain: { base: white },
+    palette: 'blue',
+    value: 1,
     autoGenerateVariants: true
   }),
 

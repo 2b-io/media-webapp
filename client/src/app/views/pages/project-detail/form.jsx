@@ -2,12 +2,13 @@ import React from 'react'
 
 import { Form } from 'ui/compounds'
 import { Button } from 'ui/elements'
-import { TextArea, TextBox } from 'views/common/form'
+import { TextBox } from 'views/common/form'
 
 const ProjectForm = ({ handleSubmit, idle }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Line>
       <TextBox
+        label="Project Name"
         type="text"
         name="name"
         placeholder="Project Name"
@@ -16,6 +17,7 @@ const ProjectForm = ({ handleSubmit, idle }) => (
     </Form.Line>
     <Form.Line>
       <TextBox
+        label="Slug"
         type="text"
         name="slug"
         readOnly
@@ -23,17 +25,20 @@ const ProjectForm = ({ handleSubmit, idle }) => (
     </Form.Line>
     <Form.Line>
       <TextBox
+        label="Pretty Origin"
         type="text"
         name="prettyOrigin"
-        placeholder="Pretty Origins"
+        placeholder="https://yourproject.com/assets"
         disabled={ !idle }
       />
     </Form.Line>
     <Form.Line>
-      <TextArea
+      <TextBox
+        label="Allowed Origins"
+        multiline={ true }
         type="text"
         name="origins"
-        placeholder="Origins"
+        placeholder="*.yourproject.com"
         disabled={ !idle }
       />
     </Form.Line>

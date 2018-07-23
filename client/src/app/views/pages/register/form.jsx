@@ -9,6 +9,7 @@ const RegisterForm = ({ handleSubmit, idle }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Line>
       <TextBox
+        label="Email"
         type="email"
         name="email"
         placeholder="your email"

@@ -1,24 +1,23 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { Fragment } from 'react'
 import { Field } from 'redux-form'
 
-const Message = styled.div`
-  padding: 10px;
-`
 export default WrappedComponent => {
-  const Input = ({ input, meta: { error, valid, touched }, hasValidator, ...props }) => (
-    <div>
+  const Input = ({
+    hasValidator,
+    input,
+    meta: { error, valid, touched },
+    ...props
+  }) => (
+    <Fragment>
       <WrappedComponent
         { ...props }
         { ...input }
-        valid={ hasValidator && valid && touched }
-        invalid={ error && touched }
+        valid={ hasValidator && touched && valid }
+        invalid={ touched && error }
       />
-      { error && touched &&
-        <Message>{ error }</Message>
-      }
-    </div>
+    </Fragment>
   )
+
   const ReduxField = props => (
     <Field
       component={ Input }
