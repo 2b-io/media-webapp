@@ -3,6 +3,7 @@ import React from 'react'
 import { Button } from 'ui/elements'
 import { Form } from 'ui/compounds'
 import { TextBox } from 'views/common/form'
+import { validateEmail } from 'views/common/validate'
 
 const forgotPasswordForm = ({ handleSubmit }) => (
   <Form handleSubmit={ handleSubmit }>
@@ -13,6 +14,7 @@ const forgotPasswordForm = ({ handleSubmit }) => (
         type="email"
         name="email"
         placeholder="Your email"
+        validate={ validateEmail }
       />
     </Form.Line>
     <Form.Line last>
