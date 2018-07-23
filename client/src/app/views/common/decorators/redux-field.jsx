@@ -12,9 +12,9 @@ export default WrappedComponent => {
         { ...props }
         { ...input }
         valid={ hasValidator && valid && touched }
-        invalid={ hasValidator && error && touched }
+        invalid={ error && touched }
       />
-      { hasValidator && error && touched &&
+      { error && touched &&
         <Message>{ error }</Message>
       }
     </div>
@@ -22,7 +22,7 @@ export default WrappedComponent => {
   const ReduxField = props => (
     <Field
       component={ Input }
-      hasValidator={ !!props.validate }
+      hasValidator={ props.validate }
       { ...props }
     />
   )
