@@ -42,15 +42,13 @@ const Color = styled.div`
 `
 
 const Variant = styled.div.attrs({
-  children: ({ hex }) => hex
+  children: ({ hex }) => hex,
+  style: ({ hex }) => ({
+    background: hex,
+    color: color(hex).isDark() ? white : black
+  })
 })`
   padding: ${ ({ theme }) => theme.spacing.tiny };;
-  background: ${
-    ({ hex }) => hex
-  };
-  color: ${
-    ({ hex }) => color(hex).isDark() ? white : black
-  };
   height: 20px;
   text-align: center;
   display: flex;

@@ -3,6 +3,16 @@ import styled, { css } from 'styled-components'
 
 import { SuccessIcon, ErrorIcon } from 'ui/icons'
 
+const Icon = styled.div`
+  position: absolute;
+  transform: translate3d(0, -50%, 0);
+  top: 50%;
+  right: ${ ({ theme }) => theme.spacing.small };
+  color: ${
+    ({ theme, invalid }) => invalid ? theme.error.base : theme.success.base
+  }
+`
+
 const Container = styled.div`
   position: relative;
   border-bottom: 2px solid ${
@@ -22,17 +32,15 @@ const Container = styled.div`
           )
         )
     };
+
+    ${ Icon } {
+      color: ${
+        ({ theme, invalid }) => invalid ? theme.error.light.base : theme.success.light.base
+      }
+    }
   }
 `
-const Icon = styled.div`
-  position: absolute;
-  transform: translate3d(0, -50%, 0);
-  top: 50%;
-  right: ${ ({ theme }) => theme.spacing.small };
-  color: ${
-    ({ theme, invalid }) => invalid ? theme.error.base : theme.success.base
-  }
-`
+
 const commonStyle = css`
   appearance: none;
   background-color: inherit;
@@ -41,7 +49,7 @@ const commonStyle = css`
   border-radius: 0;
   outline: none;
   padding: ${ ({ theme }) => theme.spacing.small };
-  padding-right: ${ ({ valid, invalid }) => valid && '44px' || invalid && '44px' };
+  padding-right: ${ ({ valid, invalid }) => (valid || invalid) && '44px' };
   width: 100%;
   transition: border-bottom .3s linear;
 `
@@ -52,7 +60,6 @@ const Input = styled.input.attrs({
   ${ commonStyle }
 `
 const TextArea = styled.textarea.attrs({
-  type: ({ type = 'text' }) => type,
   rows: ({ rows = 5 }) => rows
 })`
   ${ commonStyle }
@@ -60,18 +67,18 @@ const TextArea = styled.textarea.attrs({
 `
 
 const TextBox = ({ valid, invalid, multiline, ...props }) => (
-  <Container valid={ valid } invalid={ invalid } >
+  <Container valid={ valid } invalid={ invalid } { ...props }>
     { multiline ?
       <TextArea
         valid={ valid }
         invalid={ invalid }
-        rows={ multiline }
-        { ...props } />
-      :
+        { ...props }
+      /> :
       <Input
         valid={ valid }
         invalid={ invalid }
-        { ...props } />
+        { ...props }
+      />
     }
     <Icon invalid={ invalid }>
       { invalid && <ErrorIcon size="medium" /> }
