@@ -9,7 +9,7 @@ import { Layout } from 'ui/compounds'
 import { Button, Container, ErrorBox } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 import { stateful } from 'views/common/decorators'
-import { Route, withParams } from 'views/router'
+import { Route, Switch, withParams } from 'views/router'
 
 import CollaboratorList from './collaborator-list'
 import _ProjectForm from './form'
@@ -77,15 +77,28 @@ const Project = ({
         </Container>
       </Layout.Fixed>
     </Layout>
-    <Route path="/projects/:slug/presets/:hash">
-      <PresetModal
-        width="wide"
-        hideOnClickOutside={ false }
-        onHide={ () => toProjectDetail(project.slug) }
-      />
-    </Route>
+    <Switch>
+      <Route path="/projects/:slug/presets/new">
+        <PresetModal
+          width="wide"
+          hideOnClickOutside={ false }
+          title="Create new preset"
+          onHide={ () => toProjectDetail(project.slug) }
+        />
+      </Route>
+      <Route path="/projects/:slug/presets/:hash">
+        <PresetModal
+          width="wide"
+          hideOnClickOutside={ false }
+          title="Edit preset"
+          onHide={ () => toProjectDetail(project.slug) }
+        />
+      </Route>
+    </Switch>
     <Route path="/projects/:slug/invite">
-      <InviteModal width="wide"
+      <InviteModal
+        width="wide"
+        title="Invite collaborators"
         onHide={ () => toProjectDetail(project.slug) }
       />
     </Route>

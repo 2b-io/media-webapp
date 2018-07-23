@@ -40,9 +40,26 @@ const Wrapper = styled.div`
 
 const Header = styled.div`
   display: flex;
-  justify-content: flex-end;
-  align-items: flex-start;
-  padding: ${ ({ theme }) => theme.spacing.tiny };
+  align-items: center;
+  padding: ${
+    ({ theme }) => `
+      ${ theme.spacing.tiny }
+      ${ theme.spacing.medium }
+    `
+  };
+  background: ${ ({ theme }) => theme.primary.base };
+  color: ${ ({ theme }) => theme.primary.on.base };
+`
+
+const CloseButton = styled.div`
+  flex-grow: 0;
+  flex-shrink: 0;
+`
+
+const ModalTitle = styled.h2`
+  flex-grow: 1;
+  line-height: 2.2em;
+  text-transform: uppercase;
 `
 
 export default ({
@@ -74,9 +91,10 @@ export default ({
 
     render() {
       const {
-        modal,
         hideOnClickOutside,
+        modal,
         showCloseButton,
+        title,
         width
       } = this.props
 
@@ -89,12 +107,13 @@ export default ({
           <Overlay onClick={ hideOnClickOutside ? this.hide() : null }>
             <Wrapper onClick={ e => e.stopPropagation() } width={ width }>
               <Header>
-                {
-                  showCloseButton && (
+                <ModalTitle>{ title }</ModalTitle>
+                { showCloseButton &&
+                  <CloseButton>
                     <Button plain onClick={ this.hide() }>
                       <CloseIcon size="medium" />
                     </Button>
-                  )
+                  </CloseButton>
                 }
               </Header>
               <ModalContent modal={ modal } { ...this.props } />
