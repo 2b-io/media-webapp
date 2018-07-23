@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { Link } from 'ui/elements'
+import ProjectList from '../project-list/content'
 
 const Wrapper = styled.section`
   display: flex;
@@ -22,7 +22,7 @@ const BoxItem = styled.div`
   padding-bottom: ${ ({ theme }) => `${ theme.spacing.medium }` }
 `
 
-const BoxTitle = styled.div`
+const Title = styled.div`
   padding: ${ ({ theme }) => `${ theme.spacing.small }` }
   text-transform: capitalize
   font-weight: bold
@@ -41,7 +41,8 @@ const Project = () => (
     dashboardList.map((title) => title &&
       <Box>
         <BoxItem>
-          <BoxTitle>{title}</BoxTitle>
+          <Title>{title}</Title>
+          <ProjectList />
         </BoxItem>
       </Box>
     )

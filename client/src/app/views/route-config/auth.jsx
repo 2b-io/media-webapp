@@ -9,7 +9,10 @@ import { actions } from 'state/interface'
 export default {
   '/': {
     component: Dashboard,
-    exact: true
+    exact: true,
+    onEnter: () => [
+      actions.fetchProjects()
+    ]
   },
   '/@:id': {
     component: Profile,
