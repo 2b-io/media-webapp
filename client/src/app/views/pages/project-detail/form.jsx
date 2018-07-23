@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Form } from 'ui/compounds'
 import { Button } from 'ui/elements'
-import { TextArea, TextBox } from 'views/common/form'
+import { TextBox } from 'views/common/form'
 
 const ProjectForm = ({ handleSubmit, idle }) => (
   <Form handleSubmit={ handleSubmit }>
@@ -30,7 +30,8 @@ const ProjectForm = ({ handleSubmit, idle }) => (
       />
     </Form.Line>
     <Form.Line>
-      <TextArea
+      <TextBox
+        multiline={ true }
         type="text"
         name="origins"
         placeholder="Origins"

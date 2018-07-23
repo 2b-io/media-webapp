@@ -56,7 +56,8 @@ const theme = {
     autoGenerateVariants: true
   }),
   surface: color({
-    plain: { base: white },
+    palette: 'blue',
+    value: 1,
     autoGenerateVariants: true
   }),
 

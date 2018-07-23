@@ -2,8 +2,16 @@ import React from 'react'
 import styled from 'styled-components'
 import { Field } from 'redux-form'
 
-const Message = styled.div`
-  padding: 10px;
+const ErrorMessage = styled.div`
+  padding: ${
+    ({ theme: { spacing } }) => `
+      ${ spacing.tiny }
+      ${ spacing.small }
+    `
+  };
+  border: 1px solid ${ ({ theme }) => theme.error.base };
+  background: ${ ({ theme }) => theme.error.base };
+  color: ${ ({ theme }) => theme.error.on.base };
 `
 export default WrappedComponent => {
   const Input = ({ input, meta: { error, valid, touched }, needValidation, ...props }) => (
@@ -15,7 +23,7 @@ export default WrappedComponent => {
         invalid={ error && touched && needValidation }
       />
       { error && touched &&
-        <Message>{ error }</Message>
+        <ErrorMessage>{ error }</ErrorMessage>
       }
     </div>
   )
