@@ -7,16 +7,16 @@ import { TextBox  } from 'views/common/form'
 const projectForm = ({ handleSubmit, idle }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Line>
-      <Form.Label>Project Name</Form.Label>
       <TextBox
+        label="Project Name"
         name="name"
         placeholder="My Awesome Project"
         disabled={ !idle }
       />
     </Form.Line>
     <Form.Line>
-      <Form.Label>Slug</Form.Label>
       <TextBox
+        label="Slug"
         name="slug"
         placeholder="my-awesome-project"
         disabled={ !idle }

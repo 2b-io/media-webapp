@@ -8,8 +8,8 @@ import { validateEmail } from 'views/common/validate'
 const RegisterForm = ({ handleSubmit, idle }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Line>
-      <Form.Label>Email</Form.Label>
       <TextBox
+        label="Email"
         type="email"
         name="email"
         placeholder="your email"

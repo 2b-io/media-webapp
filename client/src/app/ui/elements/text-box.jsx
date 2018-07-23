@@ -23,7 +23,7 @@ const iconColor = (selector, color) => css`
   }
 `
 
-const Icon = styled.div`
+const TrailingIcon = styled.div`
   position: absolute;
   transform: translate3d(0, -50%, 0);
   top: 50%;
@@ -49,8 +49,8 @@ const Container = styled.div`
 
   ${
     ({ theme, invalid }) => invalid ?
-      iconColor(Icon, theme.error) :
-      iconColor(Icon, theme.success)
+      iconColor(TrailingIcon, theme.error) :
+      iconColor(TrailingIcon, theme.success)
   }
 `
 
@@ -86,25 +86,75 @@ const TextArea = styled.textarea.attrs({
   resize: none;
 `
 
-const TextBox = ({ valid, invalid, multiline, ...props }) => (
-  <Container valid={ valid } invalid={ invalid } { ...props }>
-    { multiline ?
-      <TextArea
-        valid={ valid }
-        invalid={ invalid }
-        { ...props }
-      /> :
-      <Input
-        valid={ valid }
-        invalid={ invalid }
-        { ...props }
-      />
+const Label = styled.label`
+  font-size: 0.9em;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 6px;
+  background: white;
+  line-height: ${ ({ theme }) => theme.spacing.medium };
+  height: ${ ({ theme }) => theme.spacing.medium };
+  padding: ${ ({ theme }) => `0 ${ theme.spacing.tiny }` };
+`
+
+const Wrapper = styled.div`
+  position: relative;
+  padding-top: ${
+    ({ theme }) => theme.spacing.small
+  };
+  padding-bottom: ${
+    ({ theme }) => theme.spacing.medium
+  };
+`
+
+const ErrorMessage = styled.div`
+  padding: ${
+    ({ theme: { spacing } }) => `
+      ${ spacing.tiny }
+      ${ spacing.small }
+    `
+  };
+  border: 1px solid ${ ({ theme }) => theme.error.base };
+  background: ${ ({ theme }) => theme.error.base };
+  color: ${ ({ theme }) => theme.error.on.base };
+`
+
+const TextBox = ({
+  label,
+  multiline,
+  invalid,
+  valid,
+  ...props
+}) => (
+  <Wrapper>
+    <Container valid={ valid } invalid={ invalid } { ...props }>
+      { multiline ?
+        <TextArea
+          valid={ valid }
+          invalid={ invalid }
+          { ...props }
+        /> :
+        <Input
+          valid={ valid }
+          invalid={ invalid }
+          { ...props }
+        />
+      }
+      { (valid || invalid) &&
+        <TrailingIcon invalid={ invalid }>
+          { invalid && <ErrorIcon size="medium" /> }
+          { valid && <SuccessIcon size="medium" /> }
+        </TrailingIcon>
+      }
+    </Container>
+    { invalid &&
+      <ErrorMessage>{ invalid }</ErrorMessage>
     }
-    <Icon invalid={ invalid }>
-      { invalid && <ErrorIcon size="medium" /> }
-      { valid && <SuccessIcon size="medium" /> }
-    </Icon>
-  </Container>
+    { label &&
+      <Label>{ label }</Label>
+    }
+  </Wrapper>
 )
 
 export default TextBox
