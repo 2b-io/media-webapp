@@ -77,8 +77,8 @@ const theme = {
     autoGenerateVariants: true
   }),
   success: color({
-    palette: 'green',
-    value: 3,
+    palette: 'blue',
+    value: 7,
     autoGenerateVariants: true
   }),
   spacing: {

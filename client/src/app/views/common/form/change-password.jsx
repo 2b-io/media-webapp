@@ -5,17 +5,16 @@ import { Button } from 'ui/elements'
 import { TextBox } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
-const passwordForm = ({ handleSubmit, header, resetPassword, valid }) => (
+const ChangePasswordForm = ({ handleSubmit, resetPassword, valid }) => (
   <Form handleSubmit={ handleSubmit }>
-    <Form.Header>{ header }</Form.Header>
-    <Form.Description>Enter your new password below and click on the {'Change password'} button.</Form.Description>
-    { !resetPassword? <Form.Line>
-      <TextBox
-        type="password"
-        name="currentPassword"
-        placeholder="Current password"
-      />
-    </Form.Line> :''
+    { !resetPassword &&
+      <Form.Line>
+        <TextBox
+          type="password"
+          name="currentPassword"
+          placeholder="Current password"
+        />
+      </Form.Line>
     }
     <Form.Line>
       <TextBox
@@ -49,4 +48,4 @@ const passwordForm = ({ handleSubmit, header, resetPassword, valid }) => (
   </Form>
 )
 
-export default passwordForm
+export default ChangePasswordForm

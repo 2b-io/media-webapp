@@ -49,11 +49,9 @@ class Layout extends Component {
   }
 
   calculateUniqueTops() {
-    const baseTop = this.wrapper.getBoundingClientRect().top
-
     return this.layoutItems
       .map(
-        item => item.getBoundingClientRect().top - baseTop
+        item => item.getBoundingClientRect().top
       )
       .filter(
         (value, index, self) => self.indexOf(value) === index
@@ -61,10 +59,6 @@ class Layout extends Component {
   }
 
   renderItems() {
-    if (!this.wrapper) {
-      return null
-    }
-
     const tops = this.calculateUniqueTops()
 
     return (
@@ -72,7 +66,7 @@ class Layout extends Component {
         {
           React.Children.map(
             this.props.children,
-            child => React.cloneElement(child, {
+            child => child && React.cloneElement(child, {
               innerRef: e => this.addLayoutItem(e),
               layout: tops.length === 1 ? 'horizontal' : 'vertical'
             })
@@ -92,7 +86,7 @@ class Layout extends Component {
     }
 
     return (
-      <Wrapper innerRef={ e => this.wrapper = e }>
+      <Wrapper>
         <Dimension>
           { this.renderItems }
         </Dimension>
