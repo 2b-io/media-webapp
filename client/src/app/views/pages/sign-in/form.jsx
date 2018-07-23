@@ -7,6 +7,7 @@ import { TextBox  } from 'views/common/form'
 const SignInForm = ({ handleSubmit, idle }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Line>
+      <Form.Label>Email</Form.Label>
       <TextBox
         type="email"
         name="email"
@@ -16,6 +17,7 @@ const SignInForm = ({ handleSubmit, idle }) => (
       />
     </Form.Line>
     <Form.Line>
+      <Form.Label>Password</Form.Label>
       <TextBox
         type="password"
         name="password"

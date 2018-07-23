@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 import { Button } from 'ui/elements'
 import { Form } from 'ui/compounds'
@@ -13,24 +13,29 @@ const PresetForm = ({
 }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Line>
-      { isEditing &&
-        <TextBox
-          name="hash"
-          readOnly={ true }
-        />
+      { isEditing && (
+        <Fragment>
+          <Form.Label>Hash</Form.Label>
+          <TextBox
+            name="hash"
+            readOnly={ true }
+          />
+        </Fragment> )
       }
     </Form.Line>
     <Form.Line>
+      <Form.Label>Preset Name</Form.Label>
       <TextBox
         name="name"
-        placeholder="Preset name"
+        placeholder="Default quality"
         disabled={ !idle }
       />
     </Form.Line>
     <Form.Line>
+      <Form.Label>Image Quality</Form.Label>
       <TextBox
         name="values.quality"
-        placeholder="Quality"
+        placeholder="75"
         disabled={ !idle }
       />
     </Form.Line>

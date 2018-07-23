@@ -33,8 +33,8 @@ const Icon = styled.div`
 const Container = styled.div`
   position: relative;
   transition: border .3s linear;
-  background: ${ ({ theme }) => theme.surface.base };
-  color: ${ ({ theme }) => theme.surface.on.base };
+  background: ${ ({ theme }) => theme.white.base };
+  color: ${ ({ theme }) => theme.white.on.base };
   ${
     ({ disabled, readOnly, theme, invalid, valid }) => (disabled || readOnly) ?
       border(theme.secondary) : (

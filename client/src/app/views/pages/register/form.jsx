@@ -7,6 +7,7 @@ import { TextBox } from 'views/common/form'
 const RegisterForm = ({ handleSubmit, idle }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Line>
+      <Form.Label>Email</Form.Label>
       <TextBox
         type="email"
         name="email"

@@ -7,6 +7,7 @@ import { TextBox } from 'views/common/form'
 const ProjectForm = ({ handleSubmit, idle }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Line>
+      <Form.Label>Project Name</Form.Label>
       <TextBox
         type="text"
         name="name"
@@ -15,6 +16,7 @@ const ProjectForm = ({ handleSubmit, idle }) => (
       />
     </Form.Line>
     <Form.Line>
+      <Form.Label>Slug</Form.Label>
       <TextBox
         type="text"
         name="slug"
@@ -22,6 +24,7 @@ const ProjectForm = ({ handleSubmit, idle }) => (
       />
     </Form.Line>
     <Form.Line>
+      <Form.Label>Pretty Origin</Form.Label>
       <TextBox
         type="text"
         name="prettyOrigin"
@@ -30,6 +33,7 @@ const ProjectForm = ({ handleSubmit, idle }) => (
       />
     </Form.Line>
     <Form.Line>
+      <Form.Label>Allowed Origins</Form.Label>
       <TextBox
         multiline={ true }
         type="text"

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import styled from 'styled-components'
 import { Field } from 'redux-form'
 
@@ -15,7 +15,7 @@ const ErrorMessage = styled.div`
 `
 export default WrappedComponent => {
   const Input = ({ input, meta: { error, valid, touched }, needValidation, ...props }) => (
-    <div>
+    <Fragment>
       <WrappedComponent
         { ...props }
         { ...input }
@@ -25,7 +25,7 @@ export default WrappedComponent => {
       { error && touched &&
         <ErrorMessage>{ error }</ErrorMessage>
       }
-    </div>
+    </Fragment>
   )
 
   const ReduxField = props => (
