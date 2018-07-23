@@ -41,7 +41,7 @@ const commonStyle = css`
   border-radius: 0;
   outline: none;
   padding: ${ ({ theme }) => theme.spacing.small };
-  padding-right: ${ ({ valid, invalid }) => valid || invalid && '44px' };
+  padding-right: ${ ({ valid, invalid }) => valid && '44px' || invalid && '44px' };
   width: 100%;
   transition: border-bottom .3s linear;
 `
