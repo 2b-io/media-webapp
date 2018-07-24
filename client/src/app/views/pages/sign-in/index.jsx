@@ -8,12 +8,10 @@ import { Container, ErrorBox, Link, Paragraph } from 'ui/elements'
 import { stateful } from 'views/common/decorators'
 
 import _SignInForm from './form'
-import { validateEmail } from 'views/common/validate'
 
 const SignInForm = reduxForm({
   form: 'signIn',
   enableReinitialize: true,
-  validate: validateEmail
 })(_SignInForm)
 
 const SignIn = ({

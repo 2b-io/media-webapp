@@ -26,7 +26,10 @@ const ProjectList = ({ showModal, stillHeight }) => (
         </CollapsibleMenu>
       </TitleBar.Menu>
     </TitleBar>
-    <CreateProject width="wide" />
+    <CreateProject
+      width="wide"
+      title="Create New Project"
+    />
   </Fragment>
 )
 

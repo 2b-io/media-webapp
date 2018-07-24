@@ -9,12 +9,10 @@ import { ErrorBox, SuccessBox } from 'ui/elements'
 import { stateful } from 'views/common/decorators'
 
 import _RegisterForm from './form'
-import { validateEmail } from 'views/common/validate'
 
 const RegisterForm = reduxForm({
   form: 'register',
   enableReinitialized: true,
-  validate: validateEmail
 })(_RegisterForm)
 
 const Register = ({
