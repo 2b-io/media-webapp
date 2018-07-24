@@ -5,7 +5,7 @@ import { reduxForm } from 'redux-form'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
-import { Layout } from 'ui/compounds'
+import { Layout, Panel, TitleBar } from 'ui/compounds'
 import { Button, Container, ErrorBox } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 import { stateful } from 'views/common/decorators'
@@ -35,45 +35,81 @@ const Project = ({
     <Layout>
       <Layout.Fluid size="small">
         <Container>
-          <h2>Project Info</h2>
-          { error &&
-            <ErrorBox>An error happens when updating the project.</ErrorBox>
-          }
-          <ProjectForm
-            idle={ idle }
-            initialValues={ project }
-            onSubmit={ updateProject }
-          />
+          <Panel>
+            <Panel.Header>
+              <TitleBar>
+                <TitleBar.Title>
+                  <h2>Project Info</h2>
+                </TitleBar.Title>
+              </TitleBar>
+            </Panel.Header>
+            <Panel.Content>
+              <Container>
+                { error &&
+                  <ErrorBox>An error happens when updating the project.</ErrorBox>
+                }
+                <ProjectForm
+                  idle={ idle }
+                  initialValues={ project }
+                  onSubmit={ updateProject }
+                />
+              </Container>
+            </Panel.Content>
+          </Panel>
         </Container>
       </Layout.Fluid>
       <Layout.Fixed size="small">
         <Container>
-          <h2>Presets</h2>
-          <Button plain onClick={ () => toPresetDetail(project.slug, 'new') }>
-            <AddIcon size="medium" />
-          </Button>
-          {
-            project &&
-              <PresetList
-                presets={ project.presets }
-                onPresetSelected={ hash => {
-                  toPresetDetail(project.slug, hash)
-                } }
-              />
-          }
+          <Panel>
+            <Panel.Header>
+              <TitleBar>
+                <TitleBar.Title>
+                  <h2>Presets</h2>
+                </TitleBar.Title>
+
+                <TitleBar.Menu>
+                  <Button plain onClick={ () => toPresetDetail(project.slug, 'new') }>
+                    <AddIcon size="medium" />
+                  </Button>
+                </TitleBar.Menu>
+              </TitleBar>
+            </Panel.Header>
+            <Panel.Content>
+              { project &&
+                <PresetList
+                  presets={ project.presets }
+                  onPresetSelected={ hash => {
+                    toPresetDetail(project.slug, hash)
+                  } }
+                />
+              }
+            </Panel.Content>
+          </Panel>
         </Container>
         <Container>
-          <h2>Collaborators</h2>
-          <Button plain onClick={ () => toInviteModal(project.slug) }>
-            <AddIcon size="medium" />
-          </Button>
-          {
-            project &&
-              <CollaboratorList
-                collaborators={ project.collaborators }
-                toProfile={ toProfile }
-              />
-          }
+          <Panel>
+            <Panel.Header>
+              <TitleBar>
+                <TitleBar.Title>
+                  <h2>Collaborators</h2>
+                </TitleBar.Title>
+                <TitleBar.Menu>
+                  <Button plain onClick={ () => toInviteModal(project.slug) }>
+                    <AddIcon size="medium" />
+                  </Button>
+                </TitleBar.Menu>
+              </TitleBar>
+            </Panel.Header>
+            <Panel.Content>
+              {
+                project &&
+                  <CollaboratorList
+                    collaborators={ project.collaborators }
+                    toProfile={ toProfile }
+                  />
+              }
+            </Panel.Content>
+          </Panel>
         </Container>
       </Layout.Fixed>
     </Layout>
