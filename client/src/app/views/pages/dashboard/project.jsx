@@ -5,6 +5,12 @@ import styled, { css } from 'styled-components'
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import preventDefault from 'services/prevent-default'
+import { Button } from 'ui/elements'
+import { TitleBar } from 'ui/compounds'
+import { AddIcon, ReloadIcon } from 'ui/icons'
+import CreateProject from 'views/common/modals/create-project'
+import { List } from 'ui/compounds'
+
 
 const Box = styled.div`
   max-width: 600px;
@@ -14,29 +20,27 @@ const Box = styled.div`
   }
 `
 const BoxItem = styled.div`
-  margin: ${ ({ theme }) => `${ theme.spacing.medium }` };
-  padding-bottom: ${ ({ theme }) => `${ theme.spacing.medium }` };
-`
-
-const Title = styled.div`
-  padding: ${ ({ theme }) => `${ theme.spacing.small }` };
-  text-transform: capitalize;
-  font-weight: bold;
-  ${
-    ({ theme }) => css`
-      border-bottom: 1px solid ${ theme.secondary.light.base };
-    `
-  }
-`
-
-const StyledProject = styled.div`
-  padding-top: ${ ({ theme }) => `${ theme.spacing.medium }` };
 `
 
 const StyledLink = styled.a`
   display: block;
   text-decoration:none;
+  text-overflow: ellipsis;
+  overflow: hidden;
+`
+
+const StyledAll = styled.a`
+  text-decoration:none;
+  float: right;
+  display: block;
   padding: ${ ({ theme }) => `${ theme.spacing.small }` };
+`
+const StyleHeader = styled.div`
+  ${
+    ({ theme }) => css`
+      border-bottom: 1px solid ${ theme.secondary.light.base };
+    `
+  }
 `
 
 const ProjectLink = ({ onClick, ...props }) => (
@@ -45,9 +49,7 @@ const ProjectLink = ({ onClick, ...props }) => (
 
 
 const ProjectItem = ({ project, toProjectDetail }) => (
-  <StyledProject>
-    <ProjectLink href="/" onClick={ toProjectDetail }>{ project.name }</ProjectLink>
-  </StyledProject>
+  <ProjectLink href="/" onClick={ toProjectDetail }>{ project.name }</ProjectLink>
 )
 
 const ProjectList = ({ projects, toProjectDetail }) => {
@@ -58,37 +60,66 @@ const ProjectList = ({ projects, toProjectDetail }) => {
   }
 
   return (
-    <div>
+    <List>
       {
         projects.map(
           project => (
-            <ProjectItem key={ project._id }
-              project={ project }
-              toProjectDetail={ toProjectDetail.bind(null, project.slug) }
-            />
+            <List.Item key={ project._id }>
+              <ProjectItem
+                project={ project }
+                toProjectDetail={ toProjectDetail.bind(null, project.slug) }
+              />
+            </List.Item>
           )
         )
       }
-    </div>
+    </List>
   )
 }
 
-const Project = ({ projects, toProjectDetail }) => (
+const AllProjects = ({ onClick, ...props }) => (
+  <StyledAll onClick={ preventDefault(onClick) } { ...props } />
+)
+
+const Header = ({ showModal, reloadProjects }) => (
+  <StyleHeader>
+    <TitleBar>
+      <TitleBar.Title>Project</TitleBar.Title>
+      <TitleBar.Menu>
+        <Button plain onClick={ showModal }>
+          <AddIcon size="medium" />
+        </Button>
+        <Button plain onClick={ reloadProjects }>
+          <ReloadIcon size="medium" />
+        </Button>
+      </TitleBar.Menu>
+    </TitleBar>
+    <CreateProject
+      width="wide"
+      title="Create New Project"
+    />
+  </StyleHeader>
+)
+
+const Project = ({ projects, toProjectDetail, toProjects, showModal, reloadProjects }) => (
   <Box>
     <BoxItem>
-      <Title>Project</Title>
+      <Header showModal={ showModal } reloadProjects={ reloadProjects } />
       <ProjectList projects={ projects } toProjectDetail={ toProjectDetail } />
+      <AllProjects href="/" onClick={ ()=> toProjects() }>View all</AllProjects>
     </BoxItem>
   </Box>
 )
-
 
 export default connect(
   mapState({
     projects: selectors.allProjects,
   }),
   mapDispatch({
-    toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`)
+    toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
+    toProjects: () => actions.requestLocation('/projects'),
+    showModal: () => actions.showModal({ modal: 'CreateProject' }),
+    reloadProjects: () => actions.fetchProjects()
   })
 )(Project)
 
