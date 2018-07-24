@@ -8,8 +8,9 @@ import { MoreIcon } from 'ui/icons'
 const Wrapper = styled.nav`
   position: relative;
   white-space: nowrap;
+  display: flex;
 
-  & > * {
+  & > *:not(:first-child) {
     margin-left: 10px;
   }
 `
