@@ -39,6 +39,13 @@ const StyledLink = styled.a`
   padding: ${ ({ theme }) => `${ theme.spacing.small }` };
 `
 
+const StyledAll = styled.a`
+  text-decoration:none;
+  float: right;
+  display: block;
+  padding: ${ ({ theme }) => `${ theme.spacing.small }` };
+`
+
 const ProjectLink = ({ onClick, ...props }) => (
   <StyledLink onClick={ preventDefault(onClick) } { ...props } />
 )
@@ -73,22 +80,27 @@ const ProjectList = ({ projects, toProjectDetail }) => {
   )
 }
 
-const Project = ({ projects, toProjectDetail }) => (
+const AllProjects = ({ onClick, ...props }) => (
+  <StyledAll onClick={ preventDefault(onClick) } { ...props } />
+)
+
+const Project = ({ projects, toProjectDetail, toProjects }) => (
   <Box>
     <BoxItem>
       <Title>Project</Title>
       <ProjectList projects={ projects } toProjectDetail={ toProjectDetail } />
+      <AllProjects href="/" onClick={ ()=> toProjects() }>View all</AllProjects>
     </BoxItem>
   </Box>
 )
-
 
 export default connect(
   mapState({
     projects: selectors.allProjects,
   }),
   mapDispatch({
-    toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`)
+    toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
+    toProjects: () => actions.requestLocation('/projects')
   })
 )(Project)
 
