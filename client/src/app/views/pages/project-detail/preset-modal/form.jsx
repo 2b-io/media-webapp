@@ -1,8 +1,9 @@
 import React from 'react'
 
-import { Form } from 'ui/compounds'
 import { Button } from 'ui/elements'
-import { TextBox } from 'views/common/form'
+import { Form } from 'ui/compounds'
+import { TextBox  } from 'views/common/form'
+import { validateRequired, validateNumber } from 'views/common/validate'
 
 const PresetForm = ({
   handleSubmit,
@@ -27,6 +28,7 @@ const PresetForm = ({
         name="name"
         placeholder="Default quality"
         disabled={ !idle }
+        validate={ validateRequired }
       />
     </Form.Line>
     <Form.Line>
@@ -35,6 +37,7 @@ const PresetForm = ({
         name="values.quality"
         placeholder="75"
         disabled={ !idle }
+        validate={ [ validateRequired, validateNumber ] }
       />
     </Form.Line>
     <Form.Line last>
