@@ -26,27 +26,22 @@ const Title = styled.div`
   padding: ${ ({ theme }) => `${ theme.spacing.small }` };
   text-transform: capitalize;
   font-weight: bold;
-  ${ ({ theme }) =>
-    css`
+  ${
+    ({ theme }) => css`
       border-bottom: 1px solid ${ theme.secondary.light.base };
     `
   }
 `
-
-const dashboardList = ['Project', '', '', '']
-
 const Project = () => (
   <Wrapper>
-  {
-    dashboardList.map((title) => title &&
+    {
       <Box>
         <BoxItem>
-          <Title>{title}</Title>
+          <Title>Project</Title>
           <ProjectList />
         </BoxItem>
       </Box>
-    )
-  }
+    }
   </Wrapper>
 )
 
