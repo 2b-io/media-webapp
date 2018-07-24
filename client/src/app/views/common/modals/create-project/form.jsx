@@ -3,6 +3,7 @@ import React from 'react'
 import { Button } from 'ui/elements'
 import { Form } from 'ui/compounds'
 import { TextBox  } from 'views/common/form'
+import { validateRequired } from 'views/common/validate'
 
 const projectForm = ({ handleSubmit, idle }) => (
   <Form handleSubmit={ handleSubmit }>
@@ -12,6 +13,7 @@ const projectForm = ({ handleSubmit, idle }) => (
         name="name"
         placeholder="My Awesome Project"
         disabled={ !idle }
+        validate= { validateRequired }
       />
     </Form.Line>
     <Form.Line>
@@ -20,6 +22,7 @@ const projectForm = ({ handleSubmit, idle }) => (
         name="slug"
         placeholder="my-awesome-project"
         disabled={ !idle }
+        validate= { validateRequired }
       />
     </Form.Line>
     <Form.Line last>
