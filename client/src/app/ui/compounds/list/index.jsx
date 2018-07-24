@@ -1,9 +1,6 @@
 import styled from 'styled-components'
 
-const List = styled.ul`
-`
-
-List.Item = styled.li`
+const Item = styled.li`
   padding: ${
     ({ theme }) => `
       ${ theme.spacing.small }
@@ -11,5 +8,15 @@ List.Item = styled.li`
     `
   }
 `
+
+const List = styled.ul`
+  & > ${ Item }:not(:last-child) {
+    border-bottom: 1px solid ${
+      ({ theme }) => theme.primary.base
+    };
+  }
+`
+
+List.Item = Item
 
 export default List
