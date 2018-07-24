@@ -5,8 +5,9 @@ import { reduxForm } from 'redux-form'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Layout } from 'ui/compounds'
-import { Container } from 'ui/elements'
+import { Container, ErrorBox } from 'ui/elements'
 import { ChangePassword } from 'views/common/form'
+import { stateful } from 'views/common/decorators'
 import { withParams } from 'views/router'
 import { validateConfirmPassword } from 'views/common/validate'
 import AccountInfo from './account-info'
@@ -17,7 +18,12 @@ const PasswordForm = reduxForm({
   validate: validateConfirmPassword
 })(ChangePassword)
 
-const Profile = ({ account, changePassword, session }) => (
+const Profile = ({
+  account,
+  changePassword,
+  session,
+  ui:{ error, result }
+}) => (
   <main>
     <Layout>
       <Layout.Fluid size="small">
@@ -28,6 +34,9 @@ const Profile = ({ account, changePassword, session }) => (
       { session && account && session.account._id === account._id &&
         <Layout.Fixed size="small">
           <Container>
+            { error &&
+              <ErrorBox>{ 'Change password failed' }</ErrorBox>
+            }
             <PasswordForm
               header={ 'Change password' }
               onSubmit={ changePassword }
@@ -40,17 +49,21 @@ const Profile = ({ account, changePassword, session }) => (
 )
 
 export default withParams(
-  connect(
-    (state, { params: { id } }) => ({
-      account: selectors.findAccountById(
-        state,
-        id,
-        selectors.currentSession(state)
-      ),
-      session: selectors.currentSession(state)
-    }),
-    mapDispatch({
-      changePassword: ({ currentPassword, password }) => actions.changePassword(currentPassword, password),
-    })
-  )(Profile)
+  stateful({
+    component: 'ChangePassword'
+  })(
+    connect(
+      (state, { params: { id } }) => ({
+        account: selectors.findAccountById(
+          state,
+          id,
+          selectors.currentSession(state)
+        ),
+        session: selectors.currentSession(state)
+      }),
+      mapDispatch({
+        changePassword: ({ currentPassword, password }) => actions.changePassword(currentPassword, password),
+      })
+    )(Profile)
+  )
 )

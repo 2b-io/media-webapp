@@ -8,7 +8,7 @@ import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
 import { Container, Button, Layout } from 'ui/elements'
 import { modal } from 'views/common/decorators'
-import { validateEmail } from 'views/common/validate'
+
 
 import _InviteCollaboratorForm from './form'
 
@@ -26,8 +26,7 @@ const Item = styled.div`
 
 const InviteCollaboratorForm = reduxForm({
   form: 'invite',
-  enableReinitialize: true,
-  validate: validateEmail
+  enableReinitialize: true
 })(_InviteCollaboratorForm)
 
 const InviteCollaborator = ({

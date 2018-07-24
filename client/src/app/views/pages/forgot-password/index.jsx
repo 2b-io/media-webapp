@@ -7,7 +7,7 @@ import { Container } from 'ui/elements'
 import { actions, selectors } from 'state/interface'
 import { mapDispatch, mapState } from 'services/redux-helpers'
 
-import _ForgotPasswordForm from './forgotPasswordForm'
+import _ForgotPasswordForm from './forgot-password-form'
 
 const ForgotPasswordForm = reduxForm({
   form: 'fetchEmail',
