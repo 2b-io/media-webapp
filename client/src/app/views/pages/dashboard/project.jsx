@@ -5,6 +5,10 @@ import styled, { css } from 'styled-components'
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import preventDefault from 'services/prevent-default'
+import { Button } from 'ui/elements'
+import { AddIcon, ReloadIcon } from 'ui/icons'
+import CreateProject from 'views/common/modals/create-project'
+
 
 const Box = styled.div`
   max-width: 600px;
@@ -14,19 +18,13 @@ const Box = styled.div`
   }
 `
 const BoxItem = styled.div`
-  margin: ${ ({ theme }) => `${ theme.spacing.medium }` };
-  padding-bottom: ${ ({ theme }) => `${ theme.spacing.medium }` };
 `
 
 const Title = styled.div`
-  padding: ${ ({ theme }) => `${ theme.spacing.small }` };
   text-transform: capitalize;
   font-weight: bold;
-  ${
-    ({ theme }) => css`
-      border-bottom: 1px solid ${ theme.secondary.light.base };
-    `
-  }
+  flex: 1;
+
 `
 
 const StyledProject = styled.div`
@@ -36,7 +34,6 @@ const StyledProject = styled.div`
 const StyledLink = styled.a`
   display: block;
   text-decoration:none;
-  padding: ${ ({ theme }) => `${ theme.spacing.small }` };
 `
 
 const StyledAll = styled.a`
@@ -44,6 +41,20 @@ const StyledAll = styled.a`
   float: right;
   display: block;
   padding: ${ ({ theme }) => `${ theme.spacing.small }` };
+`
+const StyleHeader = styled.div`
+  display: flex;
+  align-items: center;
+
+  ${
+    ({ theme }) => css`
+      border-bottom: 1px solid ${ theme.secondary.light.base };
+    `
+  }
+`
+
+const HeaderMenu = styled.div`
+
 `
 
 const ProjectLink = ({ onClick, ...props }) => (
@@ -84,10 +95,28 @@ const AllProjects = ({ onClick, ...props }) => (
   <StyledAll onClick={ preventDefault(onClick) } { ...props } />
 )
 
-const Project = ({ projects, toProjectDetail, toProjects }) => (
+const Header = ({ showModal, reloadProjects }) => (
+  <StyleHeader>
+    <Title>Project</Title>
+    <HeaderMenu>
+      <Button plain onClick={ showModal }>
+        <AddIcon size="medium" />
+      </Button>
+      <Button plain onClick={ reloadProjects }>
+        <ReloadIcon size="medium" />
+      </Button>
+    </HeaderMenu>
+    <CreateProject
+      width="wide"
+      title="Create New Project"
+    />
+  </StyleHeader>
+)
+
+const Project = ({ projects, toProjectDetail, toProjects, showModal, reloadProjects }) => (
   <Box>
     <BoxItem>
-      <Title>Project</Title>
+      <Header showModal={ showModal } reloadProjects={ reloadProjects } />
       <ProjectList projects={ projects } toProjectDetail={ toProjectDetail } />
       <AllProjects href="/" onClick={ ()=> toProjects() }>View all</AllProjects>
     </BoxItem>
@@ -100,7 +129,9 @@ export default connect(
   }),
   mapDispatch({
     toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
-    toProjects: () => actions.requestLocation('/projects')
+    toProjects: () => actions.requestLocation('/projects'),
+    showModal: () => actions.showModal({ modal: 'CreateProject' }),
+    reloadProjects: () => actions.fetchProjects()
   })
 )(Project)
 
