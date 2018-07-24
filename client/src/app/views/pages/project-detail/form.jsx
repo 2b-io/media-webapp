@@ -45,7 +45,11 @@ const ProjectForm = ({ handleSubmit, idle }) => (
       />
     </Form.Line>
     <Form.Line last>
-      <Button type="submit" disabled={ !idle }>Save</Button>
+      <Button
+        variant="primary"
+        type="submit"
+        disabled={ !idle }
+      >Save</Button>
     </Form.Line>
   </Form>
 )
