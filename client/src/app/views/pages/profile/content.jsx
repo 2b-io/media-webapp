@@ -22,7 +22,7 @@ const Profile = ({
   account,
   changePassword,
   session,
-  ui:{ error, result }
+  ui: { error }
 }) => (
   <main>
     <Layout>

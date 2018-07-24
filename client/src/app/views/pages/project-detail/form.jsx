@@ -14,7 +14,7 @@ const ProjectForm = ({ handleSubmit, idle }) => (
         name="name"
         placeholder="Project Name"
         disabled={ !idle }
-        validate= { validateRequired }
+        validate={ validateRequired }
       />
     </Form.Line>
     <Form.Line>

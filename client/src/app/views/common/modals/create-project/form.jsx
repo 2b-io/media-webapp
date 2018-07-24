@@ -13,7 +13,7 @@ const projectForm = ({ handleSubmit, idle }) => (
         name="name"
         placeholder="My Awesome Project"
         disabled={ !idle }
-        validate= { validateRequired }
+        validate={ validateRequired }
       />
     </Form.Line>
     <Form.Line>
@@ -22,7 +22,7 @@ const projectForm = ({ handleSubmit, idle }) => (
         name="slug"
         placeholder="my-awesome-project"
         disabled={ !idle }
-        validate= { validateRequired }
+        validate={ validateRequired }
       />
     </Form.Line>
     <Form.Line last>
