@@ -8,12 +8,13 @@ import { Layout } from 'ui/compounds'
 import { Container } from 'ui/elements'
 import { ChangePassword } from 'views/common/form'
 import { withParams } from 'views/router'
-
+import { validateConfirmPassword } from 'views/common/validate'
 import AccountInfo from './account-info'
 
 const PasswordForm = reduxForm({
   form: 'changePassword',
-  enableReinitialize: true
+  enableReinitialize: true,
+  validate: validateConfirmPassword
 })(ChangePassword)
 
 const Profile = ({ account, changePassword, session }) => (
