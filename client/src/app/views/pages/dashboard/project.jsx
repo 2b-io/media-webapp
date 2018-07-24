@@ -6,8 +6,10 @@ import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import preventDefault from 'services/prevent-default'
 import { Button } from 'ui/elements'
+import { TitleBar } from 'ui/compounds'
 import { AddIcon, ReloadIcon } from 'ui/icons'
 import CreateProject from 'views/common/modals/create-project'
+import { List } from 'ui/compounds'
 
 
 const Box = styled.div`
@@ -20,20 +22,11 @@ const Box = styled.div`
 const BoxItem = styled.div`
 `
 
-const Title = styled.div`
-  text-transform: capitalize;
-  font-weight: bold;
-  flex: 1;
-
-`
-
-const StyledProject = styled.div`
-  padding-top: ${ ({ theme }) => `${ theme.spacing.medium }` };
-`
-
 const StyledLink = styled.a`
   display: block;
   text-decoration:none;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `
 
 const StyledAll = styled.a`
@@ -43,18 +36,11 @@ const StyledAll = styled.a`
   padding: ${ ({ theme }) => `${ theme.spacing.small }` };
 `
 const StyleHeader = styled.div`
-  display: flex;
-  align-items: center;
-
   ${
     ({ theme }) => css`
       border-bottom: 1px solid ${ theme.secondary.light.base };
     `
   }
-`
-
-const HeaderMenu = styled.div`
-
 `
 
 const ProjectLink = ({ onClick, ...props }) => (
@@ -63,9 +49,7 @@ const ProjectLink = ({ onClick, ...props }) => (
 
 
 const ProjectItem = ({ project, toProjectDetail }) => (
-  <StyledProject>
-    <ProjectLink href="/" onClick={ toProjectDetail }>{ project.name }</ProjectLink>
-  </StyledProject>
+  <ProjectLink href="/" onClick={ toProjectDetail }>{ project.name }</ProjectLink>
 )
 
 const ProjectList = ({ projects, toProjectDetail }) => {
@@ -76,18 +60,20 @@ const ProjectList = ({ projects, toProjectDetail }) => {
   }
 
   return (
-    <div>
+    <List>
       {
         projects.map(
           project => (
-            <ProjectItem key={ project._id }
-              project={ project }
-              toProjectDetail={ toProjectDetail.bind(null, project.slug) }
-            />
+            <List.Item key={ project._id }>
+              <ProjectItem
+                project={ project }
+                toProjectDetail={ toProjectDetail.bind(null, project.slug) }
+              />
+            </List.Item>
           )
         )
       }
-    </div>
+    </List>
   )
 }
 
@@ -97,15 +83,17 @@ const AllProjects = ({ onClick, ...props }) => (
 
 const Header = ({ showModal, reloadProjects }) => (
   <StyleHeader>
-    <Title>Project</Title>
-    <HeaderMenu>
-      <Button plain onClick={ showModal }>
-        <AddIcon size="medium" />
-      </Button>
-      <Button plain onClick={ reloadProjects }>
-        <ReloadIcon size="medium" />
-      </Button>
-    </HeaderMenu>
+    <TitleBar>
+      <TitleBar.Title>Project</TitleBar.Title>
+      <TitleBar.Menu>
+        <Button plain onClick={ showModal }>
+          <AddIcon size="medium" />
+        </Button>
+        <Button plain onClick={ reloadProjects }>
+          <ReloadIcon size="medium" />
+        </Button>
+      </TitleBar.Menu>
+    </TitleBar>
     <CreateProject
       width="wide"
       title="Create New Project"
