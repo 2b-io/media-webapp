@@ -1,7 +1,9 @@
-import { call, take, fork, put } from 'redux-saga/effects'
+import { all, call, take, fork, put } from 'redux-saga/effects'
 import ResetPasswordCode from 'models/resetPasswordCode'
 import { actions, types } from 'state/interface'
 import serializeError from 'serialize-error'
+
+import { addToast } from './toast'
 
 const fetchEmailLoop = function*() {
   while (true) {
@@ -11,8 +13,13 @@ const fetchEmailLoop = function*() {
     try {
       const status =  yield call(ResetPasswordCode.requestResset, action.payload.email)
 
-      yield put(actions.fetchEmailCompleted(status))
-
+      yield all([
+        put(actions.fetchEmailCompleted(status)),
+        fork(addToast, {
+          type: 'success',
+          message: 'Request reset password success'
+        })
+      ])
     } catch (e) {
       yield put(actions.fetchEmailFailed(serializeError(e)))
       continue
@@ -30,7 +37,13 @@ const resetPasswordLoop = function*() {
 
       const statusReset = yield call(ResetPasswordCode.ressetPassword, password, code)
 
-      yield put(actions.fetchPasswordResetCompleted(statusReset))
+      yield all([
+        put(actions.fetchPasswordResetCompleted(statusReset)),
+        fork(addToast, {
+          type: 'success',
+          message: 'Password Reseted'
+        })
+      ])
 
     } catch (e) {
       yield put(actions.fetchPasswordResetFailed(serializeError(e)))
