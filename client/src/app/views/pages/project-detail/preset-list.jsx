@@ -1,20 +1,22 @@
 import React from 'react'
 
+import { List } from 'ui/compounds'
+
 const PresetList = ({ presets, onPresetSelected }) => (
-  <ul>
+  <List>
     {
       Object.values(presets).map(
         (preset, index) => (
-          <li
+          <List.Item
             onClick={ () => onPresetSelected(preset.hash) }
             key={ index }
           >
             { preset.name }
-          </li>
+          </List.Item>
         )
       )
     }
-  </ul>
+  </List>
 )
 
 export default PresetList
