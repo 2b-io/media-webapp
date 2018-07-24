@@ -60,6 +60,10 @@ const ModalTitle = styled.h2`
   flex-grow: 1;
   line-height: 2.2em;
   text-transform: uppercase;
+  white-space: nowrap;
+  padding-right: ${ ({ theme }) => theme.spacing.medium };
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 export default ({
