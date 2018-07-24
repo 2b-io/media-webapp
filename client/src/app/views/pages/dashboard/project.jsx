@@ -1,12 +1,14 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import styled, { css } from 'styled-components'
 
-import ProjectList from '../project-list/content'
+import { mapDispatch, mapState } from 'services/redux-helpers'
+import { actions, selectors } from 'state/interface'
+import preventDefault from 'services/prevent-default'
 
 const Box = styled.div`
   max-width: 600px;
   width: 600px;
-  // flex-grow: 1;
   @media (max-width: 768px) {
     width: 100%;
   }
@@ -26,13 +28,69 @@ const Title = styled.div`
     `
   }
 `
-const Project = () => (
+
+const StyledProject = styled.div`
+  padding-top: ${ ({ theme }) => `${ theme.spacing.medium }` };
+`
+
+const StyledLink = styled.a`
+  display: block;
+  text-decoration:none;
+  padding: ${ ({ theme }) => `${ theme.spacing.small }` };
+`
+
+const ProjectLink = ({ onClick, ...props }) => (
+  <StyledLink onClick={ preventDefault(onClick) } { ...props } />
+)
+
+
+const ProjectItem = ({ project, toProjectDetail }) => (
+  <StyledProject>
+    <ProjectLink href="/" onClick={ toProjectDetail }>{ project.name }</ProjectLink>
+  </StyledProject>
+)
+
+const ProjectList = ({ projects, toProjectDetail }) => {
+  if (!projects || !projects.length) {
+    return (
+      <h2>No data ....</h2>
+    )
+  }
+
+  return (
+    <div>
+      {
+        projects.map(
+          project => (
+            <ProjectItem key={ project._id }
+              project={ project }
+              toProjectDetail={ toProjectDetail.bind(null, project.slug) }
+            />
+          )
+        )
+      }
+    </div>
+  )
+}
+
+const Project = ({ projects, toProjectDetail }) => (
   <Box>
     <BoxItem>
       <Title>Project</Title>
-      <ProjectList />
+      <ProjectList projects={ projects } toProjectDetail={ toProjectDetail } />
     </BoxItem>
   </Box>
 )
 
-export default Project
+
+export default connect(
+  mapState({
+    projects: selectors.allProjects,
+  }),
+  mapDispatch({
+    toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`)
+  })
+)(Project)
+
+
+
