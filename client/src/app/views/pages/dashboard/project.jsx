@@ -9,27 +9,27 @@ const Wrapper = styled.section`
 `
 
 const Box = styled.div`
-  max-width: 600px
-  width: 600px
-  flex-grow: 1
+  max-width: 600px;
+  width: 600px;
+  flex-grow: 1;
   @media (max-width: 768px) {
-    width: 100%
+    width: 100%;
   }
 `
 
 const BoxItem = styled.div`
-  margin: ${ ({ theme }) => `${ theme.spacing.medium }` }
-  padding-bottom: ${ ({ theme }) => `${ theme.spacing.medium }` }
+  margin: ${ ({ theme }) => `${ theme.spacing.medium }` };
+  padding-bottom: ${ ({ theme }) => `${ theme.spacing.medium }` };
 `
 
 const Title = styled.div`
-  padding: ${ ({ theme }) => `${ theme.spacing.small }` }
-  text-transform: capitalize
-  font-weight: bold
+  padding: ${ ({ theme }) => `${ theme.spacing.small }` };
+  text-transform: capitalize;
+  font-weight: bold;
   ${ ({ theme }) =>
-      css`
-        border-bottom: 1px solid ${ theme.secondary.light.base }
-      `
+    css`
+      border-bottom: 1px solid ${ theme.secondary.light.base };
+    `
   }
 `
 
