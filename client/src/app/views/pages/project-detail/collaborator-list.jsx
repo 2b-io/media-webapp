@@ -1,13 +1,14 @@
 import React from 'react'
 
+import { List } from 'ui/compounds'
 import { Link } from 'ui/elements'
 
 const CollaboratorList = ({ collaborators, toProfile }) => (
-  <ul>
+  <List>
     {
       Object.values(collaborators).map(
         collaborator => (
-          <li key={ collaborator._id }>
+          <List.Item key={ collaborator._id }>
             <Link href="#"
               onClick={ () => toProfile(collaborator.account._id) }
             >
@@ -15,11 +16,11 @@ const CollaboratorList = ({ collaborators, toProfile }) => (
             </Link>
             <span> - </span>
             <span>{ collaborator.privilege }</span>
-          </li>
+          </List.Item>
         )
       )
     }
-  </ul>
+  </List>
 )
 
 export default CollaboratorList

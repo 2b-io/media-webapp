@@ -42,11 +42,19 @@ const PresetForm = ({
     </Form.Line>
     <Form.Line last>
       <Button.Group>
-        <Button type="submit" disabled={ !idle }>
+        <Button
+          type="submit"
+          disabled={ !idle }
+          variant="primary"
+        >
           { isEditing ? 'Save' : 'Create' }
         </Button>
         { !isDefault && isEditing &&
-          <Button onClick={ onDelete } disabled={ !idle }>
+          <Button
+            onClick={ onDelete }
+            disabled={ !idle }
+            variant="secondary"
+          >
             Delete
           </Button>
         }

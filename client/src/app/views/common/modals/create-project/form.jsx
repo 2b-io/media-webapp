@@ -28,7 +28,9 @@ const projectForm = ({ handleSubmit, idle }) => (
     <Form.Line last>
       <Button
         type="submit"
-        disabled={ !idle }>
+        disabled={ !idle }
+        variant="primary"
+      >
         Create
       </Button>
     </Form.Line>

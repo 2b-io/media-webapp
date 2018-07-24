@@ -6,6 +6,7 @@ import styled from 'styled-components'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
+import { TitleBar } from 'ui/compounds'
 import { Button } from 'ui/elements'
 import { CloseIcon } from 'ui/icons'
 import { stateful } from 'views/common/decorators'
@@ -19,9 +20,12 @@ const Overlay = styled.div`
   z-index: 10;
   overflow-x: hidden;
   overflow-y: auto;
-  background: ${ ({ theme }) => theme.secondary.opaque.base };
-  padding-left: ${ ({ theme }) => theme.spacing.small };
-  padding-right: ${ ({ theme }) => theme.spacing.small };
+  background: ${
+    ({ theme }) => theme.secondary.opaque.base
+  };
+  padding: ${
+    ({ theme }) => `0 ${ theme.spacing.small }`
+  };
 `
 
 const Wrapper = styled.div`
@@ -29,37 +33,27 @@ const Wrapper = styled.div`
   color: ${ ({ theme }) => theme.background.on.base };
   position: relative;
   margin: ${
-    ({ theme: { spacing } }) => `${ spacing.huge } auto ${spacing.big }`
+    ({ theme: { spacing } }) => `
+      ${ spacing.huge }
+      auto
+      ${spacing.big }
+    `
   };
-  box-shadow: 0 30px 80px ${ ({ theme }) => theme.secondary.limpid.base };
+  box-shadow: 0 30px 80px ${
+    ({ theme }) => theme.secondary.limpid.base
+  };
   min-width: 280px; /* support iphone5s */
   max-width: ${
-    ({ width }) => width === 'wide' ? '960px' : (width === 'narrow' ? '640px' : 'auto')
+    ({ width }) => width === 'wide' ?
+      '960px' : (
+        width === 'narrow' ? '640px' : 'auto'
+      )
   };
 `
 
 const Header = styled.div`
-  display: flex;
-  align-items: center;
-  padding: ${
-    ({ theme }) => `
-      ${ theme.spacing.tiny }
-      ${ theme.spacing.medium }
-    `
-  };
   background: ${ ({ theme }) => theme.primary.base };
   color: ${ ({ theme }) => theme.primary.on.base };
-`
-
-const CloseButton = styled.div`
-  flex-grow: 0;
-  flex-shrink: 0;
-`
-
-const ModalTitle = styled.h2`
-  flex-grow: 1;
-  line-height: 2.2em;
-  text-transform: uppercase;
 `
 
 export default ({
@@ -107,14 +101,16 @@ export default ({
           <Overlay onClick={ hideOnClickOutside ? this.hide() : null }>
             <Wrapper onClick={ e => e.stopPropagation() } width={ width }>
               <Header>
-                <ModalTitle>{ title }</ModalTitle>
-                { showCloseButton &&
-                  <CloseButton>
-                    <Button plain onClick={ this.hide() }>
-                      <CloseIcon size="medium" />
-                    </Button>
-                  </CloseButton>
-                }
+                <TitleBar>
+                  <TitleBar.Title>{ title }</TitleBar.Title>
+                  { showCloseButton &&
+                    <TitleBar.Menu>
+                      <Button plain onClick={ this.hide() }>
+                        <CloseIcon size="medium" />
+                      </Button>
+                    </TitleBar.Menu>
+                  }
+                </TitleBar>
               </Header>
               <ModalContent modal={ modal } { ...this.props } />
             </Wrapper>

@@ -8,6 +8,7 @@ const Title = styled.div`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  padding-right: ${ ({ theme }) => theme.spacing.medium };
 
   & > * {
     display: inline-block;
