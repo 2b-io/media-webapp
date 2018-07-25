@@ -9,7 +9,7 @@ import {
 import {
   requestRessetPassword as requestResset,
   ressetPassword as ressetPassword
-} from 'services/resetPasswordCode'
+} from 'services/reset-password-code'
 
 import { Account, AccountStruct } from '../types/Account'
 export default () => ({
