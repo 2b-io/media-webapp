@@ -12,7 +12,7 @@ const ProjectList = ({ showModal, stillHeight }) => (
   <Fragment>
     <TitleBar>
       <TitleBar.Title>
-        <h1>Projects</h1>
+        <h1>All Projects</h1>
       </TitleBar.Title>
 
       <TitleBar.Menu>
