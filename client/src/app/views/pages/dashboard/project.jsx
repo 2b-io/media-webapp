@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
@@ -22,13 +22,6 @@ const Footer = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-`
-const StyleHeader = styled.div`
-  ${
-    ({ theme }) => css`
-      border-bottom: 1px solid ${ theme.secondary.light.base };
-    `
-  }
 `
 
 const ProjectLink = ({ onClick, ...props }) => (
