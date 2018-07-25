@@ -14,7 +14,7 @@ injectGlobal`
   }
 
   ::-webkit-scrollbar {
-    width: ${ defaultTheme.spacing.tiny };
+    width: ${ defaultTheme.spacing.small };
   }
 
   ::-webkit-scrollbar-track {
