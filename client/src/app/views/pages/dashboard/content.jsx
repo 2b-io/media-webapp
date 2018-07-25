@@ -1,15 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-import { Container } from 'ui/elements'
+import { Container, MasonryLayout } from 'ui/elements'
 import Project from './project'
-
-import 'react-grid-layout/css/styles.css'
-import 'react-resizable/css/styles.css'
-
-import { Responsive, WidthProvider } from 'react-grid-layout'
-
-const ResponsiveReactGridLayout = WidthProvider(Responsive)
 
 const Wrapper = styled.div`
   display: flex;
@@ -46,7 +39,7 @@ const cols = {
 const layout = {
 }
 
-const widgets = [{
+const widgets = [ {
   component: Project,
   grid: {
     w: 2,
@@ -70,7 +63,7 @@ const widgets = [{
     w: 1,
     h: 1
   }
-}]
+} ]
 
 class Dashboard extends Component {
   constructor(...args) {
@@ -121,24 +114,56 @@ class Dashboard extends Component {
 
     return (
       <Container>
-        <ResponsiveReactGridLayout
-          className="layout"
-          onBreakpointChange={ this.onBreakpointChange }
-          compactType={ 'vertical' }
-          verticalCompact={ true }
-          isDraggable={ false }
-          isResizable={ false }
-          breakpoints={ breakpoints }
-          cols={ cols }
-          rowHeight={ 100 }
-          margin={ [ 20, 20 ] }
-          containerPadding={ [ 0, 0 ] }
-          measureBeforeMount={ false }
-        >
-          { this.renderItems() }
-        </ResponsiveReactGridLayout>
+        <MasonryLayout
+          items={ [ {
+            component: Project,
+            grid: {
+              w: 3,
+              h: 2
+            }
+          }, {
+            component: Project,
+            grid: {
+              w: 1,
+              h: 2
+            },
+          }, {
+            component: Project,
+            grid: {
+              w: 2,
+              h: 2
+            },
+          }, {
+            component: Project,
+            grid: {
+              w: 2,
+              h: 2
+            }
+          } ] }
+        />
       </Container>
     )
+
+    // return (
+    //   <Container>
+    //     <ResponsiveReactGridLayout
+    //       className="layout"
+    //       onBreakpointChange={ this.onBreakpointChange }
+    //       compactType={ 'vertical' }
+    //       verticalCompact={ true }
+    //       isDraggable={ false }
+    //       isResizable={ false }
+    //       breakpoints={ breakpoints }
+    //       cols={ cols }
+    //       rowHeight={ 100 }
+    //       margin={ [ 20, 20 ] }
+    //       containerPadding={ [ 0, 0 ] }
+    //       measureBeforeMount={ false }
+    //     >
+    //       { this.renderItems() }
+    //     </ResponsiveReactGridLayout>
+    //   </Container>
+    // )
   }
 }
 
