@@ -3,22 +3,31 @@ import { connect } from 'react-redux'
 
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
-import { Panel } from 'ui/compounds'
+import { Panel, TitleBar } from 'ui/compounds'
 import { Button, Container, Link, MasonryLayout, Nowrap } from 'ui/elements'
-import { AddIcon } from 'ui/icons'
+import { FavoriteIcon } from 'ui/icons'
 
 const Project = ({ project, toProjectDetail }) => (
-  <Panel fit={ true }>
-    <Panel.Content>
-      <Container>
-        <Nowrap>
+  <Panel>
+    <Panel.Header>
+      <TitleBar>
+        <TitleBar.Title>
           <Link href="/" onClick={ toProjectDetail }>
             { project.name }
           </Link>
-        </Nowrap>
-        <Nowrap>
-          <span>{ project.slug }</span>
-        </Nowrap>
+        </TitleBar.Title>
+        <TitleBar.Menu>
+          <Button plain>
+            <FavoriteIcon size="medium" />
+          </Button>
+        </TitleBar.Menu>
+      </TitleBar>
+    </Panel.Header>
+    <Panel.Content>
+      <Container>
+        <Nowrap>Slug: { project.slug }</Nowrap>
+        <Nowrap>Presets: { Object.keys(project.presets).length }</Nowrap>
+        <Nowrap>Collaborators: { project.collaborators.length }</Nowrap>
       </Container>
     </Panel.Content>
   </Panel>
@@ -50,7 +59,6 @@ const ProjectList = ({
     <main>
       <Container>
         <MasonryLayout
-          rowHeight="short"
           items={ items }
         />
       </Container>

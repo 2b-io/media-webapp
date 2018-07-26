@@ -4,9 +4,12 @@ import styled from 'styled-components'
 
 import Matrix from './matrix'
 
-const toPixel = value => value === 'short' ?
-  100 : (
-    value === 'tall' ? 250 : 175
+const toPixel = value => !value ?
+  'auto' : (
+    value === 'short' ?
+      '100px' : (
+        value === 'tall' ? '250px' : '175px'
+      )
   )
 
 const Wrapper = styled.div`
@@ -15,7 +18,7 @@ const Wrapper = styled.div`
     ({ theme }) => theme.spacing.small
   };
   grid-auto-rows: ${
-    ({ rowHeight = 'medium' }) => `${ toPixel(rowHeight) }px`
+    ({ rowHeight }) => `${ toPixel(rowHeight) }`
   };
   grid-template-columns: repeat(
     auto-fill,
