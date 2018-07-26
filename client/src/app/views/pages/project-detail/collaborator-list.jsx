@@ -1,21 +1,34 @@
 import React from 'react'
+import styled from 'styled-components'
 
 import { List } from 'ui/compounds'
-import { Link } from 'ui/elements'
+import { Button, Link } from 'ui/elements'
 
-const CollaboratorList = ({ collaborators, toProfile }) => (
+const Item = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+`
+
+const CollaboratorList = ({ collaborators, toProfile, session }) => (
   <List>
     {
       Object.values(collaborators).map(
-        collaborator => (
-          <List.Item key={ collaborator._id }>
-            <Link href="#"
-              onClick={ () => toProfile(collaborator.account._id) }
-            >
-              <span>{ collaborator.account.email }</span>
-            </Link>
-            <span> - </span>
-            <span>{ collaborator.privilege }</span>
+        ({ _id, account, privilege }) => (
+          <List.Item key={ _id }>
+            <Item>
+              <Link href="#"
+                onClick={ () => toProfile(account._id) }
+              >
+                <span>{ account.email }</span>
+              </Link>
+              {
+                ( account._id===session.account._id ) ? <span>{ privilege }</span> : (
+                  ( privilege!== 'owner' ) && <Button plain type="submit">Make owner</Button>
+                )
+                //Dang sai logic
+              }
+            </Item>
           </List.Item>
         )
       )

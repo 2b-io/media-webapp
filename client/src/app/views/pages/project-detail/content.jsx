@@ -24,6 +24,7 @@ const ProjectForm = reduxForm({
 
 const Project = ({
   project,
+  session,
   toInviteModal,
   toPresetDetail,
   toProfile,
@@ -106,6 +107,7 @@ const Project = ({
                   <CollaboratorList
                     collaborators={ project.collaborators }
                     toProfile={ toProfile }
+                    session={ session }
                   />
               }
             </Panel.Content>
@@ -140,6 +142,7 @@ const Project = ({
     </Route>
   </Fragment>
 )
+
 export default withParams(
   stateful({
     component: 'ProjectDetail'
@@ -147,6 +150,7 @@ export default withParams(
     connect(
       (state, { params: { slug } }) => ({
         project: selectors.findProjectBySlug(state, slug),
+        session: selectors.currentSession(state)
       }),
       mapDispatch({
         toInviteModal: slug => actions.requestLocation(`/projects/${ slug }/invite`),
