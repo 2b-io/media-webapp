@@ -7,8 +7,6 @@ import { validateEmail } from 'views/common/validate'
 
 const forgotPasswordForm = ({ handleSubmit }) => (
   <Form handleSubmit={ handleSubmit }>
-    <Form.Header> Forgot Password </Form.Header>
-    <Form.Description> Enter your email address below and click on the {'Request reset password'} button </Form.Description>
     <Form.Line>
       <TextBox
         type="email"
@@ -18,9 +16,7 @@ const forgotPasswordForm = ({ handleSubmit }) => (
       />
     </Form.Line>
     <Form.Line last>
-      <Form.Align center>
-        <Button type="submit">Request reset password</Button>
-      </Form.Align>
+      <Button type="submit">Request reset password</Button>
     </Form.Line>
   </Form>
 )
