@@ -38,11 +38,8 @@ export default class Matrix {
   find(w, h) {
     const fitWidth = w > this.maxWidth ? this.maxWidth : w
 
-    let col
-    let row
-
-    for (row = 0; row < this.maxHeight; row++) {
-      for (col = 0; col < this.maxWidth; col++) {
+    for (let row = 0; row < this.maxHeight; row++) {
+      for (let col = 0; col < this.maxWidth; col++) {
         if (this.enoughSpace(col, row, fitWidth, h)) {
           return {
             x: col,
