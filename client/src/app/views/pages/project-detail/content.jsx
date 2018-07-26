@@ -136,6 +136,7 @@ const Project = ({
         width="wide"
         title="Invite collaborators"
         onHide={ () => toProjectDetail(project.slug) }
+        collaborators={ project && Object.values(project.collaborators) }
       />
     </Route>
   </Fragment>

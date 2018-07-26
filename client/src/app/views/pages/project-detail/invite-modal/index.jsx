@@ -6,24 +6,16 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
-import { Container, Button, Layout } from 'ui/elements'
+import { Container, Button } from 'ui/elements'
+import { List } from 'ui/compounds'
 import { modal } from 'views/common/decorators'
-
 
 import _InviteCollaboratorForm from './form'
 
-const List = styled.div`
-  background-color: #efefef;
-  padding: 10px;
-  margin: 20px auto;
-  border-radius: 2px;
-  align-self: flex-start;
+const Layout = styled.div`
+  display: flex;
+  justify-content: space-between;
 `
-const Item = styled.div`
-  margin: 5px auto;
-  cursor: pointer;
-`
-
 const InviteCollaboratorForm = reduxForm({
   form: 'invite',
   enableReinitialize: true
@@ -32,33 +24,43 @@ const InviteCollaboratorForm = reduxForm({
 const InviteCollaborator = ({
   inviteCollaborator,
   searchAccount,
-  ui: { error, result }
+  collaborators,
+  ui: { result }
 }) => {
+
+  const filtered = result ? result.filter(
+    ({ _id }) => !collaborators.some(
+      ({ account }) => _id === account._id
+    )
+  ) : []
+
   return (
     <Container center>
       <InviteCollaboratorForm
         searchAccount={ Debounce(searchAccount, 500) }
       />
-      { result &&
+      { filtered && filtered.length ?
         <List>
           { result.map( ({ email }, index) => (
-            <Item key={ index }>
+            <List.Item key={ index }>
               <Layout>
-                <Layout.Fixed>
-                  <span>{ email }</span>
-                </Layout.Fixed>
-                <Layout.Fluid>
-                  <Button
-                    type="submit"
-                    onClick={ () => { inviteCollaborator(email) } }>
-                      Invite
-                  </Button>
-                </Layout.Fluid>
+                <span>{ email }</span>
+                <Button
+                  plain
+                  type="submit"
+                  onClick={ () => { inviteCollaborator(email) } }>
+                    Invite
+                </Button>
               </Layout>
-            </Item>
+            </List.Item>
           )) }
-        </List> }
-      { error && <p> Error search account please try again </p> }
+        </List> :
+        <List>
+          <List.Item>
+            No data collaborator ...
+          </List.Item>
+        </List>
+      }
     </Container>
   )
 }
