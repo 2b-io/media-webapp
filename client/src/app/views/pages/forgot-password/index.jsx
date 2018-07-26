@@ -2,7 +2,7 @@ import React from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
-import { Container } from 'ui/elements'
+import { Container, Description, Header } from 'ui/elements'
 import { actions, selectors } from 'state/interface'
 import { mapDispatch, mapState } from 'services/redux-helpers'
 
@@ -17,6 +17,8 @@ const ForgotPassword=({ fetchEmail }) => {
   return (
     <main>
       <Container center size="small">
+        <Header center> Forgot Password </Header>
+        <Description justify> Enter your email address below and click on the &#39;Request reset password&#39; button </Description>
         <ForgotPasswordForm onSubmit={ fetchEmail } />
       </Container>
     </main>
