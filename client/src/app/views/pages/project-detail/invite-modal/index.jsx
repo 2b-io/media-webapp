@@ -7,22 +7,10 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
 import { Container, Button, Layout } from 'ui/elements'
+import { List } from 'ui/compounds'
 import { modal } from 'views/common/decorators'
 
-
 import _InviteCollaboratorForm from './form'
-
-const List = styled.div`
-  background-color: #efefef;
-  padding: 10px;
-  margin: 20px auto;
-  border-radius: 2px;
-  align-self: flex-start;
-`
-const Item = styled.div`
-  margin: 5px auto;
-  cursor: pointer;
-`
 
 const InviteCollaboratorForm = reduxForm({
   form: 'invite',
@@ -39,26 +27,32 @@ const InviteCollaborator = ({
       <InviteCollaboratorForm
         searchAccount={ Debounce(searchAccount, 500) }
       />
-      { result &&
+      { result?
         <List>
           { result.map( ({ email }, index) => (
-            <Item key={ index }>
+            <List.Item key={ index }>
               <Layout>
                 <Layout.Fixed>
                   <span>{ email }</span>
                 </Layout.Fixed>
                 <Layout.Fluid>
                   <Button
+                    plain
                     type="submit"
                     onClick={ () => { inviteCollaborator(email) } }>
                       Invite
                   </Button>
                 </Layout.Fluid>
               </Layout>
-            </Item>
+            </List.Item>
           )) }
-        </List> }
-      { error && <p> Error search account please try again </p> }
+        </List> :
+        <List>
+          <List.Item>
+            No data collaborator ...
+          </List.Item>
+        </List>
+      }
     </Container>
   )
 }
