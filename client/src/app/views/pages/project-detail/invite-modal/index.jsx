@@ -20,14 +20,18 @@ const InviteCollaboratorForm = reduxForm({
 const InviteCollaborator = ({
   inviteCollaborator,
   searchAccount,
-  ui: { error, result }
+  collaborators,
+  ui: { result }
 }) => {
+  if (result) {
+    result = result.map(({ _id }) => collaborators.filter(({ account }) => _id === account._id ).length == 0 )
+  }
   return (
     <Container center>
       <InviteCollaboratorForm
         searchAccount={ Debounce(searchAccount, 500) }
       />
-      { result?
+      { result && result.length !== 0 ?
         <List>
           { result.map( ({ email }, index) => (
             <List.Item key={ index }>
