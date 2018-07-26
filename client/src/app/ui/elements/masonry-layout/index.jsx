@@ -10,7 +10,10 @@ const Wrapper = styled.div`
     ({ theme }) => theme.spacing.medium
   };
   grid-auto-rows: 270px;
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(230px, 1fr)
+  ); /* support iphone 5s */
 `
 
 const Item = styled.div.attrs({
