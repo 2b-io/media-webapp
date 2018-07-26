@@ -10,6 +10,7 @@ const ChangePasswordForm = ({ handleSubmit, resetPassword, valid }) => (
     { !resetPassword &&
       <Form.Line>
         <TextBox
+          label="Current password"
           type="password"
           name="currentPassword"
           placeholder="Current password"
@@ -19,6 +20,7 @@ const ChangePasswordForm = ({ handleSubmit, resetPassword, valid }) => (
     }
     <Form.Line>
       <TextBox
+        label="New password"
         type="password"
         name="password"
         placeholder="New password"
@@ -27,6 +29,7 @@ const ChangePasswordForm = ({ handleSubmit, resetPassword, valid }) => (
     </Form.Line>
     <Form.Line>
       <TextBox
+        label="Retype password"
         type="password"
         name="rePassword"
         placeholder="Retype password"
@@ -34,17 +37,15 @@ const ChangePasswordForm = ({ handleSubmit, resetPassword, valid }) => (
       />
     </Form.Line>
     <Form.Line last>
-      <Form.Align center>
-        <Button
-          type="submit"
-          onClick={ (e) => {
-            if (!valid) {
-              e.preventDefault()
-            }
-          } }>
-          Change password
-        </Button>
-      </Form.Align>
+      <Button
+        type="submit"
+        onClick={ (e) => {
+          if (!valid) {
+            e.preventDefault()
+          }
+        } }>
+        Change password
+      </Button>
     </Form.Line>
   </Form>
 )
