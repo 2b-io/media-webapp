@@ -27,7 +27,7 @@ const Project = ({ project, toProjectDetail }) => (
       <Container>
         <Nowrap>Slug: { project.slug }</Nowrap>
         <Nowrap>Presets: { Object.keys(project.presets).length }</Nowrap>
-        <Nowrap>Collaborators: { project.collaborators.length }</Nowrap>
+        <Nowrap>Collaborators: { Object.keys(project.collaborators).length }</Nowrap>
       </Container>
     </Panel.Content>
   </Panel>

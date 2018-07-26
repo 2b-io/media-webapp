@@ -12,6 +12,7 @@ export default combineReducers({
           ...projects,
           [ project.slug ]: {
             ...project,
+            collaborators: arrayToMap(project.collaborators, '_id'),
             presets: arrayToMap(project.presets, 'hash')
           }
         }), {}
