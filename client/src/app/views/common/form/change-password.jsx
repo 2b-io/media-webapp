@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Form } from 'ui/compounds'
-import { Button } from 'ui/elements'
+import { Button, Label } from 'ui/elements'
 import { TextBox } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
@@ -18,6 +18,7 @@ const ChangePasswordForm = ({ handleSubmit, resetPassword, valid }) => (
       </Form.Line>
     }
     <Form.Line>
+      <Form.Label>New password</Form.Label>
       <TextBox
         type="password"
         name="password"
@@ -26,6 +27,7 @@ const ChangePasswordForm = ({ handleSubmit, resetPassword, valid }) => (
       />
     </Form.Line>
     <Form.Line>
+      <Form.Label>Retype password</Form.Label>
       <TextBox
         type="password"
         name="rePassword"
@@ -34,17 +36,15 @@ const ChangePasswordForm = ({ handleSubmit, resetPassword, valid }) => (
       />
     </Form.Line>
     <Form.Line last>
-      <Form.Align center>
-        <Button
-          type="submit"
-          onClick={ (e) => {
-            if (!valid) {
-              e.preventDefault()
-            }
-          } }>
-          Change password
-        </Button>
-      </Form.Align>
+      <Button
+        type="submit"
+        onClick={ (e) => {
+          if (!valid) {
+            e.preventDefault()
+          }
+        } }>
+        Change password
+      </Button>
     </Form.Line>
   </Form>
 )
