@@ -23,15 +23,19 @@ const InviteCollaborator = ({
   collaborators,
   ui: { result }
 }) => {
-  if (result) {
-    result = result.map(({ _id }) => collaborators.filter(({ account }) => _id === account._id ).length == 0 )
-  }
+  
+  const filtered = result ? result.filter(
+    ({ _id }) => !collaborators.some(
+      ({ account }) => _id === account._id
+    )
+  ) : []
+
   return (
     <Container center>
       <InviteCollaboratorForm
         searchAccount={ Debounce(searchAccount, 500) }
       />
-      { result && result.length !== 0 ?
+      { filtered && filtered.length ?
         <List>
           { result.map( ({ email }, index) => (
             <List.Item key={ index }>
