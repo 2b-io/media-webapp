@@ -1,5 +1,5 @@
 import { all, call, take, fork, put } from 'redux-saga/effects'
-import ResetPasswordCode from 'models/resetPasswordCode'
+import ResetPasswordCode from 'models/reset-password-code'
 import { actions, types } from 'state/interface'
 import serializeError from 'serialize-error'
 

@@ -1,6 +1,6 @@
 export { default as account } from './account'
 export { default as authenticate } from './authenticate'
-export { default as resetPasswordCode } from './resetPasswordCode'
+export { default as resetPasswordCode } from './reset-password-code'
 export { default as layout } from './layout'
 export { default as location } from './location'
 export { default as locationChange } from './location-change'
