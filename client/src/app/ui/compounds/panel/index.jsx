@@ -1,12 +1,17 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 const Panel = styled.div`
   box-shadow: 0 5px 20px ${
     ({ theme }) => theme.secondary.opaque.base
   };
-  max-height: 100%;
   display: flex;
   flex-direction: column;
+  ${
+    ({ fit }) => fit && css`
+      height: 100%;
+      max-height: 100%;
+    `
+  }
 `
 
 Panel.Header = styled.div`

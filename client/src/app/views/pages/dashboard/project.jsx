@@ -74,7 +74,7 @@ const Header = ({ showModal, reloadProjects }) => (
 
 const Project = ({ projects, toProjectDetail, toProjects, showModal, reloadProjects }) => (
   <Fragment>
-    <Panel>
+    <Panel fit={ true }>
       <Panel.Header>
         <Header showModal={ showModal } reloadProjects={ reloadProjects } />
       </Panel.Header>

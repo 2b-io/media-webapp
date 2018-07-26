@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react'
 import Dimension from 'react-container-dimensions'
 import styled from 'styled-components'
 
+import Matrix from './matrix'
+
 const Wrapper = styled.div`
   display: grid;
   grid-gap: ${
@@ -12,9 +14,11 @@ const Wrapper = styled.div`
 `
 
 const Item = styled.div.attrs({
-  style: ({ width, height }) => ({
-    gridColumnEnd: `span ${ width }`,
-    gridRowEnd: `span ${ height }`
+  style: ({ x, y, w, h }) => ({
+    gridColumnStart: x + 1,
+    gridRowStart: y + 1,
+    gridColumnEnd: `span ${ w }`,
+    gridRowEnd: `span ${ h }`
   })
 })``
 
@@ -22,6 +26,9 @@ class MasonryLayout extends Component {
   constructor(...args) {
     super(...args)
     this.renderItems = this.renderItems.bind(this)
+
+    this._layoutWidth = 0
+    this._items = []
   }
 
   renderItems() {
@@ -35,17 +42,36 @@ class MasonryLayout extends Component {
       .split(' ')
       .map(value => parseInt(value, 10))
       .filter(Boolean)
-      .length
+
+    const diff = cols
+      .filter(
+        (value, index, self) => self.indexOf(value) === index
+      )
+
+    const colNo = diff.length > 1 ? 1 : cols.length
+
+    if (this._layoutWidth !== colNo) {
+      const matrix = new Matrix(colNo)
+
+      this._layoutWidth = colNo
+      this._items = this.props.items.map(
+        (item, index) => ({
+          ...item,
+          grid: {
+            ...matrix.place(index + 1, item.grid.w, item.grid.h)
+          }
+        })
+      )
+    }
 
     return (
       <Fragment>
         {
-          this.props.items.map(
-            ({ component: Component, grid: { w, h } }, index) => (
+          this._items.map(
+            ({ component: Component, grid }, index) => (
               <Item
                 key={ `item-${ index }` }
-                width={ w > cols ? cols : w }
-                height={ h }
+                { ... grid }
               >
                 <Component />
               </Item>

@@ -16,7 +16,7 @@ const Dashboard = () => (
         component: Project,
         grid: {
           w: 1,
-          h: 2
+          h: 4
         },
       }, {
         component: Project,
@@ -30,6 +30,12 @@ const Dashboard = () => (
           w: 2,
           h: 2
         }
+      }, {
+        component: Project,
+        grid: {
+          w: 1,
+          h: 2
+        },
       } ] }
     />
   </Container>
