@@ -1,6 +1,11 @@
 import React from 'react'
+import styled from 'styled-components'
 
 import { List } from 'ui/compounds'
+
+const SmallValue = styled.span`
+  font-size: 10px;
+`
 
 const PresetList = ({ presets, onPresetSelected }) => (
   <List>
@@ -11,7 +16,8 @@ const PresetList = ({ presets, onPresetSelected }) => (
             onClick={ () => onPresetSelected(preset.hash) }
             key={ index }
           >
-            { preset.name }
+            <p>{ preset.name }</p>
+            <SmallValue>Value: { preset.values.quality } </SmallValue>
           </List.Item>
         )
       )
