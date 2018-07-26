@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Form } from 'ui/compounds'
-import { Button, Label } from 'ui/elements'
+import { Button } from 'ui/elements'
 import { TextBox } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
