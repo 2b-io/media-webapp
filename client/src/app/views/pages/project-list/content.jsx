@@ -4,13 +4,21 @@ import { connect } from 'react-redux'
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Panel } from 'ui/compounds'
-import { Container, Link, MasonryLayout } from 'ui/elements'
+import { Button, Container, Link, MasonryLayout, Nowrap } from 'ui/elements'
+import { AddIcon } from 'ui/icons'
 
 const Project = ({ project, toProjectDetail }) => (
   <Panel fit={ true }>
     <Panel.Content>
       <Container>
-        <Link href="/" onClick={ toProjectDetail }>{ project.name }</Link>
+        <Nowrap>
+          <Link href="/" onClick={ toProjectDetail }>
+            { project.name }
+          </Link>
+        </Nowrap>
+        <Nowrap>
+          <span>{ project.slug }</span>
+        </Nowrap>
       </Container>
     </Panel.Content>
   </Panel>

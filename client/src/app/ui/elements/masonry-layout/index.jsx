@@ -12,7 +12,7 @@ const toPixel = value => value === 'short' ?
 const Wrapper = styled.div`
   display: grid;
   grid-gap: ${
-    ({ theme }) => theme.spacing.medium
+    ({ theme }) => theme.spacing.small
   };
   grid-auto-rows: ${
     ({ rowHeight = 'medium' }) => `${ toPixel(rowHeight) }px`
