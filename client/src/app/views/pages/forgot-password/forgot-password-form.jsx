@@ -9,6 +9,7 @@ const forgotPasswordForm = ({ handleSubmit }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Line>
       <TextBox
+        label="Your email"
         type="email"
         name="email"
         placeholder="Your email"

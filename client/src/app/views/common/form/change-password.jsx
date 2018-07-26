@@ -10,6 +10,7 @@ const ChangePasswordForm = ({ handleSubmit, resetPassword, valid }) => (
     { !resetPassword &&
       <Form.Line>
         <TextBox
+          label="Current password"
           type="password"
           name="currentPassword"
           placeholder="Current password"
@@ -18,8 +19,8 @@ const ChangePasswordForm = ({ handleSubmit, resetPassword, valid }) => (
       </Form.Line>
     }
     <Form.Line>
-      <Form.Label>New password</Form.Label>
       <TextBox
+        label="New password"
         type="password"
         name="password"
         placeholder="New password"
@@ -27,8 +28,8 @@ const ChangePasswordForm = ({ handleSubmit, resetPassword, valid }) => (
       />
     </Form.Line>
     <Form.Line>
-      <Form.Label>Retype password</Form.Label>
       <TextBox
+        label="Retype password"
         type="password"
         name="rePassword"
         placeholder="Retype password"
