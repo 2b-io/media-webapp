@@ -14,11 +14,11 @@ injectGlobal`
   }
 
   ::-webkit-scrollbar {
-    width: ${ defaultTheme.spacing.small };
+    width: ${ defaultTheme.spacing.tiny };
   }
 
   ::-webkit-scrollbar-track {
-    background: ${ defaultTheme.secondary.limpid.base };
+    background: ${ defaultTheme.secondary.base };
 
     &:hover {
       background: ${ defaultTheme.secondary.light.base };
