@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
@@ -22,19 +22,6 @@ const Footer = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: ${
-    ({ theme }) => `
-      ${ theme.spacing.small }
-      ${ theme.spacing.medium }
-    `
-  };
-`
-const StyleHeader = styled.div`
-  ${
-    ({ theme }) => css`
-      border-bottom: 1px solid ${ theme.secondary.light.base };
-    `
-  }
 `
 
 const ProjectLink = ({ onClick, ...props }) => (
@@ -72,39 +59,41 @@ const ProjectList = ({ projects, toProjectDetail }) => {
 }
 
 const Header = ({ showModal, reloadProjects }) => (
-  <StyleHeader>
-    <TitleBar>
-      <TitleBar.Title>Recent Projects</TitleBar.Title>
-      <TitleBar.Menu>
-        <Button plain onClick={ showModal }>
-          <AddIcon size="medium" />
-        </Button>
-        <Button plain onClick={ reloadProjects }>
-          <ReloadIcon size="medium" />
-        </Button>
-      </TitleBar.Menu>
-    </TitleBar>
+  <TitleBar>
+    <TitleBar.Title>Recent Projects</TitleBar.Title>
+    <TitleBar.Menu>
+      <Button plain onClick={ showModal }>
+        <AddIcon size="medium" />
+      </Button>
+      <Button plain onClick={ reloadProjects }>
+        <ReloadIcon size="medium" />
+      </Button>
+    </TitleBar.Menu>
+  </TitleBar>
+)
+
+const Project = ({ projects, toProjectDetail, toProjects, showModal, reloadProjects }) => (
+  <Fragment>
+    <Panel fit={ true }>
+      <Panel.Header>
+        <Header showModal={ showModal } reloadProjects={ reloadProjects } />
+      </Panel.Header>
+      <Panel.Content>
+        <ProjectList projects={ projects } toProjectDetail={ toProjectDetail } />
+      </Panel.Content>
+      <Panel.Footer>
+        <Footer href="/" onClick={ ()=> toProjects() }>
+          <Link href="/projects" onClick={ preventDefault(toProjects) }>
+            View all
+          </Link>
+        </Footer>
+      </Panel.Footer>
+    </Panel>
     <CreateProject
       width="wide"
       title="Create New Project"
     />
-  </StyleHeader>
-)
-
-const Project = ({ projects, toProjectDetail, toProjects, showModal, reloadProjects }) => (
-  <Panel>
-    <Panel.Header>
-      <Header showModal={ showModal } reloadProjects={ reloadProjects } />
-    </Panel.Header>
-    <Panel.Content>
-      <ProjectList projects={ projects } toProjectDetail={ toProjectDetail } />
-      <Footer href="/" onClick={ ()=> toProjects() }>
-        <Link href="/projects" onClick={ preventDefault(toProjects) }>
-          View all
-        </Link>
-      </Footer>
-    </Panel.Content>
-  </Panel>
+  </Fragment>
 )
 
 export default connect(
