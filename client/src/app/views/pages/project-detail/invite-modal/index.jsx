@@ -6,12 +6,16 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
-import { Container, Button, Layout } from 'ui/elements'
+import { Container, Button } from 'ui/elements'
 import { List } from 'ui/compounds'
 import { modal } from 'views/common/decorators'
 
 import _InviteCollaboratorForm from './form'
 
+const Layout = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
 const InviteCollaboratorForm = reduxForm({
   form: 'invite',
   enableReinitialize: true
@@ -23,7 +27,7 @@ const InviteCollaborator = ({
   collaborators,
   ui: { result }
 }) => {
-  
+
   const filtered = result ? result.filter(
     ({ _id }) => !collaborators.some(
       ({ account }) => _id === account._id
@@ -40,17 +44,13 @@ const InviteCollaborator = ({
           { result.map( ({ email }, index) => (
             <List.Item key={ index }>
               <Layout>
-                <Layout.Fixed>
-                  <span>{ email }</span>
-                </Layout.Fixed>
-                <Layout.Fluid>
-                  <Button
-                    plain
-                    type="submit"
-                    onClick={ () => { inviteCollaborator(email) } }>
-                      Invite
-                  </Button>
-                </Layout.Fluid>
+                <span>{ email }</span>
+                <Button
+                  plain
+                  type="submit"
+                  onClick={ () => { inviteCollaborator(email) } }>
+                    Invite
+                </Button>
               </Layout>
             </List.Item>
           )) }
