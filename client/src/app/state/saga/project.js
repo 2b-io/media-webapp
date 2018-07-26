@@ -119,7 +119,13 @@ const inviteCollaboratorLoop = function*() {
       const collaborator = yield call(Project.inviteCollaborator, session.token, slug, action.payload )
       collaborator.slug = slug
       if (collaborator) {
-        yield put(actions.inviteCollaboratorCompleted(collaborator))
+        yield all([
+          put(actions.inviteCollaboratorCompleted(collaborator)),
+          fork(addToast, {
+            type: 'success',
+            message: 'Collaborator Invited'
+          })
+        ])
       }
 
     } catch (e) {

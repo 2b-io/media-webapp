@@ -13,6 +13,7 @@ const ChangePasswordForm = ({ handleSubmit, resetPassword, valid }) => (
           type="password"
           name="currentPassword"
           placeholder="Current password"
+          validate={ validateRequired }
         />
       </Form.Line>
     }

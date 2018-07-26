@@ -9,10 +9,36 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
 `
 
+const Box = styled.div`
+  max-width: 600px;
+  width: 600px;
+  padding-bottom: ${ ({ theme }) => theme.spacing.medium };
+  padding-right: ${ ({ theme }) => theme.spacing.medium };
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding-right: 0;
+  }
+`
+
 const Dashboard = () => (
   <Container>
     <Wrapper>
-      <Project />
+      <Box>
+        <Project />
+      </Box>
+      <Box>
+        <Project />
+      </Box>
+      <Box>
+        <Project />
+      </Box>
+      <Box>
+        <Project />
+      </Box>
+      <Box>
+        <Project />
+      </Box>
     </Wrapper>
   </Container>
 

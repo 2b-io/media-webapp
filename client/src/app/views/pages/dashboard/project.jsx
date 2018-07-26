@@ -5,35 +5,29 @@ import styled, { css } from 'styled-components'
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import preventDefault from 'services/prevent-default'
-import { Button } from 'ui/elements'
-import { TitleBar } from 'ui/compounds'
+import { Button, Link } from 'ui/elements'
+import { Panel, TitleBar } from 'ui/compounds'
 import { AddIcon, ReloadIcon } from 'ui/icons'
 import CreateProject from 'views/common/modals/create-project'
 import { List } from 'ui/compounds'
 
-
-const Box = styled.div`
-  max-width: 600px;
-  width: 600px;
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-`
-const BoxItem = styled.div`
-`
-
 const StyledLink = styled.a`
   display: block;
-  text-decoration:none;
+  text-decoration: none;
   text-overflow: ellipsis;
   overflow: hidden;
 `
 
-const StyledAll = styled.a`
-  text-decoration:none;
-  float: right;
-  display: block;
-  padding: ${ ({ theme }) => `${ theme.spacing.small }` };
+const Footer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: ${
+    ({ theme }) => `
+      ${ theme.spacing.small }
+      ${ theme.spacing.medium }
+    `
+  };
 `
 const StyleHeader = styled.div`
   ${
@@ -55,7 +49,7 @@ const ProjectItem = ({ project, toProjectDetail }) => (
 const ProjectList = ({ projects, toProjectDetail }) => {
   if (!projects || !projects.length) {
     return (
-      <h2>No data ....</h2>
+      <h2>No data...</h2>
     )
   }
 
@@ -77,14 +71,10 @@ const ProjectList = ({ projects, toProjectDetail }) => {
   )
 }
 
-const AllProjects = ({ onClick, ...props }) => (
-  <StyledAll onClick={ preventDefault(onClick) } { ...props } />
-)
-
 const Header = ({ showModal, reloadProjects }) => (
   <StyleHeader>
     <TitleBar>
-      <TitleBar.Title>Project</TitleBar.Title>
+      <TitleBar.Title>Recent Projects</TitleBar.Title>
       <TitleBar.Menu>
         <Button plain onClick={ showModal }>
           <AddIcon size="medium" />
@@ -102,13 +92,19 @@ const Header = ({ showModal, reloadProjects }) => (
 )
 
 const Project = ({ projects, toProjectDetail, toProjects, showModal, reloadProjects }) => (
-  <Box>
-    <BoxItem>
+  <Panel>
+    <Panel.Header>
       <Header showModal={ showModal } reloadProjects={ reloadProjects } />
+    </Panel.Header>
+    <Panel.Content>
       <ProjectList projects={ projects } toProjectDetail={ toProjectDetail } />
-      <AllProjects href="/" onClick={ ()=> toProjects() }>View all</AllProjects>
-    </BoxItem>
-  </Box>
+      <Footer href="/" onClick={ ()=> toProjects() }>
+        <Link href="/projects" onClick={ preventDefault(toProjects) }>
+          View all
+        </Link>
+      </Footer>
+    </Panel.Content>
+  </Panel>
 )
 
 export default connect(
