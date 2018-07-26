@@ -60,3 +60,12 @@ export const ressetPassword = async (password, code) => {
   const { ok } = await ResetPasswordCode.deleteOne({ code })
   return ok === 1
 }
+
+export const getResetCode = async (code) => {
+  const accountExists = await ResetPasswordCode.findOne({ code }).lean()
+
+  if (!accountExists) {
+    return false
+  }
+  return true
+}

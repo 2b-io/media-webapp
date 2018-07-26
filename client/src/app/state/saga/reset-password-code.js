@@ -52,9 +52,27 @@ const resetPasswordLoop = function*() {
 
   }
 }
+const getResetCodeLoop = function*() {
+  while (true) {
+
+    const action = yield take(types['RESETPASSWORDCODE/GET_RESET_CODE'])
+
+    try {
+      let { code } = action.payload
+
+      const resetPasswordCode = yield call(ResetPasswordCode.getResetCode, code)
+
+      put(actions.getResetCodeCompleted(resetPasswordCode))
+    } catch (e) {
+      yield put(actions.getResetCodeFailed(serializeError(e)))
+      continue
+    }
+  }
+}
 
 export default function* () {
   yield take('@@INITIALIZED')
   yield fork(fetchEmailLoop)
   yield fork(resetPasswordLoop)
+  yield fork(getResetCodeLoop)
 }

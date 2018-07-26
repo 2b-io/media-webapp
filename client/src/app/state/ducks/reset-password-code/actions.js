@@ -25,3 +25,16 @@ export const fetchPasswordResetFailed = error => ({
   type: types.FETCH_PASSWORD_RESET_FAILED,
   payload: error
 })
+
+export const getResetCode = code => ({
+  type: types.GET_RESET_CODE,
+  payload: code
+})
+export const getResetCodeCompleted = resetPasswordCode => ({
+  type: types.GET_RESET_CODE_COMPLETED,
+  payload: resetPasswordCode
+})
+export const getResetCodeFailed = error => ({
+  type: types.GET_RESET_CODE_FAILED,
+  payload: error
+})
