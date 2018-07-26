@@ -18,6 +18,8 @@ import { ic_info } from 'react-icons-kit/md/ic_info'
 import { ic_more_vert } from 'react-icons-kit/md/ic_more_vert'
 import { ic_refresh } from 'react-icons-kit/md/ic_refresh'
 import { ic_report } from 'react-icons-kit/md/ic_report'
+import { ic_star } from 'react-icons-kit/md/ic_star'
+import { ic_star_border } from 'react-icons-kit/md/ic_star_border'
 import { ic_view_quilt } from 'react-icons-kit/md/ic_view_quilt'
 
 import icon from './icon'
@@ -27,6 +29,8 @@ export const BillingIcon = icon(ic_attach_money)
 export const CloseIcon = icon(ic_close)
 export const DashboardIcon = icon(ic_dashboard)
 export const ErrorIcon = icon(ic_block)
+export const FavoriteIcon = icon(ic_star_border)
+export const FavoritedIcon = icon(ic_star)
 export const GithubIcon = icon(github)
 export const HelpIcon = icon(ic_help_outline)
 export const InfoIcon = icon(ic_info)

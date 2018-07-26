@@ -4,12 +4,22 @@ import styled from 'styled-components'
 
 import Matrix from './matrix'
 
+const toPixel = value => !value ?
+  'auto' : (
+    value === 'short' ?
+      '100px' : (
+        value === 'tall' ? '250px' : '175px'
+      )
+  )
+
 const Wrapper = styled.div`
   display: grid;
   grid-gap: ${
-    ({ theme }) => theme.spacing.medium
+    ({ theme }) => theme.spacing.small
   };
-  grid-auto-rows: 270px;
+  grid-auto-rows: ${
+    ({ rowHeight }) => `${ toPixel(rowHeight) }`
+  };
   grid-template-columns: repeat(
     auto-fill,
     minmax(230px, 1fr)
@@ -87,7 +97,9 @@ class MasonryLayout extends Component {
 
   render() {
     return (
-      <Wrapper innerRef={ e => this._wrapper = e }>
+      <Wrapper
+        rowHeight={ this.props.rowHeight }
+        innerRef={ e => this._wrapper = e }>
         <Dimension>
           { this.renderItems }
         </Dimension>
