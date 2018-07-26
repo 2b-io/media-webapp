@@ -4,7 +4,7 @@ import { reduxForm } from 'redux-form'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
-import { Layout } from 'ui/compounds'
+import { Layout, Panel, TitleBar } from 'ui/compounds'
 import { Container, ErrorBox } from 'ui/elements'
 import { ChangePassword } from 'views/common/form'
 import { stateful } from 'views/common/decorators'
@@ -28,19 +28,45 @@ const Profile = ({
     <Layout>
       <Layout.Fluid size="small">
         <Container>
-          <AccountInfo account={ account } />
+          <Panel>
+            <Panel.Header>
+              <TitleBar>
+                <TitleBar.Title>
+                  <h2>Profile Info</h2>
+                </TitleBar.Title>
+              </TitleBar>
+            </Panel.Header>
+            <Panel.Content>
+              <Container>
+                <AccountInfo account={ account } />
+              </Container>
+            </Panel.Content>
+          </Panel>
         </Container>
       </Layout.Fluid>
       { session && account && session.account._id === account._id &&
         <Layout.Fixed size="small">
           <Container>
-            { error &&
-              <ErrorBox>{ 'Change password failed' }</ErrorBox>
-            }
-            <PasswordForm
-              header={ 'Change password' }
-              onSubmit={ changePassword }
-            />
+            <Panel>
+              <Panel.Header>
+                <TitleBar>
+                  <TitleBar.Title>
+                    <h2>Change Password</h2>
+                  </TitleBar.Title>
+                </TitleBar>
+              </Panel.Header>
+              <Panel.Content>
+                <Container>
+                  { error &&
+                    <ErrorBox>{ 'Change password failed' }</ErrorBox>
+                  }
+                  <PasswordForm
+                    header={ 'Change password' }
+                    onSubmit={ changePassword }
+                  />
+                </Container>
+              </Panel.Content>
+            </Panel>
           </Container>
         </Layout.Fixed>
       }
