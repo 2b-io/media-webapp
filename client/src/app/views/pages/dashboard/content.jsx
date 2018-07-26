@@ -10,31 +10,31 @@ const Dashboard = () => (
         component: Project,
         grid: {
           w: 1,
-          h: 2
+          h: 1
         }
       }, {
         component: Project,
         grid: {
           w: 1,
-          h: 4
+          h: 2
         },
       }, {
         component: Project,
         grid: {
           w: 1,
-          h: 2
+          h: 1
         },
       }, {
         component: Project,
         grid: {
           w: 2,
-          h: 2
+          h: 1
         }
       }, {
         component: Project,
         grid: {
           w: 1,
-          h: 2
+          h: 1
         },
       } ] }
     />

@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   grid-gap: ${
     ({ theme }) => theme.spacing.medium
   };
-  grid-auto-rows: 100px;
+  grid-auto-rows: 270px;
   grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
 `
 
