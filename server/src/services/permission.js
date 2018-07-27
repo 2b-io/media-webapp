@@ -24,6 +24,24 @@ export const invite = async (project, email) => {
     account: account._id,
     privilege: 'owner'
   }).save()
-
   return permission
+}
+export const makeOwner = async (project, { currentUId, nexUId }) => {
+  // console.log("project,currentUId,nexUId",project,currentUId,nexUId);
+
+  const changeToAdmin = await Permission.findOneAndUpdate( {
+    project: project._id,
+    account: currentUId
+  }, {
+    privilege: 'admin'
+  } )
+  const changeToOwner = await Permission.findOneAndUpdate( {
+    project: project._id,
+    account: nexUId
+  }, {
+    privilege: 'owner'
+  } )
+  // console.log("changeToAdmin",changeToAdmin);
+  // console.log("changeToOwner",changeToOwner);
+  return {}
 }

@@ -31,6 +31,7 @@ const Project = ({
   toPresetDetail,
   toProfile,
   toProjectDetail,
+  makeOwner,
   ui: {
     idle, notFound,
     deleteError, deleteResult,
@@ -122,6 +123,7 @@ const Project = ({
                       collaborators={ project.collaborators }
                       toProfile={ toProfile }
                       session={ session }
+                      makeOwner= { makeOwner }
                     />
                 }
               </Panel.Content>
@@ -174,7 +176,8 @@ export default withParams(
         toInviteModal: slug => actions.requestLocation(`/projects/${ slug }/invite`),
         toPresetDetail: (slug, hash) => actions.requestLocation(`/projects/${ slug }/presets/${ hash }`),
         toProfile: id => actions.requestLocation(`/@${ id }`),
-        toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`)
+        toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
+        makeOwner: actions.makeOwner
       })
     )(Project)
   )

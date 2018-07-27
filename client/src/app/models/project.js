@@ -240,4 +240,25 @@ export default {
     })
     return body.session.account.project._inviteCollaborator
   },
+  async makeOwner(token, slug, currentUId, nextUId) {
+    const body = await request(`
+      query makeOwner($token: String!, $slug: String!, $currentUId: String!, $nextUId: String!) {
+        session(token: $token) {
+          account {
+            project(slug: $slug) {
+              _makeOwner(currentUId: $currentUId, nextUId: $nextUId){
+                ${ PERMISSION_FRAGMENT }
+              }
+            }
+          }
+        }
+      }
+    `, {
+      token,
+      slug,
+      currentUId,
+      nextUId
+    })
+    return body.session.account.project._makeOwner
+  }
 }
