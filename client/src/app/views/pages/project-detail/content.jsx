@@ -9,7 +9,7 @@ import { Layout, Panel, TitleBar } from 'ui/compounds'
 import { Button, Container, ErrorBox } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 import { stateful } from 'views/common/decorators'
-import { Route, Switch, withParams } from 'views/router'
+import { Redirect, Route, Switch, withParams } from 'views/router'
 
 import CollaboratorList from './collaborator-list'
 import _ProjectForm from './form'
@@ -24,123 +24,139 @@ const ProjectForm = reduxForm({
 
 const Project = ({
   project,
+  deleteProject,
+  updateProject,
   toInviteModal,
   toPresetDetail,
   toProfile,
   toProjectDetail,
-  updateProject,
-  ui: { error, idle }
-}) => (
-  <Fragment>
-    <Layout>
-      <Layout.Fluid size="small">
-        <Container>
-          <Panel>
-            <Panel.Header>
-              <TitleBar>
-                <TitleBar.Title>
-                  <h2>Project Info</h2>
-                </TitleBar.Title>
-              </TitleBar>
-            </Panel.Header>
-            <Panel.Content>
-              <Container>
-                { error &&
-                  <ErrorBox>An error happens when updating the project.</ErrorBox>
-                }
-                <ProjectForm
-                  idle={ idle }
-                  initialValues={ project }
-                  onSubmit={ updateProject }
-                />
-              </Container>
-            </Panel.Content>
-          </Panel>
-        </Container>
-      </Layout.Fluid>
-      <Layout.Fixed size="small">
-        <Container>
-          <Panel>
-            <Panel.Header>
-              <TitleBar>
-                <TitleBar.Title>
-                  <h2>Presets</h2>
-                </TitleBar.Title>
+  ui: {
+    idle, notFound,
+    deleteError, deleteResult,
+    updateError
+  }
+}) => {
+  if (notFound || deleteResult) {
+    return <Redirect to="/projects" />
+  }
 
-                <TitleBar.Menu>
-                  <Button plain onClick={ () => toPresetDetail(project.slug, 'new') }>
-                    <AddIcon size="medium" />
-                  </Button>
-                </TitleBar.Menu>
-              </TitleBar>
-            </Panel.Header>
-            <Panel.Content>
-              { project &&
-                <PresetList
-                  presets={ project.presets }
-                  onPresetSelected={ hash => {
-                    toPresetDetail(project.slug, hash)
-                  } }
-                />
-              }
-            </Panel.Content>
-          </Panel>
-        </Container>
-        <Container>
-          <Panel>
-            <Panel.Header>
-              <TitleBar>
-                <TitleBar.Title>
-                  <h2>Collaborators</h2>
-                </TitleBar.Title>
-                <TitleBar.Menu>
-                  <Button plain onClick={ () => toInviteModal(project.slug) }>
-                    <AddIcon size="medium" />
-                  </Button>
-                </TitleBar.Menu>
-              </TitleBar>
-            </Panel.Header>
-            <Panel.Content>
-              {
-                project &&
-                  <CollaboratorList
-                    collaborators={ project.collaborators }
-                    toProfile={ toProfile }
+  return (
+    <Fragment>
+      <Layout>
+        <Layout.Fluid size="small">
+          <Container>
+            <Panel>
+              <Panel.Header>
+                <TitleBar>
+                  <TitleBar.Title>
+                    <h2>Project Info</h2>
+                  </TitleBar.Title>
+                </TitleBar>
+              </Panel.Header>
+              <Panel.Content>
+                <Container>
+                  { updateError &&
+                    <ErrorBox>An error happens when updating the project.</ErrorBox>
+                  }
+                  { deleteError &&
+                    <ErrorBox>An error happens when deleting the project.</ErrorBox>
+                  }
+                  <ProjectForm
+                    idle={ idle }
+                    initialValues={ project }
+                    onSubmit={ updateProject }
+                    deleteProject={ () => deleteProject(project.slug) }
                   />
-              }
-            </Panel.Content>
-          </Panel>
-        </Container>
-      </Layout.Fixed>
-    </Layout>
-    <Switch>
-      <Route path="/projects/:slug/presets/new">
-        <PresetModal
+                </Container>
+              </Panel.Content>
+            </Panel>
+          </Container>
+        </Layout.Fluid>
+        <Layout.Fixed size="small">
+          <Container>
+            <Panel>
+              <Panel.Header>
+                <TitleBar>
+                  <TitleBar.Title>
+                    <h2>Presets</h2>
+                  </TitleBar.Title>
+
+                  <TitleBar.Menu>
+                    <Button plain onClick={ () => toPresetDetail(project.slug, 'new') }>
+                      <AddIcon size="medium" />
+                    </Button>
+                  </TitleBar.Menu>
+                </TitleBar>
+              </Panel.Header>
+              <Panel.Content>
+                { project &&
+                  <PresetList
+                    presets={ project.presets }
+                    onPresetSelected={ hash => {
+                      toPresetDetail(project.slug, hash)
+                    } }
+                  />
+                }
+              </Panel.Content>
+            </Panel>
+          </Container>
+          <Container>
+            <Panel>
+              <Panel.Header>
+                <TitleBar>
+                  <TitleBar.Title>
+                    <h2>Collaborators</h2>
+                  </TitleBar.Title>
+                  <TitleBar.Menu>
+                    <Button plain onClick={ () => toInviteModal(project.slug) }>
+                      <AddIcon size="medium" />
+                    </Button>
+                  </TitleBar.Menu>
+                </TitleBar>
+              </Panel.Header>
+              <Panel.Content>
+                {
+                  project &&
+                    <CollaboratorList
+                      collaborators={ project.collaborators }
+                      toProfile={ toProfile }
+                    />
+                }
+              </Panel.Content>
+            </Panel>
+          </Container>
+        </Layout.Fixed>
+      </Layout>
+      <Switch>
+        <Route path="/projects/:slug/presets/new">
+          <PresetModal
+            width="wide"
+            hideOnClickOutside={ false }
+            title="Create new preset"
+            onHide={ () => toProjectDetail(project.slug) }
+          />
+        </Route>
+        <Route path="/projects/:slug/presets/:hash">
+          <PresetModal
+            width="wide"
+            hideOnClickOutside={ false }
+            title="Edit preset"
+            onHide={ () => toProjectDetail(project.slug) }
+          />
+        </Route>
+      </Switch>
+      <Route path="/projects/:slug/invite">
+        <InviteModal
           width="wide"
-          hideOnClickOutside={ false }
-          title="Create new preset"
+          title="Invite collaborators"
           onHide={ () => toProjectDetail(project.slug) }
+          collaborators={ project && Object.values(project.collaborators) }
         />
       </Route>
-      <Route path="/projects/:slug/presets/:hash">
-        <PresetModal
-          width="wide"
-          hideOnClickOutside={ false }
-          title="Edit preset"
-          onHide={ () => toProjectDetail(project.slug) }
-        />
-      </Route>
-    </Switch>
-    <Route path="/projects/:slug/invite">
-      <InviteModal
-        width="wide"
-        title="Invite collaborators"
-        onHide={ () => toProjectDetail(project.slug) }
-        collaborators={ project && Object.values(project.collaborators) }
-      />
-    </Route>
-  </Fragment>
-)
+    </Fragment>
+  )
+}
+
 export default withParams(
   stateful({
     component: 'ProjectDetail'
@@ -150,11 +166,12 @@ export default withParams(
         project: selectors.findProjectBySlug(state, slug),
       }),
       mapDispatch({
+        deleteProject: actions.deleteProject,
+        updateProject: actions.updateProject,
         toInviteModal: slug => actions.requestLocation(`/projects/${ slug }/invite`),
         toPresetDetail: (slug, hash) => actions.requestLocation(`/projects/${ slug }/presets/${ hash }`),
         toProfile: id => actions.requestLocation(`/@${ id }`),
-        toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
-        updateProject: actions.updateProject
+        toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`)
       })
     )(Project)
   )

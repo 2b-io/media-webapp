@@ -25,6 +25,12 @@ export default combineReducers({
         presets: arrayToMap(action.payload.project.presets, 'hash')
       }
     }),
+    [ types.DELETE_COMPLETED ]: (state, action) => {
+      const { slug } = action.payload
+      const { [ slug ]: removedProject, ...projects } = state
+
+      return projects
+    },
     [ types.GET_COMPLETED ]: (state, action) => ({
       ...state,
       [ action.payload.project.slug ]: {
