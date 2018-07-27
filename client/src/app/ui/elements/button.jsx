@@ -7,6 +7,7 @@ const Button = styled.button.attrs({
   display: inline-flex;
   align-items: center;
   margin: 0;
+  white-space: nowrap;
   cursor: ${
     ({ disabled }) => disabled ? 'not-allowed' : 'pointer'
   };
