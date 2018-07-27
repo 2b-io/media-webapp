@@ -34,6 +34,38 @@ const createLoop = function*() {
   }
 }
 
+const deleteLoop = function*() {
+  while (true) {
+    const action = yield take(types['PROJECT/DELETE'])
+    const { slug } = action.payload
+
+    try {
+      const session = yield select(selectors.currentSession)
+
+      if (!session) {
+        continue
+      }
+
+      const deleted = yield Project.delete(slug, session.token)
+
+      if (!deleted) {
+        throw new Error('Cannot delete project')
+      }
+
+      yield all([
+        put(actions.deleteProjectCompleted(slug)),
+        fork(addToast, {
+          type: 'success',
+          message: 'Project deleted.'
+        })
+      ])
+    } catch (e) {
+      yield put(actions.deleteProjectFailed(serializeError(e)))
+      continue
+    }
+  }
+}
+
 const getLoop = function*() {
   while (true) {
     const action = yield take(types['PROJECT/GET'])
@@ -138,6 +170,7 @@ const inviteCollaboratorLoop = function*() {
 export default function*() {
   yield take('@@INITIALIZED')
   yield fork(createLoop)
+  yield fork(deleteLoop)
   yield fork(fetchLoop)
   yield fork(getLoop)
   yield fork(updateLoop)

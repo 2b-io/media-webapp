@@ -28,7 +28,7 @@ const Arrow = styled.div`
     ({ theme }) => `
       transparent
       transparent
-      ${ theme.primary.limpid.base }
+      ${ theme.secondary.limpid.base }
       transparent
     `
   };
@@ -42,8 +42,8 @@ const DropDownMenu = styled.div`
   right: 0;
   padding: ${ ({ theme: { spacing: { medium } } }) => `0 ${ medium } ${ medium }}` };
   z-index: 9;
-  background: ${ ({ theme }) => theme.primary.limpid.base };
-  color: ${ ({ theme }) => theme.primary.limpid.on.base };
+  background: ${ ({ theme }) => theme.secondary.limpid.base };
+  color: ${ ({ theme }) => theme.secondary.limpid.on.base };
 
   & > * {
     margin-top: ${ ({ theme }) => theme.spacing.medium };

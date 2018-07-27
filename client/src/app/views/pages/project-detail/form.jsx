@@ -5,7 +5,7 @@ import { Button } from 'ui/elements'
 import { TextBox } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
-const ProjectForm = ({ handleSubmit, idle }) => (
+const ProjectForm = ({ deleteProject, handleSubmit, idle }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Line>
       <TextBox
@@ -45,11 +45,18 @@ const ProjectForm = ({ handleSubmit, idle }) => (
       />
     </Form.Line>
     <Form.Line last>
-      <Button
-        variant="primary"
-        type="submit"
-        disabled={ !idle }
-      >Save</Button>
+      <Button.Group>
+        <Button
+          variant="primary"
+          type="submit"
+          disabled={ !idle }
+        >Save</Button>
+        <Button
+          variant="secondary"
+          disabled={ !idle }
+          onClick={ deleteProject }
+        >Delete</Button>
+      </Button.Group>
     </Form.Line>
   </Form>
 )

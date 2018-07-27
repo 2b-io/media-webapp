@@ -7,12 +7,14 @@ const Button = styled.button.attrs({
   display: inline-flex;
   align-items: center;
   margin: 0;
+  transition: background .3s linear;
+  transition: color .3s linear;
   cursor: ${
     ({ disabled }) => disabled ? 'not-allowed' : 'pointer'
   };
 
   ${
-    ({ plain, theme, variant }) => (variant || plain) ?
+    ({ disabled, plain, theme, variant }) => (variant || plain) ?
       css`
         text-transform: uppercase;
         border: none;
@@ -29,14 +31,26 @@ const Button = styled.button.attrs({
             line-height: 2.5em;
             background: ${ theme.background.base };
             font-weight: 600;
-            color: ${ theme[variant].base };
+            color: ${
+              disabled ?
+                theme.secondary.base :
+                theme[variant].base
+            };
 
             &:hover {
-              color: ${ theme[variant].light.base };
+              color: ${
+                disabled ?
+                  theme.secondary.light.base :
+                  theme[variant].light.base
+              };
             }
 
             &:active {
-              color: ${ theme[variant].dark.base };
+              color: ${
+                disabled ?
+                  theme.secondary.dark.base :
+                  theme[variant].dark.base
+              };
             }
           `
         }
@@ -47,25 +61,24 @@ const Button = styled.button.attrs({
         padding: 0 ${ theme.spacing.medium };
         line-height: 2.5em;
         background: ${
-          ({ disabled }) => disabled ?
+          disabled ?
             theme.secondary.base :
             theme.primary.base
         };
         color: ${
-          ({ disabled }) => disabled ?
+          disabled ?
             theme.secondary.on.base :
             theme.primary.on.base
         };
-        transition: background .3s linear;
 
         &:hover {
           background: ${
-            ({ disabled }) => disabled ?
+            disabled ?
               theme.secondary.light.base :
               theme.primary.light.base
           };
           color: ${
-            ({ disabled }) => disabled ?
+            disabled ?
               theme.secondary.light.on.base :
               theme.primary.light.on.base
           };
@@ -73,12 +86,12 @@ const Button = styled.button.attrs({
 
         &:active {
           background: ${
-            ({ disabled }) => disabled ?
+            disabled ?
               theme.secondary.dark.base :
               theme.primary.dark.base
           };
           color: ${
-            ({ disabled }) => disabled ?
+            disabled ?
               theme.secondary.dark.on.base :
               theme.primary.dark.on.base
           };

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Panel, TitleBar } from 'ui/compounds'
-import { Button, Container, Link, MasonryLayout, Nowrap } from 'ui/elements'
+import { Button, Container, Link, MasonryLayout, Nowrap, Paragraph } from 'ui/elements'
 import { FavoriteIcon } from 'ui/icons'
 
 const Project = ({ project, toProjectDetail }) => (
@@ -39,7 +39,13 @@ const ProjectList = ({
 }) => {
   if (!projects || !projects.length) {
     return (
-      <h2>No data ....</h2>
+      <main>
+        <Container>
+          <Paragraph>
+            You do not have any projects yet.
+          </Paragraph>
+        </Container>
+      </main>
     )
   }
 
