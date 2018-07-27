@@ -28,22 +28,15 @@ const fetchEmailLoop = function*() {
   }
 }
 const resetPasswordLoop = function*() {
+
   while (true) {
-
     const action = yield take(types['RESETPASSWORDCODE/FETCH_PASSWORD_RESET'])
-
     try {
       let { password, code } = action.payload
 
-      const statusReset = yield call(ResetPasswordCode.ressetPassword, password, code)
+      const statusReset = yield call(ResetPasswordCode.resetPassword, password, code)
 
-      yield all([
-        put(actions.fetchPasswordResetCompleted(statusReset)),
-        fork(addToast, {
-          type: 'success',
-          message: 'Password Reseted'
-        })
-      ])
+      yield put(actions.fetchPasswordResetCompleted(statusReset))
 
     } catch (e) {
       yield put(actions.fetchPasswordResetFailed(serializeError(e)))
@@ -60,9 +53,10 @@ const getResetCodeLoop = function*() {
     try {
       let { code } = action.payload
 
-      const resetPasswordCode = yield call(ResetPasswordCode.getResetCode, code)
+      const account = yield call(ResetPasswordCode.getResetCode, code)
 
-      put(actions.getResetCodeCompleted(resetPasswordCode))
+      yield put(actions.getResetCodeCompleted(account))
+
     } catch (e) {
       yield put(actions.getResetCodeFailed(serializeError(e)))
       continue

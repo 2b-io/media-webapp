@@ -62,10 +62,7 @@ export const ressetPassword = async (password, code) => {
 }
 
 export const getResetCode = async (code) => {
-  const accountExists = await ResetPasswordCode.findOne({ code }).lean()
-
-  if (!accountExists) {
-    return false
-  }
-  return true
+  const { uid } = await ResetPasswordCode.findOne({ code }).lean()
+  const account = await Account.findOne({ _id: uid }).lean()
+  return account
 }

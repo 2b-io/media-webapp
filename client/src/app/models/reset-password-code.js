@@ -7,7 +7,7 @@ export default {
         _requestResetPassword(email: $email)
       }
     `, { email })
-    return body._requestRessetPassword
+    return body._requestResetPassword
   },
   resetPassword: async (password, code) => {
     const body = await request(`
@@ -15,12 +15,14 @@ export default {
         _resetPassword(password: $password,code: $code)
       }
     `, { password, code })
-    return body._ressetPassword
+    return body._resetPassword
   },
   getResetCode: async (code) => {
     const body = await request(`
       query getResetCode($code: String!) {
-        getResetCode(code: $code)
+        getResetCode(code: $code) {
+          email
+        }
       }
     `, { code })
     return body.getResetCode

@@ -57,7 +57,7 @@ export default () => ({
         type: GraphQLNonNull(GraphQLString)
       }
     },
-    type: GraphQLBoolean,
+    type: Account,
     resolve: async (rootValue, { code }) => {
       return await getResetCode(code)
     }
