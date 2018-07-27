@@ -44,6 +44,21 @@ export const getProjectFailed = reason => ({
   payload: { reason }
 })
 
+export const deleteProject = slug => ({
+  type: types.DELETE,
+  payload: { slug }
+})
+
+export const deleteProjectCompleted = slug => ({
+  type: types.DELETE_COMPLETED,
+  payload: { slug }
+})
+
+export const deleteProjectFailed = reason => ({
+  type: types.DELETE_FAILED,
+  payload: { reason }
+})
+
 export const updateProject = project => ({
   type: types.UPDATE,
   payload: { project }

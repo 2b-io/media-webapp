@@ -89,9 +89,27 @@ export default {
 
     return body.session.account._createProject
   },
+  async delete(slug, token) {
+    const body = await request(`
+      query deleteProject($slug: String!, $token: String!) {
+        session(token: $token) {
+          account {
+            project(slug: $slug) {
+              _destroy
+            }
+          }
+        }
+      }
+    `, {
+      slug,
+      token
+    })
+
+    return body.session.account.project._destroy
+  },
   async update(project, token) {
     const body = await request(`
-      query updateProject($project: ProjectStruct!, $token: String!, $slug:  String!) {
+      query updateProject($project: ProjectStruct!, $token: String!, $slug: String!) {
         session(token: $token) {
           account {
             project(slug: $slug) {

@@ -40,7 +40,7 @@ const Wrapper = styled.div`
     `
   };
   box-shadow: 0 30px 80px ${
-    ({ theme }) => theme.secondary.limpid.base
+    ({ theme }) => theme.secondary.opaque.base
   };
   min-width: 280px; /* support iphone5s */
   max-width: ${

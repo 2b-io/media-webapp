@@ -15,6 +15,25 @@ const Wrapper = styled.nav`
   }
 `
 
+const Arrow = styled.div`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate3d(-50%, -25px, 0);
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 5px 5px 5px;
+  border-color: ${
+    ({ theme }) => `
+      transparent
+      transparent
+      ${ theme.secondary.limpid.base }
+      transparent
+    `
+  };
+`
+
 const DropDownMenu = styled.div`
   display: flex;
   flex-direction: column;
@@ -23,8 +42,8 @@ const DropDownMenu = styled.div`
   right: 0;
   padding: ${ ({ theme: { spacing: { medium } } }) => `0 ${ medium } ${ medium }}` };
   z-index: 9;
-  background: ${ ({ theme }) => theme.primary.limpid.base };
-  color: ${ ({ theme }) => theme.primary.limpid.on.base };
+  background: ${ ({ theme }) => theme.secondary.limpid.base };
+  color: ${ ({ theme }) => theme.secondary.limpid.on.base };
 
   & > * {
     margin-top: ${ ({ theme }) => theme.spacing.medium };
@@ -64,6 +83,7 @@ class CollapsibleMenu extends Component {
             showDropDownMenu && (
               <Portal node={ document && document.getElementById('wrapper') }>
                 <DropDownMenu dock={ dock }>
+                  <Arrow />
                   { children }
                 </DropDownMenu>
               </Portal>

@@ -6,6 +6,7 @@ import Project from './project'
 const Dashboard = () => (
   <Container>
     <MasonryLayout
+      rowHeight="tall"
       items={ [ {
         component: Project,
         grid: {

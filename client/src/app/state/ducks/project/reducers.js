@@ -6,7 +6,18 @@ import * as types from './types'
 
 export default combineReducers({
   projects: createReducer({})({
-    [ types.FETCH_COMPLETED ]: (state, action) =>  arrayToMap(action.payload.projects, 'slug'),
+    [ types.FETCH_COMPLETED ]: (state, action) => {
+      return action.payload.projects.reduce(
+        (projects, project) => ({
+          ...projects,
+          [ project.slug ]: {
+            ...project,
+            collaborators: arrayToMap(project.collaborators, '_id'),
+            presets: arrayToMap(project.presets, 'hash')
+          }
+        }), {}
+      )
+    },
     [ types.CREATE_COMPLETED ]: (state, action) => ({
       ...state,
       [ action.payload.project.slug ]: {
@@ -14,6 +25,12 @@ export default combineReducers({
         presets: arrayToMap(action.payload.project.presets, 'hash')
       }
     }),
+    [ types.DELETE_COMPLETED ]: (state, action) => {
+      const { slug } = action.payload
+      const { [ slug ]: removedProject, ...projects } = state
+
+      return projects
+    },
     [ types.GET_COMPLETED ]: (state, action) => ({
       ...state,
       [ action.payload.project.slug ]: {
@@ -80,7 +97,7 @@ export default combineReducers({
       const { slug }  = action.payload.collaborator
       const { collaborator } = action.payload
       const project = state[ slug ]
-      
+
       return {
         ...state,
         [ slug ]: {

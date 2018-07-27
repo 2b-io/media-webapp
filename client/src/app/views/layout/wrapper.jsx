@@ -17,6 +17,7 @@ const StyledWrapper = styled.div`
   overflow-y: ${
     ({ shown }) => shown ? 'auto' : 'hidden'
   };
+  background: ${ ({ theme }) => theme.background.base };
 `
 
 const Wrapper = ({ children, shown, menuWidth }) => (
