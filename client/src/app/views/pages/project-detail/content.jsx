@@ -123,7 +123,7 @@ const Project = ({
                       collaborators={ project.collaborators }
                       toProfile={ toProfile }
                       session={ session }
-                      makeOwner= { makeOwner }
+                      makeOwner={ makeOwner }
                     />
                 }
               </Panel.Content>

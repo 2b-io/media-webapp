@@ -246,9 +246,7 @@ export default {
         session(token: $token) {
           account {
             project(slug: $slug) {
-              _makeOwner(currentUId: $currentUId, nextUId: $nextUId){
-                ${ PERMISSION_FRAGMENT }
-              }
+              _makeOwner(currentUId: $currentUId, nextUId: $nextUId)
             }
           }
         }

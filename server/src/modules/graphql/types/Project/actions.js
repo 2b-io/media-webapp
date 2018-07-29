@@ -82,17 +82,16 @@ export default ({ Project, ProjectStruct }) => ({
       currentUId: {
         type: GraphQLNonNull(GraphQLString)
       },
-      nexUId: {
+      nextUId: {
         type: GraphQLNonNull(GraphQLString)
       }
     },
-    type: Collaborator,
-    resolve: async (project, { currentUId, nexUId }) => {
+    type: GraphQLBoolean,
+    resolve: async (project, { currentUId, nextUId }) => {
 
-      const p = await makeOwner(project, { currentUId, nexUId })
+      const p = await makeOwner(project, { currentUId, nextUId })
 
       // add ref
-      p.project = project
 
       return p
     }

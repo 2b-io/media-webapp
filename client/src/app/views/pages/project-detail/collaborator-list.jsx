@@ -27,7 +27,7 @@ const PrivilegeValue = styled.span`
 
 const CollaboratorList = ({ collaborators, toProfile, session, makeOwner }) => {
   const signedInCollaborator = Object.values(collaborators).find(
-    ({ account }) => account._id === session.account._id
+    ({ account }) => session && account._id === session.account._id
   )
 
   return (
@@ -48,8 +48,8 @@ const CollaboratorList = ({ collaborators, toProfile, session, makeOwner }) => {
                     { privilege === 'owner' &&
                       <PrivilegeValue>{privilege}</PrivilegeValue>
                     }
-                    { signedInCollaborator.privilege === 'owner' && privilege === 'admin' &&
-                      <Button variant="primary" onClick={ () => { makeOwner(session.account._id, _id ) } }>Make owner</Button>
+                    { signedInCollaborator && signedInCollaborator.privilege === 'owner' && privilege === 'admin' &&
+                      <Button variant="primary" onClick={ () => { makeOwner(session.account._id, account._id ) } }>Make owner</Button>
                     }
                   </Right>
                 </Wrapper>
