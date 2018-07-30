@@ -5,7 +5,7 @@ import { Form } from 'ui/compounds'
 import { TextBox } from 'views/common/form'
 import { validateEmail } from 'views/common/validate'
 
-const forgotPasswordForm = ({ handleSubmit, result, toSignIn }) => (
+const forgotPasswordForm = ({ handleSubmit }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Line>
       <TextBox
@@ -17,15 +17,10 @@ const forgotPasswordForm = ({ handleSubmit, result, toSignIn }) => (
       />
     </Form.Line>
     <Form.Line last>
-      {result && <Button
-        onClick={ () => { toSignIn() } }>
-        Back to login
-      </Button> ||
       <Button
         type="submit">
         Request reset password
       </Button>
-      }
     </Form.Line>
   </Form>
 )

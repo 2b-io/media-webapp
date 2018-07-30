@@ -18,31 +18,31 @@ export default {
       [ types.GET_RESET_CODE_COMPLETED ]: (state, action) => action.payload,
       [ types.GET_RESET_CODE_FAILED ]: () => null
     }),
-    idleFetchEmail: createReducer(true)({
-      [ types.FETCH_EMAIL ]: () => false,
-      [ types.FETCH_EMAIL_COMPLETED ]: () => true,
-      [ types.FETCH_EMAIL_FAILED ]: () => true,
+    idleForgotPassword: createReducer(true)({
+      [ types.FORGOT_PASSWORD ]: () => false,
+      [ types.FORGOT_PASSWORD_COMPLETED ]: () => true,
+      [ types.FORGOT_PASSWORD_FAILED ]: () => true,
     }),
-    errorFetchEmail: createReducer(null)({
-      [ types.FETCH_EMAIL_COMPLETED ]: () => null,
-      [ types.FETCH_EMAIL_FAILED ]: (state, action) => action.payload
+    errorForgotPassword: createReducer(null)({
+      [ types.FORGOT_PASSWORD_COMPLETED ]: () => null,
+      [ types.FORGOT_PASSWORD_FAILED ]: (state, action) => action.payload
     }),
-    resultFetchEmail: createReducer(null)({
-      [ types.FETCH_EMAIL_COMPLETED ]: (state, action) => action.payload,
-      [ types.FETCH_EMAIL_FAILED ]: () => null
+    resultForgotPassword: createReducer(null)({
+      [ types.FORGOT_PASSWORD_COMPLETED ]: (state, action) => action.payload,
+      [ types.FORGOT_PASSWORD_FAILED ]: () => null
     }),
     idleResetPassword: createReducer(true)({
-      [ types.FETCH_PASSWORD_RESET ]: () => false,
-      [ types.FETCH_PASSWORD_RESET_COMPLETED ]: () => true,
-      [ types.FETCH_PASSWORD_RESET_FAILED ]: () => true,
+      [ types.RESET_PASSWORD ]: () => false,
+      [ types.RESET_PASSWORD_COMPLETED ]: () => true,
+      [ types.RESET_PASSWORD_FAILED ]: () => true,
     }),
     errorResetPassword: createReducer(null)({
-      [ types.FETCH_PASSWORD_RESET_COMPLETED ]: () => null,
-      [ types.FETCH_PASSWORD_RESET_FAILED ]: (state, action) => action.payload
+      [ types.RESET_PASSWORD_COMPLETED ]: () => null,
+      [ types.RESET_PASSWORD_FAILED ]: (state, action) => action.payload
     }),
     resultResetPassword: createReducer(null)({
-      [ types.FETCH_PASSWORD_RESET_COMPLETED ]: (state, action) => action.payload,
-      [ types.FETCH_PASSWORD_RESET_FAILED ]: () => null
+      [ types.RESET_PASSWORD_COMPLETED ]: (state, action) => action.payload,
+      [ types.RESET_PASSWORD_FAILED ]: () => null
     })
   })
 }

@@ -1,33 +1,34 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
-import { Container, Description, Header, ErrorBox, SuccessBox } from 'ui/elements'
-import { actions, selectors } from 'state/interface'
-import { mapDispatch, mapState } from 'services/redux-helpers'
+import { Container, Description, Header, ErrorBox, SuccessBox, Link } from 'ui/elements'
+import { actions } from 'state/interface'
+import { mapDispatch } from 'services/redux-helpers'
 import { stateful } from 'views/common/decorators'
 
 import _ForgotPasswordForm from './forgot-password-form'
 
 const ForgotPasswordForm = reduxForm({
-  form: 'fetchEmail',
+  form: 'forgotPassword',
   enableReinitialize: true
 })(_ForgotPasswordForm)
 
-const ForgotPassword=({ fetchEmail, toSignIn, ui: { resultFetchEmail, errorFetchEmail } }) => {
+const ForgotPassword=({ forgotPassword, toSignIn, ui: { resultForgotPassword, errorFetchEmail } }) => {
   return (
     <main>
       <Container center size="small">
         { errorFetchEmail && <ErrorBox>Request reset password fail</ErrorBox> }
-        { resultFetchEmail && <React.Fragment>
+        { resultForgotPassword && <Fragment>
           <SuccessBox>Send request success</SuccessBox>
-        </React.Fragment> ||
-        <React.Fragment>
+        </Fragment> ||
+        <Fragment>
           <Header center> Forgot Password </Header>
           <Description justify> Enter your email address below and click on the &#39;Request reset password&#39; button </Description>
-        </React.Fragment>
+        </Fragment>
         }
-        <ForgotPasswordForm onSubmit={ fetchEmail } result={ resultFetchEmail } toSignIn={ toSignIn } />
+        <ForgotPasswordForm onSubmit={ forgotPassword } />
+        <Link href='/sign-in' onClick={ toSignIn }>Back to login</Link>
       </Container>
     </main>
   ) }
@@ -36,11 +37,9 @@ export default stateful({
   component: 'ResetPassword'
 })(
   connect(
-    mapState({
-      status: selectors.status
-    }),
+    null,
     mapDispatch({
-      fetchEmail: email => actions.fetchEmail(email),
+      forgotPassword: email => actions.forgotPassword(email),
       toSignIn: () => actions.requestLocation('/sign-in')
     })
   )(ForgotPassword)

@@ -4,7 +4,7 @@ import uuid from 'uuid'
 import Account from 'models/Account'
 import ResetPasswordCode from 'models/Reset-password-code'
 
-export const requestRessetPassword = async (email) => {
+export const forgotPassword = async (email) => {
   const account = await Account.findOne(email).lean()
 
   if (!account) {

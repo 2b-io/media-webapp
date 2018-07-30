@@ -17,7 +17,7 @@ export default {
   '/reset-password/:code': {
     component: ResetPassword,
     exact: true,
-    onEnter: ( code ) => [
+    onEnter: (code) => [
       actions.getResetCode(code)
     ]
   },
