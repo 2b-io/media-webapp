@@ -24,7 +24,7 @@ const ProjectForm = reduxForm({
 
 const Project = ({
   project,
-  currentAcount,
+  currentAccount,
   deleteProject,
   updateProject,
   toInviteModal,
@@ -122,7 +122,7 @@ const Project = ({
                     <CollaboratorList
                       collaborators={ project.collaborators }
                       toProfile={ toProfile }
-                      currentAcount={ currentAcount }
+                      currentAccount={ currentAccount }
                       makeOwner={ makeOwner }
                     />
                 }
@@ -168,7 +168,7 @@ export default withParams(
     connect(
       (state, { params: { slug } }) => ({
         project: selectors.findProjectBySlug(state, slug),
-        currentAcount: selectors.currentAcount(state)
+        currentAccount: selectors.currentAccount(state)
       }),
       mapDispatch({
         deleteProject: actions.deleteProject,

@@ -8,14 +8,14 @@ const Wrapper = styled.div`
   display: flex;
 `
 
-const LeftStyled = styled.div`
+const AccountStyled = styled.div`
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 `
 
-const RightStyled = styled.div`
+const PrivilegeStyled = styled.div`
   flex-grow: 0;
 `
 
@@ -25,9 +25,9 @@ const PrivilegeValue = styled.span`
   };
 `
 
-const CollaboratorList = ({ collaborators, toProfile, currentAcount, makeOwner }) => {
+const CollaboratorList = ({ collaborators, toProfile, currentAccount, makeOwner }) => {
   const signedInCollaborator = Object.values(collaborators).find(
-    ({ account }) => currentAcount && account._id === currentAcount._id
+    ({ account }) => currentAccount && account._id === currentAccount._id
   )
 
   return (
@@ -37,19 +37,19 @@ const CollaboratorList = ({ collaborators, toProfile, currentAcount, makeOwner }
           ({ _id, account, privilege }) => (
             <List.Item key={ _id }>
               <Wrapper>
-                <LeftStyled>
+                <AccountStyled>
                   <Link href="#" onClick={ () => toProfile(account._id) } >
                     <span>{ account.email }</span>
                   </Link>
-                </LeftStyled>
-                <RightStyled>
+                </AccountStyled>
+                <PrivilegeStyled>
                   { privilege === 'owner' &&
                     <PrivilegeValue>{ privilege }</PrivilegeValue>
                   }
                   { signedInCollaborator && signedInCollaborator.privilege === 'owner' && privilege === 'admin' &&
-                    <Button variant="primary" onClick={ () => { makeOwner(currentAcount._id, account._id ) } }>Make owner</Button>
+                    <Button variant="primary" onClick={ () => { makeOwner(currentAccount._id, account._id ) } }>Make owner</Button>
                   }
-                </RightStyled>
+                </PrivilegeStyled>
               </Wrapper>
             </List.Item>
           )
