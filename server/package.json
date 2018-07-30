@@ -3,8 +3,10 @@
   "dependencies": {
     "bcrypt": "2.0.1",
     "body-parser": "1.18.2",
+    "dotenv": "6.0.0",
     "express": "4.16.3",
     "express-graphql": "0.6.12",
+    "fs-extra": "7.0.0",
     "graphql": "0.13.2",
     "graphql-type-json": "0.2.1",
     "http-proxy-middleware": "0.18.0",
@@ -13,9 +15,7 @@
     "morgan": "1.9.0",
     "ms": "2.1.1",
     "random-int": "1.0.0",
-    "recursive-config": "1.0.1",
     "serialize-error": "2.1.0",
-    "sha256": "0.2.0",
     "shorthash": "0.0.2",
     "uuid": "3.2.1"
   },
@@ -28,7 +28,7 @@
     "nodemon": "1.17.3"
   },
   "scripts": {
-    "start": "nodemon ./src --watch ./src --watch ./internals --ignore ./node_modules --delay 1000ms --exec babel-node --CONFIG=./internals/config.dev.js",
+    "start": "nodemon ./src --watch ./src --watch ./internals --ignore ./node_modules --delay 1000ms --exec babel-node",
     "build": "rm -rf ./build && babel ./src -d ./build"
   }
 }
