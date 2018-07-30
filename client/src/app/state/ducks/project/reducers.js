@@ -4,6 +4,15 @@ import createReducer from 'state/helpers/create-reducer'
 
 import * as types from './types'
 
+const collaboratorsToMap = (arr, indexKey) => arr.reduce(
+  (dict, element) => ({
+    ...dict,
+    [ element.account[ indexKey ] ]: element
+  }),
+  {}
+)
+
+
 export default combineReducers({
   projects: createReducer({})({
     [ types.FETCH_COMPLETED ]: (state, action) => {
@@ -36,8 +45,7 @@ export default combineReducers({
       [ action.payload.project.slug ]: {
         ...action.payload.project,
         presets: arrayToMap(action.payload.project.presets, 'hash'),
-        collaborators: arrayToMap(action.payload.project.collaborators, '_id'),
-
+        collaborators: collaboratorsToMap(action.payload.project.collaborators, '_id'),
       }
     }),
     [ types.GET_PRESET_COMPLETED ]: (state, action) => {
@@ -104,9 +112,30 @@ export default combineReducers({
           ...project,
           collaborators: {
             ...state[ slug ].collaborators,
-            [ collaborator._id ]: collaborator
+            [ collaborator.account._id ]: collaborator
           }
         }
+      }
+    },
+    [ types.MAKE_OWNER_COMPLETED ]: (state, action) => {
+      const { slug }  = action.payload
+      const { currentAccountId } = action.payload
+      const { accountId } = action.payload
+      const project = state[ slug ]
+      return {
+        ...state,
+        [ slug ]: {
+          ...project,
+          collaborators: {
+            ...state[ slug ].collaborators,
+            [ currentAccountId ]: {
+              ...state[ slug ].collaborators[ currentAccountId ], privilege: 'admin',
+            },
+            [ accountId ]: {
+              ...state[ slug ].collaborators[ accountId ], privilege: 'owner'
+            }
+          }
+        },
       }
     }
   }),
