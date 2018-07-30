@@ -140,7 +140,7 @@ const inviteCollaboratorLoop = function*() {
   while (true) {
     const action = yield take(types['PROJECT/INVITE_COLLABORATOR'])
     const currentLocation = yield select(selectors.currentLocation)
-    const slug = currentLocation.pathname.split("/")[2]
+    const slug = currentLocation.pathname.split('/')[2]
     try {
       const session = yield select(selectors.currentSession)
 
@@ -167,6 +167,34 @@ const inviteCollaboratorLoop = function*() {
   }
 }
 
+const makeOwnerLoop = function*() {
+  while (true) {
+    const action = yield take(types['PROJECT/MAKE_OWNER'])
+
+    try {
+      const session = yield select(selectors.currentSession)
+      if (!session) {
+        continue
+      }
+
+      const owner = yield call(Project.makeOwner, session.token, action.payload.slug, action.payload.accountId)
+      if (owner) {
+        yield all([
+          put(actions.makeOwnerCompleted(action.payload.slug, session.account._id, action.payload.accountId)),
+          fork(addToast, {
+            type: 'success',
+            message: 'Change Owner'
+          })
+        ])
+      }
+
+    } catch (e) {
+      yield put(actions.makeOwnerFailed(serializeError(e)))
+      continue
+    }
+  }
+}
+
 export default function*() {
   yield take('@@INITIALIZED')
   yield fork(createLoop)
@@ -175,4 +203,5 @@ export default function*() {
   yield fork(getLoop)
   yield fork(updateLoop)
   yield fork(inviteCollaboratorLoop)
+  yield fork(makeOwnerLoop)
 }

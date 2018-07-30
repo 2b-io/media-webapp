@@ -148,3 +148,18 @@ export const inviteCollaboratorFailed = reason => ({
   type: types.INVITE_COLLABORATOR_FAILED,
   payload: { reason }
 })
+
+export const makeOwner = (accountId, slug) => ({
+  type: types.MAKE_OWNER,
+  payload: { accountId, slug }
+})
+
+export const makeOwnerCompleted = ( slug, currentAccountId, accountId ) => ({
+  type: types.MAKE_OWNER_COMPLETED,
+  payload: { slug, currentAccountId, accountId }
+})
+
+export const makeOwnerFailed = reason => ({
+  type: types.MAKE_OWNER_FAILED,
+  payload: { reason }
+})

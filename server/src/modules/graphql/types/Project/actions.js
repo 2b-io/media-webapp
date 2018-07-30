@@ -8,7 +8,8 @@ import {
   create as createPreset
 } from 'services/preset'
 import {
-  invite as inviteCollaborator
+  invite as inviteCollaborator,
+  makeOwner as makeOwner
 } from 'services/permission'
 import {
   remove as removeProject,
@@ -74,6 +75,18 @@ export default ({ Project, ProjectStruct }) => ({
       p.project = project
 
       return p
+    }
+  },
+  _makeOwner: {
+    args: {
+      accountId: {
+        type: GraphQLNonNull(GraphQLString)
+      }
+    },
+    type: GraphQLBoolean,
+    resolve: async (project, { accountId }) => {
+
+      return await makeOwner(project, { accountId })
     }
   }
 })

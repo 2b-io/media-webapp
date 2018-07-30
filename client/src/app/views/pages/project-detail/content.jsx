@@ -24,12 +24,14 @@ const ProjectForm = reduxForm({
 
 const Project = ({
   project,
+  currentAccount,
   deleteProject,
   updateProject,
   toInviteModal,
   toPresetDetail,
   toProfile,
   toProjectDetail,
+  makeOwner,
   ui: {
     idle, notFound,
     deleteError, deleteResult,
@@ -120,6 +122,8 @@ const Project = ({
                     <CollaboratorList
                       collaborators={ project.collaborators }
                       toProfile={ toProfile }
+                      currentAccount={ currentAccount }
+                      makeOwner={ (accountId) => { makeOwner(accountId, project.slug) } }
                     />
                 }
               </Panel.Content>
@@ -164,6 +168,7 @@ export default withParams(
     connect(
       (state, { params: { slug } }) => ({
         project: selectors.findProjectBySlug(state, slug),
+        currentAccount: selectors.currentAccount(state)
       }),
       mapDispatch({
         deleteProject: actions.deleteProject,
@@ -171,7 +176,8 @@ export default withParams(
         toInviteModal: slug => actions.requestLocation(`/projects/${ slug }/invite`),
         toPresetDetail: (slug, hash) => actions.requestLocation(`/projects/${ slug }/presets/${ hash }`),
         toProfile: id => actions.requestLocation(`/@${ id }`),
-        toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`)
+        toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
+        makeOwner: ( accountId, slug ) => actions.makeOwner(accountId, slug)
       })
     )(Project)
   )

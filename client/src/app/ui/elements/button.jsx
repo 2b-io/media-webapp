@@ -7,6 +7,7 @@ const Button = styled.button.attrs({
   display: inline-flex;
   align-items: center;
   margin: 0;
+  white-space: nowrap;
   transition: background .3s linear;
   transition: color .3s linear;
   cursor: ${
