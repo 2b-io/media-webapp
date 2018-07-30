@@ -240,13 +240,13 @@ export default {
     })
     return body.session.account.project._inviteCollaborator
   },
-  async makeOwner(token, slug, currentUId, nextUId) {
+  async makeOwner(token, slug, accountId) {
     const body = await request(`
-      query makeOwner($token: String!, $slug: String!, $currentUId: String!, $nextUId: String!) {
+      query makeOwner($token: String!, $slug: String!, $accountId: String!) {
         session(token: $token) {
           account {
             project(slug: $slug) {
-              _makeOwner(currentUId: $currentUId, nextUId: $nextUId)
+              _makeOwner(accountId: $accountId)
             }
           }
         }
@@ -254,8 +254,7 @@ export default {
     `, {
       token,
       slug,
-      currentUId,
-      nextUId
+      accountId
     })
     return body.session.account.project._makeOwner
   }

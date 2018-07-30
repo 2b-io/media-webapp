@@ -35,23 +35,23 @@ const CollaboratorList = ({ collaborators, toProfile, currentAccount, makeOwner 
       {
         Object.values(collaborators).map(
           ({ _id, account, privilege }) => (
-            <List.Item key={ _id }>
-              <Wrapper>
-                <AccountStyled>
-                  <Link href="#" onClick={ () => toProfile(account._id) } >
-                    <span>{ account.email }</span>
-                  </Link>
-                </AccountStyled>
-                <PrivilegeStyled>
-                  { privilege === 'owner' &&
-                    <PrivilegeValue>{ privilege }</PrivilegeValue>
-                  }
-                  { signedInCollaborator && signedInCollaborator.privilege === 'owner' && privilege === 'admin' &&
-                    <Button variant="primary" onClick={ () => { makeOwner(currentAccount._id, account._id ) } }>Make owner</Button>
-                  }
-                </PrivilegeStyled>
-              </Wrapper>
-            </List.Item>
+              <List.Item key={ _id }>
+                <Wrapper>
+                  <AccountStyled>
+                    <Link href="#" onClick={ () => toProfile(account._id) } >
+                      <span>{ account.email }</span>
+                    </Link>
+                  </AccountStyled>
+                  <PrivilegeStyled>
+                    { privilege === 'owner' &&
+                      <PrivilegeValue>{privilege}</PrivilegeValue>
+                    }
+                    { signedInCollaborator && signedInCollaborator.privilege === 'owner' && privilege === 'admin' &&
+                      <Button variant="primary" onClick={ () => { makeOwner(account._id) } }>Make owner</Button>
+                    }
+                  </PrivilegeStyled>
+                </Wrapper>
+              </List.Item>
           )
         )
       }
