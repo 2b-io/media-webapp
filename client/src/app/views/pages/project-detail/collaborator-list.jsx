@@ -8,14 +8,14 @@ const Wrapper = styled.div`
   display: flex;
 `
 
-const Left = styled.div`
+const LeftStyled = styled.div`
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 `
 
-const Right = styled.div`
+const RightStyled = styled.div`
   flex-grow: 0;
 `
 
@@ -25,37 +25,34 @@ const PrivilegeValue = styled.span`
   };
 `
 
-const CollaboratorList = ({ collaborators, toProfile, session, makeOwner }) => {
+const CollaboratorList = ({ collaborators, toProfile, currentAcount, makeOwner }) => {
   const signedInCollaborator = Object.values(collaborators).find(
-    ({ account }) => session && account._id === session.account._id
+    ({ account }) => currentAcount && account._id === currentAcount._id
   )
 
   return (
     <List>
       {
         Object.values(collaborators).map(
-          ({ _id, account, privilege }) => {
-
-            return (
-              <List.Item key={ _id }>
-                <Wrapper>
-                  <Left>
-                    <Link href="#" onClick={ () => toProfile(account._id) } >
-                      <span>{ account.email }</span>
-                    </Link>
-                  </Left>
-                  <Right>
-                    { privilege === 'owner' &&
-                      <PrivilegeValue>{privilege}</PrivilegeValue>
-                    }
-                    { signedInCollaborator && signedInCollaborator.privilege === 'owner' && privilege === 'admin' &&
-                      <Button variant="primary" onClick={ () => { makeOwner(session.account._id, account._id ) } }>Make owner</Button>
-                    }
-                  </Right>
-                </Wrapper>
-              </List.Item>
-            )
-          }
+          ({ _id, account, privilege }) => (
+            <List.Item key={ _id }>
+              <Wrapper>
+                <LeftStyled>
+                  <Link href="#" onClick={ () => toProfile(account._id) } >
+                    <span>{ account.email }</span>
+                  </Link>
+                </LeftStyled>
+                <RightStyled>
+                  { privilege === 'owner' &&
+                    <PrivilegeValue>{ privilege }</PrivilegeValue>
+                  }
+                  { signedInCollaborator && signedInCollaborator.privilege === 'owner' && privilege === 'admin' &&
+                    <Button variant="primary" onClick={ () => { makeOwner(currentAcount._id, account._id ) } }>Make owner</Button>
+                  }
+                </RightStyled>
+              </Wrapper>
+            </List.Item>
+          )
         )
       }
     </List>
