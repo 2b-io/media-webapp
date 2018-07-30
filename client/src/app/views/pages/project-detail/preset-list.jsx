@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { List } from 'ui/compounds'
 
 const SmallValue = styled.span`
-  font-size: 10px;
+  font-size: 0.7em;
 `
 
 const PresetList = ({ presets, onPresetSelected }) => (
