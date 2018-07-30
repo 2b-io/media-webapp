@@ -22,7 +22,7 @@ export const invite = async (project, email) => {
   const permission = await new Permission({
     project: project._id,
     account: account._id,
-    privilege: 'owner'
+    privilege: 'admin'
   }).save()
 
   return permission
