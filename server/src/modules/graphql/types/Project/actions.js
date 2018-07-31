@@ -79,21 +79,14 @@ export default ({ Project, ProjectStruct }) => ({
   },
   _makeOwner: {
     args: {
-      currentUId: {
-        type: GraphQLNonNull(GraphQLString)
-      },
-      nextUId: {
+      accountId: {
         type: GraphQLNonNull(GraphQLString)
       }
     },
     type: GraphQLBoolean,
-    resolve: async (project, { currentUId, nextUId }) => {
+    resolve: async (project, { accountId }) => {
 
-      const p = await makeOwner(project, { currentUId, nextUId })
-
-      // add ref
-
-      return p
+      return await makeOwner(project, { accountId })
     }
   }
 })

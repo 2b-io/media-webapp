@@ -44,10 +44,10 @@ const CollaboratorList = ({ collaborators, toProfile, currentAccount, makeOwner 
                 </AccountStyled>
                 <PrivilegeStyled>
                   { privilege === 'owner' &&
-                    <PrivilegeValue>{ privilege }</PrivilegeValue>
+                    <PrivilegeValue>{privilege}</PrivilegeValue>
                   }
                   { signedInCollaborator && signedInCollaborator.privilege === 'owner' && privilege === 'admin' &&
-                    <Button variant="primary" onClick={ () => { makeOwner(currentAccount._id, account._id ) } }>Make owner</Button>
+                    <Button variant="primary" onClick={ () => { makeOwner(account._id) } }>Make owner</Button>
                   }
                 </PrivilegeStyled>
               </Wrapper>

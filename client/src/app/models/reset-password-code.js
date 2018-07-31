@@ -1,20 +1,30 @@
 import request from 'services/graphql'
 
 export default {
-  requestResset: async (email) => {
+  forgotPassword: async (email) => {
     const body = await request(`
-      query requestRessetPassword($email: String!) {
-        _requestRessetPassword(email: $email)
+      query forgotPassword($email: String!) {
+        _forgotPassword(email: $email)
       }
     `, { email })
-    return body._requestRessetPassword
+    return body._forgotPassword
   },
-  ressetPassword: async (password, code) => {
+  resetPassword: async (password, code) => {
     const body = await request(`
-      query ressetPassword($password: String!,$code: String!) {
-        _ressetPassword(password: $password,code: $code)
+      query resetPassword($password: String!,$code: String!) {
+        _resetPassword(password: $password,code: $code)
       }
     `, { password, code })
-    return body._ressetPassword
+    return body._resetPassword
+  },
+  getResetCode: async (code) => {
+    const body = await request(`
+      query getResetCode($code: String!) {
+        getResetCode(code: $code) {
+          email
+        }
+      }
+    `, { code })
+    return body.getResetCode
   }
 }

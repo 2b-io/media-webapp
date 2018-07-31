@@ -170,20 +170,17 @@ const inviteCollaboratorLoop = function*() {
 const makeOwnerLoop = function*() {
   while (true) {
     const action = yield take(types['PROJECT/MAKE_OWNER'])
-    const currentLocation = yield select(selectors.currentLocation)
-    const slug = currentLocation.pathname.split('/')[2]
+
     try {
       const session = yield select(selectors.currentSession)
-
       if (!session) {
         continue
       }
 
-      const collaborator = yield call(Project.makeOwner, session.token, slug, action.payload.currentUId, action.payload.nextUId)
-      collaborator.slug = slug
-      if (collaborator) {
+      const owner = yield call(Project.makeOwner, session.token, action.payload.slug, action.payload.accountId)
+      if (owner) {
         yield all([
-          put(actions.makeOwnerCompleted(collaborator)),
+          put(actions.makeOwnerCompleted(action.payload.slug, session.account._id, action.payload.accountId)),
           fork(addToast, {
             type: 'success',
             message: 'Change Owner'

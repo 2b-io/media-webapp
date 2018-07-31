@@ -1,27 +1,40 @@
 import * as types from './types'
 
-export const fetchEmail = email => ({
-  type: types.FETCH_EMAIL,
+export const forgotPassword = email => ({
+  type: types.FORGOT_PASSWORD,
   payload: email
 })
-export const fetchEmailCompleted = status => ({
-  type: types.FETCH_EMAIL_COMPLETED,
+export const forgotPasswordCompleted = status => ({
+  type: types.FORGOT_PASSWORD_COMPLETED,
   payload: status
 })
-export const fetchEmailFailed = error => ({
-  type: types.FETCH_EMAIL_FAILED,
+export const forgotPasswordFailed = error => ({
+  type: types.FORGOT_PASSWORD_FAILED,
   payload: error
 })
 
-export const fetchPasswordReset = (password, code) => ({
-  type: types.FETCH_PASSWORD_RESET,
+export const resetPassword = (password, code) => ({
+  type: types.RESET_PASSWORD,
   payload: { password, code }
 })
-export const fetchPasswordResetCompleted = statusReset => ({
-  type: types.FETCH_PASSWORD_RESET_COMPLETED,
+export const resetPasswordCompleted = statusReset => ({
+  type: types.RESET_PASSWORD_COMPLETED,
   payload: statusReset
 })
-export const fetchPasswordResetFailed = error => ({
-  type: types.FETCH_PASSWORD_RESET_FAILED,
+export const resetPasswordFailed = error => ({
+  type: types.RESET_PASSWORD_FAILED,
+  payload: error
+})
+
+export const getResetCode = code => ({
+  type: types.GET_RESET_CODE,
+  payload: code
+})
+export const getResetCodeCompleted = resetPasswordCode => ({
+  type: types.GET_RESET_CODE_COMPLETED,
+  payload: resetPasswordCode
+})
+export const getResetCodeFailed = error => ({
+  type: types.GET_RESET_CODE_FAILED,
   payload: error
 })

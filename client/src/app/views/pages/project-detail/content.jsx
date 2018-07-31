@@ -123,7 +123,7 @@ const Project = ({
                       collaborators={ project.collaborators }
                       toProfile={ toProfile }
                       currentAccount={ currentAccount }
-                      makeOwner={ makeOwner }
+                      makeOwner={ (accountId) => { makeOwner(accountId, project.slug) } }
                     />
                 }
               </Panel.Content>
@@ -177,7 +177,7 @@ export default withParams(
         toPresetDetail: (slug, hash) => actions.requestLocation(`/projects/${ slug }/presets/${ hash }`),
         toProfile: id => actions.requestLocation(`/@${ id }`),
         toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
-        makeOwner: actions.makeOwner
+        makeOwner: ( accountId, slug ) => actions.makeOwner(accountId, slug)
       })
     )(Project)
   )
