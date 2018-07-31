@@ -17,7 +17,10 @@ const forgotPasswordForm = ({ handleSubmit }) => (
       />
     </Form.Line>
     <Form.Line last>
-      <Button type="submit">Request reset password</Button>
+      <Button
+        type="submit">
+        Request reset password
+      </Button>
     </Form.Line>
   </Form>
 )
