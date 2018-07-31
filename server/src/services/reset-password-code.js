@@ -3,8 +3,10 @@ import uuid from 'uuid'
 
 import Account from 'models/Account'
 import ResetPasswordCode from 'models/Reset-password-code'
+import { sendEmailResetPassword } from 'services/send-email'
 
 export const forgotPassword = async (email) => {
+
   const account = await Account.findOne(email).lean()
 
   if (!account) {
@@ -36,9 +38,10 @@ export const forgotPassword = async (email) => {
     uid: _id,
     expired: newExpired
   }).save()
-  //to do send email (/code)
-  return true
 
+  const sendEmai = await sendEmailResetPassword(email.email, code)
+
+  return sendEmai
 }
 
 export const ressetPassword = async (password, code) => {

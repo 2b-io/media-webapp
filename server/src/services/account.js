@@ -1,4 +1,5 @@
 import Account from 'models/Account'
+import { sendEmailRegister } from 'services/send-email'
 
 export const list = async () => {
   return await Account.find().lean().exec()
@@ -10,10 +11,14 @@ export const create = async (info) => {
 
   const { email, password = '123456' } = info
 
-  return await new Account({
+  const account = await new Account({
     email,
     password
   }).save()
+
+  account && sendEmailRegister({ email })
+  
+  return account
 }
 
 export const findById = async (id) => {
