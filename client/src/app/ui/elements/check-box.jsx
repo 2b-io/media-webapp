@@ -35,6 +35,17 @@ const Container = styled.div`
 
 const Button = styled.div`
   min-width: 200px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  padding: ${ ({ theme }) => `0 ${ theme.spacing.small }` };
+`
+
+const State = styled.span`
+  flex: 1;
+  z-index: 1;
+  line-height: 30px;
+  height: 30px;
 `
 
 const Label = styled.label`
@@ -43,7 +54,7 @@ const Label = styled.label`
   z-index: 1;
   top: 0;
   left: 6px;
-  background: ${ ({ theme }) => theme.background.base };;
+  background: ${ ({ theme }) => theme.background.base };
   line-height: ${ ({ theme }) => theme.spacing.medium };
   height: ${ ({ theme }) => theme.spacing.medium };
   padding: ${ ({ theme }) => `0 ${ theme.spacing.tiny }` };
@@ -53,7 +64,6 @@ const Switch = styled.label`
   position: relative;
   display: inline-block;
   width: 100%;
-  height: 34px;
   margin: ${ ({ theme }) => theme.spacing.small } 0 ${ ({ theme }) => theme.spacing.tiny };
 `
 const Slider = styled.span`
@@ -70,14 +80,13 @@ const Slider = styled.span`
   &:before {
     position: absolute;
     content: "";
-    height: 26px;
+    height: 100%;
     width: 50%;
     left: 0;
-    bottom: 4px;
+    z-index: 2;
     background-color: ${ ({ theme }) => theme.white.base };
     transition: .4s;
   }
-
 `
 
 const Input = styled.input.attrs({
@@ -86,7 +95,7 @@ const Input = styled.input.attrs({
   display:none;
 
   &:checked + ${ Slider } {
-    background-color: ${ ({ theme }) => theme.primary.base };;
+    background-color: ${ ({ theme }) => theme.primary.base };
   }
 
   &:checked + ${ Slider } {
@@ -103,6 +112,8 @@ const CheckBox = ({ label, ...props }) => (
         <Button>
           <Input { ...props } />
           <Slider />
+          <State>ON</State>
+          <State>OFF</State>
         </Button>
       </Switch>
     </Container>
