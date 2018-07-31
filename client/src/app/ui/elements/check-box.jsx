@@ -64,8 +64,9 @@ const Switch = styled.label`
   position: relative;
   display: inline-block;
   width: 100%;
-  margin: ${ ({ theme }) => theme.spacing.small } 0 ${ ({ theme }) => theme.spacing.tiny };
+  margin: ${ ({ theme }) => theme.spacing.small } 0;
 `
+
 const Slider = styled.span`
   position: absolute;
   cursor: pointer;
