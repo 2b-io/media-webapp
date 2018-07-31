@@ -1,8 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { SuccessIcon, ErrorIcon } from 'ui/icons'
-
 
 const Wrapper = styled.div`
   padding-top: ${
@@ -18,24 +16,19 @@ const Container = styled.div`
 `
 
 const Input = styled.input.attrs({
-  type: ({ type = 'checkbox' }) => type
+  type: 'checkbox'
 })`
   width: 20px;
   height: 20px;
 `
 
-const CheckBox = ({
-  label,
-  ...props
-}) => (
+const CheckBox = ({ label, ...props }) => (
   <Wrapper>
     <Container { ...props }>
-      {
-        label && <div>{ label }</div>
-      }
-      {
+      <label > { label } </label>
+      <div>
         <Input { ...props } />
-      }
+      </div>
     </Container>
   </Wrapper>
 )
