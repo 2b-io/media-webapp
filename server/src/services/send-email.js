@@ -1,27 +1,30 @@
 import ses from 'infrastructure/mailer/ses'
-import { Register, ResetPassword } from 'services/teamplate-email'
+import { register, resetPassword } from 'services/email-template'
 
-const sendEmail = (params) => {
+const sendEmail = async (emailContent, email) => {
 
-  const sendPromise = ses.sendEmail(params).promise()
+  const destination = { ToAddresses: [ `${ email }` ] }
 
-  return sendPromise
+  const params = { ...emailContent, Destination: destination }
+
+  return await ses.sendEmail(params).promise()
+
 }
 
 export const sendEmailRegister = async (email) => {
 
-  const contentEmail = await Register(email)
+  const emailContent = register(email)
 
-  const result = await sendEmail(contentEmail)
+  const result = await sendEmail(emailContent, email)
 
   return result.MessageId ? true : false
 }
 
 export const sendEmailResetPassword = async (email, code) => {
 
-  const contentEmail = await ResetPassword({ email, code })
+  const emailContent = resetPassword({ email, code })
 
-  const result = await sendEmail(contentEmail)
+  const result = await sendEmail(emailContent, email)
 
   return result.MessageId ? true : false
 }

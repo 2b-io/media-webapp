@@ -7,7 +7,7 @@ import { sendEmailResetPassword } from 'services/send-email'
 
 export const forgotPassword = async (email) => {
 
-  const account = await Account.findOne(email).lean()
+  const account = await Account.findOne({ email }).lean()
 
   if (!account) {
     return false
@@ -39,9 +39,9 @@ export const forgotPassword = async (email) => {
     expired: newExpired
   }).save()
 
-  const sendEmai = await sendEmailResetPassword(email.email, code)
+  const sendEmail = await sendEmailResetPassword(email, code)
 
-  return sendEmai
+  return sendEmail
 }
 
 export const ressetPassword = async (password, code) => {

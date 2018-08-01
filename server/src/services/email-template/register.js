@@ -6,9 +6,6 @@ const baseUrl =  config.baseUrl
 const Register = ({ email }) => {
 
   const params = {
-    Destination: {
-      ToAddresses: [ `${ email }` ]
-    },
     Message: {
       Body: {
         Html: {
@@ -24,10 +21,6 @@ const Register = ({ email }) => {
                 <a href="${ baseUrl }/sign-in">Click here login app</a>
               </body>
             </html>`
-        },
-        Text: {
-          Charset: 'UTF-8',
-          Data: `Hello ${ email }`
         }
       },
       Subject: {

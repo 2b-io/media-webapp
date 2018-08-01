@@ -5,9 +5,6 @@ const baseUrl =  config.baseUrl
 
 const ResetPassword = ({ email, code }) => {
   const params = {
-    Destination: {
-      ToAddresses: [ `${ email }` ]
-    },
     Message: {
       Body: {
         Html: {
@@ -22,10 +19,6 @@ const ResetPassword = ({ email, code }) => {
                 <a href="${ baseUrl }/reset-password/${ code }">Click here reset Password</a>
               </body>
             </html>`
-        },
-        Text: {
-          Charset: 'UTF-8',
-          Data: `Hello ${ email }`
         }
       },
       Subject: {
