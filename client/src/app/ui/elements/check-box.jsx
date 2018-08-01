@@ -21,31 +21,33 @@ const Wrapper = styled.div`
 
 const Container = styled.div`
   position: relative;
-  width: 50%;
-  min-width: 200px;
+  display: inline-flex;
   transition: border .3s linear;
   background: ${ ({ theme }) => theme.white.base };
   color: ${ ({ theme }) => theme.white.on.base };
+  padding: ${
+    ({ theme }) => theme.spacing.small
+  };
   ${
     ({ disabled, readOnly, theme }) =>
       (disabled || readOnly) ? border(theme.secondary) : border(theme.primary)
   };
-
 `
 
 const Button = styled.div`
-  min-width: 200px;
+  width: 100%;
   display: flex;
   text-align: center;
   justify-content: center;
-  padding: ${ ({ theme }) => `0 ${ theme.spacing.small }` };
 `
 
 const State = styled.span`
-  flex: 1;
-  z-index: 1;
-  line-height: 30px;
-  height: 30px;
+  width: 100px;
+  flex-basis: 50%;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 const Label = styled.label`
@@ -62,9 +64,8 @@ const Label = styled.label`
 
 const Switch = styled.label`
   position: relative;
-  display: inline-block;
+  display: block;
   width: 100%;
-  margin: ${ ({ theme }) => theme.spacing.small } 0;
 `
 
 const Slider = styled.span`
@@ -74,9 +75,6 @@ const Slider = styled.span`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${ ({ theme }) => theme.secondary.opaque.base };
-  transition: .4s;
-  margin: 0 ${ ({ theme }) => theme.spacing.small };
 
   &:before {
     position: absolute;
@@ -84,9 +82,8 @@ const Slider = styled.span`
     height: 100%;
     width: 50%;
     left: 0;
-    z-index: 2;
-    background-color: ${ ({ theme }) => theme.white.base };
-    transition: .4s;
+    background-color: ${ ({ theme }) => theme.secondary.base };
+    transition: transform .3s linear;
   }
 `
 
@@ -95,26 +92,25 @@ const Input = styled.input.attrs({
 })`
   display:none;
 
-  &:checked + ${ Slider } {
+  &:checked + ${ Slider }:before {
     background-color: ${ ({ theme }) => theme.primary.base };
-  }
-
-  &:checked + ${ Slider } {
-    &:before {
-      transform: translateX(100%);
-    }
+    transform: translate3d(100%, 0, 0);
   }
 `
 
-const CheckBox = ({ label, ...props }) => (
+const CheckBox = ({
+  label,
+  checkedText, uncheckedText,
+  ...props
+}) => (
   <Wrapper>
     <Container { ...props }>
       <Switch>
         <Button>
-          <Input { ...props } />
+          <State>{ checkedText }</State>
+          <State>{ uncheckedText }</State>
+          <Input { ...props } checked={ props.value } />
           <Slider />
-          <State>ON</State>
-          <State>OFF</State>
         </Button>
       </Switch>
     </Container>

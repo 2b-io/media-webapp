@@ -46,7 +46,9 @@ const ProjectForm = ({ deleteProject, handleSubmit, idle }) => (
     </Form.Line>
     <Form.Line>
       <CheckBox
-        label="Disabled Project"
+        label="Project Status"
+        checkedText="Disabled"
+        uncheckedText="Enabled"
         name="disabled"
         disabled={ !idle }
       />
