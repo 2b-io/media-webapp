@@ -1,6 +1,7 @@
 {
   "license": "MIT",
   "dependencies": {
+    "aws-sdk": "2.283.1",
     "bcrypt": "2.0.1",
     "body-parser": "1.18.2",
     "dotenv": "6.0.0",

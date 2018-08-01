@@ -32,7 +32,7 @@ export default () => ({
       }
     },
     type: GraphQLBoolean,
-    resolve: async (rootValue, email) => {
+    resolve: async (rootValue, { email }) => {
       return await forgotPassword(email)
     }
   },
