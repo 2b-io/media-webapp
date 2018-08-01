@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Form } from 'ui/compounds'
 import { Button } from 'ui/elements'
-import { TextBox } from 'views/common/form'
+import { CheckBox, TextBox } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
 const ProjectForm = ({ deleteProject, handleSubmit, idle }) => (
@@ -41,6 +41,13 @@ const ProjectForm = ({ deleteProject, handleSubmit, idle }) => (
         type="text"
         name="origins"
         placeholder="*.yourproject.com"
+        disabled={ !idle }
+      />
+    </Form.Line>
+    <Form.Line>
+      <CheckBox
+        label="Disabled Project"
+        name="disabled"
         disabled={ !idle }
       />
     </Form.Line>
