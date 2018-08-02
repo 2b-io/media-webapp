@@ -8,11 +8,12 @@ import {
 } from 'services/account'
 import {
   forgotPassword as forgotPassword,
-  ressetPassword as ressetPassword,
+  resetPassword as resetPassword,
   getResetCode as getResetCode
 } from 'services/reset-password-code'
-
+import { sendEmailRegister, sendEmailResetPassword } from 'services/send-email'
 import { Account, AccountStruct } from '../types/Account'
+
 export default () => ({
   _createAccount: {
     args: {
@@ -22,7 +23,15 @@ export default () => ({
     },
     type: Account,
     resolve: async (rootValue, { account }) => {
-      return await createAccount(account)
+      const infoAccount = await createAccount(account)
+      if (!infoAccount) {
+        return infoAccount
+      }
+      const { email } = infoAccount
+      const resetPasswordCode = await forgotPassword( email )
+      const { code } = resetPasswordCode
+      await sendEmailRegister(email, code)
+      return infoAccount
     }
   },
   _forgotPassword: {
@@ -33,7 +42,13 @@ export default () => ({
     },
     type: GraphQLBoolean,
     resolve: async (rootValue, { email }) => {
-      return await forgotPassword(email)
+      const resetPasswordCode = await forgotPassword(email)
+      if (!resetPasswordCode) {
+        return false
+      }
+      const { code } = resetPasswordCode
+      const sendEmail = await sendEmailResetPassword(email, code)
+      return sendEmail
     }
   },
   _resetPassword: {
@@ -48,7 +63,7 @@ export default () => ({
     },
     type: GraphQLBoolean,
     resolve: async (rootValue, { password, code }) => {
-      return await ressetPassword(password, code)
+      return await resetPassword(password, code)
     }
   },
   getResetCode: {
