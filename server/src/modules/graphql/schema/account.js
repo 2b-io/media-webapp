@@ -28,7 +28,7 @@ export default () => ({
         return infoAccount
       }
       const { email } = infoAccount
-      const resetPasswordCode = await forgotPassword( email )
+      const resetPasswordCode = await forgotPassword(email)
       const { code } = resetPasswordCode
       await sendEmailRegister(email, code)
       return infoAccount
