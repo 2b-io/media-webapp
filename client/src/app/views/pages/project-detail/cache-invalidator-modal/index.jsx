@@ -19,7 +19,7 @@ const CacheInvalidatorModal = ({ invalidCache, slug }) => {
     <Container>
       <CacheInvalidatorForm
         idle={ true }
-        onSubmit={ ( patterns ) => invalidCache(patterns, slug) }
+        onSubmit={ (patterns) => invalidCache(patterns, slug) }
       />
     </Container>
   )
@@ -31,7 +31,7 @@ export default modal({
   connect(
     null,
     mapDispatch({
-      invalidCache: (patterns, slug) => actions.invalidCache(patterns, slug),
+      invalidCache: actions.invalidCache
     })
   )(CacheInvalidatorModal)
 )

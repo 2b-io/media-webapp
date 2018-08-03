@@ -17,13 +17,11 @@ const CacheInvalidatorForm = ({ idle, handleSubmit }) => (
       }
     </Form.Line>
     <Form.Line last>
-      <Button.Group>
-        <Button
-          variant="primary"
-          type="submit"
-          disabled={ !idle }
-        >Invalid</Button>
-      </Button.Group>
+      <Button
+        variant="primary"
+        type="submit"
+        disabled={ !idle }
+      >Invalid</Button>
     </Form.Line>
   </Form>
 )

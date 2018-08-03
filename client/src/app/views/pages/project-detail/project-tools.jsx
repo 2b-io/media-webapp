@@ -11,12 +11,12 @@ const Pattern = styled.div`
   }
 `
 
-const CacheInvalidator = ({ onPresetSelected, detail,  }) => (
+const ProjectTools = ({ onProjectSelected, detail }) => (
   <Pattern
-    onClick={ () => onPresetSelected() }
+    onClick={ onProjectSelected }
   >
     <span>{ detail }</span>
   </Pattern>
 )
 
-export default CacheInvalidator
+export default ProjectTools

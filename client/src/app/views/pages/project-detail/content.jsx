@@ -11,7 +11,7 @@ import { AddIcon } from 'ui/icons'
 import { stateful } from 'views/common/decorators'
 import { Redirect, Route, Switch, withParams } from 'views/router'
 
-import CacheInvalidator from './project-tools'
+import ProjectTools from './project-tools'
 import CacheInvalidatorModal from './cache-invalidator-modal'
 import CollaboratorList from './collaborator-list'
 import _ProjectForm from './form'
@@ -26,7 +26,7 @@ const ProjectForm = reduxForm({
 })(_ProjectForm)
 
 const Project = ({
-  onPresetSelected,
+  onProjectSelected,
   project,
   currentAccount,
   deleteProject,
@@ -145,9 +145,9 @@ const Project = ({
               <Panel.Content>
                 {
                   project &&
-                    <CacheInvalidator
+                    <ProjectTools
                       detail="Cache Invalidator"
-                      onPresetSelected={ () => onPresetSelected(project.slug) }
+                      onProjectSelected={ () => onProjectSelected(project.slug) }
                     />
                 }
               </Panel.Content>
@@ -209,8 +209,8 @@ export default withParams(
         toPresetDetail: (slug, hash) => actions.requestLocation(`/projects/${ slug }/presets/${ hash }`),
         toProfile: id => actions.requestLocation(`/@${ id }`),
         toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
-        makeOwner: ( accountId, slug ) => actions.makeOwner(accountId, slug),
-        onPresetSelected: slug => actions.requestLocation(`/projects/${ slug }/cache-invalidator`),
+        makeOwner: (accountId, slug) => actions.makeOwner(accountId, slug),
+        onProjectSelected: slug => actions.requestLocation(`/projects/${ slug }/cache-invalidator`),
       })
     )(Project)
   )
