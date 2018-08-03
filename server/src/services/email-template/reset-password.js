@@ -1,7 +1,6 @@
 import config from 'infrastructure/config'
 
-const sender =  config.aws.ses.sender
-const baseUrl =  config.baseUrl
+const baseUrl = config.baseUrl
 
 const ResetPassword = ({ email, code }) => {
   const params = {
@@ -25,8 +24,7 @@ const ResetPassword = ({ email, code }) => {
         Charset: 'UTF-8',
         Data: 'Reset password Media Network'
       }
-    },
-    Source: `${ sender }`
+    }
   }
   return params
 }
