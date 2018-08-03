@@ -1,9 +1,8 @@
 import config from 'infrastructure/config'
 
-const sender =  config.aws.ses.sender
-const baseUrl =  config.baseUrl
+const baseUrl = config.baseUrl
 
-const Register = ({ email }) => {
+const Register = ({ email, code }) => {
 
   const params = {
     Message: {
@@ -17,8 +16,8 @@ const Register = ({ email }) => {
                 <p style='color:red'>
                   Thanks for Register
                 </p>
-                <p>Media Network wellcome ! Click the link below to login</p>
-                <a href="${ baseUrl }/sign-in">Click here login app</a>
+                <p>Media Network wellcome ! Click the link below to setup password</p>
+                <a href="${ baseUrl }/reset-password/${ code }">Click here setup new password</a>
               </body>
             </html>`
         }
@@ -27,8 +26,7 @@ const Register = ({ email }) => {
         Charset: 'UTF-8',
         Data: 'Register Media Network'
       }
-    },
-    Source: `${ sender }`
+    }
   }
   return params
 }

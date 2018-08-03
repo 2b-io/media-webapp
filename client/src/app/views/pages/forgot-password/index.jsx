@@ -18,7 +18,7 @@ const ForgotPassword=({ forgotPassword, toSignIn, ui: { resultForgotPassword, er
   return (
     <main>
       <Container center size="small">
-        { errorFetchEmail && <ErrorBox>Request reset password fail</ErrorBox> }
+        { errorFetchEmail || resultForgotPassword === false && <ErrorBox>Request reset password fail or account not exist</ErrorBox> }
         { resultForgotPassword && <Fragment>
           <SuccessBox>Send request success</SuccessBox>
         </Fragment> ||

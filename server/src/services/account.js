@@ -1,5 +1,5 @@
+import uuid from 'uuid'
 import Account from 'models/Account'
-import { sendEmailRegister } from 'services/send-email'
 
 export const list = async () => {
   return await Account.find().lean().exec()
@@ -8,17 +8,13 @@ export const list = async () => {
 export const create = async (info) => {
   // TODO generate randomize password
   // TODO send password via email
+  const password = uuid.v4()
+  const { email } = info
 
-  const { email, password = '123456' } = info
-
-  const account = await new Account({
+  return await new Account({
     email,
     password
   }).save()
-
-  account && sendEmailRegister({ email })
-  
-  return account
 }
 
 export const findById = async (id) => {
