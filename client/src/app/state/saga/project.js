@@ -201,8 +201,8 @@ const invalidCacheLoop = function*() {
 
     try {
       //Do something
-      const data = yield call(action.payload.slug, action.payload.pattern)
-      if (data) {
+
+      if (action) {
         yield all([
           fork(addToast, {
             type: 'success',
@@ -211,7 +211,6 @@ const invalidCacheLoop = function*() {
         ])
       }
     } catch (e) {
-      yield put(actions.invalidCacheFailed(serializeError(e)))
       continue
     }
   }
