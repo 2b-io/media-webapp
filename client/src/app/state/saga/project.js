@@ -198,11 +198,17 @@ const makeOwnerLoop = function*() {
 const invalidCacheLoop = function*() {
   while(true) {
     const action = yield take(types['PROJECT/INVALID_CACHE'])
-
+    
     try {
-      //Do something
+      const session = yield select(selectors.currentSession)
 
-      if (action) {
+      if (!session) {
+        continue
+      }
+
+      const invalidCache = yield call(Project.invalidCache,session.token, action.payload.slug, action.payload.patterns)
+
+      if (invalidCache) {
         yield all([
           fork(addToast, {
             type: 'success',
