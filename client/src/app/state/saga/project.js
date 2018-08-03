@@ -198,17 +198,22 @@ const makeOwnerLoop = function*() {
 const invalidCacheLoop = function*() {
   while(true) {
     const action = yield take(types['PROJECT/INVALID_CACHE'])
+
     try {
-
       //Do something
-      yield all([
-        fork(addToast, {
-          type: 'success',
-          message: 'Cache invalidated.'
-        })
-      ])
-
-    } catch (e) { }
+      const data = yield call(action.payload.slug, action.payload.pattern)
+      if (data) {
+        yield all([
+          fork(addToast, {
+            type: 'success',
+            message: 'Cache invalidated.'
+          })
+        ])
+      }
+    } catch (e) {
+      yield put(actions.invalidCacheFailed(serializeError(e)))
+      continue
+    }
   }
 }
 
