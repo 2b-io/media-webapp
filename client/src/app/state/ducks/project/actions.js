@@ -163,3 +163,18 @@ export const makeOwnerFailed = reason => ({
   type: types.MAKE_OWNER_FAILED,
   payload: { reason }
 })
+
+export const invalidCache = (patterns, slug) => ({
+  type: types.INVALID_CACHE,
+  payload: { patterns, slug }
+})
+
+export const invalidCacheCompleted = (patterns, slug) => ({
+  type: types.INVALID_CACHE_COMPLETED,
+  payload: { patterns, slug }
+})
+
+export const invalidCacheFailed = reason => ({
+  type: types.INVALID_CACHE_FAILED,
+  payload: { reason }
+})

@@ -22,7 +22,6 @@ export const UPDATE = prefix('UPDATE')
 export const UPDATE_COMPLETED = prefix('UPDATE_COMPLETED')
 export const UPDATE_FAILED = prefix('UPDATE_FAILED')
 
-
 export const CREATE_PRESET = prefix('CREATE_PRESET')
 export const CREATE_PRESET_COMPLETED = prefix('CREATE_PRESET_COMPLETED')
 export const CREATE_PRESET_FAILED = prefix('CREATE_PRESET_FAILED')
@@ -46,3 +45,7 @@ export const INVITE_COLLABORATOR_FAILED = prefix('INVITE_COLLABORATOR_FAILED')
 export const MAKE_OWNER = prefix('MAKE_OWNER')
 export const MAKE_OWNER_COMPLETED = prefix('MAKE_OWNER_COMPLETED')
 export const MAKE_OWNER_FAILED = prefix('MAKE_OWNER_FAILED')
+
+export const INVALID_CACHE = prefix('INVALID_CACHE')
+export const INVALID_CACHE_COMPLETED = prefix('INVALID_CACHE_COMPLETED')
+export const INVALID_CACHE_FAILED = prefix('INVALID_CACHE_FAILED')

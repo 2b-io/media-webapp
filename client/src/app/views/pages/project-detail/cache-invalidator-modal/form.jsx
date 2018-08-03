@@ -4,14 +4,14 @@ import { Button } from 'ui/elements'
 import { Form } from 'ui/compounds'
 import { TextBox  } from 'views/common/form'
 
-const CacheInvalidatorForm = (idle, handleSubmit) => (
+const CacheInvalidatorForm = ({ idle, handleSubmit }) => (
   <Form handleSubmit={ idle, handleSubmit }>
     <Form.Line>
       {
         <TextBox
           multiline={ true }
           type="text"
-          name="origins"
+          name="pattern"
           label="Pattern"
         />
       }

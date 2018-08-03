@@ -185,6 +185,7 @@ const Project = ({
         <CacheInvalidatorModal
           width="wide"
           onHide={ () => toProjectDetail(project.slug) }
+          slug={ project && project.slug }
           title="Cache Invalidator"
         />
       </Route>
