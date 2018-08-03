@@ -91,14 +91,12 @@ export default ({ Project, ProjectStruct }) => ({
   },
   _invalidCache: {
     args: {
-    patterns: {
+      patterns: {
         type: GraphQLNonNull(GraphQLString)
       }
     },
     type: GraphQLBoolean,
-      resolve: async (project, { patterns }) => {
-        //post api to cnd
-        console.log("patterns, project.slug", patterns, project.slug)
+    resolve: async (project, { patterns }) => {
       return true
     }
   }

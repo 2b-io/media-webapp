@@ -198,7 +198,7 @@ const makeOwnerLoop = function*() {
 const invalidCacheLoop = function*() {
   while(true) {
     const action = yield take(types['PROJECT/INVALID_CACHE'])
-    
+
     try {
       const session = yield select(selectors.currentSession)
 
@@ -206,7 +206,7 @@ const invalidCacheLoop = function*() {
         continue
       }
 
-      const invalidCache = yield call(Project.invalidCache,session.token, action.payload.slug, action.payload.patterns)
+      const invalidCache = yield call(Project.invalidCache, session.token, action.payload.slug, action.payload.patterns)
 
       if (invalidCache) {
         yield all([
