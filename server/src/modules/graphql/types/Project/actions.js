@@ -88,5 +88,18 @@ export default ({ Project, ProjectStruct }) => ({
 
       return await makeOwner(project, { accountId })
     }
+  },
+  _invalidCache: {
+    args: {
+    patterns: {
+        type: GraphQLNonNull(GraphQLString)
+      }
+    },
+    type: GraphQLBoolean,
+      resolve: async (project, { patterns }) => {
+        //post api to cnd
+        console.log("patterns, project.slug", patterns, project.slug)
+      return true
+    }
   }
 })
