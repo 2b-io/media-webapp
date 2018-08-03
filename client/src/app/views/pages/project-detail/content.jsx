@@ -26,11 +26,11 @@ const ProjectForm = reduxForm({
 })(_ProjectForm)
 
 const Project = ({
-  onProjectSelected,
   project,
   currentAccount,
   deleteProject,
   updateProject,
+  toCacheInvalidator,
   toInviteModal,
   toPresetDetail,
   toProfile,
@@ -147,7 +147,7 @@ const Project = ({
                   project &&
                     <ProjectTools
                       detail="Cache Invalidator"
-                      onProjectSelected={ () => onProjectSelected(project.slug) }
+                      toCacheInvalidator={ () => toCacheInvalidator(project.slug) }
                     />
                 }
               </Panel.Content>
@@ -210,7 +210,7 @@ export default withParams(
         toProfile: id => actions.requestLocation(`/@${ id }`),
         toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
         makeOwner: (accountId, slug) => actions.makeOwner(accountId, slug),
-        onProjectSelected: slug => actions.requestLocation(`/projects/${ slug }/cache-invalidator`),
+        toCacheInvalidator: slug => actions.requestLocation(`/projects/${ slug }/cache-invalidator`),
       })
     )(Project)
   )

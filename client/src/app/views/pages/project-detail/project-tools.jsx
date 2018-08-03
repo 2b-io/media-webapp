@@ -1,22 +1,13 @@
 import React from 'react'
-import styled from 'styled-components'
 
-const Pattern = styled.div`
-  cursor: pointer;
-  padding: ${
-    ({ theme }) => `
-      ${ theme.spacing.small }
-      ${ theme.spacing.medium }
-    `
-  }
-`
+import { List } from 'ui/compounds'
+import { Link } from 'ui/elements'
 
-const ProjectTools = ({ onProjectSelected, detail }) => (
-  <Pattern
-    onClick={ onProjectSelected }
-  >
-    <span>{ detail }</span>
-  </Pattern>
+const ProjectTools = ({ toCacheInvalidator }) => (
+  <List>
+    <List.Item>
+      <Link href='/project/' onClick={ toCacheInvalidator }>Cache Invalidator</Link>
+    </List.Item>
+  </List>
 )
-
 export default ProjectTools
