@@ -6,7 +6,7 @@ import {
 } from 'graphql'
 
 import actions from './actions'
-import { headerStructInput, headerStruct } from './Header/headerStruct'
+import { headerStruct, header } from '../Header'
 import struct from './struct'
 import relationships from './relationships'
 
@@ -15,7 +15,7 @@ export const ProjectStruct = new GraphQLInputObjectType({
   fields: () => ({
     ...struct,
     headers: {
-      type: new GraphQLList(headerStructInput)
+      type: new GraphQLList(headerStruct)
     }
   })
 })
@@ -28,7 +28,7 @@ export const Project = new GraphQLObjectType({
     },
     ...struct,
     headers: {
-      type: new GraphQLList(headerStruct)
+      type: new GraphQLList(header)
     },
     ...relationships({ Project, ProjectStruct }),
     ...actions({ Project, ProjectStruct }),
