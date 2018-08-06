@@ -147,7 +147,7 @@ const Project = ({
                     <h2>Custom Header</h2>
                   </TitleBar.Title>
                   <TitleBar.Menu>
-                    <Button plain onClick={ () => true }>
+                    <Button plain onClick={ () => addCustomHeader() }>
                       <AddIcon size="medium" />
                     </Button>
                   </TitleBar.Menu>
