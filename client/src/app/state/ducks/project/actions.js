@@ -164,10 +164,14 @@ export const makeOwnerFailed = reason => ({
   payload: { reason }
 })
 
-export const invalidCache = (patterns, slug) => ({
-  type: types.INVALID_CACHE,
-  payload: { patterns, slug }
-})
+export const invalidCache = (patterns, slug) => {
+  const patternArray = patterns.trim().split(/\s*,\s*/).filter(Boolean)
+
+  return ({
+    type: types.INVALID_CACHE,
+    payload: { patternArray, slug }
+  })
+}
 
 export const invalidCacheCompleted = (patterns, slug) => ({
   type: types.INVALID_CACHE_COMPLETED,

@@ -5,14 +5,14 @@ import { Form } from 'ui/compounds'
 import { TextBox  } from 'views/common/form'
 
 const CacheInvalidatorForm = ({ idle, handleSubmit }) => (
-  <Form handleSubmit={ idle, handleSubmit }>
+  <Form handleSubmit={ handleSubmit }>
     <Form.Line>
       {
         <TextBox
           multiline={ true }
           type="text"
-          name="pattern"
-          label="Pattern"
+          name="patterns"
+          label="Patterns"
         />
       }
     </Form.Line>

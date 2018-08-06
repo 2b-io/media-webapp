@@ -19,7 +19,7 @@ const CacheInvalidatorModal = ({ invalidCache, slug }) => {
     <Container>
       <CacheInvalidatorForm
         idle={ true }
-        onSubmit={ (patterns) => invalidCache(patterns, slug) }
+        onSubmit={ ({ patterns }) => invalidCache(patterns, slug) }
       />
     </Container>
   )
