@@ -22,6 +22,9 @@ import { ic_star } from 'react-icons-kit/md/ic_star'
 import { ic_star_border } from 'react-icons-kit/md/ic_star_border'
 import { ic_view_quilt } from 'react-icons-kit/md/ic_view_quilt'
 
+// APPLICATION ICON: http://wmira.github.io/react-icons-kit/#/iconset/feather
+import { trash2 } from 'react-icons-kit/feather/trash2'
+
 import icon from './icon'
 
 export const AddIcon = icon(ic_add)
@@ -42,5 +45,6 @@ export const ProjectListIcon = icon(ic_domain)
 export const ReloadIcon = icon(ic_refresh)
 export const SignOutIcon = icon(ic_exit_to_app)
 export const SuccessIcon = icon(ic_done)
+export const Trash = icon(trash2)
 export const UiIcon = icon(ic_view_quilt)
 export const WarningIcon = icon(ic_report)

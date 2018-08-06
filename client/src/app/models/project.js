@@ -121,7 +121,7 @@ export default {
         }
       }
     `, {
-      project: pick(project, [ 'name', 'origins', 'prettyOrigin', 'disabled' ]),
+      project: pick(project, [ 'name', 'origins', 'prettyOrigin', 'headers', 'disabled' ]),
       token,
       slug: project.slug
     })

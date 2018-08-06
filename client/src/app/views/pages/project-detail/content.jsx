@@ -14,6 +14,7 @@ import { Redirect, Route, Switch, withParams } from 'views/router'
 import ProjectTools from './project-tools'
 import CacheInvalidatorModal from './cache-invalidator-modal'
 import CollaboratorList from './collaborator-list'
+import _CustomHeader from './custom-header'
 import _ProjectForm from './form'
 import InviteModal from './invite-modal'
 import PresetList from './preset-list'
@@ -24,6 +25,11 @@ const ProjectForm = reduxForm({
   form: 'project',
   enableReinitialize: true
 })(_ProjectForm)
+
+const CustomHeader = reduxForm({
+  form: 'customHeader',
+  enableReinitialize: true
+})(_CustomHeader)
 
 const Project = ({
   project,
@@ -130,6 +136,32 @@ const Project = ({
                       makeOwner={ (accountId) => { makeOwner(accountId, project.slug) } }
                     />
                 }
+              </Panel.Content>
+            </Panel>
+          </Container>
+          <Container>
+            <Panel>
+              <Panel.Header>
+                <TitleBar>
+                  <TitleBar.Title>
+                    <h2>Custom Header</h2>
+                  </TitleBar.Title>
+                  <TitleBar.Menu>
+                    <Button plain onClick={ () => true }>
+                      <AddIcon size="medium" />
+                    </Button>
+                  </TitleBar.Menu>
+                </TitleBar>
+              </Panel.Header>
+              <Panel.Content>
+                <Container>
+                  {
+                    project &&
+                      <CustomHeader
+                        idle={ true }
+                      />
+                  }
+                </Container>
               </Panel.Content>
             </Panel>
           </Container>

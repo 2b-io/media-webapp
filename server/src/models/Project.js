@@ -13,6 +13,7 @@ const schema = mongoose.Schema({
   },
   prettyOrigin: String,
   origins: [ String ],
+  headers: [ { name: String, value: String } ],
   disabled: {
     type: Boolean,
     default: false
