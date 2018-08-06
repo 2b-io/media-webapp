@@ -257,5 +257,23 @@ export default {
       accountId
     })
     return body.session.account.project._makeOwner
+  },
+  async invalidCache(token, slug, patterns) {
+    const body = await request(`
+      query invalidCache($token: String!, $slug: String!, $patterns: [String]!) {
+        session(token: $token) {
+          account {
+            project(slug: $slug) {
+              _invalidCache(patterns: $patterns)
+            }
+          }
+        }
+      }
+    `, {
+      token,
+      slug,
+      patterns
+    })
+    return body.session.account.project._invalidCache
   }
 }

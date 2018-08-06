@@ -155,7 +155,7 @@ const inviteCollaboratorLoop = function*() {
           put(actions.inviteCollaboratorCompleted(collaborator)),
           fork(addToast, {
             type: 'success',
-            message: 'Collaborator Invited'
+            message: 'Collaborator invited.'
           })
         ])
       }
@@ -183,7 +183,7 @@ const makeOwnerLoop = function*() {
           put(actions.makeOwnerCompleted(action.payload.slug, session.account._id, action.payload.accountId)),
           fork(addToast, {
             type: 'success',
-            message: 'Change Owner'
+            message: 'Owner changed.'
           })
         ])
       }
@@ -195,12 +195,40 @@ const makeOwnerLoop = function*() {
   }
 }
 
+const invalidCacheLoop = function*() {
+  while(true) {
+    const action = yield take(types['PROJECT/INVALID_CACHE'])
+
+    try {
+      const session = yield select(selectors.currentSession)
+
+      if (!session) {
+        continue
+      }
+
+      const invalidCache = yield call(Project.invalidCache, session.token, action.payload.slug, action.payload.patterns)
+
+      if (invalidCache) {
+        yield all([
+          fork(addToast, {
+            type: 'success',
+            message: 'Cache invalidated.'
+          })
+        ])
+      }
+    } catch (e) {
+      continue
+    }
+  }
+}
+
 export default function*() {
   yield take('@@INITIALIZED')
   yield fork(createLoop)
   yield fork(deleteLoop)
   yield fork(fetchLoop)
   yield fork(getLoop)
+  yield fork(invalidCacheLoop)
   yield fork(updateLoop)
   yield fork(inviteCollaboratorLoop)
   yield fork(makeOwnerLoop)

@@ -1,7 +1,9 @@
 import {
   GraphQLBoolean,
   GraphQLNonNull,
-  GraphQLString
+  GraphQLString,
+  GraphQLList
+
 } from 'graphql'
 
 import {
@@ -87,6 +89,17 @@ export default ({ Project, ProjectStruct }) => ({
     resolve: async (project, { accountId }) => {
 
       return await makeOwner(project, { accountId })
+    }
+  },
+  _invalidCache: {
+    args: {
+      patterns: {
+        type: GraphQLNonNull(GraphQLList(GraphQLString))
+      }
+    },
+    type: GraphQLBoolean,
+    resolve: async (project, { patterns }) => {
+      return true
     }
   }
 })
