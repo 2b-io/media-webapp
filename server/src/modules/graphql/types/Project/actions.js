@@ -1,7 +1,9 @@
 import {
   GraphQLBoolean,
   GraphQLNonNull,
-  GraphQLString
+  GraphQLString,
+  GraphQLList
+
 } from 'graphql'
 
 import {
@@ -92,7 +94,7 @@ export default ({ Project, ProjectStruct }) => ({
   _invalidCache: {
     args: {
       patterns: {
-        type: GraphQLNonNull(GraphQLString)
+        type: GraphQLNonNull(GraphQLList(GraphQLString))
       }
     },
     type: GraphQLBoolean,

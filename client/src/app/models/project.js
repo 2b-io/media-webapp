@@ -121,7 +121,7 @@ export default {
         }
       }
     `, {
-      project: pick(project, [ 'name', 'origins', 'prettyOrigin', 'headers', 'disabled' ]),
+      project: pick(project, [ 'name', 'origins', 'prettyOrigin', 'disabled' ]),
       token,
       slug: project.slug
     })
@@ -260,7 +260,7 @@ export default {
   },
   async invalidCache(token, slug, patterns) {
     const body = await request(`
-      query invalidCache($token: String!, $slug: String!, $patterns: String!) {
+      query invalidCache($token: String!, $slug: String!, $patterns: [String]!) {
         session(token: $token) {
           account {
             project(slug: $slug) {
