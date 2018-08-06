@@ -48,6 +48,12 @@ export default {
       actions.showModal({ modal: 'InviteCollaborator' })
     ]
   },
+  '/projects/:slug/cache-invalidator': {
+    partial: true,
+    onEnter: () => [
+      actions.showModal({ modal: 'CacheInvalidatorModal' })
+    ]
+  },
   '/ui': {
     component: UI,
     exact: true

@@ -11,12 +11,15 @@ import { AddIcon } from 'ui/icons'
 import { stateful } from 'views/common/decorators'
 import { Redirect, Route, Switch, withParams } from 'views/router'
 
+import ProjectTools from './project-tools'
+import CacheInvalidatorModal from './cache-invalidator-modal'
 import CollaboratorList from './collaborator-list'
 import _CustomHeader from './custom-header'
 import _ProjectForm from './form'
 import InviteModal from './invite-modal'
 import PresetList from './preset-list'
 import PresetModal from './preset-modal'
+
 
 const ProjectForm = reduxForm({
   form: 'project',
@@ -33,6 +36,7 @@ const Project = ({
   currentAccount,
   deleteProject,
   updateProject,
+  toCacheInvalidator,
   toInviteModal,
   toPresetDetail,
   toProfile,
@@ -161,6 +165,26 @@ const Project = ({
               </Panel.Content>
             </Panel>
           </Container>
+          <Container>
+            <Panel>
+              <Panel.Header>
+                <TitleBar>
+                  <TitleBar.Title>
+                    <h2>Tools</h2>
+                  </TitleBar.Title>
+                </TitleBar>
+              </Panel.Header>
+              <Panel.Content>
+                {
+                  project &&
+                    <ProjectTools
+                      detail="Cache Invalidator"
+                      toCacheInvalidator={ () => toCacheInvalidator(project.slug) }
+                    />
+                }
+              </Panel.Content>
+            </Panel>
+          </Container>
         </Layout.Fixed>
       </Layout>
       <Switch>
@@ -189,6 +213,14 @@ const Project = ({
           collaborators={ project && Object.values(project.collaborators) }
         />
       </Route>
+      <Route path="/projects/:slug/cache-invalidator">
+        <CacheInvalidatorModal
+          width="wide"
+          onHide={ () => toProjectDetail(project.slug) }
+          slug={ project && project.slug }
+          title="Cache Invalidator"
+        />
+      </Route>
     </Fragment>
   )
 }
@@ -209,7 +241,8 @@ export default withParams(
         toPresetDetail: (slug, hash) => actions.requestLocation(`/projects/${ slug }/presets/${ hash }`),
         toProfile: id => actions.requestLocation(`/@${ id }`),
         toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
-        makeOwner: ( accountId, slug ) => actions.makeOwner(accountId, slug)
+        makeOwner: (accountId, slug) => actions.makeOwner(accountId, slug),
+        toCacheInvalidator: slug => actions.requestLocation(`/projects/${ slug }/cache-invalidator`),
       })
     )(Project)
   )

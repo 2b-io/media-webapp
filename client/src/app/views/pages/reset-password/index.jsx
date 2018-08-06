@@ -31,8 +31,8 @@ const ResetPassword = ({
           <Link href='/sign-in' onClick={ toSignIn }>Back to login</Link>
         </Fragment>
         }
-        { resultResetPassword && <SuccessBox>Password reset success</SuccessBox> }
-        { errorResetPassword && <ErrorBox>Password reset fail</ErrorBox> }
+        { resultResetPassword && <SuccessBox>Password changed</SuccessBox> }
+        { errorResetPassword && <ErrorBox>Password changed fail</ErrorBox> }
         { resultGetcode && <Fragment>
           <TextBox value={ resultGetcode.email } readOnly />
           <ResetPasswordForm

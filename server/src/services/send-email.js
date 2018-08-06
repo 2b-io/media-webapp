@@ -1,19 +1,20 @@
+import config from 'infrastructure/config'
 import ses from 'infrastructure/mailer/ses'
+
 import { register, resetPassword } from 'services/email-template'
 
 const sendEmail = async (emailContent, email) => {
-
+  const sender = config.aws.ses.sender
   const destination = { ToAddresses: [ `${ email }` ] }
-
-  const params = { ...emailContent, Destination: destination }
+  const params = { ...emailContent, Destination: destination, Source: sender }
 
   return await ses.sendEmail(params).promise()
 
 }
 
-export const sendEmailRegister = async (email) => {
+export const sendEmailRegister = async (email, code) => {
 
-  const emailContent = register(email)
+  const emailContent = register({ email, code })
 
   const result = await sendEmail(emailContent, email)
 
