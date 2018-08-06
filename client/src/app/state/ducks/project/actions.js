@@ -169,7 +169,10 @@ export const invalidCache = (patterns, slug) => {
 
   return ({
     type: types.INVALID_CACHE,
-    payload: { patternArray, slug }
+    payload: {
+      patterns: patternArray,
+      slug
+    }
   })
 }
 
