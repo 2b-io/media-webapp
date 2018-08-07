@@ -6,6 +6,7 @@ import { Button, Link } from 'ui/elements'
 
 const Wrapper = styled.div`
   display: flex;
+  align-items: center;
 `
 
 const AccountStyled = styled.div`
@@ -17,6 +18,7 @@ const AccountStyled = styled.div`
 
 const PrivilegeStyled = styled.div`
   flex-grow: 0;
+  line-height: 2.5em;
 `
 
 const PrivilegeValue = styled.span`
