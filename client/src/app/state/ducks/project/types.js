@@ -2,8 +2,6 @@ import typePrefix from 'state/helpers/type-prefix'
 
 const prefix = typePrefix('project')
 
-export const ADD_CUSTOM_HEADER = prefix('ADD_CUSTOM_HEADER')
-
 export const CREATE = prefix('CREATE')
 export const CREATE_COMPLETED = prefix('CREATE_COMPLETED')
 export const CREATE_FAILED = prefix('CREATE_FAILED')

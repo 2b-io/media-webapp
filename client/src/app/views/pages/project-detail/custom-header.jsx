@@ -35,58 +35,47 @@ const FormItem = styled.div`
   margin-bottom: ${ ({ theme }) => theme.spacing.tiny };
 `
 
-const CustomHeaderFormItems = ({ fields, idle }) => (
-  <div>
-    {
-      fields.map(
-        (header, index) => (
-          <FormItem key={ index }>
-            <Form.Line>
-              <HeaderLine>
-                <StyledTextBox>
-                  <TextBox
-                    label="Header Name"
-                    type="text"
-                    name={ `${ header }.name` }
-                    placeholder="Header Name"
-                  />
-                </StyledTextBox>
-                <WrapperButton>
-                  <StyledButton>
-                    <Button
-                      plain
-                      size="medium"
-                      onClick={ () => fields.remove(index) }
-                    >
-                      <TrashIcon size="medium" />
-                    </Button>
-                  </StyledButton>
-                </WrapperButton>
-              </HeaderLine>
-            </Form.Line>
-            <Form.Line>
+const CustomHeaderFormItems = ({ fields }) => (
+  fields.map(
+    (header, index) => (
+      <FormItem key={ index }>
+        <Form.Line>
+          <HeaderLine>
+            <StyledTextBox>
               <TextBox
-                label="Value"
+                label="Header Name"
                 type="text"
-                name={ `${ header }.value` }
-                placeholder="Value"
+                name={ `${ header }.name` }
+                placeholder="Header Name"
               />
-            </Form.Line>
-          </FormItem>
-        )
-      )
-    }
-    <Form.Line last>
-      <Button
-        variant="primary"
-        type="submit"
-        disabled={ !idle }
-      >Save all</Button>
-    </Form.Line>
-  </div>
+            </StyledTextBox>
+            <WrapperButton>
+              <StyledButton>
+                <Button
+                  plain
+                  size="medium"
+                  onClick={ () => fields.remove(index) }
+                >
+                  <TrashIcon size="medium" />
+                </Button>
+              </StyledButton>
+            </WrapperButton>
+          </HeaderLine>
+        </Form.Line>
+        <Form.Line>
+          <TextBox
+            label="Value"
+            type="text"
+            name={ `${ header }.value` }
+            placeholder="Value"
+          />
+        </Form.Line>
+      </FormItem>
+    )
+  )
 )
 
-const CustomHeaderForm = ({ fields, idle }) => (
+const CustomHeaderForm = ({ fields }) => (
   <Panel >
     <Panel.Header>
       <TitleBar>
@@ -106,11 +95,16 @@ const CustomHeaderForm = ({ fields, idle }) => (
           fields.length ?
             <CustomHeaderFormItems
               fields={ fields }
-              idle={ idle }
             /> :
             <p>No data</p>
         }
-
+        <Form.Line last>
+          <Button
+            variant="primary"
+            type="submit"
+            // disabled={ !idle }
+          >Save all</Button>
+        </Form.Line>
       </Container>
     </Panel.Content>
   </Panel>

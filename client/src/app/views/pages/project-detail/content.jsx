@@ -32,7 +32,6 @@ const CustomHeader = reduxForm({
 })(_CustomHeader)
 
 const Project = ({
-  // addCustomHeader,
   project,
   currentAccount,
   deleteProject,
@@ -88,6 +87,7 @@ const Project = ({
             <CustomHeader
               idle={ true }
               initialValues={ project }
+              onSubmit={ updateProject }
             />
           </Container>
         </Layout.Fluid>
@@ -225,7 +225,6 @@ export default withParams(
         toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
         makeOwner: (accountId, slug) => actions.makeOwner(accountId, slug),
         toCacheInvalidator: slug => actions.requestLocation(`/projects/${ slug }/cache-invalidator`),
-        // addCustomHeader: slug => actions.addCustomHeader(slug)
       })
     )(Project)
   )

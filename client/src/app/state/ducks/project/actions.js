@@ -185,8 +185,3 @@ export const invalidCacheFailed = reason => ({
   type: types.INVALID_CACHE_FAILED,
   payload: { reason }
 })
-
-export const addCustomHeader = (slug) => ({
-  type: types.ADD_CUSTOM_HEADER,
-  payload: { slug }
-})

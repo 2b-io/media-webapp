@@ -33,6 +33,10 @@ export const PROJECT_FRAGMENT = `
       ${ ACCOUNT_FRAGMENT }
     },
     privilege
+  },
+  headers {
+    name,
+    value
   }
 `
 
