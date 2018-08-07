@@ -32,7 +32,7 @@ const CustomHeader = reduxForm({
 })(_CustomHeader)
 
 const Project = ({
-  addCustomHeader,
+  // addCustomHeader,
   project,
   currentAccount,
   deleteProject,
@@ -85,31 +85,10 @@ const Project = ({
             </Panel>
           </Container>
           <Container>
-            <Panel>
-              <Panel.Header>
-                <TitleBar>
-                  <TitleBar.Title>
-                    <h2>Custom Headers</h2>
-                  </TitleBar.Title>
-                  <TitleBar.Menu>
-                    <Button plain onClick={ () => addCustomHeader(project.slug) }>
-                      <AddIcon size="medium" />
-                    </Button>
-                  </TitleBar.Menu>
-                </TitleBar>
-              </Panel.Header>
-              <Panel.Content>
-                <Container>
-                  {
-                    project &&
-                      <CustomHeader
-                        idle={ true }
-                        initialValues={ project }
-                      />
-                  }
-                </Container>
-              </Panel.Content>
-            </Panel>
+            <CustomHeader
+              idle={ true }
+              initialValues={ project }
+            />
           </Container>
         </Layout.Fluid>
         <Layout.Fixed size="small">
@@ -246,7 +225,7 @@ export default withParams(
         toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
         makeOwner: (accountId, slug) => actions.makeOwner(accountId, slug),
         toCacheInvalidator: slug => actions.requestLocation(`/projects/${ slug }/cache-invalidator`),
-        addCustomHeader: slug => actions.addCustomHeader(slug)
+        // addCustomHeader: slug => actions.addCustomHeader(slug)
       })
     )(Project)
   )

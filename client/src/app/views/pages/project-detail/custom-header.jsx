@@ -2,10 +2,10 @@ import React from 'react'
 import { FieldArray } from 'redux-form'
 import styled from 'styled-components'
 
-import { TrashIcon } from 'ui/icons'
-import { Button } from 'ui/elements'
+import { AddIcon, TrashIcon } from 'ui/icons'
+import { Button, Container } from 'ui/elements'
 import { TextBox } from 'views/common/form'
-import { Form } from 'ui/compounds'
+import { Form, Panel, TitleBar } from 'ui/compounds'
 
 const HeaderLine = styled.div`
   display: flex;
@@ -28,9 +28,6 @@ const StyledButton = styled.div`
   padding-top: ${ ({ theme }) => theme.spacing.small };
   padding-bottom: ${ ({ theme }) => theme.spacing.medium };
 `
-const StyledIcon = styled.div`
-  padding:  ${ ({ theme }) => theme.spacing.small };
-`
 const FormItem = styled.div`
   border-bottom: 1px solid ${
     ({ theme }) => theme.secondary.opaque.base
@@ -38,50 +35,47 @@ const FormItem = styled.div`
   margin-bottom: ${ ({ theme }) => theme.spacing.tiny };
 `
 
-const CustomHeader = ({ idle, handleSubmit, headers }) => (
-  <Form handleSubmit={ handleSubmit }>
-    <FieldArray
-      name="headers"
-      component={
-        ({ fields }) => (
-          fields.length ?
-            fields.map(
-              (header, index) => (
-                <FormItem key={ index }>
-                  <Form.Line>
-                    <HeaderLine>
-                      <StyledTextBox>
-                        <TextBox
-                          label="Header Name"
-                          type="text"
-                          name={ `${ header }.name` }
-                          placeholder="Header Name"
-                        />
-                      </StyledTextBox>
-                      <WrapperButton>
-                        <StyledButton>
-                          <Button plain size="medium" >
-                            <TrashIcon size="medium" />
-                          </Button>
-                        </StyledButton>
-                      </WrapperButton>
-                    </HeaderLine>
-                  </Form.Line>
-                  <Form.Line>
-                    <TextBox
-                      label="Value"
-                      type="text"
-                      name={ `${ header }.value` }
-                      placeholder="Value"
-                    />
-                  </Form.Line>
-                </FormItem>
-              )
-            ) :
-            <p>No data</p>
+const CustomHeaderFormItems = ({ fields, idle }) => (
+  <div>
+    {
+      fields.map(
+        (header, index) => (
+          <FormItem key={ index }>
+            <Form.Line>
+              <HeaderLine>
+                <StyledTextBox>
+                  <TextBox
+                    label="Header Name"
+                    type="text"
+                    name={ `${ header }.name` }
+                    placeholder="Header Name"
+                  />
+                </StyledTextBox>
+                <WrapperButton>
+                  <StyledButton>
+                    <Button
+                      plain
+                      size="medium"
+                      onClick={ () => fields.remove(index) }
+                    >
+                      <TrashIcon size="medium" />
+                    </Button>
+                  </StyledButton>
+                </WrapperButton>
+              </HeaderLine>
+            </Form.Line>
+            <Form.Line>
+              <TextBox
+                label="Value"
+                type="text"
+                name={ `${ header }.value` }
+                placeholder="Value"
+              />
+            </Form.Line>
+          </FormItem>
         )
-      }
-    />
+      )
+    }
     <Form.Line last>
       <Button
         variant="primary"
@@ -89,6 +83,45 @@ const CustomHeader = ({ idle, handleSubmit, headers }) => (
         disabled={ !idle }
       >Save all</Button>
     </Form.Line>
+  </div>
+)
+
+const CustomHeaderForm = ({ fields, idle }) => (
+  <Panel >
+    <Panel.Header>
+      <TitleBar>
+        <TitleBar.Title>
+          <h2>Custom Headers</h2>
+        </TitleBar.Title>
+        <TitleBar.Menu>
+          <Button plain onClick={ () => fields.push({ }) }>
+            <AddIcon size="medium" />
+          </Button>
+        </TitleBar.Menu>
+      </TitleBar>
+    </Panel.Header>
+    <Panel.Content>
+      <Container >
+        {
+          fields.length ?
+            <CustomHeaderFormItems
+              fields={ fields }
+              idle={ idle }
+            /> :
+            <p>No data</p>
+        }
+
+      </Container>
+    </Panel.Content>
+  </Panel>
+)
+
+const CustomHeader = ({ handleSubmit }) => (
+  <Form handleSubmit={ handleSubmit }>
+    <FieldArray
+      name="headers"
+      component={ CustomHeaderForm }
+    />
   </Form>
 )
 
