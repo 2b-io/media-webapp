@@ -154,7 +154,7 @@ export const makeOwner = (accountId, slug) => ({
   payload: { accountId, slug }
 })
 
-export const makeOwnerCompleted = ( slug, currentAccountId, accountId ) => ({
+export const makeOwnerCompleted = (slug, currentAccountId, accountId) => ({
   type: types.MAKE_OWNER_COMPLETED,
   payload: { slug, currentAccountId, accountId }
 })
@@ -184,4 +184,9 @@ export const invalidCacheCompleted = (patterns, slug) => ({
 export const invalidCacheFailed = reason => ({
   type: types.INVALID_CACHE_FAILED,
   payload: { reason }
+})
+
+export const addCustomHeader = (slug) => ({
+  type: types.ADD_CUSTOM_HEADER,
+  payload: { slug }
 })

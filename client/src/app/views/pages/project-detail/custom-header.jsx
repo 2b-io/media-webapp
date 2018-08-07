@@ -1,4 +1,5 @@
 import React from 'react'
+import { FieldArray } from 'redux-form'
 import styled from 'styled-components'
 
 import { TrashIcon } from 'ui/icons'
@@ -18,7 +19,7 @@ const StyledTextBox = styled.div`
 `
 const WrapperButton = styled.div`
   flex-grow: 0;
-  display:none;
+
   padding:  ${
     ({ theme }) => `0 ${ theme.spacing.small }`
   };
@@ -37,37 +38,50 @@ const FormItem = styled.div`
   margin-bottom: ${ ({ theme }) => theme.spacing.tiny };
 `
 
-const CustomHeader = ({ idle, handleSubmit }) => (
+const CustomHeader = ({ idle, handleSubmit, headers }) => (
   <Form handleSubmit={ handleSubmit }>
-    <FormItem>
-      <Form.Line>
-        <HeaderLine>
-          <StyledTextBox>
-            <TextBox
-              label="Header Name"
-              type="text"
-              name="headerName"
-              placeholder="Header Name"
-            />
-          </StyledTextBox>
-          <WrapperButton>
-            <StyledButton>
-              <Button plain size="medium" >
-                <TrashIcon size="medium" />
-              </Button>
-            </StyledButton>
-          </WrapperButton>
-        </HeaderLine>
-      </Form.Line>
-      <Form.Line>
-        <TextBox
-          label="Value"
-          type="text"
-          name="Value"
-          placeholder="Value"
-        />
-      </Form.Line>
-    </FormItem>
+    <FieldArray
+      name="headers"
+      component={
+        ({ fields }) => (
+          fields.length ?
+            fields.map(
+              (header, index) => (
+                <FormItem key={ index }>
+                  <Form.Line>
+                    <HeaderLine>
+                      <StyledTextBox>
+                        <TextBox
+                          label="Header Name"
+                          type="text"
+                          name={ `${ header }.name` }
+                          placeholder="Header Name"
+                        />
+                      </StyledTextBox>
+                      <WrapperButton>
+                        <StyledButton>
+                          <Button plain size="medium" >
+                            <TrashIcon size="medium" />
+                          </Button>
+                        </StyledButton>
+                      </WrapperButton>
+                    </HeaderLine>
+                  </Form.Line>
+                  <Form.Line>
+                    <TextBox
+                      label="Value"
+                      type="text"
+                      name={ `${ header }.value` }
+                      placeholder="Value"
+                    />
+                  </Form.Line>
+                </FormItem>
+              )
+            ) :
+            <p>No data</p>
+        )
+      }
+    />
     <Form.Line last>
       <Button
         variant="primary"

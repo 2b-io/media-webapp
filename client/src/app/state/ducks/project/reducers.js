@@ -122,6 +122,7 @@ export default combineReducers({
       const { currentAccountId } = action.payload
       const { accountId } = action.payload
       const project = state[ slug ]
+
       return {
         ...state,
         [ slug ]: {
@@ -136,6 +137,24 @@ export default combineReducers({
             }
           }
         },
+      }
+    },
+    [ types.ADD_CUSTOM_HEADER ]: (state, action) => {
+      const { slug } = action.payload
+      const project = state[ slug ]
+
+      return {
+        ...state,
+        [ slug ]: {
+          ...project,
+          headers: [
+            ...(project.headers || []),
+            {
+              name: '',
+              value: ''
+            }
+          ]
+        }
       }
     }
   }),

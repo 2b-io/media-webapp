@@ -32,6 +32,7 @@ const CustomHeader = reduxForm({
 })(_CustomHeader)
 
 const Project = ({
+  addCustomHeader,
   project,
   currentAccount,
   deleteProject,
@@ -79,6 +80,33 @@ const Project = ({
                     onSubmit={ updateProject }
                     deleteProject={ () => deleteProject(project.slug) }
                   />
+                </Container>
+              </Panel.Content>
+            </Panel>
+          </Container>
+          <Container>
+            <Panel>
+              <Panel.Header>
+                <TitleBar>
+                  <TitleBar.Title>
+                    <h2>Custom Headers</h2>
+                  </TitleBar.Title>
+                  <TitleBar.Menu>
+                    <Button plain onClick={ () => addCustomHeader(project.slug) }>
+                      <AddIcon size="medium" />
+                    </Button>
+                  </TitleBar.Menu>
+                </TitleBar>
+              </Panel.Header>
+              <Panel.Content>
+                <Container>
+                  {
+                    project &&
+                      <CustomHeader
+                        idle={ true }
+                        initialValues={ project }
+                      />
+                  }
                 </Container>
               </Panel.Content>
             </Panel>
@@ -139,32 +167,7 @@ const Project = ({
               </Panel.Content>
             </Panel>
           </Container>
-          <Container>
-            <Panel>
-              <Panel.Header>
-                <TitleBar>
-                  <TitleBar.Title>
-                    <h2>Custom Header</h2>
-                  </TitleBar.Title>
-                  <TitleBar.Menu>
-                    <Button plain onClick={ () => addCustomHeader() }>
-                      <AddIcon size="medium" />
-                    </Button>
-                  </TitleBar.Menu>
-                </TitleBar>
-              </Panel.Header>
-              <Panel.Content>
-                <Container>
-                  {
-                    project &&
-                      <CustomHeader
-                        idle={ true }
-                      />
-                  }
-                </Container>
-              </Panel.Content>
-            </Panel>
-          </Container>
+
           <Container>
             <Panel>
               <Panel.Header>
@@ -243,6 +246,7 @@ export default withParams(
         toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
         makeOwner: (accountId, slug) => actions.makeOwner(accountId, slug),
         toCacheInvalidator: slug => actions.requestLocation(`/projects/${ slug }/cache-invalidator`),
+        addCustomHeader: slug => actions.addCustomHeader(slug)
       })
     )(Project)
   )
