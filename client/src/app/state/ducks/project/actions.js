@@ -154,7 +154,7 @@ export const makeOwner = (accountId, slug) => ({
   payload: { accountId, slug }
 })
 
-export const makeOwnerCompleted = ( slug, currentAccountId, accountId ) => ({
+export const makeOwnerCompleted = (slug, currentAccountId, accountId) => ({
   type: types.MAKE_OWNER_COMPLETED,
   payload: { slug, currentAccountId, accountId }
 })
