@@ -83,6 +83,13 @@ const Project = ({
               </Panel.Content>
             </Panel>
           </Container>
+          <Container>
+            <CustomHeader
+              idle={ true }
+              initialValues={ project }
+              onSubmit={ updateProject }
+            />
+          </Container>
         </Layout.Fluid>
         <Layout.Fixed size="small">
           <Container>
@@ -139,32 +146,7 @@ const Project = ({
               </Panel.Content>
             </Panel>
           </Container>
-          <Container>
-            <Panel>
-              <Panel.Header>
-                <TitleBar>
-                  <TitleBar.Title>
-                    <h2>Custom Header</h2>
-                  </TitleBar.Title>
-                  <TitleBar.Menu>
-                    <Button plain onClick={ () => true }>
-                      <AddIcon size="medium" />
-                    </Button>
-                  </TitleBar.Menu>
-                </TitleBar>
-              </Panel.Header>
-              <Panel.Content>
-                <Container>
-                  {
-                    project &&
-                      <CustomHeader
-                        idle={ true }
-                      />
-                  }
-                </Container>
-              </Panel.Content>
-            </Panel>
-          </Container>
+
           <Container>
             <Panel>
               <Panel.Header>
