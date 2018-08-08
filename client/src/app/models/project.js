@@ -79,7 +79,14 @@ export default {
       }
     `, { token })
 
-    return body.session.account.projects
+    const fetchedProjects = body.session.account.projects
+
+    return fetchedProjects.map(fetchedProject =>
+      ({
+        ...fetchedProject,
+        origins: fetchedProject.origins.join('\n')
+      })
+    )
   },
   async create(project, token) {
     const body = await request(`
