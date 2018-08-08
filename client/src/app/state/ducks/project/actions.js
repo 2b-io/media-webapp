@@ -59,16 +59,10 @@ export const deleteProjectFailed = reason => ({
   payload: { reason }
 })
 
-export const updateProject = project => {
-  project.origins = project.origins.trim().split(/\s*,\s*/).filter(Boolean)
-
-  return ({
-    type: types.UPDATE,
-    payload: { project }
-  })
-}
-
-
+export const updateProject = project => ({
+  type: types.UPDATE,
+  payload: { project }
+})
 
 export const updateProjectCompleted = project => ({
   type: types.UPDATE_COMPLETED,

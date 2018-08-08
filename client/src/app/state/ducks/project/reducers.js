@@ -22,7 +22,7 @@ export default combineReducers({
           [ project.slug ]: {
             ...project,
             collaborators: arrayToMap(project.collaborators, '_id'),
-            presets: arrayToMap(project.presets, 'hash')
+            presets: arrayToMap(project.presets, 'hash'),
           }
         }), {}
       )
@@ -45,7 +45,15 @@ export default combineReducers({
       [ action.payload.project.slug ]: {
         ...action.payload.project,
         presets: arrayToMap(action.payload.project.presets, 'hash'),
-        collaborators: collaboratorsToMap(action.payload.project.collaborators, '_id'),
+        collaborators: collaboratorsToMap(action.payload.project.collaborators, '_id')
+      }
+    }),
+    [types.UPDATE_COMPLETED ]: (state, action) => ({
+      ...state,
+      [ action.payload.project.slug ]: {
+        ...action.payload.project,
+        presets: arrayToMap(action.payload.project.presets, 'hash'),
+        collaborators: collaboratorsToMap(action.payload.project.collaborators, '_id')
       }
     }),
     [ types.GET_PRESET_COMPLETED ]: (state, action) => {
