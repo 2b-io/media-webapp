@@ -23,6 +23,7 @@ export const PROJECT_FRAGMENT = `
   name,
   slug,
   disabled,
+  origins,
   prettyOrigin,
   presets {
     ${ PRESET_FRAGMENT }
@@ -37,7 +38,7 @@ export const PROJECT_FRAGMENT = `
   headers {
     name,
     value
-  }
+  },
 `
 
 const PROJECTS_FRAGMENT = `
