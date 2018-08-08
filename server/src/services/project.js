@@ -1,9 +1,13 @@
+import FormData from'form-data'
+import got from 'got'
+
+import config from 'infrastructure/config'
 import Permission from 'models/Permission'
 import Preset from 'models/Preset'
 import Project from 'models/Project'
 
 export const update = async ( slug, data ) => {
-  
+
   const project = await Project.findOneAndUpdate(
     { slug }, { ...data },
     { new: true }
@@ -92,4 +96,11 @@ export const remove = async (slug) => {
   })
 
   return project
+}
+
+export const invalidCache = async (patterns) => {
+  let formData = new FormData()
+  formData.append({ patterns })
+
+  return await got.post(`${ config.cndServer }api/v1/cache-invalidations`, { body: formData })
 }
