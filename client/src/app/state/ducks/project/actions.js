@@ -165,7 +165,7 @@ export const makeOwnerFailed = reason => ({
 })
 
 export const invalidCache = (patterns, slug) => {
-  const patternArray = patterns.trim().split(/\s*,\s*/).filter(Boolean)
+  const patternArray = patterns.trim().split(/\s*[,\n+]\s*/).filter(Boolean)
 
   return ({
     type: types.INVALID_CACHE,
