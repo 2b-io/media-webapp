@@ -63,7 +63,12 @@ export default {
       }
     `, { slug, token })
 
-    return body.session.account.project
+    const getProject = body.session.account.project
+
+    return {
+      ...getProject,
+      origins: getProject.origins.join('\n')
+    }
   },
   async fetch(token) {
     const body = await request(`
