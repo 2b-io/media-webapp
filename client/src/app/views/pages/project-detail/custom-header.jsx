@@ -24,7 +24,7 @@ const WrapperButton = styled.div`
     ({ theme }) => `0 ${ theme.spacing.small }`
   };
 `
-const StyledButton = styled.div`
+const TrashButton = styled.div`
   padding-top: ${ ({ theme }) => theme.spacing.small };
   padding-bottom: ${ ({ theme }) => theme.spacing.medium };
 `
@@ -33,6 +33,13 @@ const FormItem = styled.div`
     ({ theme }) => theme.secondary.opaque.base
   };
   margin-bottom: ${ ({ theme }) => theme.spacing.tiny };
+`
+
+const WrapperHeader = styled.div`
+  flex-grow: 0;
+`
+const Wrapper = styled.div`
+  margin-bottom: ${ ({ theme }) => theme.spacing.medium };
 `
 
 const CustomHeaderFormItems = ({ fields }) => (
@@ -50,7 +57,7 @@ const CustomHeaderFormItems = ({ fields }) => (
               />
             </StyledTextBox>
             <WrapperButton>
-              <StyledButton>
+              <TrashButton>
                 <Button
                   plain
                   size="medium"
@@ -58,7 +65,7 @@ const CustomHeaderFormItems = ({ fields }) => (
                 >
                   <TrashIcon size="medium" />
                 </Button>
-              </StyledButton>
+              </TrashButton>
             </WrapperButton>
           </HeaderLine>
         </Form.Line>
@@ -77,10 +84,10 @@ const CustomHeaderFormItems = ({ fields }) => (
 
 const CustomHeaderForm = ({ fields }) => (
   <Panel >
-    <Panel.Header>
+    <WrapperHeader>
       <TitleBar>
         <TitleBar.Title>
-          <h2>Custom Headers</h2>
+          <h3>Custom Headers</h3>
         </TitleBar.Title>
         <TitleBar.Menu>
           <Button plain onClick={ () => fields.push({ }) }>
@@ -88,7 +95,7 @@ const CustomHeaderForm = ({ fields }) => (
           </Button>
         </TitleBar.Menu>
       </TitleBar>
-    </Panel.Header>
+    </WrapperHeader>
     <Panel.Content>
       <Container >
         {
@@ -98,25 +105,18 @@ const CustomHeaderForm = ({ fields }) => (
             /> :
             <p>No data</p>
         }
-        <Form.Line last>
-          <Button
-            variant="primary"
-            type="submit"
-            // disabled={ !idle }
-          >Save all</Button>
-        </Form.Line>
       </Container>
     </Panel.Content>
   </Panel>
 )
 
-const CustomHeader = ({ handleSubmit }) => (
-  <Form handleSubmit={ handleSubmit }>
+const CustomHeader = () => (
+  <Wrapper>
     <FieldArray
       name="headers"
       component={ CustomHeaderForm }
     />
-  </Form>
+  </Wrapper>
 )
 
 export default CustomHeader

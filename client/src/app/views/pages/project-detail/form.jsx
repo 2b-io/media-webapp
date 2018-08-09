@@ -3,6 +3,7 @@ import React from 'react'
 import { Form } from 'ui/compounds'
 import { Button } from 'ui/elements'
 import { CheckBox, TextBox } from 'views/common/form'
+import CustomHeader from './custom-header'
 import { validateRequired } from 'views/common/validate'
 
 const ProjectForm = ({ deleteProject, handleSubmit, idle }) => (
@@ -53,6 +54,9 @@ const ProjectForm = ({ deleteProject, handleSubmit, idle }) => (
         disabled={ !idle }
       />
     </Form.Line>
+
+    <CustomHeader />
+
     <Form.Line last>
       <Button.Group>
         <Button

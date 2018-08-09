@@ -1,35 +1,28 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 
-import { reduxForm } from 'redux-form'
+import { reduxForm, reset } from 'redux-form'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
 import { Layout, Panel, TitleBar } from 'ui/compounds'
 import { Button, Container, ErrorBox } from 'ui/elements'
-import { AddIcon } from 'ui/icons'
+import { AddIcon, ReloadIcon } from 'ui/icons'
 import { stateful } from 'views/common/decorators'
 import { Redirect, Route, Switch, withParams } from 'views/router'
 
 import ProjectTools from './project-tools'
 import CacheInvalidatorModal from './cache-invalidator-modal'
 import CollaboratorList from './collaborator-list'
-import _CustomHeader from './custom-header'
 import _ProjectForm from './form'
 import InviteModal from './invite-modal'
 import PresetList from './preset-list'
 import PresetModal from './preset-modal'
 
-
 const ProjectForm = reduxForm({
   form: 'project',
   enableReinitialize: true
 })(_ProjectForm)
-
-const CustomHeader = reduxForm({
-  form: 'customHeader',
-  enableReinitialize: true
-})(_CustomHeader)
 
 const Project = ({
   project,
@@ -42,6 +35,7 @@ const Project = ({
   toProfile,
   toProjectDetail,
   makeOwner,
+  reset,
   ui: {
     idle, notFound,
     deleteError, deleteResult,
@@ -63,6 +57,11 @@ const Project = ({
                   <TitleBar.Title>
                     <h2>Project Info</h2>
                   </TitleBar.Title>
+                  <TitleBar.Menu>
+                    <Button plain onClick={ () => reset('project') }>
+                      <ReloadIcon size="medium" />
+                    </Button>
+                  </TitleBar.Menu>
                 </TitleBar>
               </Panel.Header>
               <Panel.Content>
@@ -82,13 +81,6 @@ const Project = ({
                 </Container>
               </Panel.Content>
             </Panel>
-          </Container>
-          <Container>
-            <CustomHeader
-              idle={ true }
-              initialValues={ project }
-              onSubmit={ updateProject }
-            />
           </Container>
         </Layout.Fluid>
         <Layout.Fixed size="small">
@@ -219,12 +211,13 @@ export default withParams(
       mapDispatch({
         deleteProject: actions.deleteProject,
         updateProject: actions.updateProject,
+        toCacheInvalidator: slug => actions.requestLocation(`/projects/${ slug }/cache-invalidator`),
         toInviteModal: slug => actions.requestLocation(`/projects/${ slug }/invite`),
         toPresetDetail: (slug, hash) => actions.requestLocation(`/projects/${ slug }/presets/${ hash }`),
         toProfile: id => actions.requestLocation(`/@${ id }`),
         toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
         makeOwner: (accountId, slug) => actions.makeOwner(accountId, slug),
-        toCacheInvalidator: slug => actions.requestLocation(`/projects/${ slug }/cache-invalidator`),
+        reset
       })
     )(Project)
   )
