@@ -38,6 +38,9 @@ const FormItem = styled.div`
 const WrapperHeader = styled.div`
   flex-grow: 0;
 `
+const Wrapper = styled.div`
+  margin-bottom: ${ ({ theme }) => theme.spacing.medium };
+`
 
 const CustomHeaderFormItems = ({ fields }) => (
   fields.map(
@@ -108,10 +111,12 @@ const CustomHeaderForm = ({ fields }) => (
 )
 
 const CustomHeader = () => (
-  <FieldArray
-    name="headers"
-    component={ CustomHeaderForm }
-  />
+  <Wrapper>
+    <FieldArray
+      name="headers"
+      component={ CustomHeaderForm }
+    />
+  </Wrapper>
 )
 
 export default CustomHeader

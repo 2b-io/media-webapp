@@ -1,8 +1,8 @@
 export const mapDispatch = actions => dispatch => {
   return Object.entries(actions).reduce(
-    (map, [ name, func ]) => ({
+    (map, [ name, actionCreator ]) => ({
       ...map,
-      [ name ]: (...args) => dispatch(func(...args))
+      [ name ]: (...args) => dispatch(actionCreator(...args))
     }), {}
   )
 }
