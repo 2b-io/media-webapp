@@ -14,7 +14,6 @@ import { Redirect, Route, Switch, withParams } from 'views/router'
 import ProjectTools from './project-tools'
 import CacheInvalidatorModal from './cache-invalidator-modal'
 import CollaboratorList from './collaborator-list'
-import _CustomHeader from './custom-header'
 import _ProjectForm from './form'
 import InviteModal from './invite-modal'
 import PresetList from './preset-list'
@@ -25,11 +24,6 @@ const ProjectForm = reduxForm({
   form: 'project',
   enableReinitialize: true
 })(_ProjectForm)
-
-const CustomHeader = reduxForm({
-  form: 'customHeader',
-  enableReinitialize: true
-})(_CustomHeader)
 
 const Project = ({
   project,
@@ -82,13 +76,6 @@ const Project = ({
                 </Container>
               </Panel.Content>
             </Panel>
-          </Container>
-          <Container>
-            <CustomHeader
-              idle={ true }
-              initialValues={ project }
-              onSubmit={ updateProject }
-            />
           </Container>
         </Layout.Fluid>
         <Layout.Fixed size="small">
