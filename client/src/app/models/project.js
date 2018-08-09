@@ -23,6 +23,7 @@ export const PROJECT_FRAGMENT = `
   name,
   slug,
   disabled,
+  origins,
   prettyOrigin,
   presets {
     ${ PRESET_FRAGMENT }
@@ -37,7 +38,7 @@ export const PROJECT_FRAGMENT = `
   headers {
     name,
     value
-  }
+  },
 `
 
 const PROJECTS_FRAGMENT = `
@@ -62,7 +63,12 @@ export default {
       }
     `, { slug, token })
 
-    return body.session.account.project
+    const getProject = body.session.account.project
+
+    return {
+      ...getProject,
+      origins: getProject.origins.join('\n')
+    }
   },
   async fetch(token) {
     const body = await request(`
@@ -73,7 +79,14 @@ export default {
       }
     `, { token })
 
-    return body.session.account.projects
+    const fetchedProjects = body.session.account.projects
+
+    return fetchedProjects.map(fetchedProject =>
+      ({
+        ...fetchedProject,
+        origins: fetchedProject.origins.join('\n')
+      })
+    )
   },
   async create(project, token) {
     const body = await request(`
@@ -91,7 +104,12 @@ export default {
       token
     })
 
-    return body.session.account._createProject
+    const createdProject = body.session.account._createProject
+
+    return {
+      ...createdProject,
+      origins: createdProject.origins.join('\n')
+    }
   },
   async delete(slug, token) {
     const body = await request(`
@@ -112,6 +130,14 @@ export default {
     return body.session.account.project._destroy
   },
   async update(project, token) {
+    /*
+    regex to describes a pattern of character:
+      \s* Find multi space, multi tab and multi newline
+      [,\n+] Find any character between the brackets
+    */
+    const delimiter = /\s*[,\n+]\s*/
+    const origins = (project.origins || '').trim().split(delimiter).filter(Boolean)
+
     const body = await request(`
       query updateProject($project: ProjectStruct!, $token: String!, $slug: String!) {
         session(token: $token) {
@@ -125,12 +151,23 @@ export default {
         }
       }
     `, {
-      project: pick(project, [ 'name', 'origins', 'prettyOrigin', 'headers', 'disabled' ]),
+      project: pick(
+        {
+          ...project,
+          origins
+        },
+        [ 'name', 'origins', 'prettyOrigin', 'headers', 'disabled' ]
+      ),
       token,
       slug: project.slug
     })
 
-    return body.session.account.project._update
+    const updatedProject = body.session.account.project._update
+
+    return {
+      ...updatedProject,
+      origins: updatedProject.origins.join('\n')
+    }
   },
 
   async createPreset({ preset, slug }, token) {
