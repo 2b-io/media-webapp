@@ -39,5 +39,7 @@ export default {
     }
   },
   baseUrl: process.env.BASE_URL,
-  cdnServer: process.env.CDN_SERVER
+  cdnServer: process.env.CDN_DEV_SERVER,
+  cdnApiVersion: process.env.CDN_API_VERSION,
+  cdnUrlInvalidCache: process.env.CDN_URL_INVALID_CACHE
 }

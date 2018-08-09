@@ -1,5 +1,4 @@
-import FormData from'form-data'
-import got from 'got'
+import request from 'superagent'
 
 import config from 'infrastructure/config'
 import Permission from 'models/Permission'
@@ -99,8 +98,12 @@ export const remove = async (slug) => {
 }
 
 export const invalidCache = async (patterns) => {
-  let formData = new FormData()
-  formData.append({ patterns })
 
-  return await got.post(`${ config.cndServer }api/v1/cache-invalidations`, { body: formData })
+  const { cdnUrlInvalidCache, cdnApiVersion, cdnServer } = config
+
+  return await request
+    .post(`${ cdnServer }/${ cdnApiVersion }/${ cdnUrlInvalidCache }`)
+    .send({ patterns })
+    .set('Content-Type', 'application/json')
+    .then(res => res)
 }
