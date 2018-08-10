@@ -15,7 +15,8 @@ import {
 } from 'services/permission'
 import {
   remove as removeProject,
-  update as updateProject
+  update as updateProject,
+  invalidCache as invalidCache
 } from 'services/project'
 
 import { Collaborator } from '../Collaborator'
@@ -99,7 +100,8 @@ export default ({ Project, ProjectStruct }) => ({
     },
     type: GraphQLBoolean,
     resolve: async (project, { patterns }) => {
-      return true
+
+      return await invalidCache(patterns)
     }
   }
 })

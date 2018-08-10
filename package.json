@@ -25,5 +25,6 @@
     "dev:server": "cd server && npm start && cd ..",
     "lint": "eslint --ext js --ext jsx .",
     "lint:watch": "nodemon --watch client --watch server --watch .eslintrc.js --ext js,jsx --delay 1000ms --exec \"npm run lint\""
-  }
+  },
+  "dependencies": {}
 }
