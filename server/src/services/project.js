@@ -1,9 +1,14 @@
+import request from 'superagent'
+
+import config from 'infrastructure/config'
 import Permission from 'models/Permission'
 import Preset from 'models/Preset'
 import Project from 'models/Project'
+import { validatePatterns } from 'common/validate'
+
 
 export const update = async ( slug, data ) => {
-  
+
   const project = await Project.findOneAndUpdate(
     { slug }, { ...data },
     { new: true }
@@ -92,4 +97,19 @@ export const remove = async (slug) => {
   })
 
   return project
+}
+
+export const invalidCache = async (patterns) => {
+
+  const { cdnServer } = config
+
+  try {
+    await request
+      .post(`${ cdnServer }/cache-invalidations`)
+      .send({ patterns })
+      .set('Content-Type', 'application/json')
+    return true
+  } catch (e) {
+    return false
+  }
 }

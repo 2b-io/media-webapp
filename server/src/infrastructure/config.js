@@ -38,5 +38,6 @@ export default {
       sender: process.env.AWS_SES_SENDER
     }
   },
-  baseUrl: process.env.BASE_URL
+  baseUrl: process.env.BASE_URL,
+  cdnServer: process.env.CDN_SERVER
 }

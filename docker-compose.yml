@@ -12,7 +12,10 @@ services:
       - "8888:8888"
     networks:
       - infra_webapp
+      - infra_cdn
 
 networks:
   infra_webapp:
+    external: true
+  infra_cdn:
     external: true
