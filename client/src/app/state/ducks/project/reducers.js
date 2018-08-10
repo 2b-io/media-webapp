@@ -125,6 +125,23 @@ export default combineReducers({
         }
       }
     },
+
+    [ types.DELETE_COLLABORATOR_COMPLETED ]: (state, action) => {
+
+      const { slug } = action.payload
+      const project = state[ slug ]
+      const { collaborators } = project
+      const { accountId } = action.payload
+      const { [ accountId ]: accountIdtoDelete, ...newCollaborators } = collaborators
+
+      return {
+        ...state,
+        [ slug ]: {
+          ...project,
+          collaborators: newCollaborators
+        }
+      }
+    },
     [ types.MAKE_OWNER_COMPLETED ]: (state, action) => {
       const { slug }  = action.payload
       const { currentAccountId } = action.payload

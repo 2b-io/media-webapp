@@ -32,7 +32,13 @@ const PrivilegeValueButton = styled.div`
   align-items: center;
 `
 
-const CollaboratorList = ({ collaborators, toProfile, currentAccount, makeOwner }) => {
+const CollaboratorList = ({
+  collaborators,
+  currentAccount,
+  makeOwner,
+  deleteCollaborator,
+  toProfile
+}) => {
   const signedInCollaborator = Object.values(collaborators).find(
     ({ account }) => currentAccount && account._id === currentAccount._id
   )
@@ -58,7 +64,7 @@ const CollaboratorList = ({ collaborators, toProfile, currentAccount, makeOwner 
                       <Button variant="primary" onClick={ () => { makeOwner(account._id) } }>
                         <OwnerSetIcon size="small" />
                       </Button>
-                      <Button variant="primary" onClick={ () => { console.log("hello"); return true; } }>
+                      <Button variant="primary" onClick={ () => { deleteCollaborator(account._id) } }>
                         <OwnerRemoveIcon size="small" />
                       </Button>
                     </PrivilegeValueButton>
