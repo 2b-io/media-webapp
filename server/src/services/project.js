@@ -4,6 +4,8 @@ import config from 'infrastructure/config'
 import Permission from 'models/Permission'
 import Preset from 'models/Preset'
 import Project from 'models/Project'
+import { validatePatterns } from 'common/validate'
+
 
 export const update = async ( slug, data ) => {
 
@@ -99,11 +101,15 @@ export const remove = async (slug) => {
 
 export const invalidCache = async (patterns) => {
 
-  const { cdnUrlInvalidCache, cdnApiVersion, cdnServer } = config
+  const { cdnServer } = config
 
-  return await request
-    .post(`${ cdnServer }/${ cdnApiVersion }/${ cdnUrlInvalidCache }`)
-    .send({ patterns })
-    .set('Content-Type', 'application/json')
-    .then(res => res)
+  try {
+    await request
+      .post(`${ cdnServer }/cache-invalidations`)
+      .send({ patterns })
+      .set('Content-Type', 'application/json')
+    return true
+  } catch (e) {
+    return false
+  }
 }

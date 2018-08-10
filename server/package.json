@@ -7,9 +7,7 @@
     "dotenv": "6.0.0",
     "express": "4.16.3",
     "express-graphql": "0.6.12",
-    "form-data": "2.3.2",
     "fs-extra": "7.0.0",
-    "got": "9.0.0",
     "graphql": "0.13.2",
     "graphql-type-json": "0.2.1",
     "http-proxy-middleware": "0.18.0",
@@ -20,6 +18,7 @@
     "random-int": "1.0.0",
     "serialize-error": "2.1.0",
     "shorthash": "0.0.2",
+    "superagent": "3.8.3",
     "uuid": "3.2.1"
   },
   "devDependencies": {
