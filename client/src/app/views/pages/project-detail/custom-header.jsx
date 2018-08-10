@@ -32,7 +32,13 @@ const FormItem = styled.div`
   border-bottom: 1px solid ${
     ({ theme }) => theme.secondary.opaque.base
   };
-  margin-bottom: ${ ({ theme }) => theme.spacing.tiny };
+  padding-top: ${ ({ theme }) => theme.spacing.small };
+  &:last-child {
+    border-bottom: none;
+  };
+  &:first-child {
+    padding-top: 0;
+  }
 `
 
 const WrapperHeader = styled.div`
