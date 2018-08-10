@@ -254,7 +254,6 @@ export default function*() {
   yield take('@@INITIALIZED')
   yield fork(createLoop)
   yield fork(deleteLoop)
-  yield fork(makeOwnerLoop)
   yield fork(fetchLoop)
   yield fork(getLoop)
   yield fork(invalidCacheLoop)
