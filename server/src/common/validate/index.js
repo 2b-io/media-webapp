@@ -1,1 +1,2 @@
-export { default as validatePatterns } from './patterns'
+export { default as validateDomain } from './domain'
+export { default as validatePattern } from './pattern'

@@ -1,10 +1,11 @@
 import request from 'superagent'
 
+import { validatePattern } from 'common/validate'
 import config from 'infrastructure/config'
 import Permission from 'models/Permission'
 import Preset from 'models/Preset'
 import Project from 'models/Project'
-import { validatePatterns } from 'common/validate'
+
 
 
 export const update = async ( slug, data ) => {
@@ -99,14 +100,14 @@ export const remove = async (slug) => {
   return project
 }
 
-export const invalidCache = async (patterns) => {
+export const invalidCache = async (patterns=[], slug, prettyOrigin) => {
 
   const { cdnServer } = config
-
+  const _patterns = patterns.map((part) => validatePattern(part, slug, prettyOrigin))
   try {
     await request
       .post(`${ cdnServer }/cache-invalidations`)
-      .send({ patterns })
+      .send({ _patterns })
       .set('Content-Type', 'application/json')
     return true
   } catch (e) {

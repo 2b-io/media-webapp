@@ -100,8 +100,8 @@ export default ({ Project, ProjectStruct }) => ({
     },
     type: GraphQLBoolean,
     resolve: async (project, { patterns }) => {
-
-      return await invalidCache(patterns)
+      const { slug, origins } = project
+      return await invalidCache(patterns, slug, origins)
     }
   }
 })
