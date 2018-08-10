@@ -7,7 +7,7 @@ import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
 import { Layout, Panel, TitleBar } from 'ui/compounds'
 import { Button, Container, ErrorBox } from 'ui/elements'
-import { AddIcon, ReloadIcon } from 'ui/icons'
+import { AddIcon, OwnerAddIcon, OwnerSetIcon, OwnerRemoveIcon,  ReloadIcon } from 'ui/icons'
 import { stateful } from 'views/common/decorators'
 import { Redirect, Route, Switch, withParams } from 'views/router'
 
@@ -120,7 +120,7 @@ const Project = ({
                   </TitleBar.Title>
                   <TitleBar.Menu>
                     <Button plain onClick={ () => toInviteModal(project.slug) }>
-                      <AddIcon size="medium" />
+                      <OwnerAddIcon size="small" />
                     </Button>
                   </TitleBar.Menu>
                 </TitleBar>
