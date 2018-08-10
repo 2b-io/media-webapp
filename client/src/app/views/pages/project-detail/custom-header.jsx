@@ -2,10 +2,11 @@ import React from 'react'
 import { FieldArray } from 'redux-form'
 import styled from 'styled-components'
 
-import { AddIcon, TrashIcon } from 'ui/icons'
+import { TrashIcon } from 'ui/icons'
 import { Button, Container } from 'ui/elements'
 import { TextBox } from 'views/common/form'
 import { Form, Panel, TitleBar } from 'ui/compounds'
+import { validateRequired } from 'views/common/validate'
 
 const HeaderLine = styled.div`
   display: flex;
@@ -32,14 +33,28 @@ const FormItem = styled.div`
   border-bottom: 1px solid ${
     ({ theme }) => theme.secondary.opaque.base
   };
-  margin-bottom: ${ ({ theme }) => theme.spacing.tiny };
+  padding-top: ${ ({ theme }) => theme.spacing.small };
+  &:last-child {
+    border-bottom: none;
+  };
+  &:first-child {
+    padding-top: 0;
+  }
+`
+
+const Wrapper = styled.div`
+  margin-bottom: ${ ({ theme }) => theme.spacing.medium };
 `
 
 const WrapperHeader = styled.div`
   flex-grow: 0;
 `
-const Wrapper = styled.div`
-  margin-bottom: ${ ({ theme }) => theme.spacing.medium };
+
+const WrapperFooter = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  cursor: pointer;
 `
 
 const CustomHeaderFormItems = ({ fields }) => (
@@ -53,7 +68,8 @@ const CustomHeaderFormItems = ({ fields }) => (
                 label="Header Name"
                 type="text"
                 name={ `${ header }.name` }
-                placeholder="Header Name"
+                placeholder="X-Pull"
+                validate={ validateRequired }
               />
             </StyledTextBox>
             <WrapperButton>
@@ -71,10 +87,11 @@ const CustomHeaderFormItems = ({ fields }) => (
         </Form.Line>
         <Form.Line>
           <TextBox
-            label="Value"
+            label="Header Value"
             type="text"
             name={ `${ header }.value` }
-            placeholder="Value"
+            placeholder="Media CDN"
+            validate={ validateRequired }
           />
         </Form.Line>
       </FormItem>
@@ -89,11 +106,7 @@ const CustomHeaderForm = ({ fields }) => (
         <TitleBar.Title>
           <h3>Custom Headers</h3>
         </TitleBar.Title>
-        <TitleBar.Menu>
-          <Button plain onClick={ () => fields.push({ }) }>
-            <AddIcon size="medium" />
-          </Button>
-        </TitleBar.Menu>
+
       </TitleBar>
     </WrapperHeader>
     <Panel.Content>
@@ -107,6 +120,13 @@ const CustomHeaderForm = ({ fields }) => (
         }
       </Container>
     </Panel.Content>
+    <Panel.Footer>
+      <WrapperFooter>
+        <Button variant="secondary" onClick={ () => fields.push({ }) }>
+          Add more header
+        </Button>
+      </WrapperFooter>
+    </Panel.Footer>
   </Panel>
 )
 
