@@ -6,6 +6,7 @@ import { AddIcon, TrashIcon } from 'ui/icons'
 import { Button, Container } from 'ui/elements'
 import { TextBox } from 'views/common/form'
 import { Form, Panel, TitleBar } from 'ui/compounds'
+import { validateRequired } from 'views/common/validate'
 
 const HeaderLine = styled.div`
   display: flex;
@@ -59,7 +60,8 @@ const CustomHeaderFormItems = ({ fields }) => (
                 label="Header Name"
                 type="text"
                 name={ `${ header }.name` }
-                placeholder="Header Name"
+                placeholder="X-Pull"
+                validate={ validateRequired }
               />
             </StyledTextBox>
             <WrapperButton>
@@ -77,10 +79,11 @@ const CustomHeaderFormItems = ({ fields }) => (
         </Form.Line>
         <Form.Line>
           <TextBox
-            label="Value"
+            label="Header Value"
             type="text"
             name={ `${ header }.value` }
-            placeholder="Value"
+            placeholder="Media CDN"
+            validate={ validateRequired }
           />
         </Form.Line>
       </FormItem>
