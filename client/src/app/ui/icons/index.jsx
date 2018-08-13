@@ -24,6 +24,9 @@ import { ic_view_quilt } from 'react-icons-kit/md/ic_view_quilt'
 
 // APPLICATION ICON: http://wmira.github.io/react-icons-kit/#/iconset/feather
 import { trash2 } from 'react-icons-kit/feather/trash2'
+import { userCheck } from 'react-icons-kit/feather/userCheck'
+import { userPlus } from 'react-icons-kit/feather/userPlus'
+import { userX } from 'react-icons-kit/feather/userX'
 
 import icon from './icon'
 
@@ -47,4 +50,7 @@ export const SignOutIcon = icon(ic_exit_to_app)
 export const SuccessIcon = icon(ic_done)
 export const TrashIcon = icon(trash2)
 export const UiIcon = icon(ic_view_quilt)
+export const OwnerAddIcon = icon(userPlus)
+export const OwnerSetIcon = icon(userCheck)
+export const OwnerRemoveIcon = icon(userX)
 export const WarningIcon = icon(ic_report)

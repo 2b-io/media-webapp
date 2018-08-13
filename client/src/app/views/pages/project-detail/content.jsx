@@ -7,7 +7,7 @@ import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
 import { Layout, Panel, TitleBar } from 'ui/compounds'
 import { Button, Container, ErrorBox } from 'ui/elements'
-import { AddIcon, ReloadIcon } from 'ui/icons'
+import { AddIcon, OwnerAddIcon, ReloadIcon } from 'ui/icons'
 import { stateful } from 'views/common/decorators'
 import { Redirect, Route, Switch, withParams } from 'views/router'
 
@@ -35,6 +35,7 @@ const Project = ({
   toProfile,
   toProjectDetail,
   makeOwner,
+  deleteCollaborator,
   reset,
   ui: {
     idle, notFound,
@@ -120,7 +121,7 @@ const Project = ({
                   </TitleBar.Title>
                   <TitleBar.Menu>
                     <Button plain onClick={ () => toInviteModal(project.slug) }>
-                      <AddIcon size="medium" />
+                      <OwnerAddIcon size="small" />
                     </Button>
                   </TitleBar.Menu>
                 </TitleBar>
@@ -133,6 +134,7 @@ const Project = ({
                       toProfile={ toProfile }
                       currentAccount={ currentAccount }
                       makeOwner={ (accountId) => { makeOwner(accountId, project.slug) } }
+                      deleteCollaborator={ (accountId) => { deleteCollaborator(project.slug, accountId) } }
                     />
                 }
               </Panel.Content>
@@ -217,6 +219,7 @@ export default withParams(
         toProfile: id => actions.requestLocation(`/@${ id }`),
         toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
         makeOwner: (accountId, slug) => actions.makeOwner(accountId, slug),
+        deleteCollaborator: (slug, accountId) => actions.deleteCollaborator(slug, accountId),
         reset
       })
     )(Project)

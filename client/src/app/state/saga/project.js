@@ -167,6 +167,34 @@ const inviteCollaboratorLoop = function*() {
   }
 }
 
+const deleteCollaboratorLoop = function*() {
+  while (true) {
+    const action = yield take(types['PROJECT/DELETE_COLLABORATOR'])
+    try {
+      const session = yield select(selectors.currentSession)
+      if (!session) {
+        continue
+      }
+
+      const owner = true
+      // yield call(Project.deleteCollaborator, session.token, action.payload.slug, action.payload.accountId)
+      if (owner) {
+        yield all([
+          put(actions.deleteCollaboratorCompleted(action.payload.slug, action.payload.accountId)),
+          fork(addToast, {
+            type: 'success',
+            message: 'Collaborator deleted.'
+          })
+        ])
+      }
+
+    } catch (e) {
+      yield put(actions.deleteCollaboratorFailed(serializeError(e)))
+      continue
+    }
+  }
+}
+
 const makeOwnerLoop = function*() {
   while (true) {
     const action = yield take(types['PROJECT/MAKE_OWNER'])
@@ -231,5 +259,6 @@ export default function*() {
   yield fork(invalidCacheLoop)
   yield fork(updateLoop)
   yield fork(inviteCollaboratorLoop)
+  yield fork(deleteCollaboratorLoop)
   yield fork(makeOwnerLoop)
 }

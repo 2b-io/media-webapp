@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { List } from 'ui/compounds'
 import { Button, Link } from 'ui/elements'
+import { OwnerSetIcon, OwnerRemoveIcon } from 'ui/icons'
 
 const Wrapper = styled.div`
   display: flex;
@@ -18,7 +19,6 @@ const AccountStyled = styled.div`
 
 const PrivilegeStyled = styled.div`
   flex-grow: 0;
-  line-height: 2.5em;
 `
 
 const PrivilegeValue = styled.span`
@@ -27,7 +27,18 @@ const PrivilegeValue = styled.span`
   };
 `
 
-const CollaboratorList = ({ collaborators, toProfile, currentAccount, makeOwner }) => {
+const PrivilegeValueButton = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const CollaboratorList = ({
+  collaborators,
+  currentAccount,
+  makeOwner,
+  deleteCollaborator,
+  toProfile
+}) => {
   const signedInCollaborator = Object.values(collaborators).find(
     ({ account }) => currentAccount && account._id === currentAccount._id
   )
@@ -49,8 +60,16 @@ const CollaboratorList = ({ collaborators, toProfile, currentAccount, makeOwner 
                     <PrivilegeValue>{privilege}</PrivilegeValue>
                   }
                   { signedInCollaborator && signedInCollaborator.privilege === 'owner' && privilege === 'admin' &&
-                    <Button variant="primary" onClick={ () => { makeOwner(account._id) } }>Make owner</Button>
+                    <PrivilegeValueButton>
+                      <Button variant="primary" onClick={ () => { makeOwner(account._id) } }>
+                        <OwnerSetIcon size="small" />
+                      </Button>
+                      <Button variant="primary" onClick={ () => { deleteCollaborator(account._id) } }>
+                        <OwnerRemoveIcon size="small" />
+                      </Button>
+                    </PrivilegeValueButton>
                   }
+
                 </PrivilegeStyled>
               </Wrapper>
             </List.Item>
