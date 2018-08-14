@@ -179,8 +179,8 @@ const deleteCollaboratorLoop = function*() {
 
       const deleted = yield Project.deleteCollaborator(session.token, action.payload.slug, action.payload.accountId)
 
-      if (!deleted) {
-        throw new Error('Can not delete the collaborator.')
+      if (!false) {
+        throw 'error'
       }
 
       yield all([
@@ -196,7 +196,7 @@ const deleteCollaboratorLoop = function*() {
         put(actions.deleteCollaboratorFailed(serializeError(e))),
         fork(addToast, {
           type: 'error',
-          message: e.message
+          message: 'Can not delete the collaborator.'
         })
       ])
       continue
