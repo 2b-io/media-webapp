@@ -23,6 +23,15 @@ const CollaboratorItem = styled.li`
   }
 `
 
+const Email = styled.span`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-grow: 1;
+  padding-right: ${
+    ({ theme }) => theme.spacing.small
+  };
+`
+
 const InviteCollaboratorForm = reduxForm({
   form: 'invite',
   enableReinitialize: true
@@ -51,7 +60,7 @@ const InviteCollaborator = ({
           { result.map( ({ email }, index) => (
             <CollaboratorItem key={ index }>
               <Layout>
-                <span>{ email }</span>
+                <Email>{ email }</Email>
                 <Button
                   plain
                   type="submit"
