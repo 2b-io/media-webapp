@@ -16,6 +16,13 @@ const Layout = styled.div`
   display: flex;
   justify-content: space-between;
 `
+
+const CollaboratorItem = styled.li`
+  padding: ${
+    ({ theme }) => theme.spacing.small
+  }
+`
+
 const InviteCollaboratorForm = reduxForm({
   form: 'invite',
   enableReinitialize: true
@@ -42,7 +49,7 @@ const InviteCollaborator = ({
       { filtered && filtered.length ?
         <List>
           { result.map( ({ email }, index) => (
-            <List.Item key={ index }>
+            <CollaboratorItem key={ index }>
               <Layout>
                 <span>{ email }</span>
                 <Button
@@ -52,13 +59,13 @@ const InviteCollaborator = ({
                     Invite
                 </Button>
               </Layout>
-            </List.Item>
+            </CollaboratorItem>
           )) }
         </List> :
         <List>
-          <List.Item>
+          <CollaboratorItem>
             No data collaborator ...
-          </List.Item>
+          </CollaboratorItem>
         </List>
       }
     </Container>

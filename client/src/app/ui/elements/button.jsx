@@ -20,6 +20,7 @@ const Button = styled.button.attrs({
         text-transform: uppercase;
         border: none;
         outline: none;
+        font-weight: 600;
         ${
           plain && `
             padding: 0;
@@ -31,7 +32,6 @@ const Button = styled.button.attrs({
             padding: 0 ${ theme.spacing.small };
             line-height: 2.5em;
             background: ${ theme.background.base };
-            font-weight: 600;
             color: ${
               disabled ?
                 theme.secondary.base :

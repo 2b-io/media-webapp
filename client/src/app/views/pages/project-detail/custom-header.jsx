@@ -2,10 +2,11 @@ import React from 'react'
 import { FieldArray } from 'redux-form'
 import styled from 'styled-components'
 
-import { AddIcon, TrashIcon } from 'ui/icons'
+import { TrashIcon } from 'ui/icons'
 import { Button, Container } from 'ui/elements'
 import { TextBox } from 'views/common/form'
 import { Form, Panel, TitleBar } from 'ui/compounds'
+import { validateRequired } from 'views/common/validate'
 
 const HeaderLine = styled.div`
   display: flex;
@@ -45,6 +46,13 @@ const Wrapper = styled.div`
   margin-bottom: ${ ({ theme }) => theme.spacing.medium };
 `
 
+const WrapperFooter = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  cursor: pointer;
+`
+
 const CustomHeaderFormItems = ({ fields }) => (
   fields.map(
     (header, index) => (
@@ -57,6 +65,7 @@ const CustomHeaderFormItems = ({ fields }) => (
                 type="text"
                 name={ `${ header }.name` }
                 placeholder="X-Pull"
+                validate={ validateRequired }
               />
             </StyledTextBox>
             <WrapperButton>
@@ -78,6 +87,7 @@ const CustomHeaderFormItems = ({ fields }) => (
             type="text"
             name={ `${ header }.value` }
             placeholder="Media CDN"
+            validate={ validateRequired }
           />
         </Form.Line>
       </FormItem>
@@ -92,11 +102,6 @@ const CustomHeaderForm = ({ fields }) => (
         <TitleBar.Title>
           <h3>Custom Headers</h3>
         </TitleBar.Title>
-        <TitleBar.Menu>
-          <Button plain onClick={ () => fields.push({ }) }>
-            <AddIcon size="medium" />
-          </Button>
-        </TitleBar.Menu>
       </TitleBar>
     </WrapperHeader>
     <Panel.Content>
@@ -110,6 +115,13 @@ const CustomHeaderForm = ({ fields }) => (
         }
       </Container>
     </Panel.Content>
+    <Panel.Footer>
+      <WrapperFooter>
+        <Button variant="secondary" onClick={ () => fields.push({ }) }>
+          Add more header
+        </Button>
+      </WrapperFooter>
+    </Panel.Footer>
   </Panel>
 )
 
