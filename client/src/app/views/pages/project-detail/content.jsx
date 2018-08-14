@@ -121,7 +121,7 @@ const Project = ({
                   </TitleBar.Title>
                   <TitleBar.Menu>
                     <Button plain onClick={ () => toInviteModal(project.slug) }>
-                      <OwnerAddIcon size="small" />
+                      <OwnerAddIcon size="medium" />
                     </Button>
                   </TitleBar.Menu>
                 </TitleBar>

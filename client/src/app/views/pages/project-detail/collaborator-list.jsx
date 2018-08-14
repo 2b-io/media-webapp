@@ -17,19 +17,10 @@ const AccountStyled = styled.div`
   white-space: nowrap;
 `
 
-const PrivilegeStyled = styled.div`
-  flex-grow: 0;
-`
-
 const PrivilegeValue = styled.span`
-  padding: ${
-    ({ theme }) => `0 ${ theme.spacing.small }`
+  padding-left: ${
+    ({ theme }) => theme.spacing.small
   };
-`
-
-const PrivilegeValueButton = styled.div`
-  display: flex;
-  align-items: center;
 `
 
 const CollaboratorList = ({
@@ -55,22 +46,19 @@ const CollaboratorList = ({
                     <span>{ account.email }</span>
                   </Link>
                 </AccountStyled>
-                <PrivilegeStyled>
-                  { privilege === 'owner' &&
-                    <PrivilegeValue>{privilege}</PrivilegeValue>
-                  }
-                  { signedInCollaborator && signedInCollaborator.privilege === 'owner' && privilege === 'admin' &&
-                    <PrivilegeValueButton>
-                      <Button variant="primary" onClick={ () => { makeOwner(account._id) } }>
-                        <OwnerSetIcon size="small" />
-                      </Button>
-                      <Button variant="primary" onClick={ () => { deleteCollaborator(account._id) } }>
-                        <OwnerRemoveIcon size="small" />
-                      </Button>
-                    </PrivilegeValueButton>
-                  }
-
-                </PrivilegeStyled>
+                { privilege === 'owner' &&
+                  <PrivilegeValue>{privilege}</PrivilegeValue>
+                }
+                { signedInCollaborator && signedInCollaborator.privilege === 'owner' && privilege === 'admin' &&
+                  <Button.Group loosed>
+                    <Button plain onClick={ () => { makeOwner(account._id) } }>
+                      <OwnerSetIcon size="medium" />
+                    </Button>
+                    <Button plain onClick={ () => { deleteCollaborator(account._id) } }>
+                      <OwnerRemoveIcon size="medium" />
+                    </Button>
+                  </Button.Group>
+                }
               </Wrapper>
             </List.Item>
           )

@@ -20,8 +20,8 @@ const StyledTextBox = styled.div`
 const WrapperButton = styled.div`
   flex-grow: 0;
 
-  padding:  ${
-    ({ theme }) => `0 ${ theme.spacing.small }`
+  padding-left:  ${
+    ({ theme }) => theme.spacing.small
   };
 `
 const TrashButton = styled.div`
@@ -29,10 +29,13 @@ const TrashButton = styled.div`
   padding-bottom: ${ ({ theme }) => theme.spacing.medium };
 `
 const FormItem = styled.div`
-  border-bottom: 1px solid ${
-    ({ theme }) => theme.secondary.opaque.base
-  };
-  margin-bottom: ${ ({ theme }) => theme.spacing.tiny };
+
+  &:not(:last-child) {
+    border-bottom: 1px solid ${
+      ({ theme }) => theme.secondary.opaque.base
+    };
+    margin-bottom: ${ ({ theme }) => theme.spacing.small };
+  }
 `
 
 const WrapperHeader = styled.div`
@@ -53,7 +56,7 @@ const CustomHeaderFormItems = ({ fields }) => (
                 label="Header Name"
                 type="text"
                 name={ `${ header }.name` }
-                placeholder="Header Name"
+                placeholder="X-Pull"
               />
             </StyledTextBox>
             <WrapperButton>
@@ -71,10 +74,10 @@ const CustomHeaderFormItems = ({ fields }) => (
         </Form.Line>
         <Form.Line>
           <TextBox
-            label="Value"
+            label="Header Value"
             type="text"
             name={ `${ header }.value` }
-            placeholder="Value"
+            placeholder="Media CDN"
           />
         </Form.Line>
       </FormItem>
@@ -103,7 +106,7 @@ const CustomHeaderForm = ({ fields }) => (
             <CustomHeaderFormItems
               fields={ fields }
             /> :
-            <p>No data</p>
+            <p>There is no custom header yet.</p>
         }
       </Container>
     </Panel.Content>

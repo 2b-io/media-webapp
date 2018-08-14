@@ -10,33 +10,9 @@ const Dashboard = () => (
       items={ [ {
         component: Project,
         grid: {
-          w: 1,
-          h: 1
-        }
-      }, {
-        component: Project,
-        grid: {
-          w: 1,
-          h: 2
-        },
-      }, {
-        component: Project,
-        grid: {
-          w: 1,
-          h: 1
-        },
-      }, {
-        component: Project,
-        grid: {
           w: 2,
           h: 1
         }
-      }, {
-        component: Project,
-        grid: {
-          w: 1,
-          h: 1
-        },
       } ] }
     />
   </Container>

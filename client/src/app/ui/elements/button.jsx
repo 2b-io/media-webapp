@@ -109,7 +109,11 @@ Button.Group = styled.div`
   display: inline-flex;
 
   & > ${ Button } {
-    margin-right: ${ ({ theme }) => theme.spacing.small };
+    margin-right: ${
+      ({ theme, loosed }) => loosed ?
+        theme.spacing.medium :
+        theme.spacing.small
+    };
 
     &:last-child {
       margin-right: 0;
