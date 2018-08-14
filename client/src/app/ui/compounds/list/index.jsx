@@ -2,7 +2,10 @@ import styled from 'styled-components'
 
 const Item = styled.li`
   padding: ${
-    ({ theme }) => theme.spacing.small
+    ({ theme }) => `
+      ${ theme.spacing.small }
+      ${ theme.spacing.medium }
+    `
   }
 `
 
