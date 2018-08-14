@@ -180,7 +180,7 @@ const deleteCollaboratorLoop = function*() {
       const deleted = yield Project.deleteCollaborator(session.token, action.payload.slug, action.payload.accountId)
 
       if (!deleted) {
-        throw 'error'
+        throw new Error('Can not delete the collaborator.')
       }
 
       yield all([
