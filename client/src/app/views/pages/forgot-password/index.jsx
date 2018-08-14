@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
-import { Container, Description, Header, Link, Paragraph } from 'ui/elements'
+import { Container, Link, Paragraph } from 'ui/elements'
 import { ErrorBox, SuccessBox } from 'ui/elements'
 import { actions } from 'state/interface'
 import { mapDispatch } from 'services/redux-helpers'
@@ -33,7 +33,7 @@ const ForgotPassword=({
       }
       { !resultForgotPassword &&
         <Fragment>
-          <Paragraph>Enter your email address</Paragraph>
+          <Paragraph>Enter your email</Paragraph>
           <ForgotPasswordForm onSubmit={ forgotPassword } />
         </Fragment>
       }

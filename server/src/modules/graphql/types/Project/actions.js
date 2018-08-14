@@ -23,7 +23,6 @@ import {
 import { Collaborator } from '../Collaborator'
 import { Preset, PresetStruct } from '../Preset'
 
-
 export default ({ Project, ProjectStruct }) => ({
   _update: {
     args: {
@@ -113,8 +112,8 @@ export default ({ Project, ProjectStruct }) => ({
     },
     type: GraphQLBoolean,
     resolve: async (project, { patterns }) => {
-
-      return await invalidCache(patterns)
+      const { slug, prettyOrigin } = project
+      return await invalidCache(patterns, slug, prettyOrigin)
     }
   }
 })
