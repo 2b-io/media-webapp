@@ -172,24 +172,33 @@ const deleteCollaboratorLoop = function*() {
     const action = yield take(types['PROJECT/DELETE_COLLABORATOR'])
     try {
       const session = yield select(selectors.currentSession)
+
       if (!session) {
         continue
       }
 
-      const owner = true
-      // yield call(Project.deleteCollaborator, session.token, action.payload.slug, action.payload.accountId)
-      if (owner) {
-        yield all([
-          put(actions.deleteCollaboratorCompleted(action.payload.slug, action.payload.accountId)),
-          fork(addToast, {
-            type: 'success',
-            message: 'Collaborator deleted.'
-          })
-        ])
+      const deleted = yield Project.deleteCollaborator(session.token, action.payload.slug, action.payload.accountId)
+
+      if (!deleted) {
+        throw new Error('Can not delete the collaborator.')
       }
 
+      yield all([
+        put(actions.deleteCollaboratorCompleted(action.payload.slug, action.payload.accountId)),
+        fork(addToast, {
+          type: 'success',
+          message: 'Collaborator deleted.'
+        })
+      ])
+
     } catch (e) {
-      yield put(actions.deleteCollaboratorFailed(serializeError(e)))
+      yield all([
+        put(actions.deleteCollaboratorFailed(serializeError(e))),
+        fork(addToast, {
+          type: 'error',
+          message: 'Can not delete the collaborator.'
+        })
+      ])
       continue
     }
   }
