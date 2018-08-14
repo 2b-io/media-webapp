@@ -5,39 +5,44 @@ import serializeError from 'serialize-error'
 
 const forgotPasswordLoop = function*() {
   while (true) {
-
     const action = yield take(types['RESETPASSWORDCODE/FORGOT_PASSWORD'])
 
     try {
       const status = yield call(ResetPasswordCode.forgotPassword, action.payload.email)
 
-      yield put(actions.forgotPasswordCompleted(status))
+      if (!status) {
+        throw new Error('Reset password failed')
+      }
 
+      yield put(actions.forgotPasswordCompleted(status))
     } catch (e) {
       yield put(actions.forgotPasswordFailed(serializeError(e)))
       continue
     }
-
   }
 }
-const resetPasswordLoop = function*() {
 
+const resetPasswordLoop = function*() {
   while (true) {
     const action = yield take(types['RESETPASSWORDCODE/RESET_PASSWORD'])
+
     try {
       const { password, code } = action.payload
 
-      const statusReset = yield call(ResetPasswordCode.resetPassword, password, code)
+      const status = yield call(ResetPasswordCode.resetPassword, password, code)
 
-      yield put(actions.resetPasswordCompleted(statusReset))
+      if (!status) {
+        throw new Error('Reset password failed')
+      }
 
+      yield put(actions.resetPasswordCompleted(status))
     } catch (e) {
       yield put(actions.resetPasswordFailed(serializeError(e)))
       continue
     }
-
   }
 }
+
 const getResetCodeLoop = function*() {
   while (true) {
 
@@ -49,7 +54,6 @@ const getResetCodeLoop = function*() {
       const account = yield call(ResetPasswordCode.getResetCode, code)
 
       yield put(actions.getResetCodeCompleted(account))
-
     } catch (e) {
       yield put(actions.getResetCodeFailed(serializeError(e)))
       continue
@@ -60,6 +64,6 @@ const getResetCodeLoop = function*() {
 export default function* () {
   yield take('@@INITIALIZED')
   yield fork(forgotPasswordLoop)
-  yield fork(resetPasswordLoop)
   yield fork(getResetCodeLoop)
+  yield fork(resetPasswordLoop)
 }

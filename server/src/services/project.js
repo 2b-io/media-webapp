@@ -1,40 +1,37 @@
 import request from 'superagent'
+import { URL } from 'url'
 
-import { normalizePattern } from 'common/normalize'
-import { validateDomain } from 'common/validate'
 import config from 'infrastructure/config'
 import Permission from 'models/Permission'
 import Preset from 'models/Preset'
 import Project from 'models/Project'
 
-
+const normalizePattern = (path, origin) => {
+  try {
+    return new URL(path, origin || undefined).toString()
+  } catch (e) {
+    return null
+  }
+}
 
 export const update = async ( slug, data ) => {
-
-  const project = await Project.findOneAndUpdate(
+  return await Project.findOneAndUpdate(
     { slug }, { ...data },
     { new: true }
   ).lean()
-
-  return project
 }
 
 export const getBySlug = async (slug) => {
-  const project = await Project.findOne({
+  return await Project.findOne({
     slug,
     removed: false
   }).lean()
-
-  return project
 }
 export const getById = async (id) => {
-
-  const project = await Project.findOne({
+  return await Project.findOne({
     _id: id,
     removed: false
   }).lean()
-
-  return project
 }
 
 export const list = async (account) => {
@@ -63,55 +60,57 @@ export const create = async (data, account) => {
     throw new Error('Invalid parameters')
   }
 
-  try {
-    const project = await new Project({
-      name,
-      slug,
-      prettyOrigin,
-      origins
-    }).save()
+  const project = await new Project({
+    name,
+    slug,
+    prettyOrigin,
+    origins
+  }).save()
 
-    await new Permission({
-      project: project._id,
-      account: account._id,
-      privilege: 'owner'
-    }).save()
+  await new Permission({
+    project: project._id,
+    account: account._id,
+    privilege: 'owner'
+  }).save()
 
-    await new Preset({
-      project: project._id,
-      name: 'default',
-      isDefault: true
-    }).save()
+  await new Preset({
+    project: project._id,
+    name: 'default',
+    isDefault: true
+  }).save()
 
-    return project
-  } catch (error) {
-    throw error
-  }
+  return project
 }
 
 export const remove = async (slug) => {
-  const project = await Project.findOneAndUpdate({
+  return await Project.findOneAndUpdate({
     slug
   }, {
     removed: true
   }, {
     new: true
   })
-
-  return project
 }
 
-export const invalidCache = async (_patterns=[], slug, prettyOrigin) => {
-
+export const invalidCache = async (patterns = [], slug, prettyOrigin) => {
   const { cdnServer } = config
-  const patterns = _patterns.map((pattern) => normalizePattern(pattern, prettyOrigin))
-  try {
-    await request
-      .post(`${ cdnServer }/cache-invalidations`)
-      .send({ patterns, slug })
-      .set('Content-Type', 'application/json')
+  const normalizedPatterns = patterns
+    .map(
+      (pattern) => normalizePattern(pattern, prettyOrigin)
+    )
+    .filter(Boolean)
+
+  if (!normalizedPatterns.length) {
     return true
-  } catch (e) {
-    return false
   }
+
+  await request
+    .post(`${ cdnServer }/cache-invalidations`)
+    .set('Content-Type', 'application/json')
+    .send({
+      patterns: normalizedPatterns,
+      slug
+    })
+
+  return true
 }

@@ -29,7 +29,7 @@ const Register = ({
         <ErrorBox>An error happens when registering.</ErrorBox>
       }
       <Paragraph>
-        Enter your email address
+        Enter your email
       </Paragraph>
       <RegisterForm
         onSubmit={ register }

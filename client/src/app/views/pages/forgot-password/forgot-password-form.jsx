@@ -3,24 +3,21 @@ import React from 'react'
 import { Button } from 'ui/elements'
 import { Form } from 'ui/compounds'
 import { TextBox } from 'views/common/form'
-import { validateEmail } from 'views/common/validate'
+import { validateEmail, validateRequired } from 'views/common/validate'
 
 const forgotPasswordForm = ({ handleSubmit }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Line>
       <TextBox
-        label="Your email"
+        label="Email"
         type="email"
         name="email"
-        placeholder="Your email"
-        validate={ validateEmail }
+        placeholder="name@example.com"
+        validate={ [ validateEmail, validateRequired ] }
       />
     </Form.Line>
     <Form.Line last>
-      <Button
-        type="submit">
-        Request reset password
-      </Button>
+      <Button type="submit">Recover Password</Button>
     </Form.Line>
   </Form>
 )

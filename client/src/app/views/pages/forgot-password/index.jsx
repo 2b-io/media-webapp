@@ -2,7 +2,8 @@ import React, { Fragment } from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
-import { Container, Description, Header, ErrorBox, SuccessBox, Link } from 'ui/elements'
+import { Container, Link, Paragraph } from 'ui/elements'
+import { ErrorBox, SuccessBox } from 'ui/elements'
 import { actions } from 'state/interface'
 import { mapDispatch } from 'services/redux-helpers'
 import { stateful } from 'views/common/decorators'
@@ -14,24 +15,34 @@ const ForgotPasswordForm = reduxForm({
   enableReinitialize: true
 })(_ForgotPasswordForm)
 
-const ForgotPassword=({ forgotPassword, toSignIn, ui: { resultForgotPassword, errorFetchEmail } }) => {
-  return (
-    <main>
-      <Container center size="small">
-        { errorFetchEmail || resultForgotPassword === false && <ErrorBox>Request reset password fail or account not exist</ErrorBox> }
-        { resultForgotPassword && <Fragment>
-          <SuccessBox>Send request success</SuccessBox>
-        </Fragment> ||
+const ForgotPassword=({
+  forgotPassword,
+  toSignIn,
+  ui: {
+    errorForgotPassword,
+    resultForgotPassword
+  }
+}) => (
+  <main>
+    <Container center size="small">
+      { resultForgotPassword &&
+        <SuccessBox>We&apos;ve send a password reset link to your email. Please check your inbox.</SuccessBox>
+      }
+      { errorForgotPassword &&
+        <ErrorBox>Fail to send the reset password email or the account does not exist.</ErrorBox>
+      }
+      { !resultForgotPassword &&
         <Fragment>
-          <Header center> Forgot Password </Header>
-          <Description justify> Enter your email address below and click on the &#39;Request reset password&#39; button </Description>
+          <Paragraph>Enter your email</Paragraph>
+          <ForgotPasswordForm onSubmit={ forgotPassword } />
         </Fragment>
-        }
-        <ForgotPasswordForm onSubmit={ forgotPassword } />
-        <Link href='/sign-in' onClick={ toSignIn }>Back to login</Link>
-      </Container>
-    </main>
-  ) }
+      }
+      <Paragraph>
+        <Link href='/sign-in' onClick={ toSignIn }>Back to sign in</Link>
+      </Paragraph>
+    </Container>
+  </main>
+)
 
 export default stateful({
   component: 'ResetPassword'

@@ -21,8 +21,8 @@ const StyledTextBox = styled.div`
 const WrapperButton = styled.div`
   flex-grow: 0;
 
-  padding:  ${
-    ({ theme }) => `0 ${ theme.spacing.small }`
+  padding-left:  ${
+    ({ theme }) => theme.spacing.small
   };
 `
 const TrashButton = styled.div`
@@ -30,24 +30,20 @@ const TrashButton = styled.div`
   padding-bottom: ${ ({ theme }) => theme.spacing.medium };
 `
 const FormItem = styled.div`
-  border-bottom: 1px solid ${
-    ({ theme }) => theme.secondary.opaque.base
-  };
-  padding-top: ${ ({ theme }) => theme.spacing.small };
-  &:last-child {
-    border-bottom: none;
-  };
-  &:first-child {
-    padding-top: 0;
-  }
-`
 
-const Wrapper = styled.div`
-  margin-bottom: ${ ({ theme }) => theme.spacing.medium };
+  &:not(:last-child) {
+    border-bottom: 1px solid ${
+      ({ theme }) => theme.secondary.opaque.base
+    };
+    margin-bottom: ${ ({ theme }) => theme.spacing.small };
+  }
 `
 
 const WrapperHeader = styled.div`
   flex-grow: 0;
+`
+const Wrapper = styled.div`
+  margin-bottom: ${ ({ theme }) => theme.spacing.medium };
 `
 
 const WrapperFooter = styled.div`
@@ -106,7 +102,6 @@ const CustomHeaderForm = ({ fields }) => (
         <TitleBar.Title>
           <h3>Custom Headers</h3>
         </TitleBar.Title>
-
       </TitleBar>
     </WrapperHeader>
     <Panel.Content>
@@ -116,7 +111,7 @@ const CustomHeaderForm = ({ fields }) => (
             <CustomHeaderFormItems
               fields={ fields }
             /> :
-            <p>No data</p>
+            <p>There is no custom header yet.</p>
         }
       </Container>
     </Panel.Content>

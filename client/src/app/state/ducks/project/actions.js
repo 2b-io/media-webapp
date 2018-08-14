@@ -149,6 +149,22 @@ export const inviteCollaboratorFailed = reason => ({
   payload: { reason }
 })
 
+export const deleteCollaborator = (slug, accountId) => ({
+  type: types.DELETE_COLLABORATOR,
+  payload: { slug, accountId }
+})
+
+//?? what do action do when deleted collaborator?
+export const deleteCollaboratorCompleted = (slug, accountId) => ({
+  type: types.DELETE_COLLABORATOR_COMPLETED,
+  payload: { slug, accountId }
+})
+
+export const deleteCollaboratorFailed = reason => ({
+  type: types.DELETE_COLLABORATOR_FAILED,
+  payload: { reason }
+})
+
 export const makeOwner = (accountId, slug) => ({
   type: types.MAKE_OWNER,
   payload: { accountId, slug }

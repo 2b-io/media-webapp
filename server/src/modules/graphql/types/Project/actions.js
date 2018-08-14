@@ -11,6 +11,7 @@ import {
 } from 'services/preset'
 import {
   invite as inviteCollaborator,
+  deleteCollaborator as deleteCollaborator,
   makeOwner as makeOwner
 } from 'services/permission'
 import {
@@ -21,7 +22,6 @@ import {
 
 import { Collaborator } from '../Collaborator'
 import { Preset, PresetStruct } from '../Preset'
-
 
 export default ({ Project, ProjectStruct }) => ({
   _update: {
@@ -78,6 +78,18 @@ export default ({ Project, ProjectStruct }) => ({
       p.project = project
 
       return p
+    }
+  },
+  _deleteCollaborator: {
+    args: {
+      accountId: {
+        type: GraphQLNonNull(GraphQLString)
+      }
+    },
+    type: GraphQLBoolean,
+    resolve: async (project, { accountId }) => {
+      const { _id } = project
+      return await deleteCollaborator(_id, accountId)
     }
   },
   _makeOwner: {

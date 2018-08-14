@@ -21,7 +21,7 @@ const Overlay = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
   background: ${
-    ({ theme }) => theme.secondary.opaque.base
+    ({ theme }) => theme.black.opaque.base
   };
   padding: ${
     ({ theme }) => `0 ${ theme.spacing.small }`

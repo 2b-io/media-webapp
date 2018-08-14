@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { List } from 'ui/compounds'
 import { Button, Link } from 'ui/elements'
+import { OwnerSetIcon, OwnerRemoveIcon } from 'ui/icons'
 
 const Wrapper = styled.div`
   display: flex;
@@ -16,18 +17,19 @@ const AccountStyled = styled.div`
   white-space: nowrap;
 `
 
-const PrivilegeStyled = styled.div`
-  flex-grow: 0;
-  line-height: 2.5em;
-`
-
 const PrivilegeValue = styled.span`
-  padding: ${
-    ({ theme }) => `0 ${ theme.spacing.small }`
+  padding-left: ${
+    ({ theme }) => theme.spacing.small
   };
 `
 
-const CollaboratorList = ({ collaborators, toProfile, currentAccount, makeOwner }) => {
+const CollaboratorList = ({
+  collaborators,
+  currentAccount,
+  makeOwner,
+  deleteCollaborator,
+  toProfile
+}) => {
   const signedInCollaborator = Object.values(collaborators).find(
     ({ account }) => currentAccount && account._id === currentAccount._id
   )
@@ -44,14 +46,19 @@ const CollaboratorList = ({ collaborators, toProfile, currentAccount, makeOwner 
                     <span>{ account.email }</span>
                   </Link>
                 </AccountStyled>
-                <PrivilegeStyled>
-                  { privilege === 'owner' &&
-                    <PrivilegeValue>{privilege}</PrivilegeValue>
-                  }
-                  { signedInCollaborator && signedInCollaborator.privilege === 'owner' && privilege === 'admin' &&
-                    <Button variant="primary" onClick={ () => { makeOwner(account._id) } }>Make owner</Button>
-                  }
-                </PrivilegeStyled>
+                { privilege === 'owner' &&
+                  <PrivilegeValue>{privilege}</PrivilegeValue>
+                }
+                { signedInCollaborator && signedInCollaborator.privilege === 'owner' && privilege === 'admin' &&
+                  <Button.Group loosed>
+                    <Button plain onClick={ () => { makeOwner(account._id) } }>
+                      <OwnerSetIcon size="medium" />
+                    </Button>
+                    <Button plain onClick={ () => { deleteCollaborator(account._id) } }>
+                      <OwnerRemoveIcon size="medium" />
+                    </Button>
+                  </Button.Group>
+                }
               </Wrapper>
             </List.Item>
           )

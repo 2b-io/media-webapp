@@ -24,6 +24,12 @@ const Footer = styled.div`
   align-items: center;
 `
 
+const NoData = styled.h2`
+  padding: ${
+    ({ theme }) => theme.spacing.medium
+  };
+`
+
 const ProjectLink = ({ onClick, ...props }) => (
   <StyledLink onClick={ preventDefault(onClick) } { ...props } />
 )
@@ -36,7 +42,7 @@ const ProjectItem = ({ project, toProjectDetail }) => (
 const ProjectList = ({ projects, toProjectDetail }) => {
   if (!projects || !projects.length) {
     return (
-      <h2>No data...</h2>
+      <NoData>No data...</NoData>
     )
   }
 

@@ -281,6 +281,26 @@ export default {
     })
     return body.session.account.project._inviteCollaborator
   },
+
+  async deleteCollaborator(token, slug, accountId) {
+    const body = await request(`
+      query deleteCollaborator($token: String!, $slug: String!, $accountId: String!) {
+        session(token: $token) {
+          account {
+            project(slug: $slug) {
+              _deleteCollaborator(accountId: $accountId)
+            }
+          }
+        }
+      }
+    `, {
+      token,
+      slug,
+      accountId
+    })
+    return body.session.account.project._deleteCollaborator
+  },
+
   async makeOwner(token, slug, accountId) {
     const body = await request(`
       query makeOwner($token: String!, $slug: String!, $accountId: String!) {

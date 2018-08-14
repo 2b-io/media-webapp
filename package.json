@@ -20,7 +20,7 @@
     "install:all": "npm i && npm run install:client && npm run install:server",
     "install:client": "cd client/ && npm i && cd ..",
     "install:server": "cd server/ && npm i && cd ..",
-    "dev": "concurrently --raw \"npm run dev:client\" \"npm run dev:server\" \"npm run lint:watch\"",
+    "dev": "concurrently --raw \"npm run dev:client\" \"npm run dev:server\"",
     "dev:client": "cd client && npm start && cd ..",
     "dev:server": "cd server && npm start && cd ..",
     "lint": "eslint --ext js --ext jsx .",

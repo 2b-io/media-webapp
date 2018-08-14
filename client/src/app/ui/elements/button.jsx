@@ -20,6 +20,7 @@ const Button = styled.button.attrs({
         text-transform: uppercase;
         border: none;
         outline: none;
+        font-weight: 600;
         ${
           plain && `
             padding: 0;
@@ -31,7 +32,6 @@ const Button = styled.button.attrs({
             padding: 0 ${ theme.spacing.small };
             line-height: 2.5em;
             background: ${ theme.background.base };
-            font-weight: 600;
             color: ${
               disabled ?
                 theme.secondary.base :
@@ -109,7 +109,11 @@ Button.Group = styled.div`
   display: inline-flex;
 
   & > ${ Button } {
-    margin-right: ${ ({ theme }) => theme.spacing.small };
+    margin-right: ${
+      ({ theme, loosed }) => loosed ?
+        theme.spacing.medium :
+        theme.spacing.small
+    };
 
     &:last-child {
       margin-right: 0;

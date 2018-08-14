@@ -3,7 +3,7 @@ import React from 'react'
 import { Form } from 'ui/compounds'
 import { Button } from 'ui/elements'
 import { TextBox } from 'views/common/form'
-import { validateEmail } from 'views/common/validate'
+import { validateEmail, validateRequired } from 'views/common/validate'
 
 const RegisterForm = ({ handleSubmit, idle }) => (
   <Form handleSubmit={ handleSubmit }>
@@ -14,7 +14,7 @@ const RegisterForm = ({ handleSubmit, idle }) => (
         name="email"
         placeholder="your email"
         disabled={ !idle }
-        validate={ validateEmail }
+        validate={ [ validateEmail, validateRequired ] }
       />
     </Form.Line>
     <Form.Line last>
