@@ -1,2 +1,2 @@
-export { default as pretty } from './pretty'
-export { default as universal } from './universal'
+export { default as standardizePretty } from './pretty'
+export { default as standardizeUniversal } from './universal'

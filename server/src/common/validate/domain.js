@@ -1,8 +1,8 @@
 
-const validDomain = (input) => {
+const validateDomain = (input) => {
   const domain = input.match(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)/)[1]
-  const regex = /^((?:(?:(?:\w[\.\-\+]?)*)\w)+)((?:(?:(?:\w[\.\-\+]?){0,62})\w)+)\.(\w{2,6})$/
-  return regex.test(domain)
+  const regexCheckDomain = /^((?:(?:(?:\w[\.\-\+]?)*)\w)+)((?:(?:(?:\w[\.\-\+]?){0,62})\w)+)\.(\w{2,6})$/
+  return regexCheckDomain.test(domain)
 }
 
-export default validDomain
+export default validateDomain
