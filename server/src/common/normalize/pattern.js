@@ -1,14 +1,13 @@
 import { validateDomain } from '../validate'
-import { standardizePretty, standardizeUniversal } from '../standardize'
 
-const normalizePattern = (input, slug, prettyOrigin) => {
-  if (!validateDomain(input)) {
-    return null
+const normalizePattern = (input, prettyOrigin) => {
+
+  if (validateDomain(input)) {
+    return input
   }
-  if (prettyOrigin) {
-    return standardizePretty(input, slug, prettyOrigin)
+  if (!validateDomain(input) && prettyOrigin) {
+    return prettyOrigin + input
   }
-  return standardizeUniversal(input, slug)
 }
 
 export default normalizePattern

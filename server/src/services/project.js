@@ -1,6 +1,7 @@
 import request from 'superagent'
 
 import { normalizePattern } from 'common/normalize'
+import { validateDomain } from 'common/validate'
 import config from 'infrastructure/config'
 import Permission from 'models/Permission'
 import Preset from 'models/Preset'
@@ -103,11 +104,11 @@ export const remove = async (slug) => {
 export const invalidCache = async (_patterns=[], slug, prettyOrigin) => {
 
   const { cdnServer } = config
-  const patterns = _patterns.map((pattern) => normalizePattern(pattern, slug, prettyOrigin))
+  const patterns = _patterns.map((pattern) => normalizePattern(pattern, prettyOrigin))
   try {
     await request
       .post(`${ cdnServer }/cache-invalidations`)
-      .send({ patterns })
+      .send({ patterns, slug })
       .set('Content-Type', 'application/json')
     return true
   } catch (e) {
