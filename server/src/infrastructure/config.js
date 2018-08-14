@@ -1,24 +1,6 @@
-import env from 'dotenv'
-import fs from 'fs-extra'
 import path from 'path'
 
 const rootDir = path.resolve(__dirname, '..')
-const envPath = path.resolve(rootDir, '../internals/.env')
-
-const envExisted = fs.pathExistsSync(envPath)
-
-if (!envExisted) {
-  console.warn(`
-    Could not found [ internals/.env ].
-    You can create one by copying [ internals/.example.env ]...
-  `)
-
-  throw Error('The server should be configured before starting')
-}
-
-env.config({
-  path: envPath
-})
 
 export default {
   __rootDir: rootDir,
