@@ -20,8 +20,8 @@ const FixedItem = styled.div`
     ({ size }) => size ? `${ getBreakpoint(size) }px` : 'auto'
   };
   max-width: ${
-    ({ layout, size }) => layout !== 'vertical' && size ?
-      `${ getBreakpoint(size) }px` : 'none'
+    ({ layout, size, width }) => layout !== 'vertical' && size ?
+      `${ getBreakpoint(size) }px` : `${ width }px`
   };
 `
 
@@ -58,7 +58,7 @@ class Layout extends Component {
       )
   }
 
-  renderItems() {
+  renderItems({ width }) {
     const tops = this.calculateUniqueTops()
 
     return (
@@ -68,7 +68,8 @@ class Layout extends Component {
             this.props.children,
             child => child && React.cloneElement(child, {
               innerRef: e => this.addLayoutItem(e),
-              layout: tops.length === 1 ? 'horizontal' : 'vertical'
+              layout: tops.length === 1 ? 'horizontal' : 'vertical',
+              width: width
             })
           )
         }
