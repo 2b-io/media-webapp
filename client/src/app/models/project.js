@@ -284,11 +284,11 @@ export default {
 
   async deleteCollaborator(token, slug, accountId) {
     const body = await request(`
-      query deleteCollaborator($token: String!, $slug: String!, $accountId: String!) {
+      query removeCollaborator($token: String!, $slug: String!, $accountId: String!) {
         session(token: $token) {
           account {
             project(slug: $slug) {
-              _deleteCollaborator(accountId: $accountId)
+              _removeCollaborator(accountId: $accountId)
             }
           }
         }
@@ -298,7 +298,7 @@ export default {
       slug,
       accountId
     })
-    return body.session.account.project._deleteCollaborator
+    return body.session.account.project._removeCollaborator
   },
 
   async makeOwner(token, slug, accountId) {

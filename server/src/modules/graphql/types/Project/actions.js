@@ -89,7 +89,7 @@ export default ({ Project, ProjectStruct }) => ({
     type: GraphQLBoolean,
     resolve: async (project, { accountId }) => {
       const { _id } = project
-      return await deleteCollaborator(_id, accountId)
+      return await removeCollaborator(_id, accountId)
     }
   },
   _makeOwner: {
