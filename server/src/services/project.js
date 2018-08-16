@@ -115,3 +115,17 @@ export const invalidCache = async (patterns = [], slug, prettyOrigin) => {
 
   return true
 }
+
+export const invalidAllCache = async (slug) => {
+  const { cdnServer } = config
+
+  await request
+    .post(`${ cdnServer }/cache-invalidations`)
+    .set('Content-Type', 'application/json')
+    .send({
+      patterns: ['/*'],
+      slug
+    })
+
+  return true
+}

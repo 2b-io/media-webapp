@@ -17,7 +17,8 @@ import {
 import {
   remove as removeProject,
   update as updateProject,
-  invalidCache as invalidCache
+  invalidCache as invalidCache,
+  invalidAllCache as invalidAllCache
 } from 'services/project'
 
 import { Collaborator } from '../Collaborator'
@@ -114,6 +115,13 @@ export default ({ Project, ProjectStruct }) => ({
     resolve: async (project, { patterns }) => {
       const { slug, prettyOrigin } = project
       return await invalidCache(patterns, slug, prettyOrigin)
+    }
+  },
+  _invalidAllCache: {
+    type: GraphQLBoolean,
+    resolve: async (project) => {
+      const { slug, prettyOrigin } = project
+      return await invalidAllCache(slug, prettyOrigin)
     }
   }
 })

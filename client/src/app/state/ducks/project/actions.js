@@ -202,3 +202,23 @@ export const invalidCacheFailed = reason => ({
   type: types.INVALID_CACHE_FAILED,
   payload: { reason }
 })
+
+export const invalidAllCache = (slug) => {
+  return ({
+    type: types.INVALID_ALL_CACHE,
+    payload: {
+      slug
+    }
+  })
+}
+
+export const invalidAllCacheCompleted = () => {
+  return ({
+    type: types.INVALID_ALL_CACHE_COMPLETED
+  })
+}
+
+export const invalidAllCacheFailed = reason => ({
+  type: types.INVALID_ALL_CACHE_FAILED,
+  payload: { reason }
+})

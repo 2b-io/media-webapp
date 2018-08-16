@@ -5,7 +5,7 @@ import { Form } from 'ui/compounds'
 import { TextBox  } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
-const CacheInvalidatorForm = ({ idle, handleSubmit }) => (
+const CacheInvalidatorForm = ({ idle, handleSubmit, invalidAll }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Line>
       {
@@ -25,6 +25,11 @@ const CacheInvalidatorForm = ({ idle, handleSubmit }) => (
         variant="primary"
         type="submit"
       >Invalid</Button>
+      <Button
+        disabled={ !idle }
+        variant="primary"
+        onClick={ invalidAll }
+      >Invalid all</Button>
     </Form.Line>
   </Form>
 )

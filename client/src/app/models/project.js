@@ -336,5 +336,23 @@ export default {
       patterns
     })
     return body.session.account.project._invalidCache
+  },
+
+  async invalidAllCache(token, slug) {
+    const body = await request(`
+      query invalidAllCache($token: String!, $slug: String!) {
+        session(token: $token) {
+          account {
+            project(slug: $slug) {
+              _invalidAllCache
+            }
+          }
+        }
+      }
+    `, {
+      token,
+      slug
+    })
+    return body.session.account.project._invalidAllCache
   }
 }
