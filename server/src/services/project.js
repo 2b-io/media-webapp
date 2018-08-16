@@ -82,15 +82,16 @@ export const create = async (data, account) => {
   return project
 }
 
-export const remove = async (project) => {
+export const remove = async (_project) => {
 
-  const { _id } = project
+  const { _id } = _project
+  const project = await Project.findOneAndRemove({ _id })
 
   await Preset.deleteMany({ project: _id })
 
   await Permission.deleteMany({ project: _id })
 
-  return await Project.findOneAndRemove({ _id })
+  return project
 }
 
 export const invalidCache = async (patterns = [], slug, prettyOrigin) => {
