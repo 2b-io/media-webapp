@@ -1,0 +1,35 @@
+{
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "2.283.1",
+    "bcrypt": "2.0.1",
+    "body-parser": "1.18.2",
+    "express": "4.16.3",
+    "express-graphql": "0.6.12",
+    "graphql": "0.13.2",
+    "graphql-type-json": "0.2.1",
+    "http-proxy-middleware": "0.18.0",
+    "jsonwebtoken": "8.2.1",
+    "mongoose": "5.0.17",
+    "morgan": "1.9.0",
+    "ms": "2.1.1",
+    "random-int": "1.0.0",
+    "serialize-error": "2.1.0",
+    "shorthash": "0.0.2",
+    "superagent": "3.8.3",
+    "uuid": "3.2.1"
+  },
+  "devDependencies": {
+    "babel-cli": "6.26.0",
+    "babel-plugin-module-resolver": "3.1.1",
+    "babel-plugin-transform-runtime": "6.23.0",
+    "babel-preset-env": "1.6.1",
+    "babel-preset-stage-2": "6.24.1",
+    "nodemon": "1.17.3",
+    "run.env": "1.0.2"
+  },
+  "scripts": {
+    "start": "run.env nodemon ./src --watch ./src --watch ./internals --ignore ./node_modules --delay 1000ms --exec babel-node",
+    "build": "rm -rf ./build && babel ./src -d ./build"
+  }
+}

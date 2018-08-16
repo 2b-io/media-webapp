@@ -1,0 +1,21 @@
+version: '3'
+services:
+  media-webapp:
+    build: .
+    container_name: media.webapp
+    command: bash -c "npm i && tail -f /dev/null"
+    volumes:
+      - .:/usr/src
+      - /usr/src/node_modules
+    ports:
+      - "3003:3003"
+      - "8888:8888"
+    networks:
+      - infra_webapp
+      - infra_cdn
+
+networks:
+  infra_webapp:
+    external: true
+  infra_cdn:
+    external: true
