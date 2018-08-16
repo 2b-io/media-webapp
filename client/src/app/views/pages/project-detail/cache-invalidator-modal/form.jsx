@@ -11,6 +11,7 @@ const CacheInvalidatorForm = ({ idle, handleSubmit }) => (
       {
         <TextBox
           multiline={ true }
+          disabled={ !idle }
           type="text"
           name="patterns"
           label="Patterns"
@@ -20,9 +21,9 @@ const CacheInvalidatorForm = ({ idle, handleSubmit }) => (
     </Form.Line>
     <Form.Line last>
       <Button
+        disabled={ !idle }
         variant="primary"
         type="submit"
-        disabled={ !idle }
       >Invalid</Button>
     </Form.Line>
   </Form>

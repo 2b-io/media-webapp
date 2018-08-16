@@ -14,12 +14,27 @@ const CacheInvalidatorForm = reduxForm({
   enableReinitialize: true
 })(_CacheInvalidatorForm)
 
-const CacheInvalidatorModal = ({ invalidCache, slug }) => {
+const CacheInvalidatorModal = ({
+  closeCacheInvalidatorForm,
+  invalidCache,
+  slug,
+  ui: {
+    idle,
+    invalidCacheResult
+  }
+}) => {
+
   return (
     <Container>
       <CacheInvalidatorForm
-        idle={ true }
-        onSubmit={ ({ patterns }) => invalidCache(patterns, slug) }
+        idle={ idle }
+        invalidCacheResult = { invalidCacheResult }
+        onSubmit={ ({ patterns }) =>
+          {
+            invalidCache(patterns, slug)
+            closeCacheInvalidatorForm()
+          }
+        }
       />
     </Container>
   )

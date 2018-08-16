@@ -245,15 +245,19 @@ const invalidCacheLoop = function*() {
 
       const invalidCache = yield call(Project.invalidCache, session.token, action.payload.slug, action.payload.patterns)
 
-      if (invalidCache) {
-        yield all([
-          fork(addToast, {
-            type: 'success',
-            message: 'Cache invalidated.'
-          })
-        ])
+      if (!invalidCache) {
+        throw new Error('An error happens when invalid cache.')
       }
+
+      yield all([
+        put(actions.invalidCacheCompleted(action.payload.slug, action.payload.patterns)),
+        fork(addToast, {
+          type: 'success',
+          message: 'Cache invalidated.'
+        })
+      ])
     } catch (e) {
+      yield put(actions.invalidCacheFailed(serializeError(e)))
       continue
     }
   }
