@@ -84,12 +84,12 @@ export const create = async (data, account) => {
 
 export const remove = async (project) => {
 
-  const { _id, slug, prettyOrigin } = project
+  const { _id } = project
 
   await Preset.deleteMany({ project: _id })
 
   await Permission.deleteMany({ project: _id })
-  
+
   return await Project.findOneAndRemove({ _id })
 }
 
