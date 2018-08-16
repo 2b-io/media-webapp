@@ -195,7 +195,6 @@ const Project = ({
           onHide={ () => toProjectDetail(project.slug) }
           slug={ project && project.slug }
           title="Cache Invalidator"
-          closeCacheInvalidatorForm={ () => toProjectDetail(project.slug) }
         />
       </Route>
     </Fragment>

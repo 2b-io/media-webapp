@@ -192,15 +192,9 @@ export const invalidCache = (patterns, slug) => {
   })
 }
 
-export const invalidCacheCompleted = (patterns, slug) => {
-  const patternArray = patterns.trim().split(/\s*[,\n+]\s*/).filter(Boolean)
-
+export const invalidCacheCompleted = () => {
   return ({
-    type: types.INVALID_CACHE_COMPLETED,
-    payload: {
-      patterns: patternArray,
-      slug
-    }
+    type: types.INVALID_CACHE_COMPLETED
   })
 }
 
