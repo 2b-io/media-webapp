@@ -3,9 +3,10 @@ import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
 import { actions } from 'state/interface'
-import { Container } from 'ui/elements'
+import { Container, ErrorBox } from 'ui/elements'
 import { modal } from 'views/common/decorators'
 import { mapDispatch } from 'services/redux-helpers'
+import { Redirect } from 'views/router'
 
 import _CacheInvalidatorForm from './form'
 
@@ -14,11 +15,26 @@ const CacheInvalidatorForm = reduxForm({
   enableReinitialize: true
 })(_CacheInvalidatorForm)
 
-const CacheInvalidatorModal = ({ invalidCache, slug }) => {
+const CacheInvalidatorModal = ({
+  invalidCache,
+  slug,
+  ui: {
+    error,
+    idle,
+    result
+  }
+}) => {
+
   return (
     <Container>
+      { result &&
+        <Redirect to={ `/projects/${ slug }` } />
+      }
+      { error &&
+        <ErrorBox>An error happens when invalid cache.</ErrorBox>
+      }
       <CacheInvalidatorForm
-        idle={ true }
+        idle={ idle }
         onSubmit={ ({ patterns }) => invalidCache(patterns, slug) }
       />
     </Container>

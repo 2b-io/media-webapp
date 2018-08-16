@@ -192,10 +192,11 @@ export const invalidCache = (patterns, slug) => {
   })
 }
 
-export const invalidCacheCompleted = (patterns, slug) => ({
-  type: types.INVALID_CACHE_COMPLETED,
-  payload: { patterns, slug }
-})
+export const invalidCacheCompleted = () => {
+  return ({
+    type: types.INVALID_CACHE_COMPLETED
+  })
+}
 
 export const invalidCacheFailed = reason => ({
   type: types.INVALID_CACHE_FAILED,

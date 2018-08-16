@@ -3,6 +3,7 @@ import React from 'react'
 import { Button } from 'ui/elements'
 import { Form } from 'ui/compounds'
 import { TextBox  } from 'views/common/form'
+import { validateRequired } from 'views/common/validate'
 
 const CacheInvalidatorForm = ({ idle, handleSubmit }) => (
   <Form handleSubmit={ handleSubmit }>
@@ -10,17 +11,19 @@ const CacheInvalidatorForm = ({ idle, handleSubmit }) => (
       {
         <TextBox
           multiline={ true }
+          disabled={ !idle }
           type="text"
           name="patterns"
           label="Patterns"
+          validate={ validateRequired }
         />
       }
     </Form.Line>
     <Form.Line last>
       <Button
+        disabled={ !idle }
         variant="primary"
         type="submit"
-        disabled={ !idle }
       >Invalid</Button>
     </Form.Line>
   </Form>
