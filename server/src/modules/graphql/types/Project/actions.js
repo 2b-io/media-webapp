@@ -11,7 +11,7 @@ import {
 } from 'services/preset'
 import {
   invite as inviteCollaborator,
-  deleteCollaborator as deleteCollaborator,
+  remove as removeCollaborator,
   makeOwner as makeOwner
 } from 'services/permission'
 import {
@@ -43,7 +43,7 @@ export default ({ Project, ProjectStruct }) => ({
   _destroy: {
     type: GraphQLBoolean,
     resolve: async (self) => {
-      await removeProject(self.slug)
+      await removeProject(self)
 
       return true
     }
@@ -80,7 +80,7 @@ export default ({ Project, ProjectStruct }) => ({
       return p
     }
   },
-  _deleteCollaborator: {
+  _removeCollaborator: {
     args: {
       accountId: {
         type: GraphQLNonNull(GraphQLString)

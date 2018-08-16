@@ -82,14 +82,15 @@ export const create = async (data, account) => {
   return project
 }
 
-export const remove = async (slug) => {
-  return await Project.findOneAndUpdate({
-    slug
-  }, {
-    removed: true
-  }, {
-    new: true
-  })
+export const remove = async (project) => {
+
+  const { _id, slug, prettyOrigin } = project
+
+  await Preset.deleteMany({ project: _id })
+
+  await Permission.deleteMany({ project: _id })
+  
+  return await Project.findOneAndRemove({ _id })
 }
 
 export const invalidCache = async (patterns = [], slug, prettyOrigin) => {
@@ -103,7 +104,6 @@ export const invalidCache = async (patterns = [], slug, prettyOrigin) => {
   if (!normalizedPatterns.length) {
     return true
   }
-
   await request
     .post(`${ cdnServer }/cache-invalidations`)
     .set('Content-Type', 'application/json')
