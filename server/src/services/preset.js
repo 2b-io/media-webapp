@@ -40,7 +40,7 @@ export const update = async (project, hash, data) => {
 }
 
 export const remove = async (project, hash) => {
-  const preset = await Preset.findOneAndUpdate(
+  const preset = await Preset.findOneAndRemove(
     { project: project._id, hash },
     { removed: true },
     { new: true }

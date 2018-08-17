@@ -36,7 +36,7 @@ const updatePermission = async (project, account, permission) => {
   }).lean()
 }
 
-export const deleteCollaborator = async (_id, accountId) => {
+export const remove = async (_id, accountId) => {
   return await Permission.deleteOne({
     project: _id,
     account: accountId
@@ -54,5 +54,5 @@ export const makeOwner = async (project, { accountId }) => {
     }
     return true
   }
+  return false
 }
-
