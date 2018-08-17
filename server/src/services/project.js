@@ -125,7 +125,7 @@ export const invalidAllCache = async (slug) => {
     .post(`${ cdnServer }/cache-invalidations`)
     .set('Content-Type', 'application/json')
     .send({
-      patterns: ['/*'],
+      patterns: [ '/*' ],
       slug
     })
 
