@@ -18,7 +18,7 @@ import _ProjectForm from './form'
 import InviteModal from './invite-modal'
 import PresetList from './preset-list'
 import PresetModal from './preset-modal'
-import ProjectDialog from './project-dialog'
+import ConfirmDeleteProjectDialog from './confirm-delete-project-dialog'
 
 const ProjectForm = reduxForm({
   form: 'project',
@@ -27,7 +27,7 @@ const ProjectForm = reduxForm({
 
 const Project = ({
   project,
-  cancleDeleteProject,
+  cancelDeleteProject,
   confirmDeleteProject,
   currentAccount,
   deleteProject,
@@ -77,33 +77,34 @@ const Project = ({
                     <ErrorBox>An error happens when deleting the project.</ErrorBox>
                   }
                   <ProjectForm
-                    confirmDeleteProject={ () => confirmDeleteProject({ dialog: 'ProjectDialog' }) }
+                    confirmDeleteProject={ () => confirmDeleteProject() }
                     idle={ idle }
                     initialValues={ project }
                     onSubmit={ updateProject }
+                  />
+                  <ConfirmDeleteProjectDialog
+                    width='narrow'
+                    content={ () => <p>Delete project?</p> }
+                    choices={ () => (
+                      <Button.Group>
+                        <Button
+                          variant="primary"
+                          onClick={ () => deleteProject(project.slug) }>
+                          Delete
+                        </Button>
+                        <Button
+                          variant="secondary"
+                          onClick={ () => cancelDeleteProject() }>
+                          Cancel
+                        </Button>
+                      </Button.Group>
+                    ) }
                   />
                 </Container>
               </Panel.Content>
             </Panel>
           </Container>
         </Layout.Fluid>
-        <ProjectDialog
-          content={ () => <p>Delete project?</p> }
-          choices={ () => (
-            <Button.Group>
-              <Button
-                variant="primary"
-                onClick={ () => deleteProject(project.slug) }>
-                Delete
-              </Button>
-              <Button
-                variant="secondary"
-                onClick={ () => cancleDeleteProject({ dialog: 'ProjectDialog' }) }>
-                Cancel
-              </Button>
-            </Button.Group>
-          ) }
-        />
         <Layout.Fixed size="small">
           <Container>
             <Panel>
@@ -231,8 +232,8 @@ export default withParams(
         currentAccount: selectors.currentAccount(state)
       }),
       mapDispatch({
-        confirmDeleteProject: actions.showDialog,
-        cancleDeleteProject: actions.hideDialog,
+        confirmDeleteProject: () => actions.showDialog({ dialog: 'ConfirmDeleteProjectDialog' }),
+        cancelDeleteProject: () => actions.hideDialog({ dialog: 'ConfirmDeleteProjectDialog' }),
         deleteProject: actions.deleteProject,
         updateProject: actions.updateProject,
         toCacheInvalidator: slug => actions.requestLocation(`/projects/${ slug }/cache-invalidator`),

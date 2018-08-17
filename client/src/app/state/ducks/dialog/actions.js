@@ -5,7 +5,7 @@ export const hideDialog = ({ dialog }) => ({
   payload: { dialog }
 })
 
-export const showDialog = ({ dialog, params }) => ({
+export const showDialog = ({ dialog }) => ({
   type: types.SHOW,
-  payload: { dialog, params }
+  payload: { dialog }
 })
