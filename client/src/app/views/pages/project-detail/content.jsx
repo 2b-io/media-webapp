@@ -18,6 +18,7 @@ import _ProjectForm from './form'
 import InviteModal from './invite-modal'
 import PresetList from './preset-list'
 import PresetModal from './preset-modal'
+import ProjectDialog from './project-dialog'
 
 const ProjectForm = reduxForm({
   form: 'project',
@@ -26,6 +27,8 @@ const ProjectForm = reduxForm({
 
 const Project = ({
   project,
+  cancleDeleteProject,
+  confirmDeleteProject,
   currentAccount,
   deleteProject,
   updateProject,
@@ -74,16 +77,33 @@ const Project = ({
                     <ErrorBox>An error happens when deleting the project.</ErrorBox>
                   }
                   <ProjectForm
+                    confirmDeleteProject={ () => confirmDeleteProject({ dialog: 'ProjectDialog' }) }
                     idle={ idle }
                     initialValues={ project }
                     onSubmit={ updateProject }
-                    deleteProject={ () => deleteProject(project.slug) }
                   />
                 </Container>
               </Panel.Content>
             </Panel>
           </Container>
         </Layout.Fluid>
+        <ProjectDialog
+          content={ () => <p>Delete project?</p> }
+          choices={ () => (
+            <Button.Group>
+              <Button
+                variant="primary"
+                onClick={ () => deleteProject(project.slug) }>
+                Delete
+              </Button>
+              <Button
+                variant="secondary"
+                onClick={ () => cancleDeleteProject({ dialog: 'ProjectDialog' }) }>
+                Cancel
+              </Button>
+            </Button.Group>
+          ) }
+        />
         <Layout.Fixed size="small">
           <Container>
             <Panel>
@@ -211,6 +231,8 @@ export default withParams(
         currentAccount: selectors.currentAccount(state)
       }),
       mapDispatch({
+        confirmDeleteProject: actions.showDialog,
+        cancleDeleteProject: actions.hideDialog,
         deleteProject: actions.deleteProject,
         updateProject: actions.updateProject,
         toCacheInvalidator: slug => actions.requestLocation(`/projects/${ slug }/cache-invalidator`),
