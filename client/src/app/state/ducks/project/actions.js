@@ -180,11 +180,11 @@ export const makeOwnerFailed = reason => ({
   payload: { reason }
 })
 
-export const invalidCache = (patterns, slug) => {
+export const invalidateCache = (patterns, slug) => {
   const patternArray = patterns.trim().split(/\s*[,\n+]\s*/).filter(Boolean)
 
   return ({
-    type: types.INVALID_CACHE,
+    type: types.INVALIDATE_CACHE,
     payload: {
       patterns: patternArray,
       slug
@@ -192,33 +192,33 @@ export const invalidCache = (patterns, slug) => {
   })
 }
 
-export const invalidCacheCompleted = () => {
+export const invalidateCacheCompleted = () => {
   return ({
-    type: types.INVALID_CACHE_COMPLETED
+    type: types.INVALIDATE_CACHE_COMPLETED
   })
 }
 
-export const invalidCacheFailed = reason => ({
-  type: types.INVALID_CACHE_FAILED,
+export const invalidateCacheFailed = reason => ({
+  type: types.INVALIDATE_CACHE_FAILED,
   payload: { reason }
 })
 
-export const invalidAllCache = (slug) => {
+export const invalidateAllCache = (slug) => {
   return ({
-    type: types.INVALID_ALL_CACHE,
+    type: types.INVALIDATE_ALL_CACHE,
     payload: {
       slug
     }
   })
 }
 
-export const invalidAllCacheCompleted = () => {
+export const invalidateAllCacheCompleted = () => {
   return ({
-    type: types.INVALID_ALL_CACHE_COMPLETED
+    type: types.INVALIDATE_ALL_CACHE_COMPLETED
   })
 }
 
-export const invalidAllCacheFailed = reason => ({
-  type: types.INVALID_ALL_CACHE_FAILED,
+export const invalidateAllCacheFailed = reason => ({
+  type: types.INVALIDATE_ALL_CACHE_FAILED,
   payload: { reason }
 })

@@ -91,12 +91,12 @@ export const remove = async (_project) => {
 
   await Permission.deleteMany({ project: _id })
 
-  await invalidAllCache(slug)
+  await invalidateAllCache(slug)
 
   return project
 }
 
-export const invalidCache = async (patterns = [], slug, prettyOrigin) => {
+export const invalidateCache = async (patterns = [], slug, prettyOrigin) => {
   const { cdnServer } = config
   const normalizedPatterns = patterns
     .map(
@@ -118,7 +118,7 @@ export const invalidCache = async (patterns = [], slug, prettyOrigin) => {
   return true
 }
 
-export const invalidAllCache = async (slug) => {
+export const invalidateAllCache = async (slug) => {
   const { cdnServer } = config
 
   await request

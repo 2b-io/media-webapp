@@ -7,17 +7,17 @@ export default {
   component: 'modal/CacheInvalidatorModal',
   reducer: combineReducers({
     idle: createReducer(true)({
-      [ types.INVALID_CACHE ]: () => false,
-      [ types.INVALID_CACHE_COMPLETED ]: () => true,
-      [ types.INVALID_CACHE_FAILED ]: () => true,
+      [ types.INVALIDATE_CACHE ]: () => false,
+      [ types.INVALIDATE_CACHE_COMPLETED ]: () => true,
+      [ types.INVALIDATE_CACHE_FAILED ]: () => true,
     }),
     result: createReducer(null)({
-      [ types.INVALID_CACHE_COMPLETED ]: () => true,
-      [ types.INVALID_CACHE_FAILED ]: () => false
+      [ types.INVALIDATE_CACHE_COMPLETED ]: () => true,
+      [ types.INVALIDATE_CACHE_FAILED ]: () => false
     }),
     error: createReducer(null)({
-      [ types.INVALID_CACHE_COMPLETED ]: () => false,
-      [ types.INVALID_CACHE_FAILED ]: () => true
+      [ types.INVALIDATE_CACHE_COMPLETED ]: () => false,
+      [ types.INVALIDATE_CACHE_FAILED ]: () => true
     })
   })
 }

@@ -196,7 +196,6 @@ const Project = ({
           onHide={ () => toProjectDetail(project.slug) }
           slug={ project && project.slug }
           title="Cache Invalidator"
-          invalidAllCache={ () => invalidAllCache(project.slug) }
         />
       </Route>
     </Fragment>
@@ -222,8 +221,7 @@ export default withParams(
         toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
         makeOwner: (accountId, slug) => actions.makeOwner(accountId, slug),
         deleteCollaborator: (slug, accountId) => actions.deleteCollaborator(slug, accountId),
-        reset,
-        invalidAllCache: slug => actions.invalidAllCache(slug)
+        reset
       })
     )(Project)
   )

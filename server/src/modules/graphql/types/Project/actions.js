@@ -17,8 +17,8 @@ import {
 import {
   remove as removeProject,
   update as updateProject,
-  invalidCache as invalidCache,
-  invalidAllCache as invalidAllCache
+  invalidateCache,
+  invalidateAllCache
 } from 'services/project'
 
 import { Collaborator } from '../Collaborator'
@@ -105,7 +105,7 @@ export default ({ Project, ProjectStruct }) => ({
       return await makeOwner(project, { accountId })
     }
   },
-  _invalidCache: {
+  _invalidateCache: {
     args: {
       patterns: {
         type: GraphQLNonNull(GraphQLList(GraphQLString))
@@ -114,14 +114,14 @@ export default ({ Project, ProjectStruct }) => ({
     type: GraphQLBoolean,
     resolve: async (project, { patterns }) => {
       const { slug, prettyOrigin } = project
-      return await invalidCache(patterns, slug, prettyOrigin)
+      return await invalidateCache(patterns, slug, prettyOrigin)
     }
   },
-  _invalidAllCache: {
+  _invalidateAllCache: {
     type: GraphQLBoolean,
     resolve: async (project) => {
       const { slug, prettyOrigin } = project
-      return await invalidAllCache(slug, prettyOrigin)
+      return await invalidateAllCache(slug, prettyOrigin)
     }
   }
 })
