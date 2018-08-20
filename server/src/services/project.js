@@ -84,17 +84,19 @@ export const create = async (data, account) => {
 
 export const remove = async (_project) => {
 
-  const { _id } = _project
+  const { _id, slug } = _project
   const project = await Project.findOneAndRemove({ _id })
 
   await Preset.deleteMany({ project: _id })
 
   await Permission.deleteMany({ project: _id })
 
+  await invalidateAllCache(slug)
+
   return project
 }
 
-export const invalidCache = async (patterns = [], slug, prettyOrigin) => {
+export const invalidateCache = async (patterns = [], slug, prettyOrigin) => {
   const { cdnServer } = config
   const normalizedPatterns = patterns
     .map(
@@ -110,6 +112,20 @@ export const invalidCache = async (patterns = [], slug, prettyOrigin) => {
     .set('Content-Type', 'application/json')
     .send({
       patterns: normalizedPatterns,
+      slug
+    })
+
+  return true
+}
+
+export const invalidateAllCache = async (slug) => {
+  const { cdnServer } = config
+
+  await request
+    .post(`${ cdnServer }/cache-invalidations`)
+    .set('Content-Type', 'application/json')
+    .send({
+      patterns: [ '/*' ],
       slug
     })
 

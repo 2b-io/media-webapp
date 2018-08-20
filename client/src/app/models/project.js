@@ -319,13 +319,13 @@ export default {
     })
     return body.session.account.project._makeOwner
   },
-  async invalidCache(token, slug, patterns) {
+  async invalidateCache(token, slug, patterns) {
     const body = await request(`
-      query invalidCache($token: String!, $slug: String!, $patterns: [String]!) {
+      query invalidateCache($token: String!, $slug: String!, $patterns: [String]!) {
         session(token: $token) {
           account {
             project(slug: $slug) {
-              _invalidCache(patterns: $patterns)
+              _invalidateCache(patterns: $patterns)
             }
           }
         }
@@ -335,6 +335,24 @@ export default {
       slug,
       patterns
     })
-    return body.session.account.project._invalidCache
+    return body.session.account.project._invalidateCache
+  },
+
+  async invalidateAllCache(token, slug) {
+    const body = await request(`
+      query invalidateAllCache($token: String!, $slug: String!) {
+        session(token: $token) {
+          account {
+            project(slug: $slug) {
+              _invalidateAllCache
+            }
+          }
+        }
+      }
+    `, {
+      token,
+      slug
+    })
+    return body.session.account.project._invalidateAllCache
   }
 }
