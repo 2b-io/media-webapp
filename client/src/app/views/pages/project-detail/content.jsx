@@ -30,7 +30,7 @@ const Project = ({
   project,
   cancelDeleteCollaborator,
   confirmDeleteCollaborator,
-  cancelDeleteProject,
+  removeDialogDeleteProject,
   confirmDeleteProject,
   currentAccount,
   deleteProject,
@@ -51,6 +51,9 @@ const Project = ({
   }
 }) => {
   if (notFound || deleteResult) {
+    if (deleteResult){
+      removeDialogDeleteProject()
+    }
     return <Redirect to="/projects" />
   }
 
@@ -98,7 +101,7 @@ const Project = ({
                         </Button>
                         <Button
                           variant="secondary"
-                          onClick={ () => cancelDeleteProject() }>
+                          onClick={ () => removeDialogDeleteProject() }>
                           Cancel
                         </Button>
                       </Button.Group>
@@ -176,7 +179,7 @@ const Project = ({
                   </Button>
                   <Button
                     variant="secondary"
-                    onClick={ () => cancelDeleteCollaborator() }>
+                    onClick={ () => removeDialogDeleteCollaborator() }>
                     Cancel
                   </Button>
                 </Button.Group>
@@ -255,9 +258,9 @@ export default withParams(
       }),
       mapDispatch({
         confirmDeleteCollaborator: accountId => actions.showDialog({ dialog: 'ConfirmDeleteCollaboratorDialog', params: { accountId } }),
-        cancelDeleteCollaborator: () => actions.hideDialog({ dialog: 'ConfirmDeleteCollaboratorDialog' }),
+        removeDialogDeleteCollaborator: () => actions.hideDialog({ dialog: 'ConfirmDeleteCollaboratorDialog' }),
         confirmDeleteProject: () => actions.showDialog({ dialog: 'ConfirmDeleteProjectDialog' }),
-        cancelDeleteProject: () => actions.hideDialog({ dialog: 'ConfirmDeleteProjectDialog' }),
+        removeDialogDeleteProject: () => actions.hideDialog({ dialog: 'ConfirmDeleteProjectDialog' }),
         deleteProject: actions.deleteProject,
         updateProject: actions.updateProject,
         toCacheInvalidator: slug => actions.requestLocation(`/projects/${ slug }/cache-invalidator`),
