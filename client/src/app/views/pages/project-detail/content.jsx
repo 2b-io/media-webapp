@@ -18,7 +18,7 @@ import _ProjectForm from './form'
 import InviteModal from './invite-modal'
 import PresetList from './preset-list'
 import PresetModal from './preset-modal'
-import ConfirmDeleteProjectDialog from './confirm-delete-project-dialog'
+import { ConfirmDeleteCollaboratorDialog, ConfirmDeleteProjectDialog } from './dialog'
 
 const ProjectForm = reduxForm({
   form: 'project',
@@ -26,7 +26,10 @@ const ProjectForm = reduxForm({
 })(_ProjectForm)
 
 const Project = ({
+  confirmDeleteCollaboratorDialogParams,
   project,
+  cancelDeleteCollaborator,
+  confirmDeleteCollaborator,
   cancelDeleteProject,
   confirmDeleteProject,
   currentAccount,
@@ -151,18 +154,35 @@ const Project = ({
               <Panel.Content>
                 {
                   project &&
-                    <CollaboratorList
-                      collaborators={ project.collaborators }
-                      toProfile={ toProfile }
-                      currentAccount={ currentAccount }
-                      makeOwner={ (accountId) => { makeOwner(accountId, project.slug) } }
-                      deleteCollaborator={ (accountId) => { deleteCollaborator(project.slug, accountId) } }
-                    />
+                      <CollaboratorList
+                        collaborators={ project.collaborators }
+                        toProfile={ toProfile }
+                        currentAccount={ currentAccount }
+                        makeOwner={ (accountId) => { makeOwner(accountId, project.slug) } }
+                        confirmDeleteCollaborator={ (accountId) =>  confirmDeleteCollaborator(accountId) }
+                      />
                 }
               </Panel.Content>
             </Panel>
+            <ConfirmDeleteCollaboratorDialog
+              width='narrow'
+              content={ () => <p>Delete this person?</p> }
+              choices={ () => (
+                <Button.Group>
+                  <Button
+                    variant="primary"
+                    onClick={ () => deleteCollaborator(project.slug, confirmDeleteCollaboratorDialogParams.params.accountId) }>
+                    Delete
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    onClick={ () => cancelDeleteCollaborator() }>
+                    Cancel
+                  </Button>
+                </Button.Group>
+              ) }
+            />
           </Container>
-
           <Container>
             <Panel>
               <Panel.Header>
@@ -230,9 +250,12 @@ export default withParams(
     connect(
       (state, { params: { slug } }) => ({
         project: selectors.findProjectBySlug(state, slug),
-        currentAccount: selectors.currentAccount(state)
+        currentAccount: selectors.currentAccount(state),
+        confirmDeleteCollaboratorDialogParams: selectors.dialog(state, 'ConfirmDeleteCollaboratorDialog')
       }),
       mapDispatch({
+        confirmDeleteCollaborator: accountId => actions.showDialog({ dialog: 'ConfirmDeleteCollaboratorDialog', params: { accountId } }),
+        cancelDeleteCollaborator: () => actions.hideDialog({ dialog: 'ConfirmDeleteCollaboratorDialog' }),
         confirmDeleteProject: () => actions.showDialog({ dialog: 'ConfirmDeleteProjectDialog' }),
         cancelDeleteProject: () => actions.hideDialog({ dialog: 'ConfirmDeleteProjectDialog' }),
         deleteProject: actions.deleteProject,
