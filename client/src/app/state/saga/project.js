@@ -232,9 +232,9 @@ const makeOwnerLoop = function*() {
   }
 }
 
-const invalidCacheLoop = function*() {
+const invalidateCacheLoop = function*() {
   while(true) {
-    const action = yield take(types['PROJECT/INVALID_CACHE'])
+    const action = yield take(types['PROJECT/INVALIDATE_CACHE'])
 
     try {
       const session = yield select(selectors.currentSession)
@@ -243,21 +243,51 @@ const invalidCacheLoop = function*() {
         continue
       }
 
-      const invalidCache = yield call(Project.invalidCache, session.token, action.payload.slug, action.payload.patterns)
+      const invalidateCache = yield call(Project.invalidateCache, session.token, action.payload.slug, action.payload.patterns)
 
-      if (!invalidCache) {
-        throw new Error('An error happens when invalid cache.')
+      if (!invalidateCache) {
+        throw new Error('An error happens when invalidate cache.')
       }
 
       yield all([
-        put(actions.invalidCacheCompleted(action.payload.slug, action.payload.patterns)),
+        put(actions.invalidateCacheCompleted(action.payload.slug, action.payload.patterns)),
         fork(addToast, {
           type: 'success',
           message: 'Cache invalidated.'
         })
       ])
     } catch (e) {
-      yield put(actions.invalidCacheFailed(serializeError(e)))
+      yield put(actions.invalidateCacheFailed(serializeError(e)))
+      continue
+    }
+  }
+}
+
+const invalidateAllCacheLoop = function*() {
+  while(true) {
+    const action = yield take(types['PROJECT/INVALIDATE_ALL_CACHE'])
+
+    try {
+      const session = yield select(selectors.currentSession)
+
+      if (!session) {
+        continue
+      }
+      const invalidateCache = yield call(Project.invalidateAllCache, session.token, action.payload.slug)
+
+      if (!invalidateCache) {
+        throw new Error('An error happens when invalidate all cache.')
+      }
+
+      yield all([
+        put(actions.invalidateAllCacheCompleted(action.payload.slug)),
+        fork(addToast, {
+          type: 'success',
+          message: 'All cache invalidated.'
+        })
+      ])
+    } catch (e) {
+      yield put(actions.invalidateAllCacheFailed(serializeError(e)))
       continue
     }
   }
@@ -269,7 +299,8 @@ export default function*() {
   yield fork(deleteLoop)
   yield fork(fetchLoop)
   yield fork(getLoop)
-  yield fork(invalidCacheLoop)
+  yield fork(invalidateCacheLoop)
+  yield fork(invalidateAllCacheLoop)
   yield fork(updateLoop)
   yield fork(inviteCollaboratorLoop)
   yield fork(deleteCollaboratorLoop)

@@ -40,6 +40,7 @@ const Project = ({
   makeOwner,
   deleteCollaborator,
   reset,
+  invalidAllCache,
   ui: {
     idle, notFound,
     deleteError, deleteResult,
