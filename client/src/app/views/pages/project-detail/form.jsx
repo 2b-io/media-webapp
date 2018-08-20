@@ -6,7 +6,7 @@ import { CheckBox, TextBox } from 'views/common/form'
 import CustomHeader from './custom-header'
 import { validateRequired } from 'views/common/validate'
 
-const ProjectForm = ({ deleteProject, handleSubmit, idle }) => (
+const ProjectForm = ({ confirmDeleteProject, handleSubmit, idle }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Line>
       <TextBox
@@ -67,7 +67,7 @@ const ProjectForm = ({ deleteProject, handleSubmit, idle }) => (
         <Button
           variant="secondary"
           disabled={ !idle }
-          onClick={ deleteProject }
+          onClick={ confirmDeleteProject }
         >Delete</Button>
       </Button.Group>
     </Form.Line>

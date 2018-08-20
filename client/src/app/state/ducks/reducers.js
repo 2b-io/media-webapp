@@ -1,4 +1,5 @@
 export { reducers as account } from './account'
+export { reducers as dialog } from './dialog'
 export { reducers as resetPasswordCode } from './reset-password-code'
 export { reducers as layout } from './layout'
 export { reducers as location } from './location'
