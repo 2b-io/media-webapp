@@ -28,7 +28,7 @@ const ProjectForm = reduxForm({
 const Project = ({
   confirmDeleteCollaboratorDialogParams,
   project,
-  cancelDeleteCollaborator,
+  removeDialogDeleteCollaborator,
   confirmDeleteCollaborator,
   removeDialogDeleteProject,
   confirmDeleteProject,
@@ -162,7 +162,7 @@ const Project = ({
                         toProfile={ toProfile }
                         currentAccount={ currentAccount }
                         makeOwner={ (accountId) => { makeOwner(accountId, project.slug) } }
-                        confirmDeleteCollaborator={ (accountId) =>  confirmDeleteCollaborator(accountId) }
+                        confirmDeleteCollaborator={ accountId =>  confirmDeleteCollaborator(accountId) }
                       />
                 }
               </Panel.Content>
