@@ -54,6 +54,7 @@ const deleteLoop = function*() {
 
       yield all([
         put(actions.deleteProjectCompleted(slug)),
+        put(actions.hideDialog({ dialog: 'ConfirmDeleteProjectDialog' })),
         fork(addToast, {
           type: 'success',
           message: 'Project deleted.'

@@ -50,9 +50,6 @@ const Project = ({
   }
 }) => {
   if (notFound || deleteResult) {
-    if (deleteResult){
-      removeDialogDeleteProject()
-    }
     return <Redirect to="/projects" />
   }
 
