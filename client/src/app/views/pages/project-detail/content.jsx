@@ -26,7 +26,6 @@ const ProjectForm = reduxForm({
 })(_ProjectForm)
 
 const Project = ({
-  removeDialogDeleteCollaborator,
   project,
   removeDialogDeleteCollaborator,
   confirmDeleteCollaborator,
