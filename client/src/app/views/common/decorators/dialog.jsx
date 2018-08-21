@@ -31,7 +31,7 @@ const Wrapper = styled.div`
   position: relative;
   margin: ${
     ({ theme: { spacing } }) => `
-      ${ spacing.huge }
+      180px
       auto
       ${spacing.big }
     `
