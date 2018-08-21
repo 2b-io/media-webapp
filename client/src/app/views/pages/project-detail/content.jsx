@@ -31,6 +31,7 @@ const Project = ({
   confirmDeleteCollaborator,
   removeDialogDeleteProject,
   confirmDeleteProject,
+  removeDialogDeletePreset,
   currentAccount,
   deleteProject,
   updateProject,
@@ -165,8 +166,7 @@ const Project = ({
             </Panel>
             <ConfirmDeleteCollaboratorDialog
               width='narrow'
-              removeDialogDeleteCollaborator={ removeDialogDeleteCollaborator }
-              content={ ({ params }) => <Paragraph>{`do you want to remove the account ${ params.accountEmail } from the project?`}</Paragraph> }
+              content={ ({ params }) => <Paragraph>{ `do you want to remove the account ${ params.accountEmail } from the project?` }</Paragraph> }
               choices={ ({ params }) => (
                 <Button.Group>
                   <Button
