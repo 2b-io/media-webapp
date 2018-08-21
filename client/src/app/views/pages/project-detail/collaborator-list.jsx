@@ -54,7 +54,7 @@ const CollaboratorList = ({
                     <Button plain onClick={ () => makeOwner(account._id) }>
                       <OwnerSetIcon size="medium" />
                     </Button>
-                    <Button plain onClick={ () => confirmDeleteCollaborator(account._id) }>
+                    <Button plain onClick={ () => confirmDeleteCollaborator(account._id, account.email) }>
                       <OwnerRemoveIcon size="medium" />
                     </Button>
                   </Button.Group>

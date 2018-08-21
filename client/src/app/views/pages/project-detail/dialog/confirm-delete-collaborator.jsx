@@ -12,7 +12,7 @@ const ConfirmDeleteCollaboratorDialog = ({
 
   return (
     <Dialog>
-      <Dialog.Content>{ content() }</Dialog.Content>
+      <Dialog.Content>{ content(dialogParams) }</Dialog.Content>
       <Dialog.Choices>{ choices(dialogParams) }</Dialog.Choices>
     </Dialog>
   )

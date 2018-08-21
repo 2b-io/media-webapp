@@ -158,21 +158,21 @@ const Project = ({
                         toProfile={ toProfile }
                         currentAccount={ currentAccount }
                         makeOwner={ (accountId) => { makeOwner(accountId, project.slug) } }
-                        confirmDeleteCollaborator={ accountId =>  confirmDeleteCollaborator(accountId) }
+                        confirmDeleteCollaborator={ (accountId, accountEmail) =>  confirmDeleteCollaborator(accountId, accountEmail) }
                       />
                 }
               </Panel.Content>
             </Panel>
             <ConfirmDeleteCollaboratorDialog
               width='narrow'
-              removeDialogDeleteCollaborator = { removeDialogDeleteCollaborator }
-              content={ () => <Paragraph>Delete this person?</Paragraph> }
-              choices={ (dialogParams) => (
+              removeDialogDeleteCollaborator={ removeDialogDeleteCollaborator }
+              content={ ({ params }) => <Paragraph>{`do you want to remove the account ${ params.accountEmail } from the project?`}</Paragraph> }
+              choices={ ({ params }) => (
                 <Button.Group>
                   <Button
                     variant="primary"
-                    onClick={ () => deleteCollaborator(project.slug, dialogParams.params.accountId) }>
-                    Delete
+                    onClick={ () => deleteCollaborator(project.slug, params.accountId) }>
+                    Remove
                   </Button>
                   <Button
                     variant="secondary"
@@ -253,7 +253,7 @@ export default withParams(
         currentAccount: selectors.currentAccount(state)
       }),
       mapDispatch({
-        confirmDeleteCollaborator: accountId => actions.showDialog({ dialog: 'ConfirmDeleteCollaboratorDialog', params: { accountId } }),
+        confirmDeleteCollaborator: (accountId, accountEmail) => actions.showDialog({ dialog: 'ConfirmDeleteCollaboratorDialog', params: { accountId, accountEmail } }),
         removeDialogDeleteCollaborator: () => actions.hideDialog({ dialog: 'ConfirmDeleteCollaboratorDialog' }),
         confirmDeleteProject: () => actions.showDialog({ dialog: 'ConfirmDeleteProjectDialog' }),
         removeDialogDeleteProject: () => actions.hideDialog({ dialog: 'ConfirmDeleteProjectDialog' }),
