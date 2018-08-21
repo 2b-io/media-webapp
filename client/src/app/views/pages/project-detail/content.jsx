@@ -31,7 +31,6 @@ const Project = ({
   confirmDeleteCollaborator,
   removeDialogDeleteProject,
   confirmDeleteProject,
-  removeDialogDeletePreset,
   currentAccount,
   deleteProject,
   updateProject,
@@ -43,7 +42,6 @@ const Project = ({
   makeOwner,
   deleteCollaborator,
   reset,
-  invalidAllCache,
   ui: {
     idle, notFound,
     deleteError, deleteResult,

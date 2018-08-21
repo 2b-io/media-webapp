@@ -54,16 +54,16 @@ const PresetModal = ({
         initialValues={ preset }
         isDefault={ !!preset.isDefault }
         isEditing={ !!preset.hash }
-        confirmDeletePreset={ () => confirmDeletePreset(preset, slug) }
+        confirmDeletePreset={ () => confirmDeletePreset(preset) }
       />
       <ConfirmDeletePresetDialog
         width='narrow'
-        content={ ({ params }) => <Paragraph>{ `Do you want to delete the preset ${ params.preset.name } from the project? ` }</Paragraph> }
-        choices={ ({ params }) => (
+        content={ ({ params }) => <Paragraph>{ `Do you want to delete the preset ${ params.preset.name } from this project? ` }</Paragraph> }
+        choices={ () => (
           <Button.Group>
             <Button
               variant="primary"
-              onClick={ () => deletePreset(params.preset, slug) }>
+              onClick={ () => deletePreset({ preset, slug }) }>
               Delete
             </Button>
             <Button
@@ -96,7 +96,7 @@ export default withParams(
           actions.createPreset({ preset, slug }),
         deletePreset: ({ preset, slug }) => actions.deletePreset({ preset, slug }),
         removeDialogDeletePreset: () => actions.hideDialog({ dialog: 'ConfirmDeletePresetDialog' }),
-        confirmDeletePreset: (preset, slug) => actions.showDialog({ dialog: 'ConfirmDeletePresetDialog', params: { preset, slug } })
+        confirmDeletePreset: (preset) => actions.showDialog({ dialog: 'ConfirmDeletePresetDialog', params: { preset } })
       })
     )(PresetModal)
   )

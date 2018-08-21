@@ -10,7 +10,6 @@ const PresetForm = ({
   idle,
   isDefault,
   isEditing,
-  onDelete,
   confirmDeletePreset
 }) => (
   <Form handleSubmit={ handleSubmit }>
