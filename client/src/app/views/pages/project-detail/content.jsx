@@ -6,7 +6,7 @@ import { reduxForm, reset } from 'redux-form'
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
 import { Layout, Panel, TitleBar } from 'ui/compounds'
-import { Button, Container, ErrorBox } from 'ui/elements'
+import { Button, Container, ErrorBox, Paragraph } from 'ui/elements'
 import { AddIcon, OwnerAddIcon, ReloadIcon } from 'ui/icons'
 import { stateful } from 'views/common/decorators'
 import { Redirect, Route, Switch, withParams } from 'views/router'
@@ -26,7 +26,7 @@ const ProjectForm = reduxForm({
 })(_ProjectForm)
 
 const Project = ({
-  confirmDeleteCollaboratorDialogParams,
+  removeDialogDeleteCollaborator,
   project,
   removeDialogDeleteCollaborator,
   confirmDeleteCollaborator,
@@ -169,12 +169,13 @@ const Project = ({
             </Panel>
             <ConfirmDeleteCollaboratorDialog
               width='narrow'
-              content={ () => <p>Delete this person?</p> }
-              choices={ () => (
+              removeDialogDeleteCollaborator = { removeDialogDeleteCollaborator }
+              content={ () => <Paragraph>Delete this person?</Paragraph> }
+              choices={ (dialogParams) => (
                 <Button.Group>
                   <Button
                     variant="primary"
-                    onClick={ () => deleteCollaborator(project.slug, confirmDeleteCollaboratorDialogParams.params.accountId) }>
+                    onClick={ () => deleteCollaborator(project.slug, dialogParams.params.accountId) }>
                     Delete
                   </Button>
                   <Button
@@ -253,8 +254,7 @@ export default withParams(
     connect(
       (state, { params: { slug } }) => ({
         project: selectors.findProjectBySlug(state, slug),
-        currentAccount: selectors.currentAccount(state),
-        confirmDeleteCollaboratorDialogParams: selectors.dialog(state, 'ConfirmDeleteCollaboratorDialog')
+        currentAccount: selectors.currentAccount(state)
       }),
       mapDispatch({
         confirmDeleteCollaborator: accountId => actions.showDialog({ dialog: 'ConfirmDeleteCollaboratorDialog', params: { accountId } }),

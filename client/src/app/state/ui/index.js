@@ -1,4 +1,5 @@
 export { default as CacheInvalidatorModal } from './cache-invalidator-modal'
+export { default as ConfirmDeleteCollaboratorDialog } from './collaborator-dialog'
 export { default as CreateProjectModal } from './create-project-modal'
 export { default as ChangePassword } from './change-password'
 export { default as InviteModal } from './invite-modal'
