@@ -54,6 +54,7 @@ const deleteLoop = function*() {
 
       yield all([
         put(actions.deleteProjectCompleted(slug)),
+        put(actions.hideDialog({ dialog: 'ConfirmDeleteProjectDialog' })),
         fork(addToast, {
           type: 'success',
           message: 'Project deleted.'
@@ -185,6 +186,7 @@ const deleteCollaboratorLoop = function*() {
 
       yield all([
         put(actions.deleteCollaboratorCompleted(action.payload.slug, action.payload.accountId)),
+        put(actions.hideDialog({ dialog: 'ConfirmDeleteCollaboratorDialog' })),
         fork(addToast, {
           type: 'success',
           message: 'Collaborator deleted.'

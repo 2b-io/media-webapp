@@ -2,10 +2,13 @@ import React from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
+import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
-import { Container, ErrorBox } from 'ui/elements'
+import { Button, Container, ErrorBox, Paragraph } from 'ui/elements'
 import { modal } from 'views/common/decorators'
 import { Redirect, withParams } from 'views/router'
+
+import { ConfirmDeletePresetDialog } from '../dialog'
 
 import _PresetForm from './form'
 
@@ -16,6 +19,8 @@ const PresetForm = reduxForm({
 
 const PresetModal = ({
   deletePreset,
+  confirmDeletePreset,
+  removeDialogDeletePreset,
   preset,
   savePreset,
   slug,
@@ -49,7 +54,25 @@ const PresetModal = ({
         initialValues={ preset }
         isDefault={ !!preset.isDefault }
         isEditing={ !!preset.hash }
-        onDelete={ () => deletePreset({ preset, slug }) }
+        confirmDeletePreset={ () => confirmDeletePreset(preset) }
+      />
+      <ConfirmDeletePresetDialog
+        width='narrow'
+        content={ ({ params }) => <Paragraph>{ `Do you want to delete the preset ${ params.preset.name } from this project? ` }</Paragraph> }
+        choices={ () => (
+          <Button.Group>
+            <Button
+              variant="primary"
+              onClick={ () => deletePreset({ preset, slug }) }>
+              Delete
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={ () => removeDialogDeletePreset() }>
+              Cancel
+            </Button>
+          </Button.Group>
+        ) }
       />
     </Container>
   )
@@ -67,11 +90,13 @@ export default withParams(
           slug
         }
       },
-      dispatch => ({
+      mapDispatch({
         savePreset: ({ preset, slug }) => preset.hash ?
-          dispatch(actions.updatePreset({ preset, slug })) :
-          dispatch(actions.createPreset({ preset, slug })),
-        deletePreset: ({ preset, slug }) => dispatch(actions.deletePreset({ preset, slug }))
+          actions.updatePreset({ preset, slug }) :
+          actions.createPreset({ preset, slug }),
+        deletePreset: ({ preset, slug }) => actions.deletePreset({ preset, slug }),
+        removeDialogDeletePreset: () => actions.hideDialog({ dialog: 'ConfirmDeletePresetDialog' }),
+        confirmDeletePreset: (preset) => actions.showDialog({ dialog: 'ConfirmDeletePresetDialog', params: { preset } })
       })
     )(PresetModal)
   )

@@ -27,7 +27,7 @@ const CollaboratorList = ({
   collaborators,
   currentAccount,
   makeOwner,
-  deleteCollaborator,
+  confirmDeleteCollaborator,
   toProfile
 }) => {
   const signedInCollaborator = Object.values(collaborators).find(
@@ -51,10 +51,10 @@ const CollaboratorList = ({
                 }
                 { signedInCollaborator && signedInCollaborator.privilege === 'owner' && privilege === 'admin' &&
                   <Button.Group loosed>
-                    <Button plain onClick={ () => { makeOwner(account._id) } }>
+                    <Button plain onClick={ () => makeOwner(account._id) }>
                       <OwnerSetIcon size="medium" />
                     </Button>
-                    <Button plain onClick={ () => { deleteCollaborator(account._id) } }>
+                    <Button plain onClick={ () => confirmDeleteCollaborator(account._id, account.email) }>
                       <OwnerRemoveIcon size="medium" />
                     </Button>
                   </Button.Group>

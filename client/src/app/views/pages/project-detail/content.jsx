@@ -6,7 +6,7 @@ import { reduxForm, reset } from 'redux-form'
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
 import { Layout, Panel, TitleBar } from 'ui/compounds'
-import { Button, Container, ErrorBox } from 'ui/elements'
+import { Button, Container, ErrorBox, Paragraph } from 'ui/elements'
 import { AddIcon, OwnerAddIcon, ReloadIcon } from 'ui/icons'
 import { stateful } from 'views/common/decorators'
 import { Redirect, Route, Switch, withParams } from 'views/router'
@@ -18,7 +18,7 @@ import _ProjectForm from './form'
 import InviteModal from './invite-modal'
 import PresetList from './preset-list'
 import PresetModal from './preset-modal'
-import ConfirmDeleteProjectDialog from './confirm-delete-project-dialog'
+import { ConfirmDeleteCollaboratorDialog, ConfirmDeleteProjectDialog } from './dialog'
 
 const ProjectForm = reduxForm({
   form: 'project',
@@ -27,7 +27,9 @@ const ProjectForm = reduxForm({
 
 const Project = ({
   project,
-  cancelDeleteProject,
+  removeDialogDeleteCollaborator,
+  confirmDeleteCollaborator,
+  removeDialogDeleteProject,
   confirmDeleteProject,
   currentAccount,
   deleteProject,
@@ -40,7 +42,6 @@ const Project = ({
   makeOwner,
   deleteCollaborator,
   reset,
-  invalidAllCache,
   ui: {
     idle, notFound,
     deleteError, deleteResult,
@@ -85,7 +86,7 @@ const Project = ({
                   />
                   <ConfirmDeleteProjectDialog
                     width='narrow'
-                    content={ () => <p>Delete project?</p> }
+                    content={ () => <Paragraph>Do you want delete this project?</Paragraph> }
                     choices={ () => (
                       <Button.Group>
                         <Button
@@ -95,7 +96,7 @@ const Project = ({
                         </Button>
                         <Button
                           variant="secondary"
-                          onClick={ () => cancelDeleteProject() }>
+                          onClick={ () => removeDialogDeleteProject() }>
                           Cancel
                         </Button>
                       </Button.Group>
@@ -151,18 +152,35 @@ const Project = ({
               <Panel.Content>
                 {
                   project &&
-                    <CollaboratorList
-                      collaborators={ project.collaborators }
-                      toProfile={ toProfile }
-                      currentAccount={ currentAccount }
-                      makeOwner={ (accountId) => { makeOwner(accountId, project.slug) } }
-                      deleteCollaborator={ (accountId) => { deleteCollaborator(project.slug, accountId) } }
-                    />
+                      <CollaboratorList
+                        collaborators={ project.collaborators }
+                        toProfile={ toProfile }
+                        currentAccount={ currentAccount }
+                        makeOwner={ (accountId) => { makeOwner(accountId, project.slug) } }
+                        confirmDeleteCollaborator={ (accountId, accountEmail) =>  confirmDeleteCollaborator(accountId, accountEmail) }
+                      />
                 }
               </Panel.Content>
             </Panel>
+            <ConfirmDeleteCollaboratorDialog
+              width='narrow'
+              content={ ({ params }) => <Paragraph>{ `Do you want to remove the account ${ params.accountEmail } from the project?` }</Paragraph> }
+              choices={ ({ params }) => (
+                <Button.Group>
+                  <Button
+                    variant="primary"
+                    onClick={ () => deleteCollaborator(project.slug, params.accountId) }>
+                    Remove
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    onClick={ () => removeDialogDeleteCollaborator() }>
+                    Cancel
+                  </Button>
+                </Button.Group>
+              ) }
+            />
           </Container>
-
           <Container>
             <Panel>
               <Panel.Header>
@@ -233,8 +251,10 @@ export default withParams(
         currentAccount: selectors.currentAccount(state)
       }),
       mapDispatch({
+        confirmDeleteCollaborator: (accountId, accountEmail) => actions.showDialog({ dialog: 'ConfirmDeleteCollaboratorDialog', params: { accountId, accountEmail } }),
+        removeDialogDeleteCollaborator: () => actions.hideDialog({ dialog: 'ConfirmDeleteCollaboratorDialog' }),
         confirmDeleteProject: () => actions.showDialog({ dialog: 'ConfirmDeleteProjectDialog' }),
-        cancelDeleteProject: () => actions.hideDialog({ dialog: 'ConfirmDeleteProjectDialog' }),
+        removeDialogDeleteProject: () => actions.hideDialog({ dialog: 'ConfirmDeleteProjectDialog' }),
         deleteProject: actions.deleteProject,
         updateProject: actions.updateProject,
         toCacheInvalidator: slug => actions.requestLocation(`/projects/${ slug }/cache-invalidator`),

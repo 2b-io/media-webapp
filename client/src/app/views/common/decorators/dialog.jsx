@@ -31,7 +31,7 @@ const Wrapper = styled.div`
   position: relative;
   margin: ${
     ({ theme: { spacing } }) => `
-      ${ spacing.huge }
+      180px
       auto
       ${spacing.big }
     `
@@ -64,11 +64,11 @@ export default ({
 
     render() {
       const {
-        dialog,
+        dialogParams,
         width
       } = this.props
 
-      if (!dialog) {
+      if (!dialogParams) {
         return null
       }
 
@@ -76,7 +76,7 @@ export default ({
         <Portal node={ document && document.getElementById('root') }>
           <Overlay>
             <Wrapper onClick={ e => e.stopPropagation() } width={ width }>
-              <Content dialog={ dialog } { ...this.props } />
+              <Content dialogParams={ dialogParams } { ...this.props } />
             </Wrapper>
           </Overlay>
         </Portal>
@@ -91,7 +91,7 @@ export default ({
 
   return connect(
     state => ({
-      dialog: selectors.dialog(state, name)
+      dialogParams: selectors.dialog(state, name)
     }),
     mapDispatch({
       hide: () => actions.hideDialog({
