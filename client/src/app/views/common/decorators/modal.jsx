@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import { Portal } from 'react-portal'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import keycode from 'keycode'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
