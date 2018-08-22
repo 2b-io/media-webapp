@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { Portal } from 'react-portal'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
+import keycode from 'keycode'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
@@ -58,8 +59,32 @@ export default ({
     })(WrappedComponent) : WrappedComponent
 
   class Dialog extends Component {
+    constructor(...args) {
+      super(...args)
+
+      this.handleKeyDown = this.handleKeyDown.bind(this)
+    }
+
+    componentDidMount() {
+      document.addEventListener('keydown', this.handleKeyDown)
+    }
+
     componentWillUnmount() {
       this.props.hide()
+
+      document.removeEventListener('keydown', this.handleKeyDown)
+    }
+
+    handleKeyDown(event) {
+      const { dialogParams } = this.props
+
+      if (!dialogParams) {
+        return
+      }
+
+      if (keycode.isEventKey(event, 'esc')) {
+        this.props.hide()
+      }
     }
 
     render() {

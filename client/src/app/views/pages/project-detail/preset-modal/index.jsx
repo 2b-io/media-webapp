@@ -19,8 +19,8 @@ const PresetForm = reduxForm({
 
 const PresetModal = ({
   deletePreset,
-  confirmDeletePreset,
-  removeDialogDeletePreset,
+  showDeletePresetDialog,
+  hideDeletePresetDialog,
   preset,
   savePreset,
   slug,
@@ -54,11 +54,15 @@ const PresetModal = ({
         initialValues={ preset }
         isDefault={ !!preset.isDefault }
         isEditing={ !!preset.hash }
-        confirmDeletePreset={ () => confirmDeletePreset(preset) }
+        showDeletePresetDialog={ () => showDeletePresetDialog(preset) }
       />
       <ConfirmDeletePresetDialog
-        width='narrow'
-        content={ ({ params }) => <Paragraph>{ `Do you want to delete the preset ${ params.preset.name } from this project? ` }</Paragraph> }
+        width="narrow"
+        content={ ({ params }) => (
+          <Paragraph>
+            Do you want to delete the preset { params.preset.name } from this project?
+          </Paragraph>
+        ) }
         choices={ () => (
           <Button.Group>
             <Button
@@ -68,7 +72,7 @@ const PresetModal = ({
             </Button>
             <Button
               variant="secondary"
-              onClick={ () => removeDialogDeletePreset() }>
+              onClick={ () => hideDeletePresetDialog() }>
               Cancel
             </Button>
           </Button.Group>
@@ -95,8 +99,8 @@ export default withParams(
           actions.updatePreset({ preset, slug }) :
           actions.createPreset({ preset, slug }),
         deletePreset: ({ preset, slug }) => actions.deletePreset({ preset, slug }),
-        removeDialogDeletePreset: () => actions.hideDialog({ dialog: 'ConfirmDeletePresetDialog' }),
-        confirmDeletePreset: (preset) => actions.showDialog({ dialog: 'ConfirmDeletePresetDialog', params: { preset } })
+        hideDeletePresetDialog: () => actions.hideDialog({ dialog: 'ConfirmDeletePresetDialog' }),
+        showDeletePresetDialog: (preset) => actions.showDialog({ dialog: 'ConfirmDeletePresetDialog', params: { preset } })
       })
     )(PresetModal)
   )
