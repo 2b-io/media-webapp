@@ -57,8 +57,12 @@ const PresetModal = ({
         confirmDeletePreset={ () => confirmDeletePreset(preset) }
       />
       <ConfirmDeletePresetDialog
-        width='narrow'
-        content={ ({ params }) => <Paragraph>{ `Do you want to delete the preset ${ params.preset.name } from this project? ` }</Paragraph> }
+        width="narrow"
+        content={ ({ params }) => (
+          <Paragraph>
+            Do you want to delete the preset { params.preset.name } from this project?
+          </Paragraph>
+        ) }
         choices={ () => (
           <Button.Group>
             <Button

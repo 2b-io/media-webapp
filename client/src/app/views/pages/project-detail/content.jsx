@@ -85,7 +85,7 @@ const Project = ({
                     onSubmit={ updateProject }
                   />
                   <ConfirmDeleteProjectDialog
-                    width='narrow'
+                    width="narrow"
                     content={ () => <Paragraph>Do you want delete this project?</Paragraph> }
                     choices={ () => (
                       <Button.Group>
@@ -152,19 +152,23 @@ const Project = ({
               <Panel.Content>
                 {
                   project &&
-                      <CollaboratorList
-                        collaborators={ project.collaborators }
-                        toProfile={ toProfile }
-                        currentAccount={ currentAccount }
-                        makeOwner={ (accountId) => { makeOwner(accountId, project.slug) } }
-                        confirmDeleteCollaborator={ (accountId, accountEmail) =>  confirmDeleteCollaborator(accountId, accountEmail) }
-                      />
+                    <CollaboratorList
+                      collaborators={ project.collaborators }
+                      toProfile={ toProfile }
+                      currentAccount={ currentAccount }
+                      makeOwner={ (accountId) => { makeOwner(accountId, project.slug) } }
+                      confirmDeleteCollaborator={ confirmDeleteCollaborator }
+                    />
                 }
               </Panel.Content>
             </Panel>
             <ConfirmDeleteCollaboratorDialog
-              width='narrow'
-              content={ ({ params }) => <Paragraph>{ `Do you want to remove the account ${ params.accountEmail } from the project?` }</Paragraph> }
+              width="narrow"
+              content={ ({ params }) => (
+                <Paragraph>
+                  Do you want to remove the account { params.accountEmail } from the project?
+                </Paragraph>
+              ) }
               choices={ ({ params }) => (
                 <Button.Group>
                   <Button
@@ -174,7 +178,7 @@ const Project = ({
                   </Button>
                   <Button
                     variant="secondary"
-                    onClick={ () => removeDialogDeleteCollaborator() }>
+                    onClick={ removeDialogDeleteCollaborator }>
                     Cancel
                   </Button>
                 </Button.Group>
@@ -262,8 +266,8 @@ export default withParams(
         toPresetDetail: (slug, hash) => actions.requestLocation(`/projects/${ slug }/presets/${ hash }`),
         toProfile: id => actions.requestLocation(`/@${ id }`),
         toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
-        makeOwner: (accountId, slug) => actions.makeOwner(accountId, slug),
-        deleteCollaborator: (slug, accountId) => actions.deleteCollaborator(slug, accountId),
+        makeOwner: actions.makeOwner,
+        deleteCollaborator: actions.deleteCollaborator,
         reset
       })
     )(Project)
