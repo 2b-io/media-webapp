@@ -33,9 +33,9 @@ export const searchByEmail = async (email) => {
   if (!email) {
     throw new Error('Invaid parameter')
   }
-
+  //regex to describes a pattern of character: matches beginning of email
   const emailRegex = new RegExp(`^${ email }`)
-  console.log(emailRegex);
+
   return await Account.find({ email: emailRegex })
 }
 
