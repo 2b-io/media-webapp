@@ -27,7 +27,7 @@ const CollaboratorList = ({
   collaborators,
   currentAccount,
   makeOwner,
-  confirmDeleteCollaborator,
+  showDeleteCollaboratorDialog,
   toProfile
 }) => {
   const signedInCollaborator = Object.values(collaborators).find(
@@ -54,7 +54,7 @@ const CollaboratorList = ({
                     <Button plain onClick={ () => makeOwner(account._id) }>
                       <OwnerSetIcon size="medium" />
                     </Button>
-                    <Button plain onClick={ () => confirmDeleteCollaborator(account._id, account.email) }>
+                    <Button plain onClick={ () => showDeleteCollaboratorDialog(account._id, account.email) }>
                       <OwnerRemoveIcon size="medium" />
                     </Button>
                   </Button.Group>

@@ -10,7 +10,7 @@ const PresetForm = ({
   idle,
   isDefault,
   isEditing,
-  confirmDeletePreset
+  showDeletePresetDialog
 }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Line>
@@ -51,7 +51,7 @@ const PresetForm = ({
         </Button>
         { !isDefault && isEditing &&
           <Button
-            onClick={ confirmDeletePreset }
+            onClick={ showDeletePresetDialog }
             disabled={ !idle }
             variant="secondary"
           >
