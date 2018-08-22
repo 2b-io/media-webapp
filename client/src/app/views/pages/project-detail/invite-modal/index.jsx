@@ -57,7 +57,7 @@ const InviteCollaborator = ({
       />
       { filtered && filtered.length ?
         <List>
-          { result.map( ({ email }, index) => (
+          { filtered.map( ({ email }, index) => (
             <CollaboratorItem key={ index }>
               <Layout>
                 <Email>{ email }</Email>
