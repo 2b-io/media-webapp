@@ -67,32 +67,8 @@ export default ({
     })(WrappedComponent) : WrappedComponent
 
   class Modal extends Component {
-    constructor(...args) {
-      super(...args)
-
-      this.handleKeyDown = this.handleKeyDown.bind(this)
-    }
-
-    componentDidMount() {
-      document.addEventListener('keydown', this.handleKeyDown)
-    }
-
     componentWillUnmount() {
       this.props.hide()
-
-      document.removeEventListener('keydown', this.handleKeyDown)
-    }
-
-    handleKeyDown(event) {
-      const { modal } = this.props
-
-      if (!modal) {
-        return
-      }
-
-      if (keycode.isEventKey(event, 'esc')) {
-        this.props.hide()
-      }
     }
 
     hide() {
