@@ -4,7 +4,7 @@ import { Account } from '../Account'
 
 import {
   findById as findAccountById,
-  findByEmail as findAccountByEmail
+  searchByEmail as searchAccountByEmail
 } from 'services/account'
 
 export default () => ({
@@ -36,10 +36,9 @@ export default () => ({
     },
     type: new GraphQLList(Account),
     resolve: async (session, { email }) => {
+      const account = await searchAccountByEmail(email)
 
-      const account = await findAccountByEmail(email)
-
-      return [ account ]
+      return account
     }
   }
 })

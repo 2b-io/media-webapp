@@ -22,7 +22,21 @@ export const findById = async (id) => {
 }
 
 export const findByEmail = async (email) => {
+  if (!email) {
+    throw new Error('Invaid parameter')
+  }
+
   return await Account.findOne({ email })
+}
+
+export const searchByEmail = async (email) => {
+  if (!email) {
+    throw new Error('Invaid parameter')
+  }
+
+  const emailRegex = new RegExp(`^${ email }`)
+  console.log(emailRegex);
+  return await Account.find({ email: emailRegex })
 }
 
 export const changePassword = async (_id, currentPassword, newPassword) => {
