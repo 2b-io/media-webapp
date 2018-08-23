@@ -7,6 +7,10 @@ import {
 } from 'graphql'
 
 import {
+  create as createAccount,
+  findByEmail as findAccountByEmail
+} from 'services/account'
+import {
   create as createPreset
 } from 'services/preset'
 import {
@@ -20,6 +24,10 @@ import {
   invalidateCache,
   invalidateAllCache
 } from 'services/project'
+import {
+  forgotPassword as forgotPassword,
+} from 'services/reset-password-code'
+import { sendEmailInviteToRegister } from 'services/send-email'
 
 import { Collaborator } from '../Collaborator'
 import { Preset, PresetStruct } from '../Preset'
@@ -73,6 +81,20 @@ export default ({ Project, ProjectStruct }) => ({
     },
     type: Collaborator,
     resolve: async (project, { email }) => {
+      //check exits account
+      const checkAccount = await findAccountByEmail(email)
+      if(!checkAccount) {
+        //if do not exits create new account
+        const invitedAccount = await createAccount({ email })
+        if (!invitedAccount) {
+          return
+        }
+        //sent email to invite
+        const resetPasswordCode = await forgotPassword(email)
+        const { code } = resetPasswordCode
+        await sendEmailInviteToRegister(email, code)
+      }
+
       const p = await inviteCollaborator(project, email)
 
       // add ref

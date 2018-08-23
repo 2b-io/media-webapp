@@ -76,16 +76,15 @@ const InviteCollaborator = ({
         <List>
           <CollaboratorItem>
             <Layout>
-              <Paragraph> { checkValidateInputEmail && inputEmail ?
+              <Paragraph> { checkValidateInputEmail &&  inputEmail ?
                 `${inputEmail} No data ...`:
                 'The email is invalid or already exists' }
               </Paragraph>
-              { checkValidateInputEmail &&
+              { checkValidateInputEmail && inputEmail &&
                 <Button
                   plain
                   type="submit"
-                  //This action will create the user set to admin and sent email to invite
-                  onClick={ () => { inviteCollaborator(inputEmail) } }>
+                  onClick={ () => inviteCollaborator(inputEmail) }>
                     Sent email to invite
                 </Button>
               }
@@ -103,8 +102,8 @@ export default modal({
   connect(
     null,
     mapDispatch({
-      inviteCollaborator: (email) => actions.inviteCollaborator(email),
-      searchAccount: actions.searchAccount
+      inviteCollaborator: actions.inviteCollaborator,
+      searchAccount: actions.searchAccount,
     })
   )(InviteCollaborator)
 )
