@@ -131,3 +131,29 @@ export const invalidateAllCache = async (slug) => {
 
   return true
 }
+
+export const getListMedia = async (slug) => {
+  const { cdnServer } = config
+
+  await request
+    .get(`${ cdnServer }/media`)
+    .set('Content-Type', 'application/json')
+    .send({
+      slug
+    })
+
+  return true
+}
+export const getMedia = async (slug, mediaId) => {
+  const { cdnServer } = config
+
+  await request
+    .get(`${ cdnServer }/media`)
+    .set('Content-Type', 'application/json')
+    .send({
+      slug,
+      mediaId
+    })
+
+  return true
+}
