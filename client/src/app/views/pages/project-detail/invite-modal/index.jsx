@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
-import { Container, Button } from 'ui/elements'
+import { Container, Button, Paragraph } from 'ui/elements'
 import { List } from 'ui/compounds'
 import { modal } from 'views/common/decorators'
 
@@ -41,7 +41,7 @@ const InviteCollaborator = ({
   inviteCollaborator,
   searchAccount,
   collaborators,
-  ui: { result }
+  ui: { inputEmail, result }
 }) => {
 
   const filtered = result ? result.filter(
@@ -49,6 +49,8 @@ const InviteCollaborator = ({
       ({ account }) => _id === account._id
     )
   ) : []
+
+  const checkValidateInputEmail = inputEmail && /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(inputEmail)
 
   return (
     <Container center>
@@ -73,7 +75,21 @@ const InviteCollaborator = ({
         </List> :
         <List>
           <CollaboratorItem>
-            No data collaborator ...
+            <Layout>
+              <Paragraph> { checkValidateInputEmail && inputEmail ?
+                `${inputEmail} No data ...`:
+                'The email is invalid or already exists' }
+              </Paragraph>
+              { checkValidateInputEmail &&
+                <Button
+                  plain
+                  type="submit"
+                  //This action will create the user set to admin and sent email to invite
+                  onClick={ () => { inviteCollaborator(inputEmail) } }>
+                    Sent email to invite
+                </Button>
+              }
+            </Layout>
           </CollaboratorItem>
         </List>
       }

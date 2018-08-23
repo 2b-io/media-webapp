@@ -81,11 +81,15 @@ const searchAccountLoop = function*() {
         continue
       }
 
-      const accounts = yield call(Account.search, session.token, action.payload )
+      const accounts = yield call(Account.search, session.token, action.payload)
 
-      if (accounts[0] !== null) {
-        yield put(actions.searchAccountCompleted({ accounts }))
+      if (!accounts.length) {
+        yield put(actions.searchAccountNoResult(action.payload))
+
+        throw new Error('Search account failed')
       }
+
+      yield put(actions.searchAccountCompleted({ accounts }))
 
     } catch (e) {
       yield put(actions.searchAccountFailed(serializeError(e)))
