@@ -21,7 +21,7 @@ const InviteToRegister = ({ email, code }) => ({
     },
     Subject: {
       Charset: 'UTF-8',
-      Data: 'Register Media Network'
+      Data: 'Invite To Join Media Network'
     }
   }
 })

@@ -85,11 +85,9 @@ export default ({ Project, ProjectStruct }) => ({
       const account = await findAccountByEmail(email)
       if(!account) {
         //if do not exits create new account
-        const invitedAccount = await createAccount({ email })
-
+        await createAccount({ email })
         //sent email to invite
-        const resetPasswordCode = await forgotPassword(email)
-        const { code } = resetPasswordCode
+        const { code } = await forgotPassword(email)
         await sendEmailInviteToRegister(email, code)
       }
 

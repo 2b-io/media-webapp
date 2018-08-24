@@ -31,6 +31,11 @@ const Email = styled.span`
     ({ theme }) => theme.spacing.small
   };
 `
+const Messenger = styled.div`
+  padding: ${
+    ({ theme }) => theme.spacing.small
+  }
+`
 
 const InviteCollaboratorForm = reduxForm({
   form: 'invite',
@@ -43,6 +48,9 @@ const InviteCollaborator = ({
   collaborators,
   ui: { inputEmail, result }
 }) => {
+  if (!collaborators) {
+    return null
+  }
 
   const filtered = result ? result.filter(
     ({ _id }) => !collaborators.some(
@@ -50,14 +58,20 @@ const InviteCollaborator = ({
     )
   ) : []
 
-  const checkValidateInputEmail = inputEmail && /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(inputEmail)
+  const isValidEmail = inputEmail && /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(inputEmail)
+
+
+  const inCollaboratorList = collaborators.some(({ account }) => account.email === inputEmail)
+  const inResult = !!(result && result.length)
+
+  const isEmailExisted = inResult || inCollaboratorList
 
   return (
     <Container center>
       <InviteCollaboratorForm
         searchAccount={ Debounce(searchAccount, 500) }
       />
-      { filtered && filtered.length ?
+      { !!(filtered && filtered.length) &&
         <List>
           { filtered.map(
             ({ email }, index) => (
@@ -74,24 +88,28 @@ const InviteCollaborator = ({
               </CollaboratorItem>
             ))
           }
-        </List> :
+        </List>
+      }
+
+      { inCollaboratorList &&
+        <Messenger>
+          <Paragraph>Already in collaborator list.</Paragraph>
+        </Messenger>
+      }
+
+      { (result && !isEmailExisted && isValidEmail) &&
         <List>
           <CollaboratorItem>
             <Layout>
               <Paragraph>
-                { checkValidateInputEmail ?
-                  `${ inputEmail } No data ...`:
-                  'The email is invalid or already exists'
-                }
+                { inputEmail } does not exist on our systems.
               </Paragraph>
-              { checkValidateInputEmail &&
-                <Button
-                  plain
-                  // type="submit"
-                  onClick={ () => inviteCollaborator(inputEmail) }>
-                    Sent email to invite
-                </Button>
-              }
+              <Button
+                plain
+                // type="submit"
+                onClick={ () => inviteCollaborator(inputEmail) }>
+                Sent email to invite
+              </Button>
             </Layout>
           </CollaboratorItem>
         </List>
