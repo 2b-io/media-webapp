@@ -1,8 +1,6 @@
 import config from 'infrastructure/config'
 
-const baseUrl = config.baseUrl
-
-export default = ({ email, code }) => {
+const Register = ({ email, code }) => ({
   Message: {
     Body: {
       Html: {
@@ -10,12 +8,12 @@ export default = ({ email, code }) => {
         Data: `
           <html>
             <body>
-              <h1>Hello ${ email }</h1>
+              <h1>Hello${ email }</h1>
               <p style="color:red">
                 Thanks for Register
               </p>
               <p>Media Network welcome ! Click the link below to setup password</p>
-              <a href="${ baseUrl }/reset-password/${ code }">Click here setup new password</a>
+              <a href="${ config.baseUrl }/reset-password/${ code }">Click here setup new password</a>
             </body>
           </html>
         `
@@ -26,4 +24,6 @@ export default = ({ email, code }) => {
       Data: 'Register Media Network'
     }
   }
-}
+})
+
+export default Register

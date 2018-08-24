@@ -57,11 +57,6 @@ export const searchAccountCompleted = account => ({
   payload: { account }
 })
 
-export const searchAccountNoResult = (email) => ({
-  type: types.SEARCH_ACCOUNT_NO_RESULT,
-  payload: { email }
-})
-
 export const searchAccountFailed = reason => ({
   type: types.SEARCH_ACCOUNT_FAILED,
   payload: { reason }

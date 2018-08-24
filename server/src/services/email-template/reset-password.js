@@ -1,6 +1,6 @@
 import config from 'infrastructure/config'
 
-export default ResetPassword = ({ email, code }) => {
+const ResetPassword = ({ email, code }) => ({
   Message: {
     Body: {
       Html: {
@@ -23,4 +23,6 @@ export default ResetPassword = ({ email, code }) => {
       Data: 'Reset password Media Network'
     }
   }
-}
+})
+
+export default ResetPassword

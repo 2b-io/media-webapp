@@ -1,6 +1,6 @@
 import config from 'infrastructure/config'
 
-export default InviteToRegister = ({ email, code }) => {
+const InviteToRegister = ({ email, code }) => ({
   Message: {
     Body: {
       Html: {
@@ -24,4 +24,6 @@ export default InviteToRegister = ({ email, code }) => {
       Data: 'Register Media Network'
     }
   }
-}
+})
+
+export default InviteToRegister
