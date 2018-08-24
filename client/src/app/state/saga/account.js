@@ -83,11 +83,6 @@ const searchAccountLoop = function*() {
 
       const accounts = yield call(Account.search, session.token, action.payload.email)
 
-      // if (!accounts.length) {
-      //   yield put(actions.searchAccountNoResult(action.payload.email))
-      //   continue
-      // }
-
       yield put(actions.searchAccountCompleted(
         {
           accounts,

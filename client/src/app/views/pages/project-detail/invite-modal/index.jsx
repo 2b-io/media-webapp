@@ -48,9 +48,6 @@ const InviteCollaborator = ({
   collaborators,
   ui: { inputEmail, result }
 }) => {
-  if (!collaborators) {
-    return null
-  }
 
   const filtered = result ? result.filter(
     ({ _id }) => !collaborators.some(
@@ -61,7 +58,7 @@ const InviteCollaborator = ({
   const isValidEmail = inputEmail && /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(inputEmail)
 
 
-  const inCollaboratorList = collaborators.some(({ account }) => account.email === inputEmail)
+  const inCollaboratorList = collaborators && collaborators.some(({ account }) => account.email === inputEmail)
   const inResult = !!(result && result.length)
 
   const isEmailExisted = inResult || inCollaboratorList
