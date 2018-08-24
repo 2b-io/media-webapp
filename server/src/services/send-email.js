@@ -18,7 +18,7 @@ export const sendEmailRegister = async (email, code) => {
 
   const result = await sendEmail(emailContent, email)
 
-  return result.MessageId ? true : false
+  return !!result.MessageId
 }
 
 export const sendEmailInviteToRegister = async (email, code) => {
@@ -27,7 +27,7 @@ export const sendEmailInviteToRegister = async (email, code) => {
 
   const result = await sendEmail(emailContent, email)
 
-  return result.MessageId ? true : false
+  return !!result.MessageId
 }
 
 export const sendEmailResetPassword = async (email, code) => {
@@ -36,5 +36,5 @@ export const sendEmailResetPassword = async (email, code) => {
 
   const result = await sendEmail(emailContent, email)
 
-  return result.MessageId ? true : false
+  return !!result.MessageId
 }

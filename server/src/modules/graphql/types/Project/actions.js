@@ -82,13 +82,11 @@ export default ({ Project, ProjectStruct }) => ({
     type: Collaborator,
     resolve: async (project, { email }) => {
       //check exits account
-      const checkAccount = await findAccountByEmail(email)
-      if(!checkAccount) {
+      const account = await findAccountByEmail(email)
+      if(!account) {
         //if do not exits create new account
         const invitedAccount = await createAccount({ email })
-        if (!invitedAccount) {
-          return
-        }
+
         //sent email to invite
         const resetPasswordCode = await forgotPassword(email)
         const { code } = resetPasswordCode

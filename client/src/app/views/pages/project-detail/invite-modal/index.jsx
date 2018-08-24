@@ -59,31 +59,35 @@ const InviteCollaborator = ({
       />
       { filtered && filtered.length ?
         <List>
-          { filtered.map( ({ email }, index) => (
-            <CollaboratorItem key={ index }>
-              <Layout>
-                <Email>{ email }</Email>
-                <Button
-                  plain
-                  type="submit"
-                  onClick={ () => { inviteCollaborator(email) } }>
-                    Invite
-                </Button>
-              </Layout>
-            </CollaboratorItem>
-          )) }
+          { filtered.map(
+            ({ email }, index) => (
+              <CollaboratorItem key={ index }>
+                <Layout>
+                  <Email>{ email }</Email>
+                  <Button
+                    plain
+                    type="submit"
+                    onClick={ () => { inviteCollaborator(email) } }>
+                      Invite
+                  </Button>
+                </Layout>
+              </CollaboratorItem>
+            ))
+          }
         </List> :
         <List>
           <CollaboratorItem>
             <Layout>
-              <Paragraph> { checkValidateInputEmail &&  inputEmail ?
-                `${inputEmail} No data ...`:
-                'The email is invalid or already exists' }
+              <Paragraph>
+                { checkValidateInputEmail ?
+                  `${ inputEmail } No data ...`:
+                  'The email is invalid or already exists'
+                }
               </Paragraph>
-              { checkValidateInputEmail && inputEmail &&
+              { checkValidateInputEmail &&
                 <Button
                   plain
-                  type="submit"
+                  // type="submit"
                   onClick={ () => inviteCollaborator(inputEmail) }>
                     Sent email to invite
                 </Button>
@@ -103,7 +107,7 @@ export default modal({
     null,
     mapDispatch({
       inviteCollaborator: actions.inviteCollaborator,
-      searchAccount: actions.searchAccount,
+      searchAccount: actions.searchAccount
     })
   )(InviteCollaborator)
 )

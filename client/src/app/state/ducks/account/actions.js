@@ -49,7 +49,7 @@ export const registerFailed = reason => ({
 
 export const searchAccount = email => ({
   type: types.SEARCH_ACCOUNT,
-  payload: email
+  payload: { email }
 })
 
 export const searchAccountCompleted = account => ({
