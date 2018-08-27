@@ -81,11 +81,16 @@ const searchAccountLoop = function*() {
         continue
       }
 
-      const accounts = yield call(Account.search, session.token, action.payload )
+      const accounts = yield call(Account.search, session.token, action.payload.email)
 
-      if (accounts[0] !== null) {
-        yield put(actions.searchAccountCompleted({ accounts }))
-      }
+      yield put(actions.searchAccountCompleted(
+        {
+          accounts,
+          meta: {
+            inputEmail: action.payload.email
+          }
+        }
+      ))
 
     } catch (e) {
       yield put(actions.searchAccountFailed(serializeError(e)))

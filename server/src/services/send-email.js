@@ -1,7 +1,7 @@
 import config from 'infrastructure/config'
 import ses from 'infrastructure/mailer/ses'
 
-import { register, resetPassword } from 'services/email-template'
+import { register, inviteToRegister, resetPassword } from 'services/email-template'
 
 const sendEmail = async (emailContent, email) => {
   const sender = config.aws.ses.sender
@@ -18,7 +18,16 @@ export const sendEmailRegister = async (email, code) => {
 
   const result = await sendEmail(emailContent, email)
 
-  return result.MessageId ? true : false
+  return !!result.MessageId
+}
+
+export const sendEmailInviteToRegister = async (email, code) => {
+
+  const emailContent = inviteToRegister({ email, code })
+
+  const result = await sendEmail(emailContent, email)
+
+  return !!result.MessageId
 }
 
 export const sendEmailResetPassword = async (email, code) => {
@@ -27,5 +36,5 @@ export const sendEmailResetPassword = async (email, code) => {
 
   const result = await sendEmail(emailContent, email)
 
-  return result.MessageId ? true : false
+  return !!result.MessageId
 }

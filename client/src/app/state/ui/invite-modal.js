@@ -18,6 +18,10 @@ export default {
     result: createReducer(null)({
       [ types.SEARCH_ACCOUNT_COMPLETED ]: (state, action) => action.payload.account.accounts,
       [ types.SEARCH_ACCOUNT_FAILED ]: () => null
-    })
+    }),
+    inputEmail: createReducer(null)({
+      [ types.SEARCH_ACCOUNT_COMPLETED ]: (state, action) => action.payload.account.meta.inputEmail,
+      [ types.SEARCH_ACCOUNT_FAILED ]: () => null
+    }),
   })
 }
