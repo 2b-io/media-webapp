@@ -48,6 +48,12 @@ export default {
       actions.showModal({ modal: 'InviteCollaborator' })
     ]
   },
+  '/projects/:slug/invite-by-email?:email': {
+    partial: true,
+    onEnter: ({ slug, email }) => [
+      actions.showModal({ modal: 'CollaboratorInviteEmail', params: { slug, email } })
+    ]
+  },
   '/projects/:slug/cache-invalidator': {
     partial: true,
     onEnter: () => [

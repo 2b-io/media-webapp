@@ -1,5 +1,5 @@
 import Debounce from 'lodash.debounce'
-import React from 'react'
+import React, { Fragment }  from 'react'
 import { reduxForm } from 'redux-form'
 import styled  from 'styled-components'
 import { connect } from 'react-redux'
@@ -43,9 +43,11 @@ const InviteCollaboratorForm = reduxForm({
 })(_InviteCollaboratorForm)
 
 const InviteCollaborator = ({
+  slug,
   inviteCollaborator,
   searchAccount,
   collaborators,
+  toEmailInviteModal,
   ui: { inputEmail, result }
 }) => {
 
@@ -78,7 +80,7 @@ const InviteCollaborator = ({
                   <Button
                     plain
                     type="submit"
-                    onClick={ () => { inviteCollaborator(email) } }>
+                    onClick={ () => { inviteCollaborator({ email, messenger: '' }) } }>
                       Invite
                   </Button>
                 </Layout>
@@ -103,8 +105,7 @@ const InviteCollaborator = ({
               </Paragraph>
               <Button
                 plain
-                // type="submit"
-                onClick={ () => inviteCollaborator(inputEmail) }>
+                onClick={ () => toEmailInviteModal(slug, inputEmail) }>
                 Sent email to invite
               </Button>
             </Layout>
@@ -122,7 +123,8 @@ export default modal({
     null,
     mapDispatch({
       inviteCollaborator: actions.inviteCollaborator,
-      searchAccount: actions.searchAccount
+      searchAccount: actions.searchAccount,
+      toEmailInviteModal: (slug, email) => actions.requestLocation(`/projects/${ slug }/invite-by-email?email=${ email }`),
     })
   )(InviteCollaborator)
 )

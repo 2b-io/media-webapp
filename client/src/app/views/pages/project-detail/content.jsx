@@ -13,6 +13,7 @@ import { Redirect, Route, Switch, withParams } from 'views/router'
 
 import ProjectTools from './project-tools'
 import CacheInvalidatorModal from './cache-invalidator-modal'
+import CollaboratorInviteEmail from './sent-email-invite-modal'
 import CollaboratorList from './collaborator-list'
 import _ProjectForm from './form'
 import InviteModal from './invite-modal'
@@ -228,6 +229,7 @@ const Project = ({
       <Route path="/projects/:slug/invite">
         <InviteModal
           width="wide"
+          slug={ project && project.slug }
           title="Invite collaborators"
           onHide={ () => toProjectDetail(project.slug) }
           collaborators={ project && Object.values(project.collaborators) }
@@ -239,6 +241,13 @@ const Project = ({
           onHide={ () => toProjectDetail(project.slug) }
           slug={ project && project.slug }
           title="Cache Invalidator"
+        />
+      </Route>
+      <Route path="/projects/:slug/invite-by-email">
+        <CollaboratorInviteEmail
+          width="wide"
+          title="Sent email invite collaborators"
+          onHide={ () => toProjectDetail(project.slug) }
         />
       </Route>
     </Fragment>
