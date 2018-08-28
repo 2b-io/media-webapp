@@ -8,6 +8,12 @@ const sendEmail = async (emailContent, email) => {
   const destination = { ToAddresses: [ `${ email }` ] }
   const params = { ...emailContent, Destination: destination, Source: sender }
 
+  if (!config.production) {
+    console.log(params)
+
+    return
+  }
+
   return await ses.sendEmail(params).promise()
 
 }

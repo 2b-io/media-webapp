@@ -1,5 +1,7 @@
 import pathToRegexp from 'path-to-regexp'
+import querystring from 'querystring'
 import { all, select, put, take } from 'redux-saga/effects'
+import url from 'url'
 
 import { selectors, types } from 'state/interface'
 import { authRoutes, unauthRoutes } from 'views/route-config'
@@ -22,9 +24,15 @@ export default function*() {
   while (true) {
     yield take(types['LOCATION/ACCEPT'])
 
-    const { pathname: current } = yield select(selectors.currentLocation)
+    const currentLocation = yield select(selectors.currentLocation)
+    const previousLocation = yield select(selectors.previousLocation)
 
-    const { pathname: previous } = yield select(selectors.previousLocation)
+    const { pathname: current, search: currentSearch } = url.parse(currentLocation.pathname)
+
+    const { pathname: previous, search: previousSearch } = url.parse(previousLocation.pathname)
+
+    const currentQuery = querystring.parse(currentSearch.replace(/^\?/, ''))
+    const previousQuery = querystring.parse(previousSearch.replace(/^\?/, ''))
 
     const actions = regexes
       // check enter & leave
@@ -69,14 +77,14 @@ export default function*() {
             console.debug(`Entering ${ current } [${ r.path }]`)
 
             if (r.onEnter) {
-              enteringActions = r.onEnter(r.parameters)
+              enteringActions = r.onEnter(r.parameters, currentQuery)
             }
 
           } else if (r.leave) {
             console.debug(`Leaving ${ previous } [${ r.path }]`)
 
             if (r.onLeave) {
-              leavingActions = r.onLeave(r.parameters)
+              leavingActions = r.onLeave(r.parameters, previousQuery)
             }
           }
 

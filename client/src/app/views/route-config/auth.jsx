@@ -48,9 +48,9 @@ export default {
       actions.showModal({ modal: 'InviteCollaborator' })
     ]
   },
-  '/projects/:slug/invite-by-email?:email': {
+  '/projects/:slug/invite-by-email': {
     partial: true,
-    onEnter: ({ slug, email }) => [
+    onEnter: ({ slug }, { email }) => [
       actions.showModal({ modal: 'CollaboratorInviteEmail', params: { slug, email } })
     ]
   },

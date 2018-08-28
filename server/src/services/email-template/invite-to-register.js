@@ -8,7 +8,7 @@ const InviteToRegister = ({ email, code, messenger }) => ({
         Data: `
           <html>
             <body>
-              <h1>Hello${ email }</h1>
+              <h1>Hello ${ email }</h1>
               <p style="color:red">
                 We invite you to register and join Media Network.
               </p>

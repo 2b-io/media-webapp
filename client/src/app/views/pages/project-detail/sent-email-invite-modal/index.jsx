@@ -18,21 +18,17 @@ const SentEmailInviteForm = reduxForm({
 const CollaboratorInviteEmail = ({
   inviteCollaborator,
   searchAccount,
-  location
-}) => {
-  const urlParams=new URLSearchParams(location.search)
-  const inputEmail=urlParams.get('email')
+  modal: { params: { email } }
+}) => (
+  <Container>
+    <SentEmailInviteForm
+      initialValues={ { email } }
+      onSubmit={ (data) => inviteCollaborator(data) }
+      searchAccount={ searchAccount }
+    />
+  </Container>
+)
 
-  return (
-    <Container>
-      <SentEmailInviteForm
-        initialValues={ { email: inputEmail } }
-        onSubmit={ (data) => inviteCollaborator(data) }
-        searchAccount={ searchAccount }
-      />
-    </Container>
-  )
-}
 
 export default withParams(
   modal({
