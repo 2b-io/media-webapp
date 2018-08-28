@@ -31,8 +31,8 @@ export default function*() {
 
     const { pathname: previous, search: previousSearch } = url.parse(previousLocation.pathname)
 
-    const currentQuery = querystring.parse(currentSearch.replace(/^\?/, ''))
-    const previousQuery = querystring.parse(previousSearch.replace(/^\?/, ''))
+    const currentQuery = currentSearch && querystring.parse(currentSearch.replace(/^\?/, ''))
+    const previousQuery = previousSearch && querystring.parse(previousSearch.replace(/^\?/, ''))
 
     const actions = regexes
       // check enter & leave
