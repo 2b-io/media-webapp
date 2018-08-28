@@ -29,7 +29,9 @@ class HistoryManager extends Component {
         return
       }
 
-      request(location.pathname)
+      const { pathname, search } = location
+
+      request(`${ pathname }${ search }`)
       updateKey(location.key)
     })
 
@@ -37,7 +39,9 @@ class HistoryManager extends Component {
       updateKey(location.key)
     })
 
-    init(this.browserHistory.location.pathname)
+    const { pathname, search } = this.browserHistory.location
+
+    init(`${ pathname }${ search }`)
   }
 
   componentDidUpdate() {

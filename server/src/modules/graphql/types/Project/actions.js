@@ -77,18 +77,19 @@ export default ({ Project, ProjectStruct }) => ({
     args: {
       email: {
         type: GraphQLNonNull(GraphQLString)
+      },
+      messenge: {
+        type: GraphQLNonNull(GraphQLString)
       }
     },
     type: Collaborator,
-    resolve: async (project, { email }) => {
-      //check exits account
+    resolve: async (project, { email, messenge }) => {
       const account = await findAccountByEmail(email)
+
       if(!account) {
-        //if do not exits create new account
         await createAccount({ email })
-        //sent email to invite
         const { code } = await forgotPassword(email)
-        await sendEmailInviteToRegister(email, code)
+        await sendEmailInviteToRegister(email, code, messenge)
       }
 
       const p = await inviteCollaborator(project, email)

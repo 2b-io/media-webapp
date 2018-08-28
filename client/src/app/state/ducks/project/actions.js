@@ -134,9 +134,9 @@ export const deletePresetFailed = reason => ({
   payload: { reason }
 })
 
-export const inviteCollaborator = email => ({
+export const inviteCollaborator = ({ email, messenge }) => ({
   type: types.INVITE_COLLABORATOR,
-  payload: email
+  payload: { email, messenge }
 })
 
 export const inviteCollaboratorCompleted = collaborator => ({

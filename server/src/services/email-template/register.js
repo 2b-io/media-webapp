@@ -8,7 +8,7 @@ const Register = ({ email, code }) => ({
         Data: `
           <html>
             <body>
-              <h1>Hello${ email }</h1>
+              <h1>Hello ${ email }</h1>
               <p style="color:red">
                 Thanks for Register
               </p>

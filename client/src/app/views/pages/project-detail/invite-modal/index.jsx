@@ -31,7 +31,7 @@ const Email = styled.span`
     ({ theme }) => theme.spacing.small
   };
 `
-const Messenger = styled.div`
+const Messenge = styled.div`
   padding: ${
     ({ theme }) => theme.spacing.small
   }
@@ -43,9 +43,11 @@ const InviteCollaboratorForm = reduxForm({
 })(_InviteCollaboratorForm)
 
 const InviteCollaborator = ({
+  slug,
   inviteCollaborator,
   searchAccount,
   collaborators,
+  toEmailInviteModal,
   ui: { inputEmail, result }
 }) => {
 
@@ -78,7 +80,7 @@ const InviteCollaborator = ({
                   <Button
                     plain
                     type="submit"
-                    onClick={ () => { inviteCollaborator(email) } }>
+                    onClick={ () => { inviteCollaborator({ email, messenge: '' }) } }>
                       Invite
                   </Button>
                 </Layout>
@@ -89,9 +91,9 @@ const InviteCollaborator = ({
       }
 
       { inCollaboratorList &&
-        <Messenger>
+        <Messenge>
           <Paragraph>Already in collaborator list.</Paragraph>
-        </Messenger>
+        </Messenge>
       }
 
       { (result && !isEmailExisted && isValidEmail) &&
@@ -103,8 +105,7 @@ const InviteCollaborator = ({
               </Paragraph>
               <Button
                 plain
-                // type="submit"
-                onClick={ () => inviteCollaborator(inputEmail) }>
+                onClick={ () => toEmailInviteModal(slug, inputEmail) }>
                 Sent email to invite
               </Button>
             </Layout>
@@ -122,7 +123,8 @@ export default modal({
     null,
     mapDispatch({
       inviteCollaborator: actions.inviteCollaborator,
-      searchAccount: actions.searchAccount
+      searchAccount: actions.searchAccount,
+      toEmailInviteModal: (slug, email) => actions.requestLocation(`/projects/${ slug }/invite-by-email?email=${ email }`),
     })
   )(InviteCollaborator)
 )
