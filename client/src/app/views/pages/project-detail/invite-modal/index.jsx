@@ -1,5 +1,5 @@
 import Debounce from 'lodash.debounce'
-import React, { Fragment }  from 'react'
+import React from 'react'
 import { reduxForm } from 'redux-form'
 import styled  from 'styled-components'
 import { connect } from 'react-redux'
