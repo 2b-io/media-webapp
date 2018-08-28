@@ -8,8 +8,6 @@ const loop = function*() {
   while (true) {
     const request = yield take(types['LOCATION/REQUEST'])
 
-    // const url = new Url(request.payload.pathname)
-
     const { pathname } = url.parse(request.payload.pathname)
 
     try {
