@@ -48,7 +48,6 @@ const PROJECTS_FRAGMENT = `
     }
   }
 `
-
 export default {
   async get(slug, token) {
     const body = await request(`
