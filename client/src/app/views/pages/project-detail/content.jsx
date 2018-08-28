@@ -39,6 +39,7 @@ const Project = ({
   toPresetDetail,
   toProfile,
   toProjectDetail,
+  toProjectMedia,
   makeOwner,
   deleteCollaborator,
   reset,
@@ -199,6 +200,8 @@ const Project = ({
                   project &&
                     <ProjectTools
                       detail="Cache Invalidator"
+                      slug={ project.slug }
+                      toProjectMedia={ () => toProjectMedia(project.slug) }
                       toCacheInvalidator={ () => toCacheInvalidator(project.slug) }
                     />
                 }
@@ -266,6 +269,7 @@ export default withParams(
         toPresetDetail: (slug, hash) => actions.requestLocation(`/projects/${ slug }/presets/${ hash }`),
         toProfile: id => actions.requestLocation(`/@${ id }`),
         toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
+        toProjectMedia: slug => actions.requestLocation(`/projects/${ slug }/media`),
         makeOwner: actions.makeOwner,
         deleteCollaborator: actions.deleteCollaborator,
         reset
