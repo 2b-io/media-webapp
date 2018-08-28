@@ -91,7 +91,7 @@ export default ({ Project, ProjectStruct }) => ({
         await createAccount({ email })
         //sent email to invite remember use messenger
         const { code } = await forgotPassword(email)
-        await sendEmailInviteToRegister(email, code)
+        await sendEmailInviteToRegister(email, code, messenger)
       }
 
       const p = await inviteCollaborator(project, email)
