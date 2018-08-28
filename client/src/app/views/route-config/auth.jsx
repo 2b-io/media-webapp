@@ -32,8 +32,8 @@ export default {
   '/projects/:slug/media': {
     component: ProjectMedia,
     exact: true,
-    onEnter: () => [
-      actions.fetchProjects()
+    onEnter: ({ slug }) => [
+      actions.fetchProjectMedia(slug)
     ]
   },
   '/projects/:slug': {

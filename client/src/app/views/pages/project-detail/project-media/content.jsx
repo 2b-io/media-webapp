@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Panel, TitleBar } from 'ui/compounds'
-import { Button, Container, Link, MasonryLayout, Nowrap, Paragraph } from 'ui/elements'
+import { Button, Container, MasonryLayout, Paragraph } from 'ui/elements'
 import { CopyIcon } from 'ui/icons'
 
 const MediaImage = styled.div`
@@ -34,7 +34,7 @@ const Media = ({
             </span>
           </TitleBar.Title>
           <TitleBar.Menu>
-            <Button plain onClick={ () => { console.log('click'); return true} }>
+            <Button plain onClick={ true }>
               <CopyIcon size="small" />
             </Button>
           </TitleBar.Menu>
@@ -60,8 +60,8 @@ const ProjectMedia = ({
     )
   }
 
-  const items = [...Array(10).keys()].map(
-    project => ({
+  const items = [ ...Array(10).keys() ].map(
+    () => ({
       grid: { w: 1, h: 1 },
       component: () => (
         <Media />

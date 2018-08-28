@@ -7,14 +7,14 @@ const ProjectTools = ({
   toCacheInvalidator,
   toProjectMedia,
   slug
-}) => { console.log('slug', slug); return (
+}) => (
   <List>
     <List.Item>
-      <Link href={`/projects/${ slug }/cache-invalidator`} onClick={ toCacheInvalidator }>Cache Invalidator</Link>
+      <Link href={ `/projects/${ slug }/cache-invalidator` } onClick={ toCacheInvalidator }>Cache Invalidator</Link>
     </List.Item>
     <List.Item>
-      <Link href={`/projects/${ slug }/media`} onClick={ toProjectMedia }>Project Media</Link>
+      <Link href={ `/projects/${ slug }/media` } onClick={ toProjectMedia }>Project Media</Link>
     </List.Item>
   </List>
-)}
+)
 export default ProjectTools

@@ -4,10 +4,9 @@ import { connect } from 'react-redux'
 import { actions, selectors } from 'state/interface'
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { TitleBar } from 'ui/compounds'
-import { AddIcon, HelpIcon } from 'ui/icons'
 // import MediaDetail from 'views/common/modals/create-project'
 
-const ProjectMedia = ({ showModal, stillHeight }) => (
+const ProjectMedia = ({ stillHeight }) => (
   <Fragment>
     <TitleBar>
       <TitleBar.Title>
