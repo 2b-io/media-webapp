@@ -27,8 +27,8 @@ const SentEmailInviteForm = ({
           multiline={ true }
           type="text"
           placeholder="Some text"
-          name="messenger"
-          label="Messenger"
+          name="messenge"
+          label="Messenge"
         />
       }
     </Form.Line>

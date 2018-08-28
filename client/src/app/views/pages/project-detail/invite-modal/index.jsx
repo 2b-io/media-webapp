@@ -31,7 +31,7 @@ const Email = styled.span`
     ({ theme }) => theme.spacing.small
   };
 `
-const Messenger = styled.div`
+const Messenge = styled.div`
   padding: ${
     ({ theme }) => theme.spacing.small
   }
@@ -80,7 +80,7 @@ const InviteCollaborator = ({
                   <Button
                     plain
                     type="submit"
-                    onClick={ () => { inviteCollaborator({ email, messenger: '' }) } }>
+                    onClick={ () => { inviteCollaborator({ email, messenge: '' }) } }>
                       Invite
                   </Button>
                 </Layout>
@@ -91,9 +91,9 @@ const InviteCollaborator = ({
       }
 
       { inCollaboratorList &&
-        <Messenger>
+        <Messenge>
           <Paragraph>Already in collaborator list.</Paragraph>
-        </Messenger>
+        </Messenge>
       }
 
       { (result && !isEmailExisted && isValidEmail) &&

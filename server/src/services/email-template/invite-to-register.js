@@ -1,6 +1,6 @@
 import config from 'infrastructure/config'
 
-const InviteToRegister = ({ email, code, messenger }) => ({
+const InviteToRegister = ({ email, code, messenge }) => ({
   Message: {
     Body: {
       Html: {
@@ -13,7 +13,7 @@ const InviteToRegister = ({ email, code, messenger }) => ({
                 We invite you to register and join Media Network.
               </p>
               <p>
-                ${ messenger }
+                ${ messenge }
               </p>
               <p>Media Network welcome ! Click the link below to setup password</p>
               <a href="${ config.baseUrl }/reset-password/${ code }">Click here setup new password</a>

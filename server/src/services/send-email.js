@@ -27,9 +27,9 @@ export const sendEmailRegister = async (email, code) => {
   return !!result.MessageId
 }
 
-export const sendEmailInviteToRegister = async (email, code, messenger) => {
+export const sendEmailInviteToRegister = async (email, code, messenge) => {
 
-  const emailContent = inviteToRegister({ email, code, messenger })
+  const emailContent = inviteToRegister({ email, code, messenge })
 
   const result = await sendEmail(emailContent, email)
 

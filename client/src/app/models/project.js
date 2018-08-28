@@ -261,13 +261,13 @@ export default {
     return body.session.account.project.preset._destroy
   },
 
-  async inviteCollaborator(token, slug, inputEmailMessenger) {
+  async inviteCollaborator(token, slug, inputEmailMessenge) {
     const body = await request(`
-      query inviteCollaborator($token: String!, $slug: String!, $email: String!, $messenger: String!) {
+      query inviteCollaborator($token: String!, $slug: String!, $email: String!, $messenge: String!) {
         session(token: $token) {
           account {
             project(slug: $slug) {
-              _inviteCollaborator(email: $email, messenger:  $messenger){
+              _inviteCollaborator(email: $email, messenge:  $messenge){
                 ${ PERMISSION_FRAGMENT }
               }
             }
@@ -277,8 +277,8 @@ export default {
     `, {
       token,
       slug,
-      email: inputEmailMessenger.email,
-      messenger: inputEmailMessenger.messenger
+      email: inputEmailMessenge.email,
+      messenge: inputEmailMessenge.messenge
     })
     return body.session.account.project._inviteCollaborator
   },
