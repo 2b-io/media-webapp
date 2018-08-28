@@ -8,6 +8,12 @@ const sendEmail = async (emailContent, email) => {
   const destination = { ToAddresses: [ `${ email }` ] }
   const params = { ...emailContent, Destination: destination, Source: sender }
 
+  if (!config.production) {
+    console.log(params)
+
+    return
+  }
+
   return await ses.sendEmail(params).promise()
 
 }
@@ -21,9 +27,9 @@ export const sendEmailRegister = async (email, code) => {
   return !!result.MessageId
 }
 
-export const sendEmailInviteToRegister = async (email, code) => {
+export const sendEmailInviteToRegister = async (email, code, messenge) => {
 
-  const emailContent = inviteToRegister({ email, code })
+  const emailContent = inviteToRegister({ email, code, messenge })
 
   const result = await sendEmail(emailContent, email)
 

@@ -149,7 +149,7 @@ const inviteCollaboratorLoop = function*() {
         continue
       }
 
-      const collaborator = yield call(Project.inviteCollaborator, session.token, slug, action.payload )
+      const collaborator = yield call(Project.inviteCollaborator, session.token, slug, action.payload)
       collaborator.slug = slug
       if (collaborator) {
         yield all([
