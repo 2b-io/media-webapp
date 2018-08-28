@@ -4,6 +4,11 @@ import {
 } from 'graphql'
 
 import {
+  getListMedia,
+  getMedia
+} from 'services/media'
+
+import {
   get as getPreset,
   list as listPresetsInProject
 } from 'services/preset'
@@ -15,6 +20,7 @@ import {
 import { Account } from '../Account'
 import { Collaborator } from '../Collaborator'
 import { Preset } from '../Preset'
+import { Media } from '../Media'
 
 export default () => ({
   account: {
@@ -49,12 +55,35 @@ export default () => ({
     },
     type: Preset,
     resolve: async (project, { hash }) => {
-      
+
       const preset = await getPreset(project, hash)
       // add ref
       preset.project = project
 
       return preset
+    }
+  },
+  listMedia: {
+    type: new GraphQLList(Media),
+    resolve: async (project) => {
+      const { slug } = project
+      const listMedia = await getListMedia(slug)
+
+      return listMedia
+    }
+  },
+  media: {
+    args: {
+      id: {
+        type: GraphQLString
+      }
+    },
+    type: Media,
+    resolve: async (project, { id }) => {
+      const { slug } = project
+      const media = await getMedia(slug, id)
+
+      return media
     }
   }
 })

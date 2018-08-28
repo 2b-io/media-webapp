@@ -108,11 +108,10 @@ export const invalidateCache = async (patterns = [], slug, prettyOrigin) => {
     return true
   }
   await request
-    .post(`${ cdnServer }/cache-invalidations`)
+    .post(`${ cdnServer }/${ slug }/cache-invalidations`)
     .set('Content-Type', 'application/json')
     .send({
-      patterns: normalizedPatterns,
-      slug
+      patterns: normalizedPatterns
     })
 
   return true
@@ -120,13 +119,11 @@ export const invalidateCache = async (patterns = [], slug, prettyOrigin) => {
 
 export const invalidateAllCache = async (slug) => {
   const { cdnServer } = config
-
   await request
-    .post(`${ cdnServer }/cache-invalidations`)
+    .post(`${ cdnServer }/projects/${ slug }/cache-invalidations`)
     .set('Content-Type', 'application/json')
     .send({
-      patterns: [ '/*' ],
-      slug
+      patterns: [ '/*' ]
     })
 
   return true
