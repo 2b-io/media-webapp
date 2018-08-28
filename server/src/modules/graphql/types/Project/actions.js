@@ -84,12 +84,10 @@ export default ({ Project, ProjectStruct }) => ({
     },
     type: Collaborator,
     resolve: async (project, { email, messenger }) => {
-      //check exits account
       const account = await findAccountByEmail(email)
+
       if(!account) {
-        //if do not exits create new account
         await createAccount({ email })
-        //sent email to invite remember use messenger
         const { code } = await forgotPassword(email)
         await sendEmailInviteToRegister(email, code, messenger)
       }
