@@ -10,7 +10,7 @@ export const fetchProjectsCompleted = projects => ({
 })
 
 export const fetchProjectsFailed = reason => ({
-  type: types.FETCH_COMPLETED,
+  type: types.FETCH_FAILED,
   payload: { reason }
 })
 
