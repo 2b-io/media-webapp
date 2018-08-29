@@ -49,6 +49,7 @@ const ProjectMedia = ({
   listMedia
 }) => {
   if (!listMedia || !listMedia.length) {
+    console.log('listMedia', listMedia);
     return (
       <main>
         <Container>
@@ -82,7 +83,7 @@ const ProjectMedia = ({
 
 export default connect(
   mapState({
-    // listMedia: selectors.listMedia,
+    listMedia: selectors.listMedia,
   }),
   mapDispatch({
     toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`)

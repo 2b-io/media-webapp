@@ -5,9 +5,9 @@ export const fetchProjectMedia = slug => ({
   payload: { slug }
 })
 
-export const fetchProjectMediaCompleted = projectMedia => ({
+export const fetchProjectMediaCompleted = (projectMedia, slug) => ({
   type: types.FETCH_PROJECT_MEDIA_COMPLETED,
-  payload: { projectMedia }
+  payload: { projectMedia, slug }
 })
 
 export const fetchProjectMediaFailed = reason => ({

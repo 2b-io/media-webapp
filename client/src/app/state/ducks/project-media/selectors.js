@@ -1,3 +1,3 @@
 export default {
-  listMedia: state => Object.values({}),
+  listMedia: (state, slug) => { console.log('state', state); return Object.values({})}
 }
