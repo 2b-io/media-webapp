@@ -15,7 +15,7 @@ const fetchProjectMediaLoop = function*() {
       }
 
       const projectMediaList = yield call(ProjectMedia.fetchProjectMedia, session.token, action.payload.slug)
-      yield put(actions.fetchProjectMediaCompleted(projectMediaList, action.payload.slug))
+      yield put(actions.fetchProjectMediaCompleted(projectMediaList))
     } catch (e) {
       yield put(actions.fetchProjectMediaFailed(serializeError(e)))
       continue

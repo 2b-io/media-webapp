@@ -2,54 +2,71 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
-import { mapDispatch, mapState } from 'services/redux-helpers'
-import { actions, selectors } from 'state/interface'
+import { mapState } from 'services/redux-helpers'
+import { selectors } from 'state/interface'
 import { Panel, TitleBar } from 'ui/compounds'
 import { Button, Container, MasonryLayout, Paragraph } from 'ui/elements'
 import { CopyIcon } from 'ui/icons'
 
-const MediaImage = styled.div`
+const Image = styled.img`
   width: 100%;
   height: 100px;
-  border: 1px solid red;
   display: block;
 `
 
 const Media = ({
-  urlDetail,
-  toProjectDetail
-}) => (
-  <Panel>
-    <Panel.Content>
-      <Container>
-        <MediaImage />
-      </Container>
-    </Panel.Content>
-    {
-      <Panel.Footer>
-        <TitleBar>
-          <TitleBar.Title>
-            <span>
-              media info
-            </span>
-          </TitleBar.Title>
-          <TitleBar.Menu>
-            <Button plain onClick={ true }>
-              <CopyIcon size="small" />
-            </Button>
-          </TitleBar.Menu>
-        </TitleBar>
-      </Panel.Footer>
-    }
-  </Panel>
-)
+  mediaValue
+}) => {
+  // const croppedImg = `http://localhost:3002/u/${ slug }?url=${ mediaValue.originUrl }&w=200&h=100&m=crop`
+  const croppedImg = `http://localhost:3002/u/${ 'ssss' }?url=${ mediaValue.originUrl }&w=200&h=100&m=crop`
+
+  return (
+    <Panel>
+      <Panel.Content>
+        <Container>
+          <Image
+            src={ croppedImg }
+          />
+        </Container>
+      </Panel.Content>
+      {
+        <Panel.Footer>
+          <TitleBar>
+            <TitleBar.Title>
+              <span>
+                { mediaValue.path }
+              </span>
+            </TitleBar.Title>
+            <TitleBar.Menu>
+              <Button plain onClick={ () => true }>
+                <CopyIcon size="small" />
+              </Button>
+            </TitleBar.Menu>
+          </TitleBar>
+          <TitleBar>
+            <TitleBar.Title>
+              <span>
+                { mediaValue.originUrl }
+              </span>
+            </TitleBar.Title>
+            <TitleBar.Menu>
+              <Button plain onClick={ () => true }>
+                <CopyIcon size="small" />
+              </Button>
+            </TitleBar.Menu>
+          </TitleBar>
+        </Panel.Footer>
+      }
+    </Panel>
+  )
+}
 
 const ProjectMedia = ({
-  toMediaDetail,
+  // toMediaDetail,
   listMedia
 }) => {
+
   if (!listMedia || !listMedia.length) {
-    console.log('listMedia', listMedia);
     return (
       <main>
         <Container>
@@ -61,11 +78,14 @@ const ProjectMedia = ({
     )
   }
 
-  const items = [ ...Array(10).keys() ].map(
-    () => ({
+  const items = listMedia.map(
+    mediaValue => ({
       grid: { w: 1, h: 1 },
       component: () => (
-        <Media />
+        <Media
+          mediaValue={ mediaValue }
+          // slug={ slug }
+        />
       )
     })
   )
@@ -85,7 +105,5 @@ export default connect(
   mapState({
     listMedia: selectors.listMedia,
   }),
-  mapDispatch({
-    toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`)
-  })
+  null
 )(ProjectMedia)
