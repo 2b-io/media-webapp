@@ -1,18 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled, { css } from 'styled-components'
+import mime from 'mime'
 
 import { mapState } from 'services/redux-helpers'
 import { selectors } from 'state/interface'
 import { Panel, TitleBar } from 'ui/compounds'
 import { Button, Container, MasonryLayout, Paragraph } from 'ui/elements'
 import { CopyIcon } from 'ui/icons'
-
-// const Image = styled.img`
-//   width: 100%;
-//   height: 100px;
-//   display: block;
-// `
 
 const MediaImage = styled.div`
   width: 100%;
@@ -22,52 +17,60 @@ const MediaImage = styled.div`
   ({ url }) => css`
     background: url(${ url });
     background-repeat: no-repeat;
-    background-size: auto;
+    background-size: cover;
   `
   }
 `
 
+const resizeImage = (contentType, id, project, cdnUrl = 'http://localhost:3002') => {
+  return `${ cdnUrl }/s/${ project }/${ id }/default/crop_200x100.${ mime.getExtension(contentType) }`
+}
+
 const Media = ({
   mediaValue
-}) => (
-  <Panel>
-    <Panel.Content>
-      <Container>
-        <MediaImage
-          url={ mediaValue.croppedImg }
-        />
-      </Container>
-    </Panel.Content>
-    {
-      <Panel.Footer>
-        <TitleBar>
-          <TitleBar.Title>
-            <span>
-              { mediaValue.path }
-            </span>
-          </TitleBar.Title>
-          <TitleBar.Menu>
-            <Button plain onClick={ () => true }>
-              <CopyIcon size="small" />
-            </Button>
-          </TitleBar.Menu>
-        </TitleBar>
-        <TitleBar>
-          <TitleBar.Title>
-            <span>
-              { mediaValue.originUrl }
-            </span>
-          </TitleBar.Title>
-          <TitleBar.Menu>
-            <Button plain onClick={ () => true }>
-              <CopyIcon size="small" />
-            </Button>
-          </TitleBar.Menu>
-        </TitleBar>
-      </Panel.Footer>
-    }
-  </Panel>
-)
+}) => {
+  const imgResized = resizeImage(mediaValue.contentType, mediaValue.id, mediaValue.project)
+
+  return (
+    <Panel>
+      <Panel.Content>
+        <Container>
+          <MediaImage
+            url={ imgResized }
+          />
+        </Container>
+      </Panel.Content>
+      {
+        <Panel.Footer>
+          <TitleBar>
+            <TitleBar.Title>
+              <span>
+                { mediaValue.path }
+              </span>
+            </TitleBar.Title>
+            <TitleBar.Menu>
+              <Button plain onClick={ () => true }>
+                <CopyIcon size="small" />
+              </Button>
+            </TitleBar.Menu>
+          </TitleBar>
+          <TitleBar>
+            <TitleBar.Title>
+              <span>
+                { mediaValue.originUrl }
+              </span>
+            </TitleBar.Title>
+            <TitleBar.Menu>
+              <Button plain onClick={ () => true }>
+                <CopyIcon size="small" />
+              </Button>
+            </TitleBar.Menu>
+          </TitleBar>
+        </Panel.Footer>
+      }
+    </Panel>
+  )
+}
 
 
 const ProjectMedia = ({
@@ -93,7 +96,6 @@ const ProjectMedia = ({
       component: () => (
         <Media
           mediaValue={ mediaValue }
-          // slug={ slug }
         />
       )
     })
