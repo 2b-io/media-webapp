@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import styled, { css } from 'styled-components'
 import mime from 'mime'
 
+import { mapDispatch } from 'services/redux-helpers'
 import { mapState } from 'services/redux-helpers'
-import { selectors } from 'state/interface'
+import { actions, selectors } from 'state/interface'
 import { Panel, TitleBar } from 'ui/compounds'
 import { Button, Container, MasonryLayout, Paragraph } from 'ui/elements'
 import { CopyIcon } from 'ui/icons'
+
+import ProjectMediaModal from './project-meida-modal'
 
 const MediaImage = styled.div`
   width: 100%;
@@ -27,55 +30,63 @@ const resizeImage = (contentType, id, project, cdnUrl = 'http://localhost:3002')
 }
 
 const Media = ({
-  mediaValue
+  mediaInfo,
+  toProjectMediaModal
 }) => {
-  const imgResized = resizeImage(mediaValue.contentType, mediaValue.id, mediaValue.project)
+  const imgResized = resizeImage(mediaInfo.contentType, mediaInfo.id, mediaInfo.project)
 
   return (
-    <Panel>
-      <Panel.Content>
-        <Container>
-          <MediaImage
-            url={ imgResized }
-          />
-        </Container>
-      </Panel.Content>
-      {
-        <Panel.Footer>
-          <TitleBar>
-            <TitleBar.Title>
-              <span>
-                { mediaValue.path }
-              </span>
-            </TitleBar.Title>
-            <TitleBar.Menu>
-              <Button plain onClick={ () => true }>
-                <CopyIcon size="small" />
-              </Button>
-            </TitleBar.Menu>
-          </TitleBar>
-          <TitleBar>
-            <TitleBar.Title>
-              <span>
-                { mediaValue.originUrl }
-              </span>
-            </TitleBar.Title>
-            <TitleBar.Menu>
-              <Button plain onClick={ () => true }>
-                <CopyIcon size="small" />
-              </Button>
-            </TitleBar.Menu>
-          </TitleBar>
-        </Panel.Footer>
-      }
-    </Panel>
+    <Fragment>
+      <Panel>
+        <Panel.Content>
+          <Container>
+            <MediaImage
+              url={ imgResized }
+              onClick={ () => toProjectMediaModal(mediaInfo) }
+            />
+          </Container>
+        </Panel.Content>
+        {
+          <Panel.Footer>
+            <TitleBar>
+              <TitleBar.Title>
+                <span>
+                  { mediaInfo.path }
+                </span>
+              </TitleBar.Title>
+              <TitleBar.Menu>
+                <Button plain onClick={ () => true }>
+                  <CopyIcon size="small" />
+                </Button>
+              </TitleBar.Menu>
+            </TitleBar>
+            <TitleBar>
+              <TitleBar.Title>
+                <span>
+                  { mediaInfo.originUrl }
+                </span>
+              </TitleBar.Title>
+              <TitleBar.Menu>
+                <Button plain onClick={ () => true }>
+                  <CopyIcon size="small" />
+                </Button>
+              </TitleBar.Menu>
+            </TitleBar>
+          </Panel.Footer>
+        }
+      </Panel>
+      <ProjectMediaModal
+        width="wide"
+        title="Project Media Info"
+      />
+    </Fragment>
   )
 }
 
 
 const ProjectMedia = ({
-  // toMediaDetail,
-  listMedia
+  listMedia,
+  toProjectMediaModal
 }) => {
 
   if (!listMedia || !listMedia.length) {
@@ -91,11 +102,12 @@ const ProjectMedia = ({
   }
 
   const items = listMedia.map(
-    mediaValue => ({
+    mediaInfo => ({
       grid: { w: 1, h: 1 },
       component: () => (
         <Media
-          mediaValue={ mediaValue }
+          mediaInfo={ mediaInfo }
+          toProjectMediaModal={ toProjectMediaModal }
         />
       )
     })
@@ -116,5 +128,11 @@ export default connect(
   mapState({
     listMedia: selectors.listMedia,
   }),
-  null
+  mapDispatch({
+    toProjectMediaModal: (mediaInfo) => actions.showModal({
+      modal: 'ProjectMediaModal',
+      params: { mediaInfo }
+    })
+  })
+
 )(ProjectMedia)
