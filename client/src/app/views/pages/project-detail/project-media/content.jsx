@@ -45,35 +45,32 @@ const Media = ({
               onClick={ () => toProjectMediaModal(mediaInfo) }
             />
           </Container>
+          <TitleBar>
+            <TitleBar.Title>
+              <span>
+                { mediaInfo.path }
+              </span>
+            </TitleBar.Title>
+            <TitleBar.Menu>
+              <Button plain onClick={ () => true }>
+                <CopyIcon size="small" />
+              </Button>
+            </TitleBar.Menu>
+          </TitleBar>
+          <TitleBar>
+            <TitleBar.Title>
+              <span>
+                { mediaInfo.originUrl }
+              </span>
+            </TitleBar.Title>
+            <TitleBar.Menu>
+              <Button plain onClick={ () => true }>
+                <CopyIcon size="small" />
+              </Button>
+            </TitleBar.Menu>
+          </TitleBar>
         </Panel.Content>
-        {
-          <Panel.Footer>
-            <TitleBar>
-              <TitleBar.Title>
-                <span>
-                  { mediaInfo.path }
-                </span>
-              </TitleBar.Title>
-              <TitleBar.Menu>
-                <Button plain onClick={ () => true }>
-                  <CopyIcon size="small" />
-                </Button>
-              </TitleBar.Menu>
-            </TitleBar>
-            <TitleBar>
-              <TitleBar.Title>
-                <span>
-                  { mediaInfo.originUrl }
-                </span>
-              </TitleBar.Title>
-              <TitleBar.Menu>
-                <Button plain onClick={ () => true }>
-                  <CopyIcon size="small" />
-                </Button>
-              </TitleBar.Menu>
-            </TitleBar>
-          </Panel.Footer>
-        }
+
       </Panel>
       <ProjectMediaModal
         width="wide"
