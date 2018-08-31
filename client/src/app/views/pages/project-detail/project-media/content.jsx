@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import styled, { css } from 'styled-components'
 import mime from 'mime'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { mapState } from 'services/redux-helpers'
@@ -52,9 +53,11 @@ const Media = ({
               </span>
             </TitleBar.Title>
             <TitleBar.Menu>
-              <Button plain onClick={ () => true }>
-                <CopyIcon size="small" />
-              </Button>
+              <CopyToClipboard text={ mediaInfo.path }>
+                <Button plain>
+                  <CopyIcon size="small" />
+                </Button>
+              </CopyToClipboard>
             </TitleBar.Menu>
           </TitleBar>
           <TitleBar>
@@ -64,9 +67,11 @@ const Media = ({
               </span>
             </TitleBar.Title>
             <TitleBar.Menu>
-              <Button plain onClick={ () => true }>
-                <CopyIcon size="small" />
-              </Button>
+              <CopyToClipboard text={ mediaInfo.originUrl }>
+                <Button plain>
+                  <CopyIcon size="small" />
+                </Button>
+              </CopyToClipboard>
             </TitleBar.Menu>
           </TitleBar>
         </Panel.Content>

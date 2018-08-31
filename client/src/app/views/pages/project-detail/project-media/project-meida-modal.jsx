@@ -14,6 +14,12 @@ const Wrapper = styled.div`
   }
 `
 
+const WrapperInfo = styled.div`
+  padding: ${
+    ({ theme }) => `${ theme.spacing.small } 0`
+  }
+`
+
 const Image = styled.img`
   height: 50vh;
   max-height: 500px;
@@ -42,24 +48,26 @@ const ProjectMediaModal = ({
           </Wrapper>
         </Panel.Content>
         <Panel.Footer>
-          <Nowrap>
-            Project: { mediaInfo.project }
-          </Nowrap>
-          <Nowrap>
-            Img name: { mediaInfo.id }
-          </Nowrap>
-          <Nowrap>
-            Content Type: { mediaInfo.contentType }
-          </Nowrap>
-          <Nowrap>
-            ContentLength: { getContentLength(mediaInfo.contentLength) }
-          </Nowrap>
-          <Nowrap>
-            OriginUrl: <Link target="_blank" href={ mediaInfo.originUrl }>{ mediaInfo.originUrl }</Link>
-          </Nowrap>
-          <Nowrap>
-            Path: <Link target="_blank" href={ mediaInfo.path }>{ mediaInfo.path }</Link>
-          </Nowrap>
+          <WrapperInfo>
+            <Nowrap>
+              Project: { mediaInfo.project }
+            </Nowrap>
+            <Nowrap>
+              Image name: { mediaInfo.id }
+            </Nowrap>
+            <Nowrap>
+              Content Type: { mediaInfo.contentType }
+            </Nowrap>
+            <Nowrap>
+              Content Length: { getContentLength(mediaInfo.contentLength) }
+            </Nowrap>
+            <Nowrap>
+              OriginUrl: <Link target="_blank" href={ mediaInfo.originUrl }>{ mediaInfo.originUrl }</Link>
+            </Nowrap>
+            <Nowrap>
+              Path: <Link target="_blank" href={ mediaInfo.path }>{ mediaInfo.path }</Link>
+            </Nowrap>
+          </WrapperInfo>
         </Panel.Footer>
       </Panel>
     </Fragment>
