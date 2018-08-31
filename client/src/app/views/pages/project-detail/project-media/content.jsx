@@ -32,6 +32,7 @@ const resizeImage = (contentType, id, project, cdnUrl = 'http://localhost:3002')
 
 const Media = ({
   mediaInfo,
+  showToast,
   toProjectMediaModal
 }) => {
   const imgResized = resizeImage(mediaInfo.contentType, mediaInfo.id, mediaInfo.project)
@@ -53,7 +54,7 @@ const Media = ({
               </span>
             </TitleBar.Title>
             <TitleBar.Menu>
-              <CopyToClipboard text={ mediaInfo.path }>
+              <CopyToClipboard onCopy={ showToast } text={ mediaInfo.path }>
                 <Button plain>
                   <CopyIcon size="small" />
                 </Button>
@@ -67,7 +68,7 @@ const Media = ({
               </span>
             </TitleBar.Title>
             <TitleBar.Menu>
-              <CopyToClipboard text={ mediaInfo.originUrl }>
+              <CopyToClipboard onCopy={ showToast } text={ mediaInfo.originUrl }>
                 <Button plain>
                   <CopyIcon size="small" />
                 </Button>
@@ -88,6 +89,7 @@ const Media = ({
 
 const ProjectMedia = ({
   listMedia,
+  showToast,
   toProjectMediaModal
 }) => {
 
@@ -109,6 +111,7 @@ const ProjectMedia = ({
       component: () => (
         <Media
           mediaInfo={ mediaInfo }
+          showToast={ showToast }
           toProjectMediaModal={ toProjectMediaModal }
         />
       )
@@ -134,7 +137,8 @@ export default connect(
     toProjectMediaModal: (mediaInfo) => actions.showModal({
       modal: 'ProjectMediaModal',
       params: { mediaInfo }
-    })
+    }),
+    showToast: actions.copyMediaLink
   })
 
 )(ProjectMedia)

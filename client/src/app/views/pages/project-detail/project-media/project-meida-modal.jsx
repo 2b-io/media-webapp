@@ -21,8 +21,16 @@ const WrapperInfo = styled.div`
 `
 
 const Image = styled.img`
-  height: 50vh;
-  max-height: 500px;
+  max-height: 100%;
+  @media (min-width: 300px) {
+    max-height: 200px;
+  }
+  @media (min-width: 600px) {
+    max-height: 300px;
+  }
+  @media (min-width: 800px) {
+    max-height: 450px;
+  }
   max-width: 100%;
   display: block;
 `

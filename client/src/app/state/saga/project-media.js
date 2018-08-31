@@ -3,6 +3,18 @@ import serializeError from 'serialize-error'
 
 import ProjectMedia from 'models/project-media'
 import { actions, types, selectors } from 'state/interface'
+import { addToast } from './toast'
+
+const copyMediaLinkLoop = function*() {
+  while(true) {
+    yield take(types['PROJECTMEDIA/COPY_MEDIA_LINK'])
+    yield fork(addToast, {
+      type: 'success',
+      message: 'Copied.'
+    })
+    continue
+  }
+}
 
 const fetchProjectMediaLoop = function*() {
   while (true) {
@@ -26,6 +38,6 @@ const fetchProjectMediaLoop = function*() {
 
 export default function*() {
   yield take('@@INITIALIZED')
+  yield fork(copyMediaLinkLoop)
   yield fork(fetchProjectMediaLoop)
-
 }

@@ -1,5 +1,10 @@
 import * as types from './types'
 
+export const copyMediaLink = () => ({
+  type: types.COPY_MEDIA_LINK,
+  payload: null
+})
+
 export const fetchProjectMedia = slug => ({
   type: types.FETCH_PROJECT_MEDIA,
   payload: { slug }
@@ -14,3 +19,5 @@ export const fetchProjectMediaFailed = reason => ({
   type: types.FETCH_PROJECT_MEDIA_FAILED,
   payload: { reason }
 })
+
+
