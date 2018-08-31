@@ -2,10 +2,11 @@ import request from 'services/graphql'
 
 const MEDIA_FRAGMENT = `
   id,
-  project,
+  contentLength,
   contentType,
+  originUrl,
   path,
-  originUrl
+  project
 `
 const LIST_MEDIA_FRAGMENT =`
   ${ MEDIA_FRAGMENT }
