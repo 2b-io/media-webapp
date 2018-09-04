@@ -4,6 +4,7 @@ const MEDIA_FRAGMENT = `
   id,
   contentLength,
   contentType,
+  cdnUrl,
   originUrl,
   path,
   project

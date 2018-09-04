@@ -26,7 +26,7 @@ const MediaImage = styled.div`
   }
 `
 
-const resizeImage = (contentType, id, project, cdnUrl = 'http://localhost:3002') => {
+const resizeImage = (contentType, id, project, cdnUrl) => {
   return `${ cdnUrl }/s/${ project }/${ id }/default/crop_200x100.${ mime.getExtension(contentType) }`
 }
 
@@ -35,7 +35,7 @@ const Media = ({
   showToast,
   toProjectMediaModal
 }) => {
-  const imgResized = resizeImage(mediaInfo.contentType, mediaInfo.id, mediaInfo.project)
+  const imgResized = resizeImage(mediaInfo.contentType, mediaInfo.id, mediaInfo.project, mediaInfo.cdnUrl)
 
   return (
     <Fragment>
