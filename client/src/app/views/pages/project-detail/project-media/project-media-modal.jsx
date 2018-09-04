@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 
 import { actions } from 'state/interface'
-import { Button, Link, Nowrap } from 'ui/elements'
+import { Button, Link } from 'ui/elements'
 import { modal } from 'views/common/decorators'
 import { mapDispatch } from 'services/redux-helpers'
 import { Panel } from 'ui/compounds'
@@ -35,21 +35,36 @@ const Wrapper = styled.div`
     ({ theme }) => `${ theme.spacing.small } 0`
   }
   display: flex;
+  flex-direction: column;
+`
+
+const WrapperItem = styled.span`
+  display: flex;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 const WrapperTitle = styled.div`
-  flex-basis: 30%;
-  flex-grow: 0;
+  width: 150px;
+  flex-shrink: 0;
   flex-wrap: nowrap;
+  padding-right: ${
+    ({ theme }) => theme.spacing.small
+  }
 `
 
 const WrapperInfo = styled.div`
-  flex-basis: 70%;
-  flex-grow: 0;
-  flex-wrap: nowrap;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
-
+const StyleButton = styled.div`
+  padding: ${
+    ({ theme }) => `0 ${ theme.spacing.medium } ${ theme.spacing.medium }`
+  }
+`
 
 const getContentLength = (contentLength) => {
   const BYTES_TO_MB = 1/1048576
@@ -74,40 +89,62 @@ const ProjectMediaModal = ({
         </Panel.Content>
         <Panel.Footer>
           <Wrapper>
-            {
-              // <WrapperTitle>
-              //   <Nowrap>
-              //     Project: { mediaInfo.project }
-              //   </Nowrap>
-              //   <Nowrap>
-              //     Image name: { mediaInfo.id }
-              //   </Nowrap>
-              //   <Nowrap>
-              //     Content Type: { mediaInfo.contentType }
-              //   </Nowrap>
-              //   <Nowrap>
-              //     Content Length: { getContentLength(mediaInfo.contentLength) }
-              //   </Nowrap>
-              //   <Nowrap>
-              //     OriginUrl: <Link target="_blank" href={ mediaInfo.originUrl }>{ mediaInfo.originUrl }</Link>
-              //   </Nowrap>
-              //   <Nowrap>
-              //     Path: <Link target="_blank" href={ mediaInfo.path }>{ mediaInfo.path }</Link>
-              //   </Nowrap>
-              // </WrapperTitle>
-            }
-            <WrapperTitle>
-              asdas
-            </WrapperTitle>
-            <WrapperInfo>
-              dasdas
-            </WrapperInfo>
+            <WrapperItem>
+              <WrapperTitle>
+                Project
+              </WrapperTitle>
+              <WrapperInfo>
+                { mediaInfo.project }
+              </WrapperInfo>
+            </WrapperItem>
+            <WrapperItem>
+              <WrapperTitle>
+                Image name
+              </WrapperTitle>
+              <WrapperInfo>
+                { mediaInfo.id }
+              </WrapperInfo>
+            </WrapperItem>
+            <WrapperItem>
+              <WrapperTitle>
+                Content Type
+              </WrapperTitle>
+              <WrapperInfo>
+                { mediaInfo.contentType }
+              </WrapperInfo>
+            </WrapperItem>
+            <WrapperItem>
+              <WrapperTitle>
+                Content Length
+              </WrapperTitle>
+              <WrapperInfo>
+                { getContentLength(mediaInfo.contentLength) }
+              </WrapperInfo>
+            </WrapperItem>
+            <WrapperItem>
+              <WrapperTitle>
+                OriginUrl
+              </WrapperTitle>
+              <WrapperInfo>
+                <Link target="_blank" href={ mediaInfo.originUrl }>{ mediaInfo.originUrl }</Link>
+              </WrapperInfo>
+            </WrapperItem>
+            <WrapperItem>
+              <WrapperTitle>
+                Path
+              </WrapperTitle>
+              <WrapperInfo>
+                <Link target="_blank" href={ mediaInfo.path }>{ mediaInfo.path }</Link>
+              </WrapperInfo>
+            </WrapperItem>
           </Wrapper>
-          <Button
-              plain
-              onClick={ () => removeProjectMedia(mediaInfo.project, mediaInfo.id) }
-            >Remove media</Button>
         </Panel.Footer>
+        <StyleButton>
+          <Button
+            plain
+            onClick={ () => removeProjectMedia(mediaInfo.project, mediaInfo.id) }
+          >Remove media</Button>
+        </StyleButton>
       </Panel>
     </Fragment>
   )
