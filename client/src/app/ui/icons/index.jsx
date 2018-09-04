@@ -8,6 +8,7 @@ import { ic_block } from 'react-icons-kit/md/ic_block'
 import { ic_chevron_left } from 'react-icons-kit/md/ic_chevron_left'
 import { ic_chevron_right } from 'react-icons-kit/md/ic_chevron_right'
 import { ic_close } from 'react-icons-kit/md/ic_close'
+import { ic_content_copy } from 'react-icons-kit/md/ic_content_copy'
 import { ic_credit_card } from 'react-icons-kit/md/ic_credit_card'
 import { ic_dashboard } from 'react-icons-kit/md/ic_dashboard'
 import { ic_domain } from 'react-icons-kit/md/ic_domain'
@@ -33,6 +34,7 @@ import icon from './icon'
 export const AddIcon = icon(ic_add)
 export const BillingIcon = icon(ic_attach_money)
 export const CloseIcon = icon(ic_close)
+export const CopyIcon = icon(ic_content_copy)
 export const DashboardIcon = icon(ic_dashboard)
 export const ErrorIcon = icon(ic_block)
 export const FavoriteIcon = icon(ic_star_border)

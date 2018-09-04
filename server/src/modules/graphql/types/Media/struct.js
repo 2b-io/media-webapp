@@ -21,5 +21,8 @@ export default {
   },
   originUrl: {
     type: GraphQLString
+  },
+  cdnUrl: {
+    type: GraphQLString
   }
 }

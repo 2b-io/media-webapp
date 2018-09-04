@@ -1,6 +1,7 @@
 import * as Dashboard from 'views/pages/dashboard'
 import * as Profile from 'views/pages/profile'
 import * as ProjectDetail from 'views/pages/project-detail'
+import * as ProjectMedia from 'views/pages/project-detail/project-media'
 import * as ProjectList from 'views/pages/project-list'
 import * as UI from 'views/pages/ui'
 
@@ -26,6 +27,13 @@ export default {
     exact: true,
     onEnter: () => [
       actions.fetchProjects()
+    ]
+  },
+  '/projects/:slug/media': {
+    component: ProjectMedia,
+    exact: true,
+    onEnter: ({ slug }) => [
+      actions.fetchProjectMedia(slug)
     ]
   },
   '/projects/:slug': {
