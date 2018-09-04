@@ -2,8 +2,10 @@ import React, { Fragment } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
-import { Link, Nowrap } from 'ui/elements'
+import { actions } from 'state/interface'
+import { Button, Link, Nowrap } from 'ui/elements'
 import { modal } from 'views/common/decorators'
+import { mapDispatch } from 'services/redux-helpers'
 import { Panel } from 'ui/compounds'
 
 const Wrapper = styled.div`
@@ -42,6 +44,7 @@ const getContentLength = (contentLength) => {
 }
 
 const ProjectMediaModal = ({
+  removeProjectMedia,
   modal: { params: { mediaInfo } }
 }) => {
 
@@ -75,6 +78,10 @@ const ProjectMediaModal = ({
             <Nowrap>
               Path: <Link target="_blank" href={ mediaInfo.path }>{ mediaInfo.path }</Link>
             </Nowrap>
+            <Button
+              plain
+              onClick={ () => removeProjectMedia(mediaInfo.project, mediaInfo.id) }
+            >Remove media</Button>
           </WrapperInfo>
         </Panel.Footer>
       </Panel>
@@ -86,6 +93,9 @@ export default modal({
   name: 'ProjectMediaModal'
 })(
   connect(
-    null
+    null,
+    mapDispatch({
+      removeProjectMedia: actions.removeProjectMedia
+    })
   )(ProjectMediaModal)
 )

@@ -32,5 +32,27 @@ export default {
       slug
     })
     return body.session.account.project.listMedia
+  },
+
+  async removeProjectMedia(token, slug, id) {
+
+    const body = await request(`
+      query removeMedia($token: String!, $slug: String!, $id: String!) {
+        session(token: $token) {
+          account {
+            project(slug: $slug) {
+              media(id: $id) {
+                _destroy
+              }
+            }
+          }
+        }
+      }
+    `, {
+      token,
+      slug,
+      id
+    })
+    return body.session.account.project.media._destroy
   }
 }

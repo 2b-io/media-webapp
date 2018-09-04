@@ -1,4 +1,4 @@
-import { call, take, fork, put, select } from 'redux-saga/effects'
+import { all, call, take, fork, put, select } from 'redux-saga/effects'
 import serializeError from 'serialize-error'
 
 import ProjectMedia from 'models/project-media'
@@ -35,9 +35,41 @@ const fetchProjectMediaLoop = function*() {
   }
 }
 
+const removeProjectMediaLoop = function*() {
+  while(true) {
+    const action = yield take(types['PROJECTMEDIA/REMOVE_PROJECT_MEDIA'])
+
+    try {
+      const session = yield select(selectors.currentSession)
+
+      if (!session) {
+        continue
+      }
+
+      const removeProjectMedia = yield call(ProjectMedia.removeProjectMedia, session.token, action.payload.slug, action.payload.id)
+
+      if (!removeProjectMedia) {
+        throw new Error('An error happens when remove the media.')
+      }
+
+      yield all([
+        put(actions.removeProjectMediaCompleted(action.payload.id)),
+        put(actions.hideModal({ modal: 'ProjectMediaModal' })),
+        fork(addToast, {
+          type: 'success',
+          message: 'Removed.'
+        })
+      ])
+    } catch (e) {
+      yield put(actions.removeProjectMediaFailed(serializeError(e)))
+      continue
+    }
+  }
+}
 
 export default function*() {
   yield take('@@INITIALIZED')
   yield fork(copyMediaLinkLoop)
   yield fork(fetchProjectMediaLoop)
+  yield fork(removeProjectMediaLoop)
 }

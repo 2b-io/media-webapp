@@ -11,7 +11,7 @@ import { Panel, TitleBar } from 'ui/compounds'
 import { Button, Container, MasonryLayout, Paragraph } from 'ui/elements'
 import { CopyIcon } from 'ui/icons'
 
-import ProjectMediaModal from './project-meida-modal'
+import ProjectMediaModal from './project-media-modal'
 
 const MediaImage = styled.div`
   width: 100%;
@@ -93,7 +93,7 @@ const ProjectMedia = ({
   toProjectMediaModal
 }) => {
 
-  if (!listMedia || !listMedia.length) {
+  if (!listMedia || !Object.keys(listMedia).length) {
     return (
       <main>
         <Container>
@@ -105,8 +105,9 @@ const ProjectMedia = ({
     )
   }
 
-  const items = listMedia.map(
+  const items = Object.values(listMedia).map(
     mediaInfo => ({
+      key: mediaInfo.id,
       grid: { w: 1, h: 1 },
       component: () => (
         <Media

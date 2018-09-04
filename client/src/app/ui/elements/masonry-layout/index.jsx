@@ -63,7 +63,7 @@ class MasonryLayout extends Component {
 
     const colNo = diff.length > 1 ? 1 : cols.length
 
-    if (this._layoutWidth !== colNo) {
+    if (this._layoutWidth !== colNo || this.props.items.length !== this._items.length) {
       const matrix = new Matrix(colNo)
 
       this._layoutWidth = colNo
@@ -83,7 +83,7 @@ class MasonryLayout extends Component {
           this._items.map(
             ({ component: Component, grid }, index) => (
               <Item
-                key={ `item-${ index }` }
+                key={ grid.key || `item-${ index }` }
                 { ... grid }
               >
                 <Component />

@@ -20,4 +20,17 @@ export const fetchProjectMediaFailed = reason => ({
   payload: { reason }
 })
 
+export const removeProjectMedia = (slug, id ) => ({
+  type: types.REMOVE_PROJECT_MEDIA,
+  payload: { slug, id }
+})
 
+export const removeProjectMediaCompleted = id => ({
+  type: types.REMOVE_PROJECT_MEDIA_COMPLETED,
+  payload: { id }
+})
+
+export const removeProjectMediaFailed = reason => ({
+  type: types.REMOVE_PROJECT_MEDIA_FAILED,
+  payload: { reason }
+})
