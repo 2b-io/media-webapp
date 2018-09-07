@@ -4,10 +4,10 @@ import styled, { css } from 'styled-components'
 import { SuccessIcon, ErrorIcon } from 'ui/icons'
 
 const border = color => css`
-  border: 1px solid ${ color.base };
+  border-bottom: 1px solid ${ color.base };
 
   &:hover, focus {
-    border: 1px solid ${ color.light.base };
+    border-bottom: 1px solid ${ color.light.base };
   }
 `
 
@@ -31,6 +31,7 @@ const TrailingIcon = styled.div`
 `
 
 const Container = styled.div`
+
   position: relative;
   transition: border .3s linear;
   background: ${ ({ theme }) => theme.white.base };
@@ -51,6 +52,36 @@ const Container = styled.div`
     ({ theme, invalid }) => invalid ?
       iconColor(TrailingIcon, theme.error) :
       iconColor(TrailingIcon, theme.success)
+  };
+  padding: 0 8px;
+  display: grid;
+  grid-gap: 8px;
+
+   ${
+    ({ leading, trailing }) => {
+      if(leading && trailing){
+        console.log(1);
+        return css`
+          grid-template-columns: 32px 1fr 32px;
+        `
+      }
+      if(leading && !trailing){
+        console.log(2);
+        return css`
+          grid-template-columns: 32px 1fr;
+        `
+      }
+      if(!leading && trailing){
+        console.log(3);
+        return css`
+
+          grid-template-columns: 1fr 32px;
+        `
+      }
+      return css`
+        grid-template-columns: 100%;
+      `
+    }
   }
 `
 
@@ -62,7 +93,6 @@ const commonStyle = css`
   border: none;
   border-radius: 0;
   outline: none;
-  padding: ${ ({ theme }) => theme.spacing.small };
   padding-right: ${ ({ valid, invalid }) => (valid || invalid) && '44px' };
   width: 100%;
   cursor: ${
@@ -100,24 +130,23 @@ const Label = styled.label`
 
 const Wrapper = styled.div`
   position: relative;
-  padding-top: ${
-    ({ theme }) => theme.spacing.small
-  };
-  padding-bottom: ${
-    ({ theme }) => theme.spacing.medium
-  };
 `
 
-const ErrorMessage = styled.div`
-  padding: ${
-    ({ theme: { spacing } }) => `
-      ${ spacing.tiny }
-      ${ spacing.small }
-    `
-  };
-  border: 1px solid ${ ({ theme }) => theme.error.base };
-  background: ${ ({ theme }) => theme.error.base };
-  color: ${ ({ theme }) => theme.error.on.base };
+const AssistiveText = styled.div`
+  padding: 0 8px;
+  height: 16px;
+  line-height: 16px;
+  font-size: 10px;
+  color: ${ ({ theme }) => theme.error.base };
+`
+
+const Leading = styled.div`
+  display: flex;
+  align-item: center;
+`
+const Trailing = styled.div`
+  display: flex;
+  align-item: center;
 `
 
 const TextBox = ({
@@ -125,10 +154,17 @@ const TextBox = ({
   multiline,
   invalid,
   valid,
+  leading,
+  trailing,
   ...props
 }) => (
   <Wrapper>
-    <Container valid={ valid } invalid={ invalid } { ...props }>
+    <Container valid={ valid } invalid={ invalid } leading={ leading } trailing={ trailing } { ...props }>
+      { leading && (
+        <Leading>
+          { leading }
+        </Leading>
+      ) }
       { multiline ?
         <TextArea
           valid={ valid }
@@ -141,18 +177,23 @@ const TextBox = ({
           { ...props }
         />
       }
-      { (valid || invalid) &&
-        <TrailingIcon invalid={ invalid }>
+      { /*(valid || invalid) &&
+        <TrailingIcon invalid={ invalid } >
           { invalid && <ErrorIcon size="medium" /> }
           { valid && <SuccessIcon size="medium" /> }
-        </TrailingIcon>
+        </TrailingIcon>*/
       }
+      { trailing && (
+        <Trailing>
+          { trailing }
+        </Trailing>
+      ) }
     </Container>
-    { invalid &&
-      <ErrorMessage>{ invalid }</ErrorMessage>
+    {
+      <AssistiveText>{ invalid }</AssistiveText>
     }
-    { label &&
-      <Label>{ label }</Label>
+    { //label &&
+      // <Label>{ label }</Label>
     }
   </Wrapper>
 )
