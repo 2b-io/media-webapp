@@ -29,10 +29,13 @@ const Layout = ({ isLayoutClosed, render, ...props }) => {
           </Header>
           ) }
         <Body className="body">
-          { isLayoutClosed ? render.overlay(props) : render.content(props) }
+          { isLayoutClosed ?
+            render.overlay(props) :
+            render.content(props)
+          }
         </Body>
       </Surface>
-      <Menu />
+      { !isLayoutClosed && <Menu /> }
     </Fragment>
   )
 }

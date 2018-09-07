@@ -24,10 +24,22 @@ const Surface = styled.div`
   };
 `
 
+const Content = styled.div`
+  display: grid;
+  grid-template-rows: 160px 1fr;
+  height: 100%;
+`
+
 const Menu = ({ open = true }) => (
   <Fragment>
     { open && <Overlay /> }
-    <Surface open={ open } />
+    <Surface open={ open }>
+      <Content>
+        <div className="profile"></div>
+        <div className="menu">
+        </div>
+      </Content>
+    </Surface>
   </Fragment>
 )
 
