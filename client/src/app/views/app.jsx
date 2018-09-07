@@ -16,6 +16,7 @@ injectGlobal`
   */
 
   #root {
+    position: relative;
     height: 100%
     min-height: 100%
   }

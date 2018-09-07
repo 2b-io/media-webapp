@@ -6,16 +6,15 @@ import { selectors } from 'state/interface'
 
 import Header from './header'
 import Body from './body'
+import Menu from './menu'
 
 const Surface = styled.main`
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: min-content 1fr;
   height: 100%;
-`
-
-const Overlay = styled.section`
-
+  position: relative;
+  z-index: 0;
 `
 
 const Layout = ({ isLayoutClosed, render, ...props }) => {
@@ -33,9 +32,7 @@ const Layout = ({ isLayoutClosed, render, ...props }) => {
           { isLayoutClosed ? render.overlay(props) : render.content(props) }
         </Body>
       </Surface>
-      <Overlay>
-        {  }
-      </Overlay>
+      <Menu />
     </Fragment>
   )
 }
