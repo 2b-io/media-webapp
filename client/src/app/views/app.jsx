@@ -1,16 +1,23 @@
 import React, { Fragment } from 'react'
 import { injectGlobal, ThemeProvider } from 'styled-components'
 
-import Layout, { LeftMenu } from 'views/layout'
+import Layout, { LeftMenu } from 'views/new-layout'
 import { HistoryProvider, Router } from 'views/router'
 import { content, overlay, still, unauthRoutes } from 'views/route-config'
 import defaultTheme from 'views/themes/default'
 import { Nothing } from 'ui/elements'
 
 injectGlobal`
+  /*
   body {
     background: ${ defaultTheme.primary.base };
     color: ${ defaultTheme.primary.on.base};
+  }
+  */
+
+  #root {
+    height: 100%
+    min-height: 100%
   }
 
   ::-webkit-scrollbar {
@@ -47,24 +54,10 @@ const overlayRoutesPattern = Object.keys(unauthRoutes)
   .join('|')
 
 const Overlay = ({ history, width }) => (
-  <Fragment>
-    <Router
-      animated="slide"
-      history={ history }
-      routes={ overlay }
-    />
-    <Router
-      animated="fade"
-      history={ history }
-      routes={ [
-        {
-          path: `(${ overlayRoutesPattern })`,
-          component: Nothing
-        }
-      ] }
-      otherwise={ () => <LeftMenu width={ width } /> }
-    />
-  </Fragment>
+  <Router
+    history={ history }
+    routes={ overlay }
+  />
 )
 
 const Content = ({ history }) => (
