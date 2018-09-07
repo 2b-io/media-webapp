@@ -1,3 +1,4 @@
+import * as CreateProject from 'views/pages/create-project'
 import * as Dashboard from 'views/pages/dashboard'
 import * as Profile from 'views/pages/profile'
 import * as ProjectDetail from 'views/pages/project-detail'
@@ -28,6 +29,10 @@ export default {
     onEnter: () => [
       actions.fetchProjects()
     ]
+  },
+  '/projects/create': {
+    component: CreateProject,
+    exact: true
   },
   '/projects/:slug/media': {
     component: ProjectMedia,

@@ -8,7 +8,6 @@ import preventDefault from 'services/prevent-default'
 import { Button, Link } from 'ui/elements'
 import { Panel, TitleBar } from 'ui/compounds'
 import { AddIcon, ReloadIcon } from 'ui/icons'
-import CreateProject from 'views/common/modals/create-project'
 import { List } from 'ui/compounds'
 
 const StyledLink = styled.a`
@@ -64,11 +63,11 @@ const ProjectList = ({ projects, toProjectDetail }) => {
   )
 }
 
-const Header = ({ showModal, reloadProjects }) => (
+const Header = ({ toCreateProject, reloadProjects }) => (
   <TitleBar>
     <TitleBar.Title>Recent Projects</TitleBar.Title>
     <TitleBar.Menu>
-      <Button plain onClick={ showModal }>
+      <Button plain onClick={ toCreateProject }>
         <AddIcon size="medium" />
       </Button>
       <Button plain onClick={ reloadProjects }>
@@ -78,11 +77,11 @@ const Header = ({ showModal, reloadProjects }) => (
   </TitleBar>
 )
 
-const Project = ({ projects, toProjectDetail, toProjects, showModal, reloadProjects }) => (
+const Project = ({ projects, toProjectDetail, toProjects, toCreateProject, reloadProjects }) => (
   <Fragment>
     <Panel fit={ true }>
       <Panel.Header>
-        <Header showModal={ showModal } reloadProjects={ reloadProjects } />
+        <Header toCreateProject={ toCreateProject } reloadProjects={ reloadProjects } />
       </Panel.Header>
       <Panel.Content>
         <ProjectList projects={ projects } toProjectDetail={ toProjectDetail } />
@@ -95,10 +94,6 @@ const Project = ({ projects, toProjectDetail, toProjects, showModal, reloadProje
         </Footer>
       </Panel.Footer>
     </Panel>
-    <CreateProject
-      width="wide"
-      title="Create New Project"
-    />
   </Fragment>
 )
 
@@ -109,10 +104,7 @@ export default connect(
   mapDispatch({
     toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
     toProjects: () => actions.requestLocation('/projects'),
-    showModal: () => actions.showModal({ modal: 'CreateProject' }),
+    toCreateProject: () => actions.requestLocation('/projects/create'),
     reloadProjects: () => actions.fetchProjects()
   })
 )(Project)
-
-
-

@@ -16,15 +16,6 @@ const projectForm = ({ handleSubmit, idle }) => (
         validate={ validateRequired }
       />
     </Form.Line>
-    <Form.Line>
-      <TextBox
-        label="Slug"
-        name="slug"
-        placeholder="my-awesome-project"
-        disabled={ !idle }
-        validate={ validateRequired }
-      />
-    </Form.Line>
     <Form.Line last>
       <Button
         type="submit"

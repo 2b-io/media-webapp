@@ -6,9 +6,8 @@ import { mapDispatch, mapState } from 'services/redux-helpers'
 import { TitleBar } from 'ui/compounds'
 import { Button, CollapsibleMenu } from 'ui/elements'
 import { AddIcon, HelpIcon } from 'ui/icons'
-import CreateProject from 'views/common/modals/create-project'
 
-const ProjectList = ({ showModal, stillHeight }) => (
+const ProjectList = ({ toCreateProject, stillHeight }) => (
   <Fragment>
     <TitleBar>
       <TitleBar.Title>
@@ -17,7 +16,7 @@ const ProjectList = ({ showModal, stillHeight }) => (
 
       <TitleBar.Menu>
         <CollapsibleMenu dock={ stillHeight }>
-          <Button plain onClick={ showModal }>
+          <Button plain onClick={ toCreateProject }>
             <AddIcon size="medium" />
           </Button>
           <Button plain>
@@ -26,10 +25,6 @@ const ProjectList = ({ showModal, stillHeight }) => (
         </CollapsibleMenu>
       </TitleBar.Menu>
     </TitleBar>
-    <CreateProject
-      width="wide"
-      title="Create New Project"
-    />
   </Fragment>
 )
 
@@ -38,8 +33,6 @@ export default connect(
     stillHeight: selectors.stillHeight
   }),
   mapDispatch({
-    showModal: () => actions.showModal({
-      modal: 'CreateProject'
-    })
+    toCreateProject: () => actions.requestLocation('/projects/create')
   })
 )(ProjectList)

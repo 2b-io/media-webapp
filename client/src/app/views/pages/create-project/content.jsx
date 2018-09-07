@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
 import { Container, ErrorBox } from 'ui/elements'
-import { modal } from 'views/common/decorators'
+import { stateful } from 'views/common/decorators'
 import { Redirect } from 'views/router'
 
 import _ProjectForm from './form'
@@ -21,10 +21,9 @@ const CreateProject = ({
 }) => {
   if (result) {
     return (
-      <Redirect to={ `/projects/${ result.slug }` } />
+      <Redirect to={ `/projects/${ result.id }` } />
     )
   }
-
   return (
     <Container>
       { error &&
@@ -38,8 +37,8 @@ const CreateProject = ({
   )
 }
 
-export default modal({
-  name: 'CreateProject'
+export default stateful({
+  component: 'CreateProject'
 })(
   connect(
     null,
