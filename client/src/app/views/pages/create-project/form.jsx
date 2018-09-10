@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { Button, Radio } from 'ui/elements'
+import { Button} from 'ui/elements'
 import { Form } from 'ui/compounds'
-import { TextBox } from 'views/common/form'
+import { TextBox, Radio } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
 const projectForm = ({ handleSubmit, idle }) => (

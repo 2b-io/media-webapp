@@ -1,12 +1,22 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
+import { CheckIcon } from 'ui/icons'
+
 const Wrapper = styled.div`
   padding: 0 8px;
   display: grid;
   grid-gap: 8px;
   height: 32px;
   grid-template-columns: 1fr 32px;
+`
+
+const Switch = styled.label`
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 
 const Button = styled.div`
@@ -25,14 +35,18 @@ const Label = styled.label`
   font-weight: ${ ({ fontWeight }) => fontWeight};
 `
 
+const Circle = styled.div`
+
+  border-radius: 100%;
+  border: 1px solid black;
+  width: 24px;
+  height: 24px;
+`
+
 const Input = styled.input.attrs({
   type: 'radio'
 })`
-  display: block;
-  &:checked :before {
-    background-color: ${ ({ theme }) => theme.primary.base };
-    transform: translate3d(100%, 0, 0);
-  }
+  display:none;
 `
 
 const Radio = ({
@@ -43,9 +57,18 @@ const Radio = ({
     { label &&
       <Label fontWeight={ props.fontWeight }>{ label }</Label>
     }
-    <Button>
-      <Input { ...props } defaultChecked={ props.value }/>
-    </Button>
+    <Switch>
+      <Button>
+        <Input { ...props } checked={ props.value }/>
+
+        <Circle>
+          { props.value &&
+            <CheckIcon />
+          }
+        </Circle>
+
+      </Button>
+    </Switch>
   </Wrapper>
 )
 
