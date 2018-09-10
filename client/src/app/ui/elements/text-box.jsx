@@ -31,50 +31,32 @@ const TrailingIcon = styled.div`
 `
 
 const Container = styled.div`
-
+  height: 32px;
   position: relative;
-  transition: border .3s linear;
+  padding: 0 8px;
+  display: grid;
+  grid-gap: 8px;
   background: ${ ({ theme }) => theme.white.base };
   color: ${ ({ theme }) => theme.white.on.base };
-  ${
-    ({ disabled, readOnly, theme, invalid, valid }) => (disabled || readOnly) ?
-      border(theme.secondary) : (
-        invalid ?
-          border(theme.error) : (
-            valid ?
-              border(theme.success)
-              : border(theme.primary)
-          )
-      )
-  };
-
   ${
     ({ theme, invalid }) => invalid ?
       iconColor(TrailingIcon, theme.error) :
       iconColor(TrailingIcon, theme.success)
   };
-  padding: 0 8px;
-  display: grid;
-  grid-gap: 8px;
-
-   ${
+  ${
     ({ leading, trailing }) => {
       if(leading && trailing){
-        console.log(1);
         return css`
           grid-template-columns: 32px 1fr 32px;
         `
       }
       if(leading && !trailing){
-        console.log(2);
         return css`
           grid-template-columns: 32px 1fr;
         `
       }
       if(!leading && trailing){
-        console.log(3);
         return css`
-
           grid-template-columns: 1fr 32px;
         `
       }
@@ -132,6 +114,26 @@ const Wrapper = styled.div`
   position: relative;
 `
 
+const Indicator = styled.div`
+  position: absolute;
+  top: 32px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  transition: border .3s linear;
+  ${
+    ({ disabled, readOnly, theme, invalid, valid }) => (disabled || readOnly) ?
+      border(theme.secondary) : (
+        invalid ?
+          border(theme.error) : (
+            valid ?
+              border(theme.success)
+              : border(theme.primary)
+          )
+      )
+  };
+`
+
 const AssistiveText = styled.div`
   padding: 0 8px;
   height: 16px;
@@ -143,10 +145,12 @@ const AssistiveText = styled.div`
 const Leading = styled.div`
   display: flex;
   align-item: center;
+  justify-content: center;
 `
 const Trailing = styled.div`
   display: flex;
   align-item: center;
+  justify-content: center;
 `
 
 const TextBox = ({
@@ -189,6 +193,7 @@ const TextBox = ({
         </Trailing>
       ) }
     </Container>
+    <Indicator valid={ valid } invalid={ invalid } { ...props }/>
     {
       <AssistiveText>{ invalid }</AssistiveText>
     }
