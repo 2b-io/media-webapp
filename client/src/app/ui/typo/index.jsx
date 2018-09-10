@@ -1,11 +1,12 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { font, lineHeight, paragraph, textAlign } from './mixin'
+import { font, lineHeight, padding, paragraph, textAlign } from './mixin'
 
 const Block = styled.div`
   ${ font }
   ${ lineHeight }
+  ${ padding }
   ${ textAlign }
   overflow: hidden;
   text-overflow: ellipsis;
@@ -20,6 +21,7 @@ export const Text = styled.p`
   ${ font }
   ${ textAlign }
   ${ paragraph }
+  ${ padding }
 `
 
 export const DescriptionText = ({ children, ...props }) => (

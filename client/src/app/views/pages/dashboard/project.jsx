@@ -8,8 +8,10 @@ import preventDefault from 'services/prevent-default'
 import { Button, Link } from 'ui/elements'
 import { Panel, TitleBar } from 'ui/compounds'
 import { AddIcon, ReloadIcon } from 'ui/icons'
+import { TextLine } from 'ui/typo'
 import CreateProject from 'views/common/modals/create-project'
-import { List } from 'ui/compounds'
+// import { List } from 'ui/compounds'
+import List from 'views/new-layout/sidebar/list'
 
 const StyledLink = styled.a`
   display: block;
@@ -46,21 +48,16 @@ const ProjectList = ({ projects, toProjectDetail }) => {
     )
   }
 
+  const items = projects.map(
+    project => ({
+      key: project._id,
+      onClick: toProjectDetail.bind(null, project.slug),
+      content: () => <TextLine mostLeft mostRight>{ project.name }</TextLine>
+    })
+  )
+
   return (
-    <List>
-      {
-        projects.map(
-          project => (
-            <List.Item key={ project._id }>
-              <ProjectItem
-                project={ project }
-                toProjectDetail={ toProjectDetail.bind(null, project.slug) }
-              />
-            </List.Item>
-          )
-        )
-      }
-    </List>
+    <List items={ items } />
   )
 }
 
@@ -113,6 +110,3 @@ export default connect(
     reloadProjects: () => actions.fetchProjects()
   })
 )(Project)
-
-
-

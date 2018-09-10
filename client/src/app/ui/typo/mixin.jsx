@@ -23,6 +23,20 @@ export const lineHeight = ({ size }) => css`
   }px;
 `
 
+export const padding = css`
+  ${
+    ({ mostLeft }) => mostLeft && css`
+      padding-left: 8px;
+    `
+  }
+
+  ${
+    ({ mostRight }) => mostRight && css`
+      padding-right: 8px;
+    `
+  }
+`
+
 export const paragraph = css`
   padding-top: 8px;
   padding-bottom: 16px;
