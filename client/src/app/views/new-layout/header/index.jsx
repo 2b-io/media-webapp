@@ -8,17 +8,23 @@ import { actions } from 'state/interface'
 import { MenuIcon } from 'ui/icons'
 
 const Material = styled.section`
-  height: 32px;
+  height: 40px;
 `
 
 const Content = styled.div`
   display: grid;
   background: #07f;
   color: #fff;
-  grid-template-columns: 32px 1fr 32px;
-  height: 32px;
+  grid-template-columns: 40px 1fr 40px;
+  height: 40px;
   justify-contents: center;
   align-items: center;
+
+  & h1 {
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+  }
 `
 
 const Header = ({ children, maximizeSidebar }) => (

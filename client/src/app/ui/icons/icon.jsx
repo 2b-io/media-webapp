@@ -23,7 +23,7 @@ const Surface = styled.div`
 `
 
 export default type => {
-  const IconWrapper = ({ size, ...props }) => (
+  const IconWrapper = ({ size = 'medium', ...props }) => (
     <Surface size={ toPixel(size) }>
       <Icon
         icon={ type }

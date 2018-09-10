@@ -46,12 +46,12 @@ const Content = styled.div`
 const List = styled.ul`
   display: grid;
   grid-template-columns: 100%
-  grid-auto-rows: 32px;
+  grid-auto-rows: 40px;
 `
 
 List.Item = styled.li`
   display: grid;
-  grid-template-columns: 32px 1fr;
+  grid-template-columns: 40px 1fr;
 `
 
 List.Icon = styled.div`
@@ -63,7 +63,7 @@ List.Text = styled.div`
   display: flex;
   align-items: center;
   padding-right: 8px;
-  line-height: 32px;
+  line-height: 40px;
 `
 
 const Profile = styled.div`
@@ -73,15 +73,15 @@ const Profile = styled.div`
 const UserName = styled.div`
   height: 64px;
   background: #666;
-  font-size: 12px;
-  padding: 32px 8px 0 80px;
-  line-height: 32px;
+  font-size: 14px;
+  padding: 24px 8px 0 80px;
+  line-height: 40px;
   color: #fff;
 `
 
 const UserEmail = styled.div`
-  line-height: 16px;
-  font-size: 10px;
+  line-height: 20px;
+  font-size: 12px;
   padding: 0 8px 0 80px;
 `
 
