@@ -17,8 +17,9 @@ injectGlobal`
 
   #root {
     position: relative;
-    height: 100%
-    min-height: 100%
+    height: 100%;
+    min-height: 100%;
+    font-size: 12px;
   }
 
   ::-webkit-scrollbar {
