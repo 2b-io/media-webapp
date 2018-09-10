@@ -42,6 +42,11 @@ const Content = styled.div`
   display: grid;
   grid-template-rows: 96px 1fr;
   height: 100%;
+
+  & > * {
+    min-width: 0;
+    min-height: 0;
+  }
 `
 
 const List = styled.ul`
@@ -53,6 +58,11 @@ const List = styled.ul`
 List.Item = styled.li`
   display: grid;
   grid-template-columns: 40px 1fr;
+
+  & > * {
+    min-width: 0;
+    min-height: 0;
+  }
 `
 
 List.Icon = styled.div`
@@ -64,12 +74,11 @@ List.Text = styled.div`
   display: flex;
   align-items: center;
   padding-right: 8px;
-  overflow: hidden;
 `
 
 const Profile = styled.div`
   position: relative;
-  overflow: hidden;
+  height: 96px;
 `
 
 const UserName = styled.div`
