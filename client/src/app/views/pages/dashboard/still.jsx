@@ -1,7 +1,9 @@
 import React from 'react'
 
+import { Heading } from 'ui/typo'
+
 const Dashboard = () => (
-  <h1>Dashboard</h1>
+  <Heading align="center">Dashboard</Heading>
 )
 
 export default Dashboard

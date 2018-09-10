@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Identicon } from 'ui/elements'
+import { AssistiveTextLine, TextLine } from 'ui/typo'
 
 import {
   BillingIcon,
@@ -63,10 +64,7 @@ List.Text = styled.div`
   display: flex;
   align-items: center;
   padding-right: 8px;
-  line-height: 40px;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 `
 
 const Profile = styled.div`
@@ -77,22 +75,12 @@ const Profile = styled.div`
 const UserName = styled.div`
   height: 64px;
   background: #666;
-  font-size: 14px;
   padding: 24px 8px 0 80px;
-  line-height: 40px;
   color: #fff;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 `
 
 const UserEmail = styled.div`
-  line-height: 20px;
-  font-size: 12px;
   padding: 0 8px 0 80px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 `
 
 const UserAvatar = styled.div`
@@ -121,8 +109,12 @@ const Sidebar = ({
     <Surface open={ open }>
       <Content>
         <Profile className="profile">
-          <UserName>{ currentAccount.displayName }</UserName>
-          <UserEmail>{ currentAccount.email }</UserEmail>
+          <UserName>
+            <TextLine>{ currentAccount.displayName || 'John Smith' }</TextLine>
+          </UserName>
+          <UserEmail>
+            <AssistiveTextLine>{ currentAccount.email }</AssistiveTextLine>
+          </UserEmail>
           <UserAvatar>
             <Identicon circle
               size={ 56 }
@@ -137,7 +129,7 @@ const Sidebar = ({
                 <DashboardIcon />
               </List.Icon>
               <List.Text>
-                Dashboard
+                <TextLine>Dashboard</TextLine>
               </List.Text>
             </List.Item>
             <List.Item onClick={ toProjectList }>
@@ -145,7 +137,7 @@ const Sidebar = ({
                 <ProjectListIcon />
               </List.Icon>
               <List.Text>
-                Projects
+                <TextLine>Projects</TextLine>
               </List.Text>
             </List.Item>
             <List.Item>
@@ -153,7 +145,7 @@ const Sidebar = ({
                 <BillingIcon />
               </List.Icon>
               <List.Text>
-                Billing
+                <TextLine>Billing</TextLine>
               </List.Text>
             </List.Item>
             <List.Item>
@@ -161,7 +153,7 @@ const Sidebar = ({
                 <PaymentIcon />
               </List.Icon>
               <List.Text>
-                Payment Methods
+                <TextLine>Payment Methods</TextLine>
               </List.Text>
             </List.Item>
             <List.Item onClick={ signOut }>
@@ -169,7 +161,7 @@ const Sidebar = ({
                 <SignOutIcon />
               </List.Icon>
               <List.Text>
-                Sign Out
+                <TextLine>Sign Out</TextLine>
               </List.Text>
             </List.Item>
           </List>
