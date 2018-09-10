@@ -1,11 +1,10 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { injectGlobal, ThemeProvider } from 'styled-components'
 
-import Layout, { LeftMenu } from 'views/new-layout'
+import Layout from 'views/new-layout'
 import { HistoryProvider, Router } from 'views/router'
-import { content, overlay, still, unauthRoutes } from 'views/route-config'
+import { content, overlay, still } from 'views/route-config'
 import defaultTheme from 'views/themes/default'
-import { Nothing } from 'ui/elements'
 
 injectGlobal`
   /*
@@ -51,11 +50,7 @@ injectGlobal`
   }
 `
 
-const overlayRoutesPattern = Object.keys(unauthRoutes)
-  .map(p => p.split(':')[0] + '*')
-  .join('|')
-
-const Overlay = ({ history, width }) => (
+const Overlay = ({ history }) => (
   <Router
     history={ history }
     routes={ overlay }

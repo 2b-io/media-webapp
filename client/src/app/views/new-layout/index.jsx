@@ -27,7 +27,7 @@ const Layout = ({ isLayoutClosed, render, ...props }) => {
           <Header className="header">
             { render.still(props) }
           </Header>
-          ) }
+        ) }
         <Body className="body">
           { isLayoutClosed ?
             render.overlay(props) :

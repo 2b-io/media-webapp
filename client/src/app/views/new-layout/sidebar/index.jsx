@@ -11,8 +11,7 @@ import {
   DashboardIcon,
   PaymentIcon,
   ProjectListIcon,
-  SignOutIcon,
-  UiIcon
+  SignOutIcon
 } from 'ui/icons'
 
 const Overlay = styled.div`

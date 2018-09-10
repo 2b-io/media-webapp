@@ -2,8 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
-import { mapDispatch, mapState } from 'services/redux-helpers'
-import { actions, selectors } from 'state/interface'
+import { mapDispatch } from 'services/redux-helpers'
+import { actions } from 'state/interface'
 
 import { MenuIcon } from 'ui/icons'
 

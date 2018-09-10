@@ -3,9 +3,6 @@ import { combineReducers } from 'redux'
 import createReducer from 'state/helpers/create-reducer'
 import * as types from './types'
 
-const MINIMAL_WIDTH = 44
-const MAXIMAL_WIDTH = 180
-
 export default combineReducers({
   closed: createReducer(true)({
     [ types.CLOSE ]: () => true,
