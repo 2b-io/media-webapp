@@ -19,12 +19,6 @@ const Content = styled.div`
   height: 40px;
   justify-contents: center;
   align-items: center;
-
-  & h1 {
-    font-weight: bold;
-    text-align: center;
-    text-transform: uppercase;
-  }
 `
 
 const Header = ({ children, maximizeSidebar }) => (
