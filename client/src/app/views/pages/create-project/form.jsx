@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { Button } from 'ui/elements'
+import { Button, Radio } from 'ui/elements'
 import { Form } from 'ui/compounds'
-import { TextBox  } from 'views/common/form'
+import { TextBox } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
 const projectForm = ({ handleSubmit, idle }) => (
@@ -15,6 +15,13 @@ const projectForm = ({ handleSubmit, idle }) => (
         disabled={ !idle }
         validate={ validateRequired }
       />
+    </Form.Line>
+
+    <Form.Line>
+      <Radio fontWeight="bold" label="Amazon CloudFront" name="chosse" value={ true } />
+    </Form.Line>
+    <Form.Line>
+      <Radio label="KeyCDN" name="chosse"/>
     </Form.Line>
     <Form.Line last>
       <Button
