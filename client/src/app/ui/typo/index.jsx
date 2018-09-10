@@ -22,8 +22,12 @@ export const Text = styled.p`
   ${ paragraph }
 `
 
-export const AssistiveText = ({ children, ...props }) => (
+export const DescriptionText = ({ children, ...props }) => (
   <Text size="small">{ children }</Text>
+)
+
+export const AssistiveText = ({ children, ...props }) => (
+  <Text size="tiny">{ children }</Text>
 )
 
 export const TextLine = ({ children, ...props }) => (
@@ -44,8 +48,14 @@ export const AssistiveTextLine = ({ children, ...props }) => (
   </Block>
 )
 
-export const Heading = ({ children, ...props }) => (
+export const PageTitle = ({ children, ...props }) => (
   <Block { ...props } size="large">
     <h1>{ children }</h1>
+  </Block>
+)
+
+export const Heading = ({ children, ...props }) => (
+  <Block { ...props }>
+    <h2>{ children }</h2>
   </Block>
 )
