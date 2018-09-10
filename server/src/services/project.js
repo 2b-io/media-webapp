@@ -2,6 +2,8 @@ import request from 'superagent'
 import { URL } from 'url'
 
 import config from 'infrastructure/config'
+import Infrastructure from 'models/Infrastructure'
+import { createDistribution } from 'services/cloudFront'
 import Permission from 'models/Permission'
 import Preset from 'models/Preset'
 import Project from 'models/Project'
@@ -54,17 +56,17 @@ export const list = async (account) => {
 }
 
 export const create = async (data, account) => {
-  const { name, slug, prettyOrigin, origins = [] } = data
+  const { name, prettyOrigin, origins = [] } = data
 
-  if (!name || !slug) {
+  if (!name) {
     throw new Error('Invalid parameters')
   }
 
   const project = await new Project({
     name,
-    slug,
     prettyOrigin,
-    origins
+    origins,
+    status:'INPROGRESS'
   }).save()
 
   await new Permission({
@@ -77,6 +79,15 @@ export const create = async (data, account) => {
     project: project._id,
     name: 'default',
     isDefault: true
+  }).save()
+
+  const distribution = await createDistribution()
+  const { Id: id, DomainName: domainName } = distribution
+  await new Infrastructure({
+    project: project._id,
+    id,
+    domainName,
+    provider: 'cloudfront',
   }).save()
 
   return project

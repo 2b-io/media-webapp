@@ -5,19 +5,12 @@ const schema = mongoose.Schema({
     type: String,
     required: true
   },
-  slug: {
-    type: String,
-    unique: true,
-    lowercase: true,
-    trim: true
-  },
+  identifier:String,
+  description:String,
   prettyOrigin: String,
+  status:String,
   origins: [ String ],
   headers: [ { name: String, value: String } ],
-  disabled: {
-    type: Boolean,
-    default: false
-  },
   removed: {
     type: Boolean,
     default: false,

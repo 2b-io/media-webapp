@@ -23,16 +23,14 @@ const schema = mongoose.Schema({
     type: String,
     required: true
   },
-  values: {
-    quality: {
-      type: Number,
-      default: 75
+  values: [ {
+    contentType: {
+      type: String,
     },
-    step: {
-      type: Number,
-      default: 8
-    }
-  },
+    params: {
+      type: String,
+    } }
+  ],
   isDefault: {
     type: Boolean,
     default: false
