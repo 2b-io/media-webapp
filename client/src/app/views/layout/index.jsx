@@ -13,6 +13,20 @@ import Wrapper from './wrapper'
 
 export { default as LeftMenu } from './left-menu'
 
+export default ({
+  isLayoutClosed
+}) => {
+  return (
+    <Fragment>
+      <div>
+        { isLayoutClosed ? 'true' : 'false' }
+      </div>
+      <div>
+      </div>
+    </Fragment>
+  )
+}
+
 class Layout extends Component {
   render() {
     const {
@@ -71,7 +85,7 @@ class Layout extends Component {
   }
 }
 
-export default connect(
+connect(
   state => {
     const session = selectors.currentSession(state)
 
