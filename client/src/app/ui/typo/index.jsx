@@ -32,8 +32,14 @@ export const TextLine = ({ children, ...props }) => (
   </Block>
 )
 
-export const AssistiveTextLine = ({ children, ...props }) => (
+export const DescriptionTextLine = ({ children, ...props }) => (
   <Block { ...props } size="small">
+    <span>{ children }</span>
+  </Block>
+)
+
+export const AssistiveTextLine = ({ children, ...props }) => (
+  <Block { ...props } size="tiny">
     <span>{ children }</span>
   </Block>
 )

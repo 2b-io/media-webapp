@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Identicon } from 'ui/elements'
-import { AssistiveTextLine, TextLine } from 'ui/typo'
+import { DescriptionTextLine, TextLine } from 'ui/typo'
 
 import {
   BillingIcon,
@@ -122,7 +122,7 @@ const Sidebar = ({
             <TextLine>{ currentAccount.displayName || 'John Smith' }</TextLine>
           </UserName>
           <UserEmail>
-            <AssistiveTextLine>{ currentAccount.email }</AssistiveTextLine>
+            <DescriptionTextLine>{ currentAccount.email }</DescriptionTextLine>
           </UserEmail>
           <UserAvatar>
             <Identicon circle

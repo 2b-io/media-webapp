@@ -6,6 +6,7 @@ import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
 import { Container, ErrorBox, Link, Paragraph } from 'ui/elements'
 import { stateful } from 'views/common/decorators'
+import { Text } from 'ui/typo'
 
 import _SignInForm from './form'
 
@@ -25,21 +26,21 @@ const SignIn = ({
       { error &&
         <ErrorBox>Email and password do not match.</ErrorBox>
       }
-      <Paragraph>
+      <Text>
         Enter your email and password
-      </Paragraph>
+      </Text>
       <SignInForm
         onSubmit={ signIn }
         idle={ idle }
       />
-      <Paragraph>
+      <Text>
         Don&apos;t have your account yet?<br />
         <Link href="/register" onClick={ toRegister }>Try it for free!</Link>
-      </Paragraph>
-      <Paragraph>
+      </Text>
+      <Text>
         Trouble at signing in?<br />
         <Link href="/forgot-password" onClick={ toForgotPassword }>We are here for help.</Link>
-      </Paragraph>
+      </Text>
     </Container>
   </main>
 )
