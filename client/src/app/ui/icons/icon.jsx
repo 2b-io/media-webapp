@@ -12,14 +12,12 @@ const toPixel = size => (
 )
 
 const Surface = styled.div`
-  display: inline-block;
+  display: flex;
   margin: 0 auto;
-  ${
-    ({ size }) => css`
-      width: ${ size }px;
-      height: ${ size }px;
-    `
-  }
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
 `
 
 export default type => {
