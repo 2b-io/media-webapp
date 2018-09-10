@@ -26,7 +26,7 @@ const Overlay = styled.div`
 
 const Surface = styled.div`
   position: absolute;
-  width: 256px;
+  width: 280px;
   top: 0;
   bottom: 0;
   left: 0;
@@ -64,10 +64,14 @@ List.Text = styled.div`
   align-items: center;
   padding-right: 8px;
   line-height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 const Profile = styled.div`
   position: relative;
+  overflow: hidden;
 `
 
 const UserName = styled.div`
@@ -77,12 +81,18 @@ const UserName = styled.div`
   padding: 24px 8px 0 80px;
   line-height: 40px;
   color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 const UserEmail = styled.div`
   line-height: 20px;
   font-size: 12px;
   padding: 0 8px 0 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 const UserAvatar = styled.div`
