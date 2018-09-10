@@ -1,29 +1,10 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-const sizeToPixel = (size = 'normal') => (
-  size === 'normal' ? 14 : (
-    size === 'small' ? 12 : 10
-  )
-)
-
-const textAlign = ({ align }) => css`
-  text-align: ${ align };
-`
-
-const fontSize = ({ size }) => css`
-  font-size: ${ sizeToPixel(size) }px;
-  line-height: ${ sizeToPixel(size) }px;
-`
-
-const lineHeight = ({ size }) => css`
-  line-height: ${
-    sizeToPixel(size) < 14 ? 16 : 40
-  }px;
-`
+import { font, lineHeight, paragraph, textAlign } from './mixin'
 
 const Block = styled.div`
-  ${ fontSize }
+  ${ font }
   ${ lineHeight }
   ${ textAlign }
   overflow: hidden;
@@ -36,10 +17,9 @@ const Block = styled.div`
 `
 
 export const Text = styled.p`
-  ${ fontSize }
+  ${ font }
   ${ textAlign }
-  padding-top: 8px;
-  padding-bottom: 8px;
+  ${ paragraph }
 `
 
 export const AssistiveText = ({ children, ...props }) => (
@@ -59,7 +39,7 @@ export const AssistiveTextLine = ({ children, ...props }) => (
 )
 
 export const Heading = ({ children, ...props }) => (
-  <Block { ...props }>
+  <Block { ...props } size="large">
     <h1>{ children }</h1>
   </Block>
 )
