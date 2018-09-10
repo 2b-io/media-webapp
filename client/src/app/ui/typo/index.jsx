@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import { font, lineHeight, padding, paragraph, textAlign } from './mixin'
 
@@ -25,11 +25,11 @@ export const Text = styled.p`
 `
 
 export const DescriptionText = ({ children, ...props }) => (
-  <Text size="small">{ children }</Text>
+  <Text { ...props } size="small">{ children }</Text>
 )
 
 export const AssistiveText = ({ children, ...props }) => (
-  <Text size="tiny">{ children }</Text>
+  <Text { ...props } size="tiny">{ children }</Text>
 )
 
 export const TextLine = ({ children, ...props }) => (

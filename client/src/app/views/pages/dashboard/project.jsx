@@ -5,13 +5,11 @@ import styled from 'styled-components'
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import preventDefault from 'services/prevent-default'
-import { Button, Link } from 'ui/elements'
+import { Button, Link, List } from 'ui/elements'
 import { Panel, TitleBar } from 'ui/compounds'
 import { AddIcon, ReloadIcon } from 'ui/icons'
 import { TextLine } from 'ui/typo'
 import CreateProject from 'views/common/modals/create-project'
-// import { List } from 'ui/compounds'
-import List from 'views/new-layout/sidebar/list'
 
 const StyledLink = styled.a`
   display: block;

@@ -19,7 +19,7 @@ export const font = ({ size }) => css`
 
 export const lineHeight = ({ size }) => css`
   line-height: ${
-    sizeToPixel(size) < 14 ? 16 : 40
+    sizeToPixel(size) < 14 ? 24 : 40
   }px;
 `
 

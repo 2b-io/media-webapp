@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import styled from 'styled-components'
 
-import { Identicon } from 'ui/elements'
+import { Identicon, List } from 'ui/elements'
 import { DescriptionTextLine, TextLine } from 'ui/typo'
 
 import {
@@ -11,8 +11,6 @@ import {
   ProjectListIcon,
   SignOutIcon
 } from 'ui/icons'
-
-import List from './list'
 
 const Overlay = styled.div`
   position: absolute;
