@@ -16,6 +16,7 @@ import { ic_done } from 'react-icons-kit/md/ic_done'
 import { ic_exit_to_app } from 'react-icons-kit/md/ic_exit_to_app'
 import { ic_help_outline } from 'react-icons-kit/md/ic_help_outline'
 import { ic_info } from 'react-icons-kit/md/ic_info'
+import { ic_menu } from 'react-icons-kit/md/ic_menu'
 import { ic_more_vert } from 'react-icons-kit/md/ic_more_vert'
 import { ic_refresh } from 'react-icons-kit/md/ic_refresh'
 import { ic_report } from 'react-icons-kit/md/ic_report'
@@ -43,6 +44,7 @@ export const GithubIcon = icon(github)
 export const HelpIcon = icon(ic_help_outline)
 export const InfoIcon = icon(ic_info)
 export const MaximizeIcon = icon(ic_chevron_right)
+export const MenuIcon = icon(ic_menu)
 export const MinimizeIcon = icon(ic_chevron_left)
 export const MoreIcon = icon(ic_more_vert)
 export const PaymentIcon = icon(ic_credit_card)
