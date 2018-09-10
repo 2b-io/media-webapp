@@ -2,8 +2,8 @@ import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
-import { mapDispatch } from 'services/redux-helpers'
-import { actions } from 'state/interface'
+import { mapDispatch, mapState } from 'services/redux-helpers'
+import { actions, selectors } from 'state/interface'
 import { Identicon } from 'ui/elements'
 
 import {
@@ -63,7 +63,6 @@ List.Icon = styled.div`
 List.Text = styled.div`
   display: flex;
   align-items: center;
-  padding-left: 8px;
   padding-right: 8px;
   line-height: 32px;
 `
@@ -100,21 +99,26 @@ const UserAvatar = styled.div`
   border-radius: 50%;
 `
 
-const Menu = ({
-  open = true,
+const Sidebar = ({
+  currentAccount = {},
+  minimizeSidebar,
+  open,
   signOut,
   toDashboard,
   toProjectList
 }) => (
   <Fragment>
-    { open && <Overlay /> }
+    { open && <Overlay onClick={ minimizeSidebar } /> }
     <Surface open={ open }>
       <Content>
         <Profile className="profile">
-          <UserName>Peter Smith</UserName>
-          <UserEmail>d@dapps.me</UserEmail>
+          <UserName>{ currentAccount.displayName }</UserName>
+          <UserEmail>{ currentAccount.email }</UserEmail>
           <UserAvatar>
-            <Identicon circle size={ 56 } id="d@dapps.me" />
+            <Identicon circle
+              size={ 56 }
+              id={ currentAccount.email }
+            />
           </UserAvatar>
         </Profile>
         <div className="menu">
@@ -167,11 +171,15 @@ const Menu = ({
 )
 
 export default connect(
-  null,
+  mapState({
+    open: selectors.isSidebarOpen,
+    currentAccount: selectors.currentAccount
+  }),
   mapDispatch({
+    minimizeSidebar: actions.minimizeSidebar,
     toDashboard: () => actions.requestLocation('/'),
     toProjectList: () => actions.requestLocation('/projects'),
     toUI: () => actions.requestLocation('/ui'),
     signOut: () => actions.closeLayout()
   })
-)(Menu)
+)(Sidebar)

@@ -1,5 +1,9 @@
-import React, { Fragment } from 'react'
+import React from 'react'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
+
+import { mapDispatch, mapState } from 'services/redux-helpers'
+import { actions, selectors } from 'state/interface'
 
 import { MenuIcon } from 'ui/icons'
 
@@ -17,13 +21,18 @@ const Content = styled.div`
   align-items: center;
 `
 
-const Header = ({ children }) => (
+const Header = ({ children, maximizeSidebar }) => (
   <Material>
     <Content>
-      <MenuIcon />
+      <MenuIcon onClick={ maximizeSidebar } />
       { children }
     </Content>
   </Material>
 )
 
-export default Header
+export default connect(
+  null,
+  mapDispatch({
+    maximizeSidebar: actions.maximizeSidebar
+  })
+)(Header)

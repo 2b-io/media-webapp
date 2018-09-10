@@ -11,10 +11,9 @@ export default combineReducers({
     [ types.CLOSE ]: () => true,
     [ types.OPEN ]: () => false
   }),
-  menuWidth: createReducer(MINIMAL_WIDTH)({
-    [ types.MAXIMIZE_SIDEBAR ]: () => MAXIMAL_WIDTH,
-    [ types.MINIMIZE_SIDEBAR ]: () => MINIMAL_WIDTH
-
+  sidebar: createReducer(false)({
+    [ types.MAXIMIZE_SIDEBAR ]: () => true,
+    [ types.MINIMIZE_SIDEBAR ]: () => false
   }),
   stillHeight: createReducer(0)({
     [ types.UPDATE_STILL_HEIGHT ]: (state, action) => action.payload.height

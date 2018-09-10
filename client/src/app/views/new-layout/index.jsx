@@ -4,9 +4,9 @@ import styled from 'styled-components'
 
 import { selectors } from 'state/interface'
 
-import Header from './header'
 import Body from './body'
-import Menu from './menu'
+import Header from './header'
+import Sidebar from './sidebar'
 
 const Surface = styled.main`
   display: grid;
@@ -35,7 +35,7 @@ const Layout = ({ isLayoutClosed, render, ...props }) => {
           }
         </Body>
       </Surface>
-      { !isLayoutClosed && <Menu /> }
+      { !isLayoutClosed && <Sidebar /> }
     </Fragment>
   )
 }
