@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Identicon } from 'ui/elements'
+import { DescriptionTextLine, TextLine } from 'ui/typo'
 
 import {
   BillingIcon,
@@ -41,6 +42,11 @@ const Content = styled.div`
   display: grid;
   grid-template-rows: 96px 1fr;
   height: 100%;
+
+  & > * {
+    min-width: 0;
+    min-height: 0;
+  }
 `
 
 const List = styled.ul`
@@ -52,6 +58,11 @@ const List = styled.ul`
 List.Item = styled.li`
   display: grid;
   grid-template-columns: 40px 1fr;
+
+  & > * {
+    min-width: 0;
+    min-height: 0;
+  }
 `
 
 List.Icon = styled.div`
@@ -63,36 +74,22 @@ List.Text = styled.div`
   display: flex;
   align-items: center;
   padding-right: 8px;
-  line-height: 40px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 `
 
 const Profile = styled.div`
   position: relative;
-  overflow: hidden;
+  height: 96px;
 `
 
 const UserName = styled.div`
   height: 64px;
   background: #666;
-  font-size: 14px;
   padding: 24px 8px 0 80px;
-  line-height: 40px;
   color: #fff;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 `
 
 const UserEmail = styled.div`
-  line-height: 20px;
-  font-size: 12px;
   padding: 0 8px 0 80px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 `
 
 const UserAvatar = styled.div`
@@ -121,8 +118,12 @@ const Sidebar = ({
     <Surface open={ open }>
       <Content>
         <Profile className="profile">
-          <UserName>{ currentAccount.displayName }</UserName>
-          <UserEmail>{ currentAccount.email }</UserEmail>
+          <UserName>
+            <TextLine>{ currentAccount.displayName || 'John Smith' }</TextLine>
+          </UserName>
+          <UserEmail>
+            <DescriptionTextLine>{ currentAccount.email }</DescriptionTextLine>
+          </UserEmail>
           <UserAvatar>
             <Identicon circle
               size={ 56 }
@@ -137,7 +138,7 @@ const Sidebar = ({
                 <DashboardIcon />
               </List.Icon>
               <List.Text>
-                Dashboard
+                <TextLine>Dashboard</TextLine>
               </List.Text>
             </List.Item>
             <List.Item onClick={ toProjectList }>
@@ -145,7 +146,7 @@ const Sidebar = ({
                 <ProjectListIcon />
               </List.Icon>
               <List.Text>
-                Projects
+                <TextLine>Projects</TextLine>
               </List.Text>
             </List.Item>
             <List.Item>
@@ -153,7 +154,7 @@ const Sidebar = ({
                 <BillingIcon />
               </List.Icon>
               <List.Text>
-                Billing
+                <TextLine>Billing</TextLine>
               </List.Text>
             </List.Item>
             <List.Item>
@@ -161,7 +162,7 @@ const Sidebar = ({
                 <PaymentIcon />
               </List.Icon>
               <List.Text>
-                Payment Methods
+                <TextLine>Payment Methods</TextLine>
               </List.Text>
             </List.Item>
             <List.Item onClick={ signOut }>
@@ -169,7 +170,7 @@ const Sidebar = ({
                 <SignOutIcon />
               </List.Icon>
               <List.Text>
-                Sign Out
+                <TextLine>Sign Out</TextLine>
               </List.Text>
             </List.Item>
           </List>
