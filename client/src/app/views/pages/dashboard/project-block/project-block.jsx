@@ -9,7 +9,7 @@ const ProjectBlock = ({ projects, toProjectDetail }) => {
     project => ({
       key: project._id,
       content: () => (
-        <TextLine mostLeft mostRight
+        <TextLine mostLeft
           onClick={ () => toProjectDetail(project.slug) }>
           { project.name }
         </TextLine>
