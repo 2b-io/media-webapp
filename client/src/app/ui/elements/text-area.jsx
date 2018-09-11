@@ -13,14 +13,10 @@ const Container = styled.div`
   position: relative;
   background: ${ ({ theme }) => theme.white.base };
   color: ${ ({ theme }) => theme.white.on.base };
-  grid-template-columns:
-    ${ ({ hasLeading }) => hasLeading && '40px' }
-    1fr
-    ${ ({ hasTrailing }) => hasTrailing && '40px' };
 `
 
-const Input = styled.input.attrs({
-  type: 'text'
+const InputArea = styled.textarea.attrs({
+  rows: ({ rows = 4 }) => rows
 })`
   display: block;
   appearance: none;
@@ -30,10 +26,9 @@ const Input = styled.input.attrs({
   border-radius: 0;
   outline: none;
   width: auto;
-  line-height: 40px;
-  height: 40px;
-  ${ ({ hasLeading }) => !hasLeading && 'padding-left: 8px;' }
-  ${ ({ hasTrailing }) => !hasTrailing && 'padding-right: 8px;' }
+  line-height: 24px;
+  padding: 0 8px;
+  resize: none;
   cursor: ${
     ({ disabled, readOnly }) => (disabled || readOnly) ? 'not-allowed' : 'inherit'
   };
@@ -41,40 +36,42 @@ const Input = styled.input.attrs({
   &::placeholder {
     color: ${ ({ theme }) => theme.secondary.limpid.base };
   }
+
+  &::-webkit-scrollbar {
+    width: 1px;
+  }
+  &::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0);
+  }
 `
 
 const Wrapper = styled.div`
+  position: relative;
 `
 
 const Indicator = styled.div`
   position: absolute;
-  bottom: 0;
+  bottom: 24px;
   left: 0;
   right: 0;
   height: 1px;
   background: #07f;
 `
 
-const TextBox = ({
+const TextArea = ({
   invalid,
-  leading,
-  trailing,
+  valid,
   ...props
 }) => (
   <Wrapper>
-    <Container
-      hasLeading={ !!leading }
-      hasTrailing={ !!trailing }
-    >
-      { leading && leading() }
-      <Input
-        hasLeading={ !!leading }
-        hasTrailing={ !!trailing }
+    <Container>
+      <InputArea
+        valid={ valid }
+        invalid={ invalid }
         { ...props }
       />
-      { trailing && trailing() }
-      <Indicator />
     </Container>
+    <Indicator />
     <AssistiveTextLine
       mostLeft mostRight
       variant="error">
@@ -83,4 +80,4 @@ const TextBox = ({
   </Wrapper>
 )
 
-export default TextBox
+export default TextArea
