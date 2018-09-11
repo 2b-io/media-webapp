@@ -55,13 +55,14 @@ export const list = async (account) => {
   return projects
 }
 
-export const create = async ({ name, provider, account }) => {
-
+export const create = async (data, provider, account) => {
+  const { name, description } = data
   if (!name) {
     throw new Error('Invalid parameters')
   }
   const project = await new Project({
     name,
+    description,
     status: 'INPROGRESS'
   }).save()
 

@@ -7,7 +7,7 @@ import {
 import { create as createProject } from 'services/project'
 import { changePassword } from 'services/account'
 
-import { Project } from '../Project'
+import { Project, ProjectStruct } from '../Project'
 
 export default ({ Account, AccountStruct }) => ({
   _update: {
@@ -43,17 +43,17 @@ export default ({ Account, AccountStruct }) => ({
   },
   _createProject: {
     args: {
-      name: {
-        type: new GraphQLNonNull(GraphQLString)
+      project: {
+        type: new GraphQLNonNull(ProjectStruct)
       },
       provider: {
         type: new GraphQLNonNull(GraphQLString)
       }
     },
     type: Project,
-    resolve: async (account, { name, provider }) => {
+    resolve: async (account, { project, provider }) => {
 
-      const p = await createProject({ name, provider, account })
+      const p = await createProject(project, provider, account)
 
       // add ref
       p._account = account

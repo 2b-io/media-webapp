@@ -6,12 +6,19 @@ const schema = mongoose.Schema({
     type: String,
     required: true
   },
-  identifier: String,
-  description: String,
-  prettyOrigin: String,
-  status: String,
+  identifier: {
+    type: String
+  },
+  description: {
+    type: String
+  },
+  prettyOrigin: {
+    type: String
+  },
+  status: {
+    type: String
+  },
   origins: [ String ],
-  headers: [ { name: String, value: String } ],
   removed: {
     type: Boolean,
     default: false,

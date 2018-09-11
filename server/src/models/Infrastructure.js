@@ -19,16 +19,7 @@ const schema = mongoose.Schema({
     required: true
   },
   settings: {
-    type: String,
-  },
-  isDefault: {
-    type: Boolean,
-    default: false
-  },
-  removed: {
-    type: Boolean,
-    default: false,
-    index: true
+    type: mongoose.Schema.Types.Mixed
   }
 })
 
