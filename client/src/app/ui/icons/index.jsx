@@ -14,6 +14,7 @@ import { ic_credit_card } from 'react-icons-kit/md/ic_credit_card'
 import { ic_dashboard } from 'react-icons-kit/md/ic_dashboard'
 import { ic_domain } from 'react-icons-kit/md/ic_domain'
 import { ic_done } from 'react-icons-kit/md/ic_done'
+import { ic_email } from 'react-icons-kit/md/ic_email'
 import { ic_exit_to_app } from 'react-icons-kit/md/ic_exit_to_app'
 import { ic_help_outline } from 'react-icons-kit/md/ic_help_outline'
 import { ic_info } from 'react-icons-kit/md/ic_info'
@@ -24,6 +25,7 @@ import { ic_report } from 'react-icons-kit/md/ic_report'
 import { ic_star } from 'react-icons-kit/md/ic_star'
 import { ic_star_border } from 'react-icons-kit/md/ic_star_border'
 import { ic_view_quilt } from 'react-icons-kit/md/ic_view_quilt'
+import { ic_vpn_key } from 'react-icons-kit/md/ic_vpn_key'
 
 // APPLICATION ICON: http://wmira.github.io/react-icons-kit/#/iconset/feather
 import { trash2 } from 'react-icons-kit/feather/trash2'
@@ -39,12 +41,14 @@ export const CloseIcon = icon(ic_close)
 export const CopyIcon = icon(ic_content_copy)
 export const CheckIcon = icon(ic_check)
 export const DashboardIcon = icon(ic_dashboard)
+export const EmailIcon = icon(ic_email)
 export const ErrorIcon = icon(ic_block)
 export const FavoriteIcon = icon(ic_star_border)
 export const FavoritedIcon = icon(ic_star)
 export const GithubIcon = icon(github)
 export const HelpIcon = icon(ic_help_outline)
 export const InfoIcon = icon(ic_info)
+export const KeyIcon = icon(ic_vpn_key)
 export const MaximizeIcon = icon(ic_chevron_right)
 export const MenuIcon = icon(ic_menu)
 export const MinimizeIcon = icon(ic_chevron_left)

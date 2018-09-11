@@ -7,6 +7,7 @@ const Button = styled.button.attrs({
   display: inline-flex;
   align-items: center;
   margin: 0;
+  padding: 0;
   white-space: nowrap;
   transition: background .3s linear;
   transition: color .3s linear;
@@ -57,10 +58,12 @@ const Button = styled.button.attrs({
         }
       ` :
       css`
+        display: block;
+        width: 100%;
         border: none;
         outline: none;
-        padding: 0 ${ theme.spacing.medium };
-        line-height: 2.5em;
+        line-height: 40px;
+        height: 40px;
         background: ${
           disabled ?
             theme.secondary.base :
