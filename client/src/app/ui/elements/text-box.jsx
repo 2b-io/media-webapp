@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { SuccessIcon, ErrorIcon } from 'ui/icons'
+import { AssistiveText, TextLine } from 'ui/typo'
 
 const border = color => css`
   border-bottom: 1px solid ${ color.base };
@@ -31,11 +31,13 @@ const TrailingIcon = styled.div`
 `
 
 const Container = styled.div`
-  height: 32px;
-  position: relative;
-  padding: 0 8px;
   display: grid;
-  grid-gap: 8px;
+  & > * {
+    min-width: 0;
+    min-height: 0;
+  }
+
+  position: relative;
   background: ${ ({ theme }) => theme.white.base };
   color: ${ ({ theme }) => theme.white.on.base };
   ${
@@ -47,17 +49,17 @@ const Container = styled.div`
     ({ leading, trailing }) => {
       if(leading && trailing){
         return css`
-          grid-template-columns: 32px 1fr 32px;
+          grid-template-columns: 40px 1fr 40px;
         `
       }
       if(leading && !trailing){
         return css`
-          grid-template-columns: 32px 1fr;
+          grid-template-columns: 40px 1fr;
         `
       }
       if(!leading && trailing){
         return css`
-          grid-template-columns: 1fr 32px;
+          grid-template-columns: 1fr 40px;
         `
       }
       return css`
@@ -75,7 +77,6 @@ const commonStyle = css`
   border: none;
   border-radius: 0;
   outline: none;
-  padding-right: ${ ({ valid, invalid }) => (valid || invalid) && '44px' };
   width: 100%;
   cursor: ${
     ({ disabled, readOnly }) => (disabled || readOnly) ? 'not-allowed' : 'inherit'
@@ -116,7 +117,7 @@ const Wrapper = styled.div`
 
 const Indicator = styled.div`
   position: absolute;
-  top: 32px;
+  top: 40px;
   left: 0;
   right: 0;
   height: 1px;
@@ -132,14 +133,6 @@ const Indicator = styled.div`
           )
       )
   };
-`
-
-const AssistiveText = styled.div`
-  padding: 0 8px;
-  height: 16px;
-  line-height: 16px;
-  font-size: 10px;
-  color: ${ ({ theme }) => theme.error.base };
 `
 
 const Leading = styled.div`
@@ -175,11 +168,13 @@ const TextBox = ({
           invalid={ invalid }
           { ...props }
         /> :
-        <Input
-          valid={ valid }
-          invalid={ invalid }
-          { ...props }
-        />
+        <TextLine mostLeft mostRight>
+          <Input
+            valid={ valid }
+            invalid={ invalid }
+            { ...props }
+          />
+        </TextLine>
       }
       { /*(valid || invalid) &&
         <TrailingIcon invalid={ invalid } >

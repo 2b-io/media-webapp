@@ -17,6 +17,25 @@ const projectForm = ({ handleSubmit, idle, options }) => (
         validate={ validateRequired }
       />
     </Form.Line>
+    <Form.Line>
+      <TextBox
+        label="Project Name"
+        name="name1"
+        placeholder="My Awesome Project"
+        disabled={ !idle }
+        validate={ validateRequired }
+        multiline
+      />
+    </Form.Line>
+    <Form.Line>
+      <TextBox
+        label="Project Name"
+        name="name2"
+        placeholder="My Awesome Project"
+        disabled={ !idle }
+        validate={ validateRequired }
+      />
+    </Form.Line>
 
     <Form.Line>
       <RadioGroup
