@@ -27,7 +27,7 @@ const HeaderBorder = styled.div`
   z-index: 0;
 `
 
-const FAB = styled.button`
+const Fab = styled.button`
   position: absolute;
   right: 16px;
   bottom: -16px;
@@ -45,6 +45,7 @@ const FAB = styled.button`
   line-height: 40px;
   appearance: none;
   background: #fff;
+  outline: none;
 `
 
 const Content = styled.div`
@@ -54,7 +55,7 @@ const Card = ({ title, fab, content }) => (
   <Wrapper>
     <Header hasFAB={ !!fab }>
       { title && title() }
-      { fab && <FAB>{ fab() }</FAB> }
+      { fab && <Fab>{ fab() }</Fab> }
       <HeaderBorder />
     </Header>
     <Break />
