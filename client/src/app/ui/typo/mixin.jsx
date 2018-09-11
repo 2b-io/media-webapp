@@ -12,9 +12,14 @@ export const textAlign = ({ align }) => css`
   text-align: ${ align };
 `
 
-export const font = ({ size }) => css`
+export const font = ({ bold, size }) => css`
   font-size: ${ sizeToPixel(size) }px;
   line-height: ${ sizeToPixel(size) }px;
+  ${
+    ({ bold }) => bold && css`
+      font-weight: bold;
+    `
+  }
 `
 
 export const lineHeight = ({ size }) => css`
