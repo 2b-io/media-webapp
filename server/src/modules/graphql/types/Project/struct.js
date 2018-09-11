@@ -8,7 +8,10 @@ export default {
   name: {
     type: GraphQLString
   },
-  slug: {
+  identifier: {
+    type: GraphQLString
+  },
+  description: {
     type: GraphQLString
   },
   prettyOrigin: {
@@ -17,8 +20,8 @@ export default {
   origins: {
     type: new GraphQLList(GraphQLString)
   },
-  disabled: {
-    type: GraphQLBoolean
+  status: {
+    type: GraphQLString
   },
   removed: {
     type: GraphQLBoolean
