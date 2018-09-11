@@ -21,8 +21,12 @@ const Fab = styled.button`
   align-items: center;
   line-height: 40px;
   appearance: none;
-  background: #07f;
-  color: white;
+  background: ${
+    ({ theme }) => theme.primary.base
+  };
+  color: ${
+    ({ theme }) => theme.primary.on.base
+  };
   outline: none;
   border: none;
   bottom: 8px;
