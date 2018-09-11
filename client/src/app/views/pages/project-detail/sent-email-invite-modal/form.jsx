@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Form } from 'ui/compounds'
 import { Button } from 'ui/elements'
-import { TextBox } from 'views/common/form'
+import { TextArea, TextBox } from 'views/common/form'
 import { validateRequired, validateEmail } from 'views/common/validate'
 
 const SentEmailInviteForm = ({
@@ -22,15 +22,12 @@ const SentEmailInviteForm = ({
       />
     </Form.Line>
     <Form.Line>
-      {
-        <TextBox
-          multiline={ true }
-          type="text"
-          placeholder="Some text"
-          name="messenge"
-          label="Messenge"
-        />
-      }
+      <TextArea
+        type="text"
+        placeholder="Some text"
+        name="messenge"
+        label="Messenge"
+      />
     </Form.Line>
     <Form.Line last>
       <Button

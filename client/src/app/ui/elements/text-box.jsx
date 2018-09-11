@@ -192,8 +192,9 @@ const TextBox = ({
         </Trailing>
       ) }
     </Container>
-    <Indicator valid={ valid } invalid={ invalid } { ...props }/>
-    { <ErrorTextColor>
+    <Indicator valid={ valid } invalid={ invalid } { ...props } />
+    {
+      <ErrorTextColor>
         <AssistiveTextLine mostLeft mostRight>{ invalid }</AssistiveTextLine>
       </ErrorTextColor>
     }

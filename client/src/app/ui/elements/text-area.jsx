@@ -11,18 +11,6 @@ const border = color => css`
   }
 `
 
-const iconColor = (selector, color) => css`
-  ${ selector } {
-    color: ${ color.base };
-  }
-
-  &:hover, &:focus {
-    ${ selector } {
-      color: ${ color.light.base }
-    }
-  }
-`
-
 const Container = styled.div`
   display: grid;
   & > * {
@@ -118,8 +106,9 @@ const TextArea = ({
         { ...props }
       />
     </Container>
-    <Indicator valid={ valid } invalid={ invalid } { ...props }/>
-    { <ErrorTextColor>
+    <Indicator valid={ valid } invalid={ invalid } { ...props } />
+    {
+      <ErrorTextColor>
         <AssistiveTextLine mostLeft mostRight>{ invalid }</AssistiveTextLine>
       </ErrorTextColor>
     }
