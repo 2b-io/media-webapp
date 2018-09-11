@@ -9,7 +9,7 @@ import { addToast } from './toast'
 const createLoop = function*() {
   while (true) {
     const action = yield take(types['PROJECT/CREATE'])
-    const { project } = action.payload
+    const { name, description, provider } = action.payload
 
     try {
       const session = yield select(selectors.currentSession)
@@ -18,7 +18,7 @@ const createLoop = function*() {
         continue
       }
 
-      const newProject = yield call(Project.create, project, session.token)
+      const newProject = yield call(Project.create, session.token, name, description, provider)
 
       yield all([
         put(actions.createProjectCompleted(newProject)),

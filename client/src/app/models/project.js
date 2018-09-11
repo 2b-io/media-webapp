@@ -87,20 +87,21 @@ export default {
       })
     )
   },
-  async create(project, token) {
+  async create(token, name, description, provider) {
     const body = await request(`
-      query createProject($project: ProjectStruct!, $token: String!) {
+      query createProject($project: ProjectStruct!, $token: String!, $provider: String!) {
         session(token: $token) {
           account {
-            _createProject(project: $project) {
+            _createProject(project: $project, provider: $provider) {
               ${ PROJECT_FRAGMENT }
             }
           }
         }
       }
     `, {
-      project: pick(project, [ 'name', 'slug' ]),
-      token
+      project: { name, description },
+      provider,
+      token,
     })
 
     const createdProject = body.session.account._createProject
