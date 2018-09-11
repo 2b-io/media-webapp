@@ -1,6 +1,8 @@
+export { default as Break } from './break'
 export { default as BreakPoint } from './break-point'
 export { default as Button } from './button'
 export { default as ButtonCircle } from './button-circle'
+export { default as Card } from './card'
 export { default as CircularCountdown } from './circular-countdown'
 export { default as CollapsibleMenu } from './collapsible-menu'
 export { default as ConditionalDisplay } from './conditional-display'

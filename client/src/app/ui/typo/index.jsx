@@ -12,7 +12,7 @@ const Block = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  & > span {
+  & > * {
     display: inline-block;
   }
 `
@@ -57,7 +57,7 @@ export const PageTitle = ({ children, ...props }) => (
 )
 
 export const Heading = ({ children, ...props }) => (
-  <Block { ...props }>
+  <Block { ...props } bold>
     <h2>{ children }</h2>
   </Block>
 )
