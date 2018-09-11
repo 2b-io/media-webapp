@@ -5,20 +5,9 @@ import { Form } from 'ui/compounds'
 import { TextBox, RadioButtons } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
-const CDN_LIST = [
-  {
-    id: '1',
-    label: 'Amazon CloudFront',
-    value: 'cloundFront'
-  },
-  {
-   id: '2',
-    label: 'Key CDN',
-    value: 'keyCDN'
-  }
-]
 
-const projectForm = ({ handleSubmit, idle }) => (
+
+const projectForm = ({ handleSubmit, idle, options }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Line>
       <TextBox
@@ -31,7 +20,10 @@ const projectForm = ({ handleSubmit, idle }) => (
     </Form.Line>
 
     <Form.Line>
-      <RadioButtons name='choose' options={ CDN_LIST }/>
+      <RadioButtons
+        name='cdn'
+        options={ options }
+      />
     </Form.Line>
     <Form.Line last>
       <Button

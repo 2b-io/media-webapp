@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import { CheckIcon } from 'ui/icons'
 import { DescriptionTextLine } from 'ui/typo'
@@ -55,13 +55,12 @@ const Input = styled.input.attrs({
 `
 
 const Radio = ({
-  label,
   ...props
-}) => { return (
+}) => (
   <Wrapper>
-    { label &&
+    { props.label &&
       <Label>
-        <DescriptionTextLine>{ label }</DescriptionTextLine>
+        <DescriptionTextLine>{ props.label }</DescriptionTextLine>
       </Label>
     }
     <Switch>
@@ -76,6 +75,6 @@ const Radio = ({
       </Button>
     </Switch>
   </Wrapper>
-)}
+)
 
 export default Radio

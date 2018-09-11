@@ -10,9 +10,20 @@ import { Redirect } from 'views/router'
 
 import _ProjectForm from './form'
 
+const CDN_LIST = [
+  {
+    label: 'Amazon CloudFront',
+    value: 'cloundFront',
+  },
+  {
+    label: 'Key CDN',
+    value: 'keyCDN',
+  }
+]
+
 const ProjectForm = reduxForm({
   form: 'project',
-  enableReinitialize: true,
+  enableReinitialize: true
 })(_ProjectForm)
 
 const CreateProject = ({
@@ -30,8 +41,10 @@ const CreateProject = ({
         <ErrorBox>An error happens when creating the new project.</ErrorBox>
       }
       <ProjectForm
-        onSubmit={ createProject }
         idle={ idle }
+        initialValues={ { cdn: CDN_LIST[0].value } }
+        onSubmit={ createProject }
+        options={ CDN_LIST }
       />
     </Container>
   )
