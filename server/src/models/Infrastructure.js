@@ -1,6 +1,4 @@
-import shortHash from 'shorthash'
 import mongoose from 'infrastructure/mongoose'
-
 
 const schema = mongoose.Schema({
   project: {

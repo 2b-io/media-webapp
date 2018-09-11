@@ -55,18 +55,14 @@ export const list = async (account) => {
   return projects
 }
 
-export const create = async (data, account) => {
-  const { name, prettyOrigin, origins = [] } = data
+export const create = async ({ name, provider, account }) => {
 
   if (!name) {
     throw new Error('Invalid parameters')
   }
-
   const project = await new Project({
     name,
-    prettyOrigin,
-    origins,
-    status:'INPROGRESS'
+    status: 'INPROGRESS'
   }).save()
 
   await new Permission({
@@ -81,13 +77,13 @@ export const create = async (data, account) => {
     isDefault: true
   }).save()
 
-  const distribution = await createDistribution()
-  const { Id: id, DomainName: domainName } = distribution
+  const cloudfront = await createDistribution()
+  const { Id: id, DomainName: domain } = cloudfront.Distribution
   await new Infrastructure({
     project: project._id,
     id,
-    domainName,
-    provider: 'cloudfront',
+    domain,
+    provider
   }).save()
 
   return project
