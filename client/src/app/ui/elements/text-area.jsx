@@ -22,7 +22,6 @@ const Container = styled.div`
   background: ${ ({ theme }) => theme.white.base };
   color: ${ ({ theme }) => theme.white.on.base };
   grid-template-columns: 100%;
-
 `
 
 const commonStyle = css`
@@ -50,18 +49,6 @@ const InputArea = styled.textarea.attrs({
 })`
   ${ commonStyle }
   resize: none;
-`
-
-const Label = styled.label`
-  font-size: 0.9em;
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 6px;
-  background: white;
-  line-height: ${ ({ theme }) => theme.spacing.medium };
-  height: ${ ({ theme }) => theme.spacing.medium };
-  padding: ${ ({ theme }) => `0 ${ theme.spacing.tiny }` };
 `
 
 const Wrapper = styled.div`
@@ -93,7 +80,6 @@ const ErrorTextColor = styled.div`
 `
 
 const TextArea = ({
-  label,
   invalid,
   valid,
   ...props
@@ -111,9 +97,6 @@ const TextArea = ({
       <ErrorTextColor>
         <AssistiveTextLine mostLeft mostRight>{ invalid }</AssistiveTextLine>
       </ErrorTextColor>
-    }
-    { //label &&
-      //<Label>{ label }</Label>
     }
   </Wrapper>
 )

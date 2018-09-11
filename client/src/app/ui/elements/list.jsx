@@ -20,9 +20,9 @@ const Item = styled.li`
   ${ grid }
 
   grid-template-columns:
-    ${ ({ hasLeading }) => hasLeading ? `min-content` : '' }
+    ${ ({ hasLeading }) => hasLeading ? 'min-content' : '' }
     1fr
-    ${ ({ hasTrailing }) => hasTrailing ? `min-content` : '' };
+    ${ ({ hasTrailing }) => hasTrailing ? 'min-content' : '' };
 `
 
 const List = ({ items }) => (

@@ -1,6 +1,6 @@
 import React from 'react'
 import Icon from 'react-icons-kit'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 const toPixel = size => (
   size === 'extra-large' ?

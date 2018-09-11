@@ -10,12 +10,6 @@ import { Panel, TitleBar } from 'ui/compounds'
 import { AddIcon, ReloadIcon } from 'ui/icons'
 import { TextLine } from 'ui/typo'
 
-const StyledLink = styled.a`
-  display: block;
-  text-decoration: none;
-  text-overflow: ellipsis;
-  overflow: hidden;
-`
 
 const Footer = styled.div`
   display: flex;
@@ -28,15 +22,6 @@ const NoData = styled.h2`
     ({ theme }) => theme.spacing.medium
   };
 `
-
-const ProjectLink = ({ onClick, ...props }) => (
-  <StyledLink onClick={ preventDefault(onClick) } { ...props } />
-)
-
-
-const ProjectItem = ({ project, toProjectDetail }) => (
-  <ProjectLink href="/" onClick={ toProjectDetail }>{ project.name }</ProjectLink>
-)
 
 const ProjectList = ({ projects, toProjectDetail }) => {
   if (!projects || !projects.length) {
