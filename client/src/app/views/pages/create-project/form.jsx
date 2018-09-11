@@ -2,10 +2,11 @@ import React from 'react'
 
 import { Button } from 'ui/elements'
 import { Form } from 'ui/compounds'
-import { TextBox  } from 'views/common/form'
+import { TextBox, RadioGroup } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
-const projectForm = ({ handleSubmit, idle }) => (
+
+const projectForm = ({ handleSubmit, idle, options }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Line>
       <TextBox
@@ -16,13 +17,11 @@ const projectForm = ({ handleSubmit, idle }) => (
         validate={ validateRequired }
       />
     </Form.Line>
+
     <Form.Line>
-      <TextBox
-        label="Slug"
-        name="slug"
-        placeholder="my-awesome-project"
-        disabled={ !idle }
-        validate={ validateRequired }
+      <RadioGroup
+        name="cdn"
+        options={ options }
       />
     </Form.Line>
     <Form.Line last>

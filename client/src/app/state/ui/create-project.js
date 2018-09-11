@@ -4,7 +4,7 @@ import { types } from 'state/ducks/project'
 import createReducer from 'state/helpers/create-reducer'
 
 export default {
-  component: 'modal/CreateProject',
+  component: 'CreateProject',
   reducer: combineReducers({
     idle: createReducer(true)({
       [ types.CREATE ]: () => false,
