@@ -5,11 +5,10 @@ import styled from 'styled-components'
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import preventDefault from 'services/prevent-default'
-import { Button, Link } from 'ui/elements'
+import { Button, Link, List } from 'ui/elements'
 import { Panel, TitleBar } from 'ui/compounds'
 import { AddIcon, ReloadIcon } from 'ui/icons'
-import CreateProject from 'views/common/modals/create-project'
-import { List } from 'ui/compounds'
+import { TextLine } from 'ui/typo'
 
 const StyledLink = styled.a`
   display: block;
@@ -46,29 +45,24 @@ const ProjectList = ({ projects, toProjectDetail }) => {
     )
   }
 
+  const items = projects.map(
+    project => ({
+      key: project._id,
+      onClick: toProjectDetail.bind(null, project.slug),
+      content: () => <TextLine mostLeft mostRight>{ project.name }</TextLine>
+    })
+  )
+
   return (
-    <List>
-      {
-        projects.map(
-          project => (
-            <List.Item key={ project._id }>
-              <ProjectItem
-                project={ project }
-                toProjectDetail={ toProjectDetail.bind(null, project.slug) }
-              />
-            </List.Item>
-          )
-        )
-      }
-    </List>
+    <List items={ items } />
   )
 }
 
-const Header = ({ showModal, reloadProjects }) => (
+const Header = ({ toCreateProject, reloadProjects }) => (
   <TitleBar>
     <TitleBar.Title>Recent Projects</TitleBar.Title>
     <TitleBar.Menu>
-      <Button plain onClick={ showModal }>
+      <Button plain onClick={ toCreateProject }>
         <AddIcon size="medium" />
       </Button>
       <Button plain onClick={ reloadProjects }>
@@ -78,11 +72,11 @@ const Header = ({ showModal, reloadProjects }) => (
   </TitleBar>
 )
 
-const Project = ({ projects, toProjectDetail, toProjects, showModal, reloadProjects }) => (
+const Project = ({ projects, toProjectDetail, toProjects, toCreateProject, reloadProjects }) => (
   <Fragment>
     <Panel fit={ true }>
       <Panel.Header>
-        <Header showModal={ showModal } reloadProjects={ reloadProjects } />
+        <Header toCreateProject={ toCreateProject } reloadProjects={ reloadProjects } />
       </Panel.Header>
       <Panel.Content>
         <ProjectList projects={ projects } toProjectDetail={ toProjectDetail } />
@@ -95,10 +89,6 @@ const Project = ({ projects, toProjectDetail, toProjects, showModal, reloadProje
         </Footer>
       </Panel.Footer>
     </Panel>
-    <CreateProject
-      width="wide"
-      title="Create New Project"
-    />
   </Fragment>
 )
 
@@ -109,10 +99,7 @@ export default connect(
   mapDispatch({
     toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
     toProjects: () => actions.requestLocation('/projects'),
-    showModal: () => actions.showModal({ modal: 'CreateProject' }),
+    toCreateProject: () => actions.requestLocation('/projects/create'),
     reloadProjects: () => actions.fetchProjects()
   })
 )(Project)
-
-
-
