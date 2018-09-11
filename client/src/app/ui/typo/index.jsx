@@ -51,7 +51,7 @@ export const AssistiveTextLine = ({ children, ...props }) => (
 )
 
 export const PageTitle = ({ children, ...props }) => (
-  <Block { ...props } size="large">
+  <Block { ...props } size="large" align="center">
     <h1>{ children }</h1>
   </Block>
 )
