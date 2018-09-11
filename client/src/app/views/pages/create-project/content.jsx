@@ -13,7 +13,7 @@ import _ProjectForm from './form'
 const CDN_LIST = [
   {
     label: 'Amazon CloudFront',
-    value: 'cloundFront',
+    value: 'cloudFront',
   },
   {
     label: 'Key CDN',
