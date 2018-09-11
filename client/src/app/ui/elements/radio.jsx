@@ -40,7 +40,7 @@ const Input = styled.input.attrs({
   display: none;
 `
 
-const Radio = ({ label, description, ...props) => (
+const Radio = ({ label, description, ...props }) => (
   <Fragment>
     <Wrapper>
       { label &&  <TextLine mostLeft>{ label }</TextLine> }
