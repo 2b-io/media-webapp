@@ -9,7 +9,6 @@ import { Button, Link, List } from 'ui/elements'
 import { Panel, TitleBar } from 'ui/compounds'
 import { AddIcon, ReloadIcon } from 'ui/icons'
 import { TextLine } from 'ui/typo'
-import CreateProject from 'views/common/modals/create-project'
 
 const StyledLink = styled.a`
   display: block;
