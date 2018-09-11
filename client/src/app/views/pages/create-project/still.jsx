@@ -1,13 +1,9 @@
 import React from 'react'
 
-import { TitleBar } from 'ui/compounds'
+import { PageTitle } from 'ui/typo'
 
 const Profile = () => (
-  <TitleBar>
-    <TitleBar.Title>
-      <h1>Create Project</h1>
-    </TitleBar.Title>
-  </TitleBar>
+  <PageTitle>Create Project</PageTitle>
 )
 
 export default Profile

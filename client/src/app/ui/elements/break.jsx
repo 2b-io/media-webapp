@@ -1,7 +1,9 @@
 import styled from 'styled-components'
 
 const Break = styled.div`
-  height: 16px;
+  height: ${
+    ({ double }) => double ? 32 : 16
+  }px;
 `
 
 export default Break
