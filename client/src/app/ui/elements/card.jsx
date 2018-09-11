@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import styled, { css } from 'styled-components'
 
 import { Break } from 'ui/elements'
@@ -11,7 +11,7 @@ const Header = styled.div`
   position: relative;
   height: 40px;
   ${
-    ({ hasFAB }) => hasFAB && css`
+    ({ hasFab }) => hasFab && css`
       padding-right: 64px;
     `
   }
@@ -51,14 +51,18 @@ const Fab = styled.button`
 const Content = styled.div`
 `
 
-const Card = ({ title, fab, content }) => (
-  <Wrapper>
-    <Header hasFAB={ !!fab }>
-      { title && title() }
-      { fab && <Fab>{ fab() }</Fab> }
-      <HeaderBorder />
-    </Header>
-    <Break />
+const Card = ({ title, fab, content, ...props }) => (
+  <Wrapper { ...props }>
+    { title && (
+      <Fragment>
+        <Header hasFab={ !!fab }>
+          { title && title() }
+          { fab && <Fab>{ fab() }</Fab> }
+          <HeaderBorder />
+        </Header>
+        <Break />
+      </Fragment>
+    ) }
     <Content>
       { content && content() }
     </Content>
