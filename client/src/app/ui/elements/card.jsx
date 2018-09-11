@@ -4,7 +4,12 @@ import styled, { css } from 'styled-components'
 import { Break } from 'ui/elements'
 
 const Wrapper = styled.section`
-  background: #fff;
+  background: ${
+    ({ theme }) => theme.white.base
+  };
+  color: ${
+    ({ theme }) => theme.white.on.base
+  };
 `
 
 const Header = styled.div`
@@ -22,7 +27,9 @@ const HeaderBorder = styled.div`
   height: 1px;
   left: 0;
   right: 0;
-  background: #666;
+  background: ${
+    ({ theme }) => theme.secondary.base
+  };
   bottom: 0;
   z-index: 0;
 `
@@ -32,7 +39,9 @@ const Fab = styled.button`
   right: 16px;
   bottom: -16px;
   z-index: 1;
-  border: 1px solid #666;
+  border: 1px solid ${
+    ({ theme }) => theme.secondary.base
+  };
   border-radius: 50%;
   overflow: hidden;
   width: 40px;
@@ -44,7 +53,12 @@ const Fab = styled.button`
   align-items: center;
   line-height: 40px;
   appearance: none;
-  background: #fff;
+  background: ${
+    ({ theme }) => theme.white.base
+  };
+  color: ${
+    ({ theme }) => theme.white.on.base
+  };
   outline: none;
 `
 

@@ -45,11 +45,15 @@ export default ({ Account, AccountStruct }) => ({
     args: {
       project: {
         type: new GraphQLNonNull(ProjectStruct)
+      },
+      provider: {
+        type: new GraphQLNonNull(GraphQLString)
       }
     },
     type: Project,
-    resolve: async (account, { project }) => {
-      const p = await createProject(project, account)
+    resolve: async (account, { project, provider }) => {
+
+      const p = await createProject(project, provider, account)
 
       // add ref
       p._account = account

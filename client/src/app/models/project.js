@@ -21,8 +21,6 @@ export const PRESET_FRAGMENT = `
 export const PROJECT_FRAGMENT = `
   _id,
   name,
-  slug,
-  disabled,
   origins,
   prettyOrigin,
   presets {
@@ -39,6 +37,7 @@ export const PROJECT_FRAGMENT = `
     name,
     value
   },
+  status
 `
 
 const PROJECTS_FRAGMENT = `
