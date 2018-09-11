@@ -6,6 +6,8 @@ import { mapDispatch, mapState } from 'services/redux-helpers'
 import { TitleBar } from 'ui/compounds'
 import { Button, CollapsibleMenu } from 'ui/elements'
 import { AddIcon, HelpIcon } from 'ui/icons'
+import { MoreIcon } from 'ui/icons'
+import { PageTitle } from 'ui/typo'
 
 const ProjectList = ({ toCreateProject, stillHeight }) => (
   <Fragment>

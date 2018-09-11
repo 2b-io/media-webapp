@@ -10,6 +10,7 @@ export default connect(
     projects: selectors.allProjects,
   }),
   mapDispatch({
+    toCreateProject: () => actions.requestLocation('/projects/create'),
     toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`)
   })
 )(ProjectBlock)
