@@ -79,9 +79,11 @@ const TextBox = ({
       { trailing && trailing() }
       <Indicator />
     </Container>
-    <ErrorTextColor>
-      <AssistiveTextLine mostLeft mostRight>{ invalid }</AssistiveTextLine>
-    </ErrorTextColor>
+    <AssistiveTextLine
+      mostLeft mostRight
+      variant="error">
+      { invalid }
+    </AssistiveTextLine>
   </Wrapper>
 )
 

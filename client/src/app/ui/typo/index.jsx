@@ -25,11 +25,11 @@ export const Text = styled.p`
 `
 
 export const DescriptionText = ({ children, ...props }) => (
-  <Text { ...props } size="small">{ children }</Text>
+  <Text size="small" variant="secondary" { ...props }>{ children }</Text>
 )
 
 export const AssistiveText = ({ children, ...props }) => (
-  <Text { ...props } size="tiny">{ children }</Text>
+  <Text size="tiny" { ...props }>{ children }</Text>
 )
 
 export const TextLine = ({ children, ...props }) => (
@@ -39,25 +39,25 @@ export const TextLine = ({ children, ...props }) => (
 )
 
 export const DescriptionTextLine = ({ children, ...props }) => (
-  <Block { ...props } size="small">
+  <Block size="small" variant="secondary" { ...props }>
     <span>{ children }</span>
   </Block>
 )
 
 export const AssistiveTextLine = ({ children, ...props }) => (
-  <Block { ...props } size="tiny">
+  <Block size="tiny" { ...props }>
     <span>{ children }</span>
   </Block>
 )
 
 export const PageTitle = ({ children, ...props }) => (
-  <Block { ...props } size="large" align="center">
+  <Block size="large" align="center" { ...props }>
     <h1>{ children }</h1>
   </Block>
 )
 
 export const Heading = ({ children, ...props }) => (
-  <Block { ...props } bold>
+  <Block bold { ...props }>
     <h2>{ children }</h2>
   </Block>
 )
