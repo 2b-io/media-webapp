@@ -55,14 +55,13 @@ const Radio = ({
 }) => (
   <Wrapper>
     { label &&
-      <Label fontWeight={ props.fontWeight }>{ label }</Label>
+      <Label>{ label }</Label>
     }
     <Switch>
       <Button>
-        <Input { ...props } checked={ props.value }/>
-
+        <Input { ...props } />
         <Circle>
-          { props.value &&
+          { props.checked &&
             <CheckIcon />
           }
         </Circle>

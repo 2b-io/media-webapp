@@ -1,9 +1,22 @@
 import React from 'react'
 
-import { Button} from 'ui/elements'
+import { Button } from 'ui/elements'
 import { Form } from 'ui/compounds'
-import { TextBox, Radio } from 'views/common/form'
+import { TextBox, RadioButtons } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
+
+const CDN_LIST = [
+  {
+    id: '1',
+    label: 'Amazon CloudFront',
+    value: 'cloundFront'
+  },
+  {
+   id: '2',
+    label: 'Key CDN',
+    value: 'keyCDN'
+  }
+]
 
 const projectForm = ({ handleSubmit, idle }) => (
   <Form handleSubmit={ handleSubmit }>
@@ -18,10 +31,7 @@ const projectForm = ({ handleSubmit, idle }) => (
     </Form.Line>
 
     <Form.Line>
-      <Radio fontWeight="bold" label="Amazon CloudFront" name="chosse" value={ true } />
-    </Form.Line>
-    <Form.Line>
-      <Radio label="KeyCDN" name="chosse"/>
+      <RadioButtons name='choose' options={ CDN_LIST }/>
     </Form.Line>
     <Form.Line last>
       <Button
