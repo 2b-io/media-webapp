@@ -2,9 +2,8 @@ import React from 'react'
 
 import { Button } from 'ui/elements'
 import { Form } from 'ui/compounds'
-import { TextBox, RadioButtons } from 'views/common/form'
+import { TextBox, RadioGroup } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
-
 
 
 const projectForm = ({ handleSubmit, idle, options }) => (
@@ -20,8 +19,8 @@ const projectForm = ({ handleSubmit, idle, options }) => (
     </Form.Line>
 
     <Form.Line>
-      <RadioButtons
-        name='cdn'
+      <RadioGroup
+        name="cdn"
         options={ options }
       />
     </Form.Line>

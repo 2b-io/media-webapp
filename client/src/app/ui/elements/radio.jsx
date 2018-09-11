@@ -2,13 +2,17 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { CheckIcon } from 'ui/icons'
-import { DescriptionTextLine } from 'ui/typo'
+import { TextLine } from 'ui/typo'
 
 const Wrapper = styled.div`
   display: grid;
-  grid-gap: 8px;
+  & > * {
+    min-width: 0;
+    min-height: 0;
+  }
+
   height: 40px;
-  grid-template-columns: 1fr 32px;
+  grid-template-columns: 1fr 40px;
 `
 
 const Switch = styled.label`
@@ -25,17 +29,6 @@ const Button = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`
-const Label = styled.label`
-  align-items: center;
-  display: flex;
-  flex-wrap: nowrap;
-  padding-left: 8px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  background: ${ ({ theme }) => theme.white.base };
-  color: ${ ({ theme }) => theme.white.on.base };
 `
 
 const Circle = styled.div`
@@ -54,14 +47,10 @@ const Input = styled.input.attrs({
   display: none;
 `
 
-const Radio = ({
-  ...props
-}) => (
+const Radio = (props) => (
   <Wrapper>
     { props.label &&
-      <Label>
-        <DescriptionTextLine>{ props.label }</DescriptionTextLine>
-      </Label>
+      <TextLine mostLeft>{ props.label }</TextLine>
     }
     <Switch>
       <Button>
@@ -71,7 +60,6 @@ const Radio = ({
             <CheckIcon />
           }
         </Circle>
-
       </Button>
     </Switch>
   </Wrapper>
