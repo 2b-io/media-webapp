@@ -55,10 +55,6 @@ const Indicator = styled.div`
   background: #07f;
 `
 
-const ErrorTextColor = styled.div`
-  color: ${ ({ theme }) => theme.error.base };
-`
-
 const TextBox = ({
   invalid,
   leading,
@@ -79,9 +75,11 @@ const TextBox = ({
       { trailing && trailing() }
       <Indicator />
     </Container>
-    <ErrorTextColor>
-      <AssistiveTextLine mostLeft mostRight>{ invalid }</AssistiveTextLine>
-    </ErrorTextColor>
+    <AssistiveTextLine
+      mostLeft mostRight
+      variant="error">
+      { invalid }
+    </AssistiveTextLine>
   </Wrapper>
 )
 
