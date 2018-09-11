@@ -26,6 +26,8 @@ const loop = function*() {
 
       // TODO call API to check permission here
       yield fork(put, actions.acceptLocation(request.payload.pathname))
+
+      yield put(actions.minimizeSidebar())
     } catch (error) {
       yield fork(put, actions.rejectLocation(request.payload.pathname, error))
     }

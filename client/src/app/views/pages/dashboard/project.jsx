@@ -5,10 +5,10 @@ import styled from 'styled-components'
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import preventDefault from 'services/prevent-default'
-import { Button, Link } from 'ui/elements'
+import { Button, Link, List } from 'ui/elements'
 import { Panel, TitleBar } from 'ui/compounds'
 import { AddIcon, ReloadIcon } from 'ui/icons'
-import { List } from 'ui/compounds'
+import { TextLine } from 'ui/typo'
 
 const StyledLink = styled.a`
   display: block;
@@ -45,21 +45,16 @@ const ProjectList = ({ projects, toProjectDetail }) => {
     )
   }
 
+  const items = projects.map(
+    project => ({
+      key: project._id,
+      onClick: toProjectDetail.bind(null, project.slug),
+      content: () => <TextLine mostLeft mostRight>{ project.name }</TextLine>
+    })
+  )
+
   return (
-    <List>
-      {
-        projects.map(
-          project => (
-            <List.Item key={ project._id }>
-              <ProjectItem
-                project={ project }
-                toProjectDetail={ toProjectDetail.bind(null, project.slug) }
-              />
-            </List.Item>
-          )
-        )
-      }
-    </List>
+    <List items={ items } />
   )
 }
 

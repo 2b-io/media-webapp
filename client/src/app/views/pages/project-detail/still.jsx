@@ -1,12 +1,13 @@
-import React from 'react'
-import { TitleBar } from 'ui/compounds'
+import React, { Fragment } from 'react'
+
+import { MoreIcon } from 'ui/icons'
+import { PageTitle } from 'ui/typo'
 
 const ProjectDetail = () => (
-  <TitleBar>
-    <TitleBar.Title>
-      <h1>Project Detail</h1>
-    </TitleBar.Title>
-  </TitleBar>
+  <Fragment>
+    <PageTitle>Project Detail</PageTitle>
+    <MoreIcon />
+  </Fragment>
 )
 
 export default ProjectDetail

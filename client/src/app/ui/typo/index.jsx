@@ -1,17 +1,18 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
-import { font, lineHeight, paragraph, textAlign } from './mixin'
+import { font, lineHeight, padding, paragraph, textAlign } from './mixin'
 
 const Block = styled.div`
   ${ font }
   ${ lineHeight }
+  ${ padding }
   ${ textAlign }
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  & > span {
+  & > * {
     display: inline-block;
   }
 `
@@ -20,14 +21,15 @@ export const Text = styled.p`
   ${ font }
   ${ textAlign }
   ${ paragraph }
+  ${ padding }
 `
 
 export const DescriptionText = ({ children, ...props }) => (
-  <Text size="small">{ children }</Text>
+  <Text { ...props } size="small">{ children }</Text>
 )
 
 export const AssistiveText = ({ children, ...props }) => (
-  <Text size="tiny">{ children }</Text>
+  <Text { ...props } size="tiny">{ children }</Text>
 )
 
 export const TextLine = ({ children, ...props }) => (
@@ -49,13 +51,13 @@ export const AssistiveTextLine = ({ children, ...props }) => (
 )
 
 export const PageTitle = ({ children, ...props }) => (
-  <Block { ...props } size="large">
+  <Block { ...props } size="large" align="center">
     <h1>{ children }</h1>
   </Block>
 )
 
 export const Heading = ({ children, ...props }) => (
-  <Block { ...props }>
+  <Block { ...props } bold>
     <h2>{ children }</h2>
   </Block>
 )
