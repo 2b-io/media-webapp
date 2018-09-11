@@ -79,10 +79,10 @@ export const create = async (data, provider, account) => {
   }).save()
 
   const cloudfront = await createDistribution()
-  const { Id: id, DomainName: domain } = cloudfront.Distribution
+  const { Id: hash, DomainName: domain } = cloudfront.Distribution
   await new Infrastructure({
     project: project._id,
-    id,
+    hash,
     domain,
     provider
   }).save()

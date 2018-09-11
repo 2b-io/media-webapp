@@ -41,12 +41,12 @@ export default {
       actions.fetchProjectMedia(slug)
     ]
   },
-  '/projects/:slug': {
+  '/projects/:domain': {
     component: ProjectDetail,
-    exact: false,
-    onEnter: ({ slug }) => [
-      actions.getProject(slug)
-    ]
+    // exact: false,
+    // onEnter: ({ domain }) => [
+    //   actions.getProject(domain)
+    // ]
   },
   '/projects/:slug/presets/:hash': {
     partial: true,

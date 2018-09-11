@@ -21,6 +21,10 @@ export const PRESET_FRAGMENT = `
 export const PROJECT_FRAGMENT = `
   _id,
   name,
+  infrastructure {
+    domain
+  },
+  status,
   origins,
   prettyOrigin,
   presets {
@@ -32,12 +36,7 @@ export const PROJECT_FRAGMENT = `
       ${ ACCOUNT_FRAGMENT }
     },
     privilege
-  },
-  headers {
-    name,
-    value
-  },
-  status
+  }
 `
 
 const PROJECTS_FRAGMENT = `

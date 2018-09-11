@@ -71,13 +71,13 @@ const ProjectList = ({
   const cards = projects.map(
     project => (
       <Card
-        key={ project.slug }
-        onClick={ toProjectDetail.bind(null, project.slug) }
+        key={ project.domain }
+        onClick={ toProjectDetail.bind(null, project.infrastructure.domain) }
         content={ () => (
           <Text mostLeft mostRight>
             { project.name }<br />
-            d1wbceeoo5msfq.cloudfront.net<br />
-            DEPLOYED
+            { project.infrastructure.domain }<br />
+            { project.status }
           </Text>
         ) }
       />
