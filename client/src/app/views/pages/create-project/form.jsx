@@ -1,11 +1,13 @@
 import React from 'react'
 
-import { Button} from 'ui/elements'
+import { Button } from 'ui/elements'
 import { Form } from 'ui/compounds'
-import { TextBox, Radio } from 'views/common/form'
+import { TextBox, RadioButtons } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
-const projectForm = ({ handleSubmit, idle }) => (
+
+
+const projectForm = ({ handleSubmit, idle, options }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Line>
       <TextBox
@@ -18,10 +20,10 @@ const projectForm = ({ handleSubmit, idle }) => (
     </Form.Line>
 
     <Form.Line>
-      <Radio fontWeight="bold" label="Amazon CloudFront" name="chosse" value={ true } />
-    </Form.Line>
-    <Form.Line>
-      <Radio label="KeyCDN" name="chosse"/>
+      <RadioButtons
+        name='cdn'
+        options={ options }
+      />
     </Form.Line>
     <Form.Line last>
       <Button

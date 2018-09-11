@@ -1,17 +1,18 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import { CheckIcon } from 'ui/icons'
+import { DescriptionTextLine } from 'ui/typo'
 
 const Wrapper = styled.div`
-  padding: 0 8px;
   display: grid;
   grid-gap: 8px;
-  height: 32px;
+  height: 40px;
   grid-template-columns: 1fr 32px;
 `
 
 const Switch = styled.label`
+  padding-right: 8px;
   position: relative;
   width: 100%;
   display: flex;
@@ -26,17 +27,21 @@ const Button = styled.div`
   justify-content: center;
 `
 const Label = styled.label`
-  font-size: 12px;
-  display: flex;
   align-items: center;
+  display: flex;
   flex-wrap: nowrap;
+  padding-left: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   background: ${ ({ theme }) => theme.white.base };
   color: ${ ({ theme }) => theme.white.on.base };
-  font-weight: ${ ({ fontWeight }) => fontWeight};
 `
 
 const Circle = styled.div`
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 100%;
   border: 1px solid black;
   width: 24px;
@@ -46,23 +51,23 @@ const Circle = styled.div`
 const Input = styled.input.attrs({
   type: 'radio'
 })`
-  display:none;
+  display: none;
 `
 
 const Radio = ({
-  label,
   ...props
 }) => (
   <Wrapper>
-    { label &&
-      <Label fontWeight={ props.fontWeight }>{ label }</Label>
+    { props.label &&
+      <Label>
+        <DescriptionTextLine>{ props.label }</DescriptionTextLine>
+      </Label>
     }
     <Switch>
       <Button>
-        <Input { ...props } checked={ props.value }/>
-
+        <Input { ...props } />
         <Circle>
-          { props.value &&
+          { props.checked &&
             <CheckIcon />
           }
         </Circle>
