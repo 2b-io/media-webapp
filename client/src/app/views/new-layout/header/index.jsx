@@ -13,8 +13,12 @@ const Material = styled.section`
 
 const Content = styled.div`
   display: grid;
-  background: #07f;
-  color: #fff;
+  background: ${
+    ({ theme }) => theme.primary.base
+  };
+  color: ${
+    ({ theme }) => theme.primary.on.base
+  };
   grid-template-columns: 40px 1fr 40px;
   height: 40px;
   justify-contents: center;

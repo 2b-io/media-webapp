@@ -28,7 +28,12 @@ const Surface = styled.div`
   top: 0;
   bottom: 0;
   left: 0;
-  background: #fff;
+  background: ${
+    ({ theme }) => theme.white.base
+  };
+  color: ${
+    ({ theme }) => theme.white.on.base
+  };
   z-index: 1;
   transform: ${
     ({ open }) => open ? 'translateX(0)' : 'translateX(-100%)'
@@ -53,9 +58,14 @@ const Profile = styled.div`
 
 const UserName = styled.div`
   height: 64px;
-  background: #666;
+  background: ${
+    ({ theme }) => theme.secondary.base
+  };
+  color: ${
+    ({ theme }) => theme.secondary.on.base
+  };
   padding: 24px 8px 0 80px;
-  color: #fff;
+
 `
 
 const UserEmail = styled.div`
@@ -64,7 +74,12 @@ const UserEmail = styled.div`
 
 const UserAvatar = styled.div`
   position: absolute;
-  background: white;
+  background: ${
+    ({ theme }) => theme.white.base
+  };
+  color: ${
+    ({ theme }) => theme.white.on.base
+  };
   width: 64px;
   height: 64px;
   bottom: 8px;
