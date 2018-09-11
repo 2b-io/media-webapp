@@ -4,13 +4,17 @@ import { Card, List } from 'ui/elements'
 import { AddIcon, MoreIcon } from 'ui/icons'
 import { Heading, TextLine } from 'ui/typo'
 
-const ProjectBlock = ({ projects, toProjectDetail }) => {
+const ProjectBlock = ({
+  projects,
+  toCreateProject,
+  toProjectDetail
+}) => {
   const items = projects.map(
     project => ({
       key: project._id,
       content: () => (
         <TextLine mostLeft
-          onClick={ () => toProjectDetail(project.slug) }>
+          onClick={ toProjectDetail.bind(null, project.slug) }>
           { project.name }
         </TextLine>
       ),
@@ -21,7 +25,7 @@ const ProjectBlock = ({ projects, toProjectDetail }) => {
   return (
     <Card
       title={ () => <Heading mostLeft mostRight>Projects</Heading> }
-      fab={ () => <AddIcon /> }
+      fab={ () => <AddIcon onClick={ toCreateProject } /> }
       content={ () => <List items={ items } /> }
     />
   )

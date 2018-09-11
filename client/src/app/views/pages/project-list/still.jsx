@@ -5,7 +5,7 @@ import { PageTitle } from 'ui/typo'
 
 const ProjectList = ({ showModal, stillHeight }) => (
   <Fragment>
-    <PageTitle>Project Detail</PageTitle>
+    <PageTitle>Projects</PageTitle>
     <MoreIcon />
   </Fragment>
 )
