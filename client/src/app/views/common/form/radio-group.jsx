@@ -15,6 +15,7 @@ const RadioGroup = ({ name, options }) => (
             value={ option.value }
             checked={ option.value === input.value }
             label={ option.label }
+            description={ option.description }
           />
         )
       )

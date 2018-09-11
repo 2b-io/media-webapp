@@ -14,7 +14,7 @@ export const textAlign = ({ align }) => css`
 
 export const font = ({ bold, size }) => css`
   font-size: ${ sizeToPixel(size) }px;
-  line-height: ${ sizeToPixel(size) }px;
+  line-height: 16px;
   ${ bold && `font-weight: bold;` }
 `
 
