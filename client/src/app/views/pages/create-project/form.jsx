@@ -16,7 +16,7 @@ const projectForm = ({ handleSubmit, idle, options }) => (
     />
     <Break />
     <RadioGroup
-      name="cdn"
+      name="provider"
       options={ options }
     />
     <Break double />
