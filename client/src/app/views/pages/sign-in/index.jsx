@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
-import { Container, ErrorBox, Link, Paragraph } from 'ui/elements'
+import { Break, Container, ErrorBox, Link } from 'ui/elements'
 import { stateful } from 'views/common/decorators'
 import { Text } from 'ui/typo'
 
@@ -21,28 +21,24 @@ const SignIn = ({
   toRegister,
   ui: { error, idle }
 }) => (
-  <main>
-    <Container center size="small">
-      { error &&
-        <ErrorBox>Email and password do not match.</ErrorBox>
-      }
-      <Text>
-        Enter your email and password
-      </Text>
-      <SignInForm
-        onSubmit={ signIn }
-        idle={ idle }
-      />
-      <Text>
-        Don&apos;t have your account yet?<br />
-        <Link href="/register" onClick={ toRegister }>Try it for free!</Link>
-      </Text>
-      <Text>
-        Trouble at signing in?<br />
-        <Link href="/forgot-password" onClick={ toForgotPassword }>We are here for help.</Link>
-      </Text>
-    </Container>
-  </main>
+  <Container>
+    { error &&
+      <ErrorBox>Email and password do not match.</ErrorBox>
+    }
+    <SignInForm
+      onSubmit={ signIn }
+      idle={ idle }
+    />
+    <Break />
+    <Text>
+      Don&apos;t have your account yet?<br />
+      <Link href="/register" onClick={ toRegister }>Try it for free!</Link>
+    </Text>
+    <Text>
+      Trouble at signing in?<br />
+      <Link href="/forgot-password" onClick={ toForgotPassword }>We are here for help.</Link>
+    </Text>
+  </Container>
 )
 
 export default stateful({
