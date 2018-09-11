@@ -55,7 +55,7 @@ const CreateProject = ({
       }
       <ProjectForm
         idle={ idle }
-        initialValues={ { cdn: CDN_LIST[0].value } }
+        initialValues={ { provider: CDN_LIST[0].value } }
         onSubmit={ createProject }
         options={ CDN_LIST }
       />
