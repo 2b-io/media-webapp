@@ -70,7 +70,7 @@ const Container = styled.div`
 `
 
 const commonStyle = css`
-  display: block;
+  display: inline-block;
   appearance: none;
   background-color: inherit;
   color: inherit;
@@ -78,6 +78,8 @@ const commonStyle = css`
   border-radius: 0;
   outline: none;
   width: 100%;
+  line-height: 40px;
+  padding: 0 8px;
   cursor: ${
     ({ disabled, readOnly }) => (disabled || readOnly) ? 'not-allowed' : 'inherit'
   };
@@ -117,7 +119,7 @@ const Wrapper = styled.div`
 
 const Indicator = styled.div`
   position: absolute;
-  top: 40px;
+  bottom: 24px;
   left: 0;
   right: 0;
   height: 1px;
@@ -168,13 +170,13 @@ const TextBox = ({
           invalid={ invalid }
           { ...props }
         /> :
-        <TextLine mostLeft mostRight>
+        // <TextLine mostLeft mostRight>
           <Input
             valid={ valid }
             invalid={ invalid }
             { ...props }
           />
-        </TextLine>
+        // </TextLine>
       }
       { /*(valid || invalid) &&
         <TrailingIcon invalid={ invalid } >
