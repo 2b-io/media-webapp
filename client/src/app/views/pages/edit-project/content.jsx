@@ -32,7 +32,7 @@ export default stateful({
   component: 'EditProject'
 })(
   connect(
-    (state) => ({
+    () => ({
       project: dataTest,
     }),
     null

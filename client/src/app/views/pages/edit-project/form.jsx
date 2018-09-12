@@ -22,13 +22,13 @@ const ProjectForm = ({ handleSubmit, provider }) => (
       placeholder="Provider"
       readOnly
       validate={ validateRequired }
-      trailing={ () =>
+      trailing={ () => (
         <CopyToClipboard text={ provider }>
           <Button plain >
             <CopyIcon />
           </Button>
         </CopyToClipboard>
-      }
+      ) }
     />
     <Break />
     <CheckBox
