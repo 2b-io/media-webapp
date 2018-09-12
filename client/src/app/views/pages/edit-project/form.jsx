@@ -4,7 +4,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { Button, Break } from 'ui/elements'
 import { CopyIcon } from 'ui/icons'
 import { Form } from 'ui/compounds'
-import { CheckBox, TextBox, RadioGroup } from 'views/common/form'
+import { CheckBox, TextBox } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
 const ProjectForm = ({ handleSubmit, provider }) => (
@@ -15,6 +15,7 @@ const ProjectForm = ({ handleSubmit, provider }) => (
       placeholder="My Awesome Project"
       validate={ validateRequired }
     />
+    <Break />
     <TextBox
       label="Provider"
       name="provider"
@@ -29,15 +30,14 @@ const ProjectForm = ({ handleSubmit, provider }) => (
         </CopyToClipboard>
       }
     />
+    <Break />
     <CheckBox
       name="disabled"
-      label="Project Status"
-      checkedText="Disabled"
-      uncheckedText="Enabled"
+      label="Enable"
     />
+    <Break double />
     <Button
       type="submit"
-      variant="primary"
     >
       Save
     </Button>
