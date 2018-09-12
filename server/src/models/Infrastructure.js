@@ -12,7 +12,8 @@ const schema = mongoose.Schema({
   },
   identifier: {
     type: String,
-    required: true
+    required: true,
+    index: true
   },
   domain: {
     type: String,
