@@ -29,7 +29,14 @@ const Circle = styled.div`
   justify-content: center;
   overflow: hidden;
   border-radius: 100%;
-  border: 1px solid black;
+  border: 2px solid ${
+    ({ theme }) => theme.black.base
+  };
+  background: ${
+    ({ disabled, theme }) => disabled ?
+      '#e6e6e6' :
+      theme.white.base
+  };
   width: 24px;
   height: 24px;
 `
@@ -43,15 +50,15 @@ const Input = styled.input.attrs({
 const CheckBox = ({ label, description, ...props }) => (
   <Fragment>
     <Wrapper>
-      { label &&  <TextLine mostLeft>{ label }</TextLine> }
+      { label && <TextLine mostLeft>{ label }</TextLine> }
       <Switch>
         <Input { ...props } checked={ props.value } />
-        <Circle>
+        <Circle disabled={ props.disabled }>
           { props.value && <CheckIcon /> }
         </Circle>
       </Switch>
     </Wrapper>
-    { description &&  description() }
+    { description && description() }
   </Fragment>
 )
 

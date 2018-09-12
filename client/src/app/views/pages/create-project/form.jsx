@@ -29,6 +29,7 @@ const projectForm = ({ handleSubmit, idle }) => (
       name="provider"
       choice="keycdn"
       label="Key CDN"
+      disabled
     />
     <DescriptionText mostLeft mostRight>
       KeyCDN is a service of proinity LLC.&nbsp;
