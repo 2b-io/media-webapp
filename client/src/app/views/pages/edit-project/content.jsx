@@ -22,6 +22,7 @@ const EditProject = ({
       <ProjectForm
         onSubmit={ true }
         initialValues={ project }
+        provider={ project.provider }
       />
     </Container>
   )

@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Form } from 'ui/compounds'
 import { Button } from 'ui/elements'
-import { CheckBox, TextBox, TextArea } from 'views/common/form'
+import { Toggle, TextBox, TextArea } from 'views/common/form'
 import CustomHeader from './custom-header'
 import { validateRequired } from 'views/common/validate'
 
@@ -45,7 +45,7 @@ const ProjectForm = ({ showDeleteProjectDialog, handleSubmit, idle }) => (
       />
     </Form.Line>
     <Form.Line>
-      <CheckBox
+      <Toggle
         label="Project Status"
         checkedText="Disabled"
         uncheckedText="Enabled"

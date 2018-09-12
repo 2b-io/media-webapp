@@ -1,4 +1,5 @@
 import React from 'react'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 import { Button, Break } from 'ui/elements'
 import { CopyIcon } from 'ui/icons'
@@ -6,7 +7,7 @@ import { Form } from 'ui/compounds'
 import { CheckBox, TextBox, RadioGroup } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
-const ProjectForm = ({ handleSubmit, data }) => (
+const ProjectForm = ({ handleSubmit, provider }) => (
   <Form handleSubmit={ handleSubmit }>
     <TextBox
       label="Project Name"
@@ -21,12 +22,11 @@ const ProjectForm = ({ handleSubmit, data }) => (
       readOnly
       validate={ validateRequired }
       trailing={ () =>
-        <Button
-          plain
-          onClick={ () => {console.log(1); return true } }
-        >
-          <CopyIcon />
-        </Button>
+        <CopyToClipboard text={ provider }>
+          <Button plain >
+            <CopyIcon />
+          </Button>
+        </CopyToClipboard>
       }
     />
     <CheckBox
