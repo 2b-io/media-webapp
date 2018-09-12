@@ -2,10 +2,11 @@ import React, { Fragment } from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
-import { Container, Link, Paragraph } from 'ui/elements'
-import { ErrorBox, SuccessBox } from 'ui/elements'
 import { actions } from 'state/interface'
 import { mapDispatch } from 'services/redux-helpers'
+import { Break, Container, Link } from 'ui/elements'
+import { ErrorBox, SuccessBox } from 'ui/elements'
+import { Text } from 'ui/typo'
 import { stateful } from 'views/common/decorators'
 
 import _ForgotPasswordForm from './forgot-password-form'
@@ -32,14 +33,13 @@ const ForgotPassword=({
         <ErrorBox>Fail to send the reset password email or the account does not exist.</ErrorBox>
       }
       { !resultForgotPassword &&
-        <Fragment>
-          <Paragraph>Enter your email</Paragraph>
-          <ForgotPasswordForm onSubmit={ forgotPassword } />
-        </Fragment>
+        <ForgotPasswordForm onSubmit={ forgotPassword } />
       }
-      <Paragraph>
-        <Link href='/sign-in' onClick={ toSignIn }>Back to sign in</Link>
-      </Paragraph>
+      <Break />
+      <Text mostLeft mostRight>
+        Remember your password?<br />
+        <Link href='/sign-in' onClick={ toSignIn }>Sign in now!</Link>
+      </Text>
     </Container>
   </main>
 )

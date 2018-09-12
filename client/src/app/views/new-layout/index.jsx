@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 
 import { selectors } from 'state/interface'
+import { Break } from 'ui/elements'
 
 import Body from './body'
 import Header from './header'
@@ -17,6 +18,24 @@ const Surface = styled.main`
   z-index: 0;
 `
 
+const LogoInside = styled.div`
+  width: 32px;
+  height: 32px;
+  background: white;
+`
+
+const Logo = styled.div.attrs({
+  children: () => <LogoInside />
+})`
+  width: 64px;
+  height: 64px;
+  margin: 0 auto;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
 const Layout = ({ isLayoutClosed, render, ...props }) => {
   console.log(isLayoutClosed)
 
@@ -29,8 +48,14 @@ const Layout = ({ isLayoutClosed, render, ...props }) => {
           </Header>
         ) }
         <Body className="body">
-          { isLayoutClosed ?
-            render.overlay(props) :
+          { isLayoutClosed &&
+            <Fragment>
+              <Break double />
+              <Break double />
+              <Logo />
+              <Break double />
+              { render.overlay(props) }
+            </Fragment> ||
             render.content(props)
           }
         </Body>

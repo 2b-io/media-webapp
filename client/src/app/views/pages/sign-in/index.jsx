@@ -30,11 +30,11 @@ const SignIn = ({
       idle={ idle }
     />
     <Break />
-    <Text>
+    <Text mostLeft mostRight>
       Don&apos;t have your account yet?<br />
       <Link href="/register" onClick={ toRegister }>Try it for free!</Link>
     </Text>
-    <Text>
+    <Text mostLeft mostRight>
       Trouble at signing in?<br />
       <Link href="/forgot-password" onClick={ toForgotPassword }>We are here for help.</Link>
     </Text>

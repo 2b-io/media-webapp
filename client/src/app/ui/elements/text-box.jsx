@@ -52,7 +52,7 @@ const Indicator = styled.div`
   left: 0;
   right: 0;
   height: 1px;
-  background: #07f;
+  background: ${ ({ theme }) => theme.secondary.base };
 `
 
 const TextBox = ({

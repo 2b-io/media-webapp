@@ -12,7 +12,7 @@ const SignInForm = ({ handleSubmit, idle }) => (
       label="Email"
       type="email"
       name="email"
-      placeholder="your email"
+      placeholder="name@example.com"
       disabled={ !idle }
       validate={ [ validateRequired, validateEmail ] }
       leading={ () => <EmailIcon /> }
@@ -22,12 +22,12 @@ const SignInForm = ({ handleSubmit, idle }) => (
       label="Password"
       type="password"
       name="password"
-      placeholder="your password"
+      placeholder="* * * * * *"
       disabled={ !idle }
       leading={ () => <KeyIcon /> }
     />
     <Break double />
-    <Button type="submit" disabled={ !idle }>Sign In</Button>
+    <Button type="submit" disabled={ !idle }>Sign in</Button>
   </Form>
 )
 
