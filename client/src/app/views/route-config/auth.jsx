@@ -46,7 +46,7 @@ export default {
   '/projects/:identifier': {
     component: ProjectDetail,
     exact: true,
-    onEnter: ({ identifier }) => [
+    onEnter: ({ identifier }) => identifier === 'create' || [
       actions.getProject(identifier)
     ]
   },

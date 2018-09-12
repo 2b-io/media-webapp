@@ -42,19 +42,26 @@ const Input = styled.input.attrs({
   display: none;
 `
 
-const Radio = ({ label, description, ...props }) => (
-  <Fragment>
-    <Wrapper>
-      { label &&  <TextLine mostLeft>{ label }</TextLine> }
-      <Switch>
-        <Input { ...props } />
-        <Circle>
-          { props.checked && <CheckIcon /> }
-        </Circle>
-      </Switch>
-    </Wrapper>
-    { description &&  description() }
-  </Fragment>
-)
+const Radio = ({ label, description, ...props }) => {
+  const checked = props.choice === props.value
+
+  return (
+    <Fragment>
+      <Wrapper>
+        { label &&  <TextLine mostLeft>{ label }</TextLine> }
+        <Switch>
+          <Input { ...props }
+            checked={ checked }
+            value={ props.choice }
+          />
+          <Circle>
+            { checked && <CheckIcon /> }
+          </Circle>
+        </Switch>
+      </Wrapper>
+      { description &&  description() }
+    </Fragment>
+  )
+}
 
 export default Radio

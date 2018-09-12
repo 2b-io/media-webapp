@@ -11,29 +11,6 @@ import { Redirect } from 'views/router'
 
 import _ProjectForm from './form'
 
-const CDN_LIST = [
-  {
-    label: 'Amazon CloudFront',
-    value: 'cloudFront',
-    description: () => (
-      <DescriptionText mostLeft mostRight>
-        Amazon CloudFront is a global content delivery network (CDN) service that securely delivers data, videos, applications, and APIs to your viewers with low latency and high transfer speeds.
-        <Link href="#">Read more.</Link>
-      </DescriptionText>
-    )
-  },
-  {
-    label: 'Key CDN',
-    value: 'keyCDN',
-    description: () => (
-      <DescriptionText mostLeft mostRight>
-        KeyCDN is a service of proinity LLC.
-        <Link href="#">Read more.</Link>
-      </DescriptionText>
-    )
-  }
-]
-
 const ProjectForm = reduxForm({
   form: 'project',
   enableReinitialize: true
@@ -48,6 +25,7 @@ const CreateProject = ({
       <Redirect to={ `/projects/${ result.id }` } />
     )
   }
+
   return (
     <Container>
       { error &&
@@ -55,9 +33,8 @@ const CreateProject = ({
       }
       <ProjectForm
         idle={ idle }
-        initialValues={ { provider: CDN_LIST[0].value } }
+        initialValues={ { provider: 'cloudfront' } }
         onSubmit={ createProject }
-        options={ CDN_LIST }
       />
     </Container>
   )
