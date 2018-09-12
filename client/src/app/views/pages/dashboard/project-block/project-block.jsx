@@ -14,7 +14,7 @@ const ProjectBlock = ({
       key: project._id,
       content: () => (
         <TextLine mostLeft
-          onClick={ toProjectDetail.bind(null, project.slug) }>
+          onClick={ toProjectDetail.bind(null, project.identifier) }>
           { project.name }
         </TextLine>
       ),

@@ -28,8 +28,10 @@ const Circle = styled.div`
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border-radius: 100%;
-  border: 1px solid black;
+  border-radius: 50%;
+  border: 1px solid ${
+    ({ theme }) => theme.secondary.base
+  };
   width: 24px;
   height: 24px;
 `
