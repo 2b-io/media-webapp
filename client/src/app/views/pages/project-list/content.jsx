@@ -58,16 +58,6 @@ const ProjectList = ({
   toCreateProject,
   toProjectDetail
 }) => {
-  if (!projects || !projects.length) {
-    return (
-      <Layout>
-        <Container>
-          <Text>You do not have any projects yet.</Text>
-        </Container>
-      </Layout>
-    )
-  }
-
   const cards = projects.map(
     project => (
       <Card
@@ -87,7 +77,10 @@ const ProjectList = ({
   return (
     <Layout>
       <Container>
-        { cards }
+        { projects.length &&
+          cards ||
+          <Text>You do not have any projects yet.</Text>
+        }
       </Container>
       <Fab onClick={ toCreateProject }>
         <AddIcon />
@@ -105,10 +98,3 @@ export default connect(
     toProjectDetail: identifier => actions.requestLocation(`/projects/${ identifier }`)
   })
 )(ProjectList)
-
-// TODO
-//   <List
-//     items={ projects }
-//     renderItem={ project => <Project data={ project } /> }
-//   />
-// )
