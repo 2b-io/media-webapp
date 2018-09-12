@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import styled from 'styled-components'
 
 import { Identicon, List } from 'ui/elements'
+import { CloseIcon } from 'ui/icons'
 import { DescriptionTextLine, TextLine } from 'ui/typo'
 
 import {
@@ -40,9 +41,26 @@ const Surface = styled.div`
   };
 `
 
+const CloseButton = styled.button`
+  position: absolute;
+  top: 0;
+  right: 0;
+  appearance: none;
+  outline: none;
+  border: none;
+  background: transparent;
+  color: ${ ({ theme }) => theme.white.base };
+  padding: 0;
+  margin: 0;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  z-index: 1;
+`
+
 const Content = styled.div`
   display: grid;
-  grid-template-rows: 96px 1fr;
+  grid-template-rows: min-content 1fr;
   height: 100%;
 
   & > * {
@@ -53,23 +71,22 @@ const Content = styled.div`
 
 const Profile = styled.div`
   position: relative;
-  height: 96px;
 `
 
 const UserName = styled.div`
-  height: 64px;
+  height: 96px;
   background: ${
     ({ theme }) => theme.secondary.base
   };
   color: ${
     ({ theme }) => theme.secondary.on.base
   };
-  padding: 24px 8px 0 80px;
+  padding: 56px 0 0 72px;
 
 `
 
 const UserEmail = styled.div`
-  padding: 0 8px 0 80px;
+  padding-left: 72px;
 `
 
 const UserAvatar = styled.div`
@@ -122,13 +139,20 @@ const Sidebar = ({
     <Fragment>
       { open && <Overlay onClick={ minimizeSidebar } /> }
       <Surface open={ open }>
+        <CloseButton onClick={ minimizeSidebar }>
+          <CloseIcon />
+        </CloseButton>
         <Content>
           <Profile className="profile">
             <UserName>
-              <TextLine>{ currentAccount.displayName || 'John Smith' }</TextLine>
+              <TextLine mostLeft mostRight>
+                { currentAccount.displayName || 'John Smith' }
+              </TextLine>
             </UserName>
             <UserEmail>
-              <DescriptionTextLine>{ currentAccount.email }</DescriptionTextLine>
+              <DescriptionTextLine mostLeft mostRight>
+                { currentAccount.email }
+              </DescriptionTextLine>
             </UserEmail>
             <UserAvatar>
               <Identicon circle
