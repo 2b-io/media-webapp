@@ -1,5 +1,6 @@
 import * as CreateProject from 'views/pages/create-project'
 import * as Dashboard from 'views/pages/dashboard'
+import * as EditProject from 'views/pages/edit-project'
 import * as Profile from 'views/pages/profile'
 import * as ProjectDetail from 'views/pages/project-detail'
 import * as ProjectMedia from 'views/pages/project-detail/project-media'
@@ -43,10 +44,14 @@ export default {
   },
   '/projects/:identifier': {
     component: ProjectDetail,
-    exact: false,
+    exact: true,
     onEnter: ({ identifier }) => [
       actions.getProject(identifier)
     ]
+  },
+  '/projects/:identifier/edit': {
+    component: EditProject,
+    exact: true
   },
   '/projects/:slug/presets/:hash': {
     partial: true,
