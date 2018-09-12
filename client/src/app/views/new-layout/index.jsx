@@ -19,16 +19,16 @@ const Surface = styled.main`
 `
 
 const LogoInside = styled.div`
-  width: 32px;
-  height: 32px;
+  width: 64px;
+  height: 64px;
   background: white;
 `
 
 const Logo = styled.div.attrs({
   children: () => <LogoInside />
 })`
-  width: 64px;
-  height: 64px;
+  width: 96px;
+  height: 96px;
   margin: 0 auto;
   background: black;
   display: flex;
