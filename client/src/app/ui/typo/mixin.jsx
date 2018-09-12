@@ -46,5 +46,5 @@ export const padding = css`
 
 export const paragraph = css`
   padding-top: 8px;
-  padding-bottom: 16px;
+  padding-bottom: 8px;
 `
