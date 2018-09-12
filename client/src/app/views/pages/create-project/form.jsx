@@ -20,7 +20,7 @@ const projectForm = ({ handleSubmit, idle, options }) => (
       options={ options }
     />
     <Break double />
-    <Button type="submit">Create</Button>
+    <Button type="submit" disabled={ !idle }>Create</Button>
   </Form>
 )
 

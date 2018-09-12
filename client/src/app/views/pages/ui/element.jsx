@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { AddIcon } from 'ui/icons'
-import { Button, TextBox } from 'ui/elements'
+import { Button, TextArea, TextBox } from 'ui/elements'
 import { ErrorBox, InfoBox, SuccessBox, WarningBox } from 'ui/elements'
 
 const Wrapper = styled.section`
@@ -33,8 +33,8 @@ const ElementSection = () => (
       <TextBox placeholder="Enter your things here" />
     </Box>
     <Box>
-      <TextBox defaultValue="Normal TextArea" multiline />
-      <TextBox defaultValue="Disabled TextArea" disabled  multiline />
+      <TextArea defaultValue="Normal TextArea" />
+      <TextArea defaultValue="Disabled TextArea" disabled />
     </Box>
     <Box>
       <Button>

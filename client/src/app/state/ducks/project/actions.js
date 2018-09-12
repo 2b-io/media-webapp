@@ -14,9 +14,9 @@ export const fetchProjectsFailed = reason => ({
   payload: { reason }
 })
 
-export const createProject = project => ({
+export const createProject = ({ name, description, provider }) => ({
   type: types.CREATE,
-  payload: { project }
+  payload: { name, description, provider }
 })
 
 export const createProjectCompleted = project => ({

@@ -2,19 +2,19 @@ import React from 'react'
 
 import { Button } from 'ui/elements'
 import { Form } from 'ui/compounds'
-import { TextBox  } from 'views/common/form'
+import { TextArea  } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
 const CacheInvalidatorForm = ({ idle, handleSubmit, invalidateAllCache }) => (
   <Form handleSubmit={ handleSubmit }>
     <Form.Line>
       {
-        <TextBox
-          multiline={ true }
+        <TextArea
           disabled={ !idle }
           type="text"
           name="patterns"
           label="Patterns"
+          placeholder="Patterns"
           validate={ validateRequired }
         />
       }

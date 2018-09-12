@@ -15,7 +15,7 @@ export const textAlign = ({ align }) => css`
 export const font = ({ bold, size, variant, theme }) => css`
   font-size: ${ sizeToPixel(size) }px;
   line-height: 24px;
-  ${ bold && `font-weight: bold;` }
+  ${ bold && 'font-weight: bold;' }
   color: ${
     variant === 'error' ? theme.error.base : (
       variant === 'secondary' ? theme.secondary.base :

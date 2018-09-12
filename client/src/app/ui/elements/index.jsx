@@ -23,6 +23,7 @@ export { default as Paragraph } from './paragraph'
 export { default as Radio } from './radio'
 export { default as SuccessBox } from './success-box'
 export { default as TextBox } from './text-box'
+export { default as TextArea } from './text-area'
 export { default as TransactionItem } from './transaction-item'
 export { default as WarningBox } from './warning-box'
 
