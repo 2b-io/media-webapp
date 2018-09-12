@@ -76,10 +76,10 @@ const Profile = styled.div`
 const UserName = styled.div`
   height: 96px;
   background: ${
-    ({ theme }) => theme.secondary.base
+    ({ theme }) => theme.black.base
   };
   color: ${
-    ({ theme }) => theme.secondary.on.base
+    ({ theme }) => theme.black.on.base
   };
   padding: 56px 0 0 72px;
 
