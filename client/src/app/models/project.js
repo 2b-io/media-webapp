@@ -22,7 +22,8 @@ export const PROJECT_FRAGMENT = `
   identifier,
   name,
   infrastructure {
-    domain
+    domain,
+    provider
   },
   status,
   origins,
@@ -137,10 +138,10 @@ export default {
     const origins = (project.origins || '').trim().split(delimiter).filter(Boolean)
 
     const body = await request(`
-      query updateProject($project: ProjectStruct!, $token: String!, $slug: String!) {
+      query updateProject($project: ProjectStruct!, $token: String!, $identifier: String!) {
         session(token: $token) {
           account {
-            project(slug: $slug) {
+            project(identifier: $identifier) {
               _update(project: $project) {
                 ${ PROJECT_FRAGMENT }
               }
@@ -154,10 +155,10 @@ export default {
           ...project,
           origins
         },
-        [ 'name', 'origins', 'prettyOrigin', 'headers', 'disabled' ]
+        [ 'name', 'origins', 'prettyOrigin', 'headers', 'disabled, description' ]
       ),
       token,
-      slug: project.slug
+      identifier: project.identifier
     })
 
     const updatedProject = body.session.account.project._update
