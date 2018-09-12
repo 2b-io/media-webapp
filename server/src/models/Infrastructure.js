@@ -10,9 +10,10 @@ const schema = mongoose.Schema({
     type: String,
     required: true
   },
-  id: {
+  identifier: {
     type: String,
-    required: true
+    required: true,
+    index: true
   },
   domain: {
     type: String,

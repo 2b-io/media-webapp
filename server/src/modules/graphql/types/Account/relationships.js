@@ -4,7 +4,7 @@ import {
   GraphQLString
 } from 'graphql'
 import {
-  getBySlug as getProjectBySlug,
+  getByIdentifier as getProjectByIdentifier,
   list as listProjectsByAccount
 } from 'services/project'
 
@@ -28,13 +28,13 @@ export default () => ({
   },
   project: {
     args: {
-      slug: {
+      identifier: {
         type: new GraphQLNonNull(GraphQLString)
       }
     },
     type: Project,
-    resolve: async (account, { slug }) => {
-      const project = await getProjectBySlug(slug)
+    resolve: async (account, { identifier }) => {
+      const project = await getProjectByIdentifier(identifier)
       // add ref
       project.account = account
       return project

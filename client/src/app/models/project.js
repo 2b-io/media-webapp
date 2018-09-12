@@ -19,8 +19,12 @@ export const PRESET_FRAGMENT = `
 `
 
 export const PROJECT_FRAGMENT = `
-  _id,
+  identifier,
   name,
+  infrastructure {
+    domain
+  },
+  status,
   origins,
   prettyOrigin,
   presets {
@@ -32,12 +36,7 @@ export const PROJECT_FRAGMENT = `
       ${ ACCOUNT_FRAGMENT }
     },
     privilege
-  },
-  headers {
-    name,
-    value
-  },
-  status
+  }
 `
 
 const PROJECTS_FRAGMENT = `
@@ -48,18 +47,18 @@ const PROJECTS_FRAGMENT = `
   }
 `
 export default {
-  async get(slug, token) {
+  async get(identifier, token) {
     const body = await request(`
-      query getProject($slug: String!, $token: String!) {
+      query getProject($identifier: String!, $token: String!) {
         session(token: $token) {
           account {
-            project(slug: $slug) {
+            project(identifier: $identifier) {
               ${ PROJECT_FRAGMENT }
             }
           }
         }
       }
-    `, { slug, token })
+    `, { identifier, token })
 
     const getProject = body.session.account.project
 

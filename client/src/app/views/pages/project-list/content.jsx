@@ -71,13 +71,13 @@ const ProjectList = ({
   const cards = projects.map(
     project => (
       <Card
-        key={ project.slug }
-        onClick={ toProjectDetail.bind(null, project.slug) }
+        key={ project.identifier }
+        onClick={ toProjectDetail.bind(null, project.identifier) }
         content={ () => (
           <Text mostLeft mostRight>
             { project.name }<br />
-            d1wbceeoo5msfq.cloudfront.net<br />
-            DEPLOYED
+            { project.infrastructure.domain }<br />
+            { project.status }
           </Text>
         ) }
       />
@@ -102,7 +102,7 @@ export default connect(
   }),
   mapDispatch({
     toCreateProject: () => actions.requestLocation('/projects/create'),
-    toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`)
+    toProjectDetail: identifier => actions.requestLocation(`/projects/${ identifier }`)
   })
 )(ProjectList)
 

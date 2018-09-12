@@ -70,7 +70,7 @@ const deleteLoop = function*() {
 const getLoop = function*() {
   while (true) {
     const action = yield take(types['PROJECT/GET'])
-    const { slug } = action.payload
+    const { identifier } = action.payload
 
     try {
       const session = yield select(selectors.currentSession)
@@ -79,7 +79,7 @@ const getLoop = function*() {
         continue
       }
 
-      const project = yield call(Project.get, slug, session.token)
+      const project = yield call(Project.get, identifier, session.token)
 
       yield put(actions.getProjectCompleted(project))
     } catch (e) {

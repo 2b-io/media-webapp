@@ -29,9 +29,9 @@ export const createProjectFailed = reason => ({
   payload: { reason }
 })
 
-export const getProject = slug => ({
+export const getProject = identifier => ({
   type: types.GET,
-  payload: { slug }
+  payload: { identifier }
 })
 
 export const getProjectCompleted = project => ({

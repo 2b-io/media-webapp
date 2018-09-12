@@ -17,10 +17,15 @@ import {
   list as listPermissions
 } from 'services/permission'
 
+import {
+  getInfrastructure
+} from 'services/infrastructure'
+
 import { Account } from '../Account'
 import { Collaborator } from '../Collaborator'
 import { Preset } from '../Preset'
 import { Media } from '../Media'
+import { Infrastructure } from '../Infrastructure'
 
 export default () => ({
   account: {
@@ -84,6 +89,14 @@ export default () => ({
       const media = await getMedia(slug, id)
 
       return media
+    }
+  },
+  infrastructure: {
+    type: Infrastructure,
+    resolve: async (project) => {
+      const infra = await getInfrastructure(project._id)
+
+      return infra
     }
   }
 })

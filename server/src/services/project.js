@@ -23,9 +23,9 @@ export const update = async ( slug, data ) => {
   ).lean()
 }
 
-export const getBySlug = async (slug) => {
+export const getByIdentifier = async (identifier) => {
   return await Project.findOne({
-    slug,
+    identifier,
     removed: false
   }).lean()
 }
@@ -79,10 +79,10 @@ export const create = async (data, provider, account) => {
   }).save()
 
   const cloudfront = await createDistribution()
-  const { Id: id, DomainName: domain } = cloudfront.Distribution
+  const { Id: identifier, DomainName: domain } = cloudfront.Distribution
   await new Infrastructure({
     project: project._id,
-    id,
+    identifier,
     domain,
     provider
   }).save()
