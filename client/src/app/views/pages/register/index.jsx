@@ -4,8 +4,9 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
-import { Container, Link, Paragraph } from 'ui/elements'
+import { Break, Container, Link } from 'ui/elements'
 import { ErrorBox, SuccessBox } from 'ui/elements'
+import { Text } from 'ui/typo'
 import { stateful } from 'views/common/decorators'
 
 import _RegisterForm from './form'
@@ -28,17 +29,15 @@ const Register = ({
       { error &&
         <ErrorBox>An error happens when registering.</ErrorBox>
       }
-      <Paragraph>
-        Enter your email
-      </Paragraph>
       <RegisterForm
         onSubmit={ register }
         idle={ idle }
       />
-      <Paragraph>
-        Have an account already?<br />
+      <Break />
+      <Text mostLeft mostRight>
+        Have your account already?<br />
         <Link href="/sign-in" onClick={ toSignIn }>Sign in now!</Link>
-      </Paragraph>
+      </Text>
     </Container>
   </main>
 )
