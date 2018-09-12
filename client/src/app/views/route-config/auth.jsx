@@ -48,6 +48,10 @@ export default {
       actions.getProject(identifier)
     ]
   },
+  '/projects/:identifier/edit': {
+    component: EditProject,
+    exact: false
+  },
   '/projects/:slug/presets/:hash': {
     partial: true,
     onEnter: ({ hash, slug }) => [
