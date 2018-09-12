@@ -24,13 +24,13 @@ const Header = styled.div`
 
 const HeaderBorder = styled.div`
   position: absolute;
-  height: 1px;
+  height: 2px;
   left: 0;
   right: 0;
+  bottom: -1px;
   background: ${
-    ({ theme }) => theme.secondary.base
+    ({ theme }) => theme.black.base
   };
-  bottom: 0;
   z-index: 0;
 `
 
@@ -39,8 +39,8 @@ const Fab = styled.button`
   right: 16px;
   bottom: -16px;
   z-index: 1;
-  border: 1px solid ${
-    ({ theme }) => theme.secondary.base
+  border: 2px solid ${
+    ({ theme }) => theme.black.base
   };
   border-radius: 50%;
   overflow: hidden;
@@ -62,6 +62,14 @@ const Fab = styled.button`
   outline: none;
 `
 
+const FabContent = styled.div`
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 40px;
+  height: 40px;
+`
+
 const Content = styled.div`
 `
 
@@ -71,7 +79,11 @@ const Card = ({ title, fab, content, ...props }) => (
       <Fragment>
         <Header hasFab={ !!fab }>
           { title && title() }
-          { fab && <Fab>{ fab() }</Fab> }
+          { fab && (
+            <Fab>
+              <FabContent>{ fab() }</FabContent>
+            </Fab>
+          ) }
           <HeaderBorder />
         </Header>
         <Break />

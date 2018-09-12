@@ -29,8 +29,13 @@ const Circle = styled.div`
   justify-content: center;
   overflow: hidden;
   border-radius: 50%;
-  border: 1px solid ${
-    ({ theme }) => theme.secondary.base
+  border: 2px solid ${
+    ({ theme }) => theme.black.base
+  };
+  background: ${
+    ({ disabled, theme }) => disabled ?
+      '#e6e6e6' :
+      theme.white.base
   };
   width: 24px;
   height: 24px;
@@ -48,18 +53,18 @@ const Radio = ({ label, description, ...props }) => {
   return (
     <Fragment>
       <Wrapper>
-        { label &&  <TextLine mostLeft>{ label }</TextLine> }
+        { label && <TextLine mostLeft>{ label }</TextLine> }
         <Switch>
           <Input { ...props }
             checked={ checked }
             value={ props.choice }
           />
-          <Circle>
+          <Circle disabled={ props.disabled }>
             { checked && <CheckIcon /> }
           </Circle>
         </Switch>
       </Wrapper>
-      { description &&  description() }
+      { description && description() }
     </Fragment>
   )
 }
