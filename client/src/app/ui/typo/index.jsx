@@ -57,7 +57,7 @@ export const PageTitle = ({ children, ...props }) => (
 )
 
 export const Heading = ({ children, ...props }) => (
-  <Block bold { ...props }>
+  <Block { ...props }>
     <h2>{ children }</h2>
   </Block>
 )
