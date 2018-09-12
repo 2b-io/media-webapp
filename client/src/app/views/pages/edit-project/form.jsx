@@ -20,6 +20,7 @@ const ProjectForm = ({ handleSubmit, provider }) => (
       label="Provider"
       name="provider"
       placeholder="Provider"
+      value={ provider }
       readOnly
       validate={ validateRequired }
       trailing={ () => (

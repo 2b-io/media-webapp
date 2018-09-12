@@ -41,7 +41,7 @@ export default ({ Project, ProjectStruct }) => ({
     },
     type: Project,
     resolve: async (self, { project }) => {
-      const p = await updateProject(self.slug, project)
+      const p = await updateProject(self.identifier, project)
 
       // add ref
       p._account = self._account
