@@ -10,7 +10,7 @@ const schema = mongoose.Schema({
     type: String,
     required: true
   },
-  hash: {
+  identifier: {
     type: String,
     required: true
   },

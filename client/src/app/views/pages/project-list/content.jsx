@@ -71,8 +71,8 @@ const ProjectList = ({
   const cards = projects.map(
     project => (
       <Card
-        key={ project.domain }
-        onClick={ toProjectDetail.bind(null, project.infrastructure.domain) }
+        key={ project.identifier }
+        onClick={ toProjectDetail.bind(null, project.identifier) }
         content={ () => (
           <Text mostLeft mostRight>
             { project.name }<br />
@@ -102,7 +102,7 @@ export default connect(
   }),
   mapDispatch({
     toCreateProject: () => actions.requestLocation('/projects/create'),
-    toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`)
+    toProjectDetail: identifier => actions.requestLocation(`/projects/${ identifier }`)
   })
 )(ProjectList)
 

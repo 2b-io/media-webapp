@@ -23,9 +23,9 @@ export const update = async ( slug, data ) => {
   ).lean()
 }
 
-export const getBySlug = async (slug) => {
+export const getByIdentifier = async (identifier) => {
   return await Project.findOne({
-    slug,
+    identifier,
     removed: false
   }).lean()
 }
