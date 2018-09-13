@@ -23,6 +23,7 @@ const InputArea = styled.textarea.attrs({
   line-height: 24px;
   padding: 8px;
   resize: none;
+  overflow-wrap: break-word;
   cursor: ${
     ({ disabled, readOnly }) => (disabled || readOnly) ? 'not-allowed' : 'inherit'
   };
