@@ -2,12 +2,8 @@ import React from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
-import { mapDispatch } from 'services/redux-helpers'
-import { actions } from 'state/interface'
-import { Container, ErrorBox, Link } from 'ui/elements'
-import { DescriptionText } from 'ui/typo'
+import { Container } from 'ui/elements'
 import { stateful } from 'views/common/decorators'
-import { Redirect } from 'views/router'
 
 import _PullSettingForm from './form'
 
@@ -23,18 +19,17 @@ const pullData = {
   ]
 }
 
-
 const PullSettingForm = reduxForm({
   form: 'pullSetting',
   enableReinitialize: true
 })(_PullSettingForm)
 
-const PullSetting = (pullData) => {
+const PullSetting = ({ pullData }) => {
 
   return (
     <Container>
       <PullSettingForm
-        onSubmit={ () => {console.log(1); return true}}
+        onSubmit={ () => true }
         initialValues={ pullData }
       />
     </Container>
