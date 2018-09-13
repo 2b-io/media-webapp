@@ -262,8 +262,8 @@ export default withParams(
     component: 'ProjectDetail'
   })(
     connect(
-      (state, { params: { slug } }) => ({
-        project: selectors.findProjectBySlug(state, slug),
+      (state, { params: { identifier } }) => ({
+        project: selectors.findProjectByIdentifier(state, identifier),
         currentAccount: selectors.currentAccount(state)
       }),
       mapDispatch({

@@ -29,42 +29,34 @@ const Logo = styled.div.attrs({
 })`
   width: 96px;
   height: 96px;
-  margin: 0 auto;
+  margin: 96px auto 16px;
   background: black;
   display: flex;
   justify-content: center;
   align-items: center;
 `
 
-const Layout = ({ isLayoutClosed, render, ...props }) => {
-  console.log(isLayoutClosed)
-
-  return (
-    <Fragment>
-      <Surface>
-        { !isLayoutClosed && (
-          <Header className="header">
-            { render.still(props) }
-          </Header>
-        ) }
-        <Body className="body">
-          { isLayoutClosed &&
-            <Fragment>
-              <Break double />
-              <Break double />
-              <Logo />
-              <Break double />
-              { render.overlay(props) }
-            </Fragment> ||
-            render.content(props)
-          }
-        </Body>
-      </Surface>
-      { !isLayoutClosed && <Sidebar /> }
-    </Fragment>
-  )
-}
-
+const Layout = ({ isLayoutClosed, render, ...props }) => (
+  <Fragment>
+    <Surface>
+      { !isLayoutClosed && (
+        <Header className="header">
+          { render.still(props) }
+        </Header>
+      ) }
+      <Body className="body">
+        { isLayoutClosed &&
+          <Fragment>
+            <Logo />
+            { render.overlay(props) }
+          </Fragment> ||
+          render.content(props)
+        }
+      </Body>
+    </Surface>
+    { !isLayoutClosed && <Sidebar /> }
+  </Fragment>
+)
 
 export default connect(
   state => ({

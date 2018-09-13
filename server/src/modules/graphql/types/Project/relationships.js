@@ -71,8 +71,8 @@ export default () => ({
   listMedia: {
     type: new GraphQLList(Media),
     resolve: async (project) => {
-      const { slug } = project
-      const listMedia = await getListMedia(slug)
+      const { identifier } = project
+      const listMedia = await getListMedia(identifier)
 
       return listMedia
     }
@@ -85,8 +85,8 @@ export default () => ({
     },
     type: Media,
     resolve: async (project, { id }) => {
-      const { slug } = project
-      const media = await getMedia(slug, id)
+      const { identifier } = project
+      const media = await getMedia(identifier, id)
 
       return media
     }
