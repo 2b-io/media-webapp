@@ -5,6 +5,8 @@ import { Button, Break } from 'ui/elements'
 import { TextArea, TextBox } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
+import CustomHeader from './custom-header'
+
 const pullSettingForm = ({ handleSubmit }) => (
   <Form handleSubmit={ handleSubmit }>
     <TextBox
@@ -20,6 +22,9 @@ const pullSettingForm = ({ handleSubmit }) => (
       placeholder="example.com"
       validate={ validateRequired }
     />
+    <Break />
+    <CustomHeader />
+
     <Break double />
     <Button type="submit" >Save</Button>
   </Form>
