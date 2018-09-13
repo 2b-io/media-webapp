@@ -14,9 +14,7 @@ const ProjectForm = ({ handleSubmit, domain, status }) => (
     <TextBox
       label="Project Name"
       name="name"
-      readOnly={ (status === 'UPDATING' || status === 'INITIALIZING')
-        ? true : false
-      }
+      readOnly={ (status === 'UPDATING' || status === 'INITIALIZING') ? true : false }
       placeholder="My Awesome Project"
       validate={ validateRequired }
     />
@@ -52,7 +50,7 @@ const ProjectForm = ({ handleSubmit, domain, status }) => (
             Save
           </Button>
         </React.Fragment>
-      }
+    }
   </Form>
 )
 
