@@ -21,6 +21,7 @@ injectGlobal`
     font-size: 14px;
   }
 
+  /*
   ::-webkit-scrollbar {
     width: ${ defaultTheme.spacing.tiny };
   }
@@ -48,6 +49,7 @@ injectGlobal`
       background: ${ defaultTheme.primary.dark.base };
     }
   }
+  */
 `
 
 const Overlay = ({ history }) => (
