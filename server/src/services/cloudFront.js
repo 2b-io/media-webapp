@@ -15,7 +15,7 @@ export const createDistribution = async (projectName) => {
     .post(`${ cdnServer }/distributions`)
     .set('Content-Type', 'application/json')
     .send({
-      projectName: projectName
+      projectName
     })
   return distribution.body
 }

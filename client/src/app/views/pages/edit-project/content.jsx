@@ -26,7 +26,7 @@ const EditProject = ({
         initialValues={ {
           name: project && project.name,
           domain: project && project.infrastructure.domain,
-          status : project && project.status !== 'DISABLED' ? true : false
+          status: project && project.status !== 'DISABLED' ? true : false
         } }
         domain={ project && project.infrastructure.domain }
       />
