@@ -51,11 +51,11 @@ const Wrapper = styled.div`
 
 const Indicator = styled.div`
   position: absolute;
-  bottom: 24px;
+  bottom: -1px;
   left: 0;
   right: 0;
-  height: 1px;
-  background: #07f;
+  height: 2px;
+  background: ${ ({ theme }) => theme.black.base };
 `
 
 const TextArea = ({
@@ -70,8 +70,8 @@ const TextArea = ({
         invalid={ invalid }
         { ...props }
       />
+      <Indicator />
     </Container>
-    <Indicator />
     <AssistiveTextLine
       mostLeft mostRight
       variant="error">

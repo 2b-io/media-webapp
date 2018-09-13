@@ -5,6 +5,7 @@ import * as Profile from 'views/pages/profile'
 import * as ProjectDetail from 'views/pages/project-detail'
 import * as ProjectMedia from 'views/pages/project-detail/project-media'
 import * as ProjectList from 'views/pages/project-list'
+import * as PullSetting from 'views/pages/pull-setting'
 import * as UI from 'views/pages/ui'
 
 import { actions } from 'state/interface'
@@ -56,6 +57,10 @@ export default {
       actions.getProject(identifier)
     ]
 
+  },
+  '/projects/:identifier/pull': {
+    component: PullSetting,
+    exact: true
   },
   '/projects/:slug/presets/:hash': {
     partial: true,
