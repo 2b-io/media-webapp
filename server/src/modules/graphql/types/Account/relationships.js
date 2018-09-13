@@ -34,7 +34,7 @@ export default () => ({
     },
     type: Project,
     resolve: async (account, { identifier }) => {
-      const project = await getProjectByIdentifier(identifier)
+      const project = await getProjectByIdentifier(identifier, account._id)
       // add ref
       project.account = account
       return project

@@ -39,12 +39,22 @@ export const update = async ( projectIdentifier, data ) => {
   ).lean()
 }
 
-export const getByIdentifier = async (projectIdentifier) => {
+export const getByIdentifier = async (projectIdentifier, account) => {
 
   const project = await Project.findOne({
     identifier: projectIdentifier,
     removed: false
   }).lean()
+  //  check permission
+  const permission = await Permission.findOne({
+    account,
+    project: {
+      $eq: project._id
+    }
+  }).lean()
+  if (!permission) {
+    return
+  }
   const { status: projectStatus } = project
   if (projectStatus === 'INITIALIZING' || projectStatus === 'UPDATING') {
     const { identifier: distributionId } = await Infrastructure.findOne({ project: project._id })
