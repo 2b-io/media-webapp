@@ -50,7 +50,7 @@ export const list = async (account) => {
       $in: permissions.map(p => p.project)
     },
     removed: false
-  }).sort('slug').lean()
+  }).sort('_id').lean()
 
   return projects
 }
@@ -63,7 +63,7 @@ export const create = async (data, provider, account) => {
   const project = await new Project({
     name,
     description,
-    status: 'INPROGRESS'
+    status: 'INITIALIZING'
   }).save()
 
   await new Permission({
@@ -72,13 +72,7 @@ export const create = async (data, provider, account) => {
     privilege: 'owner'
   }).save()
 
-  await new Preset({
-    project: project._id,
-    name: 'default',
-    isDefault: true
-  }).save()
-
-  const cloudfront = await createDistribution()
+  const cloudfront = await createDistribution(project.name)
   const { Id: identifier, DomainName: domain } = cloudfront.Distribution
   await new Infrastructure({
     project: project._id,

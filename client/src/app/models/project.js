@@ -155,7 +155,7 @@ export default {
           ...project,
           origins
         },
-        [ 'name', 'origins', 'prettyOrigin', 'headers', 'disabled, description' ]
+        [ 'name', 'origins', 'prettyOrigin', 'headers', 'status', 'description' ]
       ),
       token,
       identifier: project.identifier
