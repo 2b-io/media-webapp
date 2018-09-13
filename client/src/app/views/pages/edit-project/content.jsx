@@ -4,6 +4,9 @@ import { connect } from 'react-redux'
 
 import { Container } from 'ui/elements'
 import { stateful } from 'views/common/decorators'
+import { mapDispatch } from 'services/redux-helpers'
+import { selectors, actions } from 'state/interface'
+import { withParams } from 'views/router'
 
 import _ProjectForm from './form'
 
@@ -13,35 +16,31 @@ const ProjectForm = reduxForm({
 })(_ProjectForm)
 
 const EditProject = ({
-  project
+  project,
+  updateProject
 }) => {
-
   return (
     <Container>
-
       <ProjectForm
-        onSubmit={ true }
-        initialValues={ project }
-        provider={ project.provider }
+        onSubmit={ ( { name, disabled }) => updateProject(project.identifier, name, disabled) }
+        initialValues={ { name: project && project.name, provider: project && project.infrastructure.provider  } }
+        provider={ project && project.infrastructure.provider }
       />
     </Container>
   )
 }
 
-export default stateful({
-  component: 'EditProject'
-})(
-  connect(
-    () => ({
-      project: dataTest,
-    }),
-    null
-  )(EditProject)
+export default withParams(
+  stateful({
+    component: 'EditProject'
+  })(
+    connect(
+      (state, { params: { identifier } }) => ({
+        project: selectors.findProjectByIdentifier(state, identifier),
+      }),
+      mapDispatch({
+        updateProject: (identifier, name, disabled) => actions.updateProject({ identifier, name, disabled })
+      })
+    )(EditProject)
+  )
 )
-
-const dataTest = {
-  name: 'test Project',
-  provider: 'd1wbceeoo5msfq.cloudfront.net',
-  description: 'Ahihihihi',
-  disabled: true
-}

@@ -16,9 +16,9 @@ const normalizePattern = (path, origin) => {
   }
 }
 
-export const update = async ( slug, data ) => {
+export const update = async ( identifier, data ) => {
   return await Project.findOneAndUpdate(
-    { slug }, { ...data },
+    { identifier }, { ...data },
     { new: true }
   ).lean()
 }

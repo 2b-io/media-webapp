@@ -19,7 +19,7 @@ export default combineReducers({
       return action.payload.projects.reduce(
         (projects, project) => ({
           ...projects,
-          [ project.slug ]: {
+          [ project.identifier ]: {
             ...project,
             collaborators: arrayToMap(project.collaborators, '_id'),
             presets: arrayToMap(project.presets, 'hash'),
@@ -29,20 +29,20 @@ export default combineReducers({
     },
     [ types.CREATE_COMPLETED ]: (state, action) => ({
       ...state,
-      [ action.payload.project.slug ]: {
+      [ action.payload.project.identifier ]: {
         ...action.payload.project,
         presets: arrayToMap(action.payload.project.presets, 'hash')
       }
     }),
     [ types.DELETE_COMPLETED ]: (state, action) => {
-      const { slug } = action.payload
-      const { [ slug ]: removedProject, ...projects } = state
+      const { identifier } = action.payload
+      const { [ identifier ]: removedProject, ...projects } = state
 
       return projects
     },
     [ types.GET_COMPLETED ]: (state, action) => ({
       ...state,
-      [ action.payload.project.slug ]: {
+      [ action.payload.project.identifier ]: {
         ...action.payload.project,
         presets: arrayToMap(action.payload.project.presets, 'hash'),
         collaborators: collaboratorsToMap(action.payload.project.collaborators, '_id')
@@ -50,76 +50,76 @@ export default combineReducers({
     }),
     [types.UPDATE_COMPLETED ]: (state, action) => ({
       ...state,
-      [ action.payload.project.slug ]: {
+      [ action.payload.project.identifier ]: {
         ...action.payload.project,
         presets: arrayToMap(action.payload.project.presets, 'hash'),
         collaborators: collaboratorsToMap(action.payload.project.collaborators, '_id')
       }
     }),
     [ types.GET_PRESET_COMPLETED ]: (state, action) => {
-      const { preset, slug }  = action.payload
+      const { preset, identifier }  = action.payload
 
       return {
         ...state,
-        [ slug ]: {
-          ...state[ slug ],
+        [ identifier ]: {
+          ...state[ identifier ],
           presets: {
-            ...state[ slug ].presets,
+            ...state[ identifier ].presets,
             [ preset.hash ]: preset
           }
         }
       }
     },
     [ types.CREATE_PRESET_COMPLETED ]: (state, action) => {
-      const { preset, slug } = action.payload
+      const { preset, identifier } = action.payload
 
       return {
         ...state,
-        [ slug ]: {
-          ...state[ slug ],
+        [ identifier ]: {
+          ...state[ identifier ],
           presets: {
-            ...state[ slug ].presets,
+            ...state[ identifier ].presets,
             [ preset.hash ]: preset
           }
         }
       }
     },
     [ types.UPDATE_PRESET_COMPLETED ]: (state, action) => {
-      const { preset, slug } = action.payload
+      const { preset, identifier } = action.payload
 
       return {
         ...state,
-        [ slug ]: {
-          ...state[ slug ],
+        [ identifier ]: {
+          ...state[ identifier ],
           presets: {
-            ...state[ slug ].presets,
+            ...state[ identifier ].presets,
             [ preset.hash ]: preset
           }
         }
       }
     },
     [ types.DELETE_PRESET_COMPLETED ]: (state, action) => {
-      const { preset: { hash }, slug } = action.payload
-      const { [ hash ]: removedPreset, ...remainPresets } = state[ slug ].presets
+      const { preset: { hash }, identifier } = action.payload
+      const { [ hash ]: removedPreset, ...remainPresets } = state[ identifier ].presets
       return {
         ...state,
-        [ slug ]: {
-          ...state[ slug ],
+        [ identifier ]: {
+          ...state[ identifier ],
           presets: remainPresets
         }
       }
     },
     [ types.INVITE_COLLABORATOR_COMPLETED ]: (state, action) => {
-      const { slug }  = action.payload.collaborator
+      const { identifier }  = action.payload.collaborator
       const { collaborator } = action.payload
-      const project = state[ slug ]
+      const project = state[ identifier ]
 
       return {
         ...state,
-        [ slug ]: {
+        [ identifier ]: {
           ...project,
           collaborators: {
-            ...state[ slug ].collaborators,
+            ...state[ identifier ].collaborators,
             [ collaborator.account._id ]: collaborator
           }
         }
@@ -128,49 +128,49 @@ export default combineReducers({
 
     [ types.DELETE_COLLABORATOR_COMPLETED ]: (state, action) => {
 
-      const { slug } = action.payload
-      const project = state[ slug ]
+      const { identifier } = action.payload
+      const project = state[ identifier ]
       const { collaborators } = project
       const { accountId } = action.payload
       const { [ accountId ]: accountIdtoDelete, ...newCollaborators } = collaborators
 
       return {
         ...state,
-        [ slug ]: {
+        [ identifier ]: {
           ...project,
           collaborators: newCollaborators
         }
       }
     },
     [ types.MAKE_OWNER_COMPLETED ]: (state, action) => {
-      const { slug }  = action.payload
+      const { identifier }  = action.payload
       const { currentAccountId } = action.payload
       const { accountId } = action.payload
-      const project = state[ slug ]
+      const project = state[ identifier ]
 
       return {
         ...state,
-        [ slug ]: {
+        [ identifier ]: {
           ...project,
           collaborators: {
-            ...state[ slug ].collaborators,
+            ...state[ identifier ].collaborators,
             [ currentAccountId ]: {
-              ...state[ slug ].collaborators[ currentAccountId ], privilege: 'admin',
+              ...state[ identifier ].collaborators[ currentAccountId ], privilege: 'admin',
             },
             [ accountId ]: {
-              ...state[ slug ].collaborators[ accountId ], privilege: 'owner'
+              ...state[ identifier ].collaborators[ accountId ], privilege: 'owner'
             }
           }
         },
       }
     },
     [ types.ADD_CUSTOM_HEADER ]: (state, action) => {
-      const { slug } = action.payload
-      const project = state[ slug ]
+      const { identifier } = action.payload
+      const project = state[ identifier ]
 
       return {
         ...state,
-        [ slug ]: {
+        [ identifier ]: {
           ...project,
           headers: [
             ...(project.headers || []),
