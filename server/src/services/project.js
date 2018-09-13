@@ -16,43 +16,44 @@ const normalizePattern = (path, origin) => {
   }
 }
 
-export const update = async ( _identifier, data ) => {
+export const update = async ( projectIdentifier, data ) => {
   const { status } = data
   const { status: currentStatus, _id } = await Project.findOne({
-    identifier: _identifier,
+    identifier: projectIdentifier,
     removed: false
   }).lean()
   if (currentStatus !== status) {
-    const { identifier } = await Infrastructure.findOne({ project: _id })
+    const { identifier: distributionId } = await Infrastructure.findOne({ project: _id })
     const enabled = status === 'DISABLED' ? false : true
-    await updateDistribution(identifier, enabled)
+    await updateDistribution(distributionId, enabled)
     return await Project.findOneAndUpdate(
-      { identifier: _identifier },
+      { identifier: projectIdentifier },
       { ...data, status: 'UPDATING' },
       { new: true }
     ).lean()
   }
   return await Project.findOneAndUpdate(
-    { identifier: _identifier },
+    { identifier: projectIdentifier },
     { ...data },
     { new: true }
   ).lean()
 }
 
-export const getByIdentifier = async (_identifier) => {
+export const getByIdentifier = async (projectIdentifier) => {
 
   const project = await Project.findOne({
-    identifier: _identifier,
+    identifier: projectIdentifier,
     removed: false
   }).lean()
   const { status: projectStatus } = project
   if (projectStatus === 'INITIALIZING' || projectStatus === 'UPDATING') {
-    const { identifier } = await Infrastructure.findOne({ project: project._id })
-    const { Distribution: distribution } = await getDistribution(identifier)
+    const { identifier: distributionId } = await Infrastructure.findOne({ project: project._id })
+    const { Distribution: distribution } = await getDistribution(distributionId)
     const { Status: distributionStatus } = distribution
     const status = distributionStatus === 'InProgress'? 'UPDATING' : distributionStatus.toUpperCase()
     return await Project.findOneAndUpdate(
-      { identifier: _identifier }, { status },
+      { identifier: projectIdentifier },
+      { status },
       { new: true }
     ).lean()
   }
