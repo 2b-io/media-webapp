@@ -7,7 +7,7 @@ import { Form } from 'ui/compounds'
 import { CheckBox, TextBox } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
-const ProjectForm = ({ handleSubmit, provider }) => (
+const ProjectForm = ({ handleSubmit, domain }) => (
   <Form handleSubmit={ handleSubmit }>
     <TextBox
       label="Project Name"
@@ -17,14 +17,13 @@ const ProjectForm = ({ handleSubmit, provider }) => (
     />
     <Break />
     <TextBox
-      label="Provider"
-      name="provider"
-      placeholder="Provider"
-      value={ provider }
+      label="Domain"
+      name="domain"
+      placeholder="Domain"
       readOnly
       validate={ validateRequired }
       trailing={ () => (
-        <CopyToClipboard text={ provider }>
+        <CopyToClipboard text={ domain }>
           <Button plain >
             <CopyIcon />
           </Button>

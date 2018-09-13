@@ -23,8 +23,8 @@ const EditProject = ({
     <Container>
       <ProjectForm
         onSubmit={ ( { name, disabled }) => updateProject(project.identifier, name, disabled) }
-        initialValues={ { name: project && project.name, provider: project && project.infrastructure.provider  } }
-        provider={ project && project.infrastructure.provider }
+        initialValues={ { name: project && project.name, domain: project && project.infrastructure.domain  } }
+        domain={ project && project.infrastructure.domain }
       />
     </Container>
   )
