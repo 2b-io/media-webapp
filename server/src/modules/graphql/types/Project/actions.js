@@ -132,15 +132,15 @@ export default ({ Project, ProjectStruct }) => ({
     },
     type: GraphQLBoolean,
     resolve: async (project, { patterns }) => {
-      const { slug, prettyOrigin } = project
-      return await invalidateCache(patterns, slug, prettyOrigin)
+      const { identifier, prettyOrigin } = project
+      return await invalidateCache(patterns, identifier, prettyOrigin)
     }
   },
   _invalidateAllCache: {
     type: GraphQLBoolean,
     resolve: async (project) => {
-      const { slug, prettyOrigin } = project
-      return await invalidateAllCache(slug, prettyOrigin)
+      const { identifier, prettyOrigin } = project
+      return await invalidateAllCache(identifier, prettyOrigin)
     }
   }
 })
