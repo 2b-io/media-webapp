@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { Button, Break } from 'ui/elements'
 import { Form } from 'ui/compounds'
+import { Button, Break } from 'ui/elements'
 import { TextArea, TextBox } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
@@ -13,14 +13,13 @@ const pullSettingForm = ({ handleSubmit }) => (
       placeholder="https://example.com"
       validate={ validateRequired }
     />
+    <Break />
     <TextArea
       label="Allowed Origins"
       name="allowedOrigins"
       placeholder="example.com"
       validate={ validateRequired }
     />
-    <Break />
-
     <Break double />
     <Button type="submit" >Save</Button>
   </Form>
