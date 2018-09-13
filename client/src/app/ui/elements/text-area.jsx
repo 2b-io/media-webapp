@@ -70,8 +70,8 @@ const TextArea = ({
         invalid={ invalid }
         { ...props }
       />
+      <Indicator />
     </Container>
-    <Indicator />
     <AssistiveTextLine
       mostLeft mostRight
       variant="error">
