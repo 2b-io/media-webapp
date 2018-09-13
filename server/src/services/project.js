@@ -3,7 +3,7 @@ import { URL } from 'url'
 
 import config from 'infrastructure/config'
 import Infrastructure from 'models/Infrastructure'
-import { createDistribution } from 'services/cloudFront'
+import { createDistribution, getDistribution, updateDistribution } from 'services/cloudFront'
 import Permission from 'models/Permission'
 import Preset from 'models/Preset'
 import Project from 'models/Project'
@@ -16,18 +16,47 @@ const normalizePattern = (path, origin) => {
   }
 }
 
-export const update = async ( identifier, data ) => {
+export const update = async ( _identifier, data ) => {
+  const { status } = data
+  const { status: currentStatus, _id } = await Project.findOne({
+    identifier: _identifier,
+    removed: false
+  }).lean()
+  if (currentStatus !== status) {
+    const { identifier } = await Infrastructure.findOne({ project: _id })
+    const enabled = status === 'DISABLED' ? false : true
+    await updateDistribution(identifier, enabled)
+    return await Project.findOneAndUpdate(
+      { identifier: _identifier },
+      { ...data, status: 'UPDATING' },
+      { new: true }
+    ).lean()
+  }
   return await Project.findOneAndUpdate(
-    { identifier }, { ...data },
+    { identifier: _identifier },
+    { ...data },
     { new: true }
   ).lean()
 }
 
-export const getByIdentifier = async (identifier) => {
-  return await Project.findOne({
-    identifier,
+export const getByIdentifier = async (_identifier) => {
+
+  const project = await Project.findOne({
+    identifier: _identifier,
     removed: false
   }).lean()
+  const { status: projectStatus } = project
+  if (projectStatus === 'INITIALIZING' || projectStatus === 'UPDATING') {
+    const { identifier } = await Infrastructure.findOne({ project: project._id })
+    const { Distribution: distribution } = await getDistribution(identifier)
+    const { Status: distributionStatus } = distribution
+    const status = distributionStatus === 'InProgress'? 'UPDATING' : distributionStatus.toUpperCase()
+    return await Project.findOneAndUpdate(
+      { identifier: _identifier }, { status },
+      { new: true }
+    ).lean()
+  }
+  return project
 }
 export const getById = async (id) => {
   return await Project.findOne({
