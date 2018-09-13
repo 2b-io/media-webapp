@@ -32,7 +32,7 @@ const ProjectForm = ({ handleSubmit, domain }) => (
     />
     <Break />
     <CheckBox
-      name="disabled"
+      name="status"
       label="Enable"
     />
     <Break double />

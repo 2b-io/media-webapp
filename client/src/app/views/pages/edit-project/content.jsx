@@ -22,8 +22,8 @@ const EditProject = ({
   return (
     <Container>
       <ProjectForm
-        onSubmit={ ( { name, disabled }) => updateProject(project.identifier, name, disabled) }
-        initialValues={ { name: project && project.name, domain: project && project.infrastructure.domain  } }
+        onSubmit={ ( { name, status }) => updateProject(project.identifier, name, status) }
+        initialValues={ { name: project && project.name, domain: project && project.infrastructure.domain } }
         domain={ project && project.infrastructure.domain }
       />
     </Container>
@@ -39,7 +39,7 @@ export default withParams(
         project: selectors.findProjectByIdentifier(state, identifier),
       }),
       mapDispatch({
-        updateProject: (identifier, name, disabled) => actions.updateProject({ identifier, name, disabled })
+        updateProject: (identifier, name, status) => actions.updateProject({ identifier, name, status })
       })
     )(EditProject)
   )
