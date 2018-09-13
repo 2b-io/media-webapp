@@ -12,7 +12,7 @@ const PullSettingForm = reduxForm({
   enableReinitialize: true
 })(_PullSettingForm)
 
-const PullSetting = ({ pullData }) => {
+const PullSetting = () => {
 
   return (
     <Container>

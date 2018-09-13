@@ -13,14 +13,12 @@ const pullSettingForm = ({ handleSubmit }) => (
       label="Pull URL"
       name="pullURL"
       placeholder="https://example.com"
-      validate={ validateRequired }
     />
     <Break />
     <TextArea
       label="Allowed Origins"
       name="allowedOrigins"
       placeholder="example.com"
-      validate={ validateRequired }
     />
     <Break />
     <CustomHeader />
