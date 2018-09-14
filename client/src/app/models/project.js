@@ -2,6 +2,7 @@ import request from 'services/graphql'
 import pick from 'object.pick'
 
 import { ACCOUNT_FRAGMENT } from './account'
+import { PULL_SETTING } from './pull-setting'
 
 export const PERMISSION_FRAGMENT = `
   _id,
@@ -17,10 +18,6 @@ export const PRESET_FRAGMENT = `
   removed,
   isDefault
 `
-export const HEADER_FRAGMENT = `
-  name,
-  value
-`
 
 export const PROJECT_FRAGMENT = `
   identifier,
@@ -31,11 +28,7 @@ export const PROJECT_FRAGMENT = `
   },
   status,
   pullSetting {
-    pullURL,
-    allowedOrigins,
-    headers {
-      ${ HEADER_FRAGMENT }
-    }
+    ${ PULL_SETTING }
   }
   presets {
     ${ PRESET_FRAGMENT }

@@ -24,7 +24,7 @@ const StyleButton = styled.div`
 const CustomHeaderList = ({ fields, addHeader }) => {
 
   if (!fields.length) {
-    fields=[ { } ]
+    fields=[ { name:'', value:'' } ]
   }
 
   return (
