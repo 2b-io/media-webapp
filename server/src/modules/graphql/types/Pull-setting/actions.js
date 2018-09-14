@@ -1,4 +1,4 @@
-import { GraphQLBoolean, GraphQLNonNull } from 'graphql'
+import { GraphQLNonNull } from 'graphql'
 
 import {
   update as updatePullSetting
@@ -13,6 +13,7 @@ export default ({ PullSetting, PullSettingStruct }) => ({
     },
     type: PullSetting,
     resolve: async (self, { pullSetting }) => {
+
       const p = await updatePullSetting(self.project, pullSetting)
 
       // add ref

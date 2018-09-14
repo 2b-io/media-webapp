@@ -17,6 +17,10 @@ export const PRESET_FRAGMENT = `
   removed,
   isDefault
 `
+export const HEADER_FRAGMENT = `
+  name,
+  value
+`
 
 export const PROJECT_FRAGMENT = `
   identifier,
@@ -26,8 +30,13 @@ export const PROJECT_FRAGMENT = `
     provider
   },
   status,
-  origins,
-  prettyOrigin,
+  pullSetting {
+    pullURL,
+    allowedOrigins,
+    headers {
+      ${ HEADER_FRAGMENT }
+    }
+  }
   presets {
     ${ PRESET_FRAGMENT }
   },
@@ -64,8 +73,7 @@ export default {
     const getProject = body.session.account.project
 
     return {
-      ...getProject,
-      origins: getProject.origins.join('\n')
+      ...getProject
     }
   },
   async fetch(token) {
@@ -81,8 +89,7 @@ export default {
 
     return fetchedProjects.map(fetchedProject =>
       ({
-        ...fetchedProject,
-        origins: fetchedProject.origins.join('\n')
+        ...fetchedProject
       })
     )
   },

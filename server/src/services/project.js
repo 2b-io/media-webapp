@@ -5,6 +5,7 @@ import config from 'infrastructure/config'
 import Infrastructure from 'models/Infrastructure'
 import { createDistribution, getDistribution, updateDistribution } from 'services/cloudFront'
 import Permission from 'models/Permission'
+import PullSetting from 'models/Pull-setting'
 import Preset from 'models/Preset'
 import Project from 'models/Project'
 
@@ -60,7 +61,11 @@ export const getByIdentifier = async (projectIdentifier, account) => {
     const { identifier: distributionId } = await Infrastructure.findOne({ project: project._id })
     const { Distribution: distribution } = await getDistribution(distributionId)
     const { Status: distributionStatus } = distribution
-    const status = distributionStatus === 'InProgress'? 'UPDATING' : distributionStatus.toUpperCase()
+
+    const status = (distributionStatus === 'InProgress')
+      ? projectStatus === 'INITIALIZING' ? 'INITIALIZING' : 'UPDATING'
+      : distributionStatus.toUpperCase()
+
     return await Project.findOneAndUpdate(
       { identifier: projectIdentifier },
       { status },
@@ -110,6 +115,10 @@ export const create = async (data, provider, account) => {
     project: project._id,
     account: account._id,
     privilege: 'owner'
+  }).save()
+
+  await new PullSetting({
+    project: project._id
   }).save()
 
   const cloudfront = await createDistribution(project.name)
