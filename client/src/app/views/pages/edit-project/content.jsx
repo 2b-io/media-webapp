@@ -29,6 +29,7 @@ const EditProject = ({
           status: project && project.status !== 'DISABLED' ? true : false
         } }
         domain={ project && project.infrastructure.domain }
+        status={ project && project.status } 
       />
     </Container>
   )
