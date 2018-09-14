@@ -2,7 +2,7 @@ import React from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
-import { mapDispatch, mapState } from 'services/redux-helpers'
+import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Container } from 'ui/elements'
 import { stateful } from 'views/common/decorators'
@@ -23,21 +23,20 @@ const PullSetting = ({
   return (
     <Container>
       <PullSettingForm
-        initialValues={pullSetting}
-        onSubmit={
-          ({
-            pullURL,
-            allowedOrigins,
-            headers
-          }) => updatePullSetting({ pullURL, allowedOrigins, headers, identifier }) }
+        initialValues={ pullSetting }
+        onSubmit={ ({
+          pullURL,
+          allowedOrigins,
+          headers
+        }) => updatePullSetting({ pullURL, allowedOrigins, headers, identifier }) }
       />
     </Container>
   )
 }
 export default withParams(
-stateful({
-  component: 'PullSetting'
-})(
+  stateful({
+    component: 'PullSetting'
+  })(
     connect(
       (state, { params: { identifier } }) => ({
         pullSetting: selectors.pullSetting(state),
@@ -46,7 +45,6 @@ stateful({
       mapDispatch({
         updatePullSetting: actions.updatePullSetting
       })
-    )
-    (PullSetting)
+    )(PullSetting)
   )
 )

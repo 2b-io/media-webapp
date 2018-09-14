@@ -31,15 +31,15 @@ export default {
 
   },
   async updatePullSetting(token, pullSetting) {
-    console.log('pullSetting',pullSetting);
+
     /*
     regex to describes a pattern of character:
       \s* Find multi space, multi tab and multi newline
       [,\n+] Find any character between the brackets
     */
-    // const delimiter = /\s*[,\n+]\s*/
-    // const allowedOrigins = (pullSetting.allowedOrigins || '').trim().split(delimiter).filter(Boolean)
-    // console.log('allowedOrigins', allowedOrigins)
+    const delimiter = /\s*[,\n+]\s*/
+    const allowedOrigins = (pullSetting.allowedOrigins || '').trim().split(delimiter).filter(Boolean)
+    const { identifier, ...pullSettingStruct } = pullSetting
     const body = await request(`
       query updateProject($pullSetting: PullSettingStruct!, $token: String!, $identifier: String!) {
         session(token: $token) {
@@ -58,7 +58,7 @@ export default {
     `, {
       token,
       identifier: pullSetting.identifier,
-      pullSetting: pullSetting
+      pullSetting: { ...pullSettingStruct, allowedOrigins }
     })
 
     const updatedProject = body.session.account.project._update
