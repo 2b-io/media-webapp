@@ -1,5 +1,6 @@
 import {
-  GraphQLString
+  GraphQLString,
+  GraphQLList
 } from 'graphql'
 
 export default {
