@@ -6,13 +6,14 @@ import { DescriptionText } from 'ui/typo'
 import { TextArea, TextBox } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
+import CustomHeader from './custom-header'
+
 const pullSettingForm = ({ handleSubmit }) => (
   <Form handleSubmit={ handleSubmit }>
     <TextBox
       label="Pull URL"
       name="pullURL"
       placeholder="https://example.com/assets"
-      validate={ validateRequired }
     />
     <DescriptionText mostLeft mostRight>
       Optional. If you want Media CDN to request your content from a directory in your origin, enter the directory here, for example, https://example.com/assets. Do not include a / at the end of the directory.
@@ -22,8 +23,8 @@ const pullSettingForm = ({ handleSubmit }) => (
       label="Allowed Origins"
       name="allowedOrigins"
       placeholder="example.com"
-      validate={ validateRequired }
     />
+    <CustomHeader />
     <DescriptionText mostLeft mostRight>
       Optional. If you want to restrict Media CDN requesting to specified origins, enter the allowed origins here.
     </DescriptionText>
