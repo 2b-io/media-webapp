@@ -1,4 +1,4 @@
-import PullSetting from 'models/PullSetting'
+import PullSetting from 'models/Pull-setting'
 
 export const get = async (project) => {
   return await PullSetting.findOne({
@@ -6,8 +6,8 @@ export const get = async (project) => {
   }).lean()
 }
 
-export const remove = async (project) => {
-  return await PullSetting.findOneAndRemove(
-    { project }
-  )
+export const update = async (project) => {
+  return await PullSetting.findOne({
+    project
+  }).lean()
 }

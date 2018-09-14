@@ -14,6 +14,10 @@ import {
 } from 'services/preset'
 
 import {
+  get as getPullSetting,
+} from 'services/pull-setting'
+
+import {
   list as listPermissions
 } from 'services/permission'
 
@@ -24,6 +28,7 @@ import {
 import { Account } from '../Account'
 import { Collaborator } from '../Collaborator'
 import { Preset } from '../Preset'
+import { PullSetting } from '../Pull-setting'
 import { Media } from '../Media'
 import { Infrastructure } from '../Infrastructure'
 
@@ -72,9 +77,8 @@ export default () => ({
     type: new GraphQLList(Media),
     resolve: async (project) => {
       const { identifier } = project
-      const listMedia = await getListMedia(identifier)
+      return await getListMedia(identifier)
 
-      return listMedia
     }
   },
   media: {
@@ -86,17 +90,20 @@ export default () => ({
     type: Media,
     resolve: async (project, { id }) => {
       const { identifier } = project
-      const media = await getMedia(identifier, id)
+      return await getMedia(identifier, id)
 
-      return media
     }
   },
   infrastructure: {
     type: Infrastructure,
     resolve: async (project) => {
-      const infra = await getInfrastructure(project._id)
-
-      return infra
+      return await getInfrastructure(project._id)
+    }
+  },
+  pullSetting: {
+    type: PullSetting,
+    resolve: async (project) => {
+      return await getPullSetting(project._id)
     }
   }
 })

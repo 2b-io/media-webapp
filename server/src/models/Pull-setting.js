@@ -6,12 +6,17 @@ const schema = mongoose.Schema({
     required: true,
     index: true
   },
+  headers: [ 
+    { 
+      name: String,
+      value: String 
+    } 
+  ],
   pullURL: {
-    type: String
+    type: String,
     index: true
   },
-  allowedOrigins: [ String ],
-  headers: [ { name: String, value: String } ]
+  allowedOrigins: [ String ]
 })
 
 export default mongoose.model('PullSetting', schema)
