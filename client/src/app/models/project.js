@@ -63,11 +63,7 @@ export default {
       }
     `, { identifier, token })
 
-    const getProject = body.session.account.project
-
-    return {
-      ...getProject
-    }
+    return body.session.account.project
   },
   async fetch(token) {
     const body = await request(`
@@ -78,13 +74,7 @@ export default {
       }
     `, { token })
 
-    const fetchedProjects = body.session.account.projects
-
-    return fetchedProjects.map(fetchedProject =>
-      ({
-        ...fetchedProject
-      })
-    )
+    return body.session.account.projects
   },
   async create(token, name, description, provider) {
     const body = await request(`
@@ -102,6 +92,7 @@ export default {
       provider,
       token,
     })
+
     return body.session.account._createProject
   },
   async delete(slug, token) {
@@ -260,6 +251,7 @@ export default {
       email: inputEmailMessenge.email,
       messenge: inputEmailMessenge.messenge
     })
+
     return body.session.account.project._inviteCollaborator
   },
 
@@ -279,6 +271,7 @@ export default {
       slug,
       accountId
     })
+
     return body.session.account.project._removeCollaborator
   },
 
@@ -298,6 +291,7 @@ export default {
       slug,
       accountId
     })
+
     return body.session.account.project._makeOwner
   },
   async invalidateCache(token, slug, patterns) {
@@ -316,6 +310,7 @@ export default {
       slug,
       patterns
     })
+
     return body.session.account.project._invalidateCache
   },
 
@@ -334,6 +329,7 @@ export default {
       token,
       slug
     })
+    
     return body.session.account.project._invalidateAllCache
   }
 }

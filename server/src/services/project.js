@@ -23,16 +23,19 @@ export const update = async ( projectIdentifier, data ) => {
     identifier: projectIdentifier,
     removed: false
   }).lean()
+
   if (currentStatus !== status) {
     const { identifier: distributionId } = await Infrastructure.findOne({ project: _id })
     const enabled = status === 'DISABLED' ? false : true
     await updateDistribution(distributionId, enabled)
+
     return await Project.findOneAndUpdate(
       { identifier: projectIdentifier },
       { ...data, status: 'UPDATING' },
       { new: true }
     ).lean()
   }
+
   return await Project.findOneAndUpdate(
     { identifier: projectIdentifier },
     { ...data },
@@ -57,11 +60,11 @@ export const getByIdentifier = async (projectIdentifier, account) => {
     return
   }
   const { status: projectStatus } = project
+
   if (projectStatus === 'INITIALIZING' || projectStatus === 'UPDATING') {
     const { identifier: distributionId } = await Infrastructure.findOne({ project: project._id })
     const { Distribution: distribution } = await getDistribution(distributionId)
     const { Status: distributionStatus } = distribution
-
     const status = (distributionStatus === 'InProgress') ?
       projectStatus === 'INITIALIZING' ? 'INITIALIZING' : 'UPDATING' :
       distributionStatus.toUpperCase()
@@ -72,6 +75,7 @@ export const getByIdentifier = async (projectIdentifier, account) => {
       { new: true }
     ).lean()
   }
+
   return project
 }
 export const getById = async (id) => {
