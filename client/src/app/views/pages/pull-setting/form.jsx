@@ -23,12 +23,12 @@ const pullSettingForm = ({ handleSubmit }) => (
       name="allowedOrigins"
       placeholder="example.com"
     />
-    <CustomHeader
-      name="headers"
-    />
     <DescriptionText mostLeft mostRight>
       Optional. If you want to restrict Media CDN requesting to specified origins, enter the allowed origins here.
     </DescriptionText>
+    <CustomHeader
+      name="headers"
+    />
     <Break double />
     <Button type="submit" >Save</Button>
   </Form>

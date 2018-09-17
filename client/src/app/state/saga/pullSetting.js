@@ -19,7 +19,7 @@ const getLoop = function*() {
       const pullSetting = yield call(PullSetting.getPullSetting, session.token, identifier)
       yield put(actions.getPullSettingCompleted( pullSetting ))
     } catch (e) {
-      yield put(actions.pullSettingFailed(serializeError(e)))
+      yield put(actions.getPullSettingFailed(serializeError(e)))
       continue
     }
   }

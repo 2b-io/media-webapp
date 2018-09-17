@@ -2,7 +2,7 @@ import request from 'services/graphql'
 import pick from 'object.pick'
 
 import { ACCOUNT_FRAGMENT } from './account'
-import { PULL_SETTING } from './pull-setting'
+import { PULL_SETTING_FRAGMENT } from './pull-setting'
 
 export const PERMISSION_FRAGMENT = `
   _id,
@@ -28,7 +28,7 @@ export const PROJECT_FRAGMENT = `
   },
   status,
   pullSetting {
-    ${ PULL_SETTING }
+    ${ PULL_SETTING_FRAGMENT }
   }
   presets {
     ${ PRESET_FRAGMENT }
@@ -102,7 +102,6 @@ export default {
       provider,
       token,
     })
-
     const createdProject = body.session.account._createProject
 
     return {
@@ -129,13 +128,6 @@ export default {
     return body.session.account.project._destroy
   },
   async update(project, token) {
-    /*
-    regex to describes a pattern of character:
-      \s* Find multi space, multi tab and multi newline
-      [,\n+] Find any character between the brackets
-    */
-    const delimiter = /\s*[,\n+]\s*/
-    const origins = (project.origins || '').trim().split(delimiter).filter(Boolean)
 
     const body = await request(`
       query updateProject($project: ProjectStruct!, $token: String!, $identifier: String!) {
@@ -152,21 +144,15 @@ export default {
     `, {
       project: pick(
         {
-          ...project,
-          origins
+          ...project
         },
-        [ 'name', 'origins', 'prettyOrigin', 'headers', 'status', 'description' ]
+        [ 'name', 'status', 'description' ]
       ),
       token,
       identifier: project.identifier
     })
 
-    const updatedProject = body.session.account.project._update
-
-    return {
-      ...updatedProject,
-      origins: updatedProject.origins.join('\n')
-    }
+    return body.session.account.project._update
   },
 
   async createPreset({ preset, slug }, token) {

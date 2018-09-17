@@ -13,7 +13,6 @@ export const getPullSettingFailed = error => ({
   payload: error
 })
 
-
 export const updatePullSetting = pullSetting => ({
   type: types.UPDATE,
   payload: pullSetting

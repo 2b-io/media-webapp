@@ -4,7 +4,7 @@ export const HEADER_FRAGMENT = `
   name,
   value
 `
-export const PULL_SETTING = `
+export const PULL_SETTING_FRAGMENT = `
   pullURL,
   allowedOrigins,
   headers {
@@ -19,7 +19,7 @@ export default {
           account {
             project(identifier: $identifier) {
               pullSetting {
-                ${ PULL_SETTING }
+                ${ PULL_SETTING_FRAGMENT }
               }
             }
           }
@@ -31,7 +31,6 @@ export default {
 
   },
   async updatePullSetting(token, pullSetting) {
-
     /*
     regex to describes a pattern of character:
       \s* Find multi space, multi tab and multi newline
@@ -47,7 +46,7 @@ export default {
             project(identifier: $identifier) {
               pullSetting {
                 _update(pullSetting: $pullSetting) {
-                  ${ PULL_SETTING }
+                  ${ PULL_SETTING_FRAGMENT }
                 }
               }
 
