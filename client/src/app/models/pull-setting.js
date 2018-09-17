@@ -29,8 +29,8 @@ export default {
 
     const { pullSetting } = body.session.account.project
     return {
-        ...pullSetting,
-        allowedOrigins: pullSetting.allowedOrigins.join('\n')
+      ...pullSetting,
+      allowedOrigins: pullSetting.allowedOrigins.join('\n')
     }
   },
   async updatePullSetting(token, pullSetting) {
