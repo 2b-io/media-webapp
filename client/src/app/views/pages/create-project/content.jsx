@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
-import { Container, ErrorBox, Link } from 'ui/elements'
-import { DescriptionText } from 'ui/typo'
+import { Container, ErrorBox } from 'ui/elements'
+// import { DescriptionText } from 'ui/typo'
 import { stateful } from 'views/common/decorators'
 import { Redirect } from 'views/router'
 

@@ -26,12 +26,13 @@ const ProjectBlock = ({
     <Card
       title={ () => <Heading mostLeft mostRight>Projects</Heading> }
       fab={ () => <AddIcon onClick={ toCreateProject } /> }
-      content={ () => items.length &&
+      content={ () => (
+        items.length &&
         <List items={ items } /> ||
         <Text mostLeft mostRight>
           You do not have any projects yet.
         </Text>
-      }
+      ) }
     />
   )
 }

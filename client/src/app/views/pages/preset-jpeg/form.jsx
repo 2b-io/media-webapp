@@ -1,13 +1,11 @@
 import React from 'react'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 import { Form } from 'ui/compounds'
 import { Button, Break } from 'ui/elements'
-import { CopyIcon } from 'ui/icons'
-import { TextLine } from 'ui/typo'
+// import { TextLine } from 'ui/typo'
 
-import { CheckBox, TextBox, SlideBar } from 'views/common/form'
-import { validateRequired } from 'views/common/validate'
+import { TextBox, SlideBar } from 'views/common/form'
+// import { validateRequired } from 'views/common/validate'
 
 const PresetForm = ({ handleSubmit }) => (
   <Form handleSubmit={ handleSubmit }>

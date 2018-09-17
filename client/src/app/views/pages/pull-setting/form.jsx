@@ -4,7 +4,7 @@ import { Form } from 'ui/compounds'
 import { Button, Break } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
 import { TextArea, TextBox } from 'views/common/form'
-import { validateRequired } from 'views/common/validate'
+// import { validateRequired } from 'views/common/validate'
 
 import CustomHeader from './custom-header'
 
