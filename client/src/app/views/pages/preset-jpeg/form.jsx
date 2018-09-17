@@ -19,9 +19,8 @@ const PresetForm = ({ handleSubmit }) => (
     <Break />
 
     <SlideBar
-      initialValues="1"
       label="Quality"
-      name="quality"
+      name="range"
       min="0"
       max="100"
     />

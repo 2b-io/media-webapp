@@ -1,7 +1,7 @@
 import * as CreateProject from 'views/pages/create-project'
 import * as Dashboard from 'views/pages/dashboard'
 import * as EditProject from 'views/pages/edit-project'
-import * as Preset from 'views/pages/presets'
+import * as JpegPreset from 'views/pages/preset-jpeg'
 import * as Profile from 'views/pages/profile'
 import * as ProjectDetail from 'views/pages/project-detail'
 import * as ProjectMedia from 'views/pages/project-detail/project-media'
@@ -51,8 +51,8 @@ export default {
       actions.getProject(identifier)
     ]
   },
-  '/projects/:identifier/preset': {
-    component: Preset,
+  '/projects/:identifier/image_jpeg': {
+    component: JpegPreset,
     exact: true
   },
   '/projects/:identifier/edit': {
