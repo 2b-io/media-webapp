@@ -1,23 +1,12 @@
 import {
-  GraphQLBoolean,
   GraphQLString
 } from 'graphql'
-import GraphQLJSON from 'graphql-type-json'
 
 export default {
-  name: {
+  contentType: {
     type: GraphQLString
   },
-  hash: {
+  parameters: {
     type: GraphQLString
-  },
-  isDefault: {
-    type: GraphQLBoolean
-  },
-  values: {
-    type: GraphQLJSON
-  },
-  removed: {
-    type: GraphQLBoolean
   }
 }

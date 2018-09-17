@@ -54,17 +54,16 @@ export default () => ({
   },
   preset: {
     args: {
-      hash: {
+      contentType: {
         type: GraphQLString
       }
     },
     type: Preset,
-    resolve: async (project, { hash }) => {
+    resolve: async (project, { contentType }) => {
 
-      const preset = await getPreset(project, hash)
+      const preset = await getPreset(project._id, contentType)
       // add ref
       preset.project = project
-
       return preset
     }
   },

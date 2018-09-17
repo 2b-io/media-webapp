@@ -11,11 +11,8 @@ export const PERMISSION_FRAGMENT = `
   privilege,
 `
 export const PRESET_FRAGMENT = `
-  name,
-  hash,
-  values,
-  removed,
-  isDefault
+  contentType,
+  parameters
 `
 
 export const PROJECT_FRAGMENT = `
