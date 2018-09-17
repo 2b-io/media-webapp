@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 const Container = styled.div`
   position: relative;
+  height: 24px;
 `
 
 const Range = styled.input.attrs({
@@ -12,15 +13,15 @@ const Range = styled.input.attrs({
   position: absolute;
   height: 24px;
   background: transparent;
-  // appearance: none;
-  // outline: none;
-  // opacity: 0;
+  appearance: none;
+  outline: none;
+  opacity: 0;
   margin: 0;
   left: 0;
   width: 100%;
 `
 
-const Circle = styled.div`
+const CircleThumb = styled.div`
   position: absolute;
   width: 24px;
   height: 24px;
@@ -29,62 +30,50 @@ const Circle = styled.div`
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, .07);
   display: block;
   transition: .2s;
-  top: -10px;
-  background: ${ ({
-    theme,
-    disabled
-  }) => disabled ?
-    theme.secondary.base :
-    theme.primary.base
-  };
+  background: ${ ({ theme }) => theme.primary.base };
   left: ${
-    ({ range }) => ` ${ range }%`
+    ({ value }) => ` ${ value }%`
   };
 `
-const RangeValue = styled.div`
+const ActiveTrack = styled.div`
   position: absolute;
-  top: -2;
+  top: 10px;
   left: 0;
   display: inline-block;
   height: 4px;
-  background: ${ ({
-    theme,
-    disabled
-  }) => disabled ?
-    theme.secondary.base :
-    theme.primary.base
-  };
+  background: ${ ({ theme }) => theme.primary.base };
   transition: .2s;
   width: ${
-    ({ range }) => ` ${ range }%`
+    ({ value }) => ` ${ value }%`
   };
 `
 
-const RangeValueRight = styled.div`
+const InactiveTrack = styled.div`
   position: absolute;
-  top: -2;
+  top: 10px;
   right: 0;
   display: inline-block;
   height: 4px;
   background: black;
   transition: .2s;
+  background: rgba(100, 200, 250, 1);
   width: ${
-    ({ range }) => ` ${ 100 - range }%`
+    ({ value }) => ` ${ 100 - value }%`
   };
 `
 
 const SlideBar = ({
   ...props
 }) => {
-
+  const currentState = props.value
   return (
     <Container>
-      <RangeValue range={ props.value } />
-      <RangeValueRight range={ props.value } />
-      <Circle range={ props.value } />
+      <ActiveTrack value={ currentState } />
+      <InactiveTrack value={ currentState } />
+      <CircleThumb value={ currentState } />
       <Range
         { ...props }
-        value={ props.value }
+        value={ currentState }
       />
     </Container>
   )
