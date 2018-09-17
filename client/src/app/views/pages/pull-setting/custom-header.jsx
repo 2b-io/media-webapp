@@ -20,57 +20,52 @@ const Wrapper = styled.div`
 const StyleButton = styled.div`
   padding-bottom: 24px;
 `
-
-const CustomHeaderList = ({ fields, addHeader }) => {
-
-  if (!fields.length) {
-    fields=[ { } ]
-  }
-
-  return (
-    fields.map(
-      (header, index) => (
-        <Wrapper key={ index }>
-          <TextBox
-            label="Header Name"
-            type="text"
-            name={ `${ header }.name` }
-            placeholder="X-Pull"
-          />
-          <TextBox
-            label="Header Value"
-            type="text"
-            name={ `${ header }.value` }
-            placeholder="Media CDN"
-          />
-          <StyleButton>
-            { index === fields.length - 1 ?
-              <Button plain onClick={ addHeader }>
-                <AddIcon />
-              </Button> :
-              <Button plain onClick={ () => fields.remove(index) }>
-                <TrashIcon />
-              </Button>
-
-            }
-          </StyleButton>
-        </Wrapper>
-      )
+const CustomHeaderList = ({ fields }) => (
+  fields.map(
+    (header, index) => (
+      <Wrapper key={ index }>
+        <TextBox
+          label="Header Name"
+          type="text"
+          name={ `${ header }.name` }
+          placeholder="X-Pull"
+        />
+        <TextBox
+          label="Header Value"
+          type="text"
+          name={ `${ header }.value` }
+          placeholder="Media CDN"
+        />
+        <StyleButton>
+          { index === fields.length - 1 ?
+            <Button plain onClick={ () => fields.push({}) }>
+              <AddIcon />
+            </Button> :
+            <Button plain onClick={ () => fields.remove(index) }>
+              <TrashIcon />
+            </Button>
+          }
+        </StyleButton>
+      </Wrapper>
     )
   )
-}
+)
 
 const CustomHeader = () => (
   <FieldArray
     name="headers"
-    component={ ({ fields }) => (
-      <CustomHeaderList
-        fields={ fields }
-        addHeader={ () => fields.push({}) }
-      />
-    ) }
+    component={ ({ fields }) => {
+      if (!fields.length) {
+        fields.push({})
+      }
+
+      return (
+        <CustomHeaderList
+          fields={ fields }
+        />
+      )
+    } }
   />
 )
-
 
 export default CustomHeader

@@ -1,6 +1,5 @@
 import {
   GraphQLBoolean,
-  GraphQLList,
   GraphQLString
 } from 'graphql'
 
@@ -13,12 +12,6 @@ export default {
   },
   description: {
     type: GraphQLString
-  },
-  prettyOrigin: {
-    type: GraphQLString
-  },
-  origins: {
-    type: new GraphQLList(GraphQLString)
   },
   status: {
     type: GraphQLString

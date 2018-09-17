@@ -4,7 +4,6 @@ import { Form } from 'ui/compounds'
 import { Button, Break } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
 import { TextArea, TextBox } from 'views/common/form'
-import { validateRequired } from 'views/common/validate'
 
 import CustomHeader from './custom-header'
 
@@ -24,9 +23,14 @@ const pullSettingForm = ({ handleSubmit }) => (
       name="allowedOrigins"
       placeholder="example.com"
     />
-    <CustomHeader />
     <DescriptionText mostLeft mostRight>
       Optional. If you want to restrict Media CDN requesting to specified origins, enter the allowed origins here.
+    </DescriptionText>
+    <CustomHeader
+      name="headers"
+    />
+    <DescriptionText mostLeft mostRight>
+      All custom header keys and values you specify here will be included in every request to the origin.
     </DescriptionText>
     <Break double />
     <Button type="submit" >Save</Button>
@@ -34,4 +38,3 @@ const pullSettingForm = ({ handleSubmit }) => (
 )
 
 export default pullSettingForm
-

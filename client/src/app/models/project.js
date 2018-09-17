@@ -2,6 +2,7 @@ import request from 'services/graphql'
 import pick from 'object.pick'
 
 import { ACCOUNT_FRAGMENT } from './account'
+import { PULL_SETTING_FRAGMENT } from './pull-setting'
 
 export const PERMISSION_FRAGMENT = `
   _id,
@@ -26,8 +27,9 @@ export const PROJECT_FRAGMENT = `
     provider
   },
   status,
-  origins,
-  prettyOrigin,
+  pullSetting {
+    ${ PULL_SETTING_FRAGMENT }
+  }
   presets {
     ${ PRESET_FRAGMENT }
   },
@@ -61,12 +63,7 @@ export default {
       }
     `, { identifier, token })
 
-    const getProject = body.session.account.project
-
-    return {
-      ...getProject,
-      origins: getProject.origins.join('\n')
-    }
+    return body.session.account.project
   },
   async fetch(token) {
     const body = await request(`
@@ -77,14 +74,7 @@ export default {
       }
     `, { token })
 
-    const fetchedProjects = body.session.account.projects
-
-    return fetchedProjects.map(fetchedProject =>
-      ({
-        ...fetchedProject,
-        origins: fetchedProject.origins.join('\n')
-      })
-    )
+    return body.session.account.projects
   },
   async create(token, name, description, provider) {
     const body = await request(`
@@ -103,12 +93,7 @@ export default {
       token,
     })
 
-    const createdProject = body.session.account._createProject
-
-    return {
-      ...createdProject,
-      origins: createdProject.origins.join('\n')
-    }
+    return body.session.account._createProject
   },
   async delete(slug, token) {
     const body = await request(`
@@ -129,13 +114,6 @@ export default {
     return body.session.account.project._destroy
   },
   async update(project, token) {
-    /*
-    regex to describes a pattern of character:
-      \s* Find multi space, multi tab and multi newline
-      [,\n+] Find any character between the brackets
-    */
-    const delimiter = /\s*[,\n+]\s*/
-    const origins = (project.origins || '').trim().split(delimiter).filter(Boolean)
 
     const body = await request(`
       query updateProject($project: ProjectStruct!, $token: String!, $identifier: String!) {
@@ -152,21 +130,15 @@ export default {
     `, {
       project: pick(
         {
-          ...project,
-          origins
+          ...project
         },
-        [ 'name', 'origins', 'prettyOrigin', 'headers', 'status', 'description' ]
+        [ 'name', 'status', 'description' ]
       ),
       token,
       identifier: project.identifier
     })
 
-    const updatedProject = body.session.account.project._update
-
-    return {
-      ...updatedProject,
-      origins: updatedProject.origins.join('\n')
-    }
+    return body.session.account.project._update
   },
 
   async createPreset({ preset, slug }, token) {
@@ -279,6 +251,7 @@ export default {
       email: inputEmailMessenge.email,
       messenge: inputEmailMessenge.messenge
     })
+
     return body.session.account.project._inviteCollaborator
   },
 
@@ -298,6 +271,7 @@ export default {
       slug,
       accountId
     })
+
     return body.session.account.project._removeCollaborator
   },
 
@@ -317,6 +291,7 @@ export default {
       slug,
       accountId
     })
+
     return body.session.account.project._makeOwner
   },
   async invalidateCache(token, slug, patterns) {
@@ -335,6 +310,7 @@ export default {
       slug,
       patterns
     })
+
     return body.session.account.project._invalidateCache
   },
 
@@ -353,6 +329,7 @@ export default {
       token,
       slug
     })
+    
     return body.session.account.project._invalidateAllCache
   }
 }
