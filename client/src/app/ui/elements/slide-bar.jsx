@@ -1,10 +1,29 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import styled from 'styled-components'
 
 
 const Container = styled.div`
   position: relative;
   height: 24px;
+`
+const Header = styled.div`
+  display: grid;
+  & > * {
+    min-width: 0;
+    min-height: 0;
+  };
+  grid-template-columns: 1fr 40px;
+`
+
+const Detail = styled.span`
+  height: 40px;
+  padding-left: 8px;
+  line-height: 40px;
+`
+const Value = styled.span`
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
 `
 
 const Range = styled.input.attrs({
@@ -63,19 +82,26 @@ const InactiveTrack = styled.div`
 `
 
 const SlideBar = ({
+  label,
   ...props
 }) => {
   const currentState = props.value
   return (
-    <Container>
-      <ActiveTrack value={ currentState } />
-      <InactiveTrack value={ currentState } />
-      <CircleThumb value={ currentState } />
-      <Range
-        { ...props }
-        value={ currentState }
-      />
-    </Container>
+    <Fragment>
+      <Header>
+        <Detail>{ label }</Detail>
+        <Value>{ currentState }</Value>
+      </Header>
+      <Container>
+        <ActiveTrack value={ currentState } />
+        <InactiveTrack value={ currentState } />
+        <CircleThumb value={ currentState } />
+        <Range
+          { ...props }
+          value={ currentState }
+        />
+      </Container>
+    </Fragment>
   )
 }
 
