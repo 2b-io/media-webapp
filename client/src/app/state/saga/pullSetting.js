@@ -1,10 +1,8 @@
-import { all, call, take, fork, put, select } from 'redux-saga/effects'
+import { call, take, fork, put, select } from 'redux-saga/effects'
 import serializeError from 'serialize-error'
 
 import PullSetting from 'models/pull-setting'
 import { actions, types, selectors } from 'state/interface'
-
-import { addToast } from './toast'
 
 const getLoop = function*() {
   while (true) {
