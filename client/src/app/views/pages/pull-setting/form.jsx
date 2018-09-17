@@ -29,6 +29,9 @@ const pullSettingForm = ({ handleSubmit }) => (
     <CustomHeader
       name="headers"
     />
+    <DescriptionText mostLeft mostRight>
+      All custom header keys and values you specify here will be included in every request to the origin.
+    </DescriptionText>
     <Break double />
     <Button type="submit" >Save</Button>
   </Form>

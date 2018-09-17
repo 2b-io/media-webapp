@@ -1,4 +1,4 @@
-import PullSetting from 'models/Pull-setting'
+import PullSetting from 'models/pull-setting'
 
 export const get = async (project) => {
 

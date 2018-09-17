@@ -27,8 +27,11 @@ export default {
       }
     `, { token, identifier })
 
-    return body.session.account.project.pullSetting
-
+    const { pullSetting } = body.session.account.project
+    return {
+        ...pullSetting,
+        allowedOrigins: pullSetting.allowedOrigins.join('\n')
+    }
   },
   async updatePullSetting(token, pullSetting) {
     /*
@@ -37,8 +40,13 @@ export default {
       [,\n+] Find any character between the brackets
     */
     const delimiter = /\s*[,\n+]\s*/
+
     const allowedOrigins = (pullSetting.allowedOrigins || '').trim().split(delimiter).filter(Boolean)
+
     const { identifier, ...pullSettingStruct } = pullSetting
+    const { headers  } = pullSetting
+    const _headers = headers.filter(({ name, value }) => name && value)
+
     const body = await request(`
       query updateProject($pullSetting: PullSettingStruct!, $token: String!, $identifier: String!) {
         session(token: $token) {
@@ -57,14 +65,13 @@ export default {
     `, {
       token,
       identifier: pullSetting.identifier,
-      pullSetting: { ...pullSettingStruct, allowedOrigins }
+      pullSetting: { ...pullSettingStruct, allowedOrigins, headers: _headers }
     })
 
     const updatedProject = body.session.account.project._update
-
     return {
       ...updatedProject,
-      origins: updatedProject.origins.join('\n')
+      allowedOrigins: updatedProject.allowedOrigins.join('\n')
     }
   },
 }

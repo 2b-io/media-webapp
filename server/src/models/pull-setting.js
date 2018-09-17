@@ -6,11 +6,11 @@ const schema = mongoose.Schema({
     required: true,
     index: true
   },
-  headers: [ 
-    { 
+  headers: [
+    {
       name: String,
-      value: String 
-    } 
+      value: String
+    }
   ],
   pullURL: {
     type: String,

@@ -28,7 +28,7 @@ import {
 import { Account } from '../Account'
 import { Collaborator } from '../Collaborator'
 import { Preset } from '../Preset'
-import { PullSetting } from '../Pull-setting'
+import { PullSetting } from '../pull-setting'
 import { Media } from '../Media'
 import { Infrastructure } from '../Infrastructure'
 
