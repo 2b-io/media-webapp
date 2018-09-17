@@ -102,12 +102,7 @@ export default {
       provider,
       token,
     })
-    const createdProject = body.session.account._createProject
-
-    return {
-      ...createdProject,
-      origins: createdProject.origins.join('\n')
-    }
+    return body.session.account._createProject
   },
   async delete(slug, token) {
     const body = await request(`

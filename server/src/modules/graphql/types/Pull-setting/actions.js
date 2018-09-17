@@ -13,12 +13,10 @@ export default ({ PullSetting, PullSettingStruct }) => ({
     },
     type: PullSetting,
     resolve: async (self, { pullSetting }) => {
-
       const p = await updatePullSetting(self.project, pullSetting)
-
       // add ref
       p.project = self.project
-
+      
       return p
     }
   }
