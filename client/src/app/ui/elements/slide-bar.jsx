@@ -1,11 +1,15 @@
 import React, { Fragment } from 'react'
 import styled from 'styled-components'
 
+import { DescriptionText, TextLine } from 'ui/typo'
 
+const Wrapper = styled.div`
+`
 const Container = styled.div`
   position: relative;
   height: 24px;
 `
+
 const Header = styled.div`
   display: grid;
   & > * {
@@ -15,11 +19,6 @@ const Header = styled.div`
   grid-template-columns: 1fr 40px;
 `
 
-const Detail = styled.span`
-  height: 40px;
-  padding-left: 8px;
-  line-height: 40px;
-`
 const Value = styled.span`
   height: 40px;
   line-height: 40px;
@@ -75,7 +74,6 @@ const InactiveTrack = styled.div`
   height: 4px;
   background: black;
   transition: .2s;
-  background: rgba(100, 200, 250, 1);
   width: ${
     ({ value }) => ` ${ 100 - value }%`
   };
@@ -86,10 +84,11 @@ const SlideBar = ({
   ...props
 }) => {
   const currentState = props.value
+
   return (
-    <Fragment>
+    <Wrapper>
       <Header>
-        <Detail>{ label }</Detail>
+        <TextLine mostLeft mostRight>{ label }</TextLine>
         <Value>{ currentState }</Value>
       </Header>
       <Container>
@@ -101,7 +100,7 @@ const SlideBar = ({
           value={ currentState }
         />
       </Container>
-    </Fragment>
+    </Wrapper>
   )
 }
 

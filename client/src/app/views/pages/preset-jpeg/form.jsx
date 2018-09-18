@@ -1,11 +1,9 @@
 import React from 'react'
 
 import { Form } from 'ui/compounds'
-import { Button, Break } from 'ui/elements'
-// import { TextLine } from 'ui/typo'
-
-import { TextBox, SlideBar } from 'views/common/form'
-// import { validateRequired } from 'views/common/validate'
+import { Break, Button } from 'ui/elements'
+import { DescriptionText } from 'ui/typo'
+import { CheckBox, SlideBar, TextBox } from 'views/common/form'
 
 const PresetForm = ({ handleSubmit }) => (
   <Form handleSubmit={ handleSubmit }>
@@ -13,15 +11,25 @@ const PresetForm = ({ handleSubmit }) => (
       label="Content Type"
       name="contentType"
       placeholder="Content Type"
+      readOnly
     />
     <Break />
-
     <SlideBar
       label="Quality"
-      name="range"
+      name="quality"
       min="0"
       max="100"
     />
+    <DescriptionText mostLeft mostRight>
+      Set maximum image quality factor (0-100)
+    </DescriptionText>
+    <CheckBox
+      name="progressive"
+      label="Progressive"
+    />
+    <DescriptionText mostLeft mostRight>
+      Lossless conversion to progressive
+    </DescriptionText>
     <Break double />
     <Button
       type="submit"

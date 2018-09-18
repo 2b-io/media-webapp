@@ -11,18 +11,24 @@ const PresetForm = reduxForm({
   enableReinitialize: true
 })(_PresetForm)
 
-const JpegPreset = ({
-  range
+const PresetJpeg = ({
+  preset
 }) => {
   return (
     <Container>
       <PresetForm
-        initialValues={ { range: range || 0 } }
+        initialValues={ preset }
       />
     </Container>
   )
 }
 
 export default connect(
+  state => ({
+    preset: {
+      contentType: 'image/jpeg',
+      quality: 90
+    }
+  }),
   null
-)(JpegPreset)
+)(PresetJpeg)
