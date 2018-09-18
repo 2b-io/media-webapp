@@ -65,7 +65,10 @@ export default {
   },
   '/projects/:identifier/pull': {
     component: PullSetting,
-    exact: true
+    exact: true,
+    onEnter: ({ identifier }) => [
+      actions.getPullSetting(identifier)
+    ]
   },
   '/projects/:slug/presets/:hash': {
     partial: true,

@@ -5,6 +5,7 @@ import config from 'infrastructure/config'
 import Infrastructure from 'models/Infrastructure'
 import { createDistribution, getDistribution, updateDistribution } from 'services/cloudFront'
 import Permission from 'models/Permission'
+import pullSetting from 'models/pull-setting'
 import Preset from 'models/Preset'
 import Project from 'models/Project'
 
@@ -22,16 +23,19 @@ export const update = async ( projectIdentifier, data ) => {
     identifier: projectIdentifier,
     removed: false
   }).lean()
+
   if (currentStatus !== status) {
     const { identifier: distributionId } = await Infrastructure.findOne({ project: _id })
     const enabled = status === 'DISABLED' ? false : true
     await updateDistribution(distributionId, enabled)
+
     return await Project.findOneAndUpdate(
       { identifier: projectIdentifier },
       { ...data, status: 'UPDATING' },
       { new: true }
     ).lean()
   }
+
   return await Project.findOneAndUpdate(
     { identifier: projectIdentifier },
     { ...data },
@@ -56,17 +60,22 @@ export const getByIdentifier = async (projectIdentifier, account) => {
     return
   }
   const { status: projectStatus } = project
+
   if (projectStatus === 'INITIALIZING' || projectStatus === 'UPDATING') {
     const { identifier: distributionId } = await Infrastructure.findOne({ project: project._id })
     const { Distribution: distribution } = await getDistribution(distributionId)
     const { Status: distributionStatus } = distribution
-    const status = distributionStatus === 'InProgress'? 'UPDATING' : distributionStatus.toUpperCase()
+    const status = (distributionStatus === 'InProgress') ?
+      projectStatus === 'INITIALIZING' ? 'INITIALIZING' : 'UPDATING' :
+      distributionStatus.toUpperCase()
+
     return await Project.findOneAndUpdate(
       { identifier: projectIdentifier },
       { status },
       { new: true }
     ).lean()
   }
+
   return project
 }
 export const getById = async (id) => {
@@ -110,6 +119,10 @@ export const create = async (data, provider, account) => {
     project: project._id,
     account: account._id,
     privilege: 'owner'
+  }).save()
+
+  await new pullSetting({
+    project: project._id
   }).save()
 
   const cloudfront = await createDistribution(project.name)

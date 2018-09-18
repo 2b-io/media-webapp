@@ -12,13 +12,9 @@ const schema = mongoose.Schema({
   description: {
     type: String
   },
-  prettyOrigin: {
-    type: String
-  },
   status: {
     type: String
   },
-  origins: [ String ],
   removed: {
     type: Boolean,
     default: false,
