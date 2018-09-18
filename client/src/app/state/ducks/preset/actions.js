@@ -26,13 +26,13 @@ export const getPresetFailed = reason => ({
   payload: { reason }
 })
 
-export const updatePreset = ({ preset, identifier }) => ({
+export const updatePreset = ({ preset }) => ({
   type: types.UPDATE,
-  payload: { preset, identifier }
+  payload: { preset }
 })
-export const updatePresetCompleted = ({ preset, identifier }) => ({
+export const updatePresetCompleted = ({ preset }) => ({
   type: types.UPDATE_COMPLETED,
-  payload: { preset, identifier }
+  payload: { preset }
 })
 export const updatePresetFailed = reason => ({
   type: types.UPDATE_FAILED,

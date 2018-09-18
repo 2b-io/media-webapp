@@ -25,11 +25,11 @@ export default {
   async update(token, preset) {
     const { identifier, ...presetStruct } = preset
     const body = await request(`
-      query updatePreset($token: String!, $identifier: String!, $preset: PresetStruct!) {
+      query updatePreset($token: String!, $identifier: String!, $contentType: String!, $preset: PresetStruct!) {
         session(token: $token) {
           account {
             project(identifier: $identifier) {
-              preset {
+              preset (contentType: $contentType){
                 _update(preset: $preset) {
                   ${ PRESET_FRAGMENT }
                 }
@@ -42,6 +42,7 @@ export default {
     `, {
       token,
       identifier: preset.identifier,
+      contentType: preset.contentType,
       preset: presetStruct
     })
     return  body.session.account.project.preset

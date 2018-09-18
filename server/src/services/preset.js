@@ -21,7 +21,7 @@ export const get = async (project, contentType) => {
 export const create = async (project, data) => {
   const preset = await new Preset({
     ...data,
-    project: project._id
+    project
   }).save()
 
   return preset

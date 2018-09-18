@@ -44,7 +44,7 @@ const createLoop = function*() {
 
 const deleteLoop = function*() {
   while (true) {
-    const action = yield take(types['PRESET/DELETE'])
+    const action = yield take(types['PRESET/REMOVE'])
 
     try {
       const session = yield select(selectors.currentSession)
@@ -94,7 +94,6 @@ const getLoop = function*() {
       const { contentType, identifier } = action.payload
 
       const preset = yield call(Preset.get, session.token, identifier, contentType)
-
       yield put(actions.getPresetCompleted({ preset, identifier }))
     } catch (e) {
       yield put(actions.getPresetFailed(serializeError(e)))
@@ -114,13 +113,9 @@ const updateLoop = function*() {
         continue
       }
 
-      const { preset, identifier } = action.payload
+      const { preset } = action.payload
 
-      const newPreset = yield call(
-        Preset.updatePreset,
-        { preset, identifier },
-        session.token
-      )
+      const newPreset = yield call(Preset.update, session.token, preset)
 
       yield all([
         put(actions.updatePresetCompleted({

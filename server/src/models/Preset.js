@@ -7,11 +7,12 @@ const schema = mongoose.Schema({
     index: true
   },
   contentType: {
-    type: String,
+    type: String
   },
   parameters: {
-    type: mongoose.Schema.Types.Mixed
+    type: mongoose.Schema.Types.Mixed,
+    default: {}
   }
-})
+}, { minimize: false })
 
 export default mongoose.model('Preset', schema)
