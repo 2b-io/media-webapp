@@ -29,7 +29,7 @@ export const create = async (project, data) => {
 
 export const update = async (project, contentType, data) => {
   const preset = await Preset.findOneAndUpdate(
-    { project: project._id, contentType },
+    { project, contentType },
     data,
     { new: true }
   ).lean()
@@ -37,9 +37,9 @@ export const update = async (project, contentType, data) => {
   return preset
 }
 
-export const remove = async (project, hash) => {
+export const remove = async (project, contentType) => {
   const preset = await Preset.findOneAndRemove(
-    { project: project._id, hash }
+    { project, contentType }
   )
 
   return preset

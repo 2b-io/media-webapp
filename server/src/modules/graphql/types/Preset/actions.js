@@ -14,7 +14,8 @@ export default ({ Preset, PresetStruct }) => ({
     },
     type: Preset,
     resolve: async (self, { preset }) => {
-      const p = await updatePreset(self.project, self.contentType, preset)
+      const { project: { _id: project }, contentType } = self
+      const p = await updatePreset(project, contentType, preset)
 
       // add ref
       p.project = self.project
@@ -25,9 +26,9 @@ export default ({ Preset, PresetStruct }) => ({
   _destroy: {
     type: GraphQLBoolean,
     resolve: async (self) => {
-      await removePreset(self.project, self.hash)
+      const { project: { _id: project }, contentType } = self
 
-      return true
+      return removePreset(project, contentType)
     }
   }
 })
