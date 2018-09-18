@@ -74,66 +74,6 @@ export const updateProjectFailed = reason => ({
   payload: { reason }
 })
 
-export const createPreset = ({ preset, slug }) => ({
-  type: types.CREATE_PRESET,
-  payload: ({ preset, slug })
-})
-
-export const createPresetCompleted = ({ preset, slug }) => ({
-  type: types.CREATE_PRESET_COMPLETED,
-  payload: ({ preset, slug })
-})
-
-export const createPresetFailed = reason => ({
-  type: types.CREATE_PRESET_FAILED,
-  payload: { reason }
-})
-
-export const getPreset = ({ hash, slug }) => ({
-  type: types.GET_PRESET,
-  payload: { hash, slug }
-})
-
-export const getPresetCompleted = ({ preset, slug }) => ({
-  type: types.GET_PRESET_COMPLETED,
-  payload: { preset, slug }
-})
-
-export const getPresetFailed = reason => ({
-  type: types.GET_PRESET_FAILED,
-  payload: { reason }
-})
-
-export const updatePreset = ({ preset, slug }) => ({
-  type: types.UPDATE_PRESET,
-  payload: { preset, slug }
-})
-
-export const updatePresetCompleted = ({ preset, slug }) => ({
-  type: types.UPDATE_PRESET_COMPLETED,
-  payload: { preset, slug }
-})
-
-export const updatePresetFailed = reason => ({
-  type: types.UPDATE_PRESET_FAILED,
-  payload: { reason }
-})
-
-export const deletePreset = ({ preset, slug }) => ({
-  type: types.DELETE_PRESET,
-  payload: { preset, slug }
-})
-
-export const deletePresetCompleted = ({ preset, slug }) => ({
-  type: types.DELETE_PRESET_COMPLETED,
-  payload: { preset, slug }
-})
-
-export const deletePresetFailed = reason => ({
-  type: types.DELETE_PRESET_FAILED,
-  payload: { reason }
-})
-
 export const inviteCollaborator = ({ email, messenge }) => ({
   type: types.INVITE_COLLABORATOR,
   payload: { email, messenge }

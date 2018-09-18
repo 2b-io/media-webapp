@@ -10,7 +10,7 @@ const schema = mongoose.Schema({
     type: String,
   },
   parameters: {
-    type: String
+    type: mongoose.Schema.Types.Mixed
   }
 })
 

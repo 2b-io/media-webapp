@@ -2,7 +2,9 @@ import request from 'services/graphql'
 import pick from 'object.pick'
 
 import { ACCOUNT_FRAGMENT } from './account'
+import { PRESET_FRAGMENT } from './preset'
 import { PULL_SETTING_FRAGMENT } from './pull-setting'
+
 
 export const PERMISSION_FRAGMENT = `
   _id,
@@ -11,14 +13,6 @@ export const PERMISSION_FRAGMENT = `
   }
   privilege,
 `
-export const PRESET_FRAGMENT = `
-  name,
-  hash,
-  values,
-  removed,
-  isDefault
-`
-
 export const PROJECT_FRAGMENT = `
   identifier,
   name,
@@ -329,7 +323,7 @@ export default {
       token,
       slug
     })
-    
+
     return body.session.account.project._invalidateAllCache
   }
 }

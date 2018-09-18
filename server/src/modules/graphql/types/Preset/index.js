@@ -5,7 +5,6 @@ import {
 } from 'graphql'
 
 import actions from './actions'
-import relationships from './relationships'
 import struct from './struct'
 
 export const PresetStruct = new GraphQLInputObjectType({
@@ -22,7 +21,6 @@ export const Preset = new GraphQLObjectType({
       type: GraphQLID
     },
     ...struct,
-    ...actions({ Preset, PresetStruct }),
-    ...relationships({ Preset, PresetStruct })
+    ...actions({ Preset, PresetStruct })
   })
 })

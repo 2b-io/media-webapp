@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 
 import { selectors } from 'state/interface'
-import { Break } from 'ui/elements'
 
 import Body from './body'
 import Header from './header'

@@ -9,11 +9,10 @@ export const list = async (project) => {
   return presets
 }
 
-export const get = async (project, hash) => {
+export const get = async (project, contentType) => {
   const preset = await Preset.findOne({
-    hash,
-    project: project._id,
-    removed: false
+    contentType,
+    project
   }).lean()
 
   return preset
@@ -22,16 +21,15 @@ export const get = async (project, hash) => {
 export const create = async (project, data) => {
   const preset = await new Preset({
     ...data,
-    project: project._id,
-    isDefault: false
+    project: project._id
   }).save()
 
   return preset
 }
 
-export const update = async (project, hash, data) => {
+export const update = async (project, contentType, data) => {
   const preset = await Preset.findOneAndUpdate(
-    { project: project._id, hash },
+    { project, contentType },
     data,
     { new: true }
   ).lean()
@@ -39,9 +37,9 @@ export const update = async (project, hash, data) => {
   return preset
 }
 
-export const remove = async (project, hash) => {
+export const remove = async (project, contentType) => {
   const preset = await Preset.findOneAndRemove(
-    { project: project._id, hash }
+    { project, contentType }
   )
 
   return preset

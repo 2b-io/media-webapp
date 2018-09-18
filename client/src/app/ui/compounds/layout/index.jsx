@@ -69,7 +69,7 @@ class Layout extends Component {
             child => child && React.cloneElement(child, {
               innerRef: e => this.addLayoutItem(e),
               layout: tops.length === 1 ? 'horizontal' : 'vertical',
-              width: width
+              width
             })
           )
         }
