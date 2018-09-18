@@ -37,23 +37,31 @@ const Range = styled.input.attrs({
   margin: 0;
   left: 0;
   width: 100%;
+  z-index: 4;
 `
 
-const CircleThumb = styled.div`
+const CircleThumb = styled.div.attrs({
+  style: ({ relativeValue }) => ({
+    left: `${ relativeValue }%`
+  })
+})`
   position: absolute;
   width: 24px;
   height: 24px;
-  margin-left: -12px;
+  transform: translate3d(-50%, 0, 0);
   border-radius: 50%;
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, .07);
   display: block;
   transition: .2s;
+  z-index: 3;
   background: ${ ({ theme }) => theme.primary.base };
-  left: ${
-    ({ value }) => ` ${ value }%`
-  };
 `
-const ActiveTrack = styled.div`
+
+const ActiveTrack = styled.div.attrs({
+  style: ({ relativeValue }) => ({
+    width: `${ relativeValue }%`
+  })
+})`
   position: absolute;
   top: 10px;
   left: 0;
@@ -61,43 +69,40 @@ const ActiveTrack = styled.div`
   height: 4px;
   background: ${ ({ theme }) => theme.primary.base };
   transition: .2s;
-  width: ${
-    ({ value }) => ` ${ value }%`
-  };
+  z-index: 2;
 `
 
 const InactiveTrack = styled.div`
-  position: absolute;
-  top: 10px;
+  position: absolute
+  top: 11px;
   right: 0;
   display: inline-block;
-  height: 4px;
-  background: black;
+  height: 2px;
+  background: ${ ({ theme }) => theme.black.base };
   transition: .2s;
-  width: ${
-    ({ value }) => ` ${ 100 - value }%`
-  };
+  width: 100%;
+  z-index: 1;
 `
 
 const SlideBar = ({
   label,
   ...props
 }) => {
-  const currentState = props.value
+  const { min, max, value } = props
+  const relativeValue = Math.abs((value - min) / (max - min)) * 100
 
   return (
     <Wrapper>
       <Header>
         <TextLine mostLeft mostRight>{ label }</TextLine>
-        <Value>{ currentState }</Value>
+        <Value>{ value }</Value>
       </Header>
       <Container>
-        <ActiveTrack value={ currentState } />
-        <InactiveTrack value={ currentState } />
-        <CircleThumb value={ currentState } />
+        <ActiveTrack relativeValue={ relativeValue } />
+        <InactiveTrack />
+        <CircleThumb relativeValue={ relativeValue } />
         <Range
           { ...props }
-          value={ currentState }
         />
       </Container>
     </Wrapper>
