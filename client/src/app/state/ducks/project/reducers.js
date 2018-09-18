@@ -56,59 +56,6 @@ export default combineReducers({
         collaborators: collaboratorsToMap(action.payload.project.collaborators, '_id')
       }
     }),
-    [ types.GET_PRESET_COMPLETED ]: (state, action) => {
-      const { preset, identifier }  = action.payload
-
-      return {
-        ...state,
-        [ identifier ]: {
-          ...state[ identifier ],
-          presets: {
-            ...state[ identifier ].presets,
-            [ preset.hash ]: preset
-          }
-        }
-      }
-    },
-    [ types.CREATE_PRESET_COMPLETED ]: (state, action) => {
-      const { preset, identifier } = action.payload
-
-      return {
-        ...state,
-        [ identifier ]: {
-          ...state[ identifier ],
-          presets: {
-            ...state[ identifier ].presets,
-            [ preset.hash ]: preset
-          }
-        }
-      }
-    },
-    [ types.UPDATE_PRESET_COMPLETED ]: (state, action) => {
-      const { preset, identifier } = action.payload
-
-      return {
-        ...state,
-        [ identifier ]: {
-          ...state[ identifier ],
-          presets: {
-            ...state[ identifier ].presets,
-            [ preset.hash ]: preset
-          }
-        }
-      }
-    },
-    [ types.DELETE_PRESET_COMPLETED ]: (state, action) => {
-      const { preset: { hash }, identifier } = action.payload
-      const { [ hash ]: removedPreset, ...remainPresets } = state[ identifier ].presets
-      return {
-        ...state,
-        [ identifier ]: {
-          ...state[ identifier ],
-          presets: remainPresets
-        }
-      }
-    },
     [ types.INVITE_COLLABORATOR_COMPLETED ]: (state, action) => {
       const { identifier }  = action.payload.collaborator
       const { collaborator } = action.payload

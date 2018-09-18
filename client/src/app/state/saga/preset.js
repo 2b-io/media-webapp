@@ -1,14 +1,14 @@
 import { all, call, take, fork, put, select } from 'redux-saga/effects'
 import serializeError from 'serialize-error'
 
-import Project from 'models/project'
+import Preset from 'models/preset'
 import { actions, types, selectors } from 'state/interface'
 
 import { addToast } from './toast'
 
 const createLoop = function*() {
   while (true) {
-    const action = yield take(types['PROJECT/CREATE_PRESET'])
+    const action = yield take(types['PRESET/CREATE'])
 
     try {
       const session = yield select(selectors.currentSession)
@@ -17,18 +17,18 @@ const createLoop = function*() {
         continue
       }
 
-      const { preset, slug } = action.payload
+      const { preset, identifier } = action.payload
 
       const newPreset = yield call(
-        Project.createPreset,
-        { preset, slug },
+        Preset.create,
+        { preset, identifier },
         session.token
       )
 
       yield all([
         put(actions.createPresetCompleted({
           preset: newPreset,
-          slug
+          identifier
         })),
         fork(addToast, {
           type: 'success',
@@ -44,7 +44,7 @@ const createLoop = function*() {
 
 const deleteLoop = function*() {
   while (true) {
-    const action = yield take(types['PROJECT/DELETE_PRESET'])
+    const action = yield take(types['PRESET/DELETE'])
 
     try {
       const session = yield select(selectors.currentSession)
@@ -53,11 +53,11 @@ const deleteLoop = function*() {
         continue
       }
 
-      const { preset, slug } = action.payload
+      const { preset, identifier } = action.payload
 
       const destroyed = yield call(
-        Project.deletePreset,
-        { preset, slug },
+        Preset.deletePreset,
+        { preset, identifier },
         session.token
       )
 
@@ -66,7 +66,7 @@ const deleteLoop = function*() {
       }
 
       yield all([
-        put(actions.deletePresetCompleted({ preset, slug })),
+        put(actions.deletePresetCompleted({ preset, identifier })),
         put(actions.hideDialog({ dialog: 'ConfirmDeletePresetDialog' })),
         fork(addToast, {
           type: 'success',
@@ -82,7 +82,7 @@ const deleteLoop = function*() {
 
 const getLoop = function*() {
   while (true) {
-    const action = yield take(types['PROJECT/GET_PRESET'])
+    const action = yield take(types['PRESET/GET'])
 
     try {
       const session = yield select(selectors.currentSession)
@@ -91,14 +91,11 @@ const getLoop = function*() {
         continue
       }
 
-      const { hash, slug } = action.payload
+      const { contentType, identifier } = action.payload
 
-      const preset = yield call(Project.getPreset,
-        { hash, slug },
-        session.token
-      )
+      const preset = yield call(Preset.get, session.token, identifier, contentType)
 
-      yield put(actions.getPresetCompleted({ preset, slug }))
+      yield put(actions.getPresetCompleted({ preset, identifier }))
     } catch (e) {
       yield put(actions.getPresetFailed(serializeError(e)))
       continue
@@ -108,7 +105,7 @@ const getLoop = function*() {
 
 const updateLoop = function*() {
   while (true) {
-    const action = yield take(types['PROJECT/UPDATE_PRESET'])
+    const action = yield take(types['PRESET/UPDATE'])
 
     try {
       const session = yield select(selectors.currentSession)
@@ -117,18 +114,18 @@ const updateLoop = function*() {
         continue
       }
 
-      const { preset, slug } = action.payload
+      const { preset, identifier } = action.payload
 
       const newPreset = yield call(
-        Project.updatePreset,
-        { preset, slug },
+        Preset.updatePreset,
+        { preset, identifier },
         session.token
       )
 
       yield all([
         put(actions.updatePresetCompleted({
           preset: newPreset,
-          slug
+          identifier
         })),
         fork(addToast, {
           type: 'success',

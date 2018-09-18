@@ -53,7 +53,10 @@ export default {
   },
   '/projects/:identifier/image_jpeg': {
     component: PresetJpeg,
-    exact: true
+    exact: true,
+    onEnter: ({ identifier }) => [
+      actions.getPreset({ identifier, contentType: 'image/jpeg' })
+    ]
   },
   '/projects/:identifier/edit': {
     component: EditProject,
