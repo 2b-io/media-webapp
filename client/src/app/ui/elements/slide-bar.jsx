@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
-import { DescriptionText, TextLine } from 'ui/typo'
+import { TextLine } from 'ui/typo'
 
 const Wrapper = styled.div`
 `

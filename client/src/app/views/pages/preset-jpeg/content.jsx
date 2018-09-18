@@ -24,7 +24,7 @@ const PresetJpeg = ({
 }
 
 export default connect(
-  state => ({
+  () => ({
     preset: {
       contentType: 'image/jpeg',
       quality: 90
