@@ -8,7 +8,7 @@ export default {
   async get(token, identifier, contentType) {
 
     const body = await request(`
-      query getProject($token: String!, $identifier: String!, $contentType: String!) {
+      query getPreset($token: String!, $identifier: String!, $contentType: String!) {
         session(token: $token) {
           account {
             project(identifier: $identifier) {
@@ -22,8 +22,7 @@ export default {
     `, { token, identifier, contentType })
     return body.session.account.project.preset
   },
-  async update(token, preset) {
-    const { identifier, ...presetStruct } = preset
+  async update(token, identifier, preset) {
     const body = await request(`
       query updatePreset($token: String!, $identifier: String!, $contentType: String!, $preset: PresetStruct!) {
         session(token: $token) {
@@ -41,11 +40,33 @@ export default {
       }
     `, {
       token,
-      identifier: preset.identifier,
+      identifier,
       contentType: preset.contentType,
-      preset: presetStruct
+      preset
     })
     return  body.session.account.project.preset
 
   },
+  async remove(token, identifier, preset) {
+    const body = await request(`
+      query removePreset($token: String!, $identifier: String!, $contentType: String!, $preset: PresetStruct!) {
+        session(token: $token) {
+          account {
+            project(identifier: $identifier) {
+              preset (contentType: $contentType){
+                _destroy
+              }
+
+            }
+          }
+        }
+      }
+    `, {
+      token,
+      identifier,
+      contentType: preset.contentType,
+      preset
+    })
+    return  body.session.account.project.preset
+  }
 }

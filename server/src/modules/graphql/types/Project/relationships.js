@@ -1,6 +1,7 @@
 import {
   GraphQLList,
-  GraphQLString
+  GraphQLString,
+  GraphQLNonNull
 } from 'graphql'
 
 import {
@@ -47,7 +48,7 @@ export default () => ({
   presets: {
     type: new GraphQLList(Preset),
     resolve: async (project) => {
-      let presets = await listPresetsInProject(project)
+      let presets = await listPresetsInProject(project._id)
 
       return presets.map(preset => {
         // add ref
@@ -60,7 +61,7 @@ export default () => ({
   preset: {
     args: {
       contentType: {
-        type: GraphQLString
+        type: new GraphQLNonNull (GraphQLString)
       }
     },
     type: Preset,
