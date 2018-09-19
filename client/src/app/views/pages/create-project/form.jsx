@@ -3,7 +3,7 @@ import React from 'react'
 import { Form } from 'ui/compounds'
 import { Button, Break, Link } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
-import { Radio, TextBox } from 'views/common/form'
+import { Radio, TextBox, Selection } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
 const projectForm = ({ handleSubmit, idle }) => (
@@ -35,6 +35,12 @@ const projectForm = ({ handleSubmit, idle }) => (
       KeyCDN is a service of proinity LLC.&nbsp;
       <Link href="https://www.keycdn.com/">Read more</Link>
     </DescriptionText>
+
+    <Selection
+      name="contentType"
+      list={ [ "image/ipeg","image/png","image/svg" ] }
+    />
+
     <Break double />
     <Button type="submit" disabled={ !idle }>Create</Button>
   </Form>
