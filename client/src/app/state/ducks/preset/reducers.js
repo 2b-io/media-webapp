@@ -1,61 +1,46 @@
 import { combineReducers } from 'redux'
-import createReducer from 'state/helpers/create-reducer'
 
 import * as types from './types'
 
+// struct presets
+//{
+//   presets: {
+//     'Zg9CD8': {
+//       'image/jpeg': {
+//         contentType: 'image/jpeg',
+//         parameters: {}
+//       },
+//       'image/gif': { ... }
+//     },
+//     ...
+//   }
+// }
+
 export default combineReducers({
-  preset: createReducer(null)({
-    [ types.GET_COMPLETED ]: (state, action) => {
-      const { preset, identifier }  = action.payload
-      return {
-        ...state,
-        [ identifier ]: {
-          ...state[ identifier ],
-          presets: {
-            ...state[ identifier ].presets,
-            [ preset.contentType ]: preset
+  presets: (state = {}, action) => {
+    switch (action.type) {
+      case types.GET_COMPLETED:
+      case types.CREATE_COMPLETED:
+      case types.UPDATE_COMPLETED:
+      {
+        return {
+          ...state,
+          [ action.payload.identifier ]: {
+            ...state[ action.payload.identifier ],
+            [ action.payload.preset.contentType ]: action.payload.preset
           }
         }
       }
-    },
-    [ types.CREATE_PRESET_COMPLETED ]: (state, action) => {
-      const { preset, identifier } = action.payload
-
-      return {
-        ...state,
-        [ identifier ]: {
-          ...state[ identifier ],
-          presets: {
-            ...state[ identifier ].presets,
-            [ preset.contentType ]: preset
-          }
-        }
-      }
-    },
-    [ types.UPDATE_PRESET_COMPLETED ]: (state, action) => {
-      const { preset, identifier } = action.payload
-
-      return {
-        ...state,
-        [ identifier ]: {
-          ...state[ identifier ],
-          presets: {
-            ...state[ identifier ].presets,
-            [ preset.contentType ]: preset
-          }
-        }
-      }
-    },
-    [ types.DELETE_PRESET_COMPLETED ]: (state, action) => {
-      const { preset: { contentType }, identifier } = action.payload
-      const { [ contentType ]: removedPreset, ...remainPresets } = state[ identifier ].presets
-      return {
-        ...state,
-        [ identifier ]: {
-          ...state[ identifier ],
-          presets: remainPresets
+      case types.REMOVE_COMPLETED:
+      {
+        const { preset: { contentType }, identifier } = action.payload
+        const { [ contentType ]: removedPreset, ...remainPresets } = state[ identifier ]
+        return {
+          ...state,
+          [ identifier ]: remainPresets
         }
       }
     }
-  })
+    return state
+  }
 })

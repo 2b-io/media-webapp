@@ -73,13 +73,6 @@ export default {
       actions.getPullSetting(identifier)
     ]
   },
-  '/projects/:slug/presets/:hash': {
-    partial: true,
-    onEnter: ({ hash, slug }) => [
-      actions.getPreset({ hash, slug }),
-      actions.showModal({ modal: 'Preset' })
-    ]
-  },
   '/projects/:slug/invite': {
     partial: true,
     onEnter: () => [

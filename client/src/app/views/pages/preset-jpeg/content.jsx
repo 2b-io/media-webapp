@@ -16,12 +16,23 @@ const PresetForm = reduxForm({
 })(_PresetForm)
 
 const PresetJpeg = ({
-  preset
+  preset,
+  identifier,
+  updatePreset
 }) => {
   return (
     <Container>
       <PresetForm
-        initialValues={ preset }
+        initialValues={ {
+          contentType: preset && preset.contentType,
+          quality: preset && preset.parameters.quality,
+          progressive: preset && preset.parameters.progressive
+        } }
+        onSubmit={ ({
+          contentType,
+          quality,
+          progressive
+        }) => updatePreset({ preset: { contentType, parameters: { quality, progressive }, identifier } }) }
       />
     </Container>
   )
@@ -33,7 +44,7 @@ export default withParams(
   })(
     connect(
       (state, { params: { identifier } }) => ({
-        preset: selectors.getPreset(state, identifier, { contentType: 'image/jpeg' } ),
+        preset: selectors.findPreset(state, identifier, 'image/jpeg'),
         identifier
       }),
       mapDispatch({

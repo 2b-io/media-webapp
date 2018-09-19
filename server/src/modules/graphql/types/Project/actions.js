@@ -65,7 +65,7 @@ export default ({ Project, ProjectStruct }) => ({
     },
     type: Preset,
     resolve: async (project, { preset }) => {
-      const p = await createPreset(project, preset)
+      const p = await createPreset(project._id, preset)
 
       // add ref
       p._project = project
