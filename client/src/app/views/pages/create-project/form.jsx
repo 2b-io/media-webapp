@@ -35,7 +35,6 @@ const projectForm = ({ handleSubmit, idle }) => (
       KeyCDN is a service of proinity LLC.&nbsp;
       <Link href="https://www.keycdn.com/">Read more</Link>
     </DescriptionText>
-
     <Break double />
     <Button type="submit" disabled={ !idle }>Create</Button>
   </Form>
