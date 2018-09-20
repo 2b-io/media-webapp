@@ -39,7 +39,7 @@ const DropdownMenu = styled.ul.attrs({
   border: 1px solid ${ ({ theme }) => theme.secondary.base };;
 `
 
-const Item = styled.div`
+const Item = styled.li`
   cursor: pointer;
   &:hover,
   &:active {
@@ -47,11 +47,7 @@ const Item = styled.div`
   }
 `
 
-class Selection extends React.Component {
-
-  static defaultProps = {
-    list: []
-  };
+class Select extends React.Component {
 
   constructor(props) {
     super(props)
@@ -68,9 +64,11 @@ class Selection extends React.Component {
     if (typeof label != 'undefined') {
       this.checkType(false)
       this.setState({ contentType: label })
+      this.props.input.onChange(label)
     } else {
       this.checkType(true)
       this.setState({ contentType: this.props.list[ 0 ] })
+      this.props.input.onChange(this.props.list[ 0 ])
     }
   }
 
@@ -91,10 +89,12 @@ class Selection extends React.Component {
   }
 
   chooseItem = (value) => {
+
     if (this.state.contentType !== value) {
       this.setState({
         contentType: value
       })
+      this.props.input.onChange(value)
 
     }
   }
@@ -113,13 +113,14 @@ class Selection extends React.Component {
   }
 
   render () {
-    const { list } = this.props
+    const { list, input } = this.props
 
     return (
       <Wrapper>
         <SelectButton
+          onChange={ () => input.onChange( this.state ) }
+          selectedValue={ this.props.input.value }
           name="contentType"
-          component="select"
           onClick={ this.showDropdown }>
           <TextLine mostLeft mostRight>
             { this.state.contentType }
@@ -129,7 +130,6 @@ class Selection extends React.Component {
         <DropdownMenu isOpen={ this.state.isOpen }>
           {
             list.map(this.renderDataDropDown)
-            // <List items={ this.renderDataDropDown } />
           }
         </DropdownMenu>
       </Wrapper>
@@ -137,6 +137,12 @@ class Selection extends React.Component {
   }
 }
 
+Select.propTypes = {
+  list: PropTypes.arrayOf(PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]))
+}
 
+Select.defaultProps = {
+  list: []
+}
 
-export default Selection
+export default Select

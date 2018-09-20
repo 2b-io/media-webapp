@@ -1,4 +1,14 @@
-import { Selection } from 'ui/elements'
-import { reduxField } from 'views/common/decorators'
+import React from 'react'
+import { Field } from 'redux-form'
 
-export default reduxField(Selection)
+import { Select } from 'ui/elements'
+
+const Selection = props => (
+  <Field
+    component={ Select }
+    type="select"
+    { ...props }
+  />
+)
+
+export default Selection
