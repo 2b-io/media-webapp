@@ -28,11 +28,12 @@ const PresetPng = ({
     <Container>
       <PresetForm
         initialValues={ { ...parameters, contentType } }
-        onSubmit={ ({ ...props }) => {
+        onSubmit={ ({ ...parameters }) => {
+          const { contentType, ...params } = parameters
           updatePreset({
             preset: {
-              contentType: props.contentType,
-              parameters: { ...props }
+              contentType: parameters.contentType,
+              parameters: params
             },
             identifier
           })
