@@ -54,28 +54,28 @@ export default {
       actions.getProject(identifier)
     ]
   },
-  '/projects/:identifier/image_jpeg': {
+  '/projects/:identifier/presets/image_jpeg': {
     component: PresetJpeg,
     exact: true,
     onEnter: ({ identifier }) => [
       actions.getPreset({ identifier, contentType: 'image/jpeg' })
     ]
   },
-  '/projects/:identifier/image_svg': {
+  '/projects/:identifier/presets/image_svg': {
     component: PresetSvg,
     exact: true,
     onEnter: ({ identifier }) => [
       actions.getPreset({ identifier, contentType: 'image/svg' })
     ]
   },
-  '/projects/:identifier/image_gif': {
+  '/projects/:identifier/presets/image_gif': {
     component: PresetGif,
     exact: true,
     onEnter: ({ identifier }) => [
       actions.getPreset({ identifier, contentType: 'image/gif' })
     ]
   },
-  '/projects/:identifier/image_png': {
+  '/projects/:identifier/presets/image_png': {
     component: PresetPng,
     exact: true,
     onEnter: ({ identifier }) => [
