@@ -24,11 +24,7 @@ const PullSetting = ({
     <Container>
       <PullSettingForm
         initialValues={ pullSetting }
-        onSubmit={ ({
-          pullURL,
-          allowedOrigins,
-          headers
-        }) => updatePullSetting({ pullURL, allowedOrigins, headers, identifier }) }
+        onSubmit={ (pullSetting) => updatePullSetting({ identifier, pullSetting }) }
       />
     </Container>
   )
@@ -39,7 +35,7 @@ export default withParams(
   })(
     connect(
       (state, { params: { identifier } }) => ({
-        pullSetting: selectors.pullSetting(state),
+        pullSetting: selectors.pullSetting(state, identifier),
         identifier
       }),
       mapDispatch({
