@@ -89,7 +89,7 @@ export default {
       actions.getProject(identifier)
     ]
   },
-  '/projects/:identifier/pull': {
+  '/projects/:identifier/pull-setting': {
     component: PullSetting,
     exact: true,
     onEnter: ({ identifier }) => [

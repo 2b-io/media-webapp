@@ -49,6 +49,7 @@ export const getByIdentifier = async (projectIdentifier, account) => {
     identifier: projectIdentifier,
     removed: false
   }).lean()
+
   //  check permission
   const permission = await Permission.findOne({
     account,
@@ -56,9 +57,11 @@ export const getByIdentifier = async (projectIdentifier, account) => {
       $eq: project._id
     }
   }).lean()
+
   if (!permission) {
     return
   }
+
   const { status: projectStatus } = project
 
   if (projectStatus === 'INITIALIZING' || projectStatus === 'UPDATING') {
