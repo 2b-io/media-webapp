@@ -23,17 +23,16 @@ const PresetJpeg = ({
   return (
     <Container>
       <PresetForm
-        initialValues={ { ...parameters, contentType } }
-        onSubmit={ ({ ...parameters }) => {
-          const { contentType, ...params } = parameters
-          updatePreset({
-            preset: {
-              contentType: parameters.contentType,
-              parameters: params
-            },
-            identifier
-          })
+        initialValues={ {
+          contentType: preset && preset.contentType,
+          quality: preset && preset.parameters.quality,
+          progressive: preset && preset.parameters.progressive
         } }
+        onSubmit={ ({
+          contentType,
+          quality,
+          progressive
+        }) => updatePreset({ preset: { contentType, parameters: { quality, progressive } }, identifier }) }
       />
     </Container>
   )
