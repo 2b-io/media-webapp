@@ -16,13 +16,7 @@ const Header = styled.div`
     min-width: 0;
     min-height: 0;
   };
-  grid-template-columns: 1fr 40px;
-`
-
-const Value = styled.span`
-  height: 40px;
-  line-height: 40px;
-  text-align: center;
+  grid-template-columns: 1fr minmax(40px, min-content);
 `
 
 const Range = styled.input.attrs({
@@ -89,16 +83,14 @@ const SlideBar = ({
     <Wrapper>
       <Header>
         <TextLine mostLeft mostRight>{ label }</TextLine>
-        <Value>{ value }</Value>
+        <TextLine align="center">{ value }</TextLine>
       </Header>
       <Container>
         <InactiveTrack />
         <ActiveTrack relativeValue={ relativeValue }>
           <CircleThumb />
         </ActiveTrack>
-        <Range
-          { ...props }
-        />
+        <Range { ...props } />
       </Container>
     </Wrapper>
   )
