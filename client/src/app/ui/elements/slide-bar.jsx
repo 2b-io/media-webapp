@@ -16,20 +16,14 @@ const Header = styled.div`
     min-width: 0;
     min-height: 0;
   };
-  grid-template-columns: 1fr 40px;
-`
-
-const Value = styled.span`
-  height: 40px;
-  line-height: 40px;
-  text-align: center;
+  grid-template-columns: 1fr minmax(40px, min-content);
 `
 
 const Range = styled.input.attrs({
   type: 'range'
 })`
   position: absolute;
-  height: 24px;
+  height: 16px;
   background: transparent;
   appearance: none;
   outline: none;
@@ -45,16 +39,13 @@ const CircleThumb = styled.div.attrs({
     left: `${ relativeValue }%`
   })
 })`
-  position: absolute;
-  width: 24px;
-  height: 24px;
-  transform: translate3d(-50%, 0, 0);
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, .07);
-  display: block;
-  transition: .2s;
-  z-index: 3;
   background: ${ ({ theme }) => theme.primary.base };
+  position: absolute;
+  top: -7px;
+  right: -8px;
 `
 
 const ActiveTrack = styled.div.attrs({
@@ -63,24 +54,21 @@ const ActiveTrack = styled.div.attrs({
   })
 })`
   position: absolute;
-  top: 10px;
+  top: 7px;
   left: 0;
-  display: inline-block;
-  height: 4px;
+  height: 2px;
   background: ${ ({ theme }) => theme.primary.base };
-  transition: .2s;
+  transition: width .2s;
   z-index: 2;
 `
 
 const InactiveTrack = styled.div`
   position: absolute
-  top: 11px;
+  top: 7px;
+  left: 0;
   right: 0;
-  display: inline-block;
   height: 2px;
   background: ${ ({ theme }) => theme.black.base };
-  transition: .2s;
-  width: 100%;
   z-index: 1;
 `
 
@@ -95,15 +83,14 @@ const SlideBar = ({
     <Wrapper>
       <Header>
         <TextLine mostLeft mostRight>{ label }</TextLine>
-        <Value>{ value }</Value>
+        <TextLine align="center">{ value }</TextLine>
       </Header>
       <Container>
-        <ActiveTrack relativeValue={ relativeValue } />
         <InactiveTrack />
-        <CircleThumb relativeValue={ relativeValue } />
-        <Range
-          { ...props }
-        />
+        <ActiveTrack relativeValue={ relativeValue }>
+          <CircleThumb />
+        </ActiveTrack>
+        <Range { ...props } />
       </Container>
     </Wrapper>
   )

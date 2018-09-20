@@ -3,9 +3,11 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 
 import { selectors } from 'state/interface'
+import { Break } from 'ui/elements'
 
 import Body from './body'
 import Header from './header'
+import Logo from './logo'
 import Sidebar from './sidebar'
 
 const Surface = styled.main`
@@ -17,22 +19,9 @@ const Surface = styled.main`
   z-index: 0;
 `
 
-const LogoInside = styled.div`
-  width: 64px;
-  height: 64px;
-  background: white;
-`
-
-const Logo = styled.div.attrs({
-  children: () => <LogoInside />
-})`
-  width: 96px;
-  height: 96px;
-  margin: 96px auto 16px;
-  background: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const LogoWrapper = styled.div`
+  padding-top: 96px;
+  text-align: center;
 `
 
 const Layout = ({ isLayoutClosed, render, ...props }) => (
@@ -46,7 +35,10 @@ const Layout = ({ isLayoutClosed, render, ...props }) => (
       <Body className="body">
         { isLayoutClosed &&
           <Fragment>
-            <Logo />
+            <LogoWrapper>
+              <Logo />
+            </LogoWrapper>
+            <Break />
             { render.overlay(props) }
           </Fragment> ||
           render.content(props)

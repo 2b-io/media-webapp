@@ -1,3 +1,3 @@
 export default {
-  pullSetting: state => state.pullSetting
+  pullSetting: (state, identifer) => state[ identifer ]
 }

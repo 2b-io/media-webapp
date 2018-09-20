@@ -21,8 +21,9 @@ const createLoop = function*() {
 
       const newPreset = yield call(
         Preset.create,
-        { preset, identifier },
-        session.token
+        session.token,
+        preset,
+        identifier
       )
 
       yield all([
@@ -56,17 +57,17 @@ const deleteLoop = function*() {
       const { preset, identifier } = action.payload
 
       const destroyed = yield call(
-        Preset.deletePreset,
-        { preset, identifier },
-        session.token
+        Preset.remove,
+        session.token,
+        preset,
+        identifier
       )
-
       if (!destroyed) {
         throw new Error('Cannot delete preset')
       }
 
       yield all([
-        put(actions.deletePresetCompleted({ preset, identifier })),
+        put(actions.removePresetCompleted({ preset, identifier })),
         put(actions.hideDialog({ dialog: 'ConfirmDeletePresetDialog' })),
         fork(addToast, {
           type: 'success',
@@ -74,7 +75,7 @@ const deleteLoop = function*() {
         })
       ])
     } catch (e) {
-      yield put(actions.deletePresetFailed(serializeError(e)))
+      yield put(actions.removePresetFailed(serializeError(e)))
       continue
     }
   }
@@ -93,7 +94,13 @@ const getLoop = function*() {
 
       const { contentType, identifier } = action.payload
 
-      const preset = yield call(Preset.get, session.token, identifier, contentType)
+      const preset = yield call(
+        Preset.get,
+        session.token,
+        identifier,
+        contentType
+      )
+
       yield put(actions.getPresetCompleted({ preset, identifier }))
     } catch (e) {
       yield put(actions.getPresetFailed(serializeError(e)))
@@ -113,9 +120,14 @@ const updateLoop = function*() {
         continue
       }
 
-      const { preset } = action.payload
+      const { identifier, preset } = action.payload
 
-      const newPreset = yield call(Preset.update, session.token, preset)
+      const newPreset = yield call(
+        Preset.update,
+        session.token,
+        identifier,
+        preset
+      )
 
       yield all([
         put(actions.updatePresetCompleted({

@@ -17,7 +17,7 @@ const PresetList = ({ presets, onPresetSelected }) => (
             key={ index }
           >
             <p>{ preset.name }</p>
-            <SmallValue>Value: { preset.values.quality } </SmallValue>
+            {/* <SmallValue>Value: { preset.values.quality } </SmallValue> */}
           </List.Item>
         )
       )

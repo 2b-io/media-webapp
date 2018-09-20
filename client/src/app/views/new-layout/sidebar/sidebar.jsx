@@ -61,6 +61,7 @@ const CloseButton = styled.button`
 const Content = styled.div`
   display: grid;
   grid-template-rows: min-content 1fr;
+  grid-row-gap: 16px;
   height: 100%;
 
   & > * {
