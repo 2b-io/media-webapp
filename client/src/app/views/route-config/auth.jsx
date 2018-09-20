@@ -2,6 +2,7 @@ import * as CreateProject from 'views/pages/create-project'
 import * as Dashboard from 'views/pages/dashboard'
 import * as EditProject from 'views/pages/edit-project'
 import * as PresetJpeg from 'views/pages/preset-jpeg'
+import * as PresetSvg from 'views/pages/preset-svg'
 import * as Profile from 'views/pages/profile'
 import * as ProjectDetail from 'views/pages/project-detail'
 import * as ProjectMedia from 'views/pages/project-detail/project-media'
@@ -56,6 +57,13 @@ export default {
     exact: true,
     onEnter: ({ identifier }) => [
       actions.getPreset({ identifier, contentType: 'image/jpeg' })
+    ]
+  },
+  '/projects/:identifier/image_svg': {
+    component: PresetSvg,
+    exact: true,
+    onEnter: ({ identifier }) => [
+      actions.getPreset({ identifier, contentType: 'image/svg' })
     ]
   },
   '/projects/:identifier/edit': {

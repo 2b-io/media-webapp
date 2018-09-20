@@ -2,9 +2,8 @@ import Preset from 'models/Preset'
 
 export const list = async (project) => {
   const presets = await Preset.find({
-    project: project._id,
-    removed: false
-  }).sort('-isDefault hash').lean()
+    project
+  }).lean()
 
   return presets
 }
@@ -14,7 +13,10 @@ export const get = async (project, contentType) => {
     contentType,
     project
   }).lean()
-
+  
+  if (!preset.parameters) {
+    return { ...preset, parameters: {} }
+  }
   return preset
 }
 
