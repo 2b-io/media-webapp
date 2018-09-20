@@ -89,13 +89,11 @@ class Select extends React.Component {
   }
 
   chooseItem = (value) => {
-
     if (this.state.contentType !== value) {
       this.setState({
         contentType: value
       })
       this.props.input.onChange(value)
-
     }
   }
 
@@ -119,7 +117,6 @@ class Select extends React.Component {
       <Wrapper>
         <SelectButton
           onChange={ () => input.onChange( this.state ) }
-          selectedValue={ this.props.input.value }
           name="contentType"
           onClick={ this.showDropdown }>
           <TextLine mostLeft mostRight>
