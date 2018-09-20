@@ -3,6 +3,7 @@ import * as Dashboard from 'views/pages/dashboard'
 import * as EditProject from 'views/pages/edit-project'
 import * as PresetJpeg from 'views/pages/preset-jpeg'
 import * as PresetSvg from 'views/pages/preset-svg'
+import * as PresetPng from 'views/pages/preset-png'
 import * as Profile from 'views/pages/profile'
 import * as ProjectDetail from 'views/pages/project-detail'
 import * as ProjectMedia from 'views/pages/project-detail/project-media'
@@ -64,6 +65,13 @@ export default {
     exact: true,
     onEnter: ({ identifier }) => [
       actions.getPreset({ identifier, contentType: 'image/svg' })
+    ]
+  },
+  '/projects/:identifier/image_png': {
+    component: PresetPng,
+    exact: true,
+    onEnter: ({ identifier }) => [
+      actions.getPreset({ identifier, contentType: 'image/png' })
     ]
   },
   '/projects/:identifier/edit': {
