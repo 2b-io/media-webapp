@@ -16,7 +16,7 @@ const uiReducer = combineReducers({
   )
 })
 
-export default combineReducers({
+const combined = combineReducers({
   ...duckReducers,
   form,
   ui: (state = {}, action) => {
@@ -32,3 +32,11 @@ export default combineReducers({
     return uiReducer(state, action)
   }
 })
+
+export default (state = {}, action) => {
+  if (action.type === '@@RESET') {
+    return combined({}, action)
+  }
+
+  return combined(state, action)
+}
