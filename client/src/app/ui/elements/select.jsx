@@ -63,6 +63,10 @@ class Select extends React.Component {
     this.props.onBlur()
   }
 
+  componentWillUnmount() {
+    document.removeEventListener('click', this.hideDropdown)
+  }
+
   chooseOption(value) {
     this.props.onChange(value)
   }
