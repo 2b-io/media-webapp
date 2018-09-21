@@ -70,21 +70,17 @@ export default function*() {
       // call onEnter * onLeave
       .reduce(
         (collector, r) => {
-          if (collector.end) {
-            return collector
-          }
-
           let enteringActions = []
           let leavingActions = []
 
-          if (r.enter) {
+          if (!collector.enterEnd && r.enter) {
             console.debug(`Entering ${ current } [${ r.path }]`)
 
             if (r.onEnter) {
               enteringActions = r.onEnter(r.parameters, currentQuery)
             }
 
-          } else if (r.leave) {
+          } else if (!collector.leaveEnd && r.leave) {
             console.debug(`Leaving ${ previous } [${ r.path }]`)
 
             if (r.onLeave) {
@@ -93,7 +89,8 @@ export default function*() {
           }
 
           return {
-            end: r.exact,
+            enterEnd: r.enter && r.exact,
+            leaveEnd: r.leave && r.exact,
             actions: [
               ...collector.actions,
               ...leavingActions,

@@ -1,6 +1,5 @@
 import * as types from './types'
 
-
 export const fetchPresets = ({ identifier }) => ({
   type: types.FETCH,
   payload: { identifier }
@@ -13,7 +12,6 @@ export const fetchPresetsFailed = reason => ({
   type: types.FETCH_FAILED,
   payload: { reason }
 })
-
 
 export const createPreset = ({ identifier, contentType }) => ({
   type: types.CREATE,
