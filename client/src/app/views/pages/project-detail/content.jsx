@@ -9,7 +9,7 @@ import { Layout, Panel, TitleBar } from 'ui/compounds'
 import { Button, Container, ErrorBox, Paragraph } from 'ui/elements'
 import { AddIcon, OwnerAddIcon, ReloadIcon } from 'ui/icons'
 import { stateful } from 'views/common/decorators'
-import { Redirect, Route, Switch, withParams } from 'views/router'
+import { Redirect, Route, withParams } from 'views/router'
 
 import ProjectTools from './project-tools'
 import CacheInvalidatorModal from './cache-invalidator-modal'
@@ -93,7 +93,7 @@ const Project = ({
                       <Button.Group>
                         <Button
                           variant="primary"
-                          onClick={ () => deleteProject(project.slug) }>
+                          onClick={ () => deleteProject(project.identifier) }>
                           Delete
                         </Button>
                         <Button
@@ -119,7 +119,7 @@ const Project = ({
                   </TitleBar.Title>
 
                   <TitleBar.Menu>
-                    <Button plain onClick={ () => toPresetDetail(project.slug, 'new') }>
+                    <Button plain onClick={ () => toPresetDetail(project.identifier, 'new') }>
                       <AddIcon size="medium" />
                     </Button>
                   </TitleBar.Menu>
@@ -130,7 +130,7 @@ const Project = ({
                   <PresetList
                     presets={ project.presets }
                     onPresetSelected={ hash => {
-                      toPresetDetail(project.slug, hash)
+                      toPresetDetail(project.identifier, hash)
                     } }
                   />
                 }
@@ -145,7 +145,7 @@ const Project = ({
                     <h2>Collaborators</h2>
                   </TitleBar.Title>
                   <TitleBar.Menu>
-                    <Button plain onClick={ () => toInviteModal(project.slug) }>
+                    <Button plain onClick={ () => toInviteModal(project.identifier) }>
                       <OwnerAddIcon size="medium" />
                     </Button>
                   </TitleBar.Menu>
@@ -158,7 +158,7 @@ const Project = ({
                       collaborators={ project.collaborators }
                       toProfile={ toProfile }
                       currentAccount={ currentAccount }
-                      makeOwner={ (accountId) => { makeOwner(accountId, project.slug) } }
+                      makeOwner={ (accountId) => { makeOwner(accountId, project.identifier) } }
                       showDeleteCollaboratorDialog={ showDeleteCollaboratorDialog }
                     />
                 }
@@ -175,7 +175,7 @@ const Project = ({
                 <Button.Group>
                   <Button
                     variant="primary"
-                    onClick={ () => deleteCollaborator(project.slug, params.accountId) }>
+                    onClick={ () => deleteCollaborator(project.identifier, params.accountId) }>
                     Remove
                   </Button>
                   <Button
@@ -201,9 +201,9 @@ const Project = ({
                   project &&
                     <ProjectTools
                       detail="Cache Invalidator"
-                      slug={ project.slug }
-                      toProjectMedia={ () => toProjectMedia(project.slug) }
-                      toCacheInvalidator={ () => toCacheInvalidator(project.slug) }
+                      identifier={ project.identifier }
+                      toProjectMedia={ () => toProjectMedia(project.identifier) }
+                      toCacheInvalidator={ () => toCacheInvalidator(project.identifier) }
                     />
                 }
               </Panel.Content>
@@ -211,46 +211,35 @@ const Project = ({
           </Container>
         </Layout.Fixed>
       </Layout>
-      <Switch>
-        <Route path="/projects/:slug/presets/new">
-          <PresetModal
-            width="wide"
-            hideOnClickOutside={ false }
-            title="Create new preset"
-            onHide={ () => toProjectDetail(project.slug) }
-          />
-        </Route>
-        <Route path="/projects/:slug/presets/:hash">
-          <PresetModal
-            width="wide"
-            hideOnClickOutside={ false }
-            title="Edit preset"
-            onHide={ () => toProjectDetail(project.slug) }
-          />
-        </Route>
-      </Switch>
-      <Route path="/projects/:slug/invite">
+      <Route path="/projects/:identifier/presets/new">
+        <PresetModal
+          width="wide"
+          hideOnClickOutside={ false }
+          onHide={ () => toProjectDetail(project.identifier) }
+        />
+      </Route>
+      <Route path="/projects/:identifier/invite">
         <InviteModal
           width="wide"
-          slug={ project && project.slug }
+          identifier={ project && project.identifier }
           title="Invite collaborators"
-          onHide={ () => toProjectDetail(project.slug) }
+          onHide={ () => toProjectDetail(project.identifier) }
           collaborators={ project && Object.values(project.collaborators) }
         />
       </Route>
-      <Route path="/projects/:slug/cache-invalidator">
+      <Route path="/projects/:identifier/cache-invalidator">
         <CacheInvalidatorModal
           width="wide"
-          onHide={ () => toProjectDetail(project.slug) }
-          slug={ project && project.slug }
+          onHide={ () => toProjectDetail(project.identifier) }
+          identifier={ project && project.identifier }
           title="Cache Invalidator"
         />
       </Route>
-      <Route path="/projects/:slug/invite-by-email">
+      <Route path="/projects/:identifier/invite-by-email">
         <CollaboratorInviteEmail
           width="wide"
           title="Sent email invite collaborators"
-          onHide={ () => toProjectDetail(project.slug) }
+          onHide={ () => toProjectDetail(project.identifier) }
         />
       </Route>
     </Fragment>
@@ -273,12 +262,12 @@ export default withParams(
         hideDeleteProjectDialog: () => actions.hideDialog({ dialog: 'ConfirmDeleteProjectDialog' }),
         deleteProject: actions.deleteProject,
         updateProject: actions.updateProject,
-        toCacheInvalidator: slug => actions.requestLocation(`/projects/${ slug }/cache-invalidator`),
-        toInviteModal: slug => actions.requestLocation(`/projects/${ slug }/invite`),
-        toPresetDetail: (slug, hash) => actions.requestLocation(`/projects/${ slug }/presets/${ hash }`),
+        toCacheInvalidator: identifier => actions.requestLocation(`/projects/${ identifier }/cache-invalidator`),
+        toInviteModal: identifier => actions.requestLocation(`/projects/${ identifier }/invite`),
+        toPresetDetail: (identifier, hash) => actions.requestLocation(`/projects/${ identifier }/presets/${ hash }`),
         toProfile: id => actions.requestLocation(`/@${ id }`),
-        toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`),
-        toProjectMedia: slug => actions.requestLocation(`/projects/${ slug }/media`),
+        toProjectDetail: identifier => actions.requestLocation(`/projects/${ identifier }`),
+        toProjectMedia: identifier => actions.requestLocation(`/projects/${ identifier }/media`),
         makeOwner: actions.makeOwner,
         deleteCollaborator: actions.deleteCollaborator,
         reset

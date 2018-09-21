@@ -100,18 +100,21 @@ export default ({
         <Portal node={ document && document.getElementById('root') }>
           <Overlay onClick={ hideOnClickOutside ? this.hide() : null }>
             <Wrapper onClick={ e => e.stopPropagation() } width={ width }>
-              <Header>
-                <TitleBar>
-                  <TitleBar.Title>{ title }</TitleBar.Title>
-                  { showCloseButton &&
-                    <TitleBar.Menu>
-                      <Button plain onClick={ this.hide() }>
-                        <CloseIcon size="medium" />
-                      </Button>
-                    </TitleBar.Menu>
-                  }
-                </TitleBar>
-              </Header>
+              {
+                title ?
+                  <Header>
+                    <TitleBar>
+                      <TitleBar.Title>{ title }</TitleBar.Title>
+                      { showCloseButton &&
+                        <TitleBar.Menu>
+                          <Button plain onClick={ this.hide() }>
+                            <CloseIcon size="medium" />
+                          </Button>
+                        </TitleBar.Menu>
+                      }
+                    </TitleBar>
+                  </Header> : null
+              }
               <ModalContent modal={ modal } { ...this.props } />
             </Wrapper>
           </Overlay>
