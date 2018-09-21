@@ -12,7 +12,7 @@ const Logo = styled.div.attrs({
 })`
   width: 112px;
   height: 112px;
-  background: black;
+  background: #07f;
   display: inline-flex;
   justify-content: center;
   align-items: center;

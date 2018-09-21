@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 import { Identicon, List } from 'ui/elements'
 import { CloseIcon } from 'ui/icons'
@@ -13,14 +13,27 @@ import {
   SignOutIcon
 } from 'ui/icons'
 
+const easingFunc = 'cubic-bezier(.4, 0, .2, 1)'
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`
+
 const Overlay = styled.div`
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  background: rgba(0, 0, 0, .3);
+  background: ${ ({ theme }) => theme.black.opaque.base };
   z-index: 1;
+  animation: ${ fadeIn } .6s;
+  animation-timing-function: ${ easingFunc };
 `
 
 const Surface = styled.div`
@@ -37,8 +50,11 @@ const Surface = styled.div`
   };
   z-index: 1;
   transform: ${
-    ({ open }) => open ? 'translateX(0)' : 'translateX(-100%)'
+    ({ open }) => open ?
+      'translate3d(0, 0, 0)' :
+      'translate3d(-100%, 0, 0)'
   };
+  transition: transform .3s ${ easingFunc };
 `
 
 const CloseButton = styled.button`
