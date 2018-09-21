@@ -1,5 +1,4 @@
 import React from 'react'
-import { render } from 'react-dom'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
@@ -44,13 +43,21 @@ const DropdownMenu = styled.div`
 `
 
 class Select extends React.Component {
-  showDropdown = () => {
+  constructor(props) {
+    super(props)
+
+    this.chooseOption = this.chooseOption.bind(this)
+    this.hideDropdown = this.hideDropdown.bind(this)
+    this.showDropdown = this.showDropdown.bind(this)
+  }
+
+  showDropdown() {
     document.addEventListener('click', this.hideDropdown)
 
     this.props.onFocus()
   }
 
-  hideDropdown = () => {
+  hideDropdown() {
     document.removeEventListener('click', this.hideDropdown)
 
     this.props.onBlur()
@@ -60,11 +67,11 @@ class Select extends React.Component {
     document.removeEventListener('click', this.hideDropdown)
   }
 
-  chooseOption = (value) => {
+  chooseOption(value) {
     this.props.onChange(value)
   }
 
-  renderDataDropDown = (options) => {
+  renderDataDropDown(options) {
     const items = options.map(
       option => ({
         key: option.value,
@@ -88,7 +95,7 @@ class Select extends React.Component {
     return option.label
   }
 
-  render () {
+  render() {
     const { options, active, value } = this.props
 
     return (
