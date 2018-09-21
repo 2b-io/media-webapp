@@ -36,6 +36,7 @@ const DropdownMenu = styled.div`
   right: 0;
   z-index: 1;
   background-color: ${ ({ theme }) => theme.white.base };
+  color: ${ ({ theme }) => theme.white.on.base };
   border: 1px solid ${ ({ theme }) => theme.secondary.base };
   display: ${
     ({ isOpen }) => isOpen ? 'block' : 'none'

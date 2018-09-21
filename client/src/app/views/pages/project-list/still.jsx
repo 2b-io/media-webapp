@@ -1,12 +1,31 @@
 import React, { Fragment } from 'react'
 
-import { MoreIcon } from 'ui/icons'
-import { PageTitle } from 'ui/typo'
+import { List, MenuMore } from 'ui/elements'
+import { PageTitle, TextLine } from 'ui/typo'
 
-const ProjectList = ({ showModal, stillHeight }) => (
+const ProjectList = () => (
   <Fragment>
     <PageTitle>Projects</PageTitle>
-    <MoreIcon />
+    <MenuMore
+      content={ () => (
+        <List
+          items={ [
+            {
+              content: () => <TextLine mostLeft mostRight>Sort by privilege</TextLine>
+            },
+            {
+              content: () => <TextLine mostLeft mostRight>Sort by name</TextLine>
+            },
+            {
+              content: () => <TextLine mostLeft mostRight>Sort by created date</TextLine>
+            },
+            {
+              content: () => <TextLine mostLeft mostRight>Hide disabled projects</TextLine>
+            }
+          ] }
+        />
+      ) }
+    />
   </Fragment>
 )
 
