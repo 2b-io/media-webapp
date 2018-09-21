@@ -1,4 +1,4 @@
-import { call, take, fork, put, select } from 'redux-saga/effects'
+import { take, fork, put, select } from 'redux-saga/effects'
 import serializeError from 'serialize-error'
 
 import PushSetting from 'models/push-setting'
