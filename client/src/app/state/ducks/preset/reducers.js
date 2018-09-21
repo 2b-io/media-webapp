@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 
+import arrayToMap from 'state/helpers/array-to-map'
 import * as types from './types'
 
 // struct presets
@@ -40,6 +41,11 @@ export default combineReducers({
           [ identifier ]: remainPresets
         }
       }
+      case types.FETCH_COMPLETED:
+        return {
+          ...state,
+          [ action.payload.identifier ]: arrayToMap(action.payload.presets, 'contentType')
+        }
     }
     return state
   }
