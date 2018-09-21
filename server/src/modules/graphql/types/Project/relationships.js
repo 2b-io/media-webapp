@@ -19,6 +19,10 @@ import {
 } from 'services/pull-setting'
 
 import {
+  get as getPushSetting,
+} from 'services/push-setting'
+
+import {
   list as listPermissions
 } from 'services/permission'
 
@@ -29,6 +33,7 @@ import {
 import { Account } from '../Account'
 import { Collaborator } from '../Collaborator'
 import { Preset } from '../Preset'
+import { PushSetting } from '../push-setting'
 import { PullSetting } from '../pull-setting'
 import { Media } from '../Media'
 import { Infrastructure } from '../Infrastructure'
@@ -104,6 +109,12 @@ export default () => ({
     type: PullSetting,
     resolve: async (project) => {
       return await getPullSetting(project._id)
+    }
+  },
+  pushSetting: {
+    type: PushSetting,
+    resolve: async (project) => {
+      return await getPushSetting(project._id)
     }
   }
 })
