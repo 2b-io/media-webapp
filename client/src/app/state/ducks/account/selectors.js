@@ -1,11 +1,11 @@
 export default {
   findAccountById: (state, id, currentSession) => {
     if (id !== 'me' || !currentSession) {
-      return state.accounts[ id ]
+      return state[ id ]
     }
 
     const { account: { _id } } = currentSession
 
-    return state.accounts[ _id ]
+    return state[ _id ]
   }
 }
