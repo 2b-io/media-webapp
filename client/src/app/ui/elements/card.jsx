@@ -39,9 +39,6 @@ const Fab = styled.button`
   right: 16px;
   bottom: -16px;
   z-index: 1;
-  border: 2px solid ${
-    ({ theme }) => theme.black.base
-  };
   border-radius: 50%;
   overflow: hidden;
   width: 40px;
@@ -60,12 +57,19 @@ const Fab = styled.button`
     ({ theme }) => theme.white.on.base
   };
   outline: none;
+  border: none;
+`
+
+const FabBorder = styled.div`
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border: 2px solid ${ ({ theme }) => theme.black.base };
+  border-radius: 50%;
 `
 
 const FabContent = styled.div`
   position: absolute;
-  top: -2px;
-  left: -2px;
   width: 40px;
   height: 40px;
 `
@@ -81,6 +85,7 @@ const Card = ({ title, fab, content, ...props }) => (
           { title && title() }
           { fab && (
             <Fab>
+              <FabBorder />
               <FabContent>{ fab() }</FabContent>
             </Fab>
           ) }

@@ -16,6 +16,8 @@ const Surface = styled.div`
   margin: 0 auto;
   width: 40px;
   height: 40px;
+  max-width: 100%;
+  max-height: 100%;
   justify-content: center;
   align-items: center;
 `
