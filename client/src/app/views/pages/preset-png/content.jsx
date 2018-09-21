@@ -11,11 +11,11 @@ import { withParams } from 'views/router'
 import _PresetForm from './form'
 
 const PresetForm = reduxForm({
-  form: 'presetSvg',
+  form: 'presetPng',
   enableReinitialize: true
 })(_PresetForm)
 
-const PresetSvg = ({
+const PresetPng = ({
   preset,
   identifier,
   updatePreset
@@ -45,16 +45,16 @@ const PresetSvg = ({
 
 export default withParams(
   stateful({
-    component: 'PresetSvg'
+    component: 'PresetPng'
   })(
     connect(
       (state, { params: { identifier } }) => ({
-        preset: selectors.findPreset(state, identifier, 'image/svg'),
+        preset: selectors.findPreset(state, identifier, 'image/png'),
         identifier
       }),
       mapDispatch({
         updatePreset: actions.updatePreset
       })
-    )(PresetSvg)
+    )(PresetPng)
   )
 )

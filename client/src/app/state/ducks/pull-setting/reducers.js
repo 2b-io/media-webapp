@@ -3,9 +3,15 @@ import createReducer from 'state/helpers/create-reducer'
 
 import * as types from './types'
 
-export default combineReducers({
-  pullSetting: createReducer(null)({
-    [types.GET_COMPLETED]: (state, action) => action.payload,
-    [types.UPDATE_COMPLETED]: (state, action) => action.payload
-  })
-})
+export default (state = {}, action) => {
+  switch (action.type) {
+    case types.GET_COMPLETED:
+    case types.UPDATE_COMPLETED:
+      return {
+        ...state,
+        [ action.payload.identifier ]: action.payload.pullSetting
+      }
+  }
+
+  return state
+}

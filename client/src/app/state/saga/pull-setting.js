@@ -15,9 +15,9 @@ const getLoop = function*() {
         continue
       }
 
-      const identifier = action.payload
-      const pullSetting = yield call(PullSetting.getPullSetting, session.token, identifier)
-      yield put(actions.getPullSettingCompleted( pullSetting ))
+      const { identifier } = action.payload
+      const pullSetting = yield PullSetting.getPullSetting(session.token, identifier)
+      yield put(actions.getPullSettingCompleted({ identifier, pullSetting }))
     } catch (e) {
       yield put(actions.getPullSettingFailed(serializeError(e)))
       continue
@@ -36,10 +36,14 @@ const updateLoop = function*() {
         continue
       }
 
-      const pullSetting = action.payload
-      const newPullSetting = yield call(PullSetting.updatePullSetting, session.token, pullSetting)
+      const { identifier, pullSetting } = action.payload
 
-      yield put(actions.updatePullSettingCompleted(newPullSetting))
+      const updatedPullSetting = yield PullSetting.updatePullSetting(session.token, identifier, pullSetting)
+
+      yield put(actions.updatePullSettingCompleted({
+        identifier,
+        pullSetting: updatedPullSetting
+      }))
     } catch (e) {
       yield put(actions.updatePullSettingFailed(serializeError(e)))
       continue

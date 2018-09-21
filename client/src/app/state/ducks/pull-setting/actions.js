@@ -2,26 +2,26 @@ import * as types from './types'
 
 export const getPullSetting = identifier => ({
   type: types.GET,
-  payload: identifier
+  payload: { identifier }
 })
-export const getPullSettingCompleted = pullSetting => ({
+export const getPullSettingCompleted = ({ identifier, pullSetting }) => ({
   type: types.GET_COMPLETED,
-  payload: pullSetting
+  payload: ({ identifier, pullSetting })
 })
-export const getPullSettingFailed = error => ({
+export const getPullSettingFailed = (reason) => ({
   type: types.GET_FAILED,
-  payload: error
+  payload: { reason }
 })
 
-export const updatePullSetting = pullSetting => ({
+export const updatePullSetting = ({ identifier, pullSetting }) => ({
   type: types.UPDATE,
-  payload: pullSetting
+  payload: { identifier, pullSetting }
 })
-export const updatePullSettingCompleted = pullSetting => ({
+export const updatePullSettingCompleted = ({ identifier, pullSetting }) => ({
   type: types.UPDATE_COMPLETED,
-  payload: pullSetting
+  payload: { identifier, pullSetting }
 })
-export const updatePullSettingFailed = error => ({
+export const updatePullSettingFailed = (reason) => ({
   type: types.UPDATE_FAILED,
-  payload: error
+  payload: { reason }
 })

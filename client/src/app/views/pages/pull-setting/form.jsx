@@ -26,6 +26,7 @@ const pullSettingForm = ({ handleSubmit }) => (
     <DescriptionText mostLeft mostRight>
       Optional. If you want to restrict Media CDN requesting to specified origins, enter the allowed origins here.
     </DescriptionText>
+    <Break />
     <CustomHeader
       name="headers"
     />
