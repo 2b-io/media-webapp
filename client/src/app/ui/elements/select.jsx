@@ -2,11 +2,10 @@ import React from 'react'
 import { render } from 'react-dom'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { Field } from 'redux-form'
 
 import { List } from 'ui/elements'
 import { ExpandIcon } from 'ui/icons'
-import { DescriptionText, TextLine } from 'ui/typo'
+import { TextLine } from 'ui/typo'
 
 const Wrapper = styled.div`
   position: relative;
@@ -19,115 +18,86 @@ const SelectButton = styled.div`
     min-height: 0;
   };
   grid-template-columns: 1fr 40px;
-  white-space: nowrap;
   cursor: pointer;
-  border-bottom: 2px solid ${ ({ theme }) => theme.black.base };
 `
 
-const DropdownMenu = styled.ul.attrs({
-  style: ({ isOpen }) => ({
-    display: `${ isOpen ? 'block' : 'none' }`
-  })
-})`
+const Indicator = styled.div`
   position: absolute;
-  top: 36px;
+  bottom: 0;
   left: 0;
-  right: 4px;
-  z-index: 1000;
-  display: none;
-  background-color: ${ ({ theme }) => theme.white.base };
-  border: 1px solid ${ ({ theme }) => theme.secondary.base };;
+  right: 0;
+  height: 2px;
+  background: ${ ({ theme }) => theme.black.base };
 `
 
-const Item = styled.li`
-  cursor: pointer;
-  &:hover,
-  &:active {
-    background: #ddd;
-  }
+const DropdownMenu = styled.div`
+  position: absolute;
+  top: 32px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background-color: ${ ({ theme }) => theme.white.base };
+  border: 1px solid ${ ({ theme }) => theme.secondary.base };
+  display: ${
+    ({ isOpen }) => isOpen ? 'block' : 'none'
+  };
 `
 
 class Select extends React.Component {
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      isOpen: false,
-      labelItem: null,
-      typeDropdown: null
-    }
-  }
-
-  componentWillMount() {
-    const { label } = this.props.list[0]
-
-    if (typeof label != 'undefined') {
-      this.checkType(false)
-      this.setState({ contentType: label })
-      this.props.input.onChange(label)
-    } else {
-      this.checkType(true)
-      this.setState({ contentType: this.props.list[ 0 ] })
-      this.props.input.onChange(this.props.list[ 0 ])
-    }
-  }
-
-  checkType = (value) => {
-    this.setState({
-        typeDropdown: value
-    })
-  }
-
   showDropdown = () => {
-    this.setState({ isOpen: true })
-    document.addEventListener("click", this.hideDropdown)
+    document.addEventListener('click', this.hideDropdown)
+
+    this.props.onFocus()
   }
 
   hideDropdown = () => {
-    this.setState({ isOpen: false })
-    document.removeEventListener("click", this.hideDropdown)
+    document.removeEventListener('click', this.hideDropdown)
+
+    this.props.onBlur()
   }
 
-  chooseItem = (value) => {
-    if (this.state.contentType !== value) {
-      this.setState({
-        contentType: value
+  chooseOption = (value) => {
+    this.props.onChange(value)
+  }
+
+  renderDataDropDown = (options) => {
+    const items = options.map(
+      option => ({
+        key: option.value,
+        content: () => (
+          <TextLine mostLeft mostRight>
+            { option.label }
+          </TextLine>
+        ),
+        onClick: () => this.chooseOption(option.value)
       })
-      this.props.input.onChange(value)
-    }
-  }
+    )
 
-  renderDataDropDown = (item, index) => {
-    const { value, label } = this.state.typeDropdown ? { value: index, label: item } : item
     return (
-      <Item
-        key={ index }
-        value={ value }
-        onClick={ () => this.chooseItem(label) }
-      >
-        <TextLine mostLeft mostRight><option>{ label }</option></TextLine>
-      </Item>
+      <List items={ items } />
     )
   }
 
+  findLabelByValue(options, value) {
+    const option = options.filter(option => option.value === value).shift()
+
+    return option.label
+  }
+
   render () {
-    const { list, input } = this.props
+    const { options, active, value } = this.props
 
     return (
       <Wrapper>
-        <SelectButton
-          onChange={ () => input.onChange( this.state ) }
-          name="contentType"
-          onClick={ this.showDropdown }>
+        <SelectButton onClick={ this.showDropdown }>
           <TextLine mostLeft mostRight>
-            { this.state.contentType }
+            { this.findLabelByValue(options, value) }
           </TextLine>
           <ExpandIcon />
         </SelectButton>
-        <DropdownMenu isOpen={ this.state.isOpen }>
-          {
-            list.map(this.renderDataDropDown)
-          }
+        <Indicator />
+        <DropdownMenu isOpen={ active }>
+          { this.renderDataDropDown(options) }
         </DropdownMenu>
       </Wrapper>
     )
@@ -135,11 +105,10 @@ class Select extends React.Component {
 }
 
 Select.propTypes = {
-  list: PropTypes.arrayOf(PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]))
-}
-
-Select.defaultProps = {
-  list: []
+  items: PropTypes.arrayOf(PropTypes.shape({
+    label: PropTypes.string,
+    value: PropTypes.string
+  }))
 }
 
 export default Select

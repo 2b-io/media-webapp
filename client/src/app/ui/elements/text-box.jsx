@@ -48,7 +48,7 @@ const Wrapper = styled.div`
 
 const Indicator = styled.div`
   position: absolute;
-  bottom: -1px;
+  bottom: 0;
   left: 0;
   right: 0;
   height: 2px;
