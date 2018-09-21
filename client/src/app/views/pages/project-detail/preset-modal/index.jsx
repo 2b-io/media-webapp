@@ -12,10 +12,10 @@ import { Redirect, withParams } from 'views/router'
 import _PresetForm from './form'
 
 const SUPPORTED_CONTENT_TYPES = [
-  { label: 'content/jpeg', value: 'image/jpeg' },
-  { label: 'content/png', value: 'image/png' },
-  { label: 'content/svg', value: 'image/svg' },
-  { label: 'content/gif', value: 'image/gif' }
+  { label: 'image/jpeg', value: 'image/jpeg' },
+  { label: 'image/png', value: 'image/png' },
+  { label: 'image/svg', value: 'image/svg' },
+  { label: 'image/gif', value: 'image/gif' }
 ]
 
 const PresetForm = reduxForm({

@@ -93,7 +93,7 @@ export default {
     partial: true,
     onEnter: ({ identifier }) => [
       actions.showModal({ modal: 'Preset' }),
-      actions.fetchPresets({ identifier }),
+      actions.fetchPresets({ identifier })
     ]
   },
   '/projects/:identifier/invite': {
@@ -118,7 +118,8 @@ export default {
     component: ProjectDetail,
     exact: false,
     onEnter: ({ identifier }) => identifier === 'create' || [
-      actions.getProject(identifier)
+      actions.getProject(identifier),
+      actions.fetchPresets({ identifier })
     ]
   },
   '/ui': {

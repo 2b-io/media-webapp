@@ -12,11 +12,11 @@ const allPaths = {
 }
 
 const regexes = Object.entries(allPaths).map(
-  ([ path, options ]) => {
+  ([ path, { exact, partial } ]) => {
     const keys = []
-    const regex = pathToRegexp(path, keys, { end: options.exact })
+    const regex = pathToRegexp(path, keys, { end: exact })
 
-    return { keys, path, regex }
+    return { keys, path, regex, partial, exact }
   }
 )
 
@@ -34,7 +34,7 @@ export default function*() {
     const currentQuery = currentSearch && querystring.parse(currentSearch.replace(/^\?/, ''))
     const previousQuery = previousSearch && querystring.parse(previousSearch.replace(/^\?/, ''))
 
-    const actions = regexes
+    const { actions } = regexes
       // check enter & leave
       .map(
         r => ({
@@ -69,7 +69,11 @@ export default function*() {
       )
       // call onEnter * onLeave
       .reduce(
-        (actions, r) => {
+        (collector, r) => {
+          if (collector.end) {
+            return collector
+          }
+
           let enteringActions = []
           let leavingActions = []
 
@@ -88,12 +92,18 @@ export default function*() {
             }
           }
 
-          return [
-            ...actions,
-            ...leavingActions,
-            ...enteringActions
-          ]
-        }, []
+          return {
+            end: r.exact,
+            actions: [
+              ...collector.actions,
+              ...leavingActions,
+              ...enteringActions
+            ]
+          }
+        }, {
+          end: false,
+          actions: []
+        }
       )
 
     yield all(actions.map(action => put(action)))
