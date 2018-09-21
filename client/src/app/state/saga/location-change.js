@@ -29,7 +29,7 @@ export default function*() {
 
     const { pathname: current, search: currentSearch } = url.parse(currentLocation.pathname)
 
-    const { pathname: previous, search: previousSearch } = url.parse(previousLocation.pathname)
+    const { pathname: previous, search: previousSearch } = url.parse(previousLocation.pathname || currentLocation.pathname)
 
     const currentQuery = currentSearch && querystring.parse(currentSearch.replace(/^\?/, ''))
     const previousQuery = previousSearch && querystring.parse(previousSearch.replace(/^\?/, ''))
