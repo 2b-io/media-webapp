@@ -91,8 +91,9 @@ export default {
   },
   '/projects/:identifier/presets/new': {
     partial: true,
-    onEnter: () => [
-      actions.showModal({ modal: 'Preset' })
+    onEnter: ({ identifier }) => [
+      actions.showModal({ modal: 'Preset' }),
+      actions.fetchPresets({ identifier }),
     ]
   },
   '/projects/:identifier/invite': {

@@ -214,7 +214,7 @@ const Project = ({
       <Route path="/projects/:identifier/presets/new">
         <PresetModal
           width="wide"
-          hideOnClickOutside={ false }
+          hideOnClickOutside={ true }
           onHide={ () => toProjectDetail(project.identifier) }
         />
       </Route>

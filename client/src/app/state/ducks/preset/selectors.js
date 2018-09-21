@@ -4,5 +4,12 @@ export default {
       return
     }
     return state.presets[ identifier ][ contentType ]
+  },
+  presets: (state, identifier) => {
+
+    if (!state) {
+      return
+    }
+    return state.presets[identifier]
   }
 }

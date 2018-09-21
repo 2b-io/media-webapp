@@ -5,10 +5,18 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Container, ErrorBox } from 'ui/elements'
+import { Text } from 'ui/typo'
 import { modal } from 'views/common/decorators'
 import { Redirect, withParams } from 'views/router'
 
 import _PresetForm from './form'
+
+const SUPPORTED_CONTENT_TYPES = [
+  { label: 'content/jpeg', value: 'image/jpeg' },
+  { label: 'content/png', value: 'image/png' },
+  { label: 'content/svg', value: 'image/svg' },
+  { label: 'content/gif', value: 'image/gif' }
+]
 
 const PresetForm = reduxForm({
   form: 'preset',
@@ -18,23 +26,43 @@ const PresetForm = reduxForm({
 const PresetModal = ({
   createPreset,
   identifier,
+  presets,
   ui: {
     idle,
     createError,
     createResult
   }
 }) => {
+  if (!presets) {
+    return null
+  }
+
+  if (createResult) {
+    return <Redirect to={ `/projects/${ identifier }/presets/${ createResult.contentType.replace('/', '_') }` } />
+  }
+
+  const filtered = SUPPORTED_CONTENT_TYPES.filter(
+    ({ value }) => !Object.keys(presets).some((preset) => preset === value)
+  )
+
+  if (!filtered.length) {
+    return (
+      <Container>
+        <Text>No content type to add</Text>
+      </Container>
+    )
+  }
+
   return (
     <Container>
       { createError &&
         <ErrorBox>An error happens when creating the new preset.</ErrorBox>
       }
-      { createResult &&
-        <Redirect to={ `/projects/${ identifier }/presets/${ createResult.contentType }` } />
-      }
       <PresetForm
         idle={ idle }
-        onSubmit={ createPreset }
+        onSubmit={ ({ contentType }) => createPreset({ identifier, contentType }) }
+        initialValues={ { contentType: filtered[0].value } }
+        options={ filtered }
       />
     </Container>
   )
@@ -46,9 +74,9 @@ export default withParams(
   })(
   // withParams(
     connect(
-      (state, { params: { identifier, contentType } }) => {
+      (state, { params: { identifier } }) => {
         return {
-          preset: selectors.findPreset(state, { identifier, contentType }) || {},
+          presets: selectors.presets(state, identifier),
           identifier
         }
       },
