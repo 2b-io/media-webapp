@@ -40,18 +40,25 @@ export default {
     component: CreateProject,
     exact: true
   },
-  '/projects/:slug/media': {
+  '/projects/:identifier/media': {
     component: ProjectMedia,
     exact: true,
-    onEnter: ({ slug }) => [
-      actions.fetchProjectMedia(slug)
+    onEnter: ({ identifier }) => [
+      actions.fetchProjectMedia(identifier)
     ]
   },
-  '/projects/:identifier': {
-    component: ProjectDetail,
+  '/projects/:identifier/edit': {
+    component: EditProject,
     exact: true,
-    onEnter: ({ identifier }) => identifier === 'create' || [
+    onEnter: ({ identifier }) => [
       actions.getProject(identifier)
+    ]
+  },
+  '/projects/:identifier/pull-setting': {
+    component: PullSetting,
+    exact: true,
+    onEnter: ({ identifier }) => [
+      actions.getPullSetting(identifier)
     ]
   },
   '/projects/:identifier/presets/image_jpeg': {
@@ -82,36 +89,35 @@ export default {
       actions.getPreset({ identifier, contentType: 'image/png' })
     ]
   },
-  '/projects/:identifier/edit': {
-    component: EditProject,
-    exact: true,
-    onEnter: ({ identifier }) => [
-      actions.getProject(identifier)
+  '/projects/:identifier/presets/new': {
+    partial: true,
+    onEnter: () => [
+      actions.showModal({ modal: 'Preset' })
     ]
   },
-  '/projects/:identifier/pull-setting': {
-    component: PullSetting,
-    exact: true,
-    onEnter: ({ identifier }) => [
-      actions.getPullSetting(identifier)
-    ]
-  },
-  '/projects/:slug/invite': {
+  '/projects/:identifier/invite': {
     partial: true,
     onEnter: () => [
       actions.showModal({ modal: 'InviteCollaborator' })
     ]
   },
-  '/projects/:slug/invite-by-email': {
+  '/projects/:identifier/invite-by-email': {
     partial: true,
-    onEnter: ({ slug }, { email }) => [
-      actions.showModal({ modal: 'CollaboratorInviteEmail', params: { slug, email } })
+    onEnter: ({ identifier }, { email }) => [
+      actions.showModal({ modal: 'CollaboratorInviteEmail', params: { identifier, email } })
     ]
   },
-  '/projects/:slug/cache-invalidator': {
+  '/projects/:identifier/cache-invalidator': {
     partial: true,
     onEnter: () => [
       actions.showModal({ modal: 'CacheInvalidatorModal' })
+    ]
+  },
+  '/projects/:identifier': {
+    component: ProjectDetail,
+    exact: false,
+    onEnter: ({ identifier }) => identifier === 'create' || [
+      actions.getProject(identifier)
     ]
   },
   '/ui': {
