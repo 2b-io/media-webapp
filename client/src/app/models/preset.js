@@ -5,6 +5,23 @@ export const PRESET_FRAGMENT = `
   parameters
 `
 export default {
+  async fetch(token, identifier) {
+
+    const body = await request(`
+      query fetchPreset($token: String!, $identifier: String!) {
+        session(token: $token) {
+          account {
+            project(identifier: $identifier) {
+              presets {
+                ${ PRESET_FRAGMENT }
+              }
+            }
+          }
+        }
+      }
+    `, { token, identifier })
+    return body.session.account.project.presets
+  },
   async get(token, identifier, contentType) {
 
     const body = await request(`
@@ -68,5 +85,21 @@ export default {
       preset
     })
     return  body.session.account.project.preset
+  },
+  async create(token, identifier, contentType) {
+    const body = await request(`
+      query getPreset($token: String!, $identifier: String!, $preset: PresetStruct!) {
+        session(token: $token) {
+          account {
+            project(identifier: $identifier) {
+              _createPreset(preset: $preset) {
+                ${ PRESET_FRAGMENT }
+              }
+            }
+          }
+        }
+      }
+    `, { token, identifier, preset: { contentType } })
+    return body.session.account.project._createPreset
   }
 }

@@ -53,7 +53,8 @@ const loop = function*() {
     yield all([
       call(storage.clear, TOKEN),
       put(actions.destroySessionCompleted()),
-      put(actions.requestLocation('/sign-in'))
+      put(actions.requestLocation('/sign-in')),
+      put({ type: '@@RESET' })
     ])
   }
 }

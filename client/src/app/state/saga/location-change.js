@@ -12,11 +12,11 @@ const allPaths = {
 }
 
 const regexes = Object.entries(allPaths).map(
-  ([ path, options ]) => {
+  ([ path, { exact, partial } ]) => {
     const keys = []
-    const regex = pathToRegexp(path, keys, { end: options.exact })
+    const regex = pathToRegexp(path, keys, { end: exact })
 
-    return { keys, path, regex }
+    return { keys, path, regex, partial, exact }
   }
 )
 
@@ -29,12 +29,12 @@ export default function*() {
 
     const { pathname: current, search: currentSearch } = url.parse(currentLocation.pathname)
 
-    const { pathname: previous, search: previousSearch } = url.parse(previousLocation.pathname)
+    const { pathname: previous, search: previousSearch } = url.parse(previousLocation.pathname || currentLocation.pathname)
 
     const currentQuery = currentSearch && querystring.parse(currentSearch.replace(/^\?/, ''))
     const previousQuery = previousSearch && querystring.parse(previousSearch.replace(/^\?/, ''))
 
-    const actions = regexes
+    const { actions } = regexes
       // check enter & leave
       .map(
         r => ({
@@ -69,18 +69,18 @@ export default function*() {
       )
       // call onEnter * onLeave
       .reduce(
-        (actions, r) => {
+        (collector, r) => {
           let enteringActions = []
           let leavingActions = []
 
-          if (r.enter) {
+          if (!collector.enterEnd && r.enter) {
             console.debug(`Entering ${ current } [${ r.path }]`)
 
             if (r.onEnter) {
               enteringActions = r.onEnter(r.parameters, currentQuery)
             }
 
-          } else if (r.leave) {
+          } else if (!collector.leaveEnd && r.leave) {
             console.debug(`Leaving ${ previous } [${ r.path }]`)
 
             if (r.onLeave) {
@@ -88,12 +88,19 @@ export default function*() {
             }
           }
 
-          return [
-            ...actions,
-            ...leavingActions,
-            ...enteringActions
-          ]
-        }, []
+          return {
+            enterEnd: r.enter && r.exact,
+            leaveEnd: r.leave && r.exact,
+            actions: [
+              ...collector.actions,
+              ...leavingActions,
+              ...enteringActions
+            ]
+          }
+        }, {
+          end: false,
+          actions: []
+        }
       )
 
     yield all(actions.map(action => put(action)))
