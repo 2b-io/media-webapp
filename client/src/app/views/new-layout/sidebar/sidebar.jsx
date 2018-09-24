@@ -130,6 +130,7 @@ const Sidebar = ({
   open,
   signOut,
   toDashboard,
+  toProfile,
   toProjectList
 }) => {
   const menuItems = [ {
@@ -160,7 +161,7 @@ const Sidebar = ({
           <CloseIcon />
         </CloseButton>
         <Content>
-          <Profile className="profile">
+          <Profile>
             <UserName>
               <TextLine mostLeft mostRight>
                 { currentAccount.displayName || 'John Smith' }
@@ -171,7 +172,7 @@ const Sidebar = ({
                 { currentAccount.email }
               </DescriptionTextLine>
             </UserEmail>
-            <UserAvatar>
+            <UserAvatar onClick={ toProfile }>
               <Identicon circle
                 size={ 56 }
                 id={ currentAccount.email }

@@ -23,32 +23,18 @@ const Overlay = styled.div`
   background: ${
     ({ theme }) => theme.black.opaque.base
   };
-  padding: ${
-    ({ theme }) => `0 ${ theme.spacing.small }`
-  };
+  padding: 0 16px;
 `
 
 const Wrapper = styled.div`
   background: ${ ({ theme }) => theme.background.base };
   color: ${ ({ theme }) => theme.background.on.base };
   position: relative;
-  margin: ${
-    ({ theme: { spacing } }) => `
-      ${ spacing.huge }
-      auto
-      ${spacing.big }
-    `
-  };
+  margin: 72px auto 16px;
   box-shadow: 0 30px 80px ${
     ({ theme }) => theme.secondary.opaque.base
   };
   min-width: 280px; /* support iphone5s */
-  max-width: ${
-    ({ width }) => width === 'wide' ?
-      '960px' : (
-        width === 'narrow' ? '640px' : 'auto'
-      )
-  };
 `
 
 const Header = styled.div`

@@ -1,8 +1,11 @@
 export default {
   findPreset: (state, identifier, contentType) => {
-    if (!state.presets[ identifier ]) {
+    if (!state[ identifier ]) {
       return
     }
-    return state.presets[ identifier ][ contentType ]
+    return state[ identifier ][ contentType ]
+  },
+  presets: (state, identifier) => {
+    return state[ identifier ]
   }
 }

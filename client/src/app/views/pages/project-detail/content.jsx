@@ -6,11 +6,12 @@ import { reduxForm, reset } from 'redux-form'
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
 import { Layout, Panel, TitleBar } from 'ui/compounds'
-import { Button, Container, ErrorBox, Paragraph } from 'ui/elements'
-import { AddIcon, OwnerAddIcon, ReloadIcon } from 'ui/icons'
+import { Button, Card, Container, ErrorBox, Paragraph } from 'ui/elements'
+import { AddIcon, EditIcon, OwnerAddIcon, ReloadIcon } from 'ui/icons'
 import { stateful } from 'views/common/decorators'
 import { Redirect, Route, withParams } from 'views/router'
 
+import { Heading, Text } from 'ui/typo'
 import ProjectTools from './project-tools'
 import CacheInvalidatorModal from './cache-invalidator-modal'
 import CollaboratorInviteEmail from './sent-email-invite-modal'
@@ -36,6 +37,7 @@ const Project = ({
   deleteProject,
   updateProject,
   toCacheInvalidator,
+  toEditProject,
   toInviteModal,
   toPresetDetail,
   toProfile,
@@ -56,6 +58,21 @@ const Project = ({
 
   return (
     <Fragment>
+      <Container>
+        { project &&
+          <Card
+            title={ () => <Heading mostLeft mostRight>General</Heading> }
+            fab={ () => <EditIcon onClick={ () => toEditProject(project.identifier) } /> }
+            content={ () => (
+              <Text mostLeft mostRight>
+                { project.name }<br />
+                { project.infrastructure.domain }<br />
+                { project.status }
+              </Text>
+            ) }
+          />
+        }
+      </Container>
       <Layout>
         <Layout.Fluid size="small">
           <Container>
@@ -214,7 +231,7 @@ const Project = ({
       <Route path="/projects/:identifier/presets/new">
         <PresetModal
           width="wide"
-          hideOnClickOutside={ false }
+          hideOnClickOutside={ true }
           onHide={ () => toProjectDetail(project.identifier) }
         />
       </Route>
@@ -262,12 +279,13 @@ export default withParams(
         hideDeleteProjectDialog: () => actions.hideDialog({ dialog: 'ConfirmDeleteProjectDialog' }),
         deleteProject: actions.deleteProject,
         updateProject: actions.updateProject,
-        toCacheInvalidator: identifier => actions.requestLocation(`/projects/${ identifier }/cache-invalidator`),
-        toInviteModal: identifier => actions.requestLocation(`/projects/${ identifier }/invite`),
+        toCacheInvalidator: (identifier) => actions.requestLocation(`/projects/${ identifier }/cache-invalidator`),
+        toEditProject: (identifier) => actions.requestLocation(`/projects/${ identifier }/edit`),
+        toInviteModal: (identifier) => actions.requestLocation(`/projects/${ identifier }/invite`),
         toPresetDetail: (identifier, hash) => actions.requestLocation(`/projects/${ identifier }/presets/${ hash }`),
-        toProfile: id => actions.requestLocation(`/@${ id }`),
-        toProjectDetail: identifier => actions.requestLocation(`/projects/${ identifier }`),
-        toProjectMedia: identifier => actions.requestLocation(`/projects/${ identifier }/media`),
+        toProfile: (id) => actions.requestLocation(`/@${ id }`),
+        toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }`),
+        toProjectMedia: (identifier) => actions.requestLocation(`/projects/${ identifier }/media`),
         makeOwner: actions.makeOwner,
         deleteCollaborator: actions.deleteCollaborator,
         reset

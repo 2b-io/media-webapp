@@ -1,14 +1,27 @@
 import * as types from './types'
 
-export const create = ({ preset, identifier }) => ({
-  type: types.CREATE,
-  payload: ({ preset, identifier })
+export const fetchPresets = ({ identifier }) => ({
+  type: types.FETCH,
+  payload: { identifier }
 })
-export const createCompleted = ({ preset, identifier }) => ({
+export const fetchPresetsCompleted = ({ presets, identifier }) => ({
+  type: types.FETCH_COMPLETED,
+  payload: { presets, identifier }
+})
+export const fetchPresetsFailed = reason => ({
+  type: types.FETCH_FAILED,
+  payload: { reason }
+})
+
+export const createPreset = ({ identifier, contentType }) => ({
+  type: types.CREATE,
+  payload: ({ identifier, contentType })
+})
+export const createPresetCompleted = ({ identifier, preset }) => ({
   type: types.CREATE_COMPLETED,
   payload: ({ preset, identifier })
 })
-export const createFailed = reason => ({
+export const createPresetFailed = reason => ({
   type: types.CREATE_FAILED,
   payload: { reason }
 })

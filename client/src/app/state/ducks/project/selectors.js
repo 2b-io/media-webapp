@@ -1,4 +1,4 @@
 export default {
-  allProjects: state => Object.values(state.projects || {}),
-  findProjectByIdentifier: (state, identifier) => state.projects[ identifier ]
+  allProjects: state => Object.values(state || {}),
+  findProjectByIdentifier: (state, identifier) => state[ identifier ]
 }

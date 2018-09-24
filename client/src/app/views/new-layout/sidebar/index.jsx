@@ -12,9 +12,9 @@ export default connect(
   }),
   mapDispatch({
     minimizeSidebar: actions.minimizeSidebar,
+    signOut: () => actions.closeLayout(),
     toDashboard: () => actions.requestLocation('/'),
-    toProjectList: () => actions.requestLocation('/projects'),
-    toUI: () => actions.requestLocation('/ui'),
-    signOut: () => actions.closeLayout()
+    toProfile: () => actions.requestLocation('/@me'),
+    toProjectList: () => actions.requestLocation('/projects')
   })
 )(Sidebar)

@@ -7,6 +7,7 @@ const ProjectList = () => (
   <Fragment>
     <PageTitle>Projects</PageTitle>
     <MenuMore
+      name="menuMoreOnProjectListStill"
       content={ () => (
         <List
           items={ [

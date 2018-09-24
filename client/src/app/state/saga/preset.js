@@ -17,13 +17,12 @@ const createLoop = function*() {
         continue
       }
 
-      const { preset, identifier } = action.payload
-
+      const { identifier, contentType } = action.payload
       const newPreset = yield call(
         Preset.create,
         session.token,
-        preset,
-        identifier
+        identifier,
+        contentType
       )
 
       yield all([
@@ -108,6 +107,26 @@ const getLoop = function*() {
     }
   }
 }
+const fetchLoop = function*() {
+  while (true) {
+    const action = yield take(types['PRESET/FETCH'])
+
+    try {
+      const session = yield select(selectors.currentSession)
+
+      if (!session) {
+        continue
+      }
+
+      const { identifier } = action.payload
+      const presets = yield Preset.fetch(session.token, identifier)
+      yield put(actions.fetchPresetsCompleted({ presets, identifier }))
+    } catch (e) {
+      yield put(actions.fetchPresetsFailed(serializeError(e)))
+      continue
+    }
+  }
+}
 
 const updateLoop = function*() {
   while (true) {
@@ -152,5 +171,6 @@ export default function*() {
   yield fork(createLoop)
   yield fork(deleteLoop)
   yield fork(getLoop)
+  yield fork(fetchLoop)
   yield fork(updateLoop)
 }

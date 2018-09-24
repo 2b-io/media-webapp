@@ -93,7 +93,7 @@ class Select extends React.Component {
   findLabelByValue(options, value) {
     const option = options.filter(option => option.value === value).shift()
 
-    return option.label
+    return option && option.label
   }
 
   render() {
