@@ -5,7 +5,7 @@ import { reset } from 'redux-form'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
-import { Card } from 'ui/elements'
+import { Button, Card, Paragraph, TextArea } from 'ui/elements'
 import { EditIcon } from 'ui/icons'
 import { Heading, TextLine } from 'ui/typo'
 import { stateful } from 'views/common/decorators'
@@ -15,9 +15,12 @@ import CacheInvalidatorModal from './cache-invalidator-modal'
 import CollaboratorInviteEmail from './sent-email-invite-modal'
 import InviteModal from './invite-modal'
 import PresetModal from './preset-modal'
+import { ConfirmDeleteCollaboratorDialog } from './dialog'
 
-import Presets from './preset-card'
 import ApiKeys from './api-key-card'
+import Collaborators from './collaborator-card'
+import Presets from './preset-card'
+
 
 const Layout = styled.section`
   padding: 16px;
@@ -41,15 +44,24 @@ const Container = styled.div`
 
 const Project = ({
   createApiKey,
+  currentAccount,
+  deleteCollaborator,
+  makeOwner,
   presets,
   project,
+  // pullSetting,
+  toCreateApiKey,
   toEditProject,
   toEditPullSetting,
+  toInviteCollaboratorModal,
   toProjectDetail,
+  toProfile,
   toCreatePreset,
   secretKeys,
   removeSecretKey,
   updateSecretKey,
+  showDeleteCollaboratorDialog,
+  hideDeleteCollaboratorDialog,
   ui: {
     // idle,
     notFound,
@@ -87,7 +99,11 @@ const Project = ({
                 title={ () => <Heading mostLeft mostRight>Pull Settings</Heading> }
                 fab={ () => <EditIcon onClick={ () => toEditPullSetting(project.identifier) } /> }
                 content={ () => (
-                  <div>Pull data</div>
+                  <TextArea>
+                    Pull Origin
+                    Allowed Origins
+                    Headers
+                  </TextArea>
                 ) }
               />
               <ApiKeys
@@ -96,8 +112,38 @@ const Project = ({
                 removeSecretKey={ (key) => removeSecretKey(project.identifier, key) }
                 updateSecretKey={ (data) => updateSecretKey(project.identifier, data ) }
               />
+              <Collaborators
+                collaborators={ project.collaborators }
+                currentAccount={ currentAccount }
+                makeOwner={ (accountId) => { makeOwner(accountId, project.identifier) } }
+                showDeleteCollaboratorDialog={ showDeleteCollaboratorDialog }
+                toProfile={ toProfile }
+                toInviteCollaboratorModal={ () => toInviteCollaboratorModal(project.identifier) }
+              />
             </Fragment>
           }
+          <ConfirmDeleteCollaboratorDialog
+            width="narrow"
+            content={ ({ params }) => (
+              <Paragraph>
+                Do you want to remove the account { params.accountEmail } from the project?
+              </Paragraph>
+            ) }
+            choices={ ({ params }) => (
+              <Button.Group>
+                <Button
+                  variant="primary"
+                  onClick={ () => deleteCollaborator(project.identifier, params.accountId) }>
+                  Remove
+                </Button>
+                <Button
+                  variant="secondary"
+                  onClick={ hideDeleteCollaboratorDialog }>
+                  Cancel
+                </Button>
+              </Button.Group>
+            ) }
+          />
         </Container>
       </Layout>
       <Route path="/projects/:identifier/presets/new">
@@ -144,7 +190,12 @@ export default withParams(
         project: selectors.findProjectByIdentifier(state, identifier),
         presets: selectors.presets(state, identifier),
         currentAccount: selectors.currentAccount(state),
-        secretKeys: selectors.secretKeys(state, identifier)
+        secretKeys: selectors.secretKeys(state, identifier),
+        pullSetting: selectors.pullSetting(state, identifier),
+        secretKeys: [
+          { key: '9LnCclsaU3fX6rgZBqB9TEGGMagC', isActive: true },
+          { key: 'gJKglwcg2QuZd99bl0C2E2CNeaFn', isActive: false }
+        ]
       }),
       mapDispatch({
         showDeleteCollaboratorDialog: (accountId, accountEmail) => actions.showDialog({ dialog: 'ConfirmDeleteCollaboratorDialog', params: { accountId, accountEmail } }),
@@ -155,11 +206,11 @@ export default withParams(
         updateProject: actions.updateProject,
         toCacheInvalidator: (identifier) => actions.requestLocation(`/projects/${ identifier }/cache-invalidator`),
         toEditProject: (identifier) => actions.requestLocation(`/projects/${ identifier }/edit`),
-        toInviteModal: (identifier) => actions.requestLocation(`/projects/${ identifier }/invite`),
+        toInviteCollaboratorModal: (identifier) => actions.requestLocation(`/projects/${ identifier }/invite`),
         toCreatePreset: (identifier, hash) => actions.requestLocation(`/projects/${ identifier }/presets/${ hash }`),
         toProfile: (id) => actions.requestLocation(`/@${ id }`),
         toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }`),
-        toPullSetting: (identifier) => actions.requestLocation(`/projects/${ identifier }/pull-setting`),
+        toEditPullSetting: (identifier) => actions.requestLocation(`/projects/${ identifier }/pull-setting`),
         toProjectMedia: (identifier) => actions.requestLocation(`/projects/${ identifier }/media`),
         makeOwner: actions.makeOwner,
         deleteCollaborator: actions.deleteCollaborator,

@@ -56,7 +56,7 @@ const Presets = ({
       fab={ () => <AddIcon onClick={ toCreatePreset } /> }
       content={ () => (
         lists.length>0 ?
-          <List items={ lists } />:
+          <List items={ lists } /> :
           <TextLine mostLeft mostRight>No preset found</TextLine>
       ) }
     />
