@@ -80,7 +80,7 @@ const updateLoop = function*() {
       const { identifier, secretKey } = action.payload
 
       const updatedSecretKey = yield SecretKey.update(session.token, identifier, secretKey)
-      
+
       yield put(actions.updateSecretKeyCompleted({
         identifier,
         secretKey: updatedSecretKey
@@ -106,7 +106,9 @@ const removeLoop = function*() {
       const { identifier, key } = action.payload
 
       const removedSecretKey = yield SecretKey.remove(session.token, identifier, key)
-
+      if (!removedSecretKey) {
+        throw new Error('Cannot delete secret key')
+      }
       yield put(actions.removeSecretKeyCompleted({
         identifier,
         key
