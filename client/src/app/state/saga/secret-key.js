@@ -15,11 +15,53 @@ const getLoop = function*() {
         continue
       }
 
-      const { identifier } = action.payload
-      const secretKey = yield SecretKey.getSecretKey(session.token, identifier)
+      const { identifier, key } = action.payload
+      const secretKey = yield SecretKey.get(session.token, identifier, key)
       yield put(actions.getSecretKeyCompleted({ identifier, secretKey }))
     } catch (e) {
       yield put(actions.getSecretKeyFailed(serializeError(e)))
+      continue
+    }
+  }
+}
+
+const fetchLoop = function*() {
+  while (true) {
+    const action = yield take(types['SECRETKEY/FETCH'])
+
+    try {
+      const session = yield select(selectors.currentSession)
+
+      if (!session) {
+        continue
+      }
+
+      const { identifier, key } = action.payload
+      const secretKey = yield SecretKey.fetch(session.token, identifier, key)
+      yield put(actions.fetchSecretKeyCompleted({ identifier, secretKey }))
+    } catch (e) {
+      yield put(actions.fetchSecretKeyFailed(serializeError(e)))
+      continue
+    }
+  }
+}
+
+const createLoop = function*() {
+  while (true) {
+    const action = yield take(types['SECRETKEY/CREATE'])
+
+    try {
+      const session = yield select(selectors.currentSession)
+
+      if (!session) {
+        continue
+      }
+
+      const { identifier } = action.payload
+      const secretKey = yield SecretKey.create(session.token, identifier)
+      yield put(actions.createSecretKeyCompleted({ identifier, secretKey }))
+    } catch (e) {
+      yield put(actions.createSecretKeyFailed(serializeError(e)))
       continue
     }
   }
@@ -38,7 +80,7 @@ const updateLoop = function*() {
 
       const { identifier, secretKey } = action.payload
 
-      const updatedSecretKey = yield SecretKey.updateSecretKey(session.token, identifier, secretKey)
+      const updatedSecretKey = yield SecretKey.update(session.token, identifier, secretKey)
 
       yield put(actions.updateSecretKeyCompleted({
         identifier,
@@ -51,9 +93,38 @@ const updateLoop = function*() {
   }
 }
 
+const removeLoop = function*() {
+  while (true) {
+    const action = yield take(types['SECRETKEY/REMOVE'])
+
+    try {
+      const session = yield select(selectors.currentSession)
+
+      if (!session) {
+        continue
+      }
+
+      const { identifier, key } = action.payload
+
+      const removedSecretKey = yield SecretKey.remove(session.token, identifier, key)
+
+      yield put(actions.removeSecretKeyCompleted({
+        identifier,
+        secretKey: removedSecretKey
+      }))
+    } catch (e) {
+      yield put(actions.removeSecretKeyFailed(serializeError(e)))
+      continue
+    }
+  }
+}
+
 
 export default function*() {
   yield take('@@INITIALIZED')
+  yield fork(createLoop)
+  yield fork(removeLoop)
   yield fork(getLoop)
+  yield fork(fetchLoop)
   yield fork(updateLoop)
 }
