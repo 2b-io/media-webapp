@@ -1,27 +1,21 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { reduxForm, reset } from 'redux-form'
+import { reset } from 'redux-form'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
-import { Panel, TitleBar } from 'ui/compounds'
-import { Button, Card, ErrorBox, List, MenuMore, Paragraph } from 'ui/elements'
-import { AddIcon, EditIcon, OwnerAddIcon, ReloadIcon } from 'ui/icons'
-import { Heading, Text, TextLine } from 'ui/typo'
+import { Card } from 'ui/elements'
+import { EditIcon } from 'ui/icons'
+import { Heading, TextLine } from 'ui/typo'
 import { stateful } from 'views/common/decorators'
 import { Redirect, Route, withParams } from 'views/router'
 
-import ProjectTools from './project-tools'
 import CacheInvalidatorModal from './cache-invalidator-modal'
 import CollaboratorInviteEmail from './sent-email-invite-modal'
-import CollaboratorList from './collaborator-list'
-
-import _ProjectForm from './form'
 import InviteModal from './invite-modal'
 import PresetList from './preset-list'
 import PresetModal from './preset-modal'
-import { ConfirmDeleteCollaboratorDialog, ConfirmDeleteProjectDialog } from './dialog'
 
 const Layout = styled.section`
   padding: 16px;
@@ -43,44 +37,18 @@ const Container = styled.div`
   grid-template-columns: 100%;
 `
 
-const LineWithButton = styled.div`
-  display: grid;
-  & > * {
-    min-height: 0;
-    min-width: 0;
-  };
-  grid-template-columns: 1fr 40px;
-`
-
-const ProjectForm = reduxForm({
-  form: 'project',
-  enableReinitialize: true
-})(_ProjectForm)
-
 const Project = ({
   presets,
   project,
-  hideDeleteCollaboratorDialog,
-  showDeleteCollaboratorDialog,
-  hideDeleteProjectDialog,
-  showDeleteProjectDialog,
-  currentAccount,
-  deleteProject,
-  updateProject,
-  toCacheInvalidator,
   toEditProject,
-  toInviteModal,
-  toPresetDetail,
-  toProfile,
   toProjectDetail,
-  toProjectMedia,
-  makeOwner,
-  deleteCollaborator,
-  reset,
+  toCreatePreset,
   ui: {
-    idle, notFound,
-    deleteError, deleteResult,
-    updateError
+    // idle,
+    notFound,
+    // deleteError,
+    deleteResult,
+    // updateError
   }
 }) => {
   if (notFound || deleteResult) {
@@ -104,7 +72,10 @@ const Project = ({
                   </TextLine>
                 ) }
               />
-              <PresetList presets={ presets } />
+              <PresetList
+                presets={ presets }
+                toCreatePreset={ () => toCreatePreset(project.identifier, 'new') }
+              />
             </Fragment>
           }
         </Container>
@@ -164,7 +135,7 @@ export default withParams(
         toCacheInvalidator: (identifier) => actions.requestLocation(`/projects/${ identifier }/cache-invalidator`),
         toEditProject: (identifier) => actions.requestLocation(`/projects/${ identifier }/edit`),
         toInviteModal: (identifier) => actions.requestLocation(`/projects/${ identifier }/invite`),
-        toPresetDetail: (identifier, hash) => actions.requestLocation(`/projects/${ identifier }/presets/${ hash }`),
+        toCreatePreset: (identifier, hash) => actions.requestLocation(`/projects/${ identifier }/presets/${ hash }`),
         toProfile: (id) => actions.requestLocation(`/@${ id }`),
         toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }`),
         toProjectMedia: (identifier) => actions.requestLocation(`/projects/${ identifier }/media`),
