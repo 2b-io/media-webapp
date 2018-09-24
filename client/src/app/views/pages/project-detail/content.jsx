@@ -5,7 +5,7 @@ import { reset } from 'redux-form'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
-import { Button, Card, Paragraph } from 'ui/elements'
+import { Button, Card, Paragraph, TextArea } from 'ui/elements'
 import { EditIcon } from 'ui/icons'
 import { Heading, TextLine } from 'ui/typo'
 import { stateful } from 'views/common/decorators'
@@ -48,6 +48,7 @@ const Project = ({
   makeOwner,
   presets,
   project,
+  // pullSetting,
   toCreateApiKey,
   toEditProject,
   toEditPullSetting,
@@ -95,7 +96,11 @@ const Project = ({
                 title={ () => <Heading mostLeft mostRight>Pull Settings</Heading> }
                 fab={ () => <EditIcon onClick={ () => toEditPullSetting(project.identifier) } /> }
                 content={ () => (
-                  <div>Pull data</div>
+                  <TextArea>
+                    Pull Origin
+                    Allowed Origins
+                    Headers
+                  </TextArea>
                 ) }
               />
               <ApiKeys
@@ -180,6 +185,7 @@ export default withParams(
         project: selectors.findProjectByIdentifier(state, identifier),
         presets: selectors.presets(state, identifier),
         currentAccount: selectors.currentAccount(state),
+        pullSetting: selectors.pullSetting(state, identifier),
         secretKeys: [
           { key: '9LnCclsaU3fX6rgZBqB9TEGGMagC', isActive: true },
           { key: 'gJKglwcg2QuZd99bl0C2E2CNeaFn', isActive: false }
