@@ -7,7 +7,7 @@ export default (state = {}, action) => {
     case types.UPDATE_COMPLETED:
       return {
         ...state,
-        [ action.payload.identifier ]: action.payload.pushSetting
+        [ action.payload.identifier ]: action.payload.secretKey
       }
   }
 

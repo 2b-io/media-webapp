@@ -1,12 +1,12 @@
 import { take, fork, put, select } from 'redux-saga/effects'
 import serializeError from 'serialize-error'
 
-import PushSetting from 'models/push-setting'
+import SecretKey from 'models/secret-key'
 import { actions, types, selectors } from 'state/interface'
 
 const getLoop = function*() {
   while (true) {
-    const action = yield take(types['PUSHSETTING/GET'])
+    const action = yield take(types['SECRETKEY/GET'])
 
     try {
       const session = yield select(selectors.currentSession)
@@ -16,10 +16,10 @@ const getLoop = function*() {
       }
 
       const { identifier } = action.payload
-      const pushSetting = yield PushSetting.getPushSetting(session.token, identifier)
-      yield put(actions.getPushSettingCompleted({ identifier, pushSetting }))
+      const secretKey = yield SecretKey.getSecretKey(session.token, identifier)
+      yield put(actions.getSecretKeyCompleted({ identifier, secretKey }))
     } catch (e) {
-      yield put(actions.getPushSettingFailed(serializeError(e)))
+      yield put(actions.getSecretKeyFailed(serializeError(e)))
       continue
     }
   }
@@ -27,7 +27,7 @@ const getLoop = function*() {
 
 const updateLoop = function*() {
   while (true) {
-    const action = yield take(types['PUSHSETTING/UPDATE'])
+    const action = yield take(types['SECRETKEY/UPDATE'])
 
     try {
       const session = yield select(selectors.currentSession)
@@ -36,16 +36,16 @@ const updateLoop = function*() {
         continue
       }
 
-      const { identifier, pushSetting } = action.payload
+      const { identifier, secretKey } = action.payload
 
-      const updatedPushSetting = yield PushSetting.updatePushSetting(session.token, identifier, pushSetting)
+      const updatedSecretKey = yield SecretKey.updateSecretKey(session.token, identifier, secretKey)
 
-      yield put(actions.updatePushSettingCompleted({
+      yield put(actions.updateSecretKeyCompleted({
         identifier,
-        pushSetting: updatedPushSetting
+        secretKey: updatedSecretKey
       }))
     } catch (e) {
-      yield put(actions.updatePushSettingFailed(serializeError(e)))
+      yield put(actions.updateSecretKeyFailed(serializeError(e)))
       continue
     }
   }

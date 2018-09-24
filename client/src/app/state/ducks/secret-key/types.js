@@ -1,6 +1,6 @@
 import typePrefix from 'state/helpers/type-prefix'
 
-const prefix = typePrefix('pushSetting')
+const prefix = typePrefix('secretKey')
 
 export const GET = prefix('GET')
 export const GET_COMPLETED = prefix('GET_COMPLETED')
