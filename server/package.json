@@ -17,6 +17,7 @@
     "serialize-error": "2.1.0",
     "shorthash": "0.0.2",
     "superagent": "3.8.3",
+    "uniqid": "5.0.3",
     "uuid": "3.2.1"
   },
   "devDependencies": {

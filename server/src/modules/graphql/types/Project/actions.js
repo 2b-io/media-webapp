@@ -142,5 +142,5 @@ export default ({ Project, ProjectStruct }) => ({
       const { identifier, prettyOrigin } = project
       return await invalidateAllCache(identifier, prettyOrigin)
     }
-  }
+  },
 })
