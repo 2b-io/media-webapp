@@ -10,7 +10,7 @@ export default (state = {}, action) => {
         ...state,
         [ action.payload.identifier ]: {
           ...state[ action.payload.identifier ],
-          [ action.payload.preset.key ]: action.payload.secretKey
+          [ action.payload.secretKey.key ]: action.payload.secretKey
         }
       }
     }

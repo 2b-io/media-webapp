@@ -17,7 +17,7 @@ const LineWithButton = styled.div`
 
 const ApiKeys = ({
   secretKeys,
-  toCreateApiKey
+  createApiKey
 }) => {
 
   const lists = secretKeys ? secretKeys.map(
@@ -51,7 +51,7 @@ const ApiKeys = ({
   return (
     <Card
       title={ () => <Heading mostLeft mostRight>API Keys</Heading> }
-      fab={ () => <AddIcon onClick={ toCreateApiKey } /> }
+      fab={ () => <AddIcon onClick={ createApiKey } /> }
       content={ () => (
         lists.length>0 ?
           <List items={ lists } />:

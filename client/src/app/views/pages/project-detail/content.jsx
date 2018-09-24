@@ -40,7 +40,7 @@ const Container = styled.div`
 `
 
 const Project = ({
-  toCreateApiKey,
+  createApiKey,
   presets,
   project,
   toEditProject,
@@ -90,7 +90,7 @@ const Project = ({
               />
               <ApiKeys
                 secretKeys={ secretKeys }
-                toCreateApiKey={ () => toCreateApiKey() }
+                createApiKey={() => createApiKey(project.identifier) }
               />
             </Fragment>
           }
@@ -158,11 +158,12 @@ export default withParams(
         toCreatePreset: (identifier, hash) => actions.requestLocation(`/projects/${ identifier }/presets/${ hash }`),
         toProfile: (id) => actions.requestLocation(`/@${ id }`),
         toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }`),
-        toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }/pull-setting`),
+        toPullSetting: (identifier) => actions.requestLocation(`/projects/${ identifier }/pull-setting`),
         toProjectMedia: (identifier) => actions.requestLocation(`/projects/${ identifier }/media`),
         makeOwner: actions.makeOwner,
         deleteCollaborator: actions.deleteCollaborator,
-        reset
+        reset,
+        createApiKey: actions.createSecretKey
       })
     )(Project)
   )
