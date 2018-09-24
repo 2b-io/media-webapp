@@ -19,8 +19,8 @@ import {
 } from 'services/pull-setting'
 
 import {
-  get as getPushSetting,
-} from 'services/push-setting'
+  list as getPushSetting,
+} from 'services/secret-key'
 
 import {
   list as listPermissions
@@ -113,8 +113,6 @@ export default () => ({
   },
   pushSetting: {
     type: PushSetting,
-    resolve: async (project) => {
-      return await getPushSetting(project._id)
-    }
+    resolve: async (project) => ({ project })
   }
 })

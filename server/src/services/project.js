@@ -6,7 +6,7 @@ import Infrastructure from 'models/Infrastructure'
 import { createDistribution, getDistribution, updateDistribution } from 'services/cloudFront'
 import Permission from 'models/Permission'
 import pullSetting from 'models/pull-setting'
-import pushSetting from 'models/push-setting'
+import secretKey from 'models/secret-key'
 import Preset from 'models/Preset'
 import Project from 'models/Project'
 
@@ -129,7 +129,8 @@ export const create = async (data, provider, account) => {
     project: project._id
   }).save()
 
-  await new pushSetting({
+  await new secretKey({
+    key:"sss1",
     project: project._id
   }).save()
 
