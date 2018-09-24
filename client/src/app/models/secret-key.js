@@ -67,7 +67,7 @@ export default {
     `, {
       token,
       identifier,
-      key : secretKey.key,
+      key: secretKey.key,
       secretKey
     })
 
@@ -90,9 +90,9 @@ export default {
         }
       }
     `, {
-      token,
-      identifier,
-      key
+    token,
+    identifier,
+    key
     })
 
     return body.session.account.project.pushSetting.secretKey._destroy
