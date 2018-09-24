@@ -1,6 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
+import { mapDispatch } from 'services/redux-helpers'
+import { actions, selectors } from 'state/interface'
 import { Button } from 'ui/elements'
 import { MoreIcon } from 'ui/icons'
 
@@ -26,26 +30,22 @@ class MenuMore extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      isOpen: false
-    }
-
     this.hideDropdownMenu = this.hideDropdownMenu.bind(this)
     this.showDropdownMenu = this.showDropdownMenu.bind(this)
   }
 
   showDropdownMenu() {
-    this.setState({ isOpen: true })
+    this.props.showMenuMore(this.props.name)
     document.addEventListener('click', this.hideDropdownMenu)
   }
 
   hideDropdownMenu() {
-    this.setState({ isOpen: false })
+    this.props.hideMenuMore(this.props.name)
     document.removeEventListener('click', this.hideDropdownMenu)
   }
 
   render() {
-    const { content } = this.props
+    const { content, isOpen } = this.props
 
     return (
       <Wrapper>
@@ -53,7 +53,7 @@ class MenuMore extends React.Component {
           <MoreIcon />
         </Button>
         { content &&
-          <DropdownMenu isOpen={ this.state.isOpen }>
+          <DropdownMenu isOpen={ isOpen }>
             { content() }
           </DropdownMenu>
         }
@@ -62,4 +62,17 @@ class MenuMore extends React.Component {
   }
 }
 
-export default MenuMore
+MenuMore.propTypes = {
+  name: PropTypes.string.isRequired
+}
+
+export default connect(
+  (state, { name }) => ({
+    isOpen: selectors.isOpenState(state, name)
+  }),
+  mapDispatch({
+    hideMenuMore: actions.hideMenuMore,
+    showMenuMore: actions.showMenuMore
+  })
+)(MenuMore)
+
