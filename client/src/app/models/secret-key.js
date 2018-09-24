@@ -26,7 +26,7 @@ export default {
     return body.session.account.project.pushSetting.secretKeys
 
   },
-  async getSecretKey(token, identifier) {
+  async getSecretKey(token, identifier, key) {
     const body = await request(`
       query getSecretKey($token: String!, $identifier: String!, $key: String!) {
         session(token: $token) {
@@ -46,7 +46,7 @@ export default {
     return body.session.account.project.pushSetting.secretKey
 
   },
-  async updateSecretKey(token, identifier, key, secretKey) {
+  async updateSecretKey(token, identifier, secretKey) {
 
     const body = await request(`
       query updateSecretKey($token: String!, $identifier: String!, $key: String!, $secretKey: SecretKeyStruct!) {
@@ -67,13 +67,13 @@ export default {
     `, {
       token,
       identifier,
-      key,
+      key : secretKey.key,
       secretKey
     })
 
     return body.session.account.project.pushSetting._update
   },
-  async removeSecretKey(token, identifier, key, secretKey) {
+  async removeSecretKey(token, identifier, key) {
 
     const body = await request(`
       query updateSecretKey($token: String!, $identifier: String!, $key: String!, $secretKey: SecretKeyStruct!) {
@@ -82,9 +82,7 @@ export default {
             project(identifier: $identifier) {
               pushSetting {
                 secretKey(key: $key) {
-                  _destroy(secretKey: $secretKey) {
-                    ${ SECRET_KEY_FRAGMENT }
-                  }
+                  _destroy
                 }
               }
             }
@@ -94,8 +92,7 @@ export default {
     `, {
       token,
       identifier,
-      key,
-      secretKey
+      key
     })
 
     return body.session.account.project.pushSetting.secretKey._destroy
