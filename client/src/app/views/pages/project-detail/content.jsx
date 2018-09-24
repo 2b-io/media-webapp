@@ -1,55 +1,59 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-
-import { reduxForm, reset } from 'redux-form'
+import styled from 'styled-components'
+import { reset } from 'redux-form'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
-import { Layout, Panel, TitleBar } from 'ui/compounds'
-import { Button, Card, Container, ErrorBox, Paragraph } from 'ui/elements'
-import { AddIcon, EditIcon, OwnerAddIcon, ReloadIcon } from 'ui/icons'
+import { Card } from 'ui/elements'
+import { EditIcon } from 'ui/icons'
+import { Heading, TextLine } from 'ui/typo'
 import { stateful } from 'views/common/decorators'
 import { Redirect, Route, withParams } from 'views/router'
 
-import { Heading, Text } from 'ui/typo'
-import ProjectTools from './project-tools'
 import CacheInvalidatorModal from './cache-invalidator-modal'
 import CollaboratorInviteEmail from './sent-email-invite-modal'
-import CollaboratorList from './collaborator-list'
-import _ProjectForm from './form'
 import InviteModal from './invite-modal'
-import PresetList from './preset-list'
 import PresetModal from './preset-modal'
-import { ConfirmDeleteCollaboratorDialog, ConfirmDeleteProjectDialog } from './dialog'
 
-const ProjectForm = reduxForm({
-  form: 'project',
-  enableReinitialize: true
-})(_ProjectForm)
+import Presets from './preset-card'
+import ApiKeys from './api-key-card'
+
+const Layout = styled.section`
+  padding: 16px;
+  height: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  background: #e6e6e6;
+`
+
+const Container = styled.div`
+  display: grid;
+  & > * {
+    min-height: 0;
+    min-width: 0;
+  }
+
+  grid-gap: 16px;
+  grid-template-columns: 100%;
+`
 
 const Project = ({
+  toCreateApiKey,
+  presets,
   project,
-  hideDeleteCollaboratorDialog,
-  showDeleteCollaboratorDialog,
-  hideDeleteProjectDialog,
-  showDeleteProjectDialog,
-  currentAccount,
-  deleteProject,
-  updateProject,
-  toCacheInvalidator,
   toEditProject,
-  toInviteModal,
-  toPresetDetail,
-  toProfile,
+  toEditPullSetting,
   toProjectDetail,
-  toProjectMedia,
-  makeOwner,
-  deleteCollaborator,
-  reset,
+  toCreatePreset,
+  secretKeys,
   ui: {
-    idle, notFound,
-    deleteError, deleteResult,
-    updateError
+    // idle,
+    notFound,
+    // deleteError,
+    deleteResult,
+    // updateError
   }
 }) => {
   if (notFound || deleteResult) {
@@ -58,175 +62,39 @@ const Project = ({
 
   return (
     <Fragment>
-      <Container>
-        { project &&
-          <Card
-            title={ () => <Heading mostLeft mostRight>General</Heading> }
-            fab={ () => <EditIcon onClick={ () => toEditProject(project.identifier) } /> }
-            content={ () => (
-              <Text mostLeft mostRight>
-                { project.name }<br />
-                { project.infrastructure.domain }<br />
-                { project.status }
-              </Text>
-            ) }
-          />
-        }
-      </Container>
       <Layout>
-        <Layout.Fluid size="small">
-          <Container>
-            <Panel>
-              <Panel.Header>
-                <TitleBar>
-                  <TitleBar.Title>
-                    <h2>Project Info</h2>
-                  </TitleBar.Title>
-                  <TitleBar.Menu>
-                    <Button plain onClick={ () => reset('project') }>
-                      <ReloadIcon size="medium" />
-                    </Button>
-                  </TitleBar.Menu>
-                </TitleBar>
-              </Panel.Header>
-              <Panel.Content>
-                <Container>
-                  { updateError &&
-                    <ErrorBox>An error happens when updating the project.</ErrorBox>
-                  }
-                  { deleteError &&
-                    <ErrorBox>An error happens when deleting the project.</ErrorBox>
-                  }
-                  <ProjectForm
-                    showDeleteProjectDialog={ showDeleteProjectDialog }
-                    idle={ idle }
-                    initialValues={ project }
-                    onSubmit={ updateProject }
-                  />
-                  <ConfirmDeleteProjectDialog
-                    width="narrow"
-                    content={ () => <Paragraph>Do you want delete this project?</Paragraph> }
-                    choices={ () => (
-                      <Button.Group>
-                        <Button
-                          variant="primary"
-                          onClick={ () => deleteProject(project.identifier) }>
-                          Delete
-                        </Button>
-                        <Button
-                          variant="secondary"
-                          onClick={ hideDeleteProjectDialog }>
-                          Cancel
-                        </Button>
-                      </Button.Group>
-                    ) }
-                  />
-                </Container>
-              </Panel.Content>
-            </Panel>
-          </Container>
-        </Layout.Fluid>
-        <Layout.Fixed size="small">
-          <Container>
-            <Panel>
-              <Panel.Header>
-                <TitleBar>
-                  <TitleBar.Title>
-                    <h2>Presets</h2>
-                  </TitleBar.Title>
-
-                  <TitleBar.Menu>
-                    <Button plain onClick={ () => toPresetDetail(project.identifier, 'new') }>
-                      <AddIcon size="medium" />
-                    </Button>
-                  </TitleBar.Menu>
-                </TitleBar>
-              </Panel.Header>
-              <Panel.Content>
-                { project &&
-                  <PresetList
-                    presets={ project.presets }
-                    onPresetSelected={ hash => {
-                      toPresetDetail(project.identifier, hash)
-                    } }
-                  />
-                }
-              </Panel.Content>
-            </Panel>
-          </Container>
-          <Container>
-            <Panel>
-              <Panel.Header>
-                <TitleBar>
-                  <TitleBar.Title>
-                    <h2>Collaborators</h2>
-                  </TitleBar.Title>
-                  <TitleBar.Menu>
-                    <Button plain onClick={ () => toInviteModal(project.identifier) }>
-                      <OwnerAddIcon size="medium" />
-                    </Button>
-                  </TitleBar.Menu>
-                </TitleBar>
-              </Panel.Header>
-              <Panel.Content>
-                {
-                  project &&
-                    <CollaboratorList
-                      collaborators={ project.collaborators }
-                      toProfile={ toProfile }
-                      currentAccount={ currentAccount }
-                      makeOwner={ (accountId) => { makeOwner(accountId, project.identifier) } }
-                      showDeleteCollaboratorDialog={ showDeleteCollaboratorDialog }
-                    />
-                }
-              </Panel.Content>
-            </Panel>
-            <ConfirmDeleteCollaboratorDialog
-              width="narrow"
-              content={ ({ params }) => (
-                <Paragraph>
-                  Do you want to remove the account { params.accountEmail } from the project?
-                </Paragraph>
-              ) }
-              choices={ ({ params }) => (
-                <Button.Group>
-                  <Button
-                    variant="primary"
-                    onClick={ () => deleteCollaborator(project.identifier, params.accountId) }>
-                    Remove
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    onClick={ hideDeleteCollaboratorDialog }>
-                    Cancel
-                  </Button>
-                </Button.Group>
-              ) }
-            />
-          </Container>
-          <Container>
-            <Panel>
-              <Panel.Header>
-                <TitleBar>
-                  <TitleBar.Title>
-                    <h2>Tools</h2>
-                  </TitleBar.Title>
-                </TitleBar>
-              </Panel.Header>
-              <Panel.Content>
-                {
-                  project &&
-                    <ProjectTools
-                      detail="Cache Invalidator"
-                      identifier={ project.identifier }
-                      toProjectMedia={ () => toProjectMedia(project.identifier) }
-                      toCacheInvalidator={ () => toCacheInvalidator(project.identifier) }
-                    />
-                }
-              </Panel.Content>
-            </Panel>
-          </Container>
-        </Layout.Fixed>
+        <Container>
+          { project &&
+            <Fragment>
+              <Card
+                title={ () => <Heading mostLeft mostRight>General</Heading> }
+                fab={ () => <EditIcon onClick={ () => toEditProject(project.identifier) } /> }
+                content={ () => (
+                  <TextLine mostLeft mostRight>
+                    { project.name }<br />
+                    { project.infrastructure.domain }<br />
+                    { project.status }
+                  </TextLine>
+                ) }
+              />
+              <Presets
+                presets={ presets }
+                toCreatePreset={ () => toCreatePreset(project.identifier, 'new') }
+              />
+              <Card
+                title={ () => <Heading mostLeft mostRight>Pull Settings</Heading> }
+                fab={ () => <EditIcon onClick={ () => toEditPullSetting(project.identifier) } /> }
+                content={ () => (
+                  <div>Pull data</div>
+                ) }
+              />
+              <ApiKeys
+                secretKeys={ secretKeys }
+                toCreateApiKey={ () => toCreateApiKey() }
+              />
+            </Fragment>
+          }
+        </Container>
       </Layout>
       <Route path="/projects/:identifier/presets/new">
         <PresetModal
@@ -270,7 +138,12 @@ export default withParams(
     connect(
       (state, { params: { identifier } }) => ({
         project: selectors.findProjectByIdentifier(state, identifier),
-        currentAccount: selectors.currentAccount(state)
+        presets: selectors.presets(state, identifier),
+        currentAccount: selectors.currentAccount(state),
+        secretKeys: [
+          { key: '9LnCclsaU3fX6rgZBqB9TEGGMagC', isActive: true },
+          { key: 'gJKglwcg2QuZd99bl0C2E2CNeaFn', isActive: false }
+        ]
       }),
       mapDispatch({
         showDeleteCollaboratorDialog: (accountId, accountEmail) => actions.showDialog({ dialog: 'ConfirmDeleteCollaboratorDialog', params: { accountId, accountEmail } }),
@@ -282,9 +155,10 @@ export default withParams(
         toCacheInvalidator: (identifier) => actions.requestLocation(`/projects/${ identifier }/cache-invalidator`),
         toEditProject: (identifier) => actions.requestLocation(`/projects/${ identifier }/edit`),
         toInviteModal: (identifier) => actions.requestLocation(`/projects/${ identifier }/invite`),
-        toPresetDetail: (identifier, hash) => actions.requestLocation(`/projects/${ identifier }/presets/${ hash }`),
+        toCreatePreset: (identifier, hash) => actions.requestLocation(`/projects/${ identifier }/presets/${ hash }`),
         toProfile: (id) => actions.requestLocation(`/@${ id }`),
         toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }`),
+        toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }/pull-setting`),
         toProjectMedia: (identifier) => actions.requestLocation(`/projects/${ identifier }/media`),
         makeOwner: actions.makeOwner,
         deleteCollaborator: actions.deleteCollaborator,
