@@ -54,7 +54,7 @@ const ApiKeys = ({
       fab={ () => <AddIcon onClick={ toCreateApiKey } /> }
       content={ () => (
         lists.length>0 ?
-          <List items={ lists } />:
+          <List items={ lists } /> :
           <TextLine mostLeft mostRight>No preset found</TextLine>
       ) }
     />

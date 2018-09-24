@@ -5,7 +5,7 @@ import { reset } from 'redux-form'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
-import { Card } from 'ui/elements'
+import { Button, Card, Paragraph } from 'ui/elements'
 import { EditIcon } from 'ui/icons'
 import { Heading, TextLine } from 'ui/typo'
 import { stateful } from 'views/common/decorators'
@@ -15,9 +15,12 @@ import CacheInvalidatorModal from './cache-invalidator-modal'
 import CollaboratorInviteEmail from './sent-email-invite-modal'
 import InviteModal from './invite-modal'
 import PresetModal from './preset-modal'
+import { ConfirmDeleteCollaboratorDialog } from './dialog'
 
-import Presets from './preset-card'
 import ApiKeys from './api-key-card'
+import Collaborators from './collaborator-card'
+import Presets from './preset-card'
+
 
 const Layout = styled.section`
   padding: 16px;
@@ -40,14 +43,21 @@ const Container = styled.div`
 `
 
 const Project = ({
-  toCreateApiKey,
+  currentAccount,
+  deleteCollaborator,
+  makeOwner,
   presets,
   project,
+  toCreateApiKey,
   toEditProject,
   toEditPullSetting,
+  toInviteCollaboratorModal,
   toProjectDetail,
+  toProfile,
   toCreatePreset,
   secretKeys,
+  showDeleteCollaboratorDialog,
+  hideDeleteCollaboratorDialog,
   ui: {
     // idle,
     notFound,
@@ -92,8 +102,38 @@ const Project = ({
                 secretKeys={ secretKeys }
                 toCreateApiKey={ () => toCreateApiKey() }
               />
+              <Collaborators
+                collaborators={ project.collaborators }
+                currentAccount={ currentAccount }
+                makeOwner={ (accountId) => { makeOwner(accountId, project.identifier) } }
+                showDeleteCollaboratorDialog={ showDeleteCollaboratorDialog }
+                toProfile={ toProfile }
+                toInviteCollaboratorModal={ () => toInviteCollaboratorModal(project.identifier) }
+              />
             </Fragment>
           }
+          <ConfirmDeleteCollaboratorDialog
+            width="narrow"
+            content={ ({ params }) => (
+              <Paragraph>
+                Do you want to remove the account { params.accountEmail } from the project?
+              </Paragraph>
+            ) }
+            choices={ ({ params }) => (
+              <Button.Group>
+                <Button
+                  variant="primary"
+                  onClick={ () => deleteCollaborator(project.identifier, params.accountId) }>
+                  Remove
+                </Button>
+                <Button
+                  variant="secondary"
+                  onClick={ hideDeleteCollaboratorDialog }>
+                  Cancel
+                </Button>
+              </Button.Group>
+            ) }
+          />
         </Container>
       </Layout>
       <Route path="/projects/:identifier/presets/new">
@@ -154,11 +194,11 @@ export default withParams(
         updateProject: actions.updateProject,
         toCacheInvalidator: (identifier) => actions.requestLocation(`/projects/${ identifier }/cache-invalidator`),
         toEditProject: (identifier) => actions.requestLocation(`/projects/${ identifier }/edit`),
-        toInviteModal: (identifier) => actions.requestLocation(`/projects/${ identifier }/invite`),
+        toInviteCollaboratorModal: (identifier) => actions.requestLocation(`/projects/${ identifier }/invite`),
         toCreatePreset: (identifier, hash) => actions.requestLocation(`/projects/${ identifier }/presets/${ hash }`),
         toProfile: (id) => actions.requestLocation(`/@${ id }`),
         toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }`),
-        toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }/pull-setting`),
+        toEditPullSetting: (identifier) => actions.requestLocation(`/projects/${ identifier }/pull-setting`),
         toProjectMedia: (identifier) => actions.requestLocation(`/projects/${ identifier }/media`),
         makeOwner: actions.makeOwner,
         deleteCollaborator: actions.deleteCollaborator,
