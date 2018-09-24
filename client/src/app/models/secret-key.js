@@ -91,12 +91,12 @@ export default {
       secretKey
     })
 
-    return body.session.account.project.pushSetting._update
+    return body.session.account.project.pushSetting.secretKey._update
   },
   async remove(token, identifier, key) {
 
     const body = await request(`
-      query updateSecretKey($token: String!, $identifier: String!, $key: String!, $secretKey: SecretKeyStruct!) {
+      query updateSecretKey($token: String!, $identifier: String!, $key: String!) {
         session(token: $token) {
           account {
             project(identifier: $identifier) {

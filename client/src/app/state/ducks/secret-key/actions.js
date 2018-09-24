@@ -13,15 +13,15 @@ export const createSecretKeyFailed = (reason) => ({
   payload: { reason }
 })
 
-export const listSecretKeys = identifier => ({
+export const fetchSecretKeys = identifier => ({
   type: types.FETCH,
   payload: { identifier }
 })
-export const listSecretKeysCompleted = ({ identifier, secretKeys }) => ({
+export const fetchSecretKeyCompleted = ({ identifier, secretKeys }) => ({
   type: types.FETCH_COMPLETED,
   payload: ({ identifier, secretKeys })
 })
-export const listSecretKeysFailed = (reason) => ({
+export const fetchSecretKeysFailed = (reason) => ({
   type: types.FETCH_FAILED,
   payload: { reason }
 })
@@ -39,7 +39,7 @@ export const getSecretKeyFailed = (reason) => ({
   payload: { reason }
 })
 
-export const updateSecretKey = ({ identifier, secretKey }) => ({
+export const updateSecretKey = (identifier, secretKey) => ({
   type: types.UPDATE,
   payload: { identifier, secretKey }
 })
@@ -52,7 +52,7 @@ export const updateSecretKeyFailed = (reason) => ({
   payload: { reason }
 })
 
-export const removeSecretKey = ({ identifier, key }) => ({
+export const removeSecretKey = ( identifier, key ) => ({
   type: types.REMOVE,
   payload: { identifier, key }
 })

@@ -17,10 +17,12 @@ const LineWithButton = styled.div`
 
 const ApiKeys = ({
   secretKeys,
-  createApiKey
+  createApiKey,
+  removeSecretKey,
+  updateSecretKey
 }) => {
 
-  const lists = secretKeys ? secretKeys.map(
+  const lists = secretKeys ? Object.values(secretKeys).map(
     (secretKey, index) => ({
       key: index,
       content: () => (
@@ -34,10 +36,30 @@ const ApiKeys = ({
               <List
                 items={ [
                   {
-                    content: () => <TextLine mostLeft mostRight>Disable</TextLine>
+                    content: () => {
+                      return (
+                        <TextLine
+                          mostLeft
+                          mostRight
+                          onClick={ () => { updateSecretKey( { key: secretKey.key, isActive: !secretKey.isActive } ) } }
+                        >
+                          {secretKey.isActive ? 'Disable' : 'Enable' }
+                        </TextLine>
+                      )
+                    }
                   },
                   {
-                    content: () => <TextLine mostLeft mostRight>Remove</TextLine>
+                    content: () => {
+                      return (
+                        <TextLine
+                          mostLeft
+                          mostRight
+                          onClick={ () => { removeSecretKey(secretKey.key) } }
+                        >
+                          Remove
+                        </TextLine>
+                      )
+                    }
                   }
                 ] }
               />

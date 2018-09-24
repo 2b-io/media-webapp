@@ -28,7 +28,6 @@ const getLoop = function*() {
 const fetchLoop = function*() {
   while (true) {
     const action = yield take(types['SECRETKEY/FETCH'])
-
     try {
       const session = yield select(selectors.currentSession)
 
@@ -36,9 +35,9 @@ const fetchLoop = function*() {
         continue
       }
 
-      const { identifier, key } = action.payload
-      const secretKey = yield SecretKey.fetch(session.token, identifier, key)
-      yield put(actions.fetchSecretKeyCompleted({ identifier, secretKey }))
+      const { identifier } = action.payload
+      const secretKeys = yield SecretKey.fetch(session.token, identifier)
+      yield put(actions.fetchSecretKeyCompleted({ identifier, secretKeys }))
     } catch (e) {
       yield put(actions.fetchSecretKeyFailed(serializeError(e)))
       continue
@@ -81,7 +80,7 @@ const updateLoop = function*() {
       const { identifier, secretKey } = action.payload
 
       const updatedSecretKey = yield SecretKey.update(session.token, identifier, secretKey)
-
+      
       yield put(actions.updateSecretKeyCompleted({
         identifier,
         secretKey: updatedSecretKey
@@ -110,7 +109,7 @@ const removeLoop = function*() {
 
       yield put(actions.removeSecretKeyCompleted({
         identifier,
-        secretKey: removedSecretKey
+        key
       }))
     } catch (e) {
       yield put(actions.removeSecretKeyFailed(serializeError(e)))

@@ -120,7 +120,8 @@ export default {
     onEnter: ({ identifier }) => identifier === 'create' || [
       actions.getProject(identifier),
       actions.fetchPresets({ identifier }),
-      actions.getPullSetting(identifier)
+      actions.getPullSetting(identifier),
+      actions.fetchSecretKeys(identifier)
     ]
   },
   '/ui': {

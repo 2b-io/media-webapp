@@ -48,6 +48,8 @@ const Project = ({
   toProjectDetail,
   toCreatePreset,
   secretKeys,
+  removeSecretKey,
+  updateSecretKey,
   ui: {
     // idle,
     notFound,
@@ -90,7 +92,9 @@ const Project = ({
               />
               <ApiKeys
                 secretKeys={ secretKeys }
-                createApiKey={() => createApiKey(project.identifier) }
+                createApiKey={ () => createApiKey(project.identifier) }
+                removeSecretKey={ (key) => removeSecretKey(project.identifier, key) }
+                updateSecretKey={ (data) => updateSecretKey(project.identifier, data ) }
               />
             </Fragment>
           }
@@ -140,10 +144,7 @@ export default withParams(
         project: selectors.findProjectByIdentifier(state, identifier),
         presets: selectors.presets(state, identifier),
         currentAccount: selectors.currentAccount(state),
-        secretKeys: [
-          { key: '9LnCclsaU3fX6rgZBqB9TEGGMagC', isActive: true },
-          { key: 'gJKglwcg2QuZd99bl0C2E2CNeaFn', isActive: false }
-        ]
+        secretKeys: selectors.secretKeys(state, identifier)
       }),
       mapDispatch({
         showDeleteCollaboratorDialog: (accountId, accountEmail) => actions.showDialog({ dialog: 'ConfirmDeleteCollaboratorDialog', params: { accountId, accountEmail } }),
@@ -163,7 +164,9 @@ export default withParams(
         makeOwner: actions.makeOwner,
         deleteCollaborator: actions.deleteCollaborator,
         reset,
-        createApiKey: actions.createSecretKey
+        createApiKey: actions.createSecretKey,
+        removeSecretKey: actions.removeSecretKey,
+        updateSecretKey: actions.updateSecretKey
       })
     )(Project)
   )

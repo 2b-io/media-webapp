@@ -15,7 +15,7 @@ export default (state = {}, action) => {
       }
     }
     case types.REMOVE_COMPLETED: {
-      const { secretKey: { key }, identifier } = action.payload
+      const { key, identifier } = action.payload
       const { [ key ]: removedKey, ...remainKey } = state[ identifier ]
 
       return {

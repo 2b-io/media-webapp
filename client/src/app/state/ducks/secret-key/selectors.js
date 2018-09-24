@@ -5,7 +5,7 @@ export default {
     }
     return state[ identifier ][ key ]
   },
-  SecretKeys: (state, identifier) => {
+  secretKeys: (state, identifier) => {
     return state[ identifier ]
   }
 }
