@@ -29,6 +29,7 @@ import {
 import { Account } from '../Account'
 import { Collaborator } from '../Collaborator'
 import { Preset } from '../Preset'
+import { PushSetting } from '../push-setting'
 import { PullSetting } from '../pull-setting'
 import { Media } from '../Media'
 import { Infrastructure } from '../Infrastructure'
@@ -105,5 +106,9 @@ export default () => ({
     resolve: async (project) => {
       return await getPullSetting(project._id)
     }
+  },
+  pushSetting: {
+    type: PushSetting,
+    resolve: async (project) => ({ project })
   }
 })
