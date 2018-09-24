@@ -88,11 +88,15 @@ const Project = ({
                 title={ () => <Heading mostLeft mostRight>General</Heading> }
                 fab={ () => <EditIcon onClick={ () => toEditProject(project.identifier) } /> }
                 content={ () => (
-                  <Text mostLeft mostRight>
-                    { project.name }<br /><br />
-                    { project.infrastructure.domain }<br />
-                    { project.status }
-                  </Text>
+                  <Fragment>
+                    <TextLine mostLeft mostRight>
+                      { project.name }
+                    </TextLine>
+                    <Text mostLeft mostRight>
+                      { project.infrastructure.domain }<br />
+                      { project.status }
+                    </Text>
+                  </Fragment>
                 ) }
               />
               <Presets
@@ -103,32 +107,38 @@ const Project = ({
                 title={ () => <Heading mostLeft mostRight>Pull Settings</Heading> }
                 fab={ () => <EditIcon onClick={ () => toEditPullSetting(project.identifier) } /> }
                 content={ () => (
-                  <Text mostLeft mostRight>
-                    Pull URL:<br />
-                    &nbsp;&nbsp;{ pullSetting.pullURL || 'N/A' }<br />
-                    Allowed Origins:<br />
-                    {
-                      allowedOrigins.length &&
-                        allowedOrigins.map(
-                          (origin) => (
-                            <Fragment key={ origin }>- { origin }<br /></Fragment>
+                  <Fragment>
+                    <Text mostLeft mostRight>
+                      Pull URL:<br />
+                      &nbsp;&nbsp;{ pullSetting.pullURL || 'N/A' }<br />
+                    </Text>
+                    <Text mostLeft mostLeft>
+                      Allowed Origins:<br />
+                      {
+                        allowedOrigins.length &&
+                          allowedOrigins.map(
+                            (origin) => (
+                              <Fragment key={ origin }>- { origin }<br /></Fragment>
+                            )
+                          ) || (
+                            <Fragment>&nbsp;&nbsp;N/A<br /></Fragment>
                           )
-                        ) || (
-                          <Fragment>&nbsp;&nbsp;N/A<br /></Fragment>
-                        )
-                    }
-                    Headers:<br />
-                    {
-                      (pullSetting.headers || []).length &&
-                        pullSetting.headers.map(
-                          ({ name, value }) => (
-                            <Fragment key={ name }>- { name }: { value}</Fragment>
+                      }
+                    </Text>
+                    <Text mostLeft mostRight>
+                      Headers:<br />
+                      {
+                        (pullSetting.headers || []).length &&
+                          pullSetting.headers.map(
+                            ({ name, value }) => (
+                              <Fragment key={ name }>- { name }: { value}</Fragment>
+                            )
+                          ) || (
+                            <Fragment>&nbsp;&nbsp;N/A<br /></Fragment>
                           )
-                        ) || (
-                          <Fragment>&nbsp;&nbsp;N/A<br /></Fragment>
-                        )
-                    }
-                  </Text>
+                      }
+                    </Text>
+                  </Fragment>
                 ) }
               />
               <ApiKeys

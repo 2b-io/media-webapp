@@ -1,13 +1,21 @@
 import React, { Fragment } from 'react'
+import { connect } from 'react-redux'
 
+import { selectors } from 'state/interface'
 import { MoreIcon } from 'ui/icons'
 import { PageTitle } from 'ui/typo'
+import { withParams } from 'views/router'
 
-const ProjectDetail = () => (
+const ProjectDetail = ({ project = {} }) => (
   <Fragment>
-    <PageTitle>Project Detail</PageTitle>
-    <MoreIcon />
+    <PageTitle>{ project.name }</PageTitle>
   </Fragment>
 )
 
-export default ProjectDetail
+export default withParams(
+  connect(
+    (state, { params: { identifier } }) => ({
+      project: selectors.findProjectByIdentifier(state, identifier)
+    })
+  )(ProjectDetail)
+)

@@ -41,6 +41,7 @@ const DropdownMenu = styled.div`
   display: ${
     ({ isOpen }) => isOpen ? 'block' : 'none'
   };
+  box-shadow: 4px 4px ${ ({ theme }) => theme.black.opaque.base };
 `
 
 class Select extends React.Component {
