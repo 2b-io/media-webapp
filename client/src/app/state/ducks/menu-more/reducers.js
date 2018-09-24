@@ -3,16 +3,19 @@ import { combineReducers } from 'redux'
 import createReducer from 'state/helpers/create-reducer'
 import * as types from './types'
 
-export default createReducer({})({
-  [ types.SHOW ]: (state, action) => {
-
-    return ({
+export default combineReducers({
+  menuMore: createReducer({})({
+    [ types.SHOW ]: (state, action) => ({
       ...state,
-      isOpen: action.payload
+      [ action.payload.name ]: {
+        isOpen: true
+      }
+    }),
+    [ types.HIDE ]: (state, action) => ({
+      ...state,
+      [ action.payload.name ]: {
+        isOpen: false
+      }
     })
-  },
-  [ types.HIDE ]: (state, action) => ({
-    ...state,
-    isOpen: action.payload
   })
 })

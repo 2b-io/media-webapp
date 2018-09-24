@@ -7,7 +7,7 @@ const ProjectList = () => (
   <Fragment>
     <PageTitle>Projects</PageTitle>
     <MenuMore
-      initialValues={ { isOpen: false } }
+      name="menuMoreOnProjectListStill"
       content={ () => (
         <List
           items={ [

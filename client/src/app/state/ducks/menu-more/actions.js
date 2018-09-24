@@ -1,11 +1,11 @@
 import * as types from './types'
 
-export const hideMenuMore = () => ({
+export const hideMenuMore = (name) => ({
   type: types.HIDE,
-  payload: false
+  payload: { name }
 })
 
-export const showMenuMore = () => ({
+export const showMenuMore = (name) => ({
   type: types.SHOW,
-  payload: true
+  payload: { name }
 })

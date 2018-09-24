@@ -1,3 +1,3 @@
 export default {
-  isOpen: state => Object.values(state.isOpen)
+  isOpenState: (state, name) => state.menuMore[ name ] && state.menuMore[ name ].isOpen
 }

@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
-import { mapDispatch, mapState } from 'services/redux-helpers'
+import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Button } from 'ui/elements'
 import { MoreIcon } from 'ui/icons'
@@ -25,49 +26,53 @@ const DropdownMenu = styled.div`
   };
 `
 
-const MenuMore = ({
-  isOpen,
-  hideMenuMore,
-  showMenuMore,
-  ...props
-}) => {
+class MenuMore extends React.Component {
+  constructor(props) {
+    super(props)
 
+    this.hideDropdownMenu = this.hideDropdownMenu.bind(this)
+    this.showDropdownMenu = this.showDropdownMenu.bind(this)
+  }
 
-  // showDropdownMenu() {
-  //   this.setState({ isOpen: true })
-  //   document.addEventListener('click', this.hideDropdownMenu)
-  // }
+  showDropdownMenu() {
+    this.props.showMenuMore(this.props.name)
+    document.addEventListener('click', this.hideDropdownMenu)
+  }
 
-  // hideDropdownMenu() {
-  //   this.setState({ isOpen: false })
-  //   document.removeEventListener('click', this.hideDropdownMenu)
-  // }
+  hideDropdownMenu() {
+    this.props.hideMenuMore(this.props.name)
+    document.removeEventListener('click', this.hideDropdownMenu)
+  }
 
+  render() {
+    const { content, isOpen } = this.props
 
-  const { content } = props
+    return (
+      <Wrapper>
+        <Button plain onClick={ this.showDropdownMenu }>
+          <MoreIcon />
+        </Button>
+        { content &&
+          <DropdownMenu isOpen={ isOpen }>
+            { content() }
+          </DropdownMenu>
+        }
+      </Wrapper>
+    )
+  }
+}
 
-  return (
-    <Wrapper>
-      <Button plain onClick={ () => showMenuMore() }>
-        <MoreIcon />
-      </Button>
-      { content &&
-        <DropdownMenu isOpen={ isOpen }>
-          { content() }
-        </DropdownMenu>
-      }
-    </Wrapper>
-  )
+MenuMore.propTypes = {
+  name: PropTypes.string.isRequired
 }
 
 export default connect(
-  // mapState({
-  //   isOpen: selectors.isOpen
-  // })
-  null
-  ,
+  (state, { name }) => ({
+    isOpen: selectors.isOpenState(state, name)
+  }),
   mapDispatch({
     hideMenuMore: actions.hideMenuMore,
     showMenuMore: actions.showMenuMore
   })
 )(MenuMore)
+
