@@ -1,28 +1,28 @@
 import * as types from './types'
 
 export const createSecretKey = identifier => ({
-  type: types.GET,
+  type: types.CREATE,
   payload: { identifier }
 })
 export const createSecretKeyCompleted = ({ identifier, secretKey }) => ({
-  type: types.GET_COMPLETED,
+  type: types.CREATE_COMPLETED,
   payload: ({ identifier, secretKey })
 })
 export const createSecretKeyFailed = (reason) => ({
-  type: types.GET_FAILED,
+  type: types.CREATE_FAILED,
   payload: { reason }
 })
 
 export const listSecretKeys = identifier => ({
-  type: types.GET,
+  type: types.FETCH,
   payload: { identifier }
 })
 export const listSecretKeysCompleted = ({ identifier, secretKeys }) => ({
-  type: types.GET_COMPLETED,
+  type: types.FETCH_COMPLETED,
   payload: ({ identifier, secretKeys })
 })
 export const listSecretKeysFailed = (reason) => ({
-  type: types.GET_FAILED,
+  type: types.FETCH_FAILED,
   payload: { reason }
 })
 
