@@ -14,8 +14,10 @@ import { Redirect, Route, withParams } from 'views/router'
 import CacheInvalidatorModal from './cache-invalidator-modal'
 import CollaboratorInviteEmail from './sent-email-invite-modal'
 import InviteModal from './invite-modal'
-import PresetList from './preset-list'
 import PresetModal from './preset-modal'
+
+import PresetList from './preset-list'
+import ApiKeyList from './api-key-list'
 
 const Layout = styled.section`
   padding: 16px;
@@ -38,11 +40,14 @@ const Container = styled.div`
 `
 
 const Project = ({
+  toCreateApiKey,
   presets,
   project,
   toEditProject,
+  toEditPullSetting,
   toProjectDetail,
   toCreatePreset,
+  secretKeys,
   ui: {
     // idle,
     notFound,
@@ -75,6 +80,17 @@ const Project = ({
               <PresetList
                 presets={ presets }
                 toCreatePreset={ () => toCreatePreset(project.identifier, 'new') }
+              />
+              <Card
+                title={ () => <Heading mostLeft mostRight>Pull Settings</Heading> }
+                fab={ () => <EditIcon onClick={ () => toEditPullSetting(project.identifier) } /> }
+                content={ () => (
+                  <div>Pull data</div>
+                ) }
+              />
+              <ApiKeyList
+                secretKeys={ secretKeys }
+                toCreateApiKey={ () => toCreateApiKey() }
               />
             </Fragment>
           }
@@ -123,7 +139,11 @@ export default withParams(
       (state, { params: { identifier } }) => ({
         project: selectors.findProjectByIdentifier(state, identifier),
         presets: selectors.presets(state, identifier),
-        currentAccount: selectors.currentAccount(state)
+        currentAccount: selectors.currentAccount(state),
+        secretKeys: [
+          { key: '9LnCclsaU3fX6rgZBqB9TEGGMagC', isActive: true },
+          { key: 'gJKglwcg2QuZd99bl0C2E2CNeaFn', isActive: false }
+        ]
       }),
       mapDispatch({
         showDeleteCollaboratorDialog: (accountId, accountEmail) => actions.showDialog({ dialog: 'ConfirmDeleteCollaboratorDialog', params: { accountId, accountEmail } }),
@@ -138,6 +158,7 @@ export default withParams(
         toCreatePreset: (identifier, hash) => actions.requestLocation(`/projects/${ identifier }/presets/${ hash }`),
         toProfile: (id) => actions.requestLocation(`/@${ id }`),
         toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }`),
+        toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }/pull-setting`),
         toProjectMedia: (identifier) => actions.requestLocation(`/projects/${ identifier }/media`),
         makeOwner: actions.makeOwner,
         deleteCollaborator: actions.deleteCollaborator,
