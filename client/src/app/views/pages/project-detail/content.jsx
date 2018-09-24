@@ -16,8 +16,8 @@ import CollaboratorInviteEmail from './sent-email-invite-modal'
 import InviteModal from './invite-modal'
 import PresetModal from './preset-modal'
 
-import PresetList from './preset-list'
-import ApiKeyList from './api-key-list'
+import Presets from './preset-card'
+import ApiKeys from './api-key-card'
 
 const Layout = styled.section`
   padding: 16px;
@@ -77,7 +77,7 @@ const Project = ({
                   </TextLine>
                 ) }
               />
-              <PresetList
+              <Presets
                 presets={ presets }
                 toCreatePreset={ () => toCreatePreset(project.identifier, 'new') }
               />
@@ -88,7 +88,7 @@ const Project = ({
                   <div>Pull data</div>
                 ) }
               />
-              <ApiKeyList
+              <ApiKeys
                 secretKeys={ secretKeys }
                 toCreateApiKey={ () => toCreateApiKey() }
               />

@@ -14,8 +14,7 @@ const LineWithButton = styled.div`
   grid-template-columns: 1fr 40px;
 `
 
-
-const PresetList = ({
+const Presets = ({
   presets,
   toCreatePreset
 }) => {
@@ -64,4 +63,4 @@ const PresetList = ({
   )
 }
 
-export default PresetList
+export default Presets

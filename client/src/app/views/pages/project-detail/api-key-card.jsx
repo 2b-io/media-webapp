@@ -15,7 +15,7 @@ const LineWithButton = styled.div`
 `
 
 
-const ApiKeyList = ({
+const ApiKeys = ({
   secretKeys,
   toCreateApiKey
 }) => {
@@ -61,4 +61,4 @@ const ApiKeyList = ({
   )
 }
 
-export default ApiKeyList
+export default ApiKeys
