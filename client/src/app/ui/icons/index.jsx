@@ -20,6 +20,7 @@ import { ic_expand_more } from 'react-icons-kit/md/ic_expand_more'
 import { ic_help_outline } from 'react-icons-kit/md/ic_help_outline'
 import { ic_info } from 'react-icons-kit/md/ic_info'
 import { ic_menu } from 'react-icons-kit/md/ic_menu'
+import { ic_mode_edit } from 'react-icons-kit/md/ic_mode_edit'
 import { ic_more_vert } from 'react-icons-kit/md/ic_more_vert'
 import { ic_refresh } from 'react-icons-kit/md/ic_refresh'
 import { ic_report } from 'react-icons-kit/md/ic_report'
@@ -42,6 +43,7 @@ export const CloseIcon = icon(ic_close)
 export const CopyIcon = icon(ic_content_copy)
 export const CheckIcon = icon(ic_check)
 export const DashboardIcon = icon(ic_dashboard)
+export const EditIcon = icon(ic_mode_edit)
 export const EmailIcon = icon(ic_email)
 export const ErrorIcon = icon(ic_block)
 export const ExpandIcon = icon(ic_expand_more)
