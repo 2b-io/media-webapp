@@ -1,6 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
 
+import { mapDispatch, mapState } from 'services/redux-helpers'
+import { actions, selectors } from 'state/interface'
 import { Button } from 'ui/elements'
 import { MoreIcon } from 'ui/icons'
 
@@ -22,44 +25,49 @@ const DropdownMenu = styled.div`
   };
 `
 
-class MenuMore extends React.Component {
-  constructor(props) {
-    super(props)
+const MenuMore = ({
+  isOpen,
+  hideMenuMore,
+  showMenuMore,
+  ...props
+}) => {
 
-    this.state = {
-      isOpen: false
-    }
 
-    this.hideDropdownMenu = this.hideDropdownMenu.bind(this)
-    this.showDropdownMenu = this.showDropdownMenu.bind(this)
-  }
+  // showDropdownMenu() {
+  //   this.setState({ isOpen: true })
+  //   document.addEventListener('click', this.hideDropdownMenu)
+  // }
 
-  showDropdownMenu() {
-    this.setState({ isOpen: true })
-    document.addEventListener('click', this.hideDropdownMenu)
-  }
+  // hideDropdownMenu() {
+  //   this.setState({ isOpen: false })
+  //   document.removeEventListener('click', this.hideDropdownMenu)
+  // }
 
-  hideDropdownMenu() {
-    this.setState({ isOpen: false })
-    document.removeEventListener('click', this.hideDropdownMenu)
-  }
 
-  render() {
-    const { content } = this.props
+  const { content } = props
 
-    return (
-      <Wrapper>
-        <Button plain onClick={ this.showDropdownMenu }>
-          <MoreIcon />
-        </Button>
-        { content &&
-          <DropdownMenu isOpen={ this.state.isOpen }>
-            { content() }
-          </DropdownMenu>
-        }
-      </Wrapper>
-    )
-  }
+  return (
+    <Wrapper>
+      <Button plain onClick={ () => showMenuMore() }>
+        <MoreIcon />
+      </Button>
+      { content &&
+        <DropdownMenu isOpen={ isOpen }>
+          { content() }
+        </DropdownMenu>
+      }
+    </Wrapper>
+  )
 }
 
-export default MenuMore
+export default connect(
+  // mapState({
+  //   isOpen: selectors.isOpen
+  // })
+  null
+  ,
+  mapDispatch({
+    hideMenuMore: actions.hideMenuMore,
+    showMenuMore: actions.showMenuMore
+  })
+)(MenuMore)
