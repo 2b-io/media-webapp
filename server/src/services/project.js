@@ -130,7 +130,6 @@ export const create = async (data, provider, account) => {
   }).save()
 
   await new secretKey({
-    key:"sss1",
     project: project._id
   }).save()
 

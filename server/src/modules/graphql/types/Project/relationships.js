@@ -19,10 +19,6 @@ import {
 } from 'services/pull-setting'
 
 import {
-  list as getPushSetting,
-} from 'services/secret-key'
-
-import {
   list as listPermissions
 } from 'services/permission'
 
