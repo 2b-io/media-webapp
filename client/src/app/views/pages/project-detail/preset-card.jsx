@@ -15,25 +15,25 @@ const LineWithButton = styled.div`
 `
 
 const Presets = ({
-  presets,
-  toCreatePreset
+  presets = {},
+  toPreset
 }) => {
-
-  const lists = presets ? Object.values(presets).map(
-    (preset, index) => ({
-      key: index,
+  const items = Object.values(presets).map(
+    ({ contentType }, index) => ({
+      key: contentType,
       content: () => (
         <LineWithButton>
           <TextLine mostLeft mostRight>
-            { preset.contentType }
+            { contentType }
           </TextLine>
           <MenuMore
-            name={ preset.contentType }
+            name={ contentType }
             content={ () => (
               <List
                 items={ [
                   {
-                    content: () => <TextLine mostLeft mostRight>Edit</TextLine>
+                    content: () => <TextLine mostLeft mostRight>Edit</TextLine>,
+                    onClick: () => toPreset(contentType.replace('/', '_'))
                   },
                   {
                     content: () => <TextLine mostLeft mostRight>Disable</TextLine>
@@ -48,15 +48,15 @@ const Presets = ({
         </LineWithButton>
       )
     })
-  ): []
+  )
 
   return (
     <Card
       title={ () => <Heading mostLeft mostRight>Presets</Heading> }
-      fab={ () => <AddIcon onClick={ toCreatePreset } /> }
+      fab={ () => <AddIcon onClick={ () => toPreset('new') } /> }
       content={ () => (
-        lists.length>0 ?
-          <List items={ lists } /> :
+        items.length &&
+          <List items={ items } /> ||
           <TextLine mostLeft mostRight>No preset found</TextLine>
       ) }
     />

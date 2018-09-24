@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { Heading, TextLine } from 'ui/typo'
-import { Card, Link, List, MenuMore } from 'ui/elements'
+import { Card, Identicon, Link, List, MenuMore } from 'ui/elements'
 import { OwnerAddIcon } from 'ui/icons'
 
 const LineWithButton = styled.div`
@@ -19,24 +19,6 @@ const Avatar = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`
-
-const Circle = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  border-radius: 100%;
-  border: 2px solid ${
-    ({ theme }) => theme.black.base
-  };
-  background: ${
-    ({ disabled, theme }) => disabled ?
-      theme.secondary.base :
-      theme.white.base
-  };
-  width: 24px;
-  height: 24px;
 `
 
 const Collaborators = ({
@@ -57,13 +39,16 @@ const Collaborators = ({
       content: () => (
         <LineWithButton>
           <Avatar>
-            <Circle />
+            <Identicon circle
+              size={ 24 }
+              id={ account.email }
+            />
           </Avatar>
           <TextLine mostLeft mostRight>
             <Link href="#" onClick={ () => toProfile(account._id) } >
               <span>{ account.email }</span>
             </Link>
-            { ` (${ privilege === 'owner' && privilege })` }
+            { `(${ privilege === 'owner' && privilege })` }
           </TextLine>
           { signedInCollaborator && signedInCollaborator.privilege === 'owner' && privilege === 'admin' &&
             <MenuMore
@@ -72,10 +57,12 @@ const Collaborators = ({
                 <List
                   items={ [
                     {
-                      content: () => <TextLine mostLeft mostRight onClick={ () => makeOwner(account._id) }>Make owner</TextLine>
+                      content: () => <TextLine mostLeft mostRight>Make owner</TextLine>,
+                      onClick: () => makeOwner(account._id)
                     },
                     {
-                      content: () => <TextLine mostLeft mostRight onClick={ () => showDeleteCollaboratorDialog(account._id, account.email) }>Remove</TextLine>
+                      content: () => <TextLine mostLeft mostRight>Remove</TextLine>,
+                      onClick: () => showDeleteCollaboratorDialog(account._id, account.email)
                     }
                   ] }
                 />

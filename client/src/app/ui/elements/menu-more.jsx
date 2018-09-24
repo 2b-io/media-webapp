@@ -17,13 +17,14 @@ const DropdownMenu = styled.div`
   width: 224px;
   top: 32px;
   right: 8px;
-  z-index: 1;
+  z-index: 2;
   background-color: ${ ({ theme }) => theme.white.base };
   color: ${ ({ theme }) => theme.white.on.base };
   border: 1px solid ${ ({ theme }) => theme.secondary.base };
   display: ${
     ({ isOpen }) => isOpen ? 'block' : 'none'
   };
+  box-shadow: 4px 4px ${ ({ theme }) => theme.black.opaque.base };
 `
 
 class MenuMore extends React.Component {

@@ -7,7 +7,7 @@ import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
 import { Button, Card, Paragraph, TextArea } from 'ui/elements'
 import { EditIcon } from 'ui/icons'
-import { Heading, TextLine } from 'ui/typo'
+import { Heading, Text, TextLine } from 'ui/typo'
 import { stateful } from 'views/common/decorators'
 import { Redirect, Route, withParams } from 'views/router'
 
@@ -49,14 +49,14 @@ const Project = ({
   makeOwner,
   presets,
   project,
-  // pullSetting,
+  pullSetting = {},
   toCreateApiKey,
   toEditProject,
   toEditPullSetting,
   toInviteCollaboratorModal,
   toProjectDetail,
   toProfile,
-  toCreatePreset,
+  toPreset,
   secretKeys,
   removeSecretKey,
   updateSecretKey,
@@ -74,6 +74,10 @@ const Project = ({
     return <Redirect to="/projects" />
   }
 
+  // copy from 'models/pull-setting'
+  const delimiter = /\s*[,\n+]\s*/
+  const allowedOrigins = (pullSetting.allowedOrigins || '').trim().split(delimiter).filter(Boolean)
+
   return (
     <Fragment>
       <Layout>
@@ -84,26 +88,47 @@ const Project = ({
                 title={ () => <Heading mostLeft mostRight>General</Heading> }
                 fab={ () => <EditIcon onClick={ () => toEditProject(project.identifier) } /> }
                 content={ () => (
-                  <TextLine mostLeft mostRight>
-                    { project.name }<br />
+                  <Text mostLeft mostRight>
+                    { project.name }<br /><br />
                     { project.infrastructure.domain }<br />
                     { project.status }
-                  </TextLine>
+                  </Text>
                 ) }
               />
               <Presets
                 presets={ presets }
-                toCreatePreset={ () => toCreatePreset(project.identifier, 'new') }
+                toPreset={ (contentType) => toPreset(project.identifier, contentType) }
               />
               <Card
                 title={ () => <Heading mostLeft mostRight>Pull Settings</Heading> }
                 fab={ () => <EditIcon onClick={ () => toEditPullSetting(project.identifier) } /> }
                 content={ () => (
-                  <TextArea>
-                    Pull Origin
-                    Allowed Origins
-                    Headers
-                  </TextArea>
+                  <Text mostLeft mostRight>
+                    Pull URL:<br />
+                    &nbsp;&nbsp;{ pullSetting.pullURL || 'N/A' }<br />
+                    Allowed Origins:<br />
+                    {
+                      allowedOrigins.length &&
+                        allowedOrigins.map(
+                          (origin) => (
+                            <Fragment key={ origin }>- { origin }<br /></Fragment>
+                          )
+                        ) || (
+                          <Fragment>&nbsp;&nbsp;N/A<br /></Fragment>
+                        )
+                    }
+                    Headers:<br />
+                    {
+                      (pullSetting.headers || []).length &&
+                        pullSetting.headers.map(
+                          ({ name, value }) => (
+                            <Fragment key={ name }>- { name }: { value}</Fragment>
+                          )
+                        ) || (
+                          <Fragment>&nbsp;&nbsp;N/A<br /></Fragment>
+                        )
+                    }
+                  </Text>
                 ) }
               />
               <ApiKeys
@@ -207,7 +232,7 @@ export default withParams(
         toCacheInvalidator: (identifier) => actions.requestLocation(`/projects/${ identifier }/cache-invalidator`),
         toEditProject: (identifier) => actions.requestLocation(`/projects/${ identifier }/edit`),
         toInviteCollaboratorModal: (identifier) => actions.requestLocation(`/projects/${ identifier }/invite`),
-        toCreatePreset: (identifier, hash) => actions.requestLocation(`/projects/${ identifier }/presets/${ hash }`),
+        toPreset: (identifier, hash) => actions.requestLocation(`/projects/${ identifier }/presets/${ hash }`),
         toProfile: (id) => actions.requestLocation(`/@${ id }`),
         toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }`),
         toEditPullSetting: (identifier) => actions.requestLocation(`/projects/${ identifier }/pull-setting`),
