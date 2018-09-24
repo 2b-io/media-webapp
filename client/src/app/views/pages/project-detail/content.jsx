@@ -43,6 +43,7 @@ const Container = styled.div`
 `
 
 const Project = ({
+  createApiKey,
   currentAccount,
   deleteCollaborator,
   makeOwner,
@@ -57,6 +58,8 @@ const Project = ({
   toProfile,
   toCreatePreset,
   secretKeys,
+  removeSecretKey,
+  updateSecretKey,
   showDeleteCollaboratorDialog,
   hideDeleteCollaboratorDialog,
   ui: {
@@ -105,7 +108,9 @@ const Project = ({
               />
               <ApiKeys
                 secretKeys={ secretKeys }
-                toCreateApiKey={ () => toCreateApiKey() }
+                createApiKey={ () => createApiKey(project.identifier) }
+                removeSecretKey={ (key) => removeSecretKey(project.identifier, key) }
+                updateSecretKey={ (data) => updateSecretKey(project.identifier, data ) }
               />
               <Collaborators
                 collaborators={ project.collaborators }
@@ -185,6 +190,7 @@ export default withParams(
         project: selectors.findProjectByIdentifier(state, identifier),
         presets: selectors.presets(state, identifier),
         currentAccount: selectors.currentAccount(state),
+        secretKeys: selectors.secretKeys(state, identifier),
         pullSetting: selectors.pullSetting(state, identifier),
         secretKeys: [
           { key: '9LnCclsaU3fX6rgZBqB9TEGGMagC', isActive: true },
@@ -208,7 +214,10 @@ export default withParams(
         toProjectMedia: (identifier) => actions.requestLocation(`/projects/${ identifier }/media`),
         makeOwner: actions.makeOwner,
         deleteCollaborator: actions.deleteCollaborator,
-        reset
+        reset,
+        createApiKey: actions.createSecretKey,
+        removeSecretKey: actions.removeSecretKey,
+        updateSecretKey: actions.updateSecretKey
       })
     )(Project)
   )
