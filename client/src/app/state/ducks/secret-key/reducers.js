@@ -1,3 +1,4 @@
+import arrayToMap from 'state/helpers/array-to-map'
 import * as types from './types'
 
 export default (state = {}, action) => {

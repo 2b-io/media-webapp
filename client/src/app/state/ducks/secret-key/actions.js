@@ -6,7 +6,7 @@ export const createSecretKey = identifier => ({
 })
 export const createSecretKeyCompleted = ({ identifier, secretKey }) => ({
   type: types.GET_COMPLETED,
-  payload: ({ identifier, secretKeys })
+  payload: ({ identifier, secretKey })
 })
 export const createSecretKeyFailed = (reason) => ({
   type: types.GET_FAILED,
