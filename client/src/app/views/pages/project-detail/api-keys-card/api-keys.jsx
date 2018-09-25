@@ -1,10 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
 import { Heading, TextLine } from 'ui/typo'
-import { Card, ContextMenu, List } from 'ui/elements'
+import { Card, ContextMenu, List, StatusIndicator } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 
 const ApiKeys = ({
@@ -18,7 +19,8 @@ const ApiKeys = ({
   const lists = Object.values(secretKeys).map(
     ({ key, isActive }) => ({
       key,
-      content: () => <TextLine mostLeft>{ key }</TextLine>,
+      content: () => <TextLine>{ key }</TextLine>,
+      leading: () => <StatusIndicator isActive={ isActive } />,
       trailing: () => (
         <ContextMenu
           name={ `secret-key-${ key }` }

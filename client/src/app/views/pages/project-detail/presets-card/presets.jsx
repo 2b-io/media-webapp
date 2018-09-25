@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { actions, selectors } from 'state/interface'
 import { mapDispatch } from 'services/redux-helpers'
 import { Heading, TextLine } from 'ui/typo'
-import { Card, ContextMenu, List } from 'ui/elements'
+import { Card, ContextMenu, List, StatusIndicator } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 
 import PresetModal from '../preset-modal'
@@ -20,7 +20,8 @@ const Presets = ({
   const items = Object.values(presets).map(
     ({ contentType, isActive }) => ({
       key: contentType,
-      content: () => <TextLine mostLeft>{ contentType }</TextLine>,
+      content: () => <TextLine>{ contentType }</TextLine>,
+      leading: () => <StatusIndicator isActive={ isActive } />,
       trailing: () => (
         <ContextMenu
           name={ `preset-${ contentType }` }
