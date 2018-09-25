@@ -38,13 +38,13 @@ export const getProjectFailed = reason => ({
   payload: { reason }
 })
 
-export const deleteProject = slug => ({
+export const deleteProject = identifier => ({
   type: types.DELETE,
-  payload: { slug }
+  payload: { identifier }
 })
-export const deleteProjectCompleted = slug => ({
+export const deleteProjectCompleted = identifier => ({
   type: types.DELETE_COMPLETED,
-  payload: { slug }
+  payload: { identifier }
 })
 export const deleteProjectFailed = reason => ({
   type: types.DELETE_FAILED,
@@ -77,41 +77,41 @@ export const inviteCollaboratorFailed = reason => ({
   payload: { reason }
 })
 
-export const deleteCollaborator = (slug, accountId) => ({
+export const deleteCollaborator = (identifier, accountId) => ({
   type: types.DELETE_COLLABORATOR,
-  payload: { slug, accountId }
+  payload: { identifier, accountId }
 })
 //?? what do action do when deleted collaborator?
-export const deleteCollaboratorCompleted = (slug, accountId) => ({
+export const deleteCollaboratorCompleted = (identifier, accountId) => ({
   type: types.DELETE_COLLABORATOR_COMPLETED,
-  payload: { slug, accountId }
+  payload: { identifier, accountId }
 })
 export const deleteCollaboratorFailed = reason => ({
   type: types.DELETE_COLLABORATOR_FAILED,
   payload: { reason }
 })
 
-export const makeOwner = (accountId, slug) => ({
+export const makeOwner = (accountId, identifier) => ({
   type: types.MAKE_OWNER,
-  payload: { accountId, slug }
+  payload: { accountId, identifier }
 })
-export const makeOwnerCompleted = (slug, currentAccountId, accountId) => ({
+export const makeOwnerCompleted = (identifier, currentAccountId, accountId) => ({
   type: types.MAKE_OWNER_COMPLETED,
-  payload: { slug, currentAccountId, accountId }
+  payload: { identifier, currentAccountId, accountId }
 })
 export const makeOwnerFailed = reason => ({
   type: types.MAKE_OWNER_FAILED,
   payload: { reason }
 })
 
-export const invalidateCache = (patterns, slug) => {
+export const invalidateCache = (patterns, identifier) => {
   const patternArray = patterns.trim().split(/\s*[,\n+]\s*/).filter(Boolean)
 
   return ({
     type: types.INVALIDATE_CACHE,
     payload: {
       patterns: patternArray,
-      slug
+      identifier
     }
   })
 }
@@ -125,11 +125,11 @@ export const invalidateCacheFailed = reason => ({
   payload: { reason }
 })
 
-export const invalidateAllCache = (slug) => {
+export const invalidateAllCache = (identifier) => {
   return ({
     type: types.INVALIDATE_ALL_CACHE,
     payload: {
-      slug
+      identifier
     }
   })
 }

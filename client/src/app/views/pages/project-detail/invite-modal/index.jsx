@@ -43,7 +43,7 @@ const InviteCollaboratorForm = reduxForm({
 })(_InviteCollaboratorForm)
 
 const InviteCollaborator = ({
-  slug,
+  identifier,
   inviteCollaborator,
   searchAccount,
   collaborators,
@@ -105,7 +105,7 @@ const InviteCollaborator = ({
               </Paragraph>
               <Button
                 plain
-                onClick={ () => toEmailInviteModal(slug, inputEmail) }>
+                onClick={ () => toEmailInviteModal(identifier, inputEmail) }>
                 Sent email to invite
               </Button>
             </Layout>
@@ -124,7 +124,7 @@ export default modal({
     mapDispatch({
       inviteCollaborator: actions.inviteCollaborator,
       searchAccount: actions.searchAccount,
-      toEmailInviteModal: (slug, email) => actions.requestLocation(`/projects/${ slug }/invite-by-email?email=${ email }`),
+      toEmailInviteModal: (identifier, email) => actions.requestLocation(`/projects/${ identifier }/invite-by-email?email=${ email }`),
     })
   )(InviteCollaborator)
 )
