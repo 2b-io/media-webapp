@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 
-import ContextMenu from './context-menu'
+import _ContextMenu from './context-menu'
 
-export default connect(
+const ContextMenu = connect(
   (state, { name }) => ({
     isActive: selectors.isMenuActive(state, name),
     stateless: true
@@ -14,4 +14,8 @@ export default connect(
     activate: actions.showMenu,
     deactivate: actions.hideMenu
   })
-)(ContextMenu)
+)(_ContextMenu)
+
+ContextMenu.Menu = _ContextMenu
+
+export default ContextMenu
