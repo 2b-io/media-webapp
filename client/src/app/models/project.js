@@ -89,19 +89,19 @@ export default {
 
     return body.session.account._createProject
   },
-  async delete(slug, token) {
+  async delete(identifier, token) {
     const body = await request(`
-      query deleteProject($slug: String!, $token: String!) {
+      query deleteProject($identifier: String!, $token: String!) {
         session(token: $token) {
           account {
-            project(slug: $slug) {
+            project(identifier: $identifier) {
               _destroy
             }
           }
         }
       }
     `, {
-      slug,
+      identifier,
       token
     })
 
@@ -135,12 +135,12 @@ export default {
     return body.session.account.project._update
   },
 
-  async createPreset({ preset, slug }, token) {
+  async createPreset({ preset, identifier }, token) {
     const body = await request(`
-      query createPreset($preset: PresetStruct!, $slug: String!, $token: String!) {
+      query createPreset($preset: PresetStruct!, $identifier: String!, $token: String!) {
         session(token: $token) {
           account {
-            project (slug: $slug) {
+            project (identifier: $identifier) {
               _createPreset(preset: $preset) {
                 ${ PRESET_FRAGMENT }
               }
@@ -150,19 +150,19 @@ export default {
       }
     `, {
       preset: pick(preset, [ 'name', 'values' ]),
-      slug,
+      identifier,
       token
     })
 
     return body.session.account.project._createPreset
   },
 
-  async getPreset({ hash, slug }, token) {
+  async getPreset({ hash, identifier }, token) {
     const body = await request(`
-      query getPreset($hash: String!, $slug: String!, $token: String!) {
+      query getPreset($hash: String!, $identifier: String!, $token: String!) {
         session(token: $token) {
           account {
-            project(slug: $slug) {
+            project(identifier: $identifier) {
               preset(hash: $hash) {
                 ${ PRESET_FRAGMENT }
               }
@@ -172,19 +172,19 @@ export default {
       }
     `, {
       hash,
-      slug,
+      identifier,
       token
     })
 
     return body.session.account.project.preset
   },
 
-  async updatePreset({ preset, slug }, token) {
+  async updatePreset({ preset, identifier }, token) {
     const body = await request(`
-      query updatePreset($hash: String!, $preset: PresetStruct!, $slug: String!, $token: String!) {
+      query updatePreset($hash: String!, $preset: PresetStruct!, $identifier: String!, $token: String!) {
         session(token: $token) {
           account {
-            project(slug: $slug) {
+            project(identifier: $identifier) {
               preset(hash: $hash){
                 _update(preset: $preset) {
                   ${ PRESET_FRAGMENT }
@@ -197,19 +197,19 @@ export default {
     `, {
       hash: preset.hash,
       preset: pick(preset, [ 'name', 'hash', 'values' ]),
-      slug,
+      identifier,
       token
     })
 
     return body.session.account.project.preset._update
   },
 
-  async deletePreset({ preset, slug }, token) {
+  async deletePreset({ preset, identifier }, token) {
     const body = await request(`
-      query deletePreset($hash: String!, $slug: String!, $token: String!) {
+      query deletePreset($hash: String!, $identifier: String!, $token: String!) {
         session(token: $token) {
           account {
-            project(slug: $slug) {
+            project(identifier: $identifier) {
               preset(hash: $hash){
                 _destroy
               }
@@ -219,19 +219,19 @@ export default {
       }
     `, {
       hash: preset.hash,
-      slug,
+      identifier,
       token
     })
 
     return body.session.account.project.preset._destroy
   },
 
-  async inviteCollaborator(token, slug, inputEmailMessenge) {
+  async inviteCollaborator(token, identifier, inputEmailMessenge) {
     const body = await request(`
-      query inviteCollaborator($token: String!, $slug: String!, $email: String!, $messenge: String!) {
+      query inviteCollaborator($token: String!, $identifier: String!, $email: String!, $messenge: String!) {
         session(token: $token) {
           account {
-            project(slug: $slug) {
+            project(identifier: $identifier) {
               _inviteCollaborator(email: $email, messenge:  $messenge){
                 ${ PERMISSION_FRAGMENT }
               }
@@ -241,7 +241,7 @@ export default {
       }
     `, {
       token,
-      slug,
+      identifier,
       email: inputEmailMessenge.email,
       messenge: inputEmailMessenge.messenge
     })
@@ -249,12 +249,12 @@ export default {
     return body.session.account.project._inviteCollaborator
   },
 
-  async deleteCollaborator(token, slug, accountId) {
+  async deleteCollaborator(token, identifier, accountId) {
     const body = await request(`
-      query removeCollaborator($token: String!, $slug: String!, $accountId: String!) {
+      query removeCollaborator($token: String!, $identifier: String!, $accountId: String!) {
         session(token: $token) {
           account {
-            project(slug: $slug) {
+            project(identifier: $identifier) {
               _removeCollaborator(accountId: $accountId)
             }
           }
@@ -262,19 +262,19 @@ export default {
       }
     `, {
       token,
-      slug,
+      identifier,
       accountId
     })
 
     return body.session.account.project._removeCollaborator
   },
 
-  async makeOwner(token, slug, accountId) {
+  async makeOwner(token, identifier, accountId) {
     const body = await request(`
-      query makeOwner($token: String!, $slug: String!, $accountId: String!) {
+      query makeOwner($token: String!, $identifier: String!, $accountId: String!) {
         session(token: $token) {
           account {
-            project(slug: $slug) {
+            project(identifier: $identifier) {
               _makeOwner(accountId: $accountId)
             }
           }
@@ -282,18 +282,18 @@ export default {
       }
     `, {
       token,
-      slug,
+      identifier,
       accountId
     })
 
     return body.session.account.project._makeOwner
   },
-  async invalidateCache(token, slug, patterns) {
+  async invalidateCache(token, identifier, patterns) {
     const body = await request(`
-      query invalidateCache($token: String!, $slug: String!, $patterns: [String]!) {
+      query invalidateCache($token: String!, $identifier: String!, $patterns: [String]!) {
         session(token: $token) {
           account {
-            project(slug: $slug) {
+            project(identifier: $identifier) {
               _invalidateCache(patterns: $patterns)
             }
           }
@@ -301,19 +301,19 @@ export default {
       }
     `, {
       token,
-      slug,
+      identifier,
       patterns
     })
 
     return body.session.account.project._invalidateCache
   },
 
-  async invalidateAllCache(token, slug) {
+  async invalidateAllCache(token, identifier) {
     const body = await request(`
-      query invalidateAllCache($token: String!, $slug: String!) {
+      query invalidateAllCache($token: String!, $identifier: String!) {
         session(token: $token) {
           account {
-            project(slug: $slug) {
+            project(identifier: $identifier) {
               _invalidateAllCache
             }
           }
@@ -321,7 +321,7 @@ export default {
       }
     `, {
       token,
-      slug
+      identifier
     })
 
     return body.session.account.project._invalidateAllCache
