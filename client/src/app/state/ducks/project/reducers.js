@@ -19,7 +19,6 @@ export default createReducer({})({
         [ project.identifier ]: {
           ...project,
           collaborators: arrayToMap(project.collaborators, '_id'),
-          presets: arrayToMap(project.presets, 'hash'),
         }
       }), {}
     )
@@ -28,7 +27,6 @@ export default createReducer({})({
     ...state,
     [ action.payload.project.identifier ]: {
       ...action.payload.project,
-      presets: arrayToMap(action.payload.project.presets, 'hash')
     }
   }),
   [ types.DELETE_COMPLETED ]: (state, action) => {
@@ -41,7 +39,6 @@ export default createReducer({})({
     ...state,
     [ action.payload.project.identifier ]: {
       ...action.payload.project,
-      presets: arrayToMap(action.payload.project.presets, 'hash'),
       collaborators: collaboratorsToMap(action.payload.project.collaborators, '_id')
     }
   }),
@@ -49,7 +46,6 @@ export default createReducer({})({
     ...state,
     [ action.payload.project.identifier ]: {
       ...action.payload.project,
-      presets: arrayToMap(action.payload.project.presets, 'hash'),
       collaborators: collaboratorsToMap(action.payload.project.collaborators, '_id')
     }
   }),
@@ -106,24 +102,6 @@ export default createReducer({})({
           }
         }
       },
-    }
-  },
-  [ types.ADD_CUSTOM_HEADER ]: (state, action) => {
-    const { identifier } = action.payload
-    const project = state[ identifier ]
-
-    return {
-      ...state,
-      [ identifier ]: {
-        ...project,
-        headers: [
-          ...(project.headers || []),
-          {
-            name: '',
-            value: ''
-          }
-        ]
-      }
     }
   }
 })
