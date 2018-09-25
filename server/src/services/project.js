@@ -60,7 +60,7 @@ export const getByIdentifier = async (projectIdentifier, account) => {
   }).lean()
 
   if (!permission) {
-    return
+    return {}
   }
 
   const { status: projectStatus } = project
@@ -103,7 +103,7 @@ export const list = async (account) => {
       $in: permissions.map(p => p.project)
     },
     removed: false
-  }).sort('_id').lean()
+  })
 
   return projects
 }
