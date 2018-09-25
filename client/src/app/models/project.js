@@ -21,6 +21,7 @@ export const PROJECT_FRAGMENT = `
     provider
   },
   status,
+  created,
   collaborators {
     _id,
     account {
