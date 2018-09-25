@@ -20,7 +20,7 @@ import { ConfirmDeleteCollaboratorDialog } from './dialog'
 import ApiKeys from './api-key-card'
 import Collaborators from './collaborator-card'
 import Presets from './preset-card'
-import { ProjectTools } from './project-tool-card'
+import { ProjectTools } from './project-tools-card'
 
 const Layout = styled.section`
   padding: 16px;
@@ -128,7 +128,7 @@ const Project = ({
                         (pullSetting.headers || []).length &&
                           pullSetting.headers.map(
                             ({ name, value }, index) => (
-                              <Fragment key={ index }>- { name }: { value}</Fragment>
+                              <Fragment key={ index }>- { name }: { value }<br /></Fragment>
                             )
                           ) || ( <Fragment>&nbsp;&nbsp;N/A<br /></Fragment> )
                       }
