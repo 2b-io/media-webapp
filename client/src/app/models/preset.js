@@ -62,12 +62,12 @@ export default {
       contentType: preset.contentType,
       preset
     })
-    return  body.session.account.project.preset
+    return  body.session.account.project.preset._update
 
   },
-  async remove(token, identifier, preset) {
+  async remove(token, identifier, contentType) {
     const body = await request(`
-      query removePreset($token: String!, $identifier: String!, $contentType: String!, $preset: PresetStruct!) {
+      query removePreset($token: String!, $identifier: String!, $contentType: String!) {
         session(token: $token) {
           account {
             project(identifier: $identifier) {
@@ -82,10 +82,9 @@ export default {
     `, {
       token,
       identifier,
-      contentType: preset.contentType,
-      preset
+      contentType,
     })
-    return  body.session.account.project.preset
+    return  body.session.account.project.preset._destroy
   },
   async create(token, identifier, contentType) {
     const body = await request(`

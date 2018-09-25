@@ -17,7 +17,7 @@ const CacheInvalidatorForm = reduxForm({
 
 const CacheInvalidatorModal = ({
   invalidateCache,
-  slug,
+  identifier,
   invalidateAllCache,
   ui: {
     error,
@@ -29,15 +29,15 @@ const CacheInvalidatorModal = ({
   return (
     <Container>
       { result &&
-        <Redirect to={ `/projects/${ slug }` } />
+        <Redirect to={ `/projects/${ identifier }` } />
       }
       { error &&
         <ErrorBox>An error happens when invalidate cache.</ErrorBox>
       }
       <CacheInvalidatorForm
         idle={ idle }
-        onSubmit={ ({ patterns }) => invalidateCache(patterns, slug) }
-        invalidateAllCache={ () => invalidateAllCache(slug) }
+        onSubmit={ ({ patterns }) => invalidateCache(patterns, identifier) }
+        invalidateAllCache={ () => invalidateAllCache(identifier) }
       />
     </Container>
   )
@@ -50,7 +50,7 @@ export default modal({
     null,
     mapDispatch({
       invalidateCache: actions.invalidateCache,
-      invalidateAllCache: slug => actions.invalidateAllCache(slug)
+      invalidateAllCache: identifier => actions.invalidateAllCache(identifier)
     })
   )(CacheInvalidatorModal)
 )

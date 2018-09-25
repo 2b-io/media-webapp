@@ -53,20 +53,20 @@ const deleteLoop = function*() {
         continue
       }
 
-      const { preset, identifier } = action.payload
+      const { contentType, identifier } = action.payload
 
       const destroyed = yield call(
         Preset.remove,
         session.token,
-        preset,
-        identifier
+        identifier,
+        contentType
       )
       if (!destroyed) {
         throw new Error('Cannot delete preset')
       }
 
       yield all([
-        put(actions.removePresetCompleted({ preset, identifier })),
+        put(actions.removePresetCompleted({ contentType, identifier })),
         put(actions.hideDialog({ dialog: 'ConfirmDeletePresetDialog' })),
         fork(addToast, {
           type: 'success',

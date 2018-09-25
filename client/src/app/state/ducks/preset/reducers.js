@@ -29,7 +29,7 @@ export default (state = {}, action) => {
       }
     }
     case types.REMOVE_COMPLETED: {
-      const { preset: { contentType }, identifier } = action.payload
+      const { contentType, identifier } = action.payload
       const { [ contentType ]: removedPreset, ...remainPresets } = state[ identifier ]
 
       return {

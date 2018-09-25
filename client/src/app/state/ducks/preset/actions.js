@@ -43,24 +43,24 @@ export const updatePreset = ({ preset, identifier }) => ({
   type: types.UPDATE,
   payload: { preset, identifier }
 })
-export const updatePresetCompleted = ({ preset }) => ({
+export const updatePresetCompleted = ({ preset, identifier }) => ({
   type: types.UPDATE_COMPLETED,
-  payload: { preset }
+  payload: { preset, identifier }
 })
 export const updatePresetFailed = reason => ({
   type: types.UPDATE_FAILED,
   payload: { reason }
 })
 
-export const removePreset = ({ preset, identifier }) => ({
-  type: types.DELETE,
-  payload: { preset, identifier }
+export const removePreset = ({ contentType, identifier }) => ({
+  type: types.REMOVE,
+  payload: { contentType, identifier }
 })
-export const removePresetCompleted = ({ preset, identifier }) => ({
-  type: types.DELETE_COMPLETED,
-  payload: { preset, identifier }
+export const removePresetCompleted = ({ contentType, identifier }) => ({
+  type: types.REMOVE_COMPLETED,
+  payload: { contentType, identifier }
 })
 export const removePresetFailed = reason => ({
-  type: types.DELETE_FAILED,
+  type: types.REMOVE_FAILED,
   payload: { reason }
 })
