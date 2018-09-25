@@ -72,15 +72,15 @@ const ProjectList = ({
   ui: {
     sortCondition,
     hideDisableProjects
-   }
+  }
 }) => {
   const hidedProjects = hideDisableProjects ? hideProjects(projects) : projects
   const sortedProjects = sortCondition ?
-   hideDisableProjects ?
-    sortProjects(sortCondition, hidedProjects) :
-      sortProjects(sortCondition, projects) :
-        hideDisableProjects ?
-          hidedProjects : projects
+    hideDisableProjects ?
+      sortProjects(sortCondition, hidedProjects) :
+        sortProjects(sortCondition, projects) :
+          hideDisableProjects ?
+            hidedProjects : projects
 
   const cards = sortedProjects.map(
     project => (

@@ -10,7 +10,7 @@ export default {
       [ types.SORT ]: (state, action) => action.payload.sortCondition
     }),
     hideDisableProjects: createReducer(null)({
-      [ types.HIDE_DISABLE ]: (state, action) => !state
+      [ types.HIDE_DISABLE ]: (state) => !state
     })
   })
 }
