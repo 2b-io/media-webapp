@@ -62,7 +62,7 @@ export default {
       contentType: preset.contentType,
       preset
     })
-    return  body.session.account.project.preset
+    return  body.session.account.project.preset._update
 
   },
   async remove(token, identifier, contentType) {

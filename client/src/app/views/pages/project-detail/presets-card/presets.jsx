@@ -15,10 +15,11 @@ const Presets = ({
   presets = {},
   toPreset,
   toProjectDetail,
-  removePreset
+  removePreset,
+  updatePreset
 }) => {
   const items = Object.values(presets).map(
-    ({ contentType }) => ({
+    ({ contentType, isActive }) => ({
       key: contentType,
       content: () => <TextLine mostLeft>{ contentType }</TextLine>,
       trailing: () => (
@@ -29,10 +30,17 @@ const Presets = ({
               items={ [
                 {
                   content: () => <TextLine mostLeft mostRight>Edit</TextLine>,
-                  onClick: () => { toPreset(identifier, contentType.replace('/', '_')) }
+                  onClick: () => toPreset(identifier, contentType.replace('/', '_'))
                 },
                 {
-                  content: () => <TextLine mostLeft mostRight>Disable</TextLine>
+                  content: () => <TextLine mostLeft mostRight>{ isActive ? 'Disable' : 'Enable' }</TextLine>,
+                  onClick: () => updatePreset({
+                    preset: {
+                      contentType,
+                      isActive: !isActive
+                    },
+                    identifier
+                  })
                 },
                 {
                   content: () => <TextLine mostLeft mostRight>Remove</TextLine>,
@@ -75,6 +83,7 @@ export default connect(
   mapDispatch({
     toPreset: (identifier, hash) => actions.requestLocation(`/projects/${ identifier }/presets/${ hash }`),
     toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }`),
-    removePreset: actions.removePreset
+    removePreset: actions.removePreset,
+    updatePreset: actions.updatePreset
   })
 )(Presets)
