@@ -129,10 +129,6 @@ export const create = async (data, provider, account) => {
     project: project._id
   }).save()
 
-  await new secretKey({
-    project: project._id
-  }).save()
-
   const cloudfront = await createDistribution(project.name)
   const { Id: identifier, DomainName: domain } = cloudfront.Distribution
   await new Infrastructure({

@@ -1,7 +1,7 @@
 export default {
   findSecretKey: (state, identifier, key) => {
     if (!state[ identifier ]) {
-      return
+      return {}
     }
     return state[ identifier ][ key ]
   },

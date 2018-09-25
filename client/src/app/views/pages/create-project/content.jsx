@@ -21,7 +21,7 @@ const CreateProject = ({
 }) => {
   if (result) {
     return (
-      <Redirect to={ `/projects/${ result.id }` } />
+      <Redirect to={ `/projects/${ result.identifier }` } />
     )
   }
 
