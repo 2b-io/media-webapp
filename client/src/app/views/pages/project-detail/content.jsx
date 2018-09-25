@@ -11,7 +11,7 @@ import { Heading, Text, TextLine } from 'ui/typo'
 import { stateful } from 'views/common/decorators'
 import { Redirect, Route, withParams } from 'views/router'
 
-import CacheInvalidatorModal from './cache-invalidator-modal'
+// import CacheInvalidatorModal from './cache-invalidator-modal'
 
 import { ApiKeys } from './api-keys-card'
 import { Collaborators } from './collaborator-card/'
@@ -90,14 +90,7 @@ const Project = ({
           }
         </Container>
       </Layout>
-      <Route path="/projects/:identifier/cache-invalidator">
-        <CacheInvalidatorModal
-          width="wide"
-          onHide={ () => toProjectDetail(identifier) }
-          identifier={ project && identifier }
-          title="Cache Invalidator"
-        />
-      </Route>
+
     </Fragment>
   )
 }
