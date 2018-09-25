@@ -35,8 +35,4 @@ schema.pre('save', function (next) {
 
   next()
 })
-
-
-
-
 export default mongoose.model('Project', schema)
