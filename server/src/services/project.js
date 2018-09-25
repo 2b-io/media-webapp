@@ -1,5 +1,8 @@
+import sh from 'shorthash'
 import request from 'superagent'
 import { URL } from 'url'
+import uniqid from 'uniqid'
+
 
 import config from 'infrastructure/config'
 import Infrastructure from 'models/Infrastructure'
@@ -129,7 +132,10 @@ export const create = async (data, provider, account) => {
     project: project._id
   }).save()
 
+  const shortProjectId = sh.unique(String(project._id))
+  const key = uniqid(`${ shortProjectId }-`)
   await new secretKey({
+    key,
     project: project._id
   }).save()
 
