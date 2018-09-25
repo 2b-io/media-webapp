@@ -17,6 +17,7 @@ import { ApiKeys } from './api-keys-card'
 import { Collaborators } from './collaborator-card/'
 import { ProjectTools } from './project-tools-card'
 import { Presets } from './presets-card'
+import { PullSettings } from './pull-settings-card/'
 
 const Layout = styled.section`
   padding: 16px;
@@ -40,9 +41,7 @@ const Container = styled.div`
 
 const Project = ({
   project,
-  pullSetting = {},
   toEditProject,
-  toEditPullSetting,
   toProjectDetail,
   ui: {
     // idle,
@@ -60,10 +59,6 @@ const Project = ({
   }
 
   const { collaborators, identifier } = project
-
-  // copy from 'models/pull-setting'
-  const delimiter = /\s*[,\n+]\s*/
-  const allowedOrigins = (pullSetting.allowedOrigins || '').trim().split(delimiter).filter(Boolean)
 
   return (
     <Fragment>
@@ -87,40 +82,7 @@ const Project = ({
                 ) }
               />
               <Presets identifier={ identifier } />
-              <Card
-                title={ () => <Heading mostLeft mostRight>Pull Settings</Heading> }
-                fab={ () => <EditIcon onClick={ () => toEditPullSetting(identifier) } /> }
-                content={ () => (
-                  <Fragment>
-                    <Text mostLeft mostRight>
-                      Pull URL:<br />
-                      &nbsp;&nbsp;{ pullSetting.pullURL || 'N/A' }<br />
-                    </Text>
-                    <Text mostLeft mostRight>
-                      Allowed Origins:<br />
-                      {
-                        allowedOrigins.length &&
-                          allowedOrigins.map(
-                            (originn, index) => (
-                              <Fragment key={ index }>- { origin }<br /></Fragment>
-                            )
-                          ) || ( <Fragment>&nbsp;&nbsp;N/A<br /></Fragment> )
-                      }
-                    </Text>
-                    <Text mostLeft mostRight>
-                      Headers:<br />
-                      {
-                        (pullSetting.headers || []).length &&
-                          pullSetting.headers.map(
-                            ({ name, value }, index) => (
-                              <Fragment key={ index }>- { name }: { value }<br /></Fragment>
-                            )
-                          ) || ( <Fragment>&nbsp;&nbsp;N/A<br /></Fragment> )
-                      }
-                    </Text>
-                  </Fragment>
-                ) }
-              />
+              <PullSettings identifier={ identifier } />
               <ApiKeys identifier={ identifier } />
               <Collaborators collaborators={ collaborators } identifier={ identifier } />
               <ProjectTools identifier={ identifier } />
@@ -146,18 +108,16 @@ export default withParams(
   })(
     connect(
       (state, { params: { identifier } }) => ({
-        project: selectors.findProjectByIdentifier(state, identifier),
-        pullSetting: selectors.pullSetting(state, identifier)
+        project: selectors.findProjectByIdentifier(state, identifier)
       }),
       mapDispatch({
         showDeleteProjectDialog: () => actions.showDialog({ dialog: 'ConfirmDeleteProjectDialog' }),
         hideDeleteProjectDialog: () => actions.hideDialog({ dialog: 'ConfirmDeleteProjectDialog' }),
         deleteProject: actions.deleteProject,
         updateProject: actions.updateProject,
-        toCacheInvalidator: (identifier) => actions.requestLocation(`/projects/${ identifier }/cache-invalidator`),
         toEditProject: (identifier) => actions.requestLocation(`/projects/${ identifier }/edit`),
         toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }`),
-        toEditPullSetting: (identifier) => actions.requestLocation(`/projects/${ identifier }/pull-setting`),
+
         toProjectMedia: (identifier) => actions.requestLocation(`/projects/${ identifier }/media`),
         reset
       })
