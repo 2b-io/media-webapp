@@ -19,10 +19,24 @@ const schema = mongoose.Schema({
     type: Boolean,
     default: false,
     index: true
+  },
+  created: {
+    type: Number
   }
 })
 schema.pre('save', function (next) {
-  this.identifier = sh.unique(String(this._id))
+  if (!this.identifier) {
+    this.identifier = sh.unique(String(this._id))
+  }
+
+  if (!this.created) {
+    this.created = Date.now()
+  }
+
   next()
 })
+
+
+
+
 export default mongoose.model('Project', schema)

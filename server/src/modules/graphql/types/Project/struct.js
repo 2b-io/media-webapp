@@ -1,6 +1,7 @@
 import {
   GraphQLBoolean,
-  GraphQLString
+  GraphQLString,
+  GraphQLFloat
 } from 'graphql'
 
 export default {
@@ -18,5 +19,8 @@ export default {
   },
   removed: {
     type: GraphQLBoolean
+  },
+  created: {
+    type: GraphQLFloat
   }
 }
