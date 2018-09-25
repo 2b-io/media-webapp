@@ -37,7 +37,7 @@ const createLoop = function*() {
 const deleteLoop = function*() {
   while (true) {
     const action = yield take(types['PROJECT/DELETE'])
-    const { slug } = action.payload
+    const { identifier } = action.payload
 
     try {
       const session = yield select(selectors.currentSession)
@@ -46,14 +46,14 @@ const deleteLoop = function*() {
         continue
       }
 
-      const deleted = yield Project.delete(slug, session.token)
+      const deleted = yield Project.delete(identifier, session.token)
 
       if (!deleted) {
         throw new Error('Cannot delete project')
       }
 
       yield all([
-        put(actions.deleteProjectCompleted(slug)),
+        put(actions.deleteProjectCompleted(identifier)),
         put(actions.hideDialog({ dialog: 'ConfirmDeleteProjectDialog' })),
         fork(addToast, {
           type: 'success',
@@ -141,7 +141,7 @@ const inviteCollaboratorLoop = function*() {
   while (true) {
     const action = yield take(types['PROJECT/INVITE_COLLABORATOR'])
     const currentLocation = yield select(selectors.currentLocation)
-    const slug = currentLocation.pathname.split('/')[2]
+    const identifier = currentLocation.pathname.split('/')[2]
     try {
       const session = yield select(selectors.currentSession)
 
@@ -149,8 +149,8 @@ const inviteCollaboratorLoop = function*() {
         continue
       }
 
-      const collaborator = yield call(Project.inviteCollaborator, session.token, slug, action.payload)
-      collaborator.slug = slug
+      const collaborator = yield call(Project.inviteCollaborator, session.token, identifier, action.payload)
+      collaborator.identifier = identifier
       if (collaborator) {
         yield all([
           put(actions.inviteCollaboratorCompleted(collaborator)),
@@ -178,14 +178,14 @@ const deleteCollaboratorLoop = function*() {
         continue
       }
 
-      const deleted = yield Project.deleteCollaborator(session.token, action.payload.slug, action.payload.accountId)
+      const deleted = yield Project.deleteCollaborator(session.token, action.payload.identifier, action.payload.accountId)
 
       if (!deleted) {
         throw new Error('Can not delete the collaborator.')
       }
 
       yield all([
-        put(actions.deleteCollaboratorCompleted(action.payload.slug, action.payload.accountId)),
+        put(actions.deleteCollaboratorCompleted(action.payload.identifier, action.payload.accountId)),
         put(actions.hideDialog({ dialog: 'ConfirmDeleteCollaboratorDialog' })),
         fork(addToast, {
           type: 'success',
@@ -216,10 +216,10 @@ const makeOwnerLoop = function*() {
         continue
       }
 
-      const owner = yield call(Project.makeOwner, session.token, action.payload.slug, action.payload.accountId)
+      const owner = yield call(Project.makeOwner, session.token, action.payload.identifier, action.payload.accountId)
       if (owner) {
         yield all([
-          put(actions.makeOwnerCompleted(action.payload.slug, session.account._id, action.payload.accountId)),
+          put(actions.makeOwnerCompleted(action.payload.identifier, session.account._id, action.payload.accountId)),
           fork(addToast, {
             type: 'success',
             message: 'Owner changed.'
@@ -245,14 +245,14 @@ const invalidateCacheLoop = function*() {
         continue
       }
 
-      const invalidateCache = yield call(Project.invalidateCache, session.token, action.payload.slug, action.payload.patterns)
+      const invalidateCache = yield call(Project.invalidateCache, session.token, action.payload.identifier, action.payload.patterns)
 
       if (!invalidateCache) {
         throw new Error('An error happens when invalidate cache.')
       }
 
       yield all([
-        put(actions.invalidateCacheCompleted(action.payload.slug, action.payload.patterns)),
+        put(actions.invalidateCacheCompleted(action.payload.identifier, action.payload.patterns)),
         fork(addToast, {
           type: 'success',
           message: 'Cache invalidated.'
@@ -275,14 +275,14 @@ const invalidateAllCacheLoop = function*() {
       if (!session) {
         continue
       }
-      const invalidateCache = yield call(Project.invalidateAllCache, session.token, action.payload.slug)
+      const invalidateCache = yield call(Project.invalidateAllCache, session.token, action.payload.identifier)
 
       if (!invalidateCache) {
         throw new Error('An error happens when invalidate all cache.')
       }
 
       yield all([
-        put(actions.invalidateAllCacheCompleted(action.payload.slug)),
+        put(actions.invalidateAllCacheCompleted(action.payload.identifier)),
         fork(addToast, {
           type: 'success',
           message: 'All cache invalidated.'
