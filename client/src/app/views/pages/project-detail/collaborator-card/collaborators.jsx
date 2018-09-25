@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
-import { Route } from 'views/router'
 import { Heading, TextLine } from 'ui/typo'
 import { Button, Card, ContextMenu, Identicon, Link, List, Paragraph } from 'ui/elements'
 import { OwnerAddIcon } from 'ui/icons'
@@ -119,22 +118,18 @@ const Collaborators = ({
           </Button.Group>
         ) }
       />
-      <Route path="/projects/:identifier/invite">
-        <InviteModal
-          width="wide"
-          identifier={ identifier }
-          title="Invite collaborators"
-          onHide={ () => toProjectDetail(identifier) }
-          collaborators={ Object.values(collaborators) }
-        />
-      </Route>
-      <Route path="/projects/:identifier/invite-by-email">
-        <CollaboratorInviteEmail
-          width="wide"
-          title="Sent email invite collaborators"
-          onHide={ () => toProjectDetail(identifier) }
-        />
-      </Route>
+      <InviteModal
+        width="wide"
+        identifier={ identifier }
+        title="Invite collaborators"
+        onHide={ () => toProjectDetail(identifier) }
+        collaborators={ Object.values(collaborators) }
+      />
+      <CollaboratorInviteEmail
+        width="wide"
+        title="Sent email invite collaborators"
+        onHide={ () => toProjectDetail(identifier) }
+      />
     </Fragment>
   )
 }

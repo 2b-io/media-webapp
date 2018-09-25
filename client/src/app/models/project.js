@@ -3,8 +3,6 @@ import pick from 'object.pick'
 
 import { ACCOUNT_FRAGMENT } from './account'
 import { PRESET_FRAGMENT } from './preset'
-import { PULL_SETTING_FRAGMENT } from './pull-setting'
-
 
 export const PERMISSION_FRAGMENT = `
   _id,
@@ -13,6 +11,7 @@ export const PERMISSION_FRAGMENT = `
   }
   privilege,
 `
+
 export const PROJECT_FRAGMENT = `
   identifier,
   name,
@@ -38,6 +37,7 @@ const PROJECTS_FRAGMENT = `
     }
   }
 `
+
 export default {
   async get(identifier, token) {
     const body = await request(`
@@ -103,7 +103,6 @@ export default {
     return body.session.account.project._destroy
   },
   async update(project, token) {
-
     const body = await request(`
       query updateProject($project: ProjectStruct!, $token: String!, $identifier: String!) {
         session(token: $token) {
@@ -129,7 +128,6 @@ export default {
 
     return body.session.account.project._update
   },
-
   async createPreset({ preset, identifier }, token) {
     const body = await request(`
       query createPreset($preset: PresetStruct!, $identifier: String!, $token: String!) {
@@ -151,7 +149,6 @@ export default {
 
     return body.session.account.project._createPreset
   },
-
   async getPreset({ hash, identifier }, token) {
     const body = await request(`
       query getPreset($hash: String!, $identifier: String!, $token: String!) {
@@ -173,7 +170,6 @@ export default {
 
     return body.session.account.project.preset
   },
-
   async updatePreset({ preset, identifier }, token) {
     const body = await request(`
       query updatePreset($hash: String!, $preset: PresetStruct!, $identifier: String!, $token: String!) {
@@ -198,7 +194,6 @@ export default {
 
     return body.session.account.project.preset._update
   },
-
   async deletePreset({ preset, identifier }, token) {
     const body = await request(`
       query deletePreset($hash: String!, $identifier: String!, $token: String!) {
@@ -220,7 +215,6 @@ export default {
 
     return body.session.account.project.preset._destroy
   },
-
   async inviteCollaborator(token, identifier, inputEmailMessenge) {
     const body = await request(`
       query inviteCollaborator($token: String!, $identifier: String!, $email: String!, $messenge: String!) {
@@ -243,7 +237,6 @@ export default {
 
     return body.session.account.project._inviteCollaborator
   },
-
   async deleteCollaborator(token, identifier, accountId) {
     const body = await request(`
       query removeCollaborator($token: String!, $identifier: String!, $accountId: String!) {
@@ -263,7 +256,6 @@ export default {
 
     return body.session.account.project._removeCollaborator
   },
-
   async makeOwner(token, identifier, accountId) {
     const body = await request(`
       query makeOwner($token: String!, $identifier: String!, $accountId: String!) {
@@ -302,7 +294,6 @@ export default {
 
     return body.session.account.project._invalidateCache
   },
-
   async invalidateAllCache(token, identifier) {
     const body = await request(`
       query invalidateAllCache($token: String!, $identifier: String!) {

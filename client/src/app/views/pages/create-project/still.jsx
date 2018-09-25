@@ -6,7 +6,7 @@ import { actions } from 'state/interface'
 import { BackIcon } from 'ui/icons'
 import { PageTitle } from 'ui/typo'
 
-const CreateProject = ({ navigateBack, project = {} }) => (
+const CreateProject = ({ navigateBack }) => (
   <Fragment>
     <BackIcon onClick={ navigateBack } />
     <PageTitle>Create Project</PageTitle>

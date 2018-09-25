@@ -21,7 +21,6 @@ const ResetPasswordForm = reduxForm({
 const ResetPassword = ({
   resetPassword,
   params: { code },
-  toSignIn,
   ui: { errorGetCode, resultGetcode, errorResetPassword, resultResetPassword }
 }) => (
   <Container center size="small">
@@ -59,8 +58,7 @@ export default withParams(
     connect(
       null,
       mapDispatch({
-        resetPassword: ({ password, code }) => actions.resetPassword(password, code),
-        toSignIn: () => actions.requestLocation('/sign-in')
+        resetPassword: ({ password, code }) => actions.resetPassword(password, code)
       })
     )(ResetPassword)
   )

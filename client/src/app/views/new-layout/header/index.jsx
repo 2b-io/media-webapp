@@ -1,11 +1,5 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import styled from 'styled-components'
-
-import { mapDispatch } from 'services/redux-helpers'
-import { actions } from 'state/interface'
-
-import { MenuIcon } from 'ui/icons'
 
 const Material = styled.section`
   height: 40px;
@@ -29,7 +23,7 @@ const Content = styled.div`
   align-items: center;
 `
 
-const Header = ({ children, maximizeSidebar }) => (
+const Header = ({ children }) => (
   <Material>
     <Content>
       { children }
@@ -37,9 +31,4 @@ const Header = ({ children, maximizeSidebar }) => (
   </Material>
 )
 
-export default connect(
-  null,
-  mapDispatch({
-    maximizeSidebar: actions.maximizeSidebar
-  })
-)(Header)
+export default Header

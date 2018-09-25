@@ -5,8 +5,7 @@ import config from 'infrastructure/config'
 import Infrastructure from 'models/Infrastructure'
 import { createDistribution, getDistribution, updateDistribution } from 'services/cloudFront'
 import Permission from 'models/Permission'
-import pullSetting from 'models/pull-setting'
-import secretKey from 'models/secret-key'
+import PullSetting from 'models/pull-setting'
 import Preset from 'models/Preset'
 import Project from 'models/Project'
 
@@ -125,7 +124,7 @@ export const create = async (data, provider, account) => {
     privilege: 'owner'
   }).save()
 
-  await new pullSetting({
+  await new PullSetting({
     project: project._id
   }).save()
 

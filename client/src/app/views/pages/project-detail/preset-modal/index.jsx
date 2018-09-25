@@ -7,7 +7,7 @@ import { actions, selectors } from 'state/interface'
 import { Container, ErrorBox } from 'ui/elements'
 import { Text } from 'ui/typo'
 import { modal } from 'views/common/decorators'
-import { Redirect, withParams } from 'views/router'
+import { Redirect } from 'views/router'
 
 import _PresetForm from './form'
 
@@ -68,21 +68,18 @@ const PresetModal = ({
   )
 }
 
-export default withParams(
-  modal({
-    name: 'Preset'
-  })(
-  // withParams(
-    connect(
-      (state, { params: { identifier } }) => {
-        return {
-          presets: selectors.presets(state, identifier),
-          identifier
-        }
-      },
-      mapDispatch({
-        createPreset: actions.createPreset
-      })
-    )(PresetModal)
-  )
+export default modal({
+  name: 'Preset'
+})(
+  connect(
+    (state, { identifier }) => {
+      return {
+        presets: selectors.presets(state, identifier),
+        identifier
+      }
+    },
+    mapDispatch({
+      createPreset: actions.createPreset
+    })
+  )(PresetModal)
 )

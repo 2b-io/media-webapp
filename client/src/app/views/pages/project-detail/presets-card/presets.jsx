@@ -6,7 +6,6 @@ import { mapDispatch } from 'services/redux-helpers'
 import { Heading, TextLine } from 'ui/typo'
 import { Card, ContextMenu, List } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
-import { Route } from 'views/router'
 
 import PresetModal from '../preset-modal'
 
@@ -65,13 +64,12 @@ const Presets = ({
             <TextLine mostLeft mostRight>No preset found</TextLine>
         ) }
       />
-      <Route path="/projects/:identifier/presets/new">
-        <PresetModal
-          width="wide"
-          hideOnClickOutside={ true }
-          onHide={ () => toProjectDetail(identifier) }
-        />
-      </Route>
+      <PresetModal
+        identifier={ identifier }
+        width="wide"
+        hideOnClickOutside={ true }
+        onHide={ () => toProjectDetail(identifier) }
+      />
     </Fragment>
   )
 }

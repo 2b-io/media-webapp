@@ -102,24 +102,36 @@ export default {
     onEnter: ({ identifier }) => [
       actions.showModal({ modal: 'Preset' }),
       actions.fetchPresets({ identifier })
+    ],
+    onLeave: () => [
+      actions.hideModal({ modal: 'Preset' }),
     ]
   },
   '/projects/:identifier/invite': {
     partial: true,
     onEnter: () => [
       actions.showModal({ modal: 'InviteCollaborator' })
+    ],
+    onLeave: () => [
+      actions.hideModal({ modal: 'InviteCollaborator' })
     ]
   },
   '/projects/:identifier/invite-by-email': {
     partial: true,
     onEnter: ({ identifier }, { email }) => [
       actions.showModal({ modal: 'CollaboratorInviteEmail', params: { identifier, email } })
+    ],
+    onLeave: () => [
+      actions.hideModal({ modal: 'CollaboratorInviteEmail' })
     ]
   },
   '/projects/:identifier/cache-invalidator': {
     partial: true,
     onEnter: () => [
       actions.showModal({ modal: 'CacheInvalidatorModal' })
+    ],
+    onLeave: () => [
+      actions.hideModal({ modal: 'CacheInvalidatorModal' })
     ]
   },
   '/projects/:identifier': {

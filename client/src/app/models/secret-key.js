@@ -24,7 +24,6 @@ export default {
     `, { token, identifier })
 
     return body.session.account.project.pushSetting._createSecretKey
-
   },
   async fetch(token, identifier) {
     const body = await request(`
@@ -44,7 +43,6 @@ export default {
     `, { token, identifier })
 
     return body.session.account.project.pushSetting.secretKeys
-
   },
   async get(token, identifier, key) {
     const body = await request(`
@@ -67,7 +65,6 @@ export default {
 
   },
   async update(token, identifier, secretKey) {
-
     const body = await request(`
       query updateSecretKey($token: String!, $identifier: String!, $key: String!, $secretKey: SecretKeyStruct!) {
         session(token: $token) {
@@ -94,7 +91,6 @@ export default {
     return body.session.account.project.pushSetting.secretKey._update
   },
   async remove(token, identifier, key) {
-
     const body = await request(`
       query updateSecretKey($token: String!, $identifier: String!, $key: String!) {
         session(token: $token) {
@@ -110,9 +106,9 @@ export default {
         }
       }
     `, {
-    token,
-    identifier,
-    key
+      token,
+      identifier,
+      key
     })
 
     return body.session.account.project.pushSetting.secretKey._destroy

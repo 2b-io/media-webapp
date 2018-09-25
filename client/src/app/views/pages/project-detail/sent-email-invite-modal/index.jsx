@@ -6,7 +6,6 @@ import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
 import { Container } from 'ui/elements'
 import { modal } from 'views/common/decorators'
-import { withParams } from 'views/router'
 
 import _SentEmailInviteForm from './form'
 
@@ -29,18 +28,14 @@ const CollaboratorInviteEmail = ({
   </Container>
 )
 
-
-export default withParams(
-  modal({
-    name: 'CollaboratorInviteEmail'
-  })(
-    connect(
-      null,
-      mapDispatch({
-        inviteCollaborator: actions.inviteCollaborator,
-        searchAccount: actions.searchAccount,
-      })
-    )(CollaboratorInviteEmail)
-  )
+export default modal({
+  name: 'CollaboratorInviteEmail'
+})(
+  connect(
+    null,
+    mapDispatch({
+      inviteCollaborator: actions.inviteCollaborator,
+      searchAccount: actions.searchAccount,
+    })
+  )(CollaboratorInviteEmail)
 )
-

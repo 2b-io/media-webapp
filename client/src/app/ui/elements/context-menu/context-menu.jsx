@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 
 import { MoreIcon } from 'ui/icons'
@@ -50,7 +50,7 @@ class ContextMenu extends Component {
     const { stateless, activate, name } = this.props
 
     if (stateless) {
-      this.props.activate(name)
+      activate && activate(name)
     } else {
       this.setState({
         isActive: true
@@ -64,7 +64,7 @@ class ContextMenu extends Component {
     const { stateless, deactivate, name } = this.props
 
     if (stateless) {
-      this.props.deactivate(name)
+      deactivate && deactivate(name)
     } else {
       this.setState({
         isActive: false
