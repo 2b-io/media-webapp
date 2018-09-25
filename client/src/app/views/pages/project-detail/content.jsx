@@ -16,10 +16,10 @@ import CollaboratorInviteEmail from './sent-email-invite-modal'
 import InviteModal from './invite-modal'
 import { ConfirmDeleteCollaboratorDialog } from './dialog'
 
-import ApiKeys from './api-key-card'
+import { ApiKeys } from './api-keys-card'
 import Collaborators from './collaborator-card'
 import { ProjectTools } from './project-tools-card'
-import { Presets } from './presets-card/'
+import { Presets } from './presets-card'
 
 const Layout = styled.section`
   padding: 16px;

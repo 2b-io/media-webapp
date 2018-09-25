@@ -6,7 +6,7 @@ import { mapDispatch } from 'services/redux-helpers'
 import { Heading, TextLine } from 'ui/typo'
 import { Card, ContextMenu, List } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
-import { Redirect, Route, withParams } from 'views/router'
+import { Route } from 'views/router'
 
 import PresetModal from '../preset-modal'
 
@@ -71,8 +71,7 @@ const Presets = ({
 export default connect(
   (state, { identifier }) => ({
     presets: selectors.presets(state, identifier)
-  })
-  ,
+  }),
   mapDispatch({
     toPreset: (identifier, hash) => actions.requestLocation(`/projects/${ identifier }/presets/${ hash }`),
     toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }`),
