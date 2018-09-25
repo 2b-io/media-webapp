@@ -6,7 +6,6 @@ import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Container } from 'ui/elements'
 import { stateful } from 'views/common/decorators'
-import { withParams } from 'views/router'
 
 import _PullSettingForm from './form'
 
@@ -29,18 +28,20 @@ const PullSetting = ({
     </Container>
   )
 }
-export default withParams(
-  stateful({
-    component: 'PullSetting'
-  })(
-    connect(
-      (state, { params: { identifier } }) => ({
+export default stateful({
+  component: 'PullSetting'
+})(
+  connect(
+    (state) => {
+      const { identifier } = selectors.currentParams(state)
+
+      return {
         pullSetting: selectors.pullSetting(state, identifier),
         identifier
-      }),
-      mapDispatch({
-        updatePullSetting: actions.updatePullSetting
-      })
-    )(PullSetting)
-  )
+      }
+    },
+    mapDispatch({
+      updatePullSetting: actions.updatePullSetting
+    })
+  )(PullSetting)
 )

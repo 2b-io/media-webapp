@@ -17,7 +17,7 @@ const PresetForm = ({ handleSubmit }) => (
     <Radio
       name="optimize"
       choice="-O1"
-      label="O1"
+      label="Optimize Level 1"
     />
     <DescriptionText mostLeft mostRight>
       Stores only the changed portion of each image. This is the default.
@@ -26,7 +26,7 @@ const PresetForm = ({ handleSubmit }) => (
     <Radio
       name="optimize"
       choice="-O2"
-      label="O2"
+      label="Optimize Level 2"
     />
     <DescriptionText mostLeft mostRight>
       Also uses transparency to shrink the file further.
@@ -35,15 +35,13 @@ const PresetForm = ({ handleSubmit }) => (
     <Radio
       name="optimize"
       choice="-O3"
-      label="O3"
+      label="Optimize Level 3"
     />
     <DescriptionText mostLeft mostRight>
       Try several optimization methods (usually slower, sometimes better results).
     </DescriptionText>
     <Break double />
-    <Button
-      type="submit"
-    >
+    <Button type="submit">
       Save
     </Button>
   </Form>

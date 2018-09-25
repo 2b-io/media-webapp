@@ -3,7 +3,7 @@ import querystring from 'querystring'
 import { all, select, put, take } from 'redux-saga/effects'
 import url from 'url'
 
-import { selectors, types } from 'state/interface'
+import { actions, selectors, types } from 'state/interface'
 import { authRoutes, unauthRoutes } from 'views/route-config'
 
 const allPaths = {
@@ -34,7 +34,7 @@ export default function*() {
     const currentQuery = currentSearch && querystring.parse(currentSearch.replace(/^\?/, ''))
     const previousQuery = previousSearch && querystring.parse(previousSearch.replace(/^\?/, ''))
 
-    const { actions } = regexes
+    const { actions: routingActions, enteringParams, leavingParams } = regexes
       // check enter & leave
       .map(
         r => ({
@@ -49,7 +49,7 @@ export default function*() {
       .map(
         r => ({
           ...r,
-          leave: r.enter ? false : r.leave,
+          // leave: (r.enter && r.partial) ? false : r.leave,
           regexFrags: r.regex.exec(r.enter ? current : previous)
         })
       )
@@ -79,7 +79,6 @@ export default function*() {
             if (r.onEnter) {
               enteringActions = r.onEnter(r.parameters, currentQuery)
             }
-
           } else if (!collector.leaveEnd && r.leave) {
             console.debug(`Leaving ${ previous } [${ r.path }]`)
 
@@ -95,14 +94,32 @@ export default function*() {
               ...collector.actions,
               ...leavingActions,
               ...enteringActions
-            ]
+            ],
+            enteringParams: {
+              ...collector.enteringParams,
+              ...(r.enter ? r.parameters : {})
+            },
+            leavingParams: {
+              ...collector.leavingParams,
+              ...(r.leave ? r.parameters : {})
+            }
           }
         }, {
           end: false,
-          actions: []
+          actions: [],
+          enteringParams: {},
+          leavingParams: {}
         }
       )
 
-    yield all(actions.map(action => put(action)))
+    yield all([
+      put(actions.updateParams({
+        currentParams: enteringParams,
+        previousParams: leavingParams,
+        currentQuery,
+        previousQuery
+      })),
+      ...routingActions.map(action => put(action))
+    ])
   }
 }

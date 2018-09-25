@@ -1,10 +1,6 @@
 import * as types from './types'
 
-export default (state = {
-  current: null,
-  key: null,
-  previous: null
-}, action) => {
+export default (state = {}, action) => {
   switch (action.type) {
     case types.ACCEPT:
       return {
@@ -24,6 +20,13 @@ export default (state = {
       return {
         ...state,
         key: action.payload.key
+      }
+    }
+
+    case types.UPDATE_PARAMS: {
+      return {
+        ...state,
+        ...action.payload
       }
     }
 

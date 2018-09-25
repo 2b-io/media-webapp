@@ -6,7 +6,6 @@ import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Container } from 'ui/elements'
 import { stateful } from 'views/common/decorators'
-import { withParams } from 'views/router'
 
 import _PresetForm from './form'
 
@@ -43,18 +42,20 @@ const PresetJpeg = ({
   )
 }
 
-export default withParams(
-  stateful({
-    component: 'PresetJpeg'
-  })(
-    connect(
-      (state, { params: { identifier } }) => ({
+export default stateful({
+  component: 'PresetJpeg'
+})(
+  connect(
+    (state) => {
+      const { identifier } = selectors.currentParams(state)
+
+      return {
         preset: selectors.findPreset(state, identifier, 'image/jpeg'),
         identifier
-      }),
-      mapDispatch({
-        updatePreset: actions.updatePreset
-      })
-    )(PresetJpeg)
-  )
+      }
+    },
+    mapDispatch({
+      updatePreset: actions.updatePreset
+    })
+  )(PresetJpeg)
 )

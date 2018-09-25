@@ -5,7 +5,6 @@ import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { BackIcon } from 'ui/icons'
 import { PageTitle } from 'ui/typo'
-import { withParams } from 'views/router'
 
 const PresetSvg = ({ navigateBack, project = {} }) => (
   <Fragment>
@@ -14,13 +13,15 @@ const PresetSvg = ({ navigateBack, project = {} }) => (
   </Fragment>
 )
 
-export default withParams(
-  connect(
-    (state, { params: { identifier } }) => ({
+export default connect(
+  (state) => {
+    const { identifier } = selectors.currentParams(state)
+
+    return {
       project: selectors.findProjectByIdentifier(state, identifier)
-    }),
-    mapDispatch({
-      navigateBack: (identifier) => actions.requestLocation(`/projects/${ identifier }`)
-    })
-  )(PresetSvg)
-)
+    }
+  },
+  mapDispatch({
+    navigateBack: (identifier) => actions.requestLocation(`/projects/${ identifier }`)
+  })
+)(PresetSvg)

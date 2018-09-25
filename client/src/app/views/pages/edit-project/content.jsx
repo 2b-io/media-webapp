@@ -6,7 +6,6 @@ import { Container } from 'ui/elements'
 import { stateful } from 'views/common/decorators'
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
-import { withParams } from 'views/router'
 
 import _ProjectForm from './form'
 
@@ -29,23 +28,25 @@ const EditProject = ({
           status: project && project.status !== 'DISABLED' ? true : false
         } }
         domain={ project && project.infrastructure.domain }
-        status={ project && project.status } 
+        status={ project && project.status }
       />
     </Container>
   )
 }
 
-export default withParams(
-  stateful({
-    component: 'EditProject'
-  })(
-    connect(
-      (state, { params: { identifier } }) => ({
-        project: selectors.findProjectByIdentifier(state, identifier),
-      }),
-      mapDispatch({
-        updateProject: (identifier, name, status) => actions.updateProject({ identifier, name, status: status === true ? 'DEPLOYED' : 'DISABLED' })
-      })
-    )(EditProject)
-  )
+export default stateful({
+  component: 'EditProject'
+})(
+  connect(
+    (state) => {
+      const { identifier } = selectors.currentParams(state)
+
+      return {
+        project: selectors.findProjectByIdentifier(state, identifier)
+      }
+    },
+    mapDispatch({
+      updateProject: (identifier, name, status) => actions.updateProject({ identifier, name, status: status === true ? 'DEPLOYED' : 'DISABLED' })
+    })
+  )(EditProject)
 )
