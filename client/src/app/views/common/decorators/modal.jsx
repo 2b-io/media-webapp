@@ -23,16 +23,16 @@ const Overlay = styled.div`
   background: ${
     ({ theme }) => theme.black.opaque.base
   };
-  padding: 0 16px;
+  padding: 0 24px;
 `
 
 const Wrapper = styled.div`
   background: ${ ({ theme }) => theme.background.base };
   color: ${ ({ theme }) => theme.background.on.base };
   position: relative;
-  margin: 72px auto 16px;
-  box-shadow: 0 30px 80px ${
-    ({ theme }) => theme.secondary.opaque.base
+  margin: 64px auto 16px;
+  box-shadow: 4px 4px ${
+    ({ theme }) => theme.black.opaque.base
   };
   min-width: 280px; /* support iphone5s */
 `

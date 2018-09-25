@@ -16,6 +16,7 @@ import { actions } from 'state/interface'
 
 export default {
   '/': {
+    topLevel: true,
     component: Dashboard,
     exact: true,
     onEnter: () => [
@@ -23,6 +24,7 @@ export default {
     ]
   },
   '/@:id': {
+    topLevel: true,
     component: Profile,
     exact: true,
     onEnter: ({ id }) => [
@@ -30,6 +32,7 @@ export default {
     ]
   },
   '/projects': {
+    topLevel: true,
     component: ProjectList,
     exact: true,
     onEnter: () => [
@@ -58,6 +61,7 @@ export default {
     component: PullSetting,
     exact: true,
     onEnter: ({ identifier }) => [
+      actions.getProject(identifier),
       actions.getPullSetting(identifier)
     ]
   },
@@ -65,6 +69,7 @@ export default {
     component: PresetJpeg,
     exact: true,
     onEnter: ({ identifier }) => [
+      actions.getProject(identifier),
       actions.getPreset({ identifier, contentType: 'image/jpeg' })
     ]
   },
@@ -72,6 +77,7 @@ export default {
     component: PresetSvg,
     exact: true,
     onEnter: ({ identifier }) => [
+      actions.getProject(identifier),
       actions.getPreset({ identifier, contentType: 'image/svg' })
     ]
   },
@@ -79,6 +85,7 @@ export default {
     component: PresetGif,
     exact: true,
     onEnter: ({ identifier }) => [
+      actions.getProject(identifier),
       actions.getPreset({ identifier, contentType: 'image/gif' })
     ]
   },
@@ -86,6 +93,7 @@ export default {
     component: PresetPng,
     exact: true,
     onEnter: ({ identifier }) => [
+      actions.getProject(identifier),
       actions.getPreset({ identifier, contentType: 'image/png' })
     ]
   },
