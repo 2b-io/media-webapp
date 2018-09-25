@@ -48,7 +48,7 @@ const PresetModal = ({
   if (!filtered.length) {
     return (
       <Container>
-        <Text>No content type to add</Text>
+        <Text>No more content type to add</Text>
       </Container>
     )
   }

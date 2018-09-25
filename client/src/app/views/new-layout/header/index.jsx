@@ -13,6 +13,10 @@ const Material = styled.section`
 
 const Content = styled.div`
   display: grid;
+  & > * {
+    min-width: 0;
+    min-height: 0;
+  }
   background: ${
     ({ theme }) => theme.primary.base
   };
@@ -28,7 +32,6 @@ const Content = styled.div`
 const Header = ({ children, maximizeSidebar }) => (
   <Material>
     <Content>
-      <MenuIcon onClick={ maximizeSidebar } />
       { children }
     </Content>
   </Material>

@@ -1,11 +1,16 @@
 import React, { Fragment } from 'react'
+import { connect } from 'react-redux'
 
-import { FilterIcon } from 'ui/icons'
+import { mapDispatch } from 'services/redux-helpers'
+import { actions } from 'state/interface'
+
+import { FilterIcon, MenuIcon } from 'ui/icons'
 import { ContextMenu, List } from 'ui/elements'
 import { PageTitle, TextLine } from 'ui/typo'
 
-const ProjectList = () => (
+const ProjectList = ({ maximizeSidebar }) => (
   <Fragment>
+    <MenuIcon onClick={ maximizeSidebar } />
     <PageTitle>Projects</PageTitle>
     <ContextMenu
       name="projectFilter"
@@ -32,4 +37,9 @@ const ProjectList = () => (
   </Fragment>
 )
 
-export default ProjectList
+export default connect(
+  null,
+  mapDispatch({
+    maximizeSidebar: actions.maximizeSidebar
+  })
+)(ProjectList)

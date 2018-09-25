@@ -8,24 +8,24 @@ export { authRoutes as authRoutes }
 export { unauthRoutes as unauthRoutes }
 
 Object.entries(unauthRoutes).forEach(
-  ([ path, { component, exact, partial } ]) => {
+  ([ path, { partial, ...props } ]) => {
     if (partial) {
       return
     }
 
-    overlay.push({ path, component, exact })
+    overlay.push({ path, ...props })
   }
 )
 
 Object.entries(authRoutes).forEach(
-  ([ path, { component, exact, partial } ]) => {
+  ([ path, { partial, component, ...props } ]) => {
     if (partial) {
       return
     }
 
     const { Content, Still } = component
 
-    content.push({ path, component: Content, exact })
-    still.push({ path, component: Still, exact })
+    content.push({ path, component: Content, ...props })
+    still.push({ path, component: Still, ...props })
   }
 )

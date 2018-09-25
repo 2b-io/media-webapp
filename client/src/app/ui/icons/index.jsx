@@ -3,6 +3,7 @@ import { github } from 'react-icons-kit/entypo/github'
 
 // APPLICATION ICON: http://wmira.github.io/react-icons-kit/#/iconset/md
 import { ic_add } from 'react-icons-kit/md/ic_add'
+import { ic_arrow_back } from 'react-icons-kit/md/ic_arrow_back'
 import { ic_attach_money } from 'react-icons-kit/md/ic_attach_money'
 import { ic_block } from 'react-icons-kit/md/ic_block'
 import { ic_check } from 'react-icons-kit/md/ic_check'
@@ -40,6 +41,7 @@ import { userX } from 'react-icons-kit/feather/userX'
 import icon from './icon'
 
 export const AddIcon = icon(ic_add)
+export const BackIcon = icon(ic_arrow_back)
 export const BillingIcon = icon(ic_attach_money)
 export const CloseIcon = icon(ic_close)
 export const CopyIcon = icon(ic_content_copy)
