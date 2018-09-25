@@ -7,6 +7,7 @@ import { actions, selectors } from 'state/interface'
 import { Card } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 import { Text } from 'ui/typo'
+import { stateful } from 'views/common/decorators'
 
 const Fab = styled.button`
   position: fixed;
@@ -52,16 +53,36 @@ const Container = styled.div`
   grid-gap: 16px;
   grid-template-columns: 100%;
 `
+const sortProjects = (sortCondition, projects) => {
+  switch (sortCondition) {
+    case 'privilege':
+      return projects.sort((a, b) => a.created - b.created)
+    case 'name':
+      return projects.sort((a, b) => a.name.localeCompare(b.name))
+    case 'created':
+      return projects.sort((a, b) => a.created - b.created)
+  }
+}
+const hideProjects = (projects) => projects.filter(({ status  }) => status !== 'DISABLED' )
 
 const ProjectList = ({
   projects,
   toCreateProject,
-  toProjectDetail
-  // ui: { sortCondition }
+  toProjectDetail,
+  ui: {
+    sortCondition,
+    hideDisableProjects
+   }
 }) => {
-  // const sortedProjects = projects.sort(...)
+  const hidedProjects = hideDisableProjects ? hideProjects(projects) : projects
+  const sortedProjects = sortCondition ?
+   hideDisableProjects ?
+    sortProjects(sortCondition, hidedProjects) :
+      sortProjects(sortCondition, projects) :
+        hideDisableProjects ?
+          hidedProjects : projects
 
-  const cards = projects.map(
+  const cards = sortedProjects.map(
     project => (
       <Card
         key={ project.identifier }
@@ -91,13 +112,16 @@ const ProjectList = ({
     </Layout>
   )
 }
-
-export default connect(
-  mapState({
-    projects: selectors.allProjects,
-  }),
-  mapDispatch({
-    toCreateProject: () => actions.requestLocation('/projects/create'),
-    toProjectDetail: identifier => actions.requestLocation(`/projects/${ identifier }`)
-  })
-)(ProjectList)
+export default stateful({
+  component: 'ProjectList'
+})(
+  connect(
+    mapState({
+      projects: selectors.allProjects,
+    }),
+    mapDispatch({
+      toCreateProject: () => actions.requestLocation('/projects/create'),
+      toProjectDetail: identifier => actions.requestLocation(`/projects/${ identifier }`)
+    })
+  )(ProjectList)
+)
