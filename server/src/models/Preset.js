@@ -14,6 +14,10 @@ const schema = mongoose.Schema({
   parameters: {
     type: mongoose.Schema.Types.Mixed,
     default: {}
+  },
+  isActive: {
+    type: Boolean,
+    default: true
   }
 })
 schema.index({ project: 1, contentType: 1 }, { unique: true })
