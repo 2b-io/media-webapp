@@ -2,15 +2,15 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-import { List } from 'ui/elements'
-import { ExpandIcon } from 'ui/icons'
+import { List, ContextMenu } from 'ui/elements'
+import { CheckIcon, ExpandIcon } from 'ui/icons'
 import { TextLine } from 'ui/typo'
 
 const Wrapper = styled.div`
   position: relative;
 `
 
-const SelectButton = styled.div`
+const Input = styled.div`
   display: grid;
   & > * {
     min-width: 0;
@@ -29,93 +29,56 @@ const Indicator = styled.div`
   background: ${ ({ theme }) => theme.black.base };
 `
 
-const DropdownMenu = styled.div`
-  position: absolute;
-  top: 32px;
-  left: 0;
-  right: 0;
-  z-index: 1;
-  background-color: ${ ({ theme }) => theme.white.base };
-  color: ${ ({ theme }) => theme.white.on.base };
-  border: 1px solid ${ ({ theme }) => theme.secondary.base };
-  display: ${
-    ({ isOpen }) => isOpen ? 'block' : 'none'
-  };
-  box-shadow: 4px 4px ${ ({ theme }) => theme.black.opaque.base };
-`
+const renderOptions = (options, currentValue, onChoose) => {
+  const items = options.map(
+    ({ label, value }) => ({
+      key: value,
+      content: () => (
+        <TextLine mostLeft
+          mostRight={ value !== currentValue }>
+          { label }
+        </TextLine>
+      ),
+      trailing: value === currentValue ?
+        () => <CheckIcon /> :
+        null,
+      onClick: () => onChoose(value)
+    })
+  )
 
-class Select extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.chooseOption = this.chooseOption.bind(this)
-    this.hideDropdown = this.hideDropdown.bind(this)
-    this.showDropdown = this.showDropdown.bind(this)
-  }
-
-  showDropdown() {
-    document.addEventListener('click', this.hideDropdown)
-
-    this.props.onFocus()
-  }
-
-  hideDropdown() {
-    document.removeEventListener('click', this.hideDropdown)
-
-    this.props.onBlur()
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('click', this.hideDropdown)
-  }
-
-  chooseOption(value) {
-    this.props.onChange(value)
-  }
-
-  renderDataDropDown(options) {
-    const items = options.map(
-      option => ({
-        key: option.value,
-        content: () => (
-          <TextLine mostLeft mostRight>
-            { option.label }
-          </TextLine>
-        ),
-        onClick: () => this.chooseOption(option.value)
-      })
-    )
-
-    return (
-      <List items={ items } />
-    )
-  }
-
-  findLabelByValue(options, value) {
-    const option = options.filter(option => option.value === value).shift()
-
-    return option && option.label
-  }
-
-  render() {
-    const { options, active, value } = this.props
-
-    return (
-      <Wrapper>
-        <SelectButton onClick={ this.showDropdown }>
-          <TextLine mostLeft mostRight>
-            { this.findLabelByValue(options, value) }
-          </TextLine>
-          <ExpandIcon />
-        </SelectButton>
-        <Indicator />
-        <DropdownMenu isOpen={ active }>
-          { this.renderDataDropDown(options) }
-        </DropdownMenu>
-      </Wrapper>
-    )
-  }
+  return (
+    <List items={ items } />
+  )
 }
+
+const findLabelByValue = (options, value) => {
+  const option = options.filter(option => option.value === value).shift()
+
+  return option && option.label
+}
+
+const Select = ({
+  options,
+  active, value,
+  onBlur, onChange, onFocus
+}) => (
+  <Wrapper>
+    <Input>
+      <TextLine mostLeft>
+        { findLabelByValue(options, value) }
+      </TextLine>
+      <ContextMenu.Menu
+        icon={ () => <ExpandIcon /> }
+        content={ () => renderOptions(options, value, onChange) }
+        stateless={ true }
+        isActive={ active }
+        activate={ onFocus }
+        deactivate={ onBlur }
+      />
+    </Input>
+    <Indicator />
+  </Wrapper>
+)
 
 Select.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape({

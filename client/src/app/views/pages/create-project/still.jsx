@@ -1,9 +1,21 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import { connect } from 'react-redux'
 
+import { mapDispatch } from 'services/redux-helpers'
+import { actions } from 'state/interface'
+import { BackIcon } from 'ui/icons'
 import { PageTitle } from 'ui/typo'
 
-const Profile = () => (
-  <PageTitle>Create Project</PageTitle>
+const CreateProject = ({ navigateBack, project = {} }) => (
+  <Fragment>
+    <BackIcon onClick={ navigateBack } />
+    <PageTitle>Create Project</PageTitle>
+  </Fragment>
 )
 
-export default Profile
+export default connect(
+  null,
+  mapDispatch({
+    navigateBack: () => actions.requestLocation('/projects')
+  })
+)(CreateProject)

@@ -13,12 +13,26 @@ const MenuContent = styled.div`
   position: absolute;
   top: 32px;
   right: 8px;
-  width: 224px;
+  width: 240px;
   z-index: 2;
   background: ${ ({ theme }) => theme.white.base };
   color: ${ ({ theme }) => theme.white.on.base };
   box-shadow: 4px 4px ${ ({ theme }) => theme.black.opaque.base };
+`
+
+const Border = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   border: 1px solid ${ ({ theme }) => theme.secondary.base };
+  z-index: 0;
+`
+
+const Content = styled.div`
+  position: relative;
+  z-index: 1;
 `
 
 class ContextMenu extends Component {
@@ -43,7 +57,7 @@ class ContextMenu extends Component {
       })
     }
 
-    document.addEventListener('click', this.deactivate, true)
+    document.addEventListener('click', this.deactivate)
   }
 
   deactivate() {
@@ -57,11 +71,11 @@ class ContextMenu extends Component {
       })
     }
 
-    document.removeEventListener('click', this.deactivate, true)
+    document.removeEventListener('click', this.deactivate)
   }
 
   componentWillUnmount() {
-    document.removeEventListener('click', this.deactivate, true)
+    this.deactivate()
   }
 
   render() {
@@ -77,7 +91,8 @@ class ContextMenu extends Component {
         </Button>
         { isActive && (
           <MenuContent>
-            { content() }
+            <Border />
+            <Content>{ content() }</Content>
           </MenuContent>
         ) }
       </Menu>
