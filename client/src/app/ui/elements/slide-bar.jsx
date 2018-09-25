@@ -92,14 +92,14 @@ const SlideBar = ({
         <TextLine align="center">{ value }</TextLine>
       </Header>
       <Container>
-        <Track active />
+        <Track active onClick={ () => props.onChange(min) } />
         <Track interactable>
           <Track active relativeValue={ relativeValue }>
             <CircleThumb />
           </Track>
           <Range { ...props } />
         </Track>
-        <Track />
+        <Track onClick={ () => props.onChange(max) } />
       </Container>
     </Wrapper>
   )
