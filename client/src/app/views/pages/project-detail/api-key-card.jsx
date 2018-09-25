@@ -13,7 +13,7 @@ const ApiKeys = ({
 
   const lists = Object.values(secretKeys).map(
     ({ key, isActive }) => ({
-      key: key,
+      key,
       content: () => <TextLine mostLeft mostRight>{ key }</TextLine>,
       trailing: () => (
         <MenuMore

@@ -5,7 +5,7 @@ import { reset } from 'redux-form'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
-import { Button, Card, Paragraph, TextArea } from 'ui/elements'
+import { Button, Card, Paragraph } from 'ui/elements'
 import { EditIcon } from 'ui/icons'
 import { Heading, Text, TextLine } from 'ui/typo'
 import { stateful } from 'views/common/decorators'
@@ -20,7 +20,7 @@ import { ConfirmDeleteCollaboratorDialog } from './dialog'
 import ApiKeys from './api-key-card'
 import Collaborators from './collaborator-card'
 import Presets from './preset-card'
-
+import { ProjectTools } from './project-tool-card'
 
 const Layout = styled.section`
   padding: 16px;
@@ -50,7 +50,6 @@ const Project = ({
   presets,
   project,
   pullSetting = {},
-  toCreateApiKey,
   toEditProject,
   toEditPullSetting,
   toInviteCollaboratorModal,
@@ -112,17 +111,15 @@ const Project = ({
                       Pull URL:<br />
                       &nbsp;&nbsp;{ pullSetting.pullURL || 'N/A' }<br />
                     </Text>
-                    <Text mostLeft mostLeft>
+                    <Text mostLeft mostRight>
                       Allowed Origins:<br />
                       {
                         allowedOrigins.length &&
                           allowedOrigins.map(
-                            (origin) => (
-                              <Fragment key={ origin }>- { origin }<br /></Fragment>
+                            (originn, index) => (
+                              <Fragment key={ index }>- { origin }<br /></Fragment>
                             )
-                          ) || (
-                            <Fragment>&nbsp;&nbsp;N/A<br /></Fragment>
-                          )
+                          ) || ( <Fragment>&nbsp;&nbsp;N/A<br /></Fragment> )
                       }
                     </Text>
                     <Text mostLeft mostRight>
@@ -130,12 +127,10 @@ const Project = ({
                       {
                         (pullSetting.headers || []).length &&
                           pullSetting.headers.map(
-                            ({ name, value }) => (
-                              <Fragment key={ name }>- { name }: { value}</Fragment>
+                            ({ name, value }, index) => (
+                              <Fragment key={ index }>- { name }: { value}</Fragment>
                             )
-                          ) || (
-                            <Fragment>&nbsp;&nbsp;N/A<br /></Fragment>
-                          )
+                          ) || ( <Fragment>&nbsp;&nbsp;N/A<br /></Fragment> )
                       }
                     </Text>
                   </Fragment>
@@ -154,6 +149,9 @@ const Project = ({
                 showDeleteCollaboratorDialog={ showDeleteCollaboratorDialog }
                 toProfile={ toProfile }
                 toInviteCollaboratorModal={ () => toInviteCollaboratorModal(project.identifier) }
+              />
+              <ProjectTools
+                identifier={ project.identifier }
               />
             </Fragment>
           }
