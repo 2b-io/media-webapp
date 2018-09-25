@@ -19,6 +19,7 @@ import { ic_exit_to_app } from 'react-icons-kit/md/ic_exit_to_app'
 import { ic_expand_more } from 'react-icons-kit/md/ic_expand_more'
 import { ic_help_outline } from 'react-icons-kit/md/ic_help_outline'
 import { ic_info } from 'react-icons-kit/md/ic_info'
+import { ic_launch } from 'react-icons-kit/md/ic_launch'
 import { ic_menu } from 'react-icons-kit/md/ic_menu'
 import { ic_mode_edit } from 'react-icons-kit/md/ic_mode_edit'
 import { ic_more_vert } from 'react-icons-kit/md/ic_more_vert'
@@ -53,6 +54,7 @@ export const GithubIcon = icon(github)
 export const HelpIcon = icon(ic_help_outline)
 export const InfoIcon = icon(ic_info)
 export const KeyIcon = icon(ic_vpn_key)
+export const LaunchIcon = icon(ic_launch)
 export const MaximizeIcon = icon(ic_chevron_right)
 export const MenuIcon = icon(ic_menu)
 export const MinimizeIcon = icon(ic_chevron_left)

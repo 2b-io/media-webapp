@@ -2,7 +2,6 @@ import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 
 import { selectors } from 'state/interface'
-import { MoreIcon } from 'ui/icons'
 import { PageTitle } from 'ui/typo'
 import { withParams } from 'views/router'
 
