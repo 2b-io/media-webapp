@@ -14,6 +14,7 @@ const projectForm = ({ handleSubmit, idle }) => (
       placeholder="My Awesome Project"
       disabled={ !idle }
       validate={ validateRequired }
+      maxLength={ 50 }
     />
     <Break />
     <Radio
