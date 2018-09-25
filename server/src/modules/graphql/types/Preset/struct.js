@@ -1,5 +1,6 @@
 import {
-  GraphQLString
+  GraphQLString,
+  GraphQLBoolean
 } from 'graphql'
 import GraphQLJSON from 'graphql-type-json'
 
@@ -9,5 +10,8 @@ export default {
   },
   parameters: {
     type: GraphQLJSON
+  },
+  isActive: {
+    type: GraphQLBoolean
   }
 }

@@ -2,13 +2,14 @@ import request from 'services/graphql'
 
 export const PRESET_FRAGMENT = `
   contentType,
-  parameters
+  parameters,
+  isActive
 `
 export default {
   async fetch(token, identifier) {
 
     const body = await request(`
-      query fetchPreset($token: String!, $identifier: String!) {
+      query fetchPresets($token: String!, $identifier: String!) {
         session(token: $token) {
           account {
             project(identifier: $identifier) {
