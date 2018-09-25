@@ -29,7 +29,7 @@ const Presets = ({
               items={ [
                 {
                   content: () => <TextLine mostLeft mostRight>Edit</TextLine>,
-                  onClick: () => { toPreset(identifier, contentType.replace('/', '_'))}
+                  onClick: () => { toPreset(identifier, contentType.replace('/', '_')) }
                 },
                 {
                   content: () => <TextLine mostLeft mostRight>Disable</TextLine>

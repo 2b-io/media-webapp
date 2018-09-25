@@ -52,15 +52,15 @@ export const updatePresetFailed = reason => ({
   payload: { reason }
 })
 
-export const removePreset = ({ preset, identifier }) => ({
-  type: types.DELETE,
-  payload: { preset, identifier }
+export const removePreset = ({ contentType, identifier }) => ({
+  type: types.REMOVE,
+  payload: { contentType, identifier }
 })
-export const removePresetCompleted = ({ preset, identifier }) => ({
-  type: types.DELETE_COMPLETED,
-  payload: { preset, identifier }
+export const removePresetCompleted = ({ contentType, identifier }) => ({
+  type: types.REMOVE_COMPLETED,
+  payload: { contentType, identifier }
 })
 export const removePresetFailed = reason => ({
-  type: types.DELETE_FAILED,
+  type: types.REMOVE_FAILED,
   payload: { reason }
 })
