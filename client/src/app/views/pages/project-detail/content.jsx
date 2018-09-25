@@ -1,20 +1,12 @@
 import React, { Fragment } from 'react'
-import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { reset } from 'redux-form'
 
-import { mapDispatch } from 'services/redux-helpers'
-import { selectors, actions } from 'state/interface'
-import { Card } from 'ui/elements'
-import { EditIcon } from 'ui/icons'
-import { Heading, Text, TextLine } from 'ui/typo'
 import { stateful } from 'views/common/decorators'
-import { Redirect, Route, withParams } from 'views/router'
-
-// import CacheInvalidatorModal from './cache-invalidator-modal'
+import { Redirect, withParams } from 'views/router'
 
 import { ApiKeys } from './api-keys-card'
 import { Collaborators } from './collaborator-card/'
+import { ProjectInfo } from './project-info-card/'
 import { ProjectTools } from './project-tools-card'
 import { Presets } from './presets-card'
 import { PullSettings } from './pull-settings-card/'
@@ -40,9 +32,9 @@ const Container = styled.div`
 `
 
 const Project = ({
-  project,
-  toEditProject,
-  toProjectDetail,
+  params: {
+    identifier
+  },
   ui: {
     // idle,
     notFound,
@@ -51,43 +43,20 @@ const Project = ({
     // updateError
   }
 }) => {
-  if(!project){
-    return null
-  }
   if(notFound || deleteResult) {
     return <Redirect to="/projects" />
   }
-
-  const { collaborators, identifier } = project
 
   return (
     <Fragment>
       <Layout>
         <Container>
-          { project &&
-            <Fragment>
-              <Card
-                title={ () => <Heading mostLeft mostRight>General</Heading> }
-                fab={ () => <EditIcon onClick={ () => toEditProject(identifier) } /> }
-                content={ () => (
-                  <Fragment>
-                    <TextLine mostLeft mostRight>
-                      { project.name }
-                    </TextLine>
-                    <Text mostLeft mostRight>
-                      { project.infrastructure.domain }<br />
-                      { project.status }
-                    </Text>
-                  </Fragment>
-                ) }
-              />
-              <Presets identifier={ identifier } />
-              <PullSettings identifier={ identifier } />
-              <ApiKeys identifier={ identifier } />
-              <Collaborators collaborators={ collaborators } identifier={ identifier } />
-              <ProjectTools identifier={ identifier } />
-            </Fragment>
-          }
+          <ProjectInfo identifier={ identifier } />
+          <Presets identifier={ identifier } />
+          <PullSettings identifier={ identifier } />
+          <ApiKeys identifier={ identifier } />
+          <Collaborators identifier={ identifier } />
+          <ProjectTools identifier={ identifier } />
         </Container>
       </Layout>
 
@@ -96,24 +65,5 @@ const Project = ({
 }
 
 export default withParams(
-  stateful({
-    component: 'ProjectDetail'
-  })(
-    connect(
-      (state, { params: { identifier } }) => ({
-        project: selectors.findProjectByIdentifier(state, identifier)
-      }),
-      mapDispatch({
-        showDeleteProjectDialog: () => actions.showDialog({ dialog: 'ConfirmDeleteProjectDialog' }),
-        hideDeleteProjectDialog: () => actions.hideDialog({ dialog: 'ConfirmDeleteProjectDialog' }),
-        deleteProject: actions.deleteProject,
-        updateProject: actions.updateProject,
-        toEditProject: (identifier) => actions.requestLocation(`/projects/${ identifier }/edit`),
-        toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }`),
-
-        toProjectMedia: (identifier) => actions.requestLocation(`/projects/${ identifier }/media`),
-        reset
-      })
-    )(Project)
-  )
+  stateful({ component: 'ProjectDetail' })(Project)
 )

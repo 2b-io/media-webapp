@@ -10,8 +10,6 @@ import { LaunchIcon } from 'ui/icons'
 
 import CacheInvalidatorModal from '../cache-invalidator-modal'
 
-console.log(CacheInvalidatorModal)
-
 const ProjectTools = ({
   identifier,
   toCacheInvalidator,
@@ -57,8 +55,8 @@ const ProjectTools = ({
 export default connect(
   null,
   mapDispatch({
-    toCacheInvalidator: identifier => actions.requestLocation(`/projects/${ identifier }/cache-invalidator`),
-    toProjectMedia: identifier => actions.requestLocation(`/projects/${ identifier }/media`),
+    toCacheInvalidator: (identifier) => actions.requestLocation(`/projects/${ identifier }/cache-invalidator`),
+    toProjectMedia: (identifier) => actions.requestLocation(`/projects/${ identifier }/media`),
     toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }`)
   })
 )(ProjectTools)

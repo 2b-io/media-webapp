@@ -22,7 +22,7 @@ const Avatar = styled.div`
 `
 
 const Collaborators = ({
-  collaborators,
+  project,
   currentAccount,
   deleteCollaborator,
   identifier,
@@ -33,7 +33,11 @@ const Collaborators = ({
   hideDeleteCollaboratorDialog,
   toProfile
 }) => {
+  if(!project) {
+    return null
+  }
 
+  const { collaborators } = project
   const signedInCollaborator = Object.values(collaborators).find(
     ({ account }) => currentAccount && account._id === currentAccount._id
   )
@@ -136,8 +140,9 @@ const Collaborators = ({
 }
 
 export default connect(
-  (state) => ({
+  (state, { identifier }) => ({
     currentAccount: selectors.currentAccount(state),
+    project: selectors.findProjectByIdentifier(state, identifier)
   }),
   mapDispatch({
     makeOwner: actions.makeOwner,
