@@ -85,15 +85,15 @@ const TextBox = ({
       <Indicator />
     </Container>
     <Assistive>
-      <AssistiveTextLine
-        mostLeft mostRight
-        variant="error">
-        { invalid }
-      </AssistiveTextLine>
       { props.readOnly &&
-        <AssistiveTextLine mostLeft mostRight>Read only</AssistiveTextLine>
+        <AssistiveTextLine mostLeft mostRight>
+          Read only
+        </AssistiveTextLine> ||
+        <AssistiveTextLine mostLeft mostRight variant="error">
+          { invalid }
+        </AssistiveTextLine>
       }
-      { (!props.readOnly && props.maxLength) &&
+      { props.maxLength &&
         <AssistiveTextLine mostLeft mostRight>
           { props.value.length }/{ props.maxLength }
         </AssistiveTextLine>
