@@ -21,12 +21,6 @@ export const PROJECT_FRAGMENT = `
     provider
   },
   status,
-  pullSetting {
-    ${ PULL_SETTING_FRAGMENT }
-  }
-  presets {
-    ${ PRESET_FRAGMENT }
-  },
   collaborators {
     _id,
     account {

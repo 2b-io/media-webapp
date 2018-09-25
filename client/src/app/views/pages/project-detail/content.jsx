@@ -226,11 +226,7 @@ export default withParams(
         presets: selectors.presets(state, identifier),
         currentAccount: selectors.currentAccount(state),
         secretKeys: selectors.secretKeys(state, identifier),
-        pullSetting: selectors.pullSetting(state, identifier),
-        secretKeys: [
-          { key: '9LnCclsaU3fX6rgZBqB9TEGGMagC', isActive: true },
-          { key: 'gJKglwcg2QuZd99bl0C2E2CNeaFn', isActive: false }
-        ]
+        pullSetting: selectors.pullSetting(state, identifier)
       }),
       mapDispatch({
         showDeleteCollaboratorDialog: (accountId, accountEmail) => actions.showDialog({ dialog: 'ConfirmDeleteCollaboratorDialog', params: { accountId, accountEmail } }),

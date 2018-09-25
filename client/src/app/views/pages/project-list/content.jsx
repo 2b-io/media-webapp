@@ -57,7 +57,10 @@ const ProjectList = ({
   projects,
   toCreateProject,
   toProjectDetail
+  // ui: { sortCondition }
 }) => {
+  // const sortedProjects = projects.sort(...)
+
   const cards = projects.map(
     project => (
       <Card
