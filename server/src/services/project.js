@@ -1,8 +1,6 @@
 import request from 'superagent'
 import { URL } from 'url'
 
-
-
 import config from 'infrastructure/config'
 import Infrastructure from 'models/Infrastructure'
 import { createDistribution, getDistribution, updateDistribution } from 'services/cloudFront'
