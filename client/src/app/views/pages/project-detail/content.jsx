@@ -53,9 +53,6 @@ const Project = ({
   toInviteCollaboratorModal,
   toProjectDetail,
   toProfile,
-  secretKeys,
-  removeSecretKey,
-  updateSecretKey,
   showDeleteCollaboratorDialog,
   hideDeleteCollaboratorDialog,
   ui: {
@@ -130,12 +127,7 @@ const Project = ({
                   </Fragment>
                 ) }
               />
-              <ApiKeys
-                secretKeys={ secretKeys }
-                createApiKey={ () => createApiKey(project.identifier) }
-                removeSecretKey={ (key) => removeSecretKey(project.identifier, key) }
-                updateSecretKey={ (data) => updateSecretKey(project.identifier, data ) }
-              />
+              <ApiKeys identifier={ project.identifier } />
               <Collaborators
                 collaborators={ project.collaborators }
                 currentAccount={ currentAccount }
@@ -207,7 +199,6 @@ export default withParams(
       (state, { params: { identifier } }) => ({
         project: selectors.findProjectByIdentifier(state, identifier),
         currentAccount: selectors.currentAccount(state),
-        secretKeys: selectors.secretKeys(state, identifier),
         pullSetting: selectors.pullSetting(state, identifier)
       }),
       mapDispatch({
@@ -226,10 +217,7 @@ export default withParams(
         toProjectMedia: (identifier) => actions.requestLocation(`/projects/${ identifier }/media`),
         makeOwner: actions.makeOwner,
         deleteCollaborator: actions.deleteCollaborator,
-        reset,
-        createApiKey: actions.createSecretKey,
-        removeSecretKey: actions.removeSecretKey,
-        updateSecretKey: actions.updateSecretKey
+        reset
       })
     )(Project)
   )
