@@ -14,13 +14,12 @@ import { Redirect, Route, withParams } from 'views/router'
 import CacheInvalidatorModal from './cache-invalidator-modal'
 import CollaboratorInviteEmail from './sent-email-invite-modal'
 import InviteModal from './invite-modal'
-import PresetModal from './preset-modal'
 import { ConfirmDeleteCollaboratorDialog } from './dialog'
 
 import ApiKeys from './api-key-card'
 import Collaborators from './collaborator-card'
-import Presets from './preset-card'
 import { ProjectTools } from './project-tools-card'
+import { Presets } from './presets-card/'
 
 const Layout = styled.section`
   padding: 16px;
@@ -47,7 +46,6 @@ const Project = ({
   currentAccount,
   deleteCollaborator,
   makeOwner,
-  presets,
   project,
   pullSetting = {},
   toEditProject,
@@ -55,7 +53,6 @@ const Project = ({
   toInviteCollaboratorModal,
   toProjectDetail,
   toProfile,
-  toPreset,
   secretKeys,
   removeSecretKey,
   updateSecretKey,
@@ -98,10 +95,7 @@ const Project = ({
                   </Fragment>
                 ) }
               />
-              <Presets
-                presets={ presets }
-                toPreset={ (contentType) => toPreset(project.identifier, contentType) }
-              />
+              <Presets identifier={ project.identifier } />
               <Card
                 title={ () => <Heading mostLeft mostRight>Pull Settings</Heading> }
                 fab={ () => <EditIcon onClick={ () => toEditPullSetting(project.identifier) } /> }
@@ -150,9 +144,7 @@ const Project = ({
                 toProfile={ toProfile }
                 toInviteCollaboratorModal={ () => toInviteCollaboratorModal(project.identifier) }
               />
-              <ProjectTools
-                identifier={ project.identifier }
-              />
+              <ProjectTools identifier={ project.identifier } />
             </Fragment>
           }
           <ConfirmDeleteCollaboratorDialog
@@ -179,13 +171,6 @@ const Project = ({
           />
         </Container>
       </Layout>
-      <Route path="/projects/:identifier/presets/new">
-        <PresetModal
-          width="wide"
-          hideOnClickOutside={ true }
-          onHide={ () => toProjectDetail(project.identifier) }
-        />
-      </Route>
       <Route path="/projects/:identifier/invite">
         <InviteModal
           width="wide"
@@ -221,7 +206,6 @@ export default withParams(
     connect(
       (state, { params: { identifier } }) => ({
         project: selectors.findProjectByIdentifier(state, identifier),
-        presets: selectors.presets(state, identifier),
         currentAccount: selectors.currentAccount(state),
         secretKeys: selectors.secretKeys(state, identifier),
         pullSetting: selectors.pullSetting(state, identifier)
@@ -236,7 +220,6 @@ export default withParams(
         toCacheInvalidator: (identifier) => actions.requestLocation(`/projects/${ identifier }/cache-invalidator`),
         toEditProject: (identifier) => actions.requestLocation(`/projects/${ identifier }/edit`),
         toInviteCollaboratorModal: (identifier) => actions.requestLocation(`/projects/${ identifier }/invite`),
-        toPreset: (identifier, hash) => actions.requestLocation(`/projects/${ identifier }/presets/${ hash }`),
         toProfile: (id) => actions.requestLocation(`/@${ id }`),
         toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }`),
         toEditPullSetting: (identifier) => actions.requestLocation(`/projects/${ identifier }/pull-setting`),
