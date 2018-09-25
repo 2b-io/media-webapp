@@ -1,13 +1,15 @@
 import React, { Fragment } from 'react'
 
-import { List, MenuMore } from 'ui/elements'
+import { FilterIcon } from 'ui/icons'
+import { ContextMenu, List } from 'ui/elements'
 import { PageTitle, TextLine } from 'ui/typo'
 
 const ProjectList = () => (
   <Fragment>
     <PageTitle>Projects</PageTitle>
-    <MenuMore
-      name="menuMoreOnProjectListStill"
+    <ContextMenu
+      name="projectFilter"
+      icon={ () => <FilterIcon /> }
       content={ () => (
         <List
           items={ [

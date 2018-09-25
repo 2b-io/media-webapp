@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Heading, TextLine } from 'ui/typo'
-import { Card, List, MenuMore } from 'ui/elements'
+import { Card, ContextMenu, List } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 
 const Presets = ({
@@ -11,10 +11,10 @@ const Presets = ({
   const items = Object.values(presets).map(
     ({ contentType }) => ({
       key: contentType,
-      content: () => <TextLine mostLeft mostRight>{ contentType }</TextLine>,
+      content: () => <TextLine mostLeft>{ contentType }</TextLine>,
       trailing: () => (
-        <MenuMore
-          name={ contentType }
+        <ContextMenu
+          name={ `preset-${ contentType }` }
           content={ () => (
             <List
               items={ [

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Heading, TextLine } from 'ui/typo'
-import { Card, List, MenuMore } from 'ui/elements'
+import { Card, ContextMenu, List } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 
 const ApiKeys = ({
@@ -14,10 +14,10 @@ const ApiKeys = ({
   const lists = Object.values(secretKeys).map(
     ({ key, isActive }) => ({
       key,
-      content: () => <TextLine mostLeft mostRight>{ key }</TextLine>,
+      content: () => <TextLine mostLeft>{ key }</TextLine>,
       trailing: () => (
-        <MenuMore
-          name={ key }
+        <ContextMenu
+          name={ `secret-key-${ key }` }
           content={ () => (
             <List
               items={ [

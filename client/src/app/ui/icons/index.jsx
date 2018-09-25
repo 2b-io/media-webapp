@@ -17,6 +17,7 @@ import { ic_done } from 'react-icons-kit/md/ic_done'
 import { ic_email } from 'react-icons-kit/md/ic_email'
 import { ic_exit_to_app } from 'react-icons-kit/md/ic_exit_to_app'
 import { ic_expand_more } from 'react-icons-kit/md/ic_expand_more'
+import { ic_filter_list } from 'react-icons-kit/md/ic_filter_list'
 import { ic_help_outline } from 'react-icons-kit/md/ic_help_outline'
 import { ic_info } from 'react-icons-kit/md/ic_info'
 import { ic_launch } from 'react-icons-kit/md/ic_launch'
@@ -50,6 +51,7 @@ export const ErrorIcon = icon(ic_block)
 export const ExpandIcon = icon(ic_expand_more)
 export const FavoriteIcon = icon(ic_star_border)
 export const FavoritedIcon = icon(ic_star)
+export const FilterIcon = icon(ic_filter_list)
 export const GithubIcon = icon(github)
 export const HelpIcon = icon(ic_help_outline)
 export const InfoIcon = icon(ic_info)
