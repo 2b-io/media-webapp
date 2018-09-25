@@ -37,9 +37,9 @@ const fetchLoop = function*() {
 
       const { identifier } = action.payload
       const secretKeys = yield SecretKey.fetch(session.token, identifier)
-      yield put(actions.fetchSecretKeyCompleted({ identifier, secretKeys }))
+      yield put(actions.fetchSecretKeysCompleted({ identifier, secretKeys }))
     } catch (e) {
-      yield put(actions.fetchSecretKeyFailed(serializeError(e)))
+      yield put(actions.fetchSecretKeysFailed(serializeError(e)))
       continue
     }
   }

@@ -55,6 +55,15 @@ const Indicator = styled.div`
   background: ${ ({ theme }) => theme.black.base };
 `
 
+const Assistive = styled.div`
+  display: grid;
+  & > * {
+    min-height: 0;
+    min-width: 0;
+  }
+  grid-template-columns: 1fr min-content;
+`
+
 const TextBox = ({
   invalid,
   leading,
@@ -75,11 +84,21 @@ const TextBox = ({
       { trailing && trailing() }
       <Indicator />
     </Container>
-    <AssistiveTextLine
-      mostLeft mostRight
-      variant="error">
-      { invalid }
-    </AssistiveTextLine>
+    <Assistive>
+      <AssistiveTextLine
+        mostLeft mostRight
+        variant="error">
+        { invalid }
+      </AssistiveTextLine>
+      { props.readOnly &&
+        <AssistiveTextLine mostLeft mostRight>Read only</AssistiveTextLine>
+      }
+      { (!props.readOnly && props.maxLength) &&
+        <AssistiveTextLine mostLeft mostRight>
+          { props.value.length }/{ props.maxLength }
+        </AssistiveTextLine>
+      }
+    </Assistive>
   </Wrapper>
 )
 

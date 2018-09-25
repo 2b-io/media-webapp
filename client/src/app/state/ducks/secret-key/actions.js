@@ -17,7 +17,7 @@ export const fetchSecretKeys = identifier => ({
   type: types.FETCH,
   payload: { identifier }
 })
-export const fetchSecretKeyCompleted = ({ identifier, secretKeys }) => ({
+export const fetchSecretKeysCompleted = ({ identifier, secretKeys }) => ({
   type: types.FETCH_COMPLETED,
   payload: ({ identifier, secretKeys })
 })

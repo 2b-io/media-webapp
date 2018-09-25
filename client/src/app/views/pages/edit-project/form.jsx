@@ -14,9 +14,10 @@ const ProjectForm = ({ handleSubmit, domain, status }) => (
     <TextBox
       label="Project Name"
       name="name"
-      readOnly={ (status === 'UPDATING' || status === 'INITIALIZING') ? true : false }
+      readOnly={ status === 'UPDATING' || status === 'INITIALIZING' }
       placeholder="My Awesome Project"
       validate={ validateRequired }
+      maxLength={ 50 }
     />
     <Break />
     <TextBox
