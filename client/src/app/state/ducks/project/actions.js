@@ -148,6 +148,6 @@ export const sortProjects = sortCondition => ({
   type: types.SORT,
   payload: { sortCondition }
 })
-export const hideDisableProjects = () => ({
+export const toggleDisabledProjects = () => ({
   type: types.HIDE_DISABLE
 })

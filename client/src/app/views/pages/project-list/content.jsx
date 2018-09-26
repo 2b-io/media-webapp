@@ -57,18 +57,26 @@ const sortProjects = (sortCondition, projects, currentAccountId) => {
 
   switch (sortCondition) {
     case 'privilege': {
-      const filteredCurrentAccount =  projects.map(({ collaborators }) => (
-        Object.values(collaborators).filter(({ account }) => (
-          account._id === currentAccountId
-        ))
-      )[0])
-      return filteredCurrentAccount.sort((a) => a.privilege === 'owner'? -1 : 1)
+      return projects.sort(
+        (project) => {
+          const privilegeInProject = Object.values(project.collaborators).filter(
+            ({ account }) => account._id === currentAccountId
+          )[0].privilege
+
+          return privilegeInProject.privilege === 'owner' ? 1 : -1
+        }
+      )
     }
     case 'name':
-      return projects.sort((a, b) => a.name.localeCompare(b.name))
+      return projects.sort(
+        (project, nextProject) => project.name.localeCompare(nextProject.name)
+      )
     case 'created':
-      return projects.sort((a, b) => a.created - b.created)
+      return projects.sort(
+        (project, nextProject) => project.created - nextProject.created
+      )
   }
+   return projects
 }
 const hideProjects = (projects) => projects.filter(({ status  }) => status !== 'DISABLED' )
 
@@ -79,17 +87,15 @@ const ProjectList = ({
   session,
   ui: {
     sortCondition,
-    hideDisableProjects
+    toggleDisabledProjects
   }
 }) => {
   const { _id: currentAccountId } = session
-  const hidedProjects = hideDisableProjects ? hideProjects(projects) : projects
-  const sortedProjects = sortCondition ?
-    hideDisableProjects ?
-      sortProjects(sortCondition, hidedProjects, currentAccountId) :
-      sortProjects(sortCondition, projects, currentAccountId) :
-    hideDisableProjects ?
-      hidedProjects : projects
+  const filteredProjects = toggleDisabledProjects ?
+    hideProjects(projects) :
+    projects
+
+  const sortedProjects = sortProjects(sortCondition, filteredProjects, currentAccountId)
 
   const cards = sortedProjects.map(
     project => (

@@ -12,9 +12,9 @@ import { stateful } from 'views/common/decorators'
 const ProjectList = ({
   maximizeSidebar,
   sortProjects,
-  hideDisableProjects,
+  toggleDisabledProjects,
   ui: {
-    hideDisableProjects: hideProjects,
+    toggleDisabledProjects: hideProjects,
     sortCondition
   }
 }) => (
@@ -29,28 +29,28 @@ const ProjectList = ({
           items={ [
             {
               content: () => <TextLine mostLeft mostRight>Sort by privilege</TextLine>,
-              onClick: () => { sortProjects('privilege') },
-              trailing: () => sortCondition === 'privilege' && <CheckIcon />
+              onClick: () => sortProjects('privilege'),
+              trailing: sortCondition === 'privilege' ? () => <CheckIcon /> : null
             },
             {
               content: () => <TextLine mostLeft mostRight>Sort by name</TextLine>,
-              onClick: () => { sortProjects('name') },
-              trailing: () => sortCondition === 'name' && <CheckIcon />
+              onClick: () => sortProjects('name'),
+              trailing: sortCondition === 'name' ? () => <CheckIcon /> : null
             },
             {
               content: () => <TextLine mostLeft mostRight>Sort by created date</TextLine>,
-              onClick: () => { sortProjects('created') },
-              trailing: () => sortCondition === 'created' && <CheckIcon />
+              onClick: () => sortProjects('created'),
+              trailing: sortCondition === 'created' ? () => <CheckIcon /> : null
             },
             {
               content: () => (
                 <TextLine mostLeft mostRight>
                   {
-                    !hideProjects? 'Hide disabled projects' : 'Show disabled projects'
+                    hideProjects ? 'Show disabled projects' : 'Hide disabled projects'
                   }
                 </TextLine>
               ),
-              onClick: () => { hideDisableProjects() }
+              onClick: toggleDisabledProjects
             }
           ] }
         />
@@ -65,7 +65,7 @@ export default stateful({
     null,
     mapDispatch({
       sortProjects: actions.sortProjects,
-      hideDisableProjects: actions.hideDisableProjects,
+      toggleDisabledProjects: actions.toggleDisabledProjects,
       maximizeSidebar: actions.maximizeSidebar
     })
   )(ProjectList)

@@ -3,8 +3,6 @@ import pick from 'object.pick'
 
 import { ACCOUNT_FRAGMENT } from './account'
 import { PRESET_FRAGMENT } from './preset'
-import { PULL_SETTING_FRAGMENT } from './pull-setting'
-
 
 export const PERMISSION_FRAGMENT = `
   _id,
