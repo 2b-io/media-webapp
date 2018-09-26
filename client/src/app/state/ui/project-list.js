@@ -6,8 +6,8 @@ import createReducer from 'state/helpers/create-reducer'
 export default {
   component: 'ProjectList',
   reducer: combineReducers({
-    sortCondition: createReducer(null)({
-      [ types.SORT ]: (state, action) => action.payload.sortCondition
+    sortCondition: createReducer({ type: "name", ascending: true })({
+      [ types.SORT ]: ( state, action) => action.payload.sortCondition
     }),
     toggleDisabledProjects: createReducer(null)({
       [ types.HIDE_DISABLE ]: (state) => !state
