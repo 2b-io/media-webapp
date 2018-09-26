@@ -60,8 +60,7 @@ const sortProjects = (sortCondition, projects, currentAccountId) => {
       const filteredCurrentAccount =  projects.map(({ collaborators }) => (
         Object.values(collaborators).filter(({ account }) => (
           account._id === currentAccountId
-          )
-        )
+        ))
       )[0])
       return filteredCurrentAccount.sort((a) => a.privilege === 'owner'? -1 : 1)
     }
@@ -88,9 +87,9 @@ const ProjectList = ({
   const sortedProjects = sortCondition ?
     hideDisableProjects ?
       sortProjects(sortCondition, hidedProjects, currentAccountId) :
-        sortProjects(sortCondition, projects, currentAccountId) :
-          hideDisableProjects ?
-            hidedProjects : projects
+      sortProjects(sortCondition, projects, currentAccountId) :
+    hideDisableProjects ?
+      hidedProjects : projects
 
   const cards = sortedProjects.map(
     project => (
