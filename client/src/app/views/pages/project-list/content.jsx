@@ -53,10 +53,18 @@ const Container = styled.div`
   grid-gap: 16px;
   grid-template-columns: 100%;
 `
-const sortProjects = (sortCondition, projects) => {
+const sortProjects = (sortCondition, projects, currentAccountId) => {
+
   switch (sortCondition) {
-    case 'privilege':
-      return projects.sort((a, b) => a.created - b.created)
+    case 'privilege': {
+      const filteredCurrentAccount =  projects.map(({ collaborators }) => (
+        Object.values(collaborators).filter(({ account }) => (
+          account._id === currentAccountId
+          )
+        )
+      )[0])
+      return filteredCurrentAccount.sort((a) => a.privilege === 'owner'? -1 : 1)
+    }
     case 'name':
       return projects.sort((a, b) => a.name.localeCompare(b.name))
     case 'created':
@@ -69,16 +77,18 @@ const ProjectList = ({
   projects,
   toCreateProject,
   toProjectDetail,
+  session,
   ui: {
     sortCondition,
     hideDisableProjects
   }
 }) => {
+  const { _id: currentAccountId } = session
   const hidedProjects = hideDisableProjects ? hideProjects(projects) : projects
   const sortedProjects = sortCondition ?
     hideDisableProjects ?
-      sortProjects(sortCondition, hidedProjects) :
-        sortProjects(sortCondition, projects) :
+      sortProjects(sortCondition, hidedProjects, currentAccountId) :
+        sortProjects(sortCondition, projects, currentAccountId) :
           hideDisableProjects ?
             hidedProjects : projects
 
@@ -118,6 +128,7 @@ export default stateful({
   connect(
     mapState({
       projects: selectors.allProjects,
+      session: selectors.currentAccount
     }),
     mapDispatch({
       toCreateProject: () => actions.requestLocation('/projects/create'),
