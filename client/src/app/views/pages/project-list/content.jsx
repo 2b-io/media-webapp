@@ -7,6 +7,7 @@ import { actions, selectors } from 'state/interface'
 import { Card } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 import { Text } from 'ui/typo'
+import { stateful } from 'views/common/decorators'
 
 const Fab = styled.button`
   position: fixed;
@@ -52,16 +53,51 @@ const Container = styled.div`
   grid-gap: 16px;
   grid-template-columns: 100%;
 `
+const sortProjects = (sortCondition, projects, currentAccountId) => {
+
+  switch (sortCondition) {
+    case 'privilege': {
+      return projects.sort(
+        (project) => {
+          const privilegeInProject = Object.values(project.collaborators).filter(
+            ({ account }) => account._id === currentAccountId
+          )[0].privilege
+
+          return privilegeInProject.privilege === 'owner' ? 1 : -1
+        }
+      )
+    }
+    case 'name':
+      return projects.sort(
+        (project, nextProject) => project.name.localeCompare(nextProject.name)
+      )
+    case 'created':
+      return projects.sort(
+        (project, nextProject) => project.created - nextProject.created
+      )
+  }
+   return projects
+}
+const hideProjects = (projects) => projects.filter(({ status  }) => status !== 'DISABLED' )
 
 const ProjectList = ({
   projects,
   toCreateProject,
-  toProjectDetail
-  // ui: { sortCondition }
+  toProjectDetail,
+  session,
+  ui: {
+    sortCondition,
+    toggleDisabledProjects
+  }
 }) => {
-  // const sortedProjects = projects.sort(...)
+  const { _id: currentAccountId } = session
+  const filteredProjects = toggleDisabledProjects ?
+    hideProjects(projects) :
+    projects
 
-  const cards = projects.map(
+  const sortedProjects = sortProjects(sortCondition, filteredProjects, currentAccountId)
+
+  const cards = sortedProjects.map(
     project => (
       <Card
         key={ project.identifier }
@@ -91,13 +127,17 @@ const ProjectList = ({
     </Layout>
   )
 }
-
-export default connect(
-  mapState({
-    projects: selectors.allProjects,
-  }),
-  mapDispatch({
-    toCreateProject: () => actions.requestLocation('/projects/create'),
-    toProjectDetail: identifier => actions.requestLocation(`/projects/${ identifier }`)
-  })
-)(ProjectList)
+export default stateful({
+  component: 'ProjectList'
+})(
+  connect(
+    mapState({
+      projects: selectors.allProjects,
+      session: selectors.currentAccount
+    }),
+    mapDispatch({
+      toCreateProject: () => actions.requestLocation('/projects/create'),
+      toProjectDetail: identifier => actions.requestLocation(`/projects/${ identifier }`)
+    })
+  )(ProjectList)
+)
