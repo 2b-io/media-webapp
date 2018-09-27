@@ -1,11 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Material = styled.section`
-  height: 40px;
-`
-
-const Content = styled.div`
+const Header = styled.div`
   display: grid;
   & > * {
     min-width: 0;
@@ -18,17 +14,8 @@ const Content = styled.div`
     ({ theme }) => theme.primary.on.base
   };
   grid-template-columns: 40px 1fr 40px;
-  height: 40px;
   justify-contents: center;
-  align-items: center;
+  align-items: flex-start;
 `
-
-const Header = ({ children }) => (
-  <Material>
-    <Content>
-      { children }
-    </Content>
-  </Material>
-)
 
 export default Header

@@ -1,13 +1,45 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import { connect } from 'react-redux'
 
-import { TitleBar } from 'ui/compounds'
+import { mapDispatch } from 'services/redux-helpers'
+import { actions, selectors } from 'state/interface'
+import { ContextMenu, List } from 'ui/elements'
+import { MenuIcon } from 'ui/icons'
+import { Text } from 'ui/typo'
 
-const Profile = () => (
-  <TitleBar>
-    <TitleBar.Title>
-      <h1>Profile</h1>
-    </TitleBar.Title>
-  </TitleBar>
-)
+import Top from './top'
 
-export default Profile
+const Profile = ({ account, maximizeSidebar }) => {
+  const menuItems = [ {
+    content: () => <Text mostLeft mostRight>Edit Profile</Text>
+  }, {
+    content: () => <Text mostLeft mostRight>Change Password</Text>
+  } ]
+
+  return (
+    <Fragment>
+      <MenuIcon onClick={ maximizeSidebar } />
+      <Top account={ account } />
+      <ContextMenu
+        content={ () => <List items={ menuItems } /> }
+      />
+    </Fragment>
+  )
+}
+
+export default connect(
+  (state) => {
+    const { id } = selectors.currentParams(state)
+    return {
+      account: selectors.findAccountById(
+        state,
+        id,
+        selectors.currentSession(state)
+      ),
+      session: selectors.currentSession(state)
+    }
+  },
+  mapDispatch({
+    maximizeSidebar: actions.maximizeSidebar
+  })
+)(Profile)
