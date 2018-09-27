@@ -12,7 +12,7 @@ const ProjectBlock = ({
   const items = projects.map(
     project => ({
       key: project._id,
-      leading: () => <StatusIndicator isActive={ true } />,
+      leading: () => <StatusIndicator isActive={ project.isActive } />,
       content: () => <TextLine mostRight>{ project.name }</TextLine>,
       onClick: toProjectDetail.bind(null, project.identifier)
     })
