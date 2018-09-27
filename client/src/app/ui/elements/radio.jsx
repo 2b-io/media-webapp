@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import styled from 'styled-components'
 
-import { CheckIcon } from 'ui/icons'
+import { CheckedRadio, UncheckedRadio } from 'ui/icons'
 import { TextLine } from 'ui/typo'
 
 const Wrapper = styled.label`
@@ -21,6 +21,11 @@ const Switch = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  color: ${
+    ({ disabled, theme }) => disabled ?
+      '#e6e6e6' :
+      theme.black.base
+  };
 `
 
 const Circle = styled.div`
@@ -54,14 +59,12 @@ const Radio = ({ label, description, ...props }) => {
     <Fragment>
       <Wrapper>
         { label && <TextLine mostLeft>{ label }</TextLine> }
-        <Switch>
+        <Switch disabled={ props.disabled }>
           <Input { ...props }
             checked={ checked }
             value={ props.choice }
           />
-          <Circle disabled={ props.disabled }>
-            { checked && <CheckIcon /> }
-          </Circle>
+          { checked && <CheckedRadio /> || <UncheckedRadio /> }
         </Switch>
       </Wrapper>
       { description && description() }
