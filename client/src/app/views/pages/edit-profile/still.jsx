@@ -2,26 +2,20 @@ import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
-import { actions, selectors } from 'state/interface'
+import { actions } from 'state/interface'
 import { BackIcon } from 'ui/icons'
 import { PageTitle } from 'ui/typo'
 
-const EditProfile = ({
-  id,
-  navigateBack
-}) => (
+const EditProfile = ({ navigateBack }) => (
   <Fragment>
-    <BackIcon onClick={ navigateBack.bind(null, id) } />
+    <BackIcon onClick={ navigateBack } />
     <PageTitle>Edit Profile</PageTitle>
   </Fragment>
 )
 
 export default connect(
-  (state) => {
-      const { id } = selectors.currentParams(state)
-    return { id }
-  },
+  null,
   mapDispatch({
-    navigateBack: (id) => actions.requestLocation(`/@:${ id }`)
+    navigateBack: () => actions.requestLocation(`/@me`)
   })
 )(EditProfile)
