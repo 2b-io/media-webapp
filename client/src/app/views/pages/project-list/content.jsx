@@ -76,7 +76,7 @@ const sortProjects = (sortCondition, projects, currentAccountId) => {
         (project, nextProject) => project.created - nextProject.created
       )
   }
-   return projects
+  return projects
 }
 const hideProjects = (projects) => projects.filter(({ status  }) => status !== 'DISABLED' )
 
