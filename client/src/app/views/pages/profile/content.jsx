@@ -1,6 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { Card, List, StatusIndicator } from 'ui/elements'
+import { AddIcon } from 'ui/icons'
+import { Heading, Text, TextLine } from 'ui/typo'
+
 const Layout = styled.section`
   padding: 16px;
   height: 100%;
@@ -16,15 +20,18 @@ const Container = styled.div`
     min-height: 0;
     min-width: 0;
   }
-
   grid-gap: 16px;
   grid-template-columns: 100%;
+  background: ${ ({ theme }) => theme.white.base };
 `
 
 const Profile = () => (
   <Layout>
     <Container>
-    ..
+      <br/>
+      <br/>
+      <br/>
+      <br/>
     </Container>
   </Layout>
 )
