@@ -22,6 +22,10 @@ const schema = mongoose.Schema({
   },
   created: {
     type: Number
+  },
+  isActive: {
+    type: Boolean,
+    default: true
   }
 })
 schema.pre('save', function (next) {
