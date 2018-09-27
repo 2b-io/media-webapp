@@ -9,6 +9,8 @@ import { AddIcon } from 'ui/icons'
 
 import CreateDialog from './create-dialog'
 
+const CREATE_PRESET = 'CREATE_PRESET'
+
 const Presets = ({
   // dialog
   isCreateDialogActive,
@@ -42,7 +44,7 @@ const Presets = ({
       />
 
       <Dialog
-        isActive= { isCreateDialogActive }
+        isActive={ isCreateDialogActive }
         onOverlayClick={ hideCreateDialog }
         content={ () => (
           <CreateDialog
@@ -61,13 +63,13 @@ const Presets = ({
 
 export default connect(
   (state, { identifier }) => ({
-    isCreateDialogActive: selectors.isDialogActive(state, 'CREATE_PRESET'),
+    isCreateDialogActive: selectors.isDialogActive(state, CREATE_PRESET),
     presets: selectors.presets(state, identifier)
   }),
   mapDispatch({
     // dialog
-    showCreateDialog: () => actions.showDialog('CREATE_PRESET'),
-    hideCreateDialog: () => actions.hideDialog('CREATE_PRESET'),
+    showCreateDialog: () => actions.showDialog(CREATE_PRESET),
+    hideCreateDialog: () => actions.hideDialog(CREATE_PRESET),
     // preset
     createPreset: actions.createPreset,
     toPreset: (identifier, hash) => actions.requestLocation(`/projects/${ identifier }/presets/${ hash }`),
