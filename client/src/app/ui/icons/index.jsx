@@ -30,6 +30,7 @@ import {
   server,
   square,
   trash2,
+  user,
   userPlus,
   x,
   xCircle
@@ -56,6 +57,7 @@ export const MenuIcon = icon(menu)
 export const MoreIcon = icon(moreVertical)
 export const OwnerAddIcon = icon(userPlus)
 export const PaymentIcon = icon(creditCard)
+export const PersonIcon = icon(user)
 export const ProjectListIcon = icon(server)
 export const SignOutIcon = icon(logOut)
 export const SortAscIcon = icon(arrowUp)
