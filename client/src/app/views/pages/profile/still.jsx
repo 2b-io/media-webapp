@@ -9,9 +9,14 @@ import { Text } from 'ui/typo'
 
 import Top from './top'
 
-const Profile = ({ account, maximizeSidebar }) => {
+const Profile = ({
+  account,
+  maximizeSidebar,
+  toEditProfile
+}) => {
   const menuItems = [ {
-    content: () => <Text mostLeft mostRight>Edit Profile</Text>
+    content: () => <Text mostLeft mostRight>Edit Profile</Text>,
+    onClick: () => toEditProfile()
   }, {
     content: () => <Text mostLeft mostRight>Change Password</Text>
   } ]
@@ -40,6 +45,7 @@ export default connect(
     }
   },
   mapDispatch({
-    maximizeSidebar: actions.maximizeSidebar
+    maximizeSidebar: actions.maximizeSidebar,
+    toEditProfile: () => actions.requestLocation('/@me/edit')
   })
 )(Profile)
