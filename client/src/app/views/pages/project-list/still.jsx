@@ -7,7 +7,6 @@ import { actions } from 'state/interface'
 import {
   FilterIcon,
   MenuIcon,
-  CheckIcon,
   EyeIcon,
   EyeOffIcon,
   SortAscIcon,
@@ -27,7 +26,7 @@ const ProjectList = ({
   toggleDisabledProjects,
   ui: {
     toggleDisabledProjects: hideProjects,
-    sortCondition : { type, ascending }
+    sortCondition: { type, ascending }
   }
 }) => (
   <Fragment>
