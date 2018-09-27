@@ -19,12 +19,17 @@ const EditProfile = ({
   session,
   updateProfile
 }) => {
+  if(!account) {
+    return null
+  }
+
+  const { _id: loginId, ...newAccount } = account
 
   return (
     <Container>
-      { session && account && session.account._id === account._id &&
+      { session && account && session.account._id === loginId &&
         <EditProfileForm
-          initialValues={ account }
+          initialValues={ newAccount }
           onSubmit={ updateProfile }
         />
       }

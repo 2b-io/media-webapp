@@ -69,6 +69,7 @@ const registerLoop = function*() {
     }
   }
 }
+
 const searchAccountLoop = function*() {
   while (true) {
 
@@ -99,6 +100,30 @@ const searchAccountLoop = function*() {
   }
 }
 
+const updateProfileLoop = function*() {
+  while (true) {
+
+    const action = yield take(types['ACCOUNT/UPDATE'])
+    const { email, ...accountInfo } = action.payload.account
+
+    try {
+      const session = yield select(selectors.currentSession)
+
+      if (!session) {
+        continue
+      }
+
+      const accountUpdated = yield call(Account.update, session.token, accountInfo)
+
+      yield put(actions.updateProfileCompleted(accountUpdated))
+
+    } catch (e) {
+      yield put(actions.updateProfileFailed(serializeError(e)))
+      continue
+    }
+  }
+}
+
 
 export default function*() {
   yield take('@@INITIALIZED')
@@ -106,4 +131,5 @@ export default function*() {
   yield fork(getLoop)
   yield fork(registerLoop)
   yield fork(searchAccountLoop)
+  yield fork(updateProfileLoop)
 }

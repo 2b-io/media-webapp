@@ -74,7 +74,7 @@ export default {
 
   async update(token, account) {
     const body = await request(`
-      query search($token: String!, $account: AccountStruct!) {
+      query updateProfile($token: String!, $account: AccountStruct!) {
         session(token: $token) {
           account {
             _update(account: $account) {
@@ -87,6 +87,7 @@ export default {
       token,
       account
     })
+
     return body.session.account._update
   }
 }
