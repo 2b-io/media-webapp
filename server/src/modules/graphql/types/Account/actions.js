@@ -5,8 +5,8 @@ import {
 } from 'graphql'
 
 import { create as createProject } from 'services/project'
+import { update as updateAccount } from 'services/account'
 import { changePassword } from 'services/account'
-
 import { Project, ProjectStruct } from '../Project'
 
 export default ({ Account, AccountStruct }) => ({
@@ -18,7 +18,7 @@ export default ({ Account, AccountStruct }) => ({
     },
     type: Account,
     resolve: async (self, { account }) => {
-      return account
+      return await updateAccount(self._id, account)
     }
   },
   _changePassword: {
