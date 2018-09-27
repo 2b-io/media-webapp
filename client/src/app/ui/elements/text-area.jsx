@@ -15,8 +15,8 @@ const InputArea = styled.textarea.attrs({
   display: block;
   width: 100%;
   appearance: none;
-  background-color: white;
-  color: black;
+  background: ${ ({ theme }) => theme.white.base };
+  color: ${ ({ theme }) => theme.white.on.base };
   border: none;
   border-radius: none;
   outline: none;
