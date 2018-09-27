@@ -16,6 +16,7 @@ const Container = styled.div`
     min-height: 0;
     min-width: 0;
   }
+  height: 24px;
   grid-gap: 16px;
   grid-template-columns: 100%;
   background: ${ ({ theme }) => theme.white.base };
@@ -24,10 +25,6 @@ const Container = styled.div`
 const Profile = () => (
   <Layout>
     <Container>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
     </Container>
   </Layout>
 )
