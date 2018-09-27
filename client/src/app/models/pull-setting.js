@@ -31,7 +31,8 @@ export default {
 
     return {
       ...pullSetting,
-      allowedOrigins: pullSetting.allowedOrigins.join('\n')
+      allowedOrigins: pullSetting.allowedOrigins.join('\n'),
+      headers: [ ...(pullSetting.headers || []), {} ]
     }
   },
   async updatePullSetting(token, identifier, pullSetting) {
@@ -74,7 +75,8 @@ export default {
 
     return {
       ...updatedProject,
-      allowedOrigins: updatedProject.allowedOrigins.join('\n')
+      allowedOrigins: updatedProject.allowedOrigins.join('\n'),
+      headers: [ ...(pullSetting.headers || []), {} ]
     }
   },
 }
