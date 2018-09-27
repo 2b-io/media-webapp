@@ -71,6 +71,6 @@ export default connect(
     hideCreateDialog: () => actions.hideDialog(CREATE_PRESET),
     // preset
     createPreset: actions.createPreset,
-    toPreset: (identifier, contentType) => actions.requestLocation(`/projects/${ identifier }/presets/${ contentType }`)
+    toPreset: (identifier, hash) => actions.requestLocation(`/projects/${ identifier }/presets/${ hash }`),
   })
 )(Presets)
