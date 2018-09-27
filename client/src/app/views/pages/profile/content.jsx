@@ -1,10 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Card, List, StatusIndicator } from 'ui/elements'
-import { AddIcon } from 'ui/icons'
-import { Heading, Text, TextLine } from 'ui/typo'
-
 const Layout = styled.section`
   padding: 16px;
   height: 100%;
