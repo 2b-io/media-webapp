@@ -27,7 +27,7 @@ export default {
       }
     `, { token, identifier })
 
-    const { pullSetting } = body.session.account.project
+    const pullSetting = body.session.account.project.pullSetting
 
     return {
       ...pullSetting,
@@ -71,12 +71,12 @@ export default {
       }
     })
 
-    const updatedProject = body.session.account.project.pullSetting._update
+    const updatedPullSetting = body.session.account.project.pullSetting._update
 
     return {
-      ...updatedProject,
-      allowedOrigins: updatedProject.allowedOrigins.join('\n'),
-      headers: [ ...(pullSetting.headers || []), {} ]
+      ...updatedPullSetting,
+      allowedOrigins: updatedPullSetting.allowedOrigins.join('\n'),
+      headers: [ ...(updatedPullSetting.headers || []), {} ]
     }
   },
 }
