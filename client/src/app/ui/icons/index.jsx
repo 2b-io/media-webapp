@@ -18,6 +18,8 @@ import { ic_done } from 'react-icons-kit/md/ic_done'
 import { ic_email } from 'react-icons-kit/md/ic_email'
 import { ic_exit_to_app } from 'react-icons-kit/md/ic_exit_to_app'
 import { ic_expand_more } from 'react-icons-kit/md/ic_expand_more'
+import { eye } from 'react-icons-kit/feather/eye'
+import { eyeOff } from 'react-icons-kit/feather/eyeOff'
 import { ic_filter_list } from 'react-icons-kit/md/ic_filter_list'
 import { ic_help_outline } from 'react-icons-kit/md/ic_help_outline'
 import { ic_info } from 'react-icons-kit/md/ic_info'
@@ -38,6 +40,14 @@ import { userCheck } from 'react-icons-kit/feather/userCheck'
 import { userPlus } from 'react-icons-kit/feather/userPlus'
 import { userX } from 'react-icons-kit/feather/userX'
 
+// APPLICATION ICON: http://wmira.github.io/react-icons-kit/#/iconset/fa
+import { sortAmountAsc } from 'react-icons-kit/fa/sortAmountAsc'
+import { sortAmountDesc } from 'react-icons-kit/fa/sortAmountDesc'
+import { sortAlphaAsc } from 'react-icons-kit/fa/sortAlphaAsc'
+import { sortAlphaDesc } from 'react-icons-kit/fa/sortAlphaDesc'
+import { sortNumericAsc } from 'react-icons-kit/fa/sortNumericAsc'
+import { sortNumericDesc } from 'react-icons-kit/fa/sortNumericDesc'
+
 import icon from './icon'
 
 export const AddIcon = icon(ic_add)
@@ -51,6 +61,8 @@ export const EditIcon = icon(ic_mode_edit)
 export const EmailIcon = icon(ic_email)
 export const ErrorIcon = icon(ic_block)
 export const ExpandIcon = icon(ic_expand_more)
+export const EyeIcon = icon(eye)
+export const EyeOffIcon = icon(eyeOff)
 export const FavoriteIcon = icon(ic_star_border)
 export const FavoritedIcon = icon(ic_star)
 export const FilterIcon = icon(ic_filter_list)
@@ -67,6 +79,12 @@ export const PaymentIcon = icon(ic_credit_card)
 export const ProjectListIcon = icon(ic_domain)
 export const ReloadIcon = icon(ic_refresh)
 export const SignOutIcon = icon(ic_exit_to_app)
+export const SortAscIcon = icon(sortAmountAsc)
+export const SortDescIcon = icon(sortAmountDesc)
+export const SortAlphaAscIcon = icon(sortAlphaAsc)
+export const SortAlphaDescIcon = icon(sortAlphaDesc)
+export const SortNumericAscIcon = icon(sortNumericAsc)
+export const SortNumericDescIcon = icon(sortNumericDesc)
 export const SuccessIcon = icon(ic_done)
 export const TrashIcon = icon(trash2)
 export const UiIcon = icon(ic_view_quilt)

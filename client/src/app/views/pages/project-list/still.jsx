@@ -4,7 +4,18 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
 
-import { FilterIcon, MenuIcon, CheckIcon } from 'ui/icons'
+import {
+  FilterIcon,
+  MenuIcon,
+  EyeIcon,
+  EyeOffIcon,
+  SortAscIcon,
+  SortDescIcon,
+  SortAlphaAscIcon,
+  SortAlphaDescIcon,
+  SortNumericAscIcon,
+  SortNumericDescIcon
+} from 'ui/icons'
 import { ContextMenu, List } from 'ui/elements'
 import { PageTitle, TextLine } from 'ui/typo'
 import { stateful } from 'views/common/decorators'
@@ -15,7 +26,7 @@ const ProjectList = ({
   toggleDisabledProjects,
   ui: {
     toggleDisabledProjects: hideProjects,
-    sortCondition
+    sortCondition: { type, ascending }
   }
 }) => (
   <Fragment>
@@ -29,18 +40,18 @@ const ProjectList = ({
           items={ [
             {
               content: () => <TextLine mostLeft mostRight>Sort by privilege</TextLine>,
-              onClick: () => sortProjects('privilege'),
-              trailing: sortCondition === 'privilege' ? () => <CheckIcon /> : null
+              onClick: () => sortProjects({ type: 'privilege', ascending: !ascending }),
+              trailing: type === 'privilege' ? () =>  ascending ? <SortAscIcon /> : <SortDescIcon /> : null
             },
             {
               content: () => <TextLine mostLeft mostRight>Sort by name</TextLine>,
-              onClick: () => sortProjects('name'),
-              trailing: sortCondition === 'name' ? () => <CheckIcon /> : null
+              onClick: () => sortProjects({ type: 'name', ascending: !ascending }),
+              trailing: type === 'name' ? () =>  ascending ? <SortAlphaAscIcon /> : <SortAlphaDescIcon /> : null
             },
             {
               content: () => <TextLine mostLeft mostRight>Sort by created date</TextLine>,
-              onClick: () => sortProjects('created'),
-              trailing: sortCondition === 'created' ? () => <CheckIcon /> : null
+              onClick: () => sortProjects({ type: 'created', ascending: !ascending }),
+              trailing: type === 'created' ? () =>  ascending ? <SortNumericAscIcon /> : <SortNumericDescIcon /> : null
             },
             {
               content: () => (
@@ -50,7 +61,8 @@ const ProjectList = ({
                   }
                 </TextLine>
               ),
-              onClick: toggleDisabledProjects
+              onClick: toggleDisabledProjects,
+              trailing: () => hideProjects ? <EyeIcon /> : <EyeOffIcon />
             }
           ] }
         />
