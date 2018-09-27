@@ -3,7 +3,7 @@ import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
-import { selectors } from 'state/interface'
+import { actions, selectors } from 'state/interface'
 import { Container } from 'ui/elements'
 import { stateful } from 'views/common/decorators'
 
@@ -17,7 +17,7 @@ const EditProfileForm = reduxForm({
 const EditProfile = ({
   account,
   session,
-  editProfile
+  updateProfile
 }) => {
 
   return (
@@ -25,7 +25,7 @@ const EditProfile = ({
       { session && account && session.account._id === account._id &&
         <EditProfileForm
           initialValues={ account }
-          onSubmit={ editProfile }
+          onSubmit={ updateProfile }
         />
       }
     </Container>
@@ -48,7 +48,7 @@ export default stateful({
       }
     },
     mapDispatch({
-      editProfile: () => true
+      updateProfile: actions.updateProfile
     })
   )(EditProfile)
 )

@@ -17,3 +17,7 @@ export const REGISTER_FAILED = prefix('REGISTER_FAILED')
 export const SEARCH_ACCOUNT = prefix('SEARCH_ACCOUNT')
 export const SEARCH_ACCOUNT_COMPLETED = prefix('SEARCH_ACCOUNT_COMPLETED')
 export const SEARCH_ACCOUNT_FAILED = prefix('SEARCH_ACCOUNT_FAILED')
+
+export const UPDATE = prefix('UPDATE')
+export const UPDATE_COMPLETED = prefix('UPDATE_COMPLETED')
+export const UPDATE_FAILED = prefix('UPDATE_FAILED')

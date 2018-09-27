@@ -2,7 +2,8 @@ import request from 'services/graphql'
 
 export const ACCOUNT_FRAGMENT = `
   _id,
-  email
+  email,
+  name
 `
 
 export default {
@@ -54,6 +55,7 @@ export default {
 
     return body._createAccount
   },
+
   async search(token, email) {
     const body = await request(`
       query search($token: String!, $email: String!) {
@@ -68,5 +70,23 @@ export default {
       email
     })
     return body.session.accounts
+  },
+
+  async update(token, account) {
+    const body = await request(`
+      query search($token: String!, $account: AccountStruct!) {
+        session(token: $token) {
+          account {
+            _update(account: $account) {
+              ${ ACCOUNT_FRAGMENT }
+            }
+          }
+        }
+      }
+    `, {
+      token,
+      account
+    })
+    return body.session.account._update
   }
 }
