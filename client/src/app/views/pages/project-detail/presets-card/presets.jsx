@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { actions, selectors } from 'state/interface'
 import { mapDispatch } from 'services/redux-helpers'
 import { Heading, TextLine } from 'ui/typo'
-import { Card, ContextMenu, List, StatusIndicator } from 'ui/elements'
+import { Card, List, StatusIndicator } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 
 import PresetModal from '../preset-modal'
@@ -13,44 +13,14 @@ const Presets = ({
   identifier,
   presets = {},
   toPreset,
-  toProjectDetail,
-  removePreset,
-  updatePreset
+  toProjectDetail
 }) => {
   const items = Object.values(presets).map(
     ({ contentType, isActive }) => ({
       key: contentType,
-      content: () => <TextLine>{ contentType }</TextLine>,
-      leading: () => <StatusIndicator isActive={ isActive } />,
-      trailing: () => (
-        <ContextMenu
-          name={ `preset-${ contentType }` }
-          content={ () => (
-            <List
-              items={ [
-                {
-                  content: () => <TextLine mostLeft mostRight>Edit</TextLine>,
-                  onClick: () => toPreset(identifier, contentType.replace('/', '_'))
-                },
-                {
-                  content: () => <TextLine mostLeft mostRight>{ isActive ? 'Disable' : 'Enable' }</TextLine>,
-                  onClick: () => updatePreset({
-                    preset: {
-                      contentType,
-                      isActive: !isActive
-                    },
-                    identifier
-                  })
-                },
-                {
-                  content: () => <TextLine mostLeft mostRight>Remove</TextLine>,
-                  onClick: () => removePreset({ contentType, identifier })
-                }
-              ] }
-            />
-          ) }
-        />
-      )
+      onClick: () => toPreset(identifier, contentType.replace('/', '_')),
+      content: () => <TextLine mostRight>{ contentType }</TextLine>,
+      leading: () => <StatusIndicator isActive={ isActive } />
     })
   )
 
@@ -81,8 +51,6 @@ export default connect(
   }),
   mapDispatch({
     toPreset: (identifier, hash) => actions.requestLocation(`/projects/${ identifier }/presets/${ hash }`),
-    toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }`),
-    removePreset: actions.removePreset,
-    updatePreset: actions.updatePreset
+    toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }`)
   })
 )(Presets)
