@@ -12,13 +12,15 @@ import Top from './top'
 const Profile = ({
   account,
   maximizeSidebar,
-  toEditProfile
+  toEditProfile,
+  toChangePassword
 }) => {
   const menuItems = [ {
     content: () => <Text mostLeft mostRight>Edit Profile</Text>,
     onClick: () => toEditProfile()
   }, {
-    content: () => <Text mostLeft mostRight>Change Password</Text>
+    content: () => <Text mostLeft mostRight>Change Password</Text>,
+    onClick: () => toChangePassword()
   } ]
 
   return (
@@ -46,6 +48,7 @@ export default connect(
   },
   mapDispatch({
     maximizeSidebar: actions.maximizeSidebar,
-    toEditProfile: () => actions.requestLocation('/@me/edit')
+    toEditProfile: () => actions.requestLocation('/@me/edit'),
+    toChangePassword: () => actions.requestLocation('/@me/change-password')
   })
 )(Profile)

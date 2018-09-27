@@ -48,19 +48,16 @@ const Project = ({
   }
 
   return (
-    <Fragment>
-      <Layout>
-        <Container>
-          <ProjectInfo identifier={ identifier } />
-          <Presets identifier={ identifier } />
-          <PullSettings identifier={ identifier } />
-          <ApiKeys identifier={ identifier } />
-          <Collaborators identifier={ identifier } />
-          <ProjectTools identifier={ identifier } />
-        </Container>
-      </Layout>
-
-    </Fragment>
+    <Layout>
+      <Container>
+        <ProjectInfo identifier={ identifier } />
+        <Presets identifier={ identifier } />
+        <PullSettings identifier={ identifier } />
+        <ApiKeys identifier={ identifier } />
+        <Collaborators identifier={ identifier } />
+        <ProjectTools identifier={ identifier } />
+      </Container>
+    </Layout>
   )
 }
 
