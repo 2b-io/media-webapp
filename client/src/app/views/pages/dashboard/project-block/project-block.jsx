@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { Card, List } from 'ui/elements'
-import { AddIcon, MoreIcon } from 'ui/icons'
+import { Card, List, StatusIndicator } from 'ui/elements'
+import { AddIcon } from 'ui/icons'
 import { Heading, Text, TextLine } from 'ui/typo'
 
 const ProjectBlock = ({
@@ -12,13 +12,9 @@ const ProjectBlock = ({
   const items = projects.map(
     project => ({
       key: project._id,
-      content: () => (
-        <TextLine mostLeft
-          onClick={ toProjectDetail.bind(null, project.identifier) }>
-          { project.name }
-        </TextLine>
-      ),
-      trailing: () => <MoreIcon />
+      leading: () => <StatusIndicator isActive={ true } />,
+      content: () => <TextLine mostRight>{ project.name }</TextLine>,
+      onClick: toProjectDetail.bind(null, project.identifier)
     })
   )
 

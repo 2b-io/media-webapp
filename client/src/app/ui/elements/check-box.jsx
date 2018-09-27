@@ -28,24 +28,6 @@ const Switch = styled.div`
   };
 `
 
-const Circle = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  border-radius: 100%;
-  border: 2px solid ${
-    ({ theme }) => theme.black.base
-  };
-  background: ${
-    ({ disabled, theme }) => disabled ?
-      '#e6e6e6' :
-      theme.white.base
-  };
-  width: 24px;
-  height: 24px;
-`
-
 const Input = styled.input.attrs({
   type: 'checkbox'
 })`
