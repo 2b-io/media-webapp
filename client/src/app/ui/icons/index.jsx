@@ -43,6 +43,10 @@ import { userX } from 'react-icons-kit/feather/userX'
 // APPLICATION ICON: http://wmira.github.io/react-icons-kit/#/iconset/fa
 import { sortAmountAsc } from 'react-icons-kit/fa/sortAmountAsc'
 import { sortAmountDesc } from 'react-icons-kit/fa/sortAmountDesc'
+import { sortAlphaAsc } from 'react-icons-kit/fa/sortAlphaAsc'
+import { sortAlphaDesc } from 'react-icons-kit/fa/sortAlphaDesc'
+import { sortNumericAsc } from 'react-icons-kit/fa/sortNumericAsc'
+import { sortNumericDesc } from 'react-icons-kit/fa/sortNumericDesc'
 
 import icon from './icon'
 
@@ -77,6 +81,10 @@ export const ReloadIcon = icon(ic_refresh)
 export const SignOutIcon = icon(ic_exit_to_app)
 export const SortAscIcon = icon(sortAmountAsc)
 export const SortDescIcon = icon(sortAmountDesc)
+export const SortAlphaAscIcon = icon(sortAlphaAsc)
+export const SortAlphaDescIcon = icon(sortAlphaDesc)
+export const SortNumericAscIcon = icon(sortNumericAsc)
+export const SortNumericDescIcon = icon(sortNumericDesc)
 export const SuccessIcon = icon(ic_done)
 export const TrashIcon = icon(trash2)
 export const UiIcon = icon(ic_view_quilt)

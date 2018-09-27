@@ -53,9 +53,9 @@ const Container = styled.div`
   grid-gap: 16px;
   grid-template-columns: 100%;
 `
-const sortProjects = (sortCondition, projects, currentAccountId) => {
+const sortProjects = ( { type, ascending }, projects, currentAccountId) => {
 
-  switch (sortCondition) {
+  switch (type) {
     case 'privilege': {
       return projects.sort(
         (project) => {
@@ -63,20 +63,28 @@ const sortProjects = (sortCondition, projects, currentAccountId) => {
             ({ account }) => account._id === currentAccountId
           )[0].privilege
 
-          return privilegeInProject.privilege === 'owner' ? 1 : -1
+          return privilegeInProject === 'owner' && ascending
         }
       )
     }
     case 'name':
       return projects.sort(
-        (project, nextProject) => project.name.localeCompare(nextProject.name)
+        (project, nextProject) => (
+          ascending ?
+            project.name.localeCompare(nextProject.name) :
+            nextProject.name.localeCompare(project.name)
+        )
       )
     case 'created':
       return projects.sort(
-        (project, nextProject) => project.created - nextProject.created
+        (project, nextProject) => (
+          ascending ?
+            project.created - nextProject.created :
+            nextProject.created - project.created
+        )
       )
   }
-   return projects
+  return projects
 }
 const hideProjects = (projects) => projects.filter(({ status  }) => status !== 'DISABLED' )
 

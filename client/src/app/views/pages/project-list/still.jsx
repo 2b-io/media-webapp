@@ -11,7 +11,11 @@ import {
   EyeIcon,
   EyeOffIcon,
   SortAscIcon,
-  SortDescIcon
+  SortDescIcon,
+  SortAlphaAscIcon,
+  SortAlphaDescIcon,
+  SortNumericAscIcon,
+  SortNumericDescIcon
 } from 'ui/icons'
 import { ContextMenu, List } from 'ui/elements'
 import { PageTitle, TextLine } from 'ui/typo'
@@ -43,12 +47,12 @@ const ProjectList = ({
             {
               content: () => <TextLine mostLeft mostRight>Sort by name</TextLine>,
               onClick: () => sortProjects({ type: 'name', ascending: !ascending }),
-              trailing: type === 'name' ? () =>  ascending ? <SortAscIcon /> : <SortDescIcon /> : null
+              trailing: type === 'name' ? () =>  ascending ? <SortAlphaAscIcon /> : <SortAlphaDescIcon /> : null
             },
             {
               content: () => <TextLine mostLeft mostRight>Sort by created date</TextLine>,
               onClick: () => sortProjects({ type: 'created', ascending: !ascending }),
-              trailing: type === 'created' ? () =>  ascending ? <SortAscIcon /> : <SortDescIcon /> : null
+              trailing: type === 'created' ? () =>  ascending ? <SortNumericAscIcon /> : <SortNumericDescIcon /> : null
             },
             {
               content: () => (
