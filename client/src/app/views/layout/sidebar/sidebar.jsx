@@ -99,7 +99,6 @@ const UserName = styled.div`
     ({ theme }) => theme.black.on.base
   };
   padding: 56px 0 0 72px;
-
 `
 
 const UserEmail = styled.div`
