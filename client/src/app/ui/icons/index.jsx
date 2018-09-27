@@ -25,6 +25,7 @@ import { ic_launch } from 'react-icons-kit/md/ic_launch'
 import { ic_menu } from 'react-icons-kit/md/ic_menu'
 import { ic_mode_edit } from 'react-icons-kit/md/ic_mode_edit'
 import { ic_more_vert } from 'react-icons-kit/md/ic_more_vert'
+import { ic_person } from 'react-icons-kit/md/ic_person'
 import { ic_refresh } from 'react-icons-kit/md/ic_refresh'
 import { ic_report } from 'react-icons-kit/md/ic_report'
 import { ic_star } from 'react-icons-kit/md/ic_star'
@@ -64,6 +65,7 @@ export const MenuIcon = icon(ic_menu)
 export const MinimizeIcon = icon(ic_chevron_left)
 export const MoreIcon = icon(ic_more_vert)
 export const PaymentIcon = icon(ic_credit_card)
+export const PersonIcon = icon(ic_person)
 export const ProjectListIcon = icon(ic_domain)
 export const ReloadIcon = icon(ic_refresh)
 export const SignOutIcon = icon(ic_exit_to_app)
