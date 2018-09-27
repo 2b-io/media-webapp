@@ -40,7 +40,7 @@ const ProjectForm = ({ handleSubmit, domain, status }) => (
         ? <TextLine>{ status }</TextLine>
         : <React.Fragment>
           <CheckBox
-            name="status"
+            name="isActive"
             label="Enable"
           />
 

@@ -86,7 +86,7 @@ const sortProjects = ( { type, ascending }, projects, currentAccountId) => {
   }
   return projects
 }
-const hideProjects = (projects) => projects.filter(({ status  }) => status !== 'DISABLED' )
+const hideProjects = (projects) => projects.filter(({ isActive }) => isActive === true )
 
 const ProjectList = ({
   projects,
@@ -114,7 +114,7 @@ const ProjectList = ({
           <Text mostLeft mostRight>
             { project.name }<br />
             { project.infrastructure.domain }<br />
-            { project.status }
+            { project.status !== 'DEPLOYED' ? project.status : project.isActive ? 'DEPLOYED' : 'DISABLED' }
           </Text>
         ) }
       />

@@ -23,7 +23,7 @@ const ProjectInfo = ({
           </TextLine>
           <Text mostLeft mostRight>
             { project.infrastructure.domain }<br />
-            { project.status }
+            { project.status !== 'DEPLOYED' ? project.status : project.isActive ? 'DEPLOYED' : 'DISABLED' }
           </Text>
         </Fragment>
       ) }

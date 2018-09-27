@@ -18,13 +18,14 @@ const normalizePattern = (path, origin) => {
 }
 
 export const update = async ( projectIdentifier, data ) => {
-  const { status } = data
-  const { status: currentStatus, _id } = await Project.findOne({
+  const { status, isActive } = data
+
+  const { status: currentStatus, isActive: currentIsActive, _id } = await Project.findOne({
     identifier: projectIdentifier,
     removed: false
   }).lean()
 
-  if (currentStatus !== status) {
+  if (currentStatus !== status || isActive !== currentIsActive) {
     const { identifier: distributionId } = await Infrastructure.findOne({ project: _id })
     const enabled = status === 'DISABLED' ? false : true
     await updateDistribution(distributionId, enabled)
@@ -38,7 +39,7 @@ export const update = async ( projectIdentifier, data ) => {
 
   return await Project.findOneAndUpdate(
     { identifier: projectIdentifier },
-    { ...data },
+    { ...data, status: 'DEPLOYED'  },
     { new: true }
   ).lean()
 }
@@ -67,14 +68,15 @@ export const getByIdentifier = async (projectIdentifier, account) => {
   if (projectStatus === 'INITIALIZING' || projectStatus === 'UPDATING') {
     const { identifier: distributionId } = await Infrastructure.findOne({ project: project._id })
     const { Distribution: distribution } = await getDistribution(distributionId)
-    const { Status: distributionStatus } = distribution
+    const { Status: distributionStatus, DistributionConfig } = distribution
+    const isActive = DistributionConfig.Enabled
     const status = (distributionStatus === 'InProgress') ?
       projectStatus === 'INITIALIZING' ? 'INITIALIZING' : 'UPDATING' :
       distributionStatus.toUpperCase()
 
     return await Project.findOneAndUpdate(
       { identifier: projectIdentifier },
-      { status },
+      { status, isActive },
       { new: true }
     ).lean()
   }
