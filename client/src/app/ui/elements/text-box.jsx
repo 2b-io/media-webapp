@@ -24,8 +24,8 @@ const Input = styled.input.attrs({
 })`
   display: block;
   appearance: none;
-  background-color: white;
-  color: black;
+  background: ${ ({ theme }) => theme.white.base };
+  color: ${ ({ theme }) => theme.white.on.base };
   border: none;
   border-radius: 0;
   outline: none;
