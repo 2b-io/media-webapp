@@ -17,9 +17,6 @@ const Wrapper = styled.div`
   position: relative;
 `
 
-const StyleButton = styled.div`
-  padding-bottom: 24px;
-`
 const CustomHeaderList = ({ fields }) => (
   fields.map(
     (header, index) => (
@@ -36,16 +33,14 @@ const CustomHeaderList = ({ fields }) => (
           name={ `${ header }.value` }
           placeholder="Media CDN"
         />
-        <StyleButton>
-          { index === fields.length - 1 ?
-            <Button plain onClick={ () => fields.push({}) }>
-              <AddIcon />
-            </Button> :
-            <Button plain onClick={ () => fields.remove(index) }>
-              <TrashIcon />
-            </Button>
-          }
-        </StyleButton>
+        { index === fields.length - 1 ?
+          <Button plain onClick={ () => fields.push({}) }>
+            <AddIcon />
+          </Button> :
+          <Button plain onClick={ () => fields.remove(index) }>
+            <TrashIcon />
+          </Button>
+        }
       </Wrapper>
     )
   )
@@ -54,17 +49,7 @@ const CustomHeaderList = ({ fields }) => (
 const CustomHeader = () => (
   <FieldArray
     name="headers"
-    component={ ({ fields }) => {
-      if (!fields.length) {
-        fields.push({})
-      }
-
-      return (
-        <CustomHeaderList
-          fields={ fields }
-        />
-      )
-    } }
+    component={ CustomHeaderList }
   />
 )
 

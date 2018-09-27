@@ -16,6 +16,6 @@ const EditProfile = ({ navigateBack }) => (
 export default connect(
   null,
   mapDispatch({
-    navigateBack: () => actions.requestLocation(`/@me`)
+    navigateBack: () => actions.requestLocation('/@me')
   })
 )(EditProfile)
