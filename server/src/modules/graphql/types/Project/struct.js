@@ -22,5 +22,8 @@ export default {
   },
   created: {
     type: GraphQLFloat
+  },
+  isActive: {
+    type: GraphQLBoolean
   }
 }

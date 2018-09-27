@@ -21,6 +21,7 @@ export const PROJECT_FRAGMENT = `
   },
   status,
   created,
+  isActive,
   collaborators {
     _id,
     account {
@@ -120,100 +121,13 @@ export default {
         {
           ...project
         },
-        [ 'name', 'status', 'description' ]
+        [ 'name', 'status', 'description', 'isActive' ]
       ),
       token,
       identifier: project.identifier
     })
 
     return body.session.account.project._update
-  },
-  async createPreset({ preset, identifier }, token) {
-    const body = await request(`
-      query createPreset($preset: PresetStruct!, $identifier: String!, $token: String!) {
-        session(token: $token) {
-          account {
-            project (identifier: $identifier) {
-              _createPreset(preset: $preset) {
-                ${ PRESET_FRAGMENT }
-              }
-            }
-          }
-        }
-      }
-    `, {
-      preset: pick(preset, [ 'name', 'values' ]),
-      identifier,
-      token
-    })
-
-    return body.session.account.project._createPreset
-  },
-  async getPreset({ hash, identifier }, token) {
-    const body = await request(`
-      query getPreset($hash: String!, $identifier: String!, $token: String!) {
-        session(token: $token) {
-          account {
-            project(identifier: $identifier) {
-              preset(hash: $hash) {
-                ${ PRESET_FRAGMENT }
-              }
-            }
-          }
-        }
-      }
-    `, {
-      hash,
-      identifier,
-      token
-    })
-
-    return body.session.account.project.preset
-  },
-  async updatePreset({ preset, identifier }, token) {
-    const body = await request(`
-      query updatePreset($hash: String!, $preset: PresetStruct!, $identifier: String!, $token: String!) {
-        session(token: $token) {
-          account {
-            project(identifier: $identifier) {
-              preset(hash: $hash){
-                _update(preset: $preset) {
-                  ${ PRESET_FRAGMENT }
-                }
-              }
-            }
-          }
-        }
-      }
-    `, {
-      hash: preset.hash,
-      preset: pick(preset, [ 'name', 'hash', 'values' ]),
-      identifier,
-      token
-    })
-
-    return body.session.account.project.preset._update
-  },
-  async deletePreset({ preset, identifier }, token) {
-    const body = await request(`
-      query deletePreset($hash: String!, $identifier: String!, $token: String!) {
-        session(token: $token) {
-          account {
-            project(identifier: $identifier) {
-              preset(hash: $hash){
-                _destroy
-              }
-            }
-          }
-        }
-      }
-    `, {
-      hash: preset.hash,
-      identifier,
-      token
-    })
-
-    return body.session.account.project.preset._destroy
   },
   async inviteCollaborator(token, identifier, inputEmailMessenge) {
     const body = await request(`

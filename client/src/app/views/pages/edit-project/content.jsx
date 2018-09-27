@@ -17,22 +17,20 @@ const ProjectForm = reduxForm({
 const EditProject = ({
   project,
   updateProject
-}) => {
-  return (
-    <Container>
-      <ProjectForm
-        onSubmit={ ( { name, status }) => updateProject(project.identifier, name, status) }
-        initialValues={ {
-          name: project && project.name,
-          domain: project && project.infrastructure.domain,
-          status: project && project.status !== 'DISABLED' ? true : false
-        } }
-        domain={ project && project.infrastructure.domain }
-        status={ project && project.status }
-      />
-    </Container>
-  )
-}
+}) => (
+  <Container>
+    <ProjectForm
+      onSubmit={ ( { name, status }) => updateProject(project.identifier, name, status) }
+      initialValues={ {
+        name: project && project.name,
+        domain: project && project.infrastructure.domain,
+        isActive: project && project.isActive
+      } }
+      domain={ project && project.infrastructure.domain }
+      status={ project && project.status }
+    />
+  </Container>
+)
 
 export default stateful({
   component: 'EditProject'
