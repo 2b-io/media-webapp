@@ -19,6 +19,16 @@ export const create = async (info) => {
   }).save()
 }
 
+export const update = async (_id, data) => {
+  const account = await Account.findOneAndUpdate(
+    { _id },
+    { ...data },
+    { new: true }
+  ).lean()
+
+  return account
+}
+
 export const findById = async (id) => {
   return await Account.findById(id)
 }

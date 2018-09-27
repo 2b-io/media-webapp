@@ -6,6 +6,9 @@ export default {
   email: {
     type: GraphQLString
   },
+  name: {
+    type: GraphQLString
+  },
   password: {
     type: GraphQLString
   }

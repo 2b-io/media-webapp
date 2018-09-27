@@ -13,6 +13,10 @@ const schema = mongoose.Schema({
     type: String,
     required: true
   },
+  name: {
+    type: String,
+    required: true
+  },
   removed: {
     type: Boolean,
     default: false,
