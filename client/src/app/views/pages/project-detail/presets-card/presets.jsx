@@ -4,14 +4,19 @@ import { connect } from 'react-redux'
 import { actions, selectors } from 'state/interface'
 import { mapDispatch } from 'services/redux-helpers'
 import { Heading, TextLine } from 'ui/typo'
-import { Card, List, StatusIndicator } from 'ui/elements'
+import { Card, Dialog, List, StatusIndicator } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 
-import PresetModal from '../preset-modal'
+import CreateDialog from './create-dialog'
 
 const Presets = ({
+  // dialog
+  isCreateDialogActive,
+  showCreateDialog,
+  hideCreateDialog,
   identifier,
   presets = {},
+  createPreset,
   toPreset,
   toProjectDetail
 }) => {
@@ -28,18 +33,27 @@ const Presets = ({
     <Fragment>
       <Card
         title={ () => <Heading mostLeft mostRight>Presets</Heading> }
-        fab={ () => <AddIcon onClick={ () => toPreset(identifier, 'new') } /> }
+        fab={ () => <AddIcon onClick={ showCreateDialog } /> }
         content={ () => (
           items.length &&
             <List items={ items } /> ||
             <TextLine mostLeft mostRight>No preset found</TextLine>
         ) }
       />
-      <PresetModal
-        identifier={ identifier }
-        width="wide"
-        hideOnClickOutside={ true }
-        onHide={ () => toProjectDetail(identifier) }
+
+      <Dialog
+        isActive= { isCreateDialogActive }
+        onOverlayClick={ hideCreateDialog }
+        content={ () => (
+          <CreateDialog
+            identifier={ identifier }
+            presets={ presets }
+            createPreset={ (params) => {
+              createPreset(params)
+              hideCreateDialog()
+            } }
+          />
+        ) }
       />
     </Fragment>
   )
@@ -47,9 +61,15 @@ const Presets = ({
 
 export default connect(
   (state, { identifier }) => ({
+    isCreateDialogActive: selectors.isDialogActive(state, 'CREATE_PRESET'),
     presets: selectors.presets(state, identifier)
   }),
   mapDispatch({
+    // dialog
+    showCreateDialog: () => actions.showDialog('CREATE_PRESET'),
+    hideCreateDialog: () => actions.hideDialog('CREATE_PRESET'),
+    // preset
+    createPreset: actions.createPreset,
     toPreset: (identifier, hash) => actions.requestLocation(`/projects/${ identifier }/presets/${ hash }`),
     toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }`)
   })

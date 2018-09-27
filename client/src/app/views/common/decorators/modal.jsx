@@ -46,6 +46,8 @@ export default ({
   name,
   enableStateful = true
 }) => WrappedComponent => {
+  console.warn('modal() is deprecated, use `Dialog` element instead...')
+
   const ModalContent = enableStateful ?
     stateful({
       component: `modal/${ name }`
