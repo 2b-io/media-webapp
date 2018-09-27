@@ -8,7 +8,8 @@ import Sidebar from './sidebar'
 export default connect(
   mapState({
     open: selectors.isSidebarOpen,
-    currentAccount: selectors.currentAccount
+    currentAccount: selectors.currentAccount,
+    projectCount: selectors.projectCount
   }),
   mapDispatch({
     minimizeSidebar: actions.minimizeSidebar,

@@ -1,3 +1,4 @@
+export { default as Badge } from './badge'
 export { default as Break } from './break'
 export { default as BreakPoint } from './break-point'
 export { default as Button } from './button'

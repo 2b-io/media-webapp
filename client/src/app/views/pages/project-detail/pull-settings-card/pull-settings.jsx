@@ -17,6 +17,10 @@ const PullSettings = ({
   const delimiter = /\s*[,\n+]\s*/
   const allowedOrigins = (pullSetting.allowedOrigins || '').trim().split(delimiter).filter(Boolean)
 
+  const filteredHeaders = (pullSetting.headers || []).filter(
+    (header) => !!(header && header.name && header.value)
+  )
+
   return (
     <Fragment>
       <Card
@@ -42,8 +46,8 @@ const PullSettings = ({
             <Text mostLeft mostRight>
               Headers:<br />
               {
-                (pullSetting.headers || []).length &&
-                  pullSetting.headers.map(
+                filteredHeaders.length &&
+                  filteredHeaders.map(
                     ({ name, value }, index) => (
                       <Fragment key={ index }>- { name }: { value }<br /></Fragment>
                     )

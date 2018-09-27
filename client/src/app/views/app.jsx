@@ -1,7 +1,7 @@
 import React from 'react'
 import { injectGlobal, ThemeProvider } from 'styled-components'
 
-import Layout from 'views/new-layout'
+import Layout from 'views/layout'
 import { HistoryProvider, Router } from 'views/router'
 import { content, overlay, still } from 'views/route-config'
 import defaultTheme from 'views/themes/default'

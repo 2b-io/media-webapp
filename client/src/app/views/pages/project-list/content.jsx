@@ -7,6 +7,7 @@ import { actions, selectors } from 'state/interface'
 import { Card } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 import { Text } from 'ui/typo'
+import { Project } from 'views/common/compounds'
 import { stateful } from 'views/common/decorators'
 
 const Fab = styled.button`
@@ -110,13 +111,7 @@ const ProjectList = ({
       <Card
         key={ project.identifier }
         onClick={ toProjectDetail.bind(null, project.identifier) }
-        content={ () => (
-          <Text mostLeft mostRight>
-            { project.name }<br />
-            { project.infrastructure.domain }<br />
-            { project.status !== 'DEPLOYED' ? project.status : project.isActive ? 'DEPLOYED' : 'DISABLED' }
-          </Text>
-        ) }
+        content={ () => <Project project={ project } /> }
       />
     )
   )

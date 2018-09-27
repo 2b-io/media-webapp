@@ -27,11 +27,12 @@ export default {
       }
     `, { token, identifier })
 
-    const { pullSetting } = body.session.account.project
+    const pullSetting = body.session.account.project.pullSetting
 
     return {
       ...pullSetting,
-      allowedOrigins: pullSetting.allowedOrigins.join('\n')
+      allowedOrigins: pullSetting.allowedOrigins.join('\n'),
+      headers: [ ...(pullSetting.headers || []), {} ]
     }
   },
   async updatePullSetting(token, identifier, pullSetting) {
@@ -70,11 +71,12 @@ export default {
       }
     })
 
-    const updatedProject = body.session.account.project.pullSetting._update
+    const updatedPullSetting = body.session.account.project.pullSetting._update
 
     return {
-      ...updatedProject,
-      allowedOrigins: updatedProject.allowedOrigins.join('\n')
+      ...updatedPullSetting,
+      allowedOrigins: updatedPullSetting.allowedOrigins.join('\n'),
+      headers: [ ...(updatedPullSetting.headers || []), {} ]
     }
   },
 }

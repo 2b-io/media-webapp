@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import styled, { keyframes } from 'styled-components'
 
-import { Identicon, List } from 'ui/elements'
+import { Badge, Identicon, List } from 'ui/elements'
 import { CloseIcon } from 'ui/icons'
 import { DescriptionTextLine, TextLine } from 'ui/typo'
 
@@ -99,7 +99,6 @@ const UserName = styled.div`
     ({ theme }) => theme.black.on.base
   };
   padding: 56px 0 0 72px;
-
 `
 
 const UserEmail = styled.div`
@@ -128,6 +127,7 @@ const Sidebar = ({
   currentAccount = {},
   minimizeSidebar,
   open,
+  projectCount = 0,
   signOut,
   toDashboard,
   toProfile,
@@ -140,7 +140,10 @@ const Sidebar = ({
   }, {
     onClick: toProjectList,
     leading: () => <ProjectListIcon />,
-    content: () => <TextLine mostRight>Projects</TextLine>
+    trailing: () => projectCount ?
+      <Badge content={ projectCount } /> :
+      null,
+    content: () => <TextLine mostRight={ !projectCount }>Projects</TextLine>
   }, {
     leading: () => <BillingIcon />,
     content: () => <TextLine mostRight>Billing</TextLine>

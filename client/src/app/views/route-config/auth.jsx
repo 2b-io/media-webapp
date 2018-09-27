@@ -1,6 +1,7 @@
 import * as CreateProject from 'views/pages/create-project'
 import * as Dashboard from 'views/pages/dashboard'
 import * as EditProject from 'views/pages/edit-project'
+import * as EditProfile from 'views/pages/edit-profile'
 import * as PresetGif from 'views/pages/preset-gif'
 import * as PresetJpeg from 'views/pages/preset-jpeg'
 import * as PresetPng from 'views/pages/preset-png'
@@ -21,6 +22,13 @@ export default {
     exact: true,
     onEnter: () => [
       actions.fetchProjects()
+    ]
+  },
+  '/@:id/edit': {
+    component: EditProfile,
+    exact: true,
+    onEnter: ({ id }) => [
+      actions.getAccount(id)
     ]
   },
   '/@:id': {

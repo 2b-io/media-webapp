@@ -11,6 +11,8 @@ const Button = styled.button.attrs({
   white-space: nowrap;
   transition: background .3s linear;
   transition: color .3s linear;
+  line-height: 40px;
+  height: 40px;
   cursor: ${
     ({ disabled }) => disabled ? 'not-allowed' : 'pointer'
   };
@@ -62,8 +64,6 @@ const Button = styled.button.attrs({
         width: 100%;
         border: none;
         outline: none;
-        line-height: 40px;
-        height: 40px;
         background: ${
           disabled ?
             theme.secondary.base :

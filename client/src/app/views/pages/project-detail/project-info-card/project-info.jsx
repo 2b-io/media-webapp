@@ -3,11 +3,12 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
-import { Heading, Text, TextLine } from 'ui/typo'
+import { Heading } from 'ui/typo'
 import { Card, Nothing } from 'ui/elements'
 import { EditIcon } from 'ui/icons'
+import { Project } from 'views/common/compounds'
 
-const ProjectInfo = ({
+const ProjectInfoCard = ({
   identifier,
   project,
   toEditProject
@@ -16,17 +17,7 @@ const ProjectInfo = ({
     <Card
       title={ () => <Heading mostLeft mostRight>General</Heading> }
       fab={ () => <EditIcon onClick={ () => toEditProject(identifier) } /> }
-      content={ () => (
-        <Fragment>
-          <TextLine mostLeft mostRight>
-            { project.name }
-          </TextLine>
-          <Text mostLeft mostRight>
-            { project.infrastructure.domain }<br />
-            { project.status !== 'DEPLOYED' ? project.status : project.isActive ? 'DEPLOYED' : 'DISABLED' }
-          </Text>
-        </Fragment>
-      ) }
+      content={ () => <Project project={ project } /> }
     />
   ) || <Nothing />
 )
@@ -38,4 +29,4 @@ export default connect(
   mapDispatch({
     toEditProject: (identifier) => actions.requestLocation(`/projects/${ identifier }/edit`)
   })
-)(ProjectInfo)
+)(ProjectInfoCard)
