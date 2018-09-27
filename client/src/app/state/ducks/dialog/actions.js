@@ -1,11 +1,11 @@
 import * as types from './types'
 
-export const hideDialog = ({ dialog }) => ({
+export const hideDialog = (name) => ({
   type: types.HIDE,
-  payload: { dialog }
+  payload: { name }
 })
 
-export const showDialog = ({ dialog, params }) => ({
+export const showDialog = (name) => ({
   type: types.SHOW,
-  payload: { dialog, params }
+  payload: { name }
 })

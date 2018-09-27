@@ -105,16 +105,6 @@ export default {
       actions.getPreset({ identifier, contentType: 'image/png' })
     ]
   },
-  '/projects/:identifier/presets/new': {
-    partial: true,
-    onEnter: ({ identifier }) => [
-      actions.showModal({ modal: 'Preset' }),
-      actions.fetchPresets({ identifier })
-    ],
-    onLeave: () => [
-      actions.hideModal({ modal: 'Preset' }),
-    ]
-  },
   '/projects/:identifier/invite': {
     partial: true,
     onEnter: () => [

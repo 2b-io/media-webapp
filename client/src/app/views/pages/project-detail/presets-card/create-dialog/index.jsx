@@ -1,13 +1,8 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
-import { connect } from 'react-redux'
 
-import { mapDispatch } from 'services/redux-helpers'
-import { actions, selectors } from 'state/interface'
-import { Container, ErrorBox } from 'ui/elements'
+import { Container } from 'ui/elements'
 import { Text } from 'ui/typo'
-import { modal } from 'views/common/decorators'
-import { Redirect } from 'views/router'
 
 import _PresetForm from './form'
 
@@ -23,22 +18,13 @@ const PresetForm = reduxForm({
   enableReinitialize: true
 })(_PresetForm)
 
-const PresetModal = ({
+const CreateDialog = ({
   createPreset,
   identifier,
   presets,
-  ui: {
-    idle,
-    createError,
-    createResult
-  }
 }) => {
   if (!presets) {
     return null
-  }
-
-  if (createResult) {
-    return <Redirect to={ `/projects/${ identifier }/presets/${ createResult.contentType.replace('/', '_') }` } />
   }
 
   const filtered = SUPPORTED_CONTENT_TYPES.filter(
@@ -55,11 +41,8 @@ const PresetModal = ({
 
   return (
     <Container>
-      { createError &&
-        <ErrorBox>An error happens when creating the new preset.</ErrorBox>
-      }
       <PresetForm
-        idle={ idle }
+        idle={ true }
         onSubmit={ ({ contentType }) => createPreset({ identifier, contentType }) }
         initialValues={ { contentType: filtered[0].value } }
         options={ filtered }
@@ -68,18 +51,4 @@ const PresetModal = ({
   )
 }
 
-export default modal({
-  name: 'Preset'
-})(
-  connect(
-    (state, { identifier }) => {
-      return {
-        presets: selectors.presets(state, identifier),
-        identifier
-      }
-    },
-    mapDispatch({
-      createPreset: actions.createPreset
-    })
-  )(PresetModal)
-)
+export default CreateDialog
