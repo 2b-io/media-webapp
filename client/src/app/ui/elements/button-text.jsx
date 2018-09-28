@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react'
-import styled, { css } from 'styled-components'
+import React from 'react'
+import styled from 'styled-components'
 
 const Button = styled.button.attrs({
   type: ({ type = 'button' }) => type
@@ -27,7 +27,7 @@ const Wrapper = styled.div`
 `
 const ButtonText = ({ ...props }) =>(
   <Wrapper>
-    <Button { ...props }/>
+    <Button { ...props } />
   </Wrapper>
 )
 

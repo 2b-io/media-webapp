@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import Choices from './dialog-choices'
 import Content from './dialog-content'
 
-const Dialog = styled.div`
+const DialogContent = styled.div`
 `
 
-Dialog.Choices = Choices
-Dialog.Content = Content
+DialogContent.Choices = Choices
+DialogContent.Content = Content
 
-export default Dialog
+export default DialogContent

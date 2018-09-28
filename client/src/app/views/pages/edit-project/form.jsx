@@ -2,14 +2,20 @@ import React from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 import { Form } from 'ui/compounds'
-import { Button, ButtonText, Break, Dialog } from 'ui/elements'
+import { Button, ButtonText, Break } from 'ui/elements'
 import { CopyIcon } from 'ui/icons'
 import { TextLine } from 'ui/typo'
 
 import { CheckBox, TextBox } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
-const ProjectForm = ({ handleSubmit, domain, status }) => (
+const ProjectForm = ({
+  handleSubmit,
+  domain,
+  status,
+  isActive,
+  showRemoveProjectDialog
+}) => (
   <Form handleSubmit={ handleSubmit }>
     <TextBox
       label="Project Name"
@@ -50,26 +56,15 @@ const ProjectForm = ({ handleSubmit, domain, status }) => (
           >
             Save
           </Button>
-          <ButtonText>
-            Delete
-          </ButtonText>
+          {
+            isActive ?
+              null :
+              <ButtonText onClick={ showRemoveProjectDialog }>
+                Delete
+              </ButtonText>
+          }
         </React.Fragment>
     }
-
-    {/* <Dialog
-      isActive={ isCreateDialogActive }
-      onOverlayClick={ hideCreateDialog }
-      content={ () => (
-        <CreateDialog
-          identifier={ identifier }
-          presets={ presets }
-          createPreset={ (params) => {
-            createPreset(params)
-            hideCreateDialog()
-          } }
-        />
-      ) }
-    /> */}
   </Form>
 )
 

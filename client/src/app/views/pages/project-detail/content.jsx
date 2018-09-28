@@ -38,12 +38,9 @@ const Project = ({
   ui: {
     // idle,
     notFound,
-    // deleteError,
-    deleteResult,
-    // updateError
   }
 }) => {
-  if(notFound || deleteResult) {
+  if(notFound) {
     return <Redirect to="/projects" />
   }
 

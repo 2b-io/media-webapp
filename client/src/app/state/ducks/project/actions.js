@@ -38,16 +38,16 @@ export const getProjectFailed = reason => ({
   payload: { reason }
 })
 
-export const deleteProject = identifier => ({
-  type: types.DELETE,
+export const removeProject = identifier => ({
+  type: types.REMOVE,
   payload: { identifier }
 })
-export const deleteProjectCompleted = identifier => ({
-  type: types.DELETE_COMPLETED,
+export const removeProjectCompleted = identifier => ({
+  type: types.REMOVE_COMPLETED,
   payload: { identifier }
 })
-export const deleteProjectFailed = reason => ({
-  type: types.DELETE_FAILED,
+export const removeProjectFailed = reason => ({
+  type: types.REMOVE_FAILED,
   payload: { reason }
 })
 

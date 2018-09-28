@@ -29,7 +29,7 @@ export default createReducer({})({
       ...action.payload.project,
     }
   }),
-  [ types.DELETE_COMPLETED ]: (state, action) => {
+  [ types.REMOVE_COMPLETED ]: (state, action) => {
     const { identifier } = action.payload
     const { [ identifier ]: removedProject, ...projects } = state
 
