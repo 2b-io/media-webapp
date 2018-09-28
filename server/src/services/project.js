@@ -130,15 +130,21 @@ export const create = async (data, provider, account) => {
     project: project._id
   }).save()
 
-  const cloudfront = await createDistribution(project.name)
-  const { Id: identifier, DomainName: domain } = cloudfront.Distribution
-  await new Infrastructure({
-    project: project._id,
-    identifier,
-    domain,
-    provider
-  }).save()
-
+  try {
+    const cloudfront = await createDistribution(project.name)
+    const { Id: identifier, DomainName: domain } = cloudfront.Distribution
+    await new Infrastructure({
+      project: project._id,
+      identifier,
+      domain,
+      provider
+    }).save()
+  } catch (error) {
+    await Project.findOneAndRemove({ _id: project._id })
+    await Permission.deleteMany({ project: project._id })
+    await PullSetting.deleteMany({ project: project._id })
+    throw error
+  }
   return project
 }
 

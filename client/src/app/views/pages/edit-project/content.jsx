@@ -20,7 +20,7 @@ const EditProject = ({
 }) => (
   <Container>
     <ProjectForm
-      onSubmit={ ( { name, status }) => updateProject(project.identifier, name, status) }
+      onSubmit={ ( { name, status, isActive }) => updateProject(project.identifier, name, status, isActive) }
       initialValues={ {
         name: project && project.name,
         domain: project && project.infrastructure.domain,
@@ -44,7 +44,7 @@ export default stateful({
       }
     },
     mapDispatch({
-      updateProject: (identifier, name, status) => actions.updateProject({ identifier, name, status: status === true ? 'DEPLOYED' : 'DISABLED' })
+      updateProject: (identifier, name, status, isActive) => actions.updateProject({ identifier, name, status: isActive ? 'DEPLOYED' : 'DISABLED', isActive })
     })
   )(EditProject)
 )
