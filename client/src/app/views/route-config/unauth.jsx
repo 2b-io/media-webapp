@@ -1,9 +1,10 @@
+import { actions } from 'state/interface'
+
 import ForgotPassword from 'views/pages/forgot-password'
 import Register from 'views/pages/register'
 import ResetPassword from 'views/pages/reset-password'
-import SignIn from 'views/pages/sign-in'
 
-import { actions } from 'state/interface'
+import signIn from './public/sign-in'
 
 export default {
   '/forgot-password': {
@@ -21,8 +22,5 @@ export default {
       actions.getResetCode(code)
     ]
   },
-  '/sign-in': {
-    component: SignIn,
-    exact: true
-  }
+  ...signIn
 }
