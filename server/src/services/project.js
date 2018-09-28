@@ -143,7 +143,7 @@ export const create = async (data, provider, account) => {
     await Project.findOneAndRemove({ _id: project._id })
     await Permission.deleteMany({ project: project._id })
     await PullSetting.deleteMany({ project: project._id })
-    throw new Error(error)
+    throw error
   }
   return project
 }
