@@ -85,8 +85,8 @@ const EditProject = ({
                   Cancel
                 </Button>
               </Button.Group>
-          </DialogContent.Choices>
-        </DialogContent>
+            </DialogContent.Choices>
+          </DialogContent>
         ) }
       />
     </Container>
