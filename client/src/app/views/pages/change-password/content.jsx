@@ -7,38 +7,28 @@ import { actions, selectors } from 'state/interface'
 import { Container } from 'ui/elements'
 import { stateful } from 'views/common/decorators'
 
-import _EditProfileForm from './form'
+import _ChangePasswordForm from './form'
 
-const EditProfileForm = reduxForm({
-  form: 'editProfile',
-  enableReinitialize: true
-})(_EditProfileForm)
+const ChangePasswordForm = reduxForm({
+  form: 'changePasswordForm'
+})(_ChangePasswordForm)
 
-const EditProfile = ({
+const ChangePassword = ({
   account,
   session,
-  updateProfile
-}) => {
-  if(!account) {
-    return null
-  }
-
-  const { _id: loginId, ...newAccount } = account
-
-  return (
-    <Container>
-      { session && account && session.account._id === loginId &&
-        <EditProfileForm
-          initialValues={ newAccount }
-          onSubmit={ updateProfile }
-        />
-      }
-    </Container>
-  )
-}
+  changePassword
+}) => (
+  <Container>
+    { session && account && session.account._id === account._id &&
+      <ChangePasswordForm
+        onSubmit={ changePassword }
+      />
+    }
+  </Container>
+)
 
 export default stateful({
-  component: 'EditProfile'
+  component: 'ChangePassword'
 })(
   connect(
     (state) => {
@@ -53,7 +43,7 @@ export default stateful({
       }
     },
     mapDispatch({
-      updateProfile: actions.updateProfile
+      changePassword: ({ currentPassword, password }) => actions.changePassword(currentPassword, password)
     })
-  )(EditProfile)
+  )(ChangePassword)
 )

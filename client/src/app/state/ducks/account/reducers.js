@@ -6,5 +6,9 @@ export default createReducer({})({
   [ types.GET_COMPLETED ]: (state, action) => ({
     ...state,
     [ action.payload.account._id ]: action.payload.account
+  }),
+  [ types.UPDATE_COMPLETED ]: (state, action) => ({
+    ...state,
+    [ action.payload.account._id ]: action.payload.account
   })
 })

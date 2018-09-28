@@ -1,3 +1,4 @@
+import * as ChangePassword from 'views/pages/change-password'
 import * as CreateProject from 'views/pages/create-project'
 import * as Dashboard from 'views/pages/dashboard'
 import * as EditProject from 'views/pages/edit-project'
@@ -26,6 +27,13 @@ export default {
   },
   '/@:id/edit': {
     component: EditProfile,
+    exact: true,
+    onEnter: ({ id }) => [
+      actions.getAccount(id)
+    ]
+  },
+  '/@:id/change-password': {
+    component: ChangePassword,
     exact: true,
     onEnter: ({ id }) => [
       actions.getAccount(id)

@@ -9,11 +9,18 @@ import { Text } from 'ui/typo'
 
 import Top from './top'
 
-const Profile = ({ account, maximizeSidebar }) => {
+const Profile = ({
+  account,
+  maximizeSidebar,
+  toEditProfile,
+  toChangePassword
+}) => {
   const menuItems = [ {
-    content: () => <Text mostLeft mostRight>Edit Profile</Text>
+    content: () => <Text mostLeft mostRight>Edit Profile</Text>,
+    onClick: () => toEditProfile()
   }, {
-    content: () => <Text mostLeft mostRight>Change Password</Text>
+    content: () => <Text mostLeft mostRight>Change Password</Text>,
+    onClick: () => toChangePassword()
   } ]
 
   return (
@@ -40,6 +47,8 @@ export default connect(
     }
   },
   mapDispatch({
-    maximizeSidebar: actions.maximizeSidebar
+    maximizeSidebar: actions.maximizeSidebar,
+    toEditProfile: () => actions.requestLocation('/@me/edit'),
+    toChangePassword: () => actions.requestLocation('/@me/change-password')
   })
 )(Profile)

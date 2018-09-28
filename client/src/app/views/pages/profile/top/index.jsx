@@ -49,7 +49,7 @@ const Top = ({ account = {} }) => (
         />
       </UserAvatar>
       <UserName>
-        <TextLine mostLeft mostRight>John Smith</TextLine>
+        <TextLine mostLeft mostRight>{ account.name }</TextLine>
       </UserName>
       <UserEmail>
         <DescriptionTextLine mostLeft mostRight>{ account.email }</DescriptionTextLine>
