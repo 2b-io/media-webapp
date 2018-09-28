@@ -1,6 +1,6 @@
 import pathToRegexp from 'path-to-regexp'
 import querystring from 'querystring'
-import { all, select, put, take } from 'redux-saga/effects'
+import { all, fork, put, select, take } from 'redux-saga/effects'
 import url from 'url'
 
 import { actions, selectors, types } from 'state/interface'
@@ -11,14 +11,24 @@ const allPaths = {
   ...unauthRoutes
 }
 
-const regexes = Object.entries(allPaths).map(
-  ([ path, { exact, partial } ]) => {
+const routes = Object.entries(allPaths).map(
+  ([ path, { exact, ...defs } ]) => {
     const keys = []
     const regex = pathToRegexp(path, keys, { end: exact })
 
-    return { keys, path, regex, partial, exact }
+    return {
+      keys,
+      path,
+      regex,
+      exact,
+      ...defs
+    }
   }
 )
+
+const state = {
+  forks: {}
+}
 
 export default function*() {
   while (true) {
@@ -34,7 +44,12 @@ export default function*() {
     const currentQuery = currentSearch && querystring.parse(currentSearch.replace(/^\?/, ''))
     const previousQuery = previousSearch && querystring.parse(previousSearch.replace(/^\?/, ''))
 
-    const { actions: routingActions, enteringParams, leavingParams } = regexes
+    const {
+      actions: routingActions,
+      enteringParams,
+      leavingParams,
+      enteringStates
+    } = routes
       // check enter & leave
       .map(
         r => ({
@@ -72,12 +87,18 @@ export default function*() {
         (collector, r) => {
           let enteringActions = []
           let leavingActions = []
+          const enteringStates = {}
+          const leavingStates = {}
 
           if (!collector.enterEnd && r.enter) {
             console.debug(`Entering ${ current } [${ r.path }]`)
 
             if (r.onEnter) {
               enteringActions = r.onEnter(r.parameters, currentQuery)
+            }
+
+            if (r.state) {
+              enteringStates[ r.path ] = r.state
             }
           } else if (!collector.leaveEnd && r.leave) {
             console.debug(`Leaving ${ previous } [${ r.path }]`)
@@ -102,16 +123,23 @@ export default function*() {
             leavingParams: {
               ...collector.leavingParams,
               ...(r.leave ? r.parameters : {})
+            },
+            enteringStates: {
+              ...collector.enteringStates,
+              ...enteringStates
             }
           }
         }, {
           end: false,
           actions: [],
           enteringParams: {},
-          leavingParams: {}
+          leavingParams: {},
+          enteringStates: {},
+          leavingStates: {}
         }
       )
 
+    // dispatch actions onEnter, onLeave
     yield all([
       put(actions.updateParams({
         currentParams: enteringParams,
@@ -121,5 +149,36 @@ export default function*() {
       })),
       ...routingActions.map(action => put(action))
     ])
+
+    // start/stop state-controller
+    const stopForks = Object.keys(state.forks).filter(
+      (path) => !(path in enteringStates)
+    )
+
+    const startForks = Object.keys(enteringStates).filter(
+      (path) => !(path in state.forks)
+    )
+
+    if (stopForks.length) {
+      yield all(
+        stopForks.map(
+          (path) => state.forks[ path ].cancel()
+        )
+      )
+
+      state.forks = {}
+    }
+
+    if (startForks.length) {
+      state.forks = yield all(
+        startForks.reduce(
+          (forks, path) => ({
+            ...forks,
+            [ path ]: fork(enteringStates[path])
+          }),
+          {}
+        )
+      )
+    }
   }
 }

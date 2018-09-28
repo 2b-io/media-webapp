@@ -167,7 +167,7 @@ const Sidebar = ({
           <Profile>
             <UserName>
               <TextLine mostLeft mostRight>
-                { currentAccount.displayName || 'John Smith' }
+                { currentAccount.name }
               </TextLine>
             </UserName>
             <UserEmail>
