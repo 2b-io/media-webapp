@@ -19,8 +19,7 @@ const Presets = ({
   identifier,
   presets = {},
   createPreset,
-  toPreset,
-  toProjectDetail
+  toPreset
 }) => {
   const items = Object.values(presets).map(
     ({ contentType, isActive }) => ({
@@ -73,6 +72,5 @@ export default connect(
     // preset
     createPreset: actions.createPreset,
     toPreset: (identifier, hash) => actions.requestLocation(`/projects/${ identifier }/presets/${ hash }`),
-    toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }`)
   })
 )(Presets)
