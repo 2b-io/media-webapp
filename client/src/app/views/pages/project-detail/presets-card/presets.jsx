@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 
 import { actions, selectors } from 'state/interface'
 import { mapDispatch } from 'services/redux-helpers'
-import { Heading, TextLine } from 'ui/typo'
 import { Card, Dialog, List, StatusIndicator } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
+import { Heading, TextLine } from 'ui/typo'
 
 import CreateDialog from './create-dialog'
 
