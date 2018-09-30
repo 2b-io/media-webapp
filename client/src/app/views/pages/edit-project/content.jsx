@@ -66,7 +66,7 @@ const EditProject = ({
               {
                 removeProjectError ?
                   removeProjectError.message :
-                  <p>You are about to permanently delete project<b> "Media Network LP" </b>and all its media. This operation cannot be undone.</p>
+                  <p>You are about to permanently delete project<b> &quot;Media Network LP&quot; </b>and all its media. This operation cannot be undone.</p>
               }
             </DialogContent.Content>
             <DialogContent.Choices>
