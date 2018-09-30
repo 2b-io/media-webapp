@@ -22,7 +22,7 @@ const PresetPng = ({
   if (!preset) {
     return null
   }
-  const { contentType, isActive,parameters } = preset
+  const { contentType, isActive, parameters } = preset
 
   return (
     <Container>
