@@ -14,6 +14,11 @@ const PresetForm = ({ handleSubmit }) => (
       readOnly
     />
     <Break />
+    <CheckBox
+      name="isActive"
+      label="Enable"
+    />
+    <Break />
     <SlideBar
       label="Quality"
       name="quality"

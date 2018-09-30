@@ -23,16 +23,17 @@ const PresetGif = ({
     return null
   }
 
-  const { contentType, parameters } = preset
+  const { contentType, parameters, isActive } = preset
 
   return (
     <Container>
       <PresetForm
-        initialValues={ { contentType, ...parameters } }
-        onSubmit={ ({ contentType, ...parameters }) => {
+        initialValues={ { contentType, isActive, ...parameters } }
+        onSubmit={ ({ contentType, isActive, ...parameters }) => {
           updatePreset({
             preset: {
               contentType,
+              isActive,
               parameters
             },
             identifier

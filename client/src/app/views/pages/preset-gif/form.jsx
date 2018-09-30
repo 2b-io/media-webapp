@@ -14,6 +14,11 @@ const PresetForm = ({ handleSubmit }) => (
       readOnly
     />
     <Break />
+    <CheckBox
+      name="isActive"
+      label="Enable"
+    />
+    <Break />
     <Radio
       name="optimize"
       choice="-O1"
