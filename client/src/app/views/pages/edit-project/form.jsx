@@ -60,7 +60,7 @@ const ProjectForm = ({
             isActive ?
               null :
               <ButtonText onClick={ showRemoveProjectDialog }>
-                Delete
+                Permanently delete
               </ButtonText>
           }
         </React.Fragment>

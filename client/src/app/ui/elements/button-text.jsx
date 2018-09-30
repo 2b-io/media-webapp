@@ -6,6 +6,7 @@ const Button = styled.button.attrs({
 })`
   appearance: none;
   margin: 0;
+  background: none;
   padding: 0;
   white-space: nowrap;
   cursor: pointer;

@@ -4,5 +4,9 @@ const Content = styled.div`
   padding: ${
     ({ theme }) => theme.spacing.medium
   };
+  b {
+    font-weight: bold;
+  };
+  text-align: justify;
 `
 export default Content

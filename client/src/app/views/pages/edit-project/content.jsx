@@ -66,23 +66,23 @@ const EditProject = ({
               {
                 removeProjectError ?
                   removeProjectError.message :
-                  `Do you want to remove the project ${ project.name } ?`
+                  <p>You are about to permanently delete project<b> "Media Network LP" </b>and all its media. This operation cannot be undone.</p>
               }
             </DialogContent.Content>
             <DialogContent.Choices>
               <Button.Group>
-                <Button
-                  variant="primary"
-                  onClick={ () => removeProject(project.identifier) }
-                >
-                  Delete
-                </Button>
                 <Button
                   variant="secondary"
                   mostRight
                   onClick={ hideRemoveProjectDialog }
                 >
                   Cancel
+                </Button>
+                <Button
+                  variant="primary"
+                  onClick={ () => removeProject(project.identifier) }
+                >
+                  Delete
                 </Button>
               </Button.Group>
             </DialogContent.Choices>
