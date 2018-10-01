@@ -1,3 +1,4 @@
+import * as CacheInvalidate from 'views/pages/cache-invalidate'
 import * as ChangePassword from 'views/pages/change-password'
 import * as CreateProject from 'views/pages/create-project'
 import * as Dashboard from 'views/pages/dashboard'
@@ -66,6 +67,13 @@ export default {
       actions.fetchProjectMedia(identifier)
     ]
   },
+  '/projects/:identifier/cache-invalidator': {
+    component: CacheInvalidate,
+    exact: true,
+    onEnter: ({ identifier }) => [
+      actions.getProject(identifier)
+    ]
+  },
   '/projects/:identifier/edit': {
     component: EditProject,
     exact: true,
@@ -129,15 +137,6 @@ export default {
     ],
     onLeave: () => [
       actions.hideModal({ modal: 'CollaboratorInviteEmail' })
-    ]
-  },
-  '/projects/:identifier/cache-invalidator': {
-    partial: true,
-    onEnter: () => [
-      actions.showModal({ modal: 'CacheInvalidatorModal' })
-    ],
-    onLeave: () => [
-      actions.hideModal({ modal: 'CacheInvalidatorModal' })
     ]
   },
   '/projects/:identifier': {

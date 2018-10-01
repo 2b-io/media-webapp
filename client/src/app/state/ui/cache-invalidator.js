@@ -4,7 +4,7 @@ import createReducer from 'state/helpers/create-reducer'
 import { types } from 'state/ducks/project'
 
 export default {
-  component: 'modal/CacheInvalidatorModal',
+  component: 'CacheInvalidator',
   reducer: combineReducers({
     idle: createReducer(true)({
       [ types.INVALIDATE_CACHE ]: () => false,

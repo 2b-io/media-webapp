@@ -1,4 +1,4 @@
-export { default as CacheInvalidatorModal } from './cache-invalidator-modal'
+export { default as CacheInvalidator } from './cache-invalidator'
 export { default as CreateProject } from './create-project'
 export { default as ChangePassword } from './change-password'
 export { default as EditProject } from './edit-project'
