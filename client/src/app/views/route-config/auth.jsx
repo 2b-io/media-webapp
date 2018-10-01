@@ -4,6 +4,7 @@ import * as CreateProject from 'views/pages/create-project'
 import * as Dashboard from 'views/pages/dashboard'
 import * as EditProject from 'views/pages/edit-project'
 import * as EditProfile from 'views/pages/edit-profile'
+import * as InviteCollaborator from 'views/pages/invite-collaborator'
 import * as PresetGif from 'views/pages/preset-gif'
 import * as PresetJpeg from 'views/pages/preset-jpeg'
 import * as PresetPng from 'views/pages/preset-png'
@@ -81,6 +82,13 @@ export default {
       actions.getProject(identifier)
     ]
   },
+  '/projects/:identifier/invite-collaborator': {
+    component: InviteCollaborator,
+    exact: true,
+    onEnter: ({ identifier }) => [
+      actions.getProject(identifier)
+    ]
+  },
   '/projects/:identifier/pull-setting': {
     component: PullSetting,
     exact: true,
@@ -119,15 +127,6 @@ export default {
     onEnter: ({ identifier }) => [
       actions.getProject(identifier),
       actions.getPreset({ identifier, contentType: 'image/png' })
-    ]
-  },
-  '/projects/:identifier/invite': {
-    partial: true,
-    onEnter: () => [
-      actions.showModal({ modal: 'InviteCollaborator' })
-    ],
-    onLeave: () => [
-      actions.hideModal({ modal: 'InviteCollaborator' })
     ]
   },
   '/projects/:identifier/invite-by-email': {
