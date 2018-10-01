@@ -15,6 +15,7 @@ import { actions } from 'state/interface'
 import dashboard from './private/dashboard'
 import profile from './private/profile'
 import projectCreate from './private/project-create'
+import projectDetail from './private/project-detail'
 import projectEdit from './private/project-edit'
 import projectList from './private/project-list'
 import pullSetting from './private/pull-setting'
@@ -92,16 +93,7 @@ export default {
       actions.hideModal({ modal: 'CacheInvalidatorModal' })
     ]
   },
-  '/projects/:identifier': {
-    component: ProjectDetail,
-    exact: false,
-    onEnter: ({ identifier }) => identifier === 'create' || [
-      actions.getProject(identifier),
-      actions.fetchPresets({ identifier }),
-      actions.getPullSetting(identifier),
-      actions.fetchSecretKeys(identifier)
-    ]
-  },
+  ...projectDetail,
   '/ui': {
     component: UI,
     exact: true
