@@ -52,9 +52,7 @@ export default ({ Project, ProjectStruct }) => ({
   _destroy: {
     type: GraphQLBoolean,
     resolve: async (self) => {
-      await removeProject(self)
-
-      return true
+      return removeProject(self)
     }
   },
   _createPreset: {

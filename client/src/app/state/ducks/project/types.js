@@ -6,9 +6,9 @@ export const CREATE = prefix('CREATE')
 export const CREATE_COMPLETED = prefix('CREATE_COMPLETED')
 export const CREATE_FAILED = prefix('CREATE_FAILED')
 
-export const DELETE = prefix('DELETE')
-export const DELETE_COMPLETED = prefix('DELETE_COMPLETED')
-export const DELETE_FAILED = prefix('DELETE_FAILED')
+export const REMOVE = prefix('REMOVE')
+export const REMOVE_COMPLETED = prefix('REMOVE_COMPLETED')
+export const REMOVE_FAILED = prefix('REMOVE_FAILED')
 
 export const FETCH = prefix('FETCH')
 export const FETCH_COMPLETED = prefix('FETCH_COMPLETED')

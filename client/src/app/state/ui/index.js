@@ -1,6 +1,7 @@
 export { default as CacheInvalidatorModal } from './cache-invalidator-modal'
 export { default as CreateProject } from './create-project'
 export { default as ChangePassword } from './change-password'
+export { default as EditProject } from './edit-project'
 export { default as InviteModal } from './invite-modal'
 export { default as GetResetCode } from './get-reset-code'
 export { default as PresetModal } from './preset-modal'

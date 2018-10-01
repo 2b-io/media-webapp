@@ -6,6 +6,7 @@ import Infrastructure from 'models/Infrastructure'
 import { createDistribution, getDistribution, updateDistribution } from 'services/cloudFront'
 import Permission from 'models/Permission'
 import PullSetting from 'models/pull-setting'
+import SecretKey from 'models/secret-key'
 import Preset from 'models/Preset'
 import Project from 'models/Project'
 
@@ -150,19 +151,25 @@ export const create = async (data, provider, account) => {
 
 export const remove = async (_project) => {
 
-  const { _id, slug } = _project
-  const project = await Project.findOneAndRemove({ _id })
+  const { _id, isActive } = _project
 
+  if (isActive) {
+    return false
+  }
+
+  try {
+    await Project.findOneAndRemove({ _id })
+  } catch (error) {
+    throw ('Error Cannot delete project')
+  }
   await Preset.deleteMany({ project: _id })
-
+  await PullSetting.deleteMany({ project: _id })
+  await SecretKey.deleteMany({ project: _id })
   await Permission.deleteMany({ project: _id })
-
-  await invalidateAllCache(slug)
-
-  return project
+  return true
 }
 
-export const invalidateCache = async (patterns = [], slug, prettyOrigin) => {
+export const invalidateCache = async (patterns = [], identifier, prettyOrigin) => {
   const { cdnServer } = config
   const normalizedPatterns = patterns
     .map(
@@ -174,7 +181,7 @@ export const invalidateCache = async (patterns = [], slug, prettyOrigin) => {
     return true
   }
   await request
-    .post(`${ cdnServer }/${ slug }/cache-invalidations`)
+    .post(`${ cdnServer }/${ identifier }/cache-invalidations`)
     .set('Content-Type', 'application/json')
     .send({
       patterns: normalizedPatterns
@@ -183,10 +190,10 @@ export const invalidateCache = async (patterns = [], slug, prettyOrigin) => {
   return true
 }
 
-export const invalidateAllCache = async (slug) => {
+export const invalidateAllCache = async (identifier) => {
   const { cdnServer } = config
   await request
-    .post(`${ cdnServer }/projects/${ slug }/cache-invalidations`)
+    .post(`${ cdnServer }/projects/${ identifier }/cache-invalidations`)
     .set('Content-Type', 'application/json')
     .send({
       patterns: [ '/*' ]

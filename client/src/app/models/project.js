@@ -85,9 +85,9 @@ export default {
 
     return body.session.account._createProject
   },
-  async delete(identifier, token) {
+  async remove(identifier, token) {
     const body = await request(`
-      query deleteProject($identifier: String!, $token: String!) {
+      query removeProject($identifier: String!, $token: String!) {
         session(token: $token) {
           account {
             project(identifier: $identifier) {

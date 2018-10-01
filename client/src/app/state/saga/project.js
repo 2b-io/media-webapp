@@ -36,7 +36,7 @@ const createLoop = function*() {
 
 const deleteLoop = function*() {
   while (true) {
-    const action = yield take(types['PROJECT/DELETE'])
+    const action = yield take(types['PROJECT/REMOVE'])
     const { identifier } = action.payload
 
     try {
@@ -46,22 +46,22 @@ const deleteLoop = function*() {
         continue
       }
 
-      const deleted = yield Project.delete(identifier, session.token)
+      const deleted = yield Project.remove(identifier, session.token)
 
       if (!deleted) {
         throw new Error('Cannot delete project')
       }
 
       yield all([
-        put(actions.deleteProjectCompleted(identifier)),
-        put(actions.hideDialog({ dialog: 'ConfirmDeleteProjectDialog' })),
+        put(actions.removeProjectCompleted(identifier)),
+        put(actions.hideDialog('REMOVE_PROJECT')),
         fork(addToast, {
           type: 'success',
           message: 'Project deleted.'
         })
       ])
     } catch (e) {
-      yield put(actions.deleteProjectFailed(serializeError(e)))
+      yield put(actions.removeProjectFailed(serializeError(e)))
       continue
     }
   }
