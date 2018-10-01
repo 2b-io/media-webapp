@@ -1,4 +1,5 @@
 import request from 'services/graphql'
+import stringToList from 'services/string-to-list'
 
 export const HEADER_FRAGMENT = `
   name,
@@ -36,13 +37,8 @@ export default {
     }
   },
   async updatePullSetting(token, identifier, pullSetting) {
-    /*
-    regex to describes a pattern of character:
-      \s* Find multi space, multi tab and multi newline
-      [,\n+] Find any character between the brackets
-    */
-    const delimiter = /\s*[,\n+]\s*/
-    const allowedOrigins = (pullSetting.allowedOrigins || '').trim().split(delimiter).filter(Boolean)
+
+    const allowedOrigins = stringToList(pullSetting.allowedOrigins)
 
     const { headers } = pullSetting
     const _headers = headers.filter(({ name, value }) => name && value)

@@ -7,15 +7,15 @@ import { Heading, Text } from 'ui/typo'
 import { Card } from 'ui/elements'
 import { EditIcon } from 'ui/icons'
 
+import stringToList from 'services/string-to-list'
+
 const PullSettings = ({
   identifier,
   toEditPullSetting,
   pullSetting = {}
 }) => {
 
-  // copy from 'models/pull-setting'
-  const delimiter = /\s*[,\n+]\s*/
-  const allowedOrigins = (pullSetting.allowedOrigins || '').trim().split(delimiter).filter(Boolean)
+  const allowedOrigins = stringToList(pullSetting.allowedOrigins)
 
   const filteredHeaders = (pullSetting.headers || []).filter(
     (header) => !!(header && header.name && header.value)
@@ -37,7 +37,7 @@ const PullSettings = ({
               {
                 allowedOrigins.length &&
                   allowedOrigins.map(
-                    (originn, index) => (
+                    (origin, index) => (
                       <Fragment key={ index }>- { origin }<br /></Fragment>
                     )
                   ) || ( <Fragment>&nbsp;&nbsp;N/A<br /></Fragment> )
