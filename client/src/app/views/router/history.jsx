@@ -63,15 +63,27 @@ class HistoryManager extends Component {
 
     return React.cloneElement(children, {
       history: this.memoryHistory,
-      locationKey: this.memoryHistory.location.key
+      locationKey: this.memoryHistory.location.key,
+      ui: this.props.ui
     })
   }
 }
 
+const emptyObject = {}
+
 export default connect(
-  mapState({
-    current: selectors.currentLocation
-  }),
+  (state) => {
+    const current = selectors.currentLocation(state)
+
+    if (!current) {
+      return emptyObject
+    }
+
+    return {
+      current,
+      ui: selectors.uiState(state, current.pathname)
+    }
+  },
   mapDispatch({
     init: actions.initLocation,
     request: actions.requestLocation,

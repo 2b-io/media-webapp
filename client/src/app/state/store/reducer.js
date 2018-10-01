@@ -19,18 +19,18 @@ const uiReducer = combineReducers({
 const combined = combineReducers({
   ...duckReducers,
   form,
-  ui: (state = {}, action) => {
-    if (action.type === '@@UI/CLEAR') {
-      const {
-        [ action.payload.component ]: removed,
-        ...nextState
-      } = state
+  // ui: (state = {}, action) => {
+  //   if (action.type === '@@UI/CLEAR') {
+  //     const {
+  //       [ action.payload.component ]: removed,
+  //       ...nextState
+  //     } = state
 
-      return nextState
-    }
+  //     return nextState
+  //   }
 
-    return uiReducer(state, action)
-  }
+  //   return uiReducer(state, action)
+  // }
 })
 
 export default (state = {}, action) => {

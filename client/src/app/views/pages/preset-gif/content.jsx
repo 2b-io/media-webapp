@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Container } from 'ui/elements'
-import { stateful } from 'views/common/decorators'
 import DialogRemovePreset from 'views/common/dialog-confirm/dialog-remove-preset'
 import { Redirect } from 'views/router'
 
@@ -75,24 +74,16 @@ const PresetGif = ({
   )
 }
 
-export default stateful({
-  component: 'EditPreset'
-})(
-  connect(
-    (state) => {
-      const { identifier } = selectors.currentParams(state)
+export default connect(
+  (state) => {
+    const { identifier } = selectors.currentParams(state)
 
-      return {
-        preset: selectors.findPreset(state, identifier, 'image/gif'),
-        identifier,
-        isRemovePresetDialogActive: selectors.isDialogActive(state, REMOVE_PRESET)
-      }
-    },
-    mapDispatch({
-      updatePreset: actions.updatePreset,
-      removePreset: actions.removePreset,
-      showRemovePresetDialog: () => actions.showDialog(REMOVE_PRESET),
-      hideRemovePresetDialog: () => actions.hideDialog(REMOVE_PRESET)
-    })
-  )(PresetGif)
-)
+    return {
+      preset: selectors.findPreset(state, identifier, 'image/gif'),
+      identifier
+    }
+  },
+  mapDispatch({
+    updatePreset: actions.updatePreset
+  })
+)(PresetGif)

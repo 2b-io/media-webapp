@@ -92,23 +92,19 @@ const EditProject = ({
     </Container>
   ) }
 
-export default stateful({
-  component: 'EditProject'
-})(
-  connect(
-    (state) => {
-      const { identifier } = selectors.currentParams(state)
+export default connect(
+  (state) => {
+    const { identifier } = selectors.currentParams(state)
 
-      return {
-        project: selectors.findProjectByIdentifier(state, identifier),
-        isRemoveProjectDialogActive: selectors.isDialogActive(state, REMOVE_PROJECT)
-      }
-    },
-    mapDispatch({
-      updateProject: (identifier, name, status, isActive) => actions.updateProject({ identifier, name, status: isActive ? 'DEPLOYED' : 'DISABLED', isActive }),
-      removeProject: actions.removeProject,
-      showRemoveProjectDialog: () => actions.showDialog(REMOVE_PROJECT),
-      hideRemoveProjectDialog: () => actions.hideDialog(REMOVE_PROJECT)
-    })
-  )(EditProject)
-)
+    return {
+      project: selectors.findProjectByIdentifier(state, identifier),
+      isRemoveProjectDialogActive: selectors.isDialogActive(state, REMOVE_PROJECT)
+    }
+  },
+  mapDispatch({
+    updateProject: (identifier, name, status, isActive) => actions.updateProject({ identifier, name, status: isActive ? 'DEPLOYED' : 'DISABLED', isActive }),
+    removeProject: actions.removeProject,
+    showRemoveProjectDialog: () => actions.showDialog(REMOVE_PROJECT),
+    hideRemoveProjectDialog: () => actions.hideDialog(REMOVE_PROJECT)
+  })
+)(EditProject)
