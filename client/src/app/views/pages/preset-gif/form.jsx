@@ -3,7 +3,7 @@ import React from 'react'
 import { Form } from 'ui/compounds'
 import { Break, Button } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
-import { Radio, TextBox } from 'views/common/form'
+import { Radio, TextBox, CheckBox } from 'views/common/form'
 
 const PresetForm = ({ handleSubmit }) => (
   <Form handleSubmit={ handleSubmit }>
@@ -12,6 +12,11 @@ const PresetForm = ({ handleSubmit }) => (
       name="contentType"
       placeholder="Content Type"
       readOnly
+    />
+    <Break />
+    <CheckBox
+      name="isActive"
+      label="Enable"
     />
     <Break />
     <Radio

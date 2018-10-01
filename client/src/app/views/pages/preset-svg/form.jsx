@@ -15,6 +15,11 @@ const PresetForm = ({ handleSubmit }) => (
     />
     <Break />
     <CheckBox
+      name="isActive"
+      label="Enable"
+    />
+    <Break />
+    <CheckBox
       name="cleanupAttrs"
       label="Cleanup Attrs"
     />

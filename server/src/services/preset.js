@@ -1,5 +1,7 @@
 import Preset from 'models/Preset'
 
+import { invalidateAllCache } from 'services/project'
+
 export const list = async (project) => {
   const presets = await Preset.find({
     project
@@ -13,7 +15,7 @@ export const get = async (project, contentType) => {
     contentType,
     project
   }).lean()
-  
+
   if (!preset.parameters) {
     return { ...preset, parameters: {} }
   }
@@ -30,8 +32,13 @@ export const create = async (project, data) => {
 }
 
 export const update = async (project, contentType, data) => {
+  const { _id, identifier } = project
+  const { isActive } = data
+  if (!isActive) {
+    await invalidateAllCache(identifier)
+  }
   const preset = await Preset.findOneAndUpdate(
-    { project, contentType },
+    { project: _id, contentType },
     data,
     { new: true }
   ).lean()
