@@ -265,35 +265,6 @@ const invalidateCacheLoop = function*() {
   }
 }
 
-const invalidateAllCacheLoop = function*() {
-  while(true) {
-    const action = yield take(types['PROJECT/INVALIDATE_ALL_CACHE'])
-
-    try {
-      const session = yield select(selectors.currentSession)
-
-      if (!session) {
-        continue
-      }
-      const invalidateCache = yield call(Project.invalidateAllCache, session.token, action.payload.identifier)
-
-      if (!invalidateCache) {
-        throw new Error('An error happens when invalidate all cache.')
-      }
-
-      yield all([
-        put(actions.invalidateAllCacheCompleted(action.payload.identifier)),
-        fork(addToast, {
-          type: 'success',
-          message: 'All cache invalidated.'
-        })
-      ])
-    } catch (e) {
-      yield put(actions.invalidateAllCacheFailed(serializeError(e)))
-      continue
-    }
-  }
-}
 
 export default function*() {
   yield take('@@INITIALIZED')
@@ -302,7 +273,6 @@ export default function*() {
   yield fork(fetchLoop)
   yield fork(getLoop)
   yield fork(invalidateCacheLoop)
-  yield fork(invalidateAllCacheLoop)
   yield fork(updateLoop)
   yield fork(inviteCollaboratorLoop)
   yield fork(deleteCollaboratorLoop)
