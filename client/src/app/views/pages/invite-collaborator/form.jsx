@@ -10,13 +10,12 @@ const InviteCollaboratorForm = ({ handleSubmit }) => (
   <Form handleSubmit={ handleSubmit }>
     <TextArea
       label="Emails"
-      type="emails"
       placeholder="Emails"
       name="emails"
       validate={ [ validateRequired, validateEmail ] }
     />
     <DescriptionText mostLeft mostRight>
-      "We'll send the persons you invited an email with the invitation detail. If they don't have an account yet, we'll create one and send instructions for setting their password."
+      We&#39;ll send the persons you invited an email with the invitation detail. If they don&#39;t have an account yet, we&#39;ll create one and send instructions for setting their password.
     </DescriptionText>
     <Break />
     <TextArea

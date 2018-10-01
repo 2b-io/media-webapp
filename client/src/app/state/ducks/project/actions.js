@@ -123,7 +123,7 @@ export const makeOwnerFailed = reason => ({
 export const invalidateCache = (patterns, identifier) => ({
   type: types.INVALIDATE_CACHE,
   payload: {
-    patterns:  stringToList(patterns),
+    patterns: stringToList(patterns),
     identifier
   }
 })
