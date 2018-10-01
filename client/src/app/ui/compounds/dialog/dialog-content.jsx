@@ -7,6 +7,5 @@ const Content = styled.div`
   b {
     font-weight: bold;
   };
-  text-align: justify;
 `
 export default Content

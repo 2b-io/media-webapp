@@ -1,6 +1,6 @@
 import Preset from 'models/Preset'
 
-import { invalidateAllCache } from 'services/project'
+// import { invalidateAllCache } from 'services/project'
 
 export const list = async (project) => {
   const presets = await Preset.find({
@@ -33,10 +33,10 @@ export const create = async (project, data) => {
 
 export const update = async (project, contentType, data) => {
   const { _id, identifier } = project
-  const { isActive } = data
-  if (!isActive) {
-    await invalidateAllCache(identifier)
-  }
+  // const { isActive } = data
+  // if (!isActive) {
+  //   await invalidateAllCache(identifier)
+  // }
   const preset = await Preset.findOneAndUpdate(
     { project: _id, contentType },
     data,
