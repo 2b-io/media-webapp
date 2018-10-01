@@ -10,7 +10,7 @@ const CacheInvalidForm = ({ handleSubmit }) => (
   <Form handleSubmit={ handleSubmit }>
     <TextArea
       label="Patterns"
-      name="Patterns"
+      name="patterns"
       placeholder="Patterns"
       validate={ validateRequired }
     />
