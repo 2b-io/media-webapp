@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { stateful } from 'views/common/decorators'
 import { Redirect, withParams } from 'views/router'
 
 import { ApiKeys } from './api-keys-card'
@@ -58,6 +57,4 @@ const Project = ({
   )
 }
 
-export default withParams(
-  stateful({ component: 'ProjectDetail' })(Project)
-)
+export default withParams(Project)

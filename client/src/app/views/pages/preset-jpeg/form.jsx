@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Form } from 'ui/compounds'
-import { Break, Button, ButtonText } from 'ui/elements'
+import { Break, Button, TextButton } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
 import { CheckBox, SlideBar, TextBox } from 'views/common/form'
 
@@ -44,9 +44,9 @@ const PresetForm = ({ handleSubmit, isActive, showRemovePresetDialog }) => (
     {
       isActive ?
         null :
-        <ButtonText onClick={ showRemovePresetDialog }>
+        <TextButton onClick={ showRemovePresetDialog }>
           Permanently delete
-        </ButtonText>
+        </TextButton>
     }
   </Form>
 )

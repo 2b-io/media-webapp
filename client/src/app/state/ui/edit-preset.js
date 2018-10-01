@@ -27,12 +27,12 @@ export default {
       [ types.REMOVE_FAILED ]: () => null,
       [ types.UPDATE ]: () => null
     }),
-    updateError: createReducer(null)({
+    updatePresetError: createReducer(null)({
       [ types.DELETE ]: () => null,
       [ types.UPDATE_COMPLETED ]: () => null,
       [ types.UPDATE_FAILED ]: (state, action) => action.payload.reason
     }),
-    updateResult: createReducer(null)({
+    updatePresetResult: createReducer(null)({
       [ types.DELETE ]: () => null,
       [ types.UPDATE_COMPLETED ]: (state, action) => action.payload.preset,
       [ types.UPDATE_FAILED ]: () => null

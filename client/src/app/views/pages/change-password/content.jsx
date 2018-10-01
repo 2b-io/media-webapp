@@ -6,11 +6,13 @@ import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Container } from 'ui/elements'
 import { stateful } from 'views/common/decorators'
+import { validateConfirmPassword } from 'views/common/validate'
 
 import _ChangePasswordForm from './form'
 
 const ChangePasswordForm = reduxForm({
-  form: 'changePasswordForm'
+  form: 'changePasswordForm',
+  validate: validateConfirmPassword
 })(_ChangePasswordForm)
 
 const ChangePassword = ({
@@ -27,23 +29,19 @@ const ChangePassword = ({
   </Container>
 )
 
-export default stateful({
-  component: 'ChangePassword'
-})(
-  connect(
-    (state) => {
-      const { id } = selectors.currentParams(state)
-      return {
-        account: selectors.findAccountById(
-          state,
-          id,
-          selectors.currentSession(state)
-        ),
-        session: selectors.currentSession(state)
-      }
-    },
-    mapDispatch({
-      changePassword: ({ currentPassword, password }) => actions.changePassword(currentPassword, password)
-    })
-  )(ChangePassword)
-)
+export default connect(
+  (state) => {
+    const { id } = selectors.currentParams(state)
+    return {
+      account: selectors.findAccountById(
+        state,
+        id,
+        selectors.currentSession(state)
+      ),
+      session: selectors.currentSession(state)
+    }
+  },
+  mapDispatch({
+    changePassword: ({ currentPassword, password }) => actions.changePassword(currentPassword, password)
+  })
+)(ChangePassword)

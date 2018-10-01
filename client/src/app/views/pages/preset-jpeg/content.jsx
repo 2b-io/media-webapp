@@ -5,13 +5,14 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Container } from 'ui/elements'
-import { stateful } from 'views/common/decorators'
 import DialogRemovePreset from 'views/common/dialog-confirm/dialog-remove-preset'
+import DialogUpdatePreset from 'views/common/dialog-confirm/dialog-update-preset'
 import { Redirect } from 'views/router'
 
 import _PresetForm from './form'
 
 const REMOVE_PRESET = 'REMOVE_PRESET'
+const UPDATE_PRESET = 'UPDATE_PRESET'
 
 const PresetForm = reduxForm({
   form: 'presetJpeg',
@@ -24,12 +25,18 @@ const PresetJpeg = ({
   updatePreset,
   removePreset,
   showRemovePresetDialog,
+  showUpdatePresetDialog,
   hideRemovePresetDialog,
+  hideUpdatePresetDialog,
   isRemovePresetDialogActive,
+  isUpdatePresetDialogActive,
+  dialogParams,
   ui: {
     removePresetError,
     removePresetResult,
-    notFoundPreset
+    notFoundPreset,
+    updatePresetResult,
+    updatePresetError
   }
 }) => {
 
@@ -40,7 +47,7 @@ const PresetJpeg = ({
   if (!preset) {
     return null
   }
-
+  console.log('dialogParams', dialogParams);
   const { contentType, parameters, isActive } = preset
 
   return (
@@ -48,7 +55,7 @@ const PresetJpeg = ({
       <PresetForm
         initialValues={ { contentType, isActive, ...parameters } }
         onSubmit={ ({ contentType, isActive, ...parameters }) => {
-          updatePreset({
+          showUpdatePresetDialog({
             preset: {
               contentType,
               isActive,
@@ -56,6 +63,14 @@ const PresetJpeg = ({
             },
             identifier
           })
+          // updatePreset({
+          //   preset: {
+          //     contentType,
+          //     isActive,
+          //     parameters
+          //   },
+          //   identifier
+          // })
         } }
         isActive={ isActive }
         showRemovePresetDialog={ showRemovePresetDialog }
@@ -65,34 +80,37 @@ const PresetJpeg = ({
         removePreset={ () => removePreset({ identifier, contentType }) }
         hideRemovePresetDialog={ hideRemovePresetDialog }
         removePresetError={ removePresetError }
-        defaultMessage={ <p>
-          You are about to permanently delete configuration for content type <b> &quot;image/gif</b> &quot;.
+        message={ <p>
+          You are about to permanently delete configuration for content type <b> &quot;image/jpeg</b> &quot;.
           All optimized media of this content type will be deleted along with this configuration.
           This operation cannot be undone and it should take a while to finish.
+        </p> }
+      />
+      <DialogUpdatePreset
+        isUpdatePresetDialogActive={ isUpdatePresetDialogActive }
+        updatePreset={ () => updatePreset({ identifier, contentType }) }
+        hideUpdatePresetDialog={ hideUpdatePresetDialog }
+        updatePresetError={ updatePresetError }
+        message={ <p>
+          You are about to update configuration for content type <b> &quot;image/jpeg</b> &quot;.
+          All previous optimized media of this content type will be deleted.
+          This operation should take a while to finish.
         </p> }
       />
     </Container>
   )
 }
 
-export default stateful({
-  component: 'EditPreset'
-})(
-  connect(
-    (state) => {
-      const { identifier } = selectors.currentParams(state)
+export default connect(
+  (state) => {
+    const { identifier } = selectors.currentParams(state)
 
-      return {
-        preset: selectors.findPreset(state, identifier, 'image/jpeg'),
-        identifier,
-        isRemovePresetDialogActive: selectors.isDialogActive(state, REMOVE_PRESET)
-      }
-    },
-    mapDispatch({
-      updatePreset: actions.updatePreset,
-      removePreset: actions.removePreset,
-      showRemovePresetDialog: () => actions.showDialog(REMOVE_PRESET),
-      hideRemovePresetDialog: () => actions.hideDialog(REMOVE_PRESET)
-    })
-  )(PresetJpeg)
-)
+    return {
+      preset: selectors.findPreset(state, identifier, 'image/jpeg'),
+      identifier
+    }
+  },
+  mapDispatch({
+    updatePreset: actions.updatePreset
+  })
+)(PresetJpeg)

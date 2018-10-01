@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Container } from 'ui/elements'
-import { stateful } from 'views/common/decorators'
 import DialogRemovePreset from 'views/common/dialog-confirm/dialog-remove-preset'
 import { Redirect } from 'views/router'
 
@@ -40,7 +39,7 @@ const PresetGif = ({
   if (!preset) {
     return null
   }
-  
+
   const { contentType, parameters, isActive } = preset
 
   return (
@@ -65,7 +64,7 @@ const PresetGif = ({
         removePreset={ () => removePreset({ identifier, contentType }) }
         hideRemovePresetDialog={ hideRemovePresetDialog }
         removePresetError={ removePresetError }
-        defaultMessage={ <p>
+        message={ <p>
           You are about to permanently delete configuration for content type <b> &quot;image/gif</b> &quot;.
           All optimized media of this content type will be deleted along with this configuration.
           This operation cannot be undone and it should take a while to finish.
@@ -75,24 +74,16 @@ const PresetGif = ({
   )
 }
 
-export default stateful({
-  component: 'EditPreset'
-})(
-  connect(
-    (state) => {
-      const { identifier } = selectors.currentParams(state)
+export default connect(
+  (state) => {
+    const { identifier } = selectors.currentParams(state)
 
-      return {
-        preset: selectors.findPreset(state, identifier, 'image/gif'),
-        identifier,
-        isRemovePresetDialogActive: selectors.isDialogActive(state, REMOVE_PRESET)
-      }
-    },
-    mapDispatch({
-      updatePreset: actions.updatePreset,
-      removePreset: actions.removePreset,
-      showRemovePresetDialog: () => actions.showDialog(REMOVE_PRESET),
-      hideRemovePresetDialog: () => actions.hideDialog(REMOVE_PRESET)
-    })
-  )(PresetGif)
-)
+    return {
+      preset: selectors.findPreset(state, identifier, 'image/gif'),
+      identifier
+    }
+  },
+  mapDispatch({
+    updatePreset: actions.updatePreset
+  })
+)(PresetGif)

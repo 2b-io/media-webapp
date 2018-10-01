@@ -5,7 +5,7 @@ import { DialogContent } from 'ui/compounds'
 
 const DialogUpdatePreset = ({
   updatePreset,
-  defaultMessage,
+  message,
   isUpdatePresetDialogActive,
   hideUpdatePresetDialog,
   updatePresetError
@@ -20,7 +20,7 @@ const DialogUpdatePreset = ({
             updatePresetError ?
               updatePresetError.message :
               <Fragment>
-                { defaultMessage }
+                { message }
               </Fragment>
           }
         </DialogContent.Content>
