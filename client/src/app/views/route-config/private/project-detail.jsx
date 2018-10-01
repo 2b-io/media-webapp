@@ -1,3 +1,5 @@
+import { fork, put, take } from 'redux-saga/effects'
+
 import { actions } from 'state/interface'
 import * as ProjectDetail from 'views/pages/project-detail'
 
@@ -12,8 +14,11 @@ export default {
       actions.fetchSecretKeys(identifier)
     ],
     state: function*(path) {
-      console.log('xxx')
-      console.log(path)
+      yield put(
+        actions.initializeUIState(path, {
+          notFound: false
+        })
+      )
     }
   }
 }

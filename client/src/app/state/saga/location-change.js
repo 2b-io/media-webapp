@@ -98,7 +98,7 @@ export default function*() {
             }
 
             if (r.state) {
-              enteringStates[ r.path ] = r.state
+              enteringStates[ current ] = r.state
             }
           }
 
