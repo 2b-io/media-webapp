@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Container } from 'ui/elements'
-import { stateful } from 'views/common/decorators'
 
 import _PresetForm from './form'
 
@@ -43,20 +42,16 @@ const PresetSvg = ({
   )
 }
 
-export default stateful({
-  component: 'PresetSvg'
-})(
-  connect(
-    (state) => {
-      const { identifier } = selectors.currentParams(state)
+export default connect(
+  (state) => {
+    const { identifier } = selectors.currentParams(state)
 
-      return {
-        preset: selectors.findPreset(state, identifier, 'image/svg'),
-        identifier
-      }
-    },
-    mapDispatch({
-      updatePreset: actions.updatePreset
-    })
-  )(PresetSvg)
-)
+    return {
+      preset: selectors.findPreset(state, identifier, 'image/svg'),
+      identifier
+    }
+  },
+  mapDispatch({
+    updatePreset: actions.updatePreset
+  })
+)(PresetSvg)

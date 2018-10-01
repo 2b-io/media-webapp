@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Container } from 'ui/elements'
-import { stateful } from 'views/common/decorators'
 
 import _PresetForm from './form'
 
@@ -44,20 +43,16 @@ const PresetGif = ({
   )
 }
 
-export default stateful({
-  component: 'PresetGif'
-})(
-  connect(
-    (state) => {
-      const { identifier } = selectors.currentParams(state)
+export default connect(
+  (state) => {
+    const { identifier } = selectors.currentParams(state)
 
-      return {
-        preset: selectors.findPreset(state, identifier, 'image/gif'),
-        identifier
-      }
-    },
-    mapDispatch({
-      updatePreset: actions.updatePreset
-    })
-  )(PresetGif)
-)
+    return {
+      preset: selectors.findPreset(state, identifier, 'image/gif'),
+      identifier
+    }
+  },
+  mapDispatch({
+    updatePreset: actions.updatePreset
+  })
+)(PresetGif)
