@@ -1,3 +1,4 @@
+import * as CacheInvalidate from 'views/pages/cache-invalidate'
 import * as CreateProject from 'views/pages/create-project'
 import * as Dashboard from 'views/pages/dashboard'
 import * as PresetGif from 'views/pages/preset-gif'
@@ -31,6 +32,13 @@ export default {
     exact: true,
     onEnter: ({ identifier }) => [
       actions.fetchProjectMedia(identifier)
+    ]
+  },
+  '/projects/:identifier/cache-invalidator': {
+    component: CacheInvalidate,
+    exact: true,
+    onEnter: ({ identifier }) => [
+      actions.getProject(identifier)
     ]
   },
   ...projectEdit,
@@ -82,15 +90,6 @@ export default {
     ],
     onLeave: () => [
       actions.hideModal({ modal: 'CollaboratorInviteEmail' })
-    ]
-  },
-  '/projects/:identifier/cache-invalidator': {
-    partial: true,
-    onEnter: () => [
-      actions.showModal({ modal: 'CacheInvalidatorModal' })
-    ],
-    onLeave: () => [
-      actions.hideModal({ modal: 'CacheInvalidatorModal' })
     ]
   },
   ...projectDetail,
