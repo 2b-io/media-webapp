@@ -6,8 +6,12 @@ import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Container } from 'ui/elements'
 import { stateful } from 'views/common/decorators'
+import DialogRemovePreset from 'views/common/dialog-confirm/dialog-remove-preset'
+import { Redirect } from 'views/router'
 
 import _PresetForm from './form'
+
+const REMOVE_PRESET = 'REMOVE_PRESET'
 
 const PresetForm = reduxForm({
   form: 'presetGif',
@@ -17,12 +21,26 @@ const PresetForm = reduxForm({
 const PresetGif = ({
   preset,
   identifier,
-  updatePreset
+  updatePreset,
+  removePreset,
+  showRemovePresetDialog,
+  hideRemovePresetDialog,
+  isRemovePresetDialogActive,
+  ui: {
+    removePresetError,
+    removePresetResult,
+    notFoundPreset
+  }
 }) => {
+
+  if (removePresetResult || notFoundPreset ) {
+    return <Redirect to={ `/projects/${ identifier }` } />
+  }
+
   if (!preset) {
     return null
   }
-
+  
   const { contentType, parameters, isActive } = preset
 
   return (
@@ -36,16 +54,29 @@ const PresetGif = ({
               isActive,
               parameters
             },
-            identifier
+            identifier,
           })
         } }
+        isActive={ isActive }
+        showRemovePresetDialog={ showRemovePresetDialog }
+      />
+      <DialogRemovePreset
+        isRemovePresetDialogActive={ isRemovePresetDialogActive }
+        removePreset={ () => removePreset({ identifier, contentType }) }
+        hideRemovePresetDialog={ hideRemovePresetDialog }
+        removePresetError={ removePresetError }
+        defaultMessage={ <p>
+          You are about to permanently delete configuration for content type <b> &quot;image/gif</b> &quot;.
+          All optimized media of this content type will be deleted along with this configuration.
+          This operation cannot be undone and it should take a while to finish.
+        </p> }
       />
     </Container>
   )
 }
 
 export default stateful({
-  component: 'PresetGif'
+  component: 'EditPreset'
 })(
   connect(
     (state) => {
@@ -53,11 +84,15 @@ export default stateful({
 
       return {
         preset: selectors.findPreset(state, identifier, 'image/gif'),
-        identifier
+        identifier,
+        isRemovePresetDialogActive: selectors.isDialogActive(state, REMOVE_PRESET)
       }
     },
     mapDispatch({
-      updatePreset: actions.updatePreset
+      updatePreset: actions.updatePreset,
+      removePreset: actions.removePreset,
+      showRemovePresetDialog: () => actions.showDialog(REMOVE_PRESET),
+      hideRemovePresetDialog: () => actions.hideDialog(REMOVE_PRESET)
     })
   )(PresetGif)
 )

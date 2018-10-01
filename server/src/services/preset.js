@@ -33,16 +33,19 @@ export const create = async (project, data) => {
 
 export const update = async (project, contentType, data) => {
   const { _id, identifier } = project
+  console.log('_id', _id);
   const { isActive } = data
-  if (!isActive) {
-    await invalidateAllCache(identifier)
-  }
+  // if (!isActive) {
+  //   console.log('isActive', isActive);
+  //   await invalidateAllCache(identifier)
+  // }
+  console.log('sss');
   const preset = await Preset.findOneAndUpdate(
     { project: _id, contentType },
     data,
     { new: true }
   ).lean()
-
+console.log('preset', preset);
   return preset
 }
 

@@ -1,11 +1,11 @@
 import React from 'react'
 
 import { Form } from 'ui/compounds'
-import { Break, Button } from 'ui/elements'
+import { Break, Button, ButtonText } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
 import { Radio, TextBox, CheckBox } from 'views/common/form'
 
-const PresetForm = ({ handleSubmit }) => (
+const PresetForm = ({ handleSubmit, isActive, showRemovePresetDialog }) => (
   <Form handleSubmit={ handleSubmit }>
     <TextBox
       label="Content Type"
@@ -49,6 +49,13 @@ const PresetForm = ({ handleSubmit }) => (
     <Button type="submit">
       Save
     </Button>
+    {
+      isActive ?
+        null :
+        <ButtonText onClick={ showRemovePresetDialog }>
+          Permanently delete
+        </ButtonText>
+    }
   </Form>
 )
 
