@@ -139,11 +139,11 @@ export const invalidateCacheFailed = reason => ({
   payload: { reason }
 })
 
-export const sortProjects = sortCondition => ({
+export const sortProjects = (sortCondition) => ({
   type: types.SORT,
   payload: { sortCondition }
 })
-
-export const toggleDisabledProjects = () => ({
-  type: types.HIDE_DISABLE
+export const toggleDisabledProjects = (hide) => ({
+  type: types.HIDE_DISABLE,
+  payload: { hide }
 })

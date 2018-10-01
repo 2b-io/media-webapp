@@ -95,16 +95,20 @@ const ProjectList = ({
   toProjectDetail,
   session,
   ui: {
-    sortCondition,
-    toggleDisabledProjects
+    sortType,
+    sortAscending,
+    hideDisabledProjects
   }
 }) => {
   const { _id: currentAccountId } = session
-  const filteredProjects = toggleDisabledProjects ?
+  const filteredProjects = hideDisabledProjects ?
     hideProjects(projects) :
     projects
 
-  const sortedProjects = sortProjects(sortCondition, filteredProjects, currentAccountId)
+  const sortedProjects = sortProjects({
+    type: sortType,
+    ascending: sortAscending
+  }, filteredProjects, currentAccountId)
 
   const cards = sortedProjects.map(
     project => (
@@ -130,17 +134,13 @@ const ProjectList = ({
     </Layout>
   )
 }
-export default stateful({
-  component: 'ProjectList'
-})(
-  connect(
-    mapState({
-      projects: selectors.allProjects,
-      session: selectors.currentAccount
-    }),
-    mapDispatch({
-      toCreateProject: () => actions.requestLocation('/projects/create'),
-      toProjectDetail: identifier => actions.requestLocation(`/projects/${ identifier }`)
-    })
-  )(ProjectList)
-)
+export default connect(
+  mapState({
+    projects: selectors.allProjects,
+    session: selectors.currentAccount
+  }),
+  mapDispatch({
+    toCreateProject: () => actions.requestLocation('/projects/create'),
+    toProjectDetail: identifier => actions.requestLocation(`/projects/${ identifier }`)
+  })
+)(ProjectList)

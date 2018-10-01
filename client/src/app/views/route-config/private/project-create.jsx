@@ -1,21 +1,21 @@
 import { fork, put, race, take } from 'redux-saga/effects'
 
 import { actions, types } from 'state/interface'
-import SignIn from 'views/pages/sign-in'
+import * as CreateProject from 'views/pages/create-project'
 
-const watchSignIn = function*(path) {
+const watchCreateProject = function*(path) {
   while (true) {
-    yield take(types[ 'SESSION/CREATE' ])
+    yield take(types[ 'PROJECT/CREATE' ])
 
     yield put(
       actions.mergeUIState(path, {
-        idle: false
+        idle: true
       })
     )
 
     const results = yield race({
-      completed: take(types[ 'SESSION/CREATE_COMPLETED' ]),
-      failed: take(types[ 'SESSION/CREATE_FAILED' ])
+      completed: take(types[ 'PROJECT/CREATE_COMPLETED' ]),
+      failed: take(types[ 'PROJECT/CREATE_FAILED' ])
     })
 
     yield put(
@@ -29,8 +29,8 @@ const watchSignIn = function*(path) {
 }
 
 export default {
-  '/sign-in': {
-    component: SignIn,
+  '/projects/create': {
+    component: CreateProject,
     exact: true,
     state: function*(path) {
       yield put(
@@ -39,7 +39,7 @@ export default {
         })
       )
 
-      yield fork(watchSignIn, path)
+      yield fork(watchCreateProject, path)
     }
   }
 }

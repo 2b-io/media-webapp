@@ -8,7 +8,6 @@ import { ChangePassword } from 'views/common/form'
 import { Container, TextBox, Break } from 'ui/elements'
 import { ErrorBox, SuccessBox } from 'ui/elements'
 import { EmailIcon } from 'ui/icons'
-import { stateful } from 'views/common/decorators'
 import { validateConfirmPassword } from 'views/common/validate'
 import { withParams } from 'views/router'
 
@@ -52,14 +51,10 @@ const ResetPassword = ({
 )
 
 export default withParams(
-  stateful({
-    component: 'ResetPassword'
-  })(
-    connect(
-      null,
-      mapDispatch({
-        resetPassword: ({ password, code }) => actions.resetPassword(password, code)
-      })
-    )(ResetPassword)
-  )
+  connect(
+    null,
+    mapDispatch({
+      resetPassword: ({ password, code }) => actions.resetPassword(password, code)
+    })
+  )(ResetPassword)
 )

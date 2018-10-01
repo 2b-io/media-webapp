@@ -37,23 +37,19 @@ const EditProfile = ({
   )
 }
 
-export default stateful({
-  component: 'EditProfile'
-})(
-  connect(
-    (state) => {
-      const { id } = selectors.currentParams(state)
-      return {
-        account: selectors.findAccountById(
-          state,
-          id,
-          selectors.currentSession(state)
-        ),
-        session: selectors.currentSession(state)
-      }
-    },
-    mapDispatch({
-      updateProfile: actions.updateProfile
-    })
-  )(EditProfile)
-)
+export default connect(
+  (state) => {
+    const { id } = selectors.currentParams(state)
+    return {
+      account: selectors.findAccountById(
+        state,
+        id,
+        selectors.currentSession(state)
+      ),
+      session: selectors.currentSession(state)
+    }
+  },
+  mapDispatch({
+    updateProfile: actions.updateProfile
+  })
+)(EditProfile)

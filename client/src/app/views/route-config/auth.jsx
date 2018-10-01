@@ -1,66 +1,33 @@
 import * as CacheInvalidate from 'views/pages/cache-invalidate'
-import * as ChangePassword from 'views/pages/change-password'
 import * as CreateProject from 'views/pages/create-project'
 import * as Dashboard from 'views/pages/dashboard'
-import * as EditProject from 'views/pages/edit-project'
-import * as EditProfile from 'views/pages/edit-profile'
 import * as InviteCollaborator from 'views/pages/invite-collaborator'
 import * as PresetGif from 'views/pages/preset-gif'
 import * as PresetJpeg from 'views/pages/preset-jpeg'
 import * as PresetPng from 'views/pages/preset-png'
 import * as PresetSvg from 'views/pages/preset-svg'
-import * as Profile from 'views/pages/profile'
 import * as ProjectDetail from 'views/pages/project-detail'
-import * as ProjectList from 'views/pages/project-list'
+
 import * as ProjectMedia from 'views/pages/project-detail/project-media'
 import * as PullSetting from 'views/pages/pull-setting'
 import * as UI from 'views/pages/ui'
 
 import { actions } from 'state/interface'
 
+import dashboard from './private/dashboard'
+import profile from './private/profile'
+import projectCreate from './private/project-create'
+import projectDetail from './private/project-detail'
+import projectEdit from './private/project-edit'
+import projectList from './private/project-list'
+import pullSetting from './private/pull-setting'
+
 export default {
-  '/': {
-    topLevel: true,
-    component: Dashboard,
-    exact: true,
-    onEnter: () => [
-      actions.fetchProjects()
-    ]
-  },
-  '/@:id/edit': {
-    component: EditProfile,
-    exact: true,
-    onEnter: ({ id }) => [
-      actions.getAccount(id)
-    ]
-  },
-  '/@:id/change-password': {
-    component: ChangePassword,
-    exact: true,
-    onEnter: ({ id }) => [
-      actions.getAccount(id)
-    ]
-  },
-  '/@:id': {
-    topLevel: true,
-    component: Profile,
-    exact: true,
-    onEnter: ({ id }) => [
-      actions.getAccount(id)
-    ]
-  },
-  '/projects': {
-    topLevel: true,
-    component: ProjectList,
-    exact: true,
-    onEnter: () => [
-      actions.fetchProjects()
-    ]
-  },
-  '/projects/create': {
-    component: CreateProject,
-    exact: true
-  },
+  ...dashboard,
+  ...profile,
+  ...projectCreate,
+  ...projectList,
+  ...pullSetting,
   '/projects/:identifier/media': {
     component: ProjectMedia,
     exact: true,
@@ -75,13 +42,6 @@ export default {
       actions.getProject(identifier)
     ]
   },
-  '/projects/:identifier/edit': {
-    component: EditProject,
-    exact: true,
-    onEnter: ({ identifier }) => [
-      actions.getProject(identifier)
-    ]
-  },
   '/projects/:identifier/invite-collaborator': {
     component: InviteCollaborator,
     exact: true,
@@ -89,14 +49,7 @@ export default {
       actions.getProject(identifier)
     ]
   },
-  '/projects/:identifier/pull-setting': {
-    component: PullSetting,
-    exact: true,
-    onEnter: ({ identifier }) => [
-      actions.getProject(identifier),
-      actions.getPullSetting(identifier)
-    ]
-  },
+  ...projectEdit,
   '/projects/:identifier/presets/image_jpeg': {
     component: PresetJpeg,
     exact: true,
@@ -138,16 +91,7 @@ export default {
       actions.hideModal({ modal: 'CollaboratorInviteEmail' })
     ]
   },
-  '/projects/:identifier': {
-    component: ProjectDetail,
-    exact: false,
-    onEnter: ({ identifier }) => identifier === 'create' || [
-      actions.getProject(identifier),
-      actions.fetchPresets({ identifier }),
-      actions.getPullSetting(identifier),
-      actions.fetchSecretKeys(identifier)
-    ]
-  },
+  ...projectDetail,
   '/ui': {
     component: UI,
     exact: true

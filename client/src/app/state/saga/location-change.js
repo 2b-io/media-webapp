@@ -98,9 +98,11 @@ export default function*() {
             }
 
             if (r.state) {
-              enteringStates[ r.path ] = r.state
+              enteringStates[ current ] = r.state
             }
-          } else if (!collector.leaveEnd && r.leave) {
+          }
+
+          if (!collector.leaveEnd && r.leave) {
             console.debug(`Leaving ${ previous } [${ r.path }]`)
 
             if (r.onLeave) {
@@ -109,8 +111,12 @@ export default function*() {
           }
 
           return {
-            enterEnd: r.enter && r.exact,
-            leaveEnd: r.leave && r.exact,
+            enterEnd: r.enter ?
+              (collector.enterEnd || r.exact) :
+              collector.enterEnd,
+            leaveEnd: r.leave ?
+              (collector.leaveEnd || r.exact) :
+              collector.leaveEnd,
             actions: [
               ...collector.actions,
               ...leavingActions,
@@ -130,7 +136,8 @@ export default function*() {
             }
           }
         }, {
-          end: false,
+          enterEnd: false,
+          leaveEnd: false,
           actions: [],
           enteringParams: {},
           leavingParams: {},
@@ -174,7 +181,7 @@ export default function*() {
         startForks.reduce(
           (forks, path) => ({
             ...forks,
-            [ path ]: fork(enteringStates[path])
+            [ path ]: fork(enteringStates[path], path)
           }),
           {}
         )

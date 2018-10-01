@@ -7,7 +7,6 @@ import { mapDispatch } from 'services/redux-helpers'
 import { Break, Container, Link } from 'ui/elements'
 import { ErrorBox, SuccessBox } from 'ui/elements'
 import { Text } from 'ui/typo'
-import { stateful } from 'views/common/decorators'
 
 import _ForgotPasswordForm from './forgot-password-form'
 
@@ -44,14 +43,10 @@ const ForgotPassword=({
   </main>
 )
 
-export default stateful({
-  component: 'ResetPassword'
-})(
-  connect(
-    null,
-    mapDispatch({
-      forgotPassword: email => actions.forgotPassword(email),
-      toSignIn: () => actions.requestLocation('/sign-in')
-    })
-  )(ForgotPassword)
-)
+export default connect(
+  null,
+  mapDispatch({
+    forgotPassword: email => actions.forgotPassword(email),
+    toSignIn: () => actions.requestLocation('/sign-in')
+  })
+)(ForgotPassword)

@@ -25,8 +25,9 @@ const ProjectList = ({
   sortProjects,
   toggleDisabledProjects,
   ui: {
-    toggleDisabledProjects: hideProjects,
-    sortCondition: { type, ascending }
+    hideDisabledProjects,
+    sortType,
+    sortAscending
   }
 }) => (
   <Fragment>
@@ -40,29 +41,29 @@ const ProjectList = ({
           items={ [
             {
               content: () => <TextLine mostLeft mostRight>Sort by privilege</TextLine>,
-              onClick: () => sortProjects({ type: 'privilege', ascending: !ascending }),
-              trailing: type === 'privilege' ? () =>  ascending ? <SortAscIcon /> : <SortDescIcon /> : null
+              onClick: () => sortProjects({ type: 'privilege', ascending: !sortAscending }),
+              trailing: sortType === 'privilege' ? () =>  sortAscending ? <SortAscIcon /> : <SortDescIcon /> : null
             },
             {
               content: () => <TextLine mostLeft mostRight>Sort by name</TextLine>,
-              onClick: () => sortProjects({ type: 'name', ascending: !ascending }),
-              trailing: type === 'name' ? () =>  ascending ? <SortAlphaAscIcon /> : <SortAlphaDescIcon /> : null
+              onClick: () => sortProjects({ type: 'name', ascending: !sortAscending }),
+              trailing: sortType === 'name' ? () =>  sortAscending ? <SortAlphaAscIcon /> : <SortAlphaDescIcon /> : null
             },
             {
               content: () => <TextLine mostLeft mostRight>Sort by created date</TextLine>,
-              onClick: () => sortProjects({ type: 'created', ascending: !ascending }),
-              trailing: type === 'created' ? () =>  ascending ? <SortNumericAscIcon /> : <SortNumericDescIcon /> : null
+              onClick: () => sortProjects({ type: 'created', ascending: !sortAscending }),
+              trailing: sortType === 'created' ? () =>  sortAscending ? <SortNumericAscIcon /> : <SortNumericDescIcon /> : null
             },
             {
               content: () => (
                 <TextLine mostLeft mostRight>
                   {
-                    hideProjects ? 'Show disabled projects' : 'Hide disabled projects'
+                    hideDisabledProjects ? 'Show disabled projects' : 'Hide disabled projects'
                   }
                 </TextLine>
               ),
-              onClick: toggleDisabledProjects,
-              trailing: () => hideProjects ? <EyeIcon /> : <EyeOffIcon />
+              onClick: toggleDisabledProjects.bind(null, !hideDisabledProjects),
+              trailing: () => hideDisabledProjects ? <EyeIcon /> : <EyeOffIcon />
             }
           ] }
         />
@@ -70,15 +71,11 @@ const ProjectList = ({
     />
   </Fragment>
 )
-export default stateful({
-  component: 'ProjectList'
-})(
-  connect(
-    null,
-    mapDispatch({
-      sortProjects: actions.sortProjects,
-      toggleDisabledProjects: actions.toggleDisabledProjects,
-      maximizeSidebar: actions.maximizeSidebar
-    })
-  )(ProjectList)
-)
+export default connect(
+  null,
+  mapDispatch({
+    sortProjects: actions.sortProjects,
+    toggleDisabledProjects: actions.toggleDisabledProjects,
+    maximizeSidebar: actions.maximizeSidebar
+  })
+)(ProjectList)

@@ -6,9 +6,18 @@ import {
 
 import Switch from './switch'
 
-const renderRoutes = routes => routes.map(
-  route => (
-    <Route { ...route } key={ route.path } />
+const renderRoutes = (routes, props) => routes.map(
+  ({ component: Component, ...route }) => (
+    <Route
+      { ...route }
+      key={ route.path }
+      render={ (ownProps) => (
+        <Component
+          { ...props }
+          { ...ownProps }
+        />
+      ) }
+    />
   )
 )
 
@@ -16,12 +25,13 @@ const Router = ({
   animated = false,
   history,
   routes,
-  otherwise: Otherwise
+  otherwise: Otherwise,
+  ...props
 }) => {
   return (
     <BrowserRouter history={ history }>
       <Switch animated={ animated }>
-        { renderRoutes(routes) }
+        { renderRoutes(routes, props) }
         { Otherwise && <Otherwise /> || null }
       </Switch>
     </BrowserRouter>

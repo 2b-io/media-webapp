@@ -52,24 +52,27 @@ injectGlobal`
   */
 `
 
-const Overlay = ({ history }) => (
+const Overlay = ({ history, ...props }) => (
   <Router
     history={ history }
     routes={ overlay }
+    { ...props }
   />
 )
 
-const Content = ({ history }) => (
+const Content = ({ history, ...props }) => (
   <Router
     history={ history }
     routes={ content }
+    { ...props }
   />
 )
 
-const Still = ({ history }) => (
+const Still = ({ history, ...props }) => (
   <Router
     history={ history }
     routes={ still }
+    { ...props }
   />
 )
 

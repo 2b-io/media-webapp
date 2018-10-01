@@ -42,14 +42,10 @@ const Register = ({
   </main>
 )
 
-export default stateful({
-  component: 'Register'
-})(
-  connect(
-    null,
-    mapDispatch({
-      register: ({ email }) => actions.register(email),
-      toSignIn: () => actions.requestLocation('/sign-in')
-    })
-  )(Register)
-)
+export default connect(
+  null,
+  mapDispatch({
+    register: ({ email }) => actions.register(email),
+    toSignIn: () => actions.requestLocation('/sign-in')
+  })
+)(Register)
