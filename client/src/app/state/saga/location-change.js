@@ -174,7 +174,7 @@ export default function*() {
         startForks.reduce(
           (forks, path) => ({
             ...forks,
-            [ path ]: fork(enteringStates[path])
+            [ path ]: fork(enteringStates[path], path)
           }),
           {}
         )

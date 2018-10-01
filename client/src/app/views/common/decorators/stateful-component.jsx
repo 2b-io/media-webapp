@@ -1,29 +1,21 @@
-import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { mapDispatch } from 'services/redux-helpers'
+import { selectors } from 'state/interface'
 
 export default ({ component }) => WrappedComponent => {
-
-  class StatefulComponent extends Component {
-    componentWillUnmount() {
-      this.props.clearState()
-    }
-
-    render() {
-      return <WrappedComponent { ...this.props } />
-    }
-  }
+  console.warn('stateful() is deprecated, use `selectors.uiState()` instead...')
 
   return connect(
-    state => ({
-      ui: state.ui[component]
-    }),
-    mapDispatch({
-      clearState: () => ({
-        type: '@@UI/CLEAR',
-        payload: { component }
-      })
-    })
-  )(StatefulComponent)
+    (state) => {
+      const currentLocation = selectors.currentLocation(state)
+
+      if (!currentLocation) {
+        return {}
+      }
+
+      return {
+        ui: selectors.uiState(state, currentLocation.pathname)
+      }
+    }
+  )(WrappedComponent)
 }
