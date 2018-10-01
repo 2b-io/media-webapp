@@ -1,13 +1,9 @@
-import * as ChangePassword from 'views/pages/change-password'
 import * as CreateProject from 'views/pages/create-project'
 import * as Dashboard from 'views/pages/dashboard'
-import * as EditProject from 'views/pages/edit-project'
-import * as EditProfile from 'views/pages/edit-profile'
 import * as PresetGif from 'views/pages/preset-gif'
 import * as PresetJpeg from 'views/pages/preset-jpeg'
 import * as PresetPng from 'views/pages/preset-png'
 import * as PresetSvg from 'views/pages/preset-svg'
-import * as Profile from 'views/pages/profile'
 import * as ProjectDetail from 'views/pages/project-detail'
 
 import * as ProjectMedia from 'views/pages/project-detail/project-media'
@@ -16,44 +12,19 @@ import * as UI from 'views/pages/ui'
 
 import { actions } from 'state/interface'
 
+import dashboard from './private/dashboard'
+import profile from './private/profile'
+import projectCreate from './private/project-create'
+import projectEdit from './private/project-edit'
 import projectList from './private/project-list'
+import pullSetting from './private/pull-setting'
 
 export default {
-  '/': {
-    topLevel: true,
-    component: Dashboard,
-    exact: true,
-    onEnter: () => [
-      actions.fetchProjects()
-    ]
-  },
-  '/@:id/edit': {
-    component: EditProfile,
-    exact: true,
-    onEnter: ({ id }) => [
-      actions.getAccount(id)
-    ]
-  },
-  '/@:id/change-password': {
-    component: ChangePassword,
-    exact: true,
-    onEnter: ({ id }) => [
-      actions.getAccount(id)
-    ]
-  },
-  '/@:id': {
-    topLevel: true,
-    component: Profile,
-    exact: true,
-    onEnter: ({ id }) => [
-      actions.getAccount(id)
-    ]
-  },
+  ...dashboard,
+  ...profile,
+  ...projectCreate,
   ...projectList,
-  '/projects/create': {
-    component: CreateProject,
-    exact: true
-  },
+  ...pullSetting,
   '/projects/:identifier/media': {
     component: ProjectMedia,
     exact: true,
@@ -61,21 +32,7 @@ export default {
       actions.fetchProjectMedia(identifier)
     ]
   },
-  '/projects/:identifier/edit': {
-    component: EditProject,
-    exact: true,
-    onEnter: ({ identifier }) => [
-      actions.getProject(identifier)
-    ]
-  },
-  '/projects/:identifier/pull-setting': {
-    component: PullSetting,
-    exact: true,
-    onEnter: ({ identifier }) => [
-      actions.getProject(identifier),
-      actions.getPullSetting(identifier)
-    ]
-  },
+  ...projectEdit,
   '/projects/:identifier/presets/image_jpeg': {
     component: PresetJpeg,
     exact: true,

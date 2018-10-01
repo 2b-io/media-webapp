@@ -27,23 +27,19 @@ const ChangePassword = ({
   </Container>
 )
 
-export default stateful({
-  component: 'ChangePassword'
-})(
-  connect(
-    (state) => {
-      const { id } = selectors.currentParams(state)
-      return {
-        account: selectors.findAccountById(
-          state,
-          id,
-          selectors.currentSession(state)
-        ),
-        session: selectors.currentSession(state)
-      }
-    },
-    mapDispatch({
-      changePassword: ({ currentPassword, password }) => actions.changePassword(currentPassword, password)
-    })
-  )(ChangePassword)
-)
+export default connect(
+  (state) => {
+    const { id } = selectors.currentParams(state)
+    return {
+      account: selectors.findAccountById(
+        state,
+        id,
+        selectors.currentSession(state)
+      ),
+      session: selectors.currentSession(state)
+    }
+  },
+  mapDispatch({
+    changePassword: ({ currentPassword, password }) => actions.changePassword(currentPassword, password)
+  })
+)(ChangePassword)

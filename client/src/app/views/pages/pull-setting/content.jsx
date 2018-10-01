@@ -28,20 +28,16 @@ const PullSetting = ({
     </Container>
   )
 }
-export default stateful({
-  component: 'PullSetting'
-})(
-  connect(
-    (state) => {
-      const { identifier } = selectors.currentParams(state)
+export default connect(
+  (state) => {
+    const { identifier } = selectors.currentParams(state)
 
-      return {
-        pullSetting: selectors.pullSetting(state, identifier),
-        identifier
-      }
-    },
-    mapDispatch({
-      updatePullSetting: actions.updatePullSetting
-    })
-  )(PullSetting)
-)
+    return {
+      pullSetting: selectors.pullSetting(state, identifier),
+      identifier
+    }
+  },
+  mapDispatch({
+    updatePullSetting: actions.updatePullSetting
+  })
+)(PullSetting)
