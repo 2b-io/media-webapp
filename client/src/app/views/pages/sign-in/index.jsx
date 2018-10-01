@@ -41,15 +41,11 @@ const SignIn = ({
   </Container>
 )
 
-export default stateful({
-  component: 'SignIn'
-})(
-  connect(
-    null,
-    mapDispatch({
-      signIn: credential => actions.createSession(credential),
-      toForgotPassword: () => actions.requestLocation('/forgot-password'),
-      toRegister: () => actions.requestLocation('/register')
-    })
-  )(SignIn)
-)
+export default connect(
+  null,
+  mapDispatch({
+    signIn: credential => actions.createSession(credential),
+    toForgotPassword: () => actions.requestLocation('/forgot-password'),
+    toRegister: () => actions.requestLocation('/register')
+  })
+)(SignIn)

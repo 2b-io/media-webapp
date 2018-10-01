@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { selectors } from 'state/interface'
 
 export default ({ component }) => WrappedComponent => {
-  console.warn('stateful() is deprecated, use `selectors.uiState()` instead...')
+  console.warn(`stateful(${ component }) is deprecated`)
 
   return connect(
     (state) => {
