@@ -1,9 +1,9 @@
 import React from 'react'
 
 import { Form } from 'ui/compounds'
-import { Button, Break, Link } from 'ui/elements'
+import { Button, Break } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
-import { TextArea, TextBox } from 'views/common/form'
+import { TextArea } from 'views/common/form'
 import { validateRequired, validateEmail } from 'views/common/validate'
 
 const InviteCollaboratorForm = ({ handleSubmit }) => (
@@ -16,7 +16,7 @@ const InviteCollaboratorForm = ({ handleSubmit }) => (
       validate={ [ validateRequired, validateEmail ] }
     />
     <DescriptionText mostLeft mostRight>
-      We'll send the persons you invited an email with the invitation detail. If they don't have an account yet, we'll create one and send instructions for setting their password.
+      "We'll send the persons you invited an email with the invitation detail. If they don't have an account yet, we'll create one and send instructions for setting their password."
     </DescriptionText>
     <Break />
     <TextArea
