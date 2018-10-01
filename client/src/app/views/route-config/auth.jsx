@@ -9,12 +9,14 @@ import * as PresetPng from 'views/pages/preset-png'
 import * as PresetSvg from 'views/pages/preset-svg'
 import * as Profile from 'views/pages/profile'
 import * as ProjectDetail from 'views/pages/project-detail'
-import * as ProjectList from 'views/pages/project-list'
+
 import * as ProjectMedia from 'views/pages/project-detail/project-media'
 import * as PullSetting from 'views/pages/pull-setting'
 import * as UI from 'views/pages/ui'
 
 import { actions } from 'state/interface'
+
+import projectList from './private/project-list'
 
 export default {
   '/': {
@@ -47,14 +49,7 @@ export default {
       actions.getAccount(id)
     ]
   },
-  '/projects': {
-    topLevel: true,
-    component: ProjectList,
-    exact: true,
-    onEnter: () => [
-      actions.fetchProjects()
-    ]
-  },
+  ...projectList,
   '/projects/create': {
     component: CreateProject,
     exact: true
