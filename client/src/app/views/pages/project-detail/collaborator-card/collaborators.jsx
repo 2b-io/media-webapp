@@ -9,8 +9,6 @@ import { Button, Card, ContextMenu, Identicon, Link, List, Paragraph } from 'ui/
 import { OwnerAddIcon } from 'ui/icons'
 
 import { ConfirmDeleteCollaboratorDialog } from '../dialog'
-import CollaboratorInviteEmail from '../sent-email-invite-modal'
-import InviteModal from '../invite-modal'
 
 const Avatar = styled.div`
   width: 40px;
@@ -27,6 +25,7 @@ const Collaborators = ({
   identifier,
   makeOwner,
   toProjectDetail,
+  toInviteCollaborator,
   toInviteCollaboratorModal,
   showDeleteCollaboratorDialog,
   hideDeleteCollaboratorDialog,
@@ -89,7 +88,7 @@ const Collaborators = ({
     <Fragment>
       <Card
         title={ () => <Heading mostLeft mostRight>Collaborators</Heading> }
-        fab={ () => <OwnerAddIcon onClick={ () => toInviteCollaboratorModal(identifier) } /> }
+        fab={ () => <OwnerAddIcon onClick={ () => toInviteCollaborator(identifier) } /> }
         content={ () => (
           items.length > 0 ?
             <List items={ items } /> :
@@ -118,18 +117,6 @@ const Collaborators = ({
           </Button.Group>
         ) }
       />
-      <InviteModal
-        width="wide"
-        identifier={ identifier }
-        title="Invite collaborators"
-        onHide={ () => toProjectDetail(identifier) }
-        collaborators={ Object.values(collaborators) }
-      />
-      <CollaboratorInviteEmail
-        width="wide"
-        title="Sent email invite collaborators"
-        onHide={ () => toProjectDetail(identifier) }
-      />
     </Fragment>
   )
 }
@@ -143,6 +130,7 @@ export default connect(
     makeOwner: actions.makeOwner,
     deleteCollaborator: actions.deleteCollaborator,
     toProfile: (id) => actions.requestLocation(`/@${ id }`),
+    toInviteCollaborator: (identifier) => actions.requestLocation(`/projects/${ identifier }/invite-collaborator`),
     toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }`),
     toInviteCollaboratorModal: (identifier) => actions.requestLocation(`/projects/${ identifier }/invite`),
     showDeleteCollaboratorDialog: (accountId, accountEmail) => actions.showDialog({ dialog: 'ConfirmDeleteCollaboratorDialog', params: { accountId, accountEmail } }),
