@@ -20,7 +20,7 @@ const DialogRemovePreset = ({
           This operation cannot be undone and it should take a while to finish.
         </Text>
         <Break double />
-        <Button.Group>
+        <Button.Group mostRight>
           <Button
             variant="secondary"
             mostRight

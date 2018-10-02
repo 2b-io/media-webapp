@@ -100,7 +100,7 @@ const ProjectList = ({
     hideDisabledProjects
   }
 }) => {
-  console.log('sortAscending', sortAscending);
+
   const { _id: currentAccountId } = session
   const filteredProjects = hideDisabledProjects ?
     hideProjects(projects) :

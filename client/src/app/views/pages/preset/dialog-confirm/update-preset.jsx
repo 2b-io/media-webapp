@@ -19,7 +19,7 @@ const DialogUpdatePreset = ({
           All previous optimized media of this content type will be deleted.
           This operation should take a while to finish.
         </Text>
-        <Button.Group>
+        <Button.Group mostRight>
           <Button
             variant="secondary"
             mostRight

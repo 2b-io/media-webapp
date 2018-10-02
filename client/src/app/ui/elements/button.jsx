@@ -109,8 +109,17 @@ const Button = styled.button.attrs({
 `
 
 Button.Group = styled.div`
-  display: inline-flex;
 
+  ${
+    ({ mostRight }) => mostRight ?
+      css`
+        display: flex;
+        justify-content: flex-end
+        `:
+      css`
+        display: inline-flex;
+        `
+  };
   & > ${ Button } {
     margin-right: ${
       ({ theme, loosed }) => loosed ?
