@@ -6,18 +6,6 @@ import { CheckBox, SlideBar, TextBox } from 'views/common/form'
 
 const JpegParameterForm = () => (
   <Fragment>
-    <TextBox
-      label="Content Type"
-      name="contentType"
-      placeholder="Content Type"
-      readOnly
-    />
-    <Break />
-    <CheckBox
-      name="isActive"
-      label="Enable"
-    />
-    <Break />
     <SlideBar
       label="Quality"
       name="quality"

@@ -6,18 +6,6 @@ import { CheckBox, TextBox } from 'views/common/form'
 
 const SvgParameterForm = () => (
   <Fragment>
-    <CheckBox
-      name="cleanupAttrs"
-      label="Cleanup Attrs"
-    />
-    <DescriptionText mostLeft mostRight>
-      Cleanup attributes from newlines, trailing, and repeating spaces
-    </DescriptionText>
-    <Break />
-    <CheckBox
-      name="inlineStyles"
-      label="Inline Styles"
-    />
     <DescriptionText mostLeft mostRight>
       Move and merge styles from  &lt;style&gt; elements to element style attributes
     </DescriptionText>

@@ -6,17 +6,6 @@ import { CheckBox, TextBox, SlideBar } from 'views/common/form'
 
 const PngParameterForm = () => (
   <Fragment>
-    <TextBox
-      label="Content Type"
-      name="contentType"
-      placeholder="Content Type"
-      readOnly
-    />
-    <Break />
-    <CheckBox
-      name="isActive"
-      label="Enable"
-    />
     <Break />
     <CheckBox
       name="progressive"
