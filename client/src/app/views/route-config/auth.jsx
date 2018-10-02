@@ -2,7 +2,7 @@ import * as CacheInvalidate from 'views/pages/cache-invalidate'
 import * as CreateProject from 'views/pages/create-project'
 import * as Dashboard from 'views/pages/dashboard'
 import * as ProjectDetail from 'views/pages/project-detail'
-
+import * as InviteCollaborator from 'views/pages/invite-collaborator's
 import * as ProjectMedia from 'views/pages/project-detail/project-media'
 import * as PullSetting from 'views/pages/pull-setting'
 import * as UI from 'views/pages/ui'
@@ -33,6 +33,13 @@ export default {
   },
   '/projects/:identifier/cache-invalidator': {
     component: CacheInvalidate,
+    exact: true,
+    onEnter: ({ identifier }) => [
+      actions.getProject(identifier)
+    ]
+  },
+  '/projects/:identifier/invite-collaborator': {
+    component: InviteCollaborator,
     exact: true,
     onEnter: ({ identifier }) => [
       actions.getProject(identifier)
