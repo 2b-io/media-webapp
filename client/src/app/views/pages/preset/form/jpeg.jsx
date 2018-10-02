@@ -1,12 +1,11 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
-import { Form } from 'ui/compounds'
-import { Break, Button, TextButton } from 'ui/elements'
+import { Break } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
 import { CheckBox, SlideBar, TextBox } from 'views/common/form'
 
-const PresetForm = ({ handleSubmit, isActive, showRemovePresetDialog }) => (
-  <Form handleSubmit={ handleSubmit }>
+const JpegParameterForm = () => (
+  <Fragment>
     <TextBox
       label="Content Type"
       name="contentType"
@@ -35,13 +34,7 @@ const PresetForm = ({ handleSubmit, isActive, showRemovePresetDialog }) => (
     <DescriptionText mostLeft mostRight>
       Lossless conversion to progressive
     </DescriptionText>
-    <Break double />
-    <Button
-      type="submit"
-    >
-      Save
-    </Button>
-  </Form>
+  </Fragment>
 )
 
-export default PresetForm
+export default JpegParameterForm

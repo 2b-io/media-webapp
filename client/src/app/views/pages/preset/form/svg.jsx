@@ -1,24 +1,11 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
-import { Form } from 'ui/compounds'
-import { Break, Button } from 'ui/elements'
+import { Break } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
 import { CheckBox, TextBox } from 'views/common/form'
 
-const PresetForm = ({ handleSubmit }) => (
-  <Form handleSubmit={ handleSubmit }>
-    <TextBox
-      label="Content Type"
-      name="contentType"
-      placeholder="Content Type"
-      readOnly
-    />
-    <Break />
-    <CheckBox
-      name="isActive"
-      label="Enable"
-    />
-    <Break />
+const SvgParameterForm = () => (
+  <Fragment>
     <CheckBox
       name="cleanupAttrs"
       label="Cleanup Attrs"
@@ -32,7 +19,7 @@ const PresetForm = ({ handleSubmit }) => (
       label="Inline Styles"
     />
     <DescriptionText mostLeft mostRight>
-      Move and merge styles from  &#60;style&#62; elements to element style attributes
+      Move and merge styles from  &lt;style&gt; elements to element style attributes
     </DescriptionText>
     <Break />
     <CheckBox
@@ -96,7 +83,7 @@ const PresetForm = ({ handleSubmit }) => (
       label="Minify Styles"
     />
     <DescriptionText mostLeft mostRight>
-      Minify &#60;style&#62; elements content with CSSO
+      Minify &lt;style&gt; elements content with CSSO
     </DescriptionText>
     <Break />
     <CheckBox
@@ -176,7 +163,7 @@ const PresetForm = ({ handleSubmit }) => (
       label="Remove Style Element"
     />
     <DescriptionText mostLeft mostRight>
-      Remove &#60;style&#62; elements (disabled by default)
+      Remove &lt;style&gt; elements (disabled by default)
     </DescriptionText>
     <Break />
     <CheckBox
@@ -186,13 +173,7 @@ const PresetForm = ({ handleSubmit }) => (
     <DescriptionText mostLeft mostRight>
       remove non-inheritable group&apos;s &quot;presentation&quot; attributes
     </DescriptionText>
-    <Break double />
-    <Button
-      type="submit"
-    >
-      Save
-    </Button>
-  </Form>
+  </Fragment>
 )
 
-export default PresetForm
+export default SvgParameterForm

@@ -5,19 +5,16 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Container, TextButton } from 'ui/elements'
-import DialogRemovePreset from 'views/common/dialog-confirm/dialog-remove-preset'
-import DialogUpdatePreset from 'views/common/dialog-confirm/dialog-update-preset'
+import DialogRemovePreset from './dialog-confirm/remove-preset'
+import DialogUpdatePreset from './dialog-confirm/update-preset'
 import { Redirect } from 'views/router'
 
-import { jpeg, gif } from './form'
-
-const REMOVE_PRESET = 'REMOVE_PRESET'
-const UPDATE_PRESET = 'UPDATE_PRESET'
+import StatelessPresetForm from './form'
 
 const PresetForm = reduxForm({
-  form: 'presetJpeg',
+  form: 'PRESET_FORM',
   enableReinitialize: true
-})(gif)
+})(StatelessPresetForm)
 
 const PresetJpeg = ({
   preset,
@@ -28,21 +25,18 @@ const PresetJpeg = ({
   showUpdatePresetDialog,
   hideRemovePresetDialog,
   hideUpdatePresetDialog,
-  isRemovePresetDialogActive,
-  isUpdatePresetDialogActive,
-  dialogParams,
   ui: {
-    removePresetError,
     removePresetResult,
     notFoundPreset,
-    updatePresetResult,
-    updatePresetError
+    isUpdatePresetDialogActive,
+    isRemovePresetDialogActive,
   }
 }) => {
 
   if (removePresetResult || notFoundPreset ) {
     return <Redirect to={ `/projects/${ identifier }` } />
   }
+
 
   if (!preset) {
     return null
@@ -53,6 +47,7 @@ const PresetJpeg = ({
   return (
     <Container>
       <PresetForm
+        contentType={ contentType }
         initialValues={ { contentType, isActive, ...parameters } }
         onSubmit={ ({ contentType, isActive, ...parameters }) => {
           showUpdatePresetDialog({
@@ -63,42 +58,24 @@ const PresetJpeg = ({
             },
             identifier
           })
-          // updatePreset({
-          //   preset: {
-          //     contentType,
-          //     isActive,
-          //     parameters
-          //   },
-          //   identifier
-          // })
         } }
         isActive={ isActive }
-        // showRemovePresetDialog={ showRemovePresetDialog }
       />
       <TextButton onClick={ showRemovePresetDialog }>
         Permanently delete
       </TextButton>
       <DialogRemovePreset
-        isRemovePresetDialogActive={ isRemovePresetDialogActive }
-        removePreset={ () => removePreset({ identifier, contentType }) }
-        hideRemovePresetDialog={ hideRemovePresetDialog }
-        removePresetError={ removePresetError }
-        message={ <p>
-          You are about to permanently delete configuration for content type <b> &quot;image/jpeg</b> &quot;.
-          All optimized media of this content type will be deleted along with this configuration.
-          This operation cannot be undone and it should take a while to finish.
-        </p> }
+        isActive={ isRemovePresetDialogActive }
+        onConfirm={ () => removePreset({ identifier, contentType }) }
+        onCancel={ hideRemovePresetDialog }
       />
       <DialogUpdatePreset
+        contentType={ contentType }
         isUpdatePresetDialogActive={ isUpdatePresetDialogActive }
-        updatePreset={ () => updatePreset({ identifier, contentType }) }
-        hideUpdatePresetDialog={ hideUpdatePresetDialog }
-        updatePresetError={ updatePresetError }
-        message={ <p>
-          You are about to update configuration for content type <b> &quot;image/jpeg</b> &quot;.
-          All previous optimized media of this content type will be deleted.
-          This operation should take a while to finish.
-        </p> }
+        onConfirm={ ({ identifier, preset }) => {
+          updatePreset({ identifier, preset })
+        } }
+        onCancel={ hideUpdatePresetDialog }
       />
     </Container>
   )
@@ -106,14 +83,23 @@ const PresetJpeg = ({
 
 export default connect(
   (state) => {
-    const { identifier } = selectors.currentParams(state)
+    const { contentType, identifier } = selectors.currentParams(state)
+
+    if (!contentType || !identifier) {
+      return {}
+    }
 
     return {
-      preset: selectors.findPreset(state, identifier, 'image/jpeg'),
+      preset: selectors.findPreset(state, identifier, contentType.replace('_', '/')),
       identifier
     }
   },
   mapDispatch({
-    updatePreset: actions.updatePreset
+    updatePreset: actions.updatePreset,
+    removePreset: actions.removePreset,
+    showRemovePresetDialog: () => actions.showDialog('REMOVE_PRESET'),
+    hideRemovePresetDialog: () => actions.hideDialog('REMOVE_PRESET'),
+    showUpdatePresetDialog: (params) => actions.showDialog('UPDATE_PRESET', params),
+    hideUpdatePresetDialog: () => actions.hideDialog('UPDATE_PRESET')
   })
 )(PresetJpeg)

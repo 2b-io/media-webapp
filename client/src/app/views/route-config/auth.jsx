@@ -1,10 +1,6 @@
 import * as CacheInvalidate from 'views/pages/cache-invalidate'
 import * as CreateProject from 'views/pages/create-project'
 import * as Dashboard from 'views/pages/dashboard'
-import * as PresetGif from 'views/pages/preset-gif'
-import * as PresetJpeg from 'views/pages/preset-jpeg'
-import * as PresetPng from 'views/pages/preset-png'
-import * as PresetSvg from 'views/pages/preset-svg'
 import * as ProjectDetail from 'views/pages/project-detail'
 
 import * as ProjectMedia from 'views/pages/project-detail/project-media'
@@ -14,6 +10,7 @@ import * as UI from 'views/pages/ui'
 import { actions } from 'state/interface'
 
 import dashboard from './private/dashboard'
+import preset from './private/preset'
 import profile from './private/profile'
 import projectCreate from './private/project-create'
 import projectDetail from './private/project-detail'
@@ -42,38 +39,7 @@ export default {
     ]
   },
   ...projectEdit,
-  '/projects/:identifier/presets/image_jpeg': {
-    component: PresetJpeg,
-    exact: true,
-    onEnter: ({ identifier }) => [
-      actions.getProject(identifier),
-      actions.getPreset({ identifier, contentType: 'image/jpeg' })
-    ]
-  },
-  '/projects/:identifier/presets/image_svg': {
-    component: PresetSvg,
-    exact: true,
-    onEnter: ({ identifier }) => [
-      actions.getProject(identifier),
-      actions.getPreset({ identifier, contentType: 'image/svg' })
-    ]
-  },
-  '/projects/:identifier/presets/image_gif': {
-    component: PresetGif,
-    exact: true,
-    onEnter: ({ identifier }) => [
-      actions.getProject(identifier),
-      actions.getPreset({ identifier, contentType: 'image/gif' })
-    ]
-  },
-  '/projects/:identifier/presets/image_png': {
-    component: PresetPng,
-    exact: true,
-    onEnter: ({ identifier }) => [
-      actions.getProject(identifier),
-      actions.getPreset({ identifier, contentType: 'image/png' })
-    ]
-  },
+  ...preset,
   '/projects/:identifier/invite': {
     partial: true,
     onEnter: () => [

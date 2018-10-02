@@ -1,24 +1,11 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
-import { Form } from 'ui/compounds'
-import { Break, Button, TextButton } from 'ui/elements'
+import { Break } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
-import { Radio, TextBox, CheckBox } from 'views/common/form'
+import { Radio } from 'views/common/form'
 
-const PresetForm = ({ handleSubmit, isActive, showRemovePresetDialog }) => (
-  <Form handleSubmit={ handleSubmit }>
-    <TextBox
-      label="Content Type"
-      name="contentType"
-      placeholder="Content Type"
-      readOnly
-    />
-    <Break />
-    <CheckBox
-      name="isActive"
-      label="Enable"
-    />
-    <Break />
+const GifParameterForm = () => (
+  <Fragment>
     <Radio
       name="optimize"
       choice="-O1"
@@ -45,11 +32,7 @@ const PresetForm = ({ handleSubmit, isActive, showRemovePresetDialog }) => (
     <DescriptionText mostLeft mostRight>
       Try several optimization methods (usually slower, sometimes better results).
     </DescriptionText>
-    <Break double />
-    <Button type="submit">
-      Save
-    </Button>
-  </Form>
+  </Fragment>
 )
 
-export default PresetForm
+export default GifParameterForm

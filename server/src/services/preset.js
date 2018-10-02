@@ -32,7 +32,7 @@ export const create = async (project, data) => {
 }
 
 export const update = async (project, contentType, data) => {
-  const { _id, identifier } = project
+  const { _id } = project
   // const { isActive } = data
   // if (!isActive) {
   //   await invalidateAllCache(identifier)

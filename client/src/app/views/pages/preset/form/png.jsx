@@ -1,12 +1,11 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
-import { Form } from 'ui/compounds'
-import { Break, Button } from 'ui/elements'
+import { Break } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
 import { CheckBox, TextBox, SlideBar } from 'views/common/form'
 
-const PresetForm = ({ handleSubmit }) => (
-  <Form handleSubmit={ handleSubmit }>
+const PngParameterForm = () => (
+  <Fragment>
     <TextBox
       label="Content Type"
       name="contentType"
@@ -56,13 +55,7 @@ const PresetForm = ({ handleSubmit }) => (
     <DescriptionText mostLeft mostRight>
       Compression level, 0-9
     </DescriptionText>
-    <Break double />
-    <Button
-      type="submit"
-    >
-      Save
-    </Button>
-  </Form>
+  </Fragment>
 )
 
-export default PresetForm
+export default PngParameterForm
