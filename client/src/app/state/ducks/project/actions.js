@@ -1,5 +1,5 @@
 import * as types from './types'
-import stringToList from 'services/string-to-list'
+import { stringToList } from 'services/string-to-list'
 
 export const fetchProjects = () => ({
   type: types.FETCH
@@ -122,10 +122,7 @@ export const makeOwnerFailed = reason => ({
 
 export const invalidateCache = (patterns, identifier) => ({
   type: types.INVALIDATE_CACHE,
-  payload: {
-    patterns: stringToList(patterns),
-    identifier
-  }
+  payload: { patterns, identifier }
 })
 
 export const invalidateCacheCompleted = () => {

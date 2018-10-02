@@ -7,7 +7,7 @@ import { Heading, Text } from 'ui/typo'
 import { Card } from 'ui/elements'
 import { EditIcon } from 'ui/icons'
 
-import stringToList from 'services/string-to-list'
+import { stringToList } from 'services/string-to-list'
 
 const PullSettings = ({
   identifier,

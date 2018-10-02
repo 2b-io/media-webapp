@@ -1,5 +1,5 @@
 import request from 'services/graphql'
-import stringToList from 'services/string-to-list'
+import { listToString, stringToList } from 'services/string-to-list'
 
 export const HEADER_FRAGMENT = `
   name,
@@ -71,7 +71,7 @@ export default {
 
     return {
       ...updatedPullSetting,
-      allowedOrigins: updatedPullSetting.allowedOrigins.join('\n'),
+      allowedOrigins: listToString(updatedPullSetting.allowedOrigins),
       headers: [ ...(updatedPullSetting.headers || []), {} ]
     }
   },

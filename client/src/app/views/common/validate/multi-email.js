@@ -1,25 +1,9 @@
-import stringToList from 'services/string-to-list'
-import checkInvalidEmail from './email'
+import { stringToList } from 'services/string-to-list'
+import isInvalidEmail from './email'
 
-
-export default (values) => {
-  const emailList = stringToList(values)
-  const invalidEmail = emailList.map(
-    (email) => checkInvalidEmail(email) ?
-    `${ email } is not valid email address. ` : undefined
+export default (emails) => {
+  const invalidEmail = stringToList(emails).find(
+    (email) => isInvalidEmail(email)
   )
-
-  return invalidEmail
+  return invalidEmail ? 'Invalid email address' : undefined
 }
-
-// export default async (values) => {
-//   const emailList = await stringToList(values)
-//   const invalidEmail = await Promise.all(emailList.map(
-//       async (email) => await checkInvalidEmail(email) ?
-//       'Have invalid email address.' : undefined
-//     ))
-
-
-//   console.log(invalidEmail);
-//   return invalidEmail
-// }
