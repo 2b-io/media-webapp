@@ -65,6 +65,7 @@ const PresetJpeg = ({
         Permanently delete
       </TextButton>
       <DialogRemovePreset
+        contentType={ contentType }
         isActive={ isRemovePresetDialogActive }
         onConfirm={ () => removePreset({ identifier, contentType }) }
         onCancel={ hideRemovePresetDialog }
