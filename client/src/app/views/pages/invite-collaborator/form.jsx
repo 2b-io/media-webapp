@@ -9,9 +9,9 @@ import { validateRequired, validateMultiEmail } from 'views/common/validate'
 const InviteCollaboratorForm = ({ handleSubmit }) => (
   <Form handleSubmit={ handleSubmit }>
     <TextArea
-      label="Email list"
+      label="Emails"
       placeholder="Email to invite."
-      name="emailList"
+      name="emails"
       validate={ [ validateRequired, validateMultiEmail ] }
     />
     <DescriptionText mostLeft mostRight>

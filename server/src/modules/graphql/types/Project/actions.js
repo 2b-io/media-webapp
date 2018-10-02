@@ -15,6 +15,7 @@ import {
 } from 'services/preset'
 import {
   invite as inviteCollaborator,
+  list as permissionList,
   remove as removeCollaborator,
   makeOwner as makeOwner
 } from 'services/permission'
@@ -73,16 +74,45 @@ export default ({ Project, ProjectStruct }) => ({
   },
   _inviteCollaborator: {
     args: {
-      email: {
-        type: GraphQLNonNull(GraphQLString)
+      emails: {
+        type: GraphQLNonNull(GraphQLList(GraphQLString))
       },
       messenge: {
         type: GraphQLNonNull(GraphQLString)
       }
     },
     type: Collaborator,
-    resolve: async (project, { email, messenge }) => {
-      const account = await findAccountByEmail(email)
+    resolve: async (project, { emails, messenge }) => {
+      //ds account id trong project permision
+      const acountIDList = (await permissionList(project)).map(permission => permission.account)
+      //ds account da ton tai trong he thong
+      const accountAreadyPartner = await Promise.all(emails.map(async (email) => await findAccountByEmail(email)))
+      //lay nhung thang trong he thong ma chua phai collaborator
+      const accountIsNotPartner = accountAreadyPartner.filter(account => !acountIDList.some((id) => String(id) === String(account._id)))
+
+      console.log('accountIsNotPartner', accountIsNotPartner);
+      //lay nhung thang khong nam trong he thong
+
+
+      // const accountExist = await findAccountByEmail(email)
+      //console.log(accountExist);
+
+      //filter collaborators aready exits in project
+      //check emails aready exits on system
+        //if false: create account (status: disable)
+      //invite to project
+      //sent email to invite
+
+
+
+      // const emailsToInvite = await Promise.all(emails.map(async (email) => {
+      //   const emailExist = await findAccountByEmail(email)
+      //   return isEmail ? null : email
+      // }))
+
+
+      // const account = await findAccountByEmail(email)
+      //if email do not exist create Account
 
       if(!account) {
         await createAccount({ email })

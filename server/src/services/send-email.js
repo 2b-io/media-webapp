@@ -5,8 +5,8 @@ import { register, inviteToRegister, resetPassword } from 'services/email-templa
 
 const sendEmail = async (emailContent, email) => {
   const sender = config.aws.ses.sender
-  const destination = { ToAddresses: [ `${ email }` ] }
-  const params = { ...emailContent, Destination: destination, Source: sender }
+  const toAddresses = email.length ? email : [ `${ email }` ]
+  const params = { ...emailContent, Destination: { ToAddresses: toAddresses }, Source: sender }
 
   if (!config.production) {
     console.log(params)

@@ -131,13 +131,14 @@ export default {
 
     return body.session.account.project._update
   },
-  async inviteCollaborator(token, identifier, inputEmailMessenge) {
+  async inviteCollaborator(token, identifier, emails, messenge) {
+    const email = stringToList(emails)
     const body = await request(`
-      query inviteCollaborator($token: String!, $identifier: String!, $email: String!, $messenge: String!) {
+      query inviteCollaborator($token: String!, $identifier: String!, $email: [String]!, $messenge: String!) {
         session(token: $token) {
           account {
             project(identifier: $identifier) {
-              _inviteCollaborator(email: $email, messenge:  $messenge){
+              _inviteCollaborator(email: $email, messenge: $messenge){
                 ${ PERMISSION_FRAGMENT }
               }
             }
@@ -147,8 +148,8 @@ export default {
     `, {
       token,
       identifier,
-      email: inputEmailMessenge.email,
-      messenge: inputEmailMessenge.messenge
+      email,
+      messenge
     })
 
     return body.session.account.project._inviteCollaborator

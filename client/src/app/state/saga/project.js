@@ -140,8 +140,8 @@ const updateLoop = function*() {
 const inviteCollaboratorLoop = function*() {
   while (true) {
     const action = yield take(types['PROJECT/INVITE_COLLABORATOR'])
-    const currentLocation = yield select(selectors.currentLocation)
-    const identifier = currentLocation.pathname.split('/')[2]
+    // const currentLocation = yield select(selectors.currentLocation)
+    const { identifier } = action.payload.identifier
     try {
       const session = yield select(selectors.currentSession)
 
@@ -149,11 +149,11 @@ const inviteCollaboratorLoop = function*() {
         continue
       }
 
-      const collaborator = yield call(Project.inviteCollaborator, session.token, identifier, action.payload)
+      const collaborator = yield call(Project.inviteCollaborator, session.token, identifier, action.payload.emails, action.payload.messenge)
       collaborator.identifier = identifier
       if (collaborator) {
         yield all([
-          put(actions.inviteCollaboratorCompleted(collaborator)),
+          put(actions.inviteCollaboratorCompleted(collaborators)),
           fork(addToast, {
             type: 'success',
             message: 'Collaborator invited.'
