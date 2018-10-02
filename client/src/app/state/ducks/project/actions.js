@@ -1,5 +1,4 @@
 import * as types from './types'
-import { stringToList } from 'services/string-to-list'
 
 export const fetchProjects = () => ({
   type: types.FETCH

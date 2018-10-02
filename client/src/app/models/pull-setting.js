@@ -32,7 +32,7 @@ export default {
 
     return {
       ...pullSetting,
-      allowedOrigins: pullSetting.allowedOrigins.join('\n'),
+      allowedOrigins: listToString(pullSetting.allowedOrigins),
       headers: [ ...(pullSetting.headers || []), {} ]
     }
   },
