@@ -1,8 +1,7 @@
 import React, { Fragment } from 'react'
 
-import { Break } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
-import { CheckBox, SlideBar, TextBox } from 'views/common/form'
+import { CheckBox, SlideBar } from 'views/common/form'
 
 const JpegParameterForm = () => (
   <Fragment>
