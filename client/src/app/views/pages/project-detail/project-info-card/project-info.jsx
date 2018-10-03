@@ -9,23 +9,30 @@ import { EditIcon } from 'ui/icons'
 import { Project } from 'views/common/compounds'
 
 const ProjectInfoCard = ({
-  identifier,
   project,
   toEditProject
 }) => (
   project && (
     <Card
       title={ () => <Heading mostLeft mostRight>General</Heading> }
-      fab={ () => <EditIcon onClick={ () => toEditProject(identifier) } /> }
+      fab={ () => <EditIcon onClick={ () => toEditProject(project.identifier) } /> }
       content={ () => <Project project={ project } /> }
     />
   ) || <Nothing />
 )
 
 export default connect(
-  (state, { identifier }) => ({
-    project: selectors.findProjectByIdentifier(state, identifier)
-  }),
+  (state) => {
+    const { identifier } = selectors.currentParams(state)
+
+    if (!identifier) {
+      return {}
+    }
+
+    return {
+      project: selectors.findProjectByIdentifier(state, identifier)
+    }
+  },
   mapDispatch({
     toEditProject: (identifier) => actions.requestLocation(`/projects/${ identifier }/edit`)
   })

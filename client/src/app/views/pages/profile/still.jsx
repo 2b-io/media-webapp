@@ -13,7 +13,11 @@ const Profile = ({
   account,
   maximizeSidebar,
   toEditProfile,
-  toChangePassword
+  toChangePassword,
+  showMenu, hideMenu,
+  ui: {
+    isMenuActive
+  }
 }) => {
   const menuItems = [ {
     content: () => <Text mostLeft mostRight>Edit Profile</Text>,
@@ -27,7 +31,11 @@ const Profile = ({
     <Fragment>
       <MenuIcon onClick={ maximizeSidebar } />
       <Top account={ account } />
-      <ContextMenu
+      <ContextMenu.Menu
+        stateless={ true }
+        isActive={ isMenuActive }
+        activate={ showMenu }
+        deactivate={ hideMenu }
         content={ () => <List items={ menuItems } /> }
       />
     </Fragment>
@@ -49,6 +57,8 @@ export default connect(
   mapDispatch({
     maximizeSidebar: actions.maximizeSidebar,
     toEditProfile: () => actions.requestLocation('/@me/edit'),
-    toChangePassword: () => actions.requestLocation('/@me/change-password')
+    toChangePassword: () => actions.requestLocation('/@me/change-password'),
+    showMenu: () => actions.showMenu('PROFILE'),
+    hideMenu: () => actions.hideMenu('PROFILE')
   })
 )(Profile)

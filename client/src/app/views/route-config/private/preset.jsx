@@ -1,22 +1,27 @@
-import { fork, put, race, take } from 'redux-saga/effects'
+import { all, fork, put, race, select, take } from 'redux-saga/effects'
 
-import { actions, types } from 'state/interface'
+import { actions, selectors, types } from 'state/interface'
 import * as Preset from 'views/pages/preset'
 
-const watchGetPreset  = function*(path) {
+const watchGetPreset = function*(path) {
   while (true) {
-    const getAction = yield take(types[ 'PRESET/GET_FAILED' ])
+    yield take(types[ 'PRESET/GET_FAILED' ])
 
-    if (getAction.type !== 'preset/GET_FAILED') {
-      continue
-    }
+    const { identifier } = yield select(selectors.currentParams)
 
     yield put(
-      actions.mergeUIState(path, {
-        notFoundPreset: true
-      })
+      actions.requestLocation(`/projects/${ identifier }`)
     )
+  }
+}
 
+const watchGetProject = function*(path) {
+  while (true) {
+    yield take(types[ 'PROJECT/GET_FAILED' ])
+
+    yield put(
+      actions.requestLocation('/projects')
+    )
   }
 }
 
@@ -39,12 +44,20 @@ const watchRemovePreset = function*(path) {
       removeCompleted: take(types[ 'PRESET/REMOVE_COMPLETED' ])
     })
 
-    yield put(
-      actions.mergeUIState(path, {
-        isRemovePresetDialogActive: false,
-        removePresetResult: dialogActions.removeCompleted
-      })
-    )
+    const { identifier } = yield select(selectors.currentParams)
+
+    yield all([
+      put(
+        actions.mergeUIState(path, {
+          isRemovePresetDialogActive: false,
+          removePresetResult: dialogActions.removeCompleted
+        })
+      ),
+      dialogActions ?
+        put(
+          actions.requestLocation(`/projects/${ identifier }`)
+        ) : null
+    ])
   }
 }
 
@@ -79,25 +92,33 @@ export default {
   '/projects/:identifier/presets/:contentType': {
     component: Preset,
     exact: true,
-    onEnter: ({ contentType, identifier }) => [
-      actions.getProject(identifier),
-      actions.getPreset({
-        identifier,
-        contentType: contentType.replace('_', '/')
-      })
-    ],
     state: function*(path) {
-      yield put(
-        actions.initializeUIState(path, {
-          isRemovePresetDialogActive: false,
-          isUpdatePresetDialogActive: false,
-          removePresetResult: null
-        })
-      )
-
       yield fork(watchGetPreset, path)
+      yield fork(watchGetProject, path)
       yield fork(watchRemovePreset, path)
       yield fork(watchUpdatePreset, path)
+
+      const { contentType, identifier } = yield select(selectors.currentParams)
+
+      console.log(contentType, identifier)
+
+      yield all([
+        put(
+          actions.getProject(identifier)
+        ),
+        put(
+          actions.getPreset({
+            identifier,
+            contentType: contentType.replace('_', '/')
+          })
+        ),
+        put(
+          actions.initializeUIState(path, {
+            isRemovePresetDialogActive: false,
+            isUpdatePresetDialogActive: false
+          })
+        )
+      ])
     }
   }
 }

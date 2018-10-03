@@ -24,17 +24,22 @@ const ProjectList = ({
   maximizeSidebar,
   sortProjects,
   toggleDisabledProjects,
+  showFilterMenu, hideFilterMenu,
   ui: {
+    isFilterMenuActive,
     hideDisabledProjects,
-    sortType,
-    sortAscending
+    sortAscending,
+    sortType
   }
 }) => (
   <Fragment>
     <MenuIcon onClick={ maximizeSidebar } />
     <PageTitle>Projects</PageTitle>
-    <ContextMenu
-      name="projectFilter"
+    <ContextMenu.Menu
+      stateless={ true }
+      isActive={ isFilterMenuActive }
+      activate={ showFilterMenu }
+      deactivate={ hideFilterMenu }
       icon={ () => <FilterIcon /> }
       content={ () => (
         <List
@@ -76,6 +81,8 @@ export default connect(
   mapDispatch({
     sortProjects: actions.sortProjects,
     toggleDisabledProjects: actions.toggleDisabledProjects,
-    maximizeSidebar: actions.maximizeSidebar
+    maximizeSidebar: actions.maximizeSidebar,
+    showFilterMenu: () => actions.showMenu('FILTER_PROJECTS'),
+    hideFilterMenu: () => actions.hideMenu('FILTER_PROJECTS')
   })
 )(ProjectList)

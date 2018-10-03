@@ -94,6 +94,8 @@ export default function*() {
             console.debug(`Entering ${ current } [${ r.path }]`)
 
             if (r.onEnter) {
+              console.warn(`\`onEnter()\` on ${ r.path } is deprecated. Use \`*state()\` instead.`)
+
               enteringActions = r.onEnter(r.parameters, currentQuery)
             }
 
