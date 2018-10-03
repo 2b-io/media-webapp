@@ -133,7 +133,6 @@ export default {
   },
   async inviteCollaborator(token, identifier, emailString, messenge) {
     const emails = stringToList(emailString)
-    console.log(emails);
     const body = await request(`
       query addCollaboratorsByEmails($token: String!, $identifier: String!, $emails: [String]!, $messenge: String!) {
         session(token: $token) {
