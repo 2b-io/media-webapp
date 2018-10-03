@@ -9,14 +9,13 @@ import { EditIcon } from 'ui/icons'
 import { Project } from 'views/common/compounds'
 
 const ProjectInfoCard = ({
-  identifier,
   project,
   toEditProject
 }) => (
   project && (
     <Card
       title={ () => <Heading mostLeft mostRight>General</Heading> }
-      fab={ () => <EditIcon onClick={ () => toEditProject(identifier) } /> }
+      fab={ () => <EditIcon onClick={ () => toEditProject(project.identifier) } /> }
       content={ () => <Project project={ project } /> }
     />
   ) || <Nothing />

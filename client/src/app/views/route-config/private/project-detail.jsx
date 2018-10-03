@@ -1,7 +1,17 @@
-import { all, fork, put, race, take } from 'redux-saga/effects'
+import { all, fork, put, race, select, take } from 'redux-saga/effects'
 
-import { actions, types } from 'state/interface'
+import { actions, selectors, types } from 'state/interface'
 import * as ProjectDetail from 'views/pages/project-detail'
+
+const watchGetProject = function*(path) {
+  while (true) {
+    yield take(types[ 'PROJECT/GET_FAILED' ])
+
+    yield put(
+      actions.requestLocation('/projects')
+    )
+  }
+}
 
 const watchCreatePreset = function*(path) {
   while (true) {
@@ -41,21 +51,32 @@ export default {
   '/projects/:identifier': {
     component: ProjectDetail,
     exact: true,
-    onEnter: ({ identifier }) => identifier === 'create' || [
-      actions.getProject(identifier),
-      actions.fetchPresets({ identifier }),
-      actions.getPullSetting(identifier),
-      actions.fetchSecretKeys(identifier)
-    ],
     state: function*(path) {
-      yield put(
-        actions.initializeUIState(path, {
-          notFound: false,
-          isCreatePresetDialogActive: false
-        })
-      )
-
+      yield fork(watchGetProject, path)
       yield fork(watchCreatePreset, path)
+
+      const { identifier } = yield select(selectors.currentParams)
+
+      yield all([
+        put(
+          actions.getProject(identifier)
+        ),
+        put(
+          actions.fetchPresets({ identifier })
+        ),
+        put(
+          actions.getPullSetting(identifier)
+        ),
+        put(
+          actions.fetchSecretKeys(identifier)
+        ),
+        put(
+          actions.initializeUIState(path, {
+            notFound: false,
+            isCreatePresetDialogActive: false
+          })
+        )
+      ])
     }
   }
 }
