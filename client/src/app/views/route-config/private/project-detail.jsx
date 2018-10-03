@@ -15,7 +15,7 @@ const watchGetProject = function*(path) {
 
 const watchCreatePreset = function*(path) {
   while (true) {
-    const action = yield take(types[ 'DIALOG/SHOW' ])
+    const action = yield take(`${ types[ 'DIALOG/SHOW' ] }:CREATE_PRESET`)
 
     yield put(
       actions.mergeUIState(path, {
@@ -28,7 +28,7 @@ const watchCreatePreset = function*(path) {
       createCompleted,
       createFailed
     } = yield race({
-      hide: take(types[ 'DIALOG/HIDE' ]),
+      hide: take(`${ types[ 'DIALOG/HIDE' ] }:CREATE_PRESET`),
       createCompleted: take(types[ 'PRESET/CREATE_COMPLETED' ]),
       createFailed: take(types[ 'PRESET/CREATE_FAILED' ])
     })

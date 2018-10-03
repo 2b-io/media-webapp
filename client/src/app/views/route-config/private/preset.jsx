@@ -27,11 +27,7 @@ const watchGetProject = function*(path) {
 
 const watchRemovePreset = function*(path) {
   while (true) {
-    const showAction = yield take(types[ 'DIALOG/SHOW' ])
-
-    if (showAction.payload.name !== 'REMOVE_PRESET') {
-      continue
-    }
+    const showAction = yield take(`${ types[ 'DIALOG/SHOW' ]}:REMOVE_PRESET`)
 
     yield put(
       actions.mergeUIState(path, {
@@ -40,7 +36,7 @@ const watchRemovePreset = function*(path) {
     )
 
     const { removeCompleted } = yield race({
-      hide: take(types[ 'DIALOG/HIDE' ]),
+      hide: take(`${ types[ 'DIALOG/HIDE' ] }:REMOVE_PRESET`),
       removeCompleted: take(types[ 'PRESET/REMOVE_COMPLETED' ])
     })
 
@@ -62,11 +58,7 @@ const watchRemovePreset = function*(path) {
 
 const watchUpdatePreset = function*(path) {
   while (true) {
-    const showAction = yield take(types[ 'DIALOG/SHOW' ])
-
-    if (showAction.payload.name !== 'UPDATE_PRESET') {
-      continue
-    }
+    const showAction = yield take(`${ types[ 'DIALOG/SHOW' ] }:UPDATE_PRESET`)
 
     yield put(
       actions.mergeUIState(path, {
@@ -75,7 +67,7 @@ const watchUpdatePreset = function*(path) {
     )
 
     yield race({
-      hide: take(types[ 'DIALOG/HIDE' ]),
+      hide: take(`${ types[ 'DIALOG/HIDE' ] }:UPDATE_PRESET`),
       updateCompleted: take(types[ 'PRESET/UPDATE_COMPLETED' ])
     })
 

@@ -27,16 +27,14 @@ const EditProject = ({
   hideRemoveProjectDialog,
   showRemoveProjectDialog,
   ui: {
-    removeProjectError,
-    removeProjectResult
+    isRemoveConfirmationDialogActive,
+    removeProjectError
   }
 }) => {
   if (!project) {
     return null
   }
-  if (removeProjectResult) {
-    return <Redirect to="/projects" />
-  }
+
   const {
     name,
     status,
@@ -62,7 +60,7 @@ const EditProject = ({
         />
       </Container>
       <Dialog
-        isActive={ isRemoveProjectDialogActive }
+        isActive={ isRemoveConfirmationDialogActive }
         onOverlayClick={ hideRemoveProjectDialog }
         content={ () => (
           <Container>
@@ -80,7 +78,7 @@ const EditProject = ({
               </Button>
               <Button
                 variant="primary"
-                onClick={ () => removeProject(project.identifier) }
+                onClick={ () => removeProject(identifier) }
               >
                 Delete
               </Button>
@@ -96,9 +94,12 @@ export default connect(
   (state) => {
     const { identifier } = selectors.currentParams(state)
 
+    if (!identifier) {
+      return {}
+    }
+
     return {
-      project: selectors.findProjectByIdentifier(state, identifier),
-      isRemoveProjectDialogActive: selectors.isDialogActive(state, REMOVE_PROJECT)
+      project: selectors.findProjectByIdentifier(state, identifier)
     }
   },
   mapDispatch({
