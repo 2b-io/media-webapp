@@ -17,14 +17,12 @@ export const list = async (project) => {
   return permissions
 }
 
-export const invite = async (project, email) => {
-  const account = await findAccountByEmail(email)
-  const permission = await new Permission({
+export const invite = async (project, account) => {
+  return new Permission({
     project: project._id,
     account: account._id,
     privilege: 'admin'
   }).save()
-  return permission
 }
 
 const updatePermission = async (project, account, permission) => {

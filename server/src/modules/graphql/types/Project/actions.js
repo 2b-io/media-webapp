@@ -26,7 +26,7 @@ import {
   invalidateAllCache
 } from 'services/project'
 import {
-  forgotPassword as forgotPassword,
+  forgotPassword as createResetCode
 } from 'services/reset-password-code'
 import { sendEmailInviteToRegister } from 'services/send-email'
 
@@ -72,7 +72,7 @@ export default ({ Project, ProjectStruct }) => ({
       return p
     }
   },
-  _inviteCollaborator: {
+  _addCollaboratorsByEmails: {
     args: {
       emails: {
         type: GraphQLNonNull(GraphQLList(GraphQLString))
@@ -81,51 +81,64 @@ export default ({ Project, ProjectStruct }) => ({
         type: GraphQLNonNull(GraphQLString)
       }
     },
-    type: Collaborator,
+    type: GraphQLList(Collaborator),
     resolve: async (project, { emails, messenge }) => {
-      //ds account id trong project permision
-      const acountIDList = (await permissionList(project)).map(permission => permission.account)
-      //ds account da ton tai trong he thong
-      const accountAreadyPartner = await Promise.all(emails.map(async (email) => await findAccountByEmail(email)))
-      //lay nhung thang trong he thong ma chua phai collaborator
-      const accountIsNotPartner = accountAreadyPartner.filter(account => !acountIDList.some((id) => String(id) === String(account._id)))
+      // create account & send email invite
 
-      console.log('accountIsNotPartner', accountIsNotPartner);
-      //lay nhung thang khong nam trong he thong
+      const existedAccounts = (await Promise.all(
+        emails.map(async (email) => await findAccountByEmail(email))
+      )).filter(Boolean)
 
+      // Emails do not exist on systems
+      const notExistedEmails = emails.filter(
+        (email) => !existedAccounts.some(
+          (account) => account.email === email
+        )
+      )
 
-      // const accountExist = await findAccountByEmail(email)
-      //console.log(accountExist);
+      // create accounts
+      const newAccounts = await Promise.all(
+        notExistedEmails.map(
+          async (email) => await createAccount({ email })
+        )
+      )
 
-      //filter collaborators aready exits in project
-      //check emails aready exits on system
-        //if false: create account (status: disable)
-      //invite to project
-      //sent email to invite
+      // Invite: create code & send email
+      await Promise.all(
+        newAccounts.map(
+          async ({ email }) => {
+            const resetPasswordCode = await createResetCode(email)
+            const { code } = resetPasswordCode
+            await sendEmailInviteToRegister(email, code, messenge)
+          }
+        )
+      )
 
+      // get account id on permission
+      const collaboratorIDs = (await permissionList(project)).map(permission => permission.account)
 
+      //filter account are not collaborator
+      const notCollaborators = existedAccounts.filter(
+        (account) => !collaboratorIDs.some(
+          (id) => String(id) === String(account._id)
+        )
+      )
 
-      // const emailsToInvite = await Promise.all(emails.map(async (email) => {
-      //   const emailExist = await findAccountByEmail(email)
-      //   return isEmail ? null : email
-      // }))
+      const accountsToInvite = [ ...notCollaborators, ...newAccounts ]
 
+      // add to project
+      const collaborators = await Promise.all(
+        accountsToInvite.map(
+          async (account) => await inviteCollaborator(project, account)
+        )
+      )
 
-      // const account = await findAccountByEmail(email)
-      //if email do not exist create Account
-
-      if(!account) {
-        await createAccount({ email })
-        const { code } = await forgotPassword(email)
-        await sendEmailInviteToRegister(email, code, messenge)
-      }
-
-      const p = await inviteCollaborator(project, email)
-
-      // add ref
-      p.project = project
-
-      return p
+      return collaborators.map(
+        (collaborator) => ({
+          project,
+          ...collaborator.toJSON()
+        })
+      )
     }
   },
   _removeCollaborator: {
