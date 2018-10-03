@@ -61,3 +61,7 @@ export const Heading = ({ children, ...props }) => (
     <h2>{ children }</h2>
   </Block>
 )
+
+export const Emphasize = styled.span`
+  font-weight: bold;
+`

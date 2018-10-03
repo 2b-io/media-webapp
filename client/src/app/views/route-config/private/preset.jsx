@@ -39,7 +39,7 @@ const watchRemovePreset = function*(path) {
       })
     )
 
-    const dialogActions = yield race({
+    const { removeCompleted } = yield race({
       hide: take(types[ 'DIALOG/HIDE' ]),
       removeCompleted: take(types[ 'PRESET/REMOVE_COMPLETED' ])
     })
@@ -49,11 +49,10 @@ const watchRemovePreset = function*(path) {
     yield all([
       put(
         actions.mergeUIState(path, {
-          isRemovePresetDialogActive: false,
-          removePresetResult: dialogActions.removeCompleted
+          isRemovePresetDialogActive: false
         })
       ),
-      dialogActions ?
+      removeCompleted ?
         put(
           actions.requestLocation(`/projects/${ identifier }`)
         ) : null

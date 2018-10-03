@@ -7,7 +7,6 @@ import { actions, selectors } from 'state/interface'
 import { Container, TextButton } from 'ui/elements'
 import DialogRemovePreset from './dialog-confirm/remove-preset'
 import DialogUpdatePreset from './dialog-confirm/update-preset'
-import { Redirect } from 'views/router'
 
 import StatelessPresetForm from './form'
 

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Button, Container, Dialog } from 'ui/elements'
-import { Text } from 'ui/typo'
+import { Emphasize, Text } from 'ui/typo'
 
 const DialogUpdatePreset = ({
   contentType,
@@ -15,11 +15,11 @@ const DialogUpdatePreset = ({
     content={ ({ params }) => (
       <Container>
         <Text mostLeft mostRight>
-          You are about to update configuration for content type <b>&quot;{ contentType }&quot;</b>.
+          You are about to update configuration for content type <Emphasize>&quot;{ contentType }&quot;</Emphasize>.
           All previous optimized media of this content type will be deleted.
           This operation should take a while to finish.
         </Text>
-        <Button.Group mostRight>
+        <Button.Group align="right">
           <Button
             variant="secondary"
             mostRight
