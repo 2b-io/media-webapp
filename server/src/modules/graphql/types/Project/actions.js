@@ -78,7 +78,7 @@ export default ({ Project, ProjectStruct }) => ({
         type: GraphQLNonNull(GraphQLList(GraphQLString))
       },
       messenge: {
-        type: GraphQLNonNull(GraphQLString)
+        type: GraphQLString
       }
     },
     type: GraphQLList(Collaborator),

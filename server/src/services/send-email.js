@@ -17,7 +17,7 @@ const sendEmail = async (emailContent, email) => {
   }
 
   if (!config.production) {
-   console.log(util.inspect(params, { depth: null }))
+    console.log(util.inspect(params, { depth: null }))
 
     return
   }

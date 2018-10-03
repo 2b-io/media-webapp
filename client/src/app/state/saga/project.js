@@ -149,18 +149,17 @@ const inviteCollaboratorLoop = function*() {
         continue
       }
 
-      const collaborator = yield call(Project.inviteCollaborator, session.token, identifier, action.payload.emails, action.payload.messenge)
-      collaborator.identifier = identifier
-      if (collaborator) {
+      const collaborators = yield call(Project.inviteCollaborator, session.token, identifier, action.payload.emails, action.payload.messenge)
+
+      if (collaborators) {
         yield all([
-          put(actions.inviteCollaboratorCompleted(collaborators)),
+          put(actions.inviteCollaboratorCompleted(identifier, collaborators)),
           fork(addToast, {
             type: 'success',
             message: 'Collaborator invited.'
           })
         ])
       }
-
     } catch (e) {
       yield put(actions.inviteCollaboratorFailed(serializeError(e)))
       continue
@@ -178,6 +177,8 @@ const deleteCollaboratorLoop = function*() {
         continue
       }
 
+      action.payload
+      console.log()
       const deleted = yield Project.deleteCollaborator(session.token, action.payload.identifier, action.payload.accountId)
 
       if (!deleted) {

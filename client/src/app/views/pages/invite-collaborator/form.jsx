@@ -23,6 +23,7 @@ const InviteCollaboratorForm = ({ handleSubmit }) => (
       placeholder="Some text"
       name="messenge"
       label="Messenge"
+      maxLength={ 200 }
     />
     <DescriptionText mostLeft mostRight>
       Optional. A personal note for the invitation email.
