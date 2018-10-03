@@ -24,7 +24,6 @@ const Collaborators = ({
   deleteCollaborator,
   identifier,
   makeOwner,
-  toProjectDetail,
   toInviteCollaborator,
   showDeleteCollaboratorDialog,
   hideDeleteCollaboratorDialog,
@@ -130,7 +129,6 @@ export default connect(
     deleteCollaborator: actions.deleteCollaborator,
     toProfile: (id) => actions.requestLocation(`/@${ id }`),
     toInviteCollaborator: (identifier) => actions.requestLocation(`/projects/${ identifier }/invite-collaborator`),
-    toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }`),
     showDeleteCollaboratorDialog: (accountId, accountEmail) => actions.showDialog({ dialog: 'ConfirmDeleteCollaboratorDialog', params: { accountId, accountEmail } }),
     hideDeleteCollaboratorDialog: () => actions.hideDialog({ dialog: 'ConfirmDeleteCollaboratorDialog' })
   })

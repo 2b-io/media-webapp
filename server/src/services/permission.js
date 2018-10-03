@@ -1,5 +1,4 @@
 import Permission from 'models/Permission'
-import { findByEmail as findAccountByEmail } from 'services/account'
 
 export const get = async (project) => {
   const permission = await Permission.findOne({

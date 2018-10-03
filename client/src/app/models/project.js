@@ -134,7 +134,7 @@ export default {
   async inviteCollaborator(token, identifier, emailString, messenge) {
     const emails = stringToList(emailString)
     const body = await request(`
-      query addCollaboratorsByEmails($token: String!, $identifier: String!, $emails: [String]!, $messenge: String!) {
+      query addCollaboratorsByEmails($token: String!, $identifier: String!, $emails: [String]!, $messenge: String) {
         session(token: $token) {
           account {
             project(identifier: $identifier) {
@@ -152,7 +152,7 @@ export default {
       messenge
     })
 
-    return body.session.account.project._inviteCollaborator
+    return body.session.account.project._addCollaboratorsByEmails
   },
   async deleteCollaborator(token, identifier, accountId) {
     const body = await request(`

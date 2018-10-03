@@ -50,9 +50,9 @@ export default createReducer({})({
     }
   }),
   [ types.INVITE_COLLABORATOR_COMPLETED ]: (state, action) => {
-    const { identifier }  = action.payload.collaborator
-    const { collaborator } = action.payload
+    const { collaborators, identifier } = action.payload
     const project = state[ identifier ]
+    const newCollaborators = arrayToMap(collaborators, '_id')
 
     return {
       ...state,
@@ -60,7 +60,7 @@ export default createReducer({})({
         ...project,
         collaborators: {
           ...state[ identifier ].collaborators,
-          [ collaborator.account._id ]: collaborator
+          ...newCollaborators
         }
       }
     }
