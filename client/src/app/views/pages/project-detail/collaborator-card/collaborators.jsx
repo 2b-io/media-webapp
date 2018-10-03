@@ -8,8 +8,6 @@ import { Heading, TextLine } from 'ui/typo'
 import { Button, Card, ContextMenu, Identicon, Link, List, Paragraph } from 'ui/elements'
 import { OwnerAddIcon } from 'ui/icons'
 
-import { ConfirmDeleteCollaboratorDialog } from '../dialog'
-
 const Avatar = styled.div`
   width: 40px;
   height: 40px;
@@ -25,8 +23,6 @@ const Collaborators = ({
   identifier,
   makeOwner,
   toInviteCollaborator,
-  showDeleteCollaboratorDialog,
-  hideDeleteCollaboratorDialog,
   toProfile
 }) => {
   if(!project) {
@@ -72,7 +68,7 @@ const Collaborators = ({
                   },
                   {
                     content: () => <TextLine mostLeft mostRight>Remove</TextLine>,
-                    onClick: () => showDeleteCollaboratorDialog(account._id, account.email)
+                    onClick: () => deleteCollaborator(identifier, account._id)
                   }
                 ] }
               />
@@ -93,28 +89,6 @@ const Collaborators = ({
             <TextLine mostLeft mostRight>No collaborator found</TextLine>
         ) }
       />
-      <ConfirmDeleteCollaboratorDialog
-        width="narrow"
-        content={ ({ params }) => (
-          <Paragraph>
-            Do you want to remove the account { params.accountEmail } from the project?
-          </Paragraph>
-        ) }
-        choices={ ({ params }) => (
-          <Button.Group>
-            <Button
-              variant="primary"
-              onClick={ () => deleteCollaborator(identifier, params.accountId) }>
-              Remove
-            </Button>
-            <Button
-              variant="secondary"
-              onClick={ hideDeleteCollaboratorDialog }>
-              Cancel
-            </Button>
-          </Button.Group>
-        ) }
-      />
     </Fragment>
   )
 }
@@ -128,8 +102,6 @@ export default connect(
     makeOwner: actions.makeOwner,
     deleteCollaborator: actions.deleteCollaborator,
     toProfile: (id) => actions.requestLocation(`/@${ id }`),
-    toInviteCollaborator: (identifier) => actions.requestLocation(`/projects/${ identifier }/invite-collaborator`),
-    showDeleteCollaboratorDialog: (accountId, accountEmail) => actions.showDialog({ dialog: 'ConfirmDeleteCollaboratorDialog', params: { accountId, accountEmail } }),
-    hideDeleteCollaboratorDialog: () => actions.hideDialog({ dialog: 'ConfirmDeleteCollaboratorDialog' })
+    toInviteCollaborator: (identifier) => actions.requestLocation(`/projects/${ identifier }/invite-collaborator`)
   })
 )(Collaborators)
