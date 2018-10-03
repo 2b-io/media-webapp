@@ -88,7 +88,6 @@ export default function*() {
           let enteringActions = []
           let leavingActions = []
           const enteringStates = {}
-          const leavingStates = {}
 
           if (!collector.enterEnd && r.enter) {
             console.debug(`Entering ${ current } [${ r.path }]`)
@@ -143,8 +142,7 @@ export default function*() {
           actions: [],
           enteringParams: {},
           leavingParams: {},
-          enteringStates: {},
-          leavingStates: {}
+          enteringStates: {}
         }
       )
 

@@ -72,7 +72,6 @@ const registerLoop = function*() {
 
 const searchAccountLoop = function*() {
   while (true) {
-
     const action = yield take(types['ACCOUNT/SEARCH_ACCOUNT'])
 
     try {
@@ -92,7 +91,6 @@ const searchAccountLoop = function*() {
           }
         }
       ))
-
     } catch (e) {
       yield put(actions.searchAccountFailed(serializeError(e)))
       continue
@@ -102,9 +100,7 @@ const searchAccountLoop = function*() {
 
 const updateProfileLoop = function*() {
   while (true) {
-
-    const action = yield take(types['ACCOUNT/UPDATE'])
-    const { email, ...accountInfo } = action.payload.account
+    const action = yield take(types[ 'ACCOUNT/UPDATE' ])
 
     try {
       const session = yield select(selectors.currentSession)
@@ -113,17 +109,15 @@ const updateProfileLoop = function*() {
         continue
       }
 
-      const accountUpdated = yield call(Account.update, session.token, accountInfo)
+      const updatedAccount = yield call(Account.update, session.token, action.payload.account)
 
-      yield put(actions.updateProfileCompleted(accountUpdated))
-
+      yield put(actions.updateProfileCompleted(updatedAccount))
     } catch (e) {
       yield put(actions.updateProfileFailed(serializeError(e)))
       continue
     }
   }
 }
-
 
 export default function*() {
   yield take('@@INITIALIZED')

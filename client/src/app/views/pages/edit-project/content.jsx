@@ -2,10 +2,8 @@ import React, { Fragment } from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
-import { DialogContent } from 'ui/compounds'
 import { Break, Button, Container, Dialog } from 'ui/elements'
 import { Emphasize, Text } from 'ui/typo'
-import { Redirect } from 'views/router'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
@@ -23,12 +21,10 @@ const EditProject = ({
   project,
   updateProject,
   removeProject,
-  isRemoveProjectDialogActive,
   hideRemoveProjectDialog,
   showRemoveProjectDialog,
   ui: {
-    isRemoveConfirmationDialogActive,
-    removeProjectError
+    isRemoveConfirmationDialogActive
   }
 }) => {
   if (!project) {

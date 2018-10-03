@@ -29,21 +29,29 @@ export default {
   '/@:id/edit': {
     component: EditProfile,
     exact: true,
-    onEnter: ({ id }) => [
-      actions.getAccount(id)
-    ]
+    *state() {
+      const { id } = yield select(selectors.currentParams)
+
+      yield put(
+        actions.getAccount(id)
+      )
+    }
   },
   '/@:id/change-password': {
     component: ChangePassword,
     exact: true,
-    onEnter: ({ id }) => [
-      actions.getAccount(id)
-    ]
+    *state() {
+      const { id } = yield select(selectors.currentParams)
+
+      yield put(
+        actions.getAccount(id)
+      )
+    }
   },
   '/@:id': {
     component: Profile,
     exact: true,
-    state: function*(path) {
+    *state(path) {
       yield fork(watchMenu, path)
 
       const { id } = yield select(selectors.currentParams)

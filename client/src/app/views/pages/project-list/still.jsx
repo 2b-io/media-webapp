@@ -18,7 +18,6 @@ import {
 } from 'ui/icons'
 import { ContextMenu, List } from 'ui/elements'
 import { PageTitle, TextLine } from 'ui/typo'
-import { stateful } from 'views/common/decorators'
 
 const ProjectList = ({
   maximizeSidebar,
@@ -76,6 +75,7 @@ const ProjectList = ({
     />
   </Fragment>
 )
+
 export default connect(
   null,
   mapDispatch({

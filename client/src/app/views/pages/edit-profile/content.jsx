@@ -5,14 +5,13 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Container } from 'ui/elements'
-import { stateful } from 'views/common/decorators'
 
-import _EditProfileForm from './form'
+import StatelessEditProfileForm from './form'
 
 const EditProfileForm = reduxForm({
   form: 'editProfile',
   enableReinitialize: true
-})(_EditProfileForm)
+})(StatelessEditProfileForm)
 
 const EditProfile = ({
   account,
@@ -23,13 +22,11 @@ const EditProfile = ({
     return null
   }
 
-  const { _id: loginId, ...newAccount } = account
-
   return (
     <Container>
-      { session && account && session.account._id === loginId &&
+      { session && account && session.account._id === account._id &&
         <EditProfileForm
-          initialValues={ newAccount }
+          initialValues={ account }
           onSubmit={ updateProfile }
         />
       }
@@ -40,13 +37,11 @@ const EditProfile = ({
 export default connect(
   (state) => {
     const { id } = selectors.currentParams(state)
+    const session = selectors.currentSession(state)
+
     return {
-      account: selectors.findAccountById(
-        state,
-        id,
-        selectors.currentSession(state)
-      ),
-      session: selectors.currentSession(state)
+      account: selectors.findAccountById(state, id, session),
+      session
     }
   },
   mapDispatch({

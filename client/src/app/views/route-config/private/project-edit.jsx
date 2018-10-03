@@ -3,7 +3,7 @@ import { all, fork, put, race, select, take } from 'redux-saga/effects'
 import { actions, types, selectors } from 'state/interface'
 import * as EditProject from 'views/pages/edit-project'
 
-const watchGetProject = function*(path) {
+const watchGetProject = function*() {
   while (true) {
     yield take(types[ 'PROJECT/GET_FAILED' ])
 
@@ -32,7 +32,8 @@ const watchRemoveProject = function*(path) {
     yield all([
       put(
         actions.mergeUIState(path, {
-          isRemoveConfirmationDialogActive: false
+          isRemoveConfirmationDialogActive: false,
+
         })
       ),
       removeCompleted ?
@@ -47,7 +48,7 @@ export default {
   '/projects/:identifier/edit': {
     component: EditProject,
     exact: true,
-    state: function*(path) {
+    *state(path) {
       yield fork(watchGetProject, path)
       yield fork(watchRemoveProject, path)
 

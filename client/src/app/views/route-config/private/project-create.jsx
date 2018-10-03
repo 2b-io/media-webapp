@@ -32,7 +32,7 @@ export default {
   '/projects/create': {
     component: CreateProject,
     exact: true,
-    state: function*(path) {
+    *state(path) {
       yield put(
         actions.initializeUIState(path, {
           idle: true

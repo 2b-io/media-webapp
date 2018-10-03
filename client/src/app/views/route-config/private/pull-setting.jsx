@@ -3,7 +3,7 @@ import { all, fork, put, race, select, take } from 'redux-saga/effects'
 import { actions, types, selectors } from 'state/interface'
 import * as PullSetting from 'views/pages/pull-setting'
 
-const watchGetData = function*(path) {
+const watchGetData = function*() {
   while (true) {
     yield race([
       take(types[ 'PROJECT/GET_FAILED' ]),
@@ -20,7 +20,7 @@ export default {
   '/projects/:identifier/pull-setting': {
     component: PullSetting,
     exact: true,
-    state: function*(path) {
+    *state(path) {
       yield fork(watchGetData, path)
 
       const { identifier } = yield select(selectors.currentParams)

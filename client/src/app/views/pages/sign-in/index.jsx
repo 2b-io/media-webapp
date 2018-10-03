@@ -5,15 +5,14 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
 import { Break, Container, ErrorBox, Link } from 'ui/elements'
-import { stateful } from 'views/common/decorators'
 import { Text } from 'ui/typo'
 
-import _SignInForm from './form'
+import StatelessSignInForm from './form'
 
 const SignInForm = reduxForm({
   form: 'signIn',
   enableReinitialize: true,
-})(_SignInForm)
+})(StatelessSignInForm)
 
 const SignIn = ({
   signIn,
@@ -44,7 +43,7 @@ const SignIn = ({
 export default connect(
   null,
   mapDispatch({
-    signIn: credential => actions.createSession(credential),
+    signIn: actions.createSession,
     toForgotPassword: () => actions.requestLocation('/forgot-password'),
     toRegister: () => actions.requestLocation('/register')
   })

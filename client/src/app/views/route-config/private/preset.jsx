@@ -3,7 +3,7 @@ import { all, fork, put, race, select, take } from 'redux-saga/effects'
 import { actions, selectors, types } from 'state/interface'
 import * as Preset from 'views/pages/preset'
 
-const watchGetPreset = function*(path) {
+const watchGetPreset = function*() {
   while (true) {
     yield take(types[ 'PRESET/GET_FAILED' ])
 
@@ -15,7 +15,7 @@ const watchGetPreset = function*(path) {
   }
 }
 
-const watchGetProject = function*(path) {
+const watchGetProject = function*() {
   while (true) {
     yield take(types[ 'PROJECT/GET_FAILED' ])
 
@@ -27,7 +27,7 @@ const watchGetProject = function*(path) {
 
 const watchRemovePreset = function*(path) {
   while (true) {
-    const showAction = yield take(`${ types[ 'DIALOG/SHOW' ]}:REMOVE_PRESET`)
+    yield take(`${ types[ 'DIALOG/SHOW' ]}:REMOVE_PRESET`)
 
     yield put(
       actions.mergeUIState(path, {
@@ -58,11 +58,11 @@ const watchRemovePreset = function*(path) {
 
 const watchUpdatePreset = function*(path) {
   while (true) {
-    const showAction = yield take(`${ types[ 'DIALOG/SHOW' ] }:UPDATE_PRESET`)
+    const action = yield take(`${ types[ 'DIALOG/SHOW' ] }:UPDATE_PRESET`)
 
     yield put(
       actions.mergeUIState(path, {
-        isUpdatePresetDialogActive: showAction.payload.params
+        isUpdatePresetDialogActive: action.payload.params
       })
     )
 
@@ -83,15 +83,13 @@ export default {
   '/projects/:identifier/presets/:contentType': {
     component: Preset,
     exact: true,
-    state: function*(path) {
+    *state(path) {
       yield fork(watchGetPreset, path)
       yield fork(watchGetProject, path)
       yield fork(watchRemovePreset, path)
       yield fork(watchUpdatePreset, path)
 
       const { contentType, identifier } = yield select(selectors.currentParams)
-
-      console.log(contentType, identifier)
 
       yield all([
         put(

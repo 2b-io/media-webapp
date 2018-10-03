@@ -32,7 +32,7 @@ export default {
   '/sign-in': {
     component: SignIn,
     exact: true,
-    state: function*(path) {
+    *state(path) {
       yield put(
         actions.initializeUIState(path, {
           idle: true

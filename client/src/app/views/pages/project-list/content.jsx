@@ -8,7 +8,6 @@ import { Card } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 import { Text } from 'ui/typo'
 import { Project } from 'views/common/compounds'
-import { stateful } from 'views/common/decorators'
 
 const Fab = styled.button`
   position: fixed;
@@ -54,8 +53,8 @@ const Container = styled.div`
   grid-gap: 16px;
   grid-template-columns: 100%;
 `
-const sortProjects = ( { type, ascending }, projects, currentAccountId) => {
 
+const sortProjects = ({ type, ascending }, projects, currentAccountId) => {
   switch (type) {
     case 'privilege': {
       return projects.sort(
@@ -85,9 +84,9 @@ const sortProjects = ( { type, ascending }, projects, currentAccountId) => {
         )
       )
   }
+
   return projects
 }
-const hideProjects = (projects) => projects.filter(({ isActive }) => isActive === true )
 
 const ProjectList = ({
   projects,
@@ -100,10 +99,9 @@ const ProjectList = ({
     hideDisabledProjects
   }
 }) => {
-
   const { _id: currentAccountId } = session
   const filteredProjects = hideDisabledProjects ?
-    hideProjects(projects) :
+    projects.filter(({ isActive }) => isActive) :
     projects
 
   const sortedProjects = sortProjects({
@@ -135,6 +133,7 @@ const ProjectList = ({
     </Layout>
   )
 }
+
 export default connect(
   mapState({
     projects: selectors.allProjects,
@@ -142,6 +141,6 @@ export default connect(
   }),
   mapDispatch({
     toCreateProject: () => actions.requestLocation('/projects/create'),
-    toProjectDetail: identifier => actions.requestLocation(`/projects/${ identifier }`)
+    toProjectDetail: (identifier) => actions.requestLocation(`/projects/${ identifier }`)
   })
 )(ProjectList)

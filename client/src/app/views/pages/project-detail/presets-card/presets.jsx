@@ -12,8 +12,6 @@ import CreateDialog from './create-dialog'
 const CREATE_PRESET = 'CREATE_PRESET'
 
 const Presets = ({
-  // dialog
-  isCreateDialogActive,
   showCreateDialog,
   hideCreateDialog,
   identifier,
