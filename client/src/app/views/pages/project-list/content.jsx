@@ -100,6 +100,7 @@ const ProjectList = ({
     hideDisabledProjects
   }
 }) => {
+
   const { _id: currentAccountId } = session
   const filteredProjects = hideDisabledProjects ?
     hideProjects(projects) :
