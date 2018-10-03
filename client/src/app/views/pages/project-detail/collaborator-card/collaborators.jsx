@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
 import { Heading, TextLine } from 'ui/typo'
-import { Button, Card, ContextMenu, Identicon, Link, List, Paragraph } from 'ui/elements'
+import { Card, ContextMenu, Identicon, Link, List } from 'ui/elements'
 import { OwnerAddIcon } from 'ui/icons'
 
 const Avatar = styled.div`
@@ -74,7 +74,24 @@ const Collaborators = ({
               />
             ) }
           />
-        ) : null
+        ) : (
+          (signedInCollaborator && signedInCollaborator.privilege === 'admin' && signedInCollaborator._id === _id) ?
+            () => (
+              <ContextMenu
+                name={ `collaborator-${ _id }` }
+                content={ () => (
+                  <List
+                    items={ [
+                      {
+                        content: () => <TextLine mostLeft mostRight>Leave project</TextLine>,
+                        onClick: () => deleteCollaborator(identifier, account._id)
+                      }
+                    ] }
+                  />
+                ) }
+              />
+            ) : null
+        )
     })
   )
 
