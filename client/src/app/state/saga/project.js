@@ -177,8 +177,6 @@ const deleteCollaboratorLoop = function*() {
         continue
       }
 
-      action.payload
-      console.log()
       const deleted = yield Project.deleteCollaborator(session.token, action.payload.identifier, action.payload.accountId)
 
       if (!deleted) {
