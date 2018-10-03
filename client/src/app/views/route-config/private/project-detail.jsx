@@ -1,4 +1,4 @@
-import { fork, put, race, take } from 'redux-saga/effects'
+import { all, fork, put, race, take } from 'redux-saga/effects'
 
 import { actions, types } from 'state/interface'
 import * as ProjectDetail from 'views/pages/project-detail'
@@ -23,11 +23,17 @@ const watchCreatePreset = function*(path) {
       createFailed: take(types[ 'PRESET/CREATE_FAILED' ])
     })
 
-    yield put(
-      actions.mergeUIState(path, {
-        isCreatePresetDialogActive: false
-      })
-    )
+    yield all([
+      put(
+        actions.mergeUIState(path, {
+          isCreatePresetDialogActive: false
+        })
+      ),
+      createCompleted ?
+        put(
+          actions.requestLocation(`/projects/${ createCompleted.payload.identifier }/presets/${ createCompleted.payload.preset.contentType.replace('/', '_') }`)
+        ) : null
+    ])
   }
 }
 
