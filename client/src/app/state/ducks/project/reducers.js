@@ -50,7 +50,7 @@ export default createReducer({})({
     }
   }),
   [ types.INVITE_COLLABORATOR_COMPLETED ]: (state, action) => {
-    const { collaborators, identifier }  = action.payload
+    const { collaborators, identifier } = action.payload
     const project = state[ identifier ]
     const newCollaborators = arrayToMap(collaborators, '_id')
 
