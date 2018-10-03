@@ -140,8 +140,8 @@ const updateLoop = function*() {
 const inviteCollaboratorLoop = function*() {
   while (true) {
     const action = yield take(types['PROJECT/INVITE_COLLABORATOR'])
-    // const currentLocation = yield select(selectors.currentLocation)
-    const { identifier } = action.payload.identifier
+    const { identifier } = action.payload
+
     try {
       const session = yield select(selectors.currentSession)
 

@@ -134,11 +134,11 @@ export default {
   async inviteCollaborator(token, identifier, emails, messenge) {
     const email = stringToList(emails)
     const body = await request(`
-      query inviteCollaborator($token: String!, $identifier: String!, $email: [String]!, $messenge: String!) {
+      query addCollaboratorsByEmails($token: String!, $identifier: String!, $emails: [String]!, $messenge: String!) {
         session(token: $token) {
           account {
             project(identifier: $identifier) {
-              _inviteCollaborator(email: $email, messenge: $messenge){
+              _addCollaboratorsByEmails(emails: $emails, messenge: $messenge){
                 ${ PERMISSION_FRAGMENT }
               }
             }
@@ -148,7 +148,7 @@ export default {
     `, {
       token,
       identifier,
-      email,
+      emails,
       messenge
     })
 
