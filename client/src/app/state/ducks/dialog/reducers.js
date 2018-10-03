@@ -4,7 +4,7 @@ import * as types from './types'
 export default createReducer({})({
   [ types.SHOW ]: (state, action) => ({
     ...state,
-    [ action.payload.name ]: { ...action.payload.params }
+    [ action.payload.name ]: true
   }),
   [ types.HIDE ]: (state, action) => ({
     ...state,
