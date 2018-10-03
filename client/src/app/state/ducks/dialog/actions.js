@@ -5,7 +5,7 @@ export const hideDialog = (name) => ({
   payload: { name }
 })
 
-export const showDialog = (name) => ({
+export const showDialog = (name,  params = {}) => ({
   type: types.SHOW,
-  payload: { name }
+  payload: { name, params }
 })

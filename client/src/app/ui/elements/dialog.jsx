@@ -41,7 +41,7 @@ const Dialog = ({
     <Portal node={ document.getElementById('root') }>
       <Overlay onClick={ onOverlayClick }>
         <Content onClick={ e => e.stopPropagation() }>
-          { content() }
+          { content({ params: isActive }) }
         </Content>
       </Overlay>
     </Portal>

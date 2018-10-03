@@ -2,7 +2,7 @@ import React from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 import { Form } from 'ui/compounds'
-import { Button, ButtonText, Break } from 'ui/elements'
+import { Button, TextButton, Break } from 'ui/elements'
 import { CopyIcon } from 'ui/icons'
 import { TextLine } from 'ui/typo'
 
@@ -59,9 +59,9 @@ const ProjectForm = ({
           {
             isActive ?
               null :
-              <ButtonText onClick={ showRemoveProjectDialog }>
+              <TextButton onClick={ showRemoveProjectDialog }>
                 Permanently delete
-              </ButtonText>
+              </TextButton>
           }
         </React.Fragment>
     }

@@ -26,16 +26,16 @@ const Wrapper = styled.div`
   line-height: 40px;
   height: 40px;
 `
-const ButtonText = ({ ...props }) =>(
+const TextButton = ({ ...props }) =>(
   <Wrapper>
     <Button { ...props } />
   </Wrapper>
 )
 
-ButtonText.Group = styled.div`
+TextButton.Group = styled.div`
   display: inline-flex;
 
-  & > ${ ButtonText } {
+  & > ${ TextButton } {
     margin-right: ${
       ({ theme, loosed }) => loosed ?
         theme.spacing.medium :
@@ -48,4 +48,4 @@ ButtonText.Group = styled.div`
   }
 `
 
-export default ButtonText
+export default TextButton
