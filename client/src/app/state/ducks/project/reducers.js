@@ -54,7 +54,6 @@ export default createReducer({})({
     const project = state[ identifier ]
     const newCollaborators = arrayToMap(collaborators, '_id')
 
-    console.log(newCollaborators)
     return {
       ...state,
       [ identifier ]: {
