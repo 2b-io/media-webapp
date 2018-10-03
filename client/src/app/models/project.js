@@ -131,8 +131,9 @@ export default {
 
     return body.session.account.project._update
   },
-  async inviteCollaborator(token, identifier, emails, messenge) {
-    const email = stringToList(emails)
+  async inviteCollaborator(token, identifier, emailString, messenge) {
+    const emails = stringToList(emailString)
+    console.log(emails);
     const body = await request(`
       query addCollaboratorsByEmails($token: String!, $identifier: String!, $emails: [String]!, $messenge: String!) {
         session(token: $token) {
