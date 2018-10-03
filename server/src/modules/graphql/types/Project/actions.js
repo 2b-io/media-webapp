@@ -15,7 +15,7 @@ import {
 } from 'services/preset'
 import {
   invite as inviteCollaborator,
-  list as permissionList,
+  list as getPermissionList,
   remove as removeCollaborator,
   makeOwner as makeOwner
 } from 'services/permission'
@@ -115,7 +115,7 @@ export default ({ Project, ProjectStruct }) => ({
       )
 
       // get account id on permission
-      const collaboratorIDs = (await permissionList(project)).map(permission => permission.account)
+      const collaboratorIDs = (await getPermissionList(project)).map(permission => permission.account)
 
       //filter account are not collaborator
       const notCollaborators = existedAccounts.filter(
