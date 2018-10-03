@@ -23,9 +23,17 @@ const ProjectInfoCard = ({
 )
 
 export default connect(
-  (state, { identifier }) => ({
-    project: selectors.findProjectByIdentifier(state, identifier)
-  }),
+  (state) => {
+    const { identifier } = selectors.currentParams(state)
+
+    if (!identifier) {
+      return {}
+    }
+
+    return {
+      project: selectors.findProjectByIdentifier(state, identifier)
+    }
+  },
   mapDispatch({
     toEditProject: (identifier) => actions.requestLocation(`/projects/${ identifier }/edit`)
   })

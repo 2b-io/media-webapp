@@ -1,7 +1,35 @@
-import { fork, put, take } from 'redux-saga/effects'
+import { fork, put, race, take } from 'redux-saga/effects'
 
-import { actions } from 'state/interface'
+import { actions, types } from 'state/interface'
 import * as ProjectDetail from 'views/pages/project-detail'
+
+const watchCreatePreset = function*(path) {
+  while (true) {
+    const action = yield take(types[ 'DIALOG/SHOW' ])
+
+    yield put(
+      actions.mergeUIState(path, {
+        isCreatePresetDialogActive: true
+      })
+    )
+
+    const {
+      hide,
+      createCompleted,
+      createFailed
+    } = yield race({
+      hide: take(types[ 'DIALOG/HIDE' ]),
+      createCompleted: take(types[ 'PRESET/CREATE_COMPLETED' ]),
+      createFailed: take(types[ 'PRESET/CREATE_FAILED' ])
+    })
+
+    yield put(
+      actions.mergeUIState(path, {
+        isCreatePresetDialogActive: false
+      })
+    )
+  }
+}
 
 export default {
   '/projects/:identifier': {
@@ -16,9 +44,12 @@ export default {
     state: function*(path) {
       yield put(
         actions.initializeUIState(path, {
-          notFound: false
+          notFound: false,
+          isCreatePresetDialogActive: false
         })
       )
+
+      yield fork(watchCreatePreset, path)
     }
   }
 }

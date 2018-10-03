@@ -34,20 +34,13 @@ const Project = ({
   params: {
     identifier
   },
-  ui: {
-    // idle,
-    notFound,
-  }
+  ui
 }) => {
-  if(notFound) {
-    return <Redirect to="/projects" />
-  }
-
   return (
     <Layout>
       <Container>
-        <ProjectInfo identifier={ identifier } />
-        <Presets identifier={ identifier } />
+        <ProjectInfo ui={ ui } />
+        <Presets ui={ ui } />
         <PullSettings identifier={ identifier } />
         <ApiKeys identifier={ identifier } />
         <Collaborators identifier={ identifier } />
