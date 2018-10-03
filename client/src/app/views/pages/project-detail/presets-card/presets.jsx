@@ -19,7 +19,10 @@ const Presets = ({
   identifier,
   presets = {},
   createPreset,
-  toPreset
+  toPreset,
+  ui: {
+    isCreatePresetDialogActive
+  }
 }) => {
   const items = Object.values(presets).map(
     ({ contentType, isActive }) => ({
@@ -41,18 +44,14 @@ const Presets = ({
             <TextLine mostLeft mostRight>No preset found</TextLine>
         ) }
       />
-
       <Dialog
-        isActive={ isCreateDialogActive }
+        isActive={ isCreatePresetDialogActive }
         onOverlayClick={ hideCreateDialog }
         content={ () => (
           <CreateDialog
             identifier={ identifier }
             presets={ presets }
-            createPreset={ (params) => {
-              createPreset(params)
-              hideCreateDialog()
-            } }
+            createPreset={ createPreset }
           />
         ) }
       />
@@ -61,10 +60,18 @@ const Presets = ({
 }
 
 export default connect(
-  (state, { identifier }) => ({
-    isCreateDialogActive: selectors.isDialogActive(state, CREATE_PRESET),
-    presets: selectors.presets(state, identifier)
-  }),
+  (state) => {
+    const { identifier } = selectors.currentParams(state)
+
+    if (!identifier) {
+      return {}
+    }
+
+    return {
+      presets: selectors.presets(state, identifier),
+      identifier
+    }
+  },
   mapDispatch({
     // dialog
     showCreateDialog: () => actions.showDialog(CREATE_PRESET),

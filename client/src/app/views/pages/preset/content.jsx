@@ -26,18 +26,10 @@ const PresetJpeg = ({
   hideRemovePresetDialog,
   hideUpdatePresetDialog,
   ui: {
-    removePresetResult,
-    notFoundPreset,
     isUpdatePresetDialogActive,
     isRemovePresetDialogActive,
   }
 }) => {
-
-  if (removePresetResult || notFoundPreset ) {
-    return <Redirect to={ `/projects/${ identifier }` } />
-  }
-
-
   if (!preset) {
     return null
   }
