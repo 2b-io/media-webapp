@@ -1,6 +1,8 @@
 import request from 'services/graphql'
 import pick from 'object.pick'
 
+import { stringToList } from 'services/string-to-list'
+
 import { ACCOUNT_FRAGMENT } from './account'
 import { PRESET_FRAGMENT } from './preset'
 
@@ -129,13 +131,14 @@ export default {
 
     return body.session.account.project._update
   },
-  async inviteCollaborator(token, identifier, inputEmailMessenge) {
+  async inviteCollaborator(token, identifier, emails, messenge) {
+    const email = stringToList(emails)
     const body = await request(`
-      query inviteCollaborator($token: String!, $identifier: String!, $email: String!, $messenge: String!) {
+      query addCollaboratorsByEmails($token: String!, $identifier: String!, $emails: [String]!, $messenge: String!) {
         session(token: $token) {
           account {
             project(identifier: $identifier) {
-              _inviteCollaborator(email: $email, messenge:  $messenge){
+              _addCollaboratorsByEmails(emails: $emails, messenge: $messenge){
                 ${ PERMISSION_FRAGMENT }
               }
             }
@@ -145,8 +148,8 @@ export default {
     `, {
       token,
       identifier,
-      email: inputEmailMessenge.email,
-      messenge: inputEmailMessenge.messenge
+      emails,
+      messenge
     })
 
     return body.session.account.project._inviteCollaborator
@@ -189,7 +192,8 @@ export default {
 
     return body.session.account.project._makeOwner
   },
-  async invalidateCache(token, identifier, patterns) {
+  async invalidateCache(token, identifier, patternsInput) {
+    const patterns = stringToList(patternsInput)
     const body = await request(`
       query invalidateCache($token: String!, $identifier: String!, $patterns: [String]!) {
         session(token: $token) {

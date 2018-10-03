@@ -15,6 +15,7 @@ const schema = mongoose.Schema({
   },
   name: {
     type: String,
+    default: 'Anonymous',
     required: true
   },
   removed: {

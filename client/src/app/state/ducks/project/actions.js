@@ -1,5 +1,4 @@
 import * as types from './types'
-import stringToList from 'services/string-to-list'
 
 export const fetchProjects = () => ({
   type: types.FETCH
@@ -75,9 +74,9 @@ export const updateProjectFailed = reason => ({
   payload: { reason }
 })
 
-export const inviteCollaborator = ({ email, messenge }) => ({
+export const inviteCollaborator = (identifier, { emails, messenge }) => ({
   type: types.INVITE_COLLABORATOR,
-  payload: { email, messenge }
+  payload: { identifier, emails, messenge }
 })
 
 export const inviteCollaboratorCompleted = collaborator => ({
@@ -122,10 +121,7 @@ export const makeOwnerFailed = reason => ({
 
 export const invalidateCache = (patterns, identifier) => ({
   type: types.INVALIDATE_CACHE,
-  payload: {
-    patterns: stringToList(patterns),
-    identifier
-  }
+  payload: { patterns, identifier }
 })
 
 export const invalidateCacheCompleted = () => {

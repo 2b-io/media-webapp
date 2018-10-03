@@ -5,6 +5,6 @@
 */
 const delimiter = /\s*[,\n+]\s*/
 
-const stringToList = value => (value || '').trim().split(delimiter).filter(Boolean)
+export const stringToList = value => (value || '').trim().split(delimiter).filter(Boolean)
 
-export default stringToList
+export const listToString = value => (value || []).join('\n')
