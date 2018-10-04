@@ -7,6 +7,14 @@ import { CheckBox } from 'views/common/form'
 const SvgParameterForm = () => (
   <Fragment>
     <CheckBox
+      name="cleanupAttrs"
+      label="Cleanup Attrs"
+    />
+    <DescriptionText mostLeft mostRight>
+      Cleanup attributes from newlines, trailing, and repeating spaces
+    </DescriptionText>
+    <Break />
+    <CheckBox
       name="inlineStyles"
       label="Inline Styles"
     />
