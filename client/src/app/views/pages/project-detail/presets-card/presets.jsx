@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { actions, selectors } from 'state/interface'
 import { mapDispatch } from 'services/redux-helpers'
-import { Card, Dialog, List, StatusIndicator } from 'ui/elements'
+import { Card, Dialog, ErrorBox, List, StatusIndicator } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 import { Heading, TextLine } from 'ui/typo'
 
@@ -19,6 +19,8 @@ const Presets = ({
   createPreset,
   toPreset,
   ui: {
+    error,
+    idle,
     isCreatePresetDialogActive
   }
 }) => {
@@ -43,9 +45,13 @@ const Presets = ({
         ) }
       />
       <Dialog
+        error={ error }
+        idle={ idle }
         isActive={ isCreatePresetDialogActive }
         onOverlayClick={ hideCreateDialog }
         content={ () => (
+          error ?
+          <ErrorBox>An error happens when invalidate cache.</ErrorBox> :
           <CreateDialog
             identifier={ identifier }
             presets={ presets }

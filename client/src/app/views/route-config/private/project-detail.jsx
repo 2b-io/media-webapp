@@ -25,8 +25,8 @@ const watchCreatePreset = function*(path) {
 
     const { createCompleted } = yield race({
       hide: take(`${ types[ 'DIALOG/HIDE' ] }:CREATE_PRESET`),
-      createCompleted: take(types[ 'PRESET/CREATE_COMPLETED' ]),
-      createFailed: take(types[ 'PRESET/CREATE_FAILED' ])
+      createCompleted: take(types.preset.CREATE_COMPLETED),
+      createFailed: take(types.preset.CREATE_FAILED)
     })
 
     yield all([
@@ -129,6 +129,7 @@ export default {
         ),
         put(
           actions.initializeUIState(path, {
+            idle: true,
             notFound: false,
             isCreatePresetDialogActive: false,
             isLeaveProjectDialogActive: false,
