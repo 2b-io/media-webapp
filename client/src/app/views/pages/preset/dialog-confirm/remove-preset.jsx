@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Break, Container, Dialog, Button } from 'ui/elements'
+import { Break, Button, Container, Dialog } from 'ui/elements'
 import { Emphasize, Text } from 'ui/typo'
 
 const DialogRemovePreset = ({

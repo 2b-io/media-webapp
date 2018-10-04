@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Button, Container, Dialog } from 'ui/elements'
+import { Break, Button, Container, Dialog } from 'ui/elements'
 import { Text } from 'ui/typo'
 
 const DialogLeaveProject = ({
@@ -16,7 +16,8 @@ const DialogLeaveProject = ({
         <Text mostLeft mostRight>
           Leave project?
         </Text>
-        <Button.Group mostRight>
+        <Break double />
+        <Button.Group align="right">
           <Button
             variant="secondary"
             mostRight
