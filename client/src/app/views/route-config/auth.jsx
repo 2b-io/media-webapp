@@ -1,10 +1,10 @@
-import * as CacheInvalidate from 'views/pages/cache-invalidate'
 import * as ProjectMedia from 'views/pages/project-detail/project-media'
 import * as UI from 'views/pages/ui'
 
 import { actions } from 'state/interface'
 
 import dashboard from './private/dashboard'
+import CacheInvalidate from './private/cache-invalidate'
 import InviteCollaborator from './private/invite-collaborator'
 import preset from './private/preset'
 import profile from './private/profile'
@@ -27,13 +27,7 @@ export default {
       actions.fetchProjectMedia(identifier)
     ]
   },
-  '/projects/:identifier/cache-invalidator': {
-    component: CacheInvalidate,
-    exact: true,
-    onEnter: ({ identifier }) => [
-      actions.getProject(identifier)
-    ]
-  },
+  ...CacheInvalidate,
   ...InviteCollaborator,
   ...projectEdit,
   ...preset,

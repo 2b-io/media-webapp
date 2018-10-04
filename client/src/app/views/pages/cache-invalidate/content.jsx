@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Container } from 'ui/elements'
-import { stateful } from 'views/common/decorators'
 
 import _CacheInvalidForm from './form'
 
@@ -26,19 +25,15 @@ const CacheInvalidate = ({
     </Container>
   )
 }
-export default stateful({
-  component: 'CacheInvalidate'
-})(
-  connect(
-    (state) => {
-      const { identifier } = selectors.currentParams(state)
+export default connect(
+  (state) => {
+    const { identifier } = selectors.currentParams(state)
 
-      return {
-        identifier
-      }
-    },
-    mapDispatch({
-      invalidateCache: actions.invalidateCache
-    })
-  )(CacheInvalidate)
-)
+    return {
+      identifier
+    }
+  },
+  mapDispatch({
+    invalidateCache: actions.invalidateCache
+  })
+)(CacheInvalidate)
