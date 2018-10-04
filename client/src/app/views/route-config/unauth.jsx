@@ -1,18 +1,11 @@
-import { actions } from 'state/interface'
-
-import ForgotPassword from 'views/pages/forgot-password'
-import ResetPassword from 'views/pages/reset-password'
-
+import forgotPassword from './public/forgot-password'
 import register from './public/register'
 import resetPassword from './public/reset-password'
 import signIn from './public/sign-in'
 
 export default {
-  '/forgot-password': {
-    component: ForgotPassword,
-    exact: true
-  },
+  ...signIn,
   ...register,
-  ...resetPassword,
-  ...signIn
+  ...forgotPassword,
+  ...resetPassword
 }

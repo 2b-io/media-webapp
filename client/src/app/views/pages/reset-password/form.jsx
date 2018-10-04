@@ -50,7 +50,7 @@ const ResetPaswordForm = ({ handleSubmit, isFinalizeStep }) => (
     <Button type="submit">
       { isFinalizeStep ?
         'Finalize my account' :
-        'Reset my password'
+        'Change password'
       }
     </Button>
   </Form>
