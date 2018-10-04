@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Container } from 'ui/elements'
-import { stateful } from 'views/common/decorators'
 
 import _InviteCollaboratorForm from './form'
 
@@ -26,19 +25,15 @@ const InviteCollaborator = ({
     </Container>
   )
 }
-export default stateful({
-  component: 'InviteCollaborator'
-})(
-  connect(
-    (state) => {
-      const { identifier } = selectors.currentParams(state)
+export default connect(
+  (state) => {
+    const { identifier } = selectors.currentParams(state)
 
-      return {
-        identifier
-      }
-    },
-    mapDispatch({
-      inviteCollaborator: actions.inviteCollaborator
-    })
-  )(InviteCollaborator)
-)
+    return {
+      identifier
+    }
+  },
+  mapDispatch({
+    inviteCollaborator: actions.inviteCollaborator
+  })
+)(InviteCollaborator)

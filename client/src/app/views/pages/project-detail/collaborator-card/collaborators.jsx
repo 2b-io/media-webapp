@@ -5,10 +5,9 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
 import { Heading, TextLine } from 'ui/typo'
-import { Button, Card, ContextMenu, Identicon, Link, List, Paragraph } from 'ui/elements'
+import { Card, ContextMenu, Identicon, Link, List } from 'ui/elements'
 import { OwnerAddIcon } from 'ui/icons'
-
-import { ConfirmDeleteCollaboratorDialog } from '../dialog'
+import { DialogLeaveProject } from './dialog'
 
 const Avatar = styled.div`
   width: 40px;
@@ -23,11 +22,15 @@ const Collaborators = ({
   currentAccount,
   deleteCollaborator,
   identifier,
+  hideLeaveProjectDialog,
+  showLeaveProjectDialog,
   makeOwner,
   toInviteCollaborator,
-  showDeleteCollaboratorDialog,
-  hideDeleteCollaboratorDialog,
-  toProfile
+  toProfile,
+  ui: {
+    isLeaveProjectDialogActive,
+    idToRemove
+  }
 }) => {
   if(!project) {
     return null
@@ -72,13 +75,32 @@ const Collaborators = ({
                   },
                   {
                     content: () => <TextLine mostLeft mostRight>Remove</TextLine>,
-                    onClick: () => showDeleteCollaboratorDialog(account._id, account.email)
+                    onClick: () => deleteCollaborator(identifier, account._id)
                   }
                 ] }
               />
             ) }
           />
-        ) : null
+        ) : (
+          (signedInCollaborator && signedInCollaborator.privilege === 'admin' && signedInCollaborator._id === _id) ?
+            () => (
+              <ContextMenu
+                name={ `collaborator-${ _id }` }
+                content={ () => (
+                  <List
+                    items={ [
+                      {
+                        content: () => <TextLine mostLeft mostRight>Leave project</TextLine>,
+                        onClick: () => showLeaveProjectDialog({
+                          idToRemove: account._id
+                        })
+                      }
+                    ] }
+                  />
+                ) }
+              />
+            ) : null
+        )
     })
   )
 
@@ -93,43 +115,36 @@ const Collaborators = ({
             <TextLine mostLeft mostRight>No collaborator found</TextLine>
         ) }
       />
-      <ConfirmDeleteCollaboratorDialog
-        width="narrow"
-        content={ ({ params }) => (
-          <Paragraph>
-            Do you want to remove the account { params.accountEmail } from the project?
-          </Paragraph>
-        ) }
-        choices={ ({ params }) => (
-          <Button.Group>
-            <Button
-              variant="primary"
-              onClick={ () => deleteCollaborator(identifier, params.accountId) }>
-              Remove
-            </Button>
-            <Button
-              variant="secondary"
-              onClick={ hideDeleteCollaboratorDialog }>
-              Cancel
-            </Button>
-          </Button.Group>
-        ) }
+      <DialogLeaveProject
+        isLeaveProjectDialogActive={ isLeaveProjectDialogActive }
+        onConfirm={ () => deleteCollaborator(identifier, idToRemove) }
+        onCancel={ hideLeaveProjectDialog }
       />
     </Fragment>
   )
 }
 
 export default connect(
-  (state, { identifier }) => ({
-    currentAccount: selectors.currentAccount(state),
-    project: selectors.findProjectByIdentifier(state, identifier)
-  }),
+  (state) => {
+    const { identifier } = selectors.currentParams(state)
+
+    if (!identifier) {
+      return {}
+    }
+
+    return {
+      currentAccount: selectors.currentAccount(state),
+      identifier,
+      project: selectors.findProjectByIdentifier(state, identifier)
+
+    }
+  },
   mapDispatch({
     makeOwner: actions.makeOwner,
     deleteCollaborator: actions.deleteCollaborator,
     toProfile: (id) => actions.requestLocation(`/@${ id }`),
     toInviteCollaborator: (identifier) => actions.requestLocation(`/projects/${ identifier }/invite-collaborator`),
-    showDeleteCollaboratorDialog: (accountId, accountEmail) => actions.showDialog({ dialog: 'ConfirmDeleteCollaboratorDialog', params: { accountId, accountEmail } }),
-    hideDeleteCollaboratorDialog: () => actions.hideDialog({ dialog: 'ConfirmDeleteCollaboratorDialog' })
+    showLeaveProjectDialog: (params) => actions.showDialog('LEAVE_PROJECT', params),
+    hideLeaveProjectDialog: () => actions.hideDialog('LEAVE_PROJECT'),
   })
 )(Collaborators)

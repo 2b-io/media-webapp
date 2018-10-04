@@ -43,6 +43,37 @@ const watchCreatePreset = function*(path) {
   }
 }
 
+const whatchLeaveProject = function*(path) {
+  while (true) {
+    const action = yield take(`${ types[ 'DIALOG/SHOW' ] }:LEAVE_PROJECT`)
+    const { idToRemove } = action.payload.params
+
+    yield put(
+      actions.mergeUIState(path, {
+        isLeaveProjectDialogActive: true,
+        idToRemove
+      })
+    )
+
+    const { removeCompleted } = yield race({
+      hide: take(`${ types[ 'DIALOG/HIDE' ] }:LEAVE_PROJECT`),
+      removeCompleted: take(types[ 'PROJECT/DELETE_COLLABORATOR_COMPLETED' ])
+    })
+
+    yield all([
+      put(
+        actions.mergeUIState(path, {
+          isLeaveProjectDialogActive: false
+        })
+      ),
+      removeCompleted ?
+        put(
+          actions.requestLocation('/projects')
+        ) : null
+    ])
+  }
+}
+
 export default {
   '/projects/:identifier': {
     component: ProjectDetail,
@@ -50,6 +81,7 @@ export default {
     *state(path) {
       yield fork(watchGetProject, path)
       yield fork(watchCreatePreset, path)
+      yield fork(whatchLeaveProject, path)
 
       const { identifier } = yield select(selectors.currentParams)
 
@@ -69,7 +101,8 @@ export default {
         put(
           actions.initializeUIState(path, {
             notFound: false,
-            isCreatePresetDialogActive: false
+            isCreatePresetDialogActive: false,
+            isLeaveProjectDialogActive: false
           })
         )
       ])

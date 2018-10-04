@@ -185,7 +185,6 @@ const deleteCollaboratorLoop = function*() {
 
       yield all([
         put(actions.deleteCollaboratorCompleted(action.payload.identifier, action.payload.accountId)),
-        put(actions.hideDialog({ dialog: 'ConfirmDeleteCollaboratorDialog' })),
         fork(addToast, {
           type: 'success',
           message: 'Collaborator deleted.'
