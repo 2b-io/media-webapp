@@ -5,7 +5,7 @@ import * as ProjectDetail from 'views/pages/project-detail'
 
 const watchGetProject = function*() {
   while (true) {
-    yield take(types[ 'PROJECT/GET_FAILED' ])
+    yield take(types.project.GET_FAILED)
 
     yield put(
       actions.requestLocation('/projects')
@@ -55,7 +55,7 @@ const watchLeaveProject = function*(path) {
 
     const { removeCompleted } = yield race({
       hide: take(`${ types[ 'DIALOG/HIDE' ] }:LEAVE_PROJECT`),
-      removeCompleted: take(types[ 'PROJECT/DELETE_COLLABORATOR_COMPLETED' ])
+      removeCompleted: take(types.project.DELETE_COLLABORATOR_COMPLETED)
     })
 
     yield all([
@@ -85,7 +85,7 @@ const watchMakeOwner = function*(path) {
 
     const { makeOwnerCompleted } = yield race({
       hide: take(`${ types[ 'DIALOG/HIDE' ] }:MAKE_OWNER`),
-      makeOwnerCompleted: take(types[ 'PROJECT/MAKE_OWNER_COMPLETED' ])
+      makeOwnerCompleted: take(types.project.MAKE_OWNER_COMPLETED)
     })
 
     yield all([
