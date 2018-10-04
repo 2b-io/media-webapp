@@ -7,6 +7,7 @@ import { selectors, actions } from 'state/interface'
 import { Heading, TextLine } from 'ui/typo'
 import { Card, ContextMenu, Identicon, Link, List } from 'ui/elements'
 import { OwnerAddIcon } from 'ui/icons'
+import { DialogRemoveCollaborator } from './dialog'
 
 const Avatar = styled.div`
   width: 40px;
@@ -21,9 +22,14 @@ const Collaborators = ({
   currentAccount,
   deleteCollaborator,
   identifier,
+  hideRemoveCollaboratorDialog,
+  showRemoveCollaboratorDialog,
   makeOwner,
   toInviteCollaborator,
-  toProfile
+  toProfile,
+  // ui: {
+  //   isRemoveCollaboratorActive
+  // }
 }) => {
   if(!project) {
     return null
@@ -68,7 +74,7 @@ const Collaborators = ({
                   },
                   {
                     content: () => <TextLine mostLeft mostRight>Remove</TextLine>,
-                    onClick: () => deleteCollaborator(identifier, account._id)
+                    onClick: showRemoveCollaboratorDialog
                   }
                 ] }
               />
@@ -106,6 +112,11 @@ const Collaborators = ({
             <TextLine mostLeft mostRight>No collaborator found</TextLine>
         ) }
       />
+      <DialogRemoveCollaborator
+        isRemoveCollaboratorActive={ true }
+        onConfirm={ () => deleteCollaborator(identifier, account._id) }
+        onCancel={ hideRemoveCollaboratorDialog }
+      />
     </Fragment>
   )
 }
@@ -119,6 +130,8 @@ export default connect(
     makeOwner: actions.makeOwner,
     deleteCollaborator: actions.deleteCollaborator,
     toProfile: (id) => actions.requestLocation(`/@${ id }`),
-    toInviteCollaborator: (identifier) => actions.requestLocation(`/projects/${ identifier }/invite-collaborator`)
+    toInviteCollaborator: (identifier) => actions.requestLocation(`/projects/${ identifier }/invite-collaborator`),
+    showRemoveCollaboratorDialog: () => actions.showDialog('REMOVE_COLLABORATOR'),
+    hideRemoveCollaboratorDialog: () => actions.hideDialog('REMOVE_COLLABORATOR'),
   })
 )(Collaborators)
