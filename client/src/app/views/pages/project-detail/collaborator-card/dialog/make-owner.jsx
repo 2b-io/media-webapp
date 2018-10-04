@@ -3,18 +3,18 @@ import React from 'react'
 import { Button, Container, Dialog } from 'ui/elements'
 import { Text } from 'ui/typo'
 
-const DialogLeaveProject = ({
+const DialogMakeOwner = ({
   onConfirm,
-  isLeaveProjectDialogActive,
+  isMakeOwnerDialogActive,
   onCancel
 }) => (
   <Dialog
-    isActive={ isLeaveProjectDialogActive }
+    isActive={ isMakeOwnerDialogActive }
     onOverlayClick={ onCancel }
     content={ ({ params }) => (
       <Container>
         <Text mostLeft mostRight>
-          Leave project?
+          Make Owner?
         </Text>
         <Button.Group mostRight>
           <Button
@@ -28,7 +28,7 @@ const DialogLeaveProject = ({
             variant="primary"
             onClick={ () => onConfirm(params) }
           >
-            Remove
+            Make Owner
           </Button>
         </Button.Group>
       </Container>
@@ -36,4 +36,4 @@ const DialogLeaveProject = ({
   />
 )
 
-export default DialogLeaveProject
+export default DialogMakeOwner

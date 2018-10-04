@@ -4,7 +4,7 @@ import uuid from 'uuid'
 import Account, { hashPassword } from 'models/Account'
 import ResetPasswordCode from 'models/Reset-password-code'
 import {
-  findById as findAccountById,
+  // findById as findAccountById,
   update as updateAccount
 } from 'services/account'
 
