@@ -1,11 +1,14 @@
 import shorthash from 'shorthash'
 import uuid from 'uuid'
 
-import Account from 'models/Account'
+import Account, { hashPassword } from 'models/Account'
 import ResetPasswordCode from 'models/Reset-password-code'
+import {
+  findById as findAccountById,
+  update as updateAccount
+} from 'services/account'
 
 export const forgotPassword = async (email) => {
-
   const account = await Account.findOne({ email }).lean()
 
   if (!account) {
@@ -40,24 +43,21 @@ export const forgotPassword = async (email) => {
   }).save()
 }
 
-export const resetPassword = async (password, code) => {
-  const accountExists = await ResetPasswordCode.findOne({ code }).lean()
+export const resetPassword = async ({ name, password }, code) => {
+  const { uid } = await ResetPasswordCode.findOne({
+    code,
+    used: false
+  }).lean()
 
-  if (!accountExists) {
-    return false
-  }
+  await updateAccount(uid, {
+    name,
+    hashedPassword: hashPassword(password),
+    isActive: true
+  })
 
-  const { used, uid: _id } = accountExists
+  await ResetPasswordCode.deleteOne({ code })
 
-  if (!_id || used) {
-    return false
-  }
-
-  const account = await Account.findOne({ _id })
-  account.password = password
-  await account.save()
-  const { ok } = await ResetPasswordCode.deleteOne({ code })
-  return ok === 1
+  return true
 }
 
 export const getResetCode = async (code) => {

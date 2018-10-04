@@ -1,7 +1,10 @@
+import pick from 'object.pick'
 import request from 'services/graphql'
 
+import { ACCOUNT_FRAGMENT } from './account'
+
 export default {
-  forgotPassword: async (email) => {
+  async forgotPassword(email) {
     const body = await request(`
       query forgotPassword($email: String!) {
         _forgotPassword(email: $email)
@@ -9,22 +12,26 @@ export default {
     `, { email })
     return body._forgotPassword
   },
-  resetPassword: async (password, code) => {
+  async resetPassword({ code, account }) {
     const body = await request(`
-      query resetPassword($password: String!,$code: String!) {
-        _resetPassword(password: $password,code: $code)
+      query resetPassword($account: AccountStruct!, $code: String!) {
+        _resetPassword(account: $account, code: $code)
       }
-    `, { password, code })
+    `, {
+      account: pick(account, [ 'name', 'password' ]),
+      code
+    })
+
     return body._resetPassword
   },
-  getResetCode: async (code) => {
+  async getResetCode(code) {
     const body = await request(`
       query getResetCode($code: String!) {
-        getResetCode(code: $code) {
-          email
+        resetCode(code: $code) {
+          ${ ACCOUNT_FRAGMENT }
         }
       }
     `, { code })
-    return body.getResetCode
+    return body.resetCode
   }
 }

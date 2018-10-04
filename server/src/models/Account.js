@@ -22,6 +22,11 @@ const schema = mongoose.Schema({
     type: Boolean,
     default: false,
     index: true
+  },
+  isActive: {
+    type: Boolean,
+    default: false,
+    index: true
   }
 })
 schema.index({ email: 'text' })
@@ -32,8 +37,12 @@ schema.methods = {
 }
 
 schema.virtual('password').set(function(password) {
-  const salt = randomInt(8, 12)
-  this.hashedPassword = bcrypt.hashSync(password, salt)
+  this.hashedPassword = hashPassword(password)
 })
+
+export const hashPassword = (plainPassword) => {
+  const salt = randomInt(8, 12)
+  return bcrypt.hashSync(plainPassword, salt)
+}
 
 export default mongoose.model('Account', schema)

@@ -5,7 +5,8 @@ import request from 'services/graphql'
 export const ACCOUNT_FRAGMENT = `
   _id,
   email,
-  name
+  name,
+  isActive
 `
 
 export default {

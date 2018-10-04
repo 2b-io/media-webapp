@@ -3,7 +3,7 @@ import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
-import { actions } from 'state/interface'
+import { actions, selectors } from 'state/interface'
 import { ChangePassword } from 'views/common/form'
 import { Container, TextBox, Break } from 'ui/elements'
 import { ErrorBox, SuccessBox } from 'ui/elements'
@@ -11,50 +11,39 @@ import { EmailIcon } from 'ui/icons'
 import { validateConfirmPassword } from 'views/common/validate'
 import { withParams } from 'views/router'
 
+import StatelessForm from './form'
+
 const ResetPasswordForm = reduxForm({
-  form: 'resetPassword',
+  form: 'RESET_PASSWORD',
   enableReinitialize: true,
   validate: validateConfirmPassword
-})(ChangePassword)
+})(StatelessForm)
 
 const ResetPassword = ({
   resetPassword,
-  params: { code },
-  ui: { errorGetCode, resultGetcode, errorResetPassword, resultResetPassword }
-}) => (
-  <Container center size="small">
-    { errorGetCode &&
-      <ErrorBox>The reset code does not exist or it has been expired.</ErrorBox>
-    }
-    { resultResetPassword &&
-      <SuccessBox>Password changed. Please use your new password in your next sign in.</SuccessBox>
-    }
-    { errorResetPassword &&
-      <ErrorBox>An error happens when changing your password. Please try again.</ErrorBox>
-    }
-    { resultGetcode && !resultResetPassword &&
-      <Fragment>
-        <TextBox readOnly
-          value={ resultGetcode.email }
-          leading={ () => <EmailIcon /> }
-        />
-        <Break />
-        <ResetPasswordForm
-          resetPassword={ true }
-          onSubmit={ ({ password }) => {
-            resetPassword({ password, code })
-          } }
-        />
-      </Fragment>
-    }
-  </Container>
-)
+  ui: {
+    account,
+    code
+  }
+}) => {
+  if (!account) {
+    return null
+  }
 
-export default withParams(
-  connect(
-    null,
-    mapDispatch({
-      resetPassword: ({ password, code }) => actions.resetPassword(password, code)
-    })
-  )(ResetPassword)
-)
+  return (
+    <Container>
+      <ResetPasswordForm
+        isFinalizeStep={ !account.isActive }
+        initialValues={ account }
+        onSubmit={ (account) => resetPassword(code, account) }
+      />
+    </Container>
+  )
+}
+
+export default connect(
+  null,
+  mapDispatch({
+    resetPassword: actions.resetPassword
+  })
+)(ResetPassword)

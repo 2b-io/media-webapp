@@ -24,12 +24,10 @@ const forgotPasswordLoop = function*() {
 
 const resetPasswordLoop = function*() {
   while (true) {
-    const action = yield take(types['RESETPASSWORDCODE/RESET_PASSWORD'])
-
     try {
-      const { password, code } = action.payload
+      const { payload } = yield take(types['RESETPASSWORDCODE/RESET_PASSWORD'])
 
-      const status = yield call(ResetPasswordCode.resetPassword, password, code)
+      const status = yield ResetPasswordCode.resetPassword(payload)
 
       if (!status) {
         throw new Error('Reset password failed')
@@ -38,7 +36,6 @@ const resetPasswordLoop = function*() {
       yield put(actions.resetPasswordCompleted(status))
     } catch (e) {
       yield put(actions.resetPasswordFailed(serializeError(e)))
-      continue
     }
   }
 }
