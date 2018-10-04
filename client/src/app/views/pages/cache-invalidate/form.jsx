@@ -20,7 +20,6 @@ const CacheInvalidForm = ({ handleSubmit }) => (
     </DescriptionText>
     <Break double />
     <Button
-      variant="primary"
       type="submit"
     >Invalidate</Button>
   </Form>
