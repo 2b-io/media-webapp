@@ -37,6 +37,7 @@ const ForgotPassword=({
         <ErrorBox>Fail to send the reset password email or the account does not exist.</ErrorBox>
       }
       <ForgotPasswordForm onSubmit={ forgotPassword } />
+      <Break double />
       <Text mostLeft mostRight>
         Remember your password?<br />
         <Link href='/sign-in' onClick={ toSignIn }>Sign in now!</Link>
