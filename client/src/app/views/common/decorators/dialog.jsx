@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import keycode from 'keycode'
 
 import { mapDispatch } from 'services/redux-helpers'
-import { actions, selectors } from 'state/interface'
+import { actions } from 'state/interface'
 import { stateful } from 'views/common/decorators'
 
 const Overlay = styled.div`
@@ -53,6 +53,8 @@ export default ({
   name,
   enableStateful = true
 }) => WrappedComponent => {
+  console.warn(`dialog(${ name }) is deprecated. Use \`ui/elements/Dialog\` instead.`)
+
   const Content = enableStateful ?
     stateful({
       component: `dialog/${ name }`
@@ -115,13 +117,9 @@ export default ({
   }
 
   return connect(
-    state => ({
-      dialogParams: selectors.dialog(state, name)
-    }),
+    null,
     mapDispatch({
-      hide: () => actions.hideDialog({
-        dialog: name
-      })
+      hide: () => actions.hideDialog(name)
     })
   )(Dialog)
 }

@@ -52,7 +52,7 @@ export default {
   '/projects': {
     component: ProjectList,
     exact: true,
-    state: function*(path) {
+    *state(path) {
       yield fork(watchFilterMenu, path)
       yield fork(watchHideDisabledProjects, path)
       yield fork(watchSortCondition, path)

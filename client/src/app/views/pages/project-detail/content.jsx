@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Redirect, withParams } from 'views/router'
+import { withParams } from 'views/router'
 
 import { ApiKeys } from './api-keys-card'
 import { Collaborators } from './collaborator-card/'

@@ -1,3 +1,5 @@
+import pick from 'object.pick'
+
 import request from 'services/graphql'
 
 export const ACCOUNT_FRAGMENT = `
@@ -85,7 +87,7 @@ export default {
       }
     `, {
       token,
-      account
+      account: pick(account, [ 'name' ])
     })
 
     return body.session.account._update

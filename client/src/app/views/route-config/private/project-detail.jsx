@@ -3,7 +3,7 @@ import { all, fork, put, race, select, take } from 'redux-saga/effects'
 import { actions, selectors, types } from 'state/interface'
 import * as ProjectDetail from 'views/pages/project-detail'
 
-const watchGetProject = function*(path) {
+const watchGetProject = function*() {
   while (true) {
     yield take(types[ 'PROJECT/GET_FAILED' ])
 
@@ -15,7 +15,7 @@ const watchGetProject = function*(path) {
 
 const watchCreatePreset = function*(path) {
   while (true) {
-    const action = yield take(types[ 'DIALOG/SHOW' ])
+    yield take(`${ types[ 'DIALOG/SHOW' ] }:CREATE_PRESET`)
 
     yield put(
       actions.mergeUIState(path, {
@@ -23,12 +23,8 @@ const watchCreatePreset = function*(path) {
       })
     )
 
-    const {
-      hide,
-      createCompleted,
-      createFailed
-    } = yield race({
-      hide: take(types[ 'DIALOG/HIDE' ]),
+    const { createCompleted } = yield race({
+      hide: take(`${ types[ 'DIALOG/HIDE' ] }:CREATE_PRESET`),
       createCompleted: take(types[ 'PRESET/CREATE_COMPLETED' ]),
       createFailed: take(types[ 'PRESET/CREATE_FAILED' ])
     })
@@ -51,7 +47,7 @@ export default {
   '/projects/:identifier': {
     component: ProjectDetail,
     exact: true,
-    state: function*(path) {
+    *state(path) {
       yield fork(watchGetProject, path)
       yield fork(watchCreatePreset, path)
 

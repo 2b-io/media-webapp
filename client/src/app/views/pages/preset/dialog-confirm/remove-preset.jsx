@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Break, Container, Dialog, Button } from 'ui/elements'
-import { Text } from 'ui/typo'
+import { Emphasize, Text } from 'ui/typo'
 
 const DialogRemovePreset = ({
   contentType,
@@ -15,12 +15,12 @@ const DialogRemovePreset = ({
     content={ () => (
       <Container>
         <Text mostLeft mostRight>
-          You are about to permanently delete configuration for content type <b>&quot;{ contentType }&quot;</b>.
+          You are about to permanently delete configuration for content type <Emphasize>&quot;{ contentType }&quot;</Emphasize>.
           All optimized media of this content type will be deleted along with this configuration.
           This operation cannot be undone and it should take a while to finish.
         </Text>
         <Break double />
-        <Button.Group mostRight>
+        <Button.Group align="right">
           <Button
             variant="secondary"
             mostRight

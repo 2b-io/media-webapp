@@ -3,7 +3,7 @@ import createMemoryHistory from 'history/createMemoryHistory'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { mapDispatch, mapState } from 'services/redux-helpers'
+import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 
 class HistoryManager extends Component {

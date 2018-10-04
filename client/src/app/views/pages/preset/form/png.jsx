@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 
 import { Break } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
-import { CheckBox, TextBox, SlideBar } from 'views/common/form'
+import { CheckBox, SlideBar } from 'views/common/form'
 
 const PngParameterForm = () => (
   <Fragment>

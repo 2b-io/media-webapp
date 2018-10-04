@@ -67,7 +67,7 @@ const deleteLoop = function*() {
 
       yield all([
         put(actions.removePresetCompleted({ contentType, identifier })),
-        put(actions.hideDialog('REMOVE_PRESET')),,
+        put(actions.hideDialog('REMOVE_PRESET')),
         fork(addToast, {
           type: 'success',
           message: 'Preset deleted.'

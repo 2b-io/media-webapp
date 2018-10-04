@@ -8,7 +8,7 @@ export default {
     topLevel: true,
     component: Dashboard,
     exact: true,
-    state: function*(path) {
+    *state() {
       yield put(
         actions.fetchProjects()
       )

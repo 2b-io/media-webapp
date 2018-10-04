@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 
 import { Break } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
-import { CheckBox, TextBox } from 'views/common/form'
+import { CheckBox } from 'views/common/form'
 
 const SvgParameterForm = () => (
   <Fragment>

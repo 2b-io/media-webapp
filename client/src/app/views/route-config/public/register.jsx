@@ -32,7 +32,7 @@ export default {
   '/register': {
     component: Register,
     exact: true,
-    state: function*(path) {
+    *state(path) {
       yield put(
         actions.initializeUIState(path, {
           idle: true

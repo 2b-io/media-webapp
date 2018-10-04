@@ -1,10 +1,9 @@
-import request from 'services/graphql'
 import pick from 'object.pick'
 
+import request from 'services/graphql'
 import { stringToList } from 'services/string-to-list'
 
 import { ACCOUNT_FRAGMENT } from './account'
-import { PRESET_FRAGMENT } from './preset'
 
 export const PERMISSION_FRAGMENT = `
   _id,

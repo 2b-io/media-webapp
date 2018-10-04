@@ -5,32 +5,34 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Container } from 'ui/elements'
-import { stateful } from 'views/common/decorators'
 
-import _PullSettingForm from './form'
+import StatelessPullSettingForm from './form'
 
 const PullSettingForm = reduxForm({
   form: 'pullSetting',
   enableReinitialize: true
-})(_PullSettingForm)
+})(StatelessPullSettingForm)
 
 const PullSetting = ({
   pullSetting,
   identifier,
   updatePullSetting
-}) => {
-  return (
-    <Container>
-      <PullSettingForm
-        initialValues={ pullSetting }
-        onSubmit={ (pullSetting) => updatePullSetting({ identifier, pullSetting }) }
-      />
-    </Container>
-  )
-}
+}) => (
+  <Container>
+    <PullSettingForm
+      initialValues={ pullSetting }
+      onSubmit={ (pullSetting) => updatePullSetting({ identifier, pullSetting }) }
+    />
+  </Container>
+)
+
 export default connect(
   (state) => {
     const { identifier } = selectors.currentParams(state)
+
+    if (!identifier) {
+      return {}
+    }
 
     return {
       pullSetting: selectors.pullSetting(state, identifier),

@@ -7,7 +7,6 @@ import { actions } from 'state/interface'
 import { Break, Container, Link } from 'ui/elements'
 import { ErrorBox, SuccessBox } from 'ui/elements'
 import { Text } from 'ui/typo'
-import { stateful } from 'views/common/decorators'
 
 import _RegisterForm from './form'
 
