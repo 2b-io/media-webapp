@@ -5,7 +5,7 @@ import * as CacheInvalidate from 'views/pages/cache-invalidate'
 
 const watchCacheInvalidator = function*(path) {
   while (true) {
-    yield take(types[ 'PROJECT/INVALIDATE_CACHE' ])
+    yield take(types.project.INVALIDATE_CACHE)
 
     yield put(
       actions.mergeUIState(path, {
@@ -14,8 +14,8 @@ const watchCacheInvalidator = function*(path) {
     )
 
     const results = yield race({
-      completed: take(types[ 'PROJECT/INVALIDATE_CACHE_COMPLETED' ]),
-      failed: take(types[ 'PROJECT/INVALIDATE_CACHE_FAILED' ])
+      completed: take(types.project.INVALIDATE_CACHE_COMPLETED),
+      failed: take(types.project.INVALIDATE_CACHE_FAILED)
     })
 
     yield put(
