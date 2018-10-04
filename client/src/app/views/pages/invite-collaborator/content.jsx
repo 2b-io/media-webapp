@@ -26,19 +26,15 @@ const InviteCollaborator = ({
     </Container>
   )
 }
-export default stateful({
-  component: 'InviteCollaborator'
-})(
-  connect(
-    (state) => {
-      const { identifier } = selectors.currentParams(state)
+export default connect(
+  (state) => {
+    const { identifier } = selectors.currentParams(state)
 
-      return {
-        identifier
-      }
-    },
-    mapDispatch({
-      inviteCollaborator: actions.inviteCollaborator
-    })
-  )(InviteCollaborator)
-)
+    return {
+      identifier
+    }
+  },
+  mapDispatch({
+    inviteCollaborator: actions.inviteCollaborator
+  })
+)(InviteCollaborator)

@@ -113,7 +113,7 @@ const Collaborators = ({
         ) }
       />
       <DialogRemoveCollaborator
-        isRemoveCollaboratorActive={ true }
+        isRemoveCollaboratorActive={ false }
         onConfirm={ () => deleteCollaborator(identifier, account._id) }
         onCancel={ hideRemoveCollaboratorDialog }
       />
