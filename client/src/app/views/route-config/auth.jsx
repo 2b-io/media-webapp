@@ -3,9 +3,9 @@ import * as UI from 'views/pages/ui'
 
 import { actions } from 'state/interface'
 
+import cacheInvalidate from './private/cache-invalidate'
 import dashboard from './private/dashboard'
-import CacheInvalidate from './private/cache-invalidate'
-import InviteCollaborator from './private/invite-collaborator'
+import inviteCollaborator from './private/invite-collaborator'
 import preset from './private/preset'
 import profile from './private/profile'
 import projectCreate from './private/project-create'
@@ -27,8 +27,8 @@ export default {
       actions.fetchProjectMedia(identifier)
     ]
   },
-  ...CacheInvalidate,
-  ...InviteCollaborator,
+  ...cacheInvalidate,
+  ...inviteCollaborator,
   ...projectEdit,
   ...preset,
   ...projectDetail,

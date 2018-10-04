@@ -7,7 +7,7 @@ import { selectors, actions } from 'state/interface'
 import { Heading, TextLine } from 'ui/typo'
 import { Card, ContextMenu, Identicon, Link, List } from 'ui/elements'
 import { OwnerAddIcon } from 'ui/icons'
-import { DialogLeaveProject } from './dialog'
+import { DialogLeaveProject, DialogMakeOwner } from './dialog'
 
 const Avatar = styled.div`
   width: 40px;
@@ -23,13 +23,15 @@ const Collaborators = ({
   deleteCollaborator,
   identifier,
   hideLeaveProjectDialog,
+  hideMakeOwnerDialog,
   showLeaveProjectDialog,
+  showMakeOwnerDialog,
   makeOwner,
   toInviteCollaborator,
   toProfile,
   ui: {
     isLeaveProjectDialogActive,
-    idToRemove
+    isMakeOwnerDialogActive
   }
 }) => {
   if(!project) {
@@ -71,7 +73,10 @@ const Collaborators = ({
                 items={ [
                   {
                     content: () => <TextLine mostLeft mostRight>Make owner</TextLine>,
-                    onClick: () => makeOwner(account._id, identifier)
+                    onClick: () => showMakeOwnerDialog({
+                      accountId: account._id,
+                      identifier
+                    })
                   },
                   {
                     content: () => <TextLine mostLeft mostRight>Remove</TextLine>,
@@ -92,7 +97,8 @@ const Collaborators = ({
                       {
                         content: () => <TextLine mostLeft mostRight>Leave project</TextLine>,
                         onClick: () => showLeaveProjectDialog({
-                          idToRemove: account._id
+                          accountId: account._id,
+                          identifier
                         })
                       }
                     ] }
@@ -117,8 +123,13 @@ const Collaborators = ({
       />
       <DialogLeaveProject
         isLeaveProjectDialogActive={ isLeaveProjectDialogActive }
-        onConfirm={ () => deleteCollaborator(identifier, idToRemove) }
+        onConfirm={ ({ accountId, identifier }) => deleteCollaborator(identifier, accountId) }
         onCancel={ hideLeaveProjectDialog }
+      />
+      <DialogMakeOwner
+        isMakeOwnerDialogActive={ isMakeOwnerDialogActive }
+        onConfirm={ ({ accountId, identifier }) => makeOwner(accountId, identifier) }
+        onCancel={ hideMakeOwnerDialog }
       />
     </Fragment>
   )
@@ -144,7 +155,9 @@ export default connect(
     deleteCollaborator: actions.deleteCollaborator,
     toProfile: (id) => actions.requestLocation(`/@${ id }`),
     toInviteCollaborator: (identifier) => actions.requestLocation(`/projects/${ identifier }/invite-collaborator`),
-    showLeaveProjectDialog: (params) => actions.showDialog('LEAVE_PROJECT', params),
     hideLeaveProjectDialog: () => actions.hideDialog('LEAVE_PROJECT'),
+    hideMakeOwnerDialog: () => actions.hideDialog('MAKE_OWNER'),
+    showLeaveProjectDialog: (params) => actions.showDialog('LEAVE_PROJECT', params),
+    showMakeOwnerDialog: (params) => actions.showDialog('MAKE_OWNER', params)
   })
 )(Collaborators)

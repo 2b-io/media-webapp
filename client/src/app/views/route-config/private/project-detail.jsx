@@ -43,15 +43,13 @@ const watchCreatePreset = function*(path) {
   }
 }
 
-const whatchLeaveProject = function*(path) {
+const watchLeaveProject = function*(path) {
   while (true) {
     const action = yield take(`${ types[ 'DIALOG/SHOW' ] }:LEAVE_PROJECT`)
-    const { idToRemove } = action.payload.params
 
     yield put(
       actions.mergeUIState(path, {
-        isLeaveProjectDialogActive: true,
-        idToRemove
+        isLeaveProjectDialogActive: action.payload.params,
       })
     )
 
@@ -74,6 +72,38 @@ const whatchLeaveProject = function*(path) {
   }
 }
 
+const watchMakeOwner = function*(path) {
+  while (true) {
+    const action = yield take(`${ types[ 'DIALOG/SHOW' ] }:MAKE_OWNER`)
+    const { identifier } = action.payload.params
+
+    console.log(action.payload.params);
+
+    yield put(
+      actions.mergeUIState(path, {
+        isMakeOwnerDialogActive: action.payload.params,
+      })
+    )
+
+    const { makeOwnerCompleted } = yield race({
+      hide: take(`${ types[ 'DIALOG/HIDE' ] }:MAKE_OWNER`),
+      makeOwnerCompleted: take(types[ 'PROJECT/MAKE_OWNER_COMPLETED' ])
+    })
+
+    yield all([
+      put(
+        actions.mergeUIState(path, {
+          isMakeOwnerDialogActive: false
+        })
+      ),
+      makeOwnerCompleted ?
+        put(
+          actions.requestLocation(`/projects/${ identifier }`)
+        ) : null
+    ])
+  }
+}
+
 export default {
   '/projects/:identifier': {
     component: ProjectDetail,
@@ -81,7 +111,8 @@ export default {
     *state(path) {
       yield fork(watchGetProject, path)
       yield fork(watchCreatePreset, path)
-      yield fork(whatchLeaveProject, path)
+      yield fork(watchLeaveProject, path)
+      yield fork(watchMakeOwner, path)
 
       const { identifier } = yield select(selectors.currentParams)
 
@@ -102,7 +133,8 @@ export default {
           actions.initializeUIState(path, {
             notFound: false,
             isCreatePresetDialogActive: false,
-            isLeaveProjectDialogActive: false
+            isLeaveProjectDialogActive: false,
+            isMakeOwnerDialogActive: false
           })
         )
       ])
