@@ -77,8 +77,6 @@ const watchMakeOwner = function*(path) {
     const action = yield take(`${ types[ 'DIALOG/SHOW' ] }:MAKE_OWNER`)
     const { identifier } = action.payload.params
 
-    console.log(action.payload.params);
-
     yield put(
       actions.mergeUIState(path, {
         isMakeOwnerDialogActive: action.payload.params,
