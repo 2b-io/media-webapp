@@ -8,40 +8,42 @@ import { Break, Container, Link } from 'ui/elements'
 import { ErrorBox, SuccessBox } from 'ui/elements'
 import { Text } from 'ui/typo'
 
-import _ForgotPasswordForm from './forgot-password-form'
+import StatelessForm from './form'
 
 const ForgotPasswordForm = reduxForm({
   form: 'forgotPassword',
   enableReinitialize: true
-})(_ForgotPasswordForm)
+})(StatelessForm)
 
 const ForgotPassword=({
   forgotPassword,
   toSignIn,
   ui: {
-    errorForgotPassword,
-    resultForgotPassword
+    completed,
+    failed
   }
-}) => (
-  <main>
-    <Container center size="small">
-      { resultForgotPassword &&
+}) => {
+  if (completed) {
+    return (
+      <Container>
         <SuccessBox>We&apos;ve send a password reset link to your email. Please check your inbox.</SuccessBox>
-      }
-      { errorForgotPassword &&
+      </Container>
+    )
+  }
+
+  return (
+    <Container>
+      { failed &&
         <ErrorBox>Fail to send the reset password email or the account does not exist.</ErrorBox>
       }
-      { !resultForgotPassword &&
-        <ForgotPasswordForm onSubmit={ forgotPassword } />
-      }
-      <Break />
+      <ForgotPasswordForm onSubmit={ forgotPassword } />
       <Text mostLeft mostRight>
         Remember your password?<br />
         <Link href='/sign-in' onClick={ toSignIn }>Sign in now!</Link>
       </Text>
     </Container>
-  </main>
-)
+  )
+}
 
 export default connect(
   null,

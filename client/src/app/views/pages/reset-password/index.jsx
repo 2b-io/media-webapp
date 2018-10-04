@@ -3,13 +3,9 @@ import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
-import { actions, selectors } from 'state/interface'
-import { ChangePassword } from 'views/common/form'
-import { Container, TextBox, Break } from 'ui/elements'
-import { ErrorBox, SuccessBox } from 'ui/elements'
-import { EmailIcon } from 'ui/icons'
+import { actions } from 'state/interface'
+import { Container } from 'ui/elements'
 import { validateConfirmPassword } from 'views/common/validate'
-import { withParams } from 'views/router'
 
 import StatelessForm from './form'
 

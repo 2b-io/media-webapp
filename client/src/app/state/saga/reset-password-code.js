@@ -5,19 +5,18 @@ import serializeError from 'serialize-error'
 
 const forgotPasswordLoop = function*() {
   while (true) {
-    const action = yield take(types['RESETPASSWORDCODE/FORGOT_PASSWORD'])
-
     try {
-      const status = yield call(ResetPasswordCode.forgotPassword, action.payload.email)
+      const {
+        payload: { email }
+      } = yield take(types['RESETPASSWORDCODE/FORGOT_PASSWORD'])
 
-      if (!status) {
-        throw new Error('Reset password failed')
-      }
+      yield ResetPasswordCode.forgotPassword(email)
 
-      yield put(actions.forgotPasswordCompleted(status))
+      yield put(actions.forgotPasswordCompleted())
     } catch (e) {
-      yield put(actions.forgotPasswordFailed(serializeError(e)))
-      continue
+      yield put(
+        actions.forgotPasswordFailed(serializeError(e))
+      )
     }
   }
 }
