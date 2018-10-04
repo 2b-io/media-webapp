@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
 
-import { withParams } from 'views/router'
+import { selectors } from 'state/interface'
 
 import { ApiKeys } from './api-keys-card'
 import { Collaborators } from './collaborator-card/'
@@ -31,9 +32,7 @@ const Container = styled.div`
 `
 
 const Project = ({
-  params: {
-    identifier
-  },
+  identifier,
   ui
 }) => {
   return (
@@ -43,11 +42,19 @@ const Project = ({
         <Presets ui={ ui } />
         <PullSettings identifier={ identifier } />
         <ApiKeys identifier={ identifier } />
-        <Collaborators identifier={ identifier } />
+        <Collaborators ui={ ui } />
         <ProjectTools identifier={ identifier } />
       </Container>
     </Layout>
   )
 }
 
-export default withParams(Project)
+export default connect(
+  (state) => {
+    const { identifier } = selectors.currentParams(state)
+
+    return {
+      identifier
+    }
+  }
+)(Project)

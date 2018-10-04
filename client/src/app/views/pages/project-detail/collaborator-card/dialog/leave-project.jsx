@@ -3,18 +3,18 @@ import React from 'react'
 import { Button, Container, Dialog } from 'ui/elements'
 import { Text } from 'ui/typo'
 
-const DialogRemoveCollaborator = ({
+const DialogLeaveProject = ({
   onConfirm,
-  isRemoveCollaboratorActive,
+  isLeaveProjectDialogActive,
   onCancel
 }) => (
   <Dialog
-    isActive={ isRemoveCollaboratorActive }
+    isActive={ isLeaveProjectDialogActive }
     onOverlayClick={ onCancel }
-    content={ ({ params }) => (
+    content={ () => (
       <Container>
         <Text mostLeft mostRight>
-          Remove the collaborator?
+          Leave project?
         </Text>
         <Button.Group mostRight>
           <Button
@@ -36,4 +36,4 @@ const DialogRemoveCollaborator = ({
   />
 )
 
-export default DialogRemoveCollaborator
+export default DialogLeaveProject

@@ -1,1 +1,1 @@
-export { default as DialogRemoveCollaborator } from './remove-collaborator'
+export { default as DialogLeaveProject } from './leave-project'
