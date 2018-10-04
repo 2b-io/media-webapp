@@ -1,18 +1,29 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 
+import { mapDispatch } from 'services/redux-helpers'
+import { actions, selectors } from 'state/interface'
+
+import { BackIcon } from 'ui/icons'
+import { PageTitle } from 'ui/typo'
 import { TitleBar } from 'ui/compounds'
 
-const ProjectMedia = () => (
+const ProjectMedia = ({ navigateBack, identifier }) => (
   <Fragment>
-    <TitleBar>
-      <TitleBar.Title>
-        <h1>Media List</h1>
-      </TitleBar.Title>
-    </TitleBar>
+    <BackIcon onClick={ navigateBack.bind(null, identifier) } />
+    <PageTitle>Media List</PageTitle>
   </Fragment>
 )
 
 export default connect(
-  null
+  (state) => {
+    const { identifier } = selectors.currentParams(state)
+
+    return {
+      identifier
+    }
+  },
+  mapDispatch({
+    navigateBack: (identifier) => actions.requestLocation(`/projects/${ identifier }`)
+  })
 )(ProjectMedia)
