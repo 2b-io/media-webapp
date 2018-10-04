@@ -6,7 +6,6 @@ import { actions, selectors } from 'state/interface'
 
 import { BackIcon } from 'ui/icons'
 import { PageTitle } from 'ui/typo'
-import { TitleBar } from 'ui/compounds'
 
 const ProjectMedia = ({ navigateBack, identifier }) => (
   <Fragment>
