@@ -5,7 +5,7 @@ import * as ProjectList from 'views/pages/project-list'
 
 const watchHideDisabledProjects = function*(path) {
   while (true) {
-    const action = yield take(types[ 'PROJECT/HIDE_DISABLE' ])
+    const action = yield take(types.project.HIDE_DISABLE)
 
     yield put(
       actions.mergeUIState(path, {
@@ -17,7 +17,7 @@ const watchHideDisabledProjects = function*(path) {
 
 const watchSortCondition = function*(path) {
   while (true) {
-    const action = yield take(types[ 'PROJECT/SORT' ])
+    const action = yield take(types.project.SORT)
 
     yield put(
       actions.mergeUIState(path, {
@@ -30,7 +30,7 @@ const watchSortCondition = function*(path) {
 
 const watchFilterMenu = function*(path) {
   while (true) {
-    yield take(types[ 'MENU/SHOW' ])
+    yield take(types.menu.SHOW)
 
     yield put(
       actions.mergeUIState(path, {
@@ -38,7 +38,7 @@ const watchFilterMenu = function*(path) {
       })
     )
 
-    yield take(types[ 'MENU/HIDE' ])
+    yield take(types.menu.HIDE)
 
     yield put(
       actions.mergeUIState(path, {
