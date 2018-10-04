@@ -1,4 +1,5 @@
 import {
+  GraphQLBoolean,
   GraphQLString
 } from 'graphql'
 
@@ -11,5 +12,8 @@ export default {
   },
   password: {
     type: GraphQLString
+  },
+  isActive: {
+    type: GraphQLBoolean
   }
 }

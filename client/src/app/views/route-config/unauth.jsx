@@ -4,6 +4,7 @@ import ForgotPassword from 'views/pages/forgot-password'
 import ResetPassword from 'views/pages/reset-password'
 
 import register from './public/register'
+import resetPassword from './public/reset-password'
 import signIn from './public/sign-in'
 
 export default {
@@ -12,12 +13,6 @@ export default {
     exact: true
   },
   ...register,
-  '/reset-password/:code': {
-    component: ResetPassword,
-    exact: true,
-    onEnter: (code) => [
-      actions.getResetCode(code)
-    ]
-  },
+  ...resetPassword,
   ...signIn
 }

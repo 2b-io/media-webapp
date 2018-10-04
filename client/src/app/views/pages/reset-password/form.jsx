@@ -1,22 +1,31 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 import { Form } from 'ui/compounds'
 import { Button, Break } from 'ui/elements'
-import { KeyIcon } from 'ui/icons'
+import { EmailIcon, KeyIcon, PersonIcon } from 'ui/icons'
 import { DescriptionText } from 'ui/typo'
 import { TextBox } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
-const ChangePasswordForm = ({ handleSubmit }) => (
+const ResetPaswordForm = ({ handleSubmit, isFinalizeStep }) => (
   <Form handleSubmit={ handleSubmit }>
     <TextBox
-      type="password"
-      name="currentPassword"
-      placeholder="Current password"
-      validate={ validateRequired }
-      leading={ () => <KeyIcon /> }
+      readOnly
+      name="email"
+      leading={ () => <EmailIcon /> }
     />
     <Break />
+    { isFinalizeStep && (
+      <Fragment>
+        <TextBox
+          name="name"
+          validate={ validateRequired }
+          maxLength={ 20 }
+          leading={ () => <PersonIcon /> }
+        />
+        <Break />
+      </Fragment>
+    ) }
     <TextBox
       type="password"
       name="password"
@@ -39,9 +48,12 @@ const ChangePasswordForm = ({ handleSubmit }) => (
     </DescriptionText>
     <Break double />
     <Button type="submit">
-      Change password
+      { isFinalizeStep ?
+        'Finalize my account' :
+        'Reset my password'
+      }
     </Button>
   </Form>
 )
 
-export default ChangePasswordForm
+export default ResetPaswordForm
