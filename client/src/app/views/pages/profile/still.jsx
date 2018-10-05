@@ -11,6 +11,7 @@ import Top from './top'
 
 const Profile = ({
   account,
+  session,
   maximizeSidebar,
   toEditProfile,
   toChangePassword,
@@ -31,13 +32,16 @@ const Profile = ({
     <Fragment>
       <MenuIcon onClick={ maximizeSidebar } />
       <Top account={ account } />
-      <ContextMenu.Menu
-        stateless={ true }
-        isActive={ isMenuActive }
-        activate={ showMenu }
-        deactivate={ hideMenu }
-        content={ () => <List items={ menuItems } /> }
-      />
+      { account && session && session.account &&
+        account._id === session.account._id && (
+        <ContextMenu.Menu
+          stateless={ true }
+          isActive={ isMenuActive }
+          activate={ showMenu }
+          deactivate={ hideMenu }
+          content={ () => <List items={ menuItems } /> }
+        />
+      ) }
     </Fragment>
   )
 }
@@ -45,6 +49,7 @@ const Profile = ({
 export default connect(
   (state) => {
     const { id } = selectors.currentParams(state)
+
     return {
       account: selectors.findAccountById(
         state,
