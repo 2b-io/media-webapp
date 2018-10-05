@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Break, Button, Container, Dialog } from 'ui/elements'
-import { Text } from 'ui/typo'
+import { Emphasize, Text } from 'ui/typo'
 
 const DialogMakeOwner = ({
   onConfirm,
@@ -14,7 +14,7 @@ const DialogMakeOwner = ({
     content={ ({ params }) => (
       <Container>
         <Text mostLeft mostRight>
-          Make Owner?
+          You are about to make <Emphasize>{ params.account.name }</Emphasize> as the owner of project <Emphasize>&quot;{ params.project.name }&quot;</Emphasize>. This operation cannot be undone.
         </Text>
         <Break double />
         <Button.Group align="right">
@@ -29,7 +29,7 @@ const DialogMakeOwner = ({
             variant="primary"
             onClick={ () => onConfirm(params) }
           >
-            Make Owner
+            Change ownership
           </Button>
         </Button.Group>
       </Container>

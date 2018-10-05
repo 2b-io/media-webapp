@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
-import { Heading, TextLine } from 'ui/typo'
+import { DescriptionTextLine, Heading, TextLine } from 'ui/typo'
 import { Card, ContextMenu, Identicon, Link, List } from 'ui/elements'
 import { OwnerAddIcon } from 'ui/icons'
 import { DialogLeaveProject, DialogMakeOwner } from './dialog'
@@ -47,14 +47,22 @@ const Collaborators = ({
     ({ _id, account, privilege }) => ({
       key: _id,
       content: () => (
-        <TextLine
-          mostRight={ !(signedInCollaborator && signedInCollaborator.privilege === 'owner' && privilege === 'admin') }
-        >
-          <Link href="#" onClick={ () => toProfile(account._id) } >
-            <span>{ account.email }</span>
-          </Link>
-          { privilege === 'owner' && ` (${ privilege })` }
-        </TextLine>
+        <div>
+          <TextLine
+            mostRight={ !(signedInCollaborator && signedInCollaborator.privilege === 'owner' && privilege === 'admin') }
+          >
+            <Link href="#" onClick={ () => toProfile(account._id) } >
+              { account.name }
+            </Link>
+            { !account.isActive && ' (pending)' }
+            { privilege === 'owner' && ` (${ privilege })` }
+          </TextLine>
+          <DescriptionTextLine
+            mostRight={ !(signedInCollaborator && signedInCollaborator.privilege === 'owner' && privilege === 'admin') }
+          >
+            { account.email }
+          </DescriptionTextLine>
+        </div>
       ),
       leading: () => (
         <Avatar>
@@ -71,13 +79,15 @@ const Collaborators = ({
             content={ () => (
               <List
                 items={ [
-                  {
+                  account.isActive ? {
                     content: () => <TextLine mostLeft mostRight>Make owner</TextLine>,
                     onClick: () => showMakeOwnerDialog({
                       accountId: account._id,
-                      identifier
+                      identifier,
+                      account,
+                      project
                     })
-                  },
+                  } : null,
                   {
                     content: () => <TextLine mostLeft mostRight>Remove</TextLine>,
                     onClick: () => deleteCollaborator(identifier, account._id)
@@ -98,7 +108,8 @@ const Collaborators = ({
                         content: () => <TextLine mostLeft mostRight>Leave project</TextLine>,
                         onClick: () => showLeaveProjectDialog({
                           accountId: account._id,
-                          identifier
+                          identifier,
+                          project
                         })
                       }
                     ] }
