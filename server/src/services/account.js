@@ -33,6 +33,10 @@ export const findById = async (id) => {
   return await Account.findById(id)
 }
 
+export const findByIdentifier = async (identifier) => {
+  return await Account.findOne({ identifier })
+}
+
 export const findByEmail = async (email) => {
   if (!email) {
     throw new Error('Invaid parameter')

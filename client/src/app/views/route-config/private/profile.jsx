@@ -5,6 +5,14 @@ import * as ChangePassword from 'views/pages/change-password'
 import * as EditProfile from 'views/pages/edit-profile'
 import * as Profile from 'views/pages/profile'
 
+const watchGetProfile = function*() {
+  yield take(types.account.GET_FAILED)
+
+  yield put(
+    actions.requestLocation('/')
+  )
+}
+
 const watchMenu = function*(path) {
   while (true) {
     yield take(types[ 'MENU/SHOW' ])
@@ -26,39 +34,44 @@ const watchMenu = function*(path) {
 }
 
 export default {
-  '/@:id/edit': {
+  '/@:identifier/edit': {
     component: EditProfile,
     exact: true,
     *state() {
-      const { id } = yield select(selectors.currentParams)
+      yield fork(watchGetProfile)
+
+      const { identifier } = yield select(selectors.currentParams)
 
       yield put(
-        actions.getAccount(id)
+        actions.getAccount(identifier)
       )
     }
   },
-  '/@:id/change-password': {
+  '/@:identifier/change-password': {
     component: ChangePassword,
     exact: true,
     *state() {
-      const { id } = yield select(selectors.currentParams)
+      yield fork(watchGetProfile)
+
+      const { identifier } = yield select(selectors.currentParams)
 
       yield put(
-        actions.getAccount(id)
+        actions.getAccount(identifier)
       )
     }
   },
-  '/@:id': {
+  '/@:identifier': {
     component: Profile,
     exact: true,
     *state(path) {
+      yield fork(watchGetProfile)
       yield fork(watchMenu, path)
 
-      const { id } = yield select(selectors.currentParams)
+      const { identifier } = yield select(selectors.currentParams)
 
       yield all([
         put(
-          actions.getAccount(id)
+          actions.getAccount(identifier)
         ),
         put(
           actions.initializeUIState(path, {

@@ -18,7 +18,7 @@ export default createReducer({})({
         ...projects,
         [ project.identifier ]: {
           ...project,
-          collaborators: arrayToMap(project.collaborators, '_id'),
+          collaborators: arrayToMap(project.collaborators, 'identifier'),
         }
       }), {}
     )
@@ -39,20 +39,20 @@ export default createReducer({})({
     ...state,
     [ action.payload.project.identifier ]: {
       ...action.payload.project,
-      collaborators: collaboratorsToMap(action.payload.project.collaborators, '_id')
+      collaborators: collaboratorsToMap(action.payload.project.collaborators, 'identifier')
     }
   }),
   [types.UPDATE_COMPLETED ]: (state, action) => ({
     ...state,
     [ action.payload.project.identifier ]: {
       ...action.payload.project,
-      collaborators: collaboratorsToMap(action.payload.project.collaborators, '_id')
+      collaborators: collaboratorsToMap(action.payload.project.collaborators, 'identifier')
     }
   }),
   [ types.INVITE_COLLABORATOR_COMPLETED ]: (state, action) => {
     const { collaborators, identifier } = action.payload
     const project = state[ identifier ]
-    const newCollaborators = arrayToMap(collaborators, '_id')
+    const newCollaborators = arrayToMap(collaborators, 'identifier')
 
     return {
       ...state,

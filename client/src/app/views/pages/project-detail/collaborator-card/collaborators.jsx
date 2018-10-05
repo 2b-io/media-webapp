@@ -39,19 +39,22 @@ const Collaborators = ({
   }
 
   const { collaborators } = project
+
   const signedInCollaborator = Object.values(collaborators).find(
-    ({ account }) => currentAccount && account._id === currentAccount._id
+    ({ account }) => currentAccount && account.identifier === currentAccount.identifier
   )
 
+  console.log(signedInCollaborator)
+
   const items = Object.values(collaborators).map(
-    ({ _id, account, privilege }) => ({
-      key: _id,
+    ({ account, privilege }) => ({
+      key: account.identifier,
       content: () => (
         <div>
           <TextLine
             mostRight={ !(signedInCollaborator && signedInCollaborator.privilege === 'owner' && privilege === 'admin') }
           >
-            <Link href="#" onClick={ () => toProfile(account._id) } >
+            <Link href="#" onClick={ () => toProfile(account.identifier) } >
               { account.name }
             </Link>
             { !account.isActive && ' (pending)' }
@@ -75,14 +78,14 @@ const Collaborators = ({
       trailing: (signedInCollaborator && signedInCollaborator.privilege === 'owner' && privilege === 'admin') ?
         () => (
           <ContextMenu
-            name={ `collaborator-${ _id }` }
+            name={ `collaborator-${ account.identifier }` }
             content={ () => (
               <List
                 items={ [
                   account.isActive ? {
                     content: () => <TextLine mostLeft mostRight>Make owner</TextLine>,
                     onClick: () => showMakeOwnerDialog({
-                      accountId: account._id,
+                      accountId: account.identifier,
                       identifier,
                       account,
                       project
@@ -90,24 +93,24 @@ const Collaborators = ({
                   } : null,
                   {
                     content: () => <TextLine mostLeft mostRight>Remove</TextLine>,
-                    onClick: () => deleteCollaborator(identifier, account._id)
+                    onClick: () => deleteCollaborator(identifier, account.identifier)
                   }
                 ] }
               />
             ) }
           />
         ) : (
-          (signedInCollaborator && signedInCollaborator.privilege === 'admin' && signedInCollaborator._id === _id) ?
+          (signedInCollaborator && signedInCollaborator.privilege === 'admin' && signedInCollaborator.account.identifier === account.identifier) ?
             () => (
               <ContextMenu
-                name={ `collaborator-${ _id }` }
+                name={ `collaborator-${ account.identifier }` }
                 content={ () => (
                   <List
                     items={ [
                       {
                         content: () => <TextLine mostLeft mostRight>Leave project</TextLine>,
                         onClick: () => showLeaveProjectDialog({
-                          accountId: account._id,
+                          accountId: account.identifier,
                           identifier,
                           project
                         })
@@ -158,13 +161,12 @@ export default connect(
       currentAccount: selectors.currentAccount(state),
       identifier,
       project: selectors.findProjectByIdentifier(state, identifier)
-
     }
   },
   mapDispatch({
     makeOwner: actions.makeOwner,
     deleteCollaborator: actions.deleteCollaborator,
-    toProfile: (id) => actions.requestLocation(`/@${ id }`),
+    toProfile: (identifier) => actions.requestLocation(`/@${ identifier }`),
     toInviteCollaborator: (identifier) => actions.requestLocation(`/projects/${ identifier }/invite-collaborator`),
     hideLeaveProjectDialog: () => actions.hideDialog('LEAVE_PROJECT'),
     hideMakeOwnerDialog: () => actions.hideDialog('MAKE_OWNER'),

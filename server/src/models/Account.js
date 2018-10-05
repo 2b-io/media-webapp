@@ -1,9 +1,15 @@
 import bcrypt from 'bcrypt'
 import randomInt from 'random-int'
+import sh from 'shorthash'
 
 import mongoose from 'infrastructure/mongoose'
 
 const schema = mongoose.Schema({
+  identifier: {
+    type: String,
+    unique: true,
+    index: true
+  },
   email: {
     type: String,
     required: true,
@@ -18,11 +24,6 @@ const schema = mongoose.Schema({
     default: 'Anonymous',
     required: true
   },
-  removed: {
-    type: Boolean,
-    default: false,
-    index: true
-  },
   isActive: {
     type: Boolean,
     default: false,
@@ -30,6 +31,15 @@ const schema = mongoose.Schema({
   }
 })
 schema.index({ email: 'text' })
+
+schema.pre('save', function (next) {
+  if (!this.identifier) {
+    this.identifier = sh.unique(String(this._id))
+  }
+
+  next()
+})
+
 schema.methods = {
   comparePassword(plain) {
     return bcrypt.compareSync(plain, this.hashedPassword)

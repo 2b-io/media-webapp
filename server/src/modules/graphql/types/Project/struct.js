@@ -17,10 +17,7 @@ export default {
   status: {
     type: GraphQLString
   },
-  removed: {
-    type: GraphQLBoolean
-  },
-  created: {
+  createdAt: {
     type: GraphQLFloat
   },
   isActive: {

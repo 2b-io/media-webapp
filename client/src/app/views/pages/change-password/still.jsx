@@ -2,20 +2,26 @@ import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
-import { actions } from 'state/interface'
+import { actions, selectors } from 'state/interface'
 import { BackIcon } from 'ui/icons'
 import { PageTitle } from 'ui/typo'
 
-const ChangePassword = ({ navigateBack }) => (
+const ChangePassword = ({ identifier, navigateBack }) => (
   <Fragment>
-    <BackIcon onClick={ navigateBack } />
+    <BackIcon onClick={ () => navigateBack(identifier) } />
     <PageTitle>Change Password</PageTitle>
   </Fragment>
 )
 
 export default connect(
-  null,
+  (state) => {
+    const { identifier } = selectors.currentParams(state)
+
+    return {
+      identifier
+    }
+  },
   mapDispatch({
-    navigateBack: () => actions.requestLocation('/@me')
+    navigateBack: (identifier) => actions.requestLocation(`/@${ identifier }`)
   })
 )(ChangePassword)

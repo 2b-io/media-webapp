@@ -24,12 +24,12 @@ const restoreSession = function*() {
 
 const loop = function*() {
   while (true) {
-    const action = yield take(types['SESSION/CREATE'])
+    const action = yield take(types.session.CREATE)
     const { credential } = action.payload
 
     try {
       const session = credential ?
-        (yield call(Session.create, credential)) :
+        (yield Session.create(credential)) :
         action.payload.session
 
       yield all([

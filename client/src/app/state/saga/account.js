@@ -38,16 +38,22 @@ const changePasswordLoop = function*() {
 
 const getLoop = function*() {
   while (true) {
-    const { payload: { id } } = yield take(types[ 'ACCOUNT/GET' ])
-
     try {
+      const {
+        payload: { identifier }
+      } = yield take(types.account.GET)
+
       const session = yield select(selectors.currentSession)
 
       if (!session) {
         continue
       }
 
-      const account = yield call(Account.get, id === 'me' ? null : id, session.token)
+      const account = yield Account.get(identifier, session.token)
+
+      if (!account) {
+        throw 'Account not found'
+      }
 
       yield put(actions.getAccountCompleted(account))
     } catch (e) {
@@ -58,42 +64,16 @@ const getLoop = function*() {
 
 const registerLoop = function*() {
   while (true) {
-    const { payload: { email } } = yield take(types[ 'ACCOUNT/REGISTER' ])
-
     try {
-      const account = yield call(Account.register, email)
+      const {
+        payload: { email }
+      } = yield take(types.account.REGISTER)
+
+      const account = yield Account.register(email)
 
       yield put(actions.registerCompleted(account))
     } catch (e) {
       yield put(actions.registerFailed(serializeError(e)))
-    }
-  }
-}
-
-const searchAccountLoop = function*() {
-  while (true) {
-    const action = yield take(types['ACCOUNT/SEARCH_ACCOUNT'])
-
-    try {
-      const session = yield select(selectors.currentSession)
-
-      if (!session) {
-        continue
-      }
-
-      const accounts = yield call(Account.search, session.token, action.payload.email)
-
-      yield put(actions.searchAccountCompleted(
-        {
-          accounts,
-          meta: {
-            inputEmail: action.payload.email
-          }
-        }
-      ))
-    } catch (e) {
-      yield put(actions.searchAccountFailed(serializeError(e)))
-      continue
     }
   }
 }
@@ -124,6 +104,5 @@ export default function*() {
   yield fork(changePasswordLoop)
   yield fork(getLoop)
   yield fork(registerLoop)
-  yield fork(searchAccountLoop)
   yield fork(updateProfileLoop)
 }

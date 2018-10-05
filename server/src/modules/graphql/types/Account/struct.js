@@ -4,6 +4,9 @@ import {
 } from 'graphql'
 
 export default {
+  identifier: {
+    type: GraphQLString
+  },
   email: {
     type: GraphQLString
   },

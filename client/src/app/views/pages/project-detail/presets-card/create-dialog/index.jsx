@@ -7,10 +7,10 @@ import { Text } from 'ui/typo'
 import _PresetForm from './form'
 
 const SUPPORTED_CONTENT_TYPES = [
+  { label: 'image/gif', value: 'image/gif' },
   { label: 'image/jpeg', value: 'image/jpeg' },
   { label: 'image/png', value: 'image/png' },
-  { label: 'image/svg+xml', value: 'image/svg+xml' },
-  { label: 'image/gif', value: 'image/gif' }
+  { label: 'image/svg+xml', value: 'image/svg+xml' }
 ]
 
 const PresetForm = reduxForm({

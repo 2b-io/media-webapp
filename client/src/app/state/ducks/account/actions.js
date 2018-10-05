@@ -17,9 +17,9 @@ export const changePasswordFailed = (reason) => ({
   payload: { reason }
 })
 
-export const getAccount = (id) => ({
+export const getAccount = (identifier) => ({
   type: types.GET,
-  payload: { id }
+  payload: { identifier }
 })
 
 export const getAccountCompleted = (account) => ({

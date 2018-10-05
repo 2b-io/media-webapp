@@ -15,7 +15,7 @@ export default connect(
     minimizeSidebar: actions.minimizeSidebar,
     signOut: () => actions.closeLayout(),
     toDashboard: () => actions.requestLocation('/'),
-    toProfile: () => actions.requestLocation('/@me'),
+    toProfile: (identifier) => actions.requestLocation(`/@${ identifier }`),
     toProjectList: () => actions.requestLocation('/projects')
   })
 )(Sidebar)

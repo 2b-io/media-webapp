@@ -161,8 +161,9 @@ export default ({ Project, ProjectStruct }) => ({
     },
     type: GraphQLBoolean,
     resolve: async (project, { accountId }) => {
+      await makeOwner(project, { accountId })
 
-      return await makeOwner(project, { accountId })
+      return true
     }
   },
   _invalidateCache: {

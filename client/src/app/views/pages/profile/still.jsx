@@ -22,10 +22,10 @@ const Profile = ({
 }) => {
   const menuItems = [ {
     content: () => <Text mostLeft mostRight>Edit Profile</Text>,
-    onClick: () => toEditProfile()
+    onClick: () => toEditProfile(account.identifier)
   }, {
     content: () => <Text mostLeft mostRight>Change Password</Text>,
-    onClick: () => toChangePassword()
+    onClick: () => toChangePassword(account.identifier)
   } ]
 
   return (
@@ -33,7 +33,7 @@ const Profile = ({
       <MenuIcon onClick={ maximizeSidebar } />
       <Top account={ account } />
       { account && session && session.account &&
-        account._id === session.account._id && (
+        account.identifier === session.account.identifier && (
         <ContextMenu.Menu
           stateless={ true }
           isActive={ isMenuActive }
@@ -48,12 +48,12 @@ const Profile = ({
 
 export default connect(
   (state) => {
-    const { id } = selectors.currentParams(state)
+    const { identifier } = selectors.currentParams(state)
 
     return {
       account: selectors.findAccountById(
         state,
-        id,
+        identifier,
         selectors.currentSession(state)
       ),
       session: selectors.currentSession(state)
@@ -61,8 +61,8 @@ export default connect(
   },
   mapDispatch({
     maximizeSidebar: actions.maximizeSidebar,
-    toEditProfile: () => actions.requestLocation('/@me/edit'),
-    toChangePassword: () => actions.requestLocation('/@me/change-password'),
+    toChangePassword: (identifier) => actions.requestLocation(`/@${ identifier }/change-password`),
+    toEditProfile: (identifier) => actions.requestLocation(`/@${ identifier }/edit`),
     showMenu: () => actions.showMenu('PROFILE'),
     hideMenu: () => actions.hideMenu('PROFILE')
   })

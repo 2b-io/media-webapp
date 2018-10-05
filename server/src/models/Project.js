@@ -7,7 +7,9 @@ const schema = mongoose.Schema({
     required: true
   },
   identifier: {
-    type: String
+    type: String,
+    unique: true,
+    index: true
   },
   description: {
     type: String
@@ -15,7 +17,7 @@ const schema = mongoose.Schema({
   status: {
     type: String
   },
-  created: {
+  createdAt: {
     type: Number
   },
   isActive: {
@@ -23,15 +25,17 @@ const schema = mongoose.Schema({
     default: true
   }
 })
+
 schema.pre('save', function (next) {
   if (!this.identifier) {
     this.identifier = sh.unique(String(this._id))
   }
 
-  if (!this.created) {
-    this.created = Date.now()
+  if (!this.createdAt) {
+    this.createdAt = Date.now()
   }
 
   next()
 })
+
 export default mongoose.model('Project', schema)

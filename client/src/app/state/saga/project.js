@@ -217,7 +217,7 @@ const makeOwnerLoop = function*() {
       const owner = yield call(Project.makeOwner, session.token, action.payload.identifier, action.payload.accountId)
       if (owner) {
         yield all([
-          put(actions.makeOwnerCompleted(action.payload.identifier, session.account._id, action.payload.accountId)),
+          put(actions.makeOwnerCompleted(action.payload.identifier, session.account.identifier, action.payload.accountId)),
           fork(addToast, {
             type: 'success',
             message: 'Owner changed.'

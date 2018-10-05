@@ -22,8 +22,7 @@ export const update = async ( projectIdentifier, data ) => {
   const { status, isActive } = data
 
   const { status: currentStatus, isActive: currentIsActive, _id } = await Project.findOne({
-    identifier: projectIdentifier,
-    removed: false
+    identifier: projectIdentifier
   }).lean()
 
   if (currentStatus !== status || isActive !== currentIsActive) {
@@ -48,8 +47,7 @@ export const update = async ( projectIdentifier, data ) => {
 export const getByIdentifier = async (projectIdentifier, account) => {
 
   const project = await Project.findOne({
-    identifier: projectIdentifier,
-    removed: false
+    identifier: projectIdentifier
   }).lean()
 
   //  check permission
@@ -86,8 +84,7 @@ export const getByIdentifier = async (projectIdentifier, account) => {
 }
 export const getById = async (id) => {
   return await Project.findOne({
-    _id: id,
-    removed: false
+    _id: id
   }).lean()
 }
 
@@ -103,8 +100,7 @@ export const list = async (account) => {
   const projects = await Project.find({
     _id: {
       $in: permissions.map(p => p.project)
-    },
-    removed: false
+    }
   })
 
   return projects

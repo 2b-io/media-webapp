@@ -24,7 +24,7 @@ const EditProfile = ({
 
   return (
     <Container>
-      { session && account && session.account._id === account._id &&
+      { account && session.account && session.account.identifier === account.identifier &&
         <EditProfileForm
           initialValues={ account }
           onSubmit={ updateProfile }
@@ -36,11 +36,11 @@ const EditProfile = ({
 
 export default connect(
   (state) => {
-    const { id } = selectors.currentParams(state)
+    const { identifier } = selectors.currentParams(state)
     const session = selectors.currentSession(state)
 
     return {
-      account: selectors.findAccountById(state, id, session),
+      account: selectors.findAccountById(state, identifier),
       session
     }
   },

@@ -3,7 +3,7 @@ import pick from 'object.pick'
 import request from 'services/graphql'
 
 export const ACCOUNT_FRAGMENT = `
-  _id,
+  identifier,
   email,
   name,
   isActive
@@ -28,17 +28,17 @@ export default {
     return body.session.account._changePassword
   },
 
-  async get(id, token) {
+  async get(identifier, token) {
     const body = await request(`
-      query getAccount($id: String, $token: String!) {
+      query getAccount($identifier: String, $token: String!) {
         session(token: $token) {
-          account(id: $id) {
+          account(identifier: $identifier) {
             ${ ACCOUNT_FRAGMENT }
           }
         }
       }
     `, {
-      id,
+      identifier,
       token
     })
 

@@ -175,7 +175,7 @@ const Sidebar = ({
                 { currentAccount.email }
               </DescriptionTextLine>
             </UserEmail>
-            <UserAvatar onClick={ toProfile }>
+            <UserAvatar onClick={ () => toProfile(currentAccount.identifier) }>
               <Identicon circle
                 size={ 56 }
                 id={ currentAccount.email }

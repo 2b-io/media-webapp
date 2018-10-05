@@ -16,7 +16,10 @@ const schema = mongoose.Schema({
     type: Boolean,
     default: true
   }
+}, {
+  collection: 'secretKeys'
 })
+
 schema.index({ project: 1, key: 1 }, { unique: true })
 
 export default mongoose.model('SecretKey', schema)

@@ -5,7 +5,7 @@ import { stringToList } from 'services/string-to-list'
 
 import { ACCOUNT_FRAGMENT } from './account'
 
-export const PERMISSION_FRAGMENT = `
+export const COLLABORATOR_FRAGMENT = `
   _id,
   account {
     ${ ACCOUNT_FRAGMENT }
@@ -21,14 +21,10 @@ export const PROJECT_FRAGMENT = `
     provider
   },
   status,
-  created,
+  createdAt,
   isActive,
   collaborators {
-    _id,
-    account {
-      ${ ACCOUNT_FRAGMENT }
-    },
-    privilege
+    ${ COLLABORATOR_FRAGMENT }
   }
 `
 
@@ -138,7 +134,7 @@ export default {
           account {
             project(identifier: $identifier) {
               _addCollaboratorsByEmails(emails: $emails, messenge: $messenge){
-                ${ PERMISSION_FRAGMENT }
+                ${ COLLABORATOR_FRAGMENT }
               }
             }
           }

@@ -6,11 +6,11 @@ import { actions, selectors, types } from 'state/interface'
 
 const loop = function*() {
   while (true) {
-    const request = yield take(types['LOCATION/REQUEST'])
-
-    const { pathname } = url.parse(request.payload.pathname)
-
     try {
+      const request = yield take(types['LOCATION/REQUEST'])
+
+      const { pathname } = url.parse(request.payload.pathname)
+
       const isSignedIn = yield select(selectors.isSignedIn)
       const checker = permissionChecker(isSignedIn)
 
