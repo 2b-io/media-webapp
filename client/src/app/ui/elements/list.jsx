@@ -13,7 +13,7 @@ const grid = () => css`
 const Wrapper = styled.ul`
   ${ grid }
   grid-template-columns: 100%
-  grid-auto-rows: 40px;
+  // grid-auto-rows: 40px;
 `
 
 const Item = styled.li`

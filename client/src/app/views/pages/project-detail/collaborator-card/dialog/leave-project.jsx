@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Break, Button, Container, Dialog } from 'ui/elements'
-import { Text } from 'ui/typo'
+import { Emphasize, Text } from 'ui/typo'
 
 const DialogLeaveProject = ({
   onConfirm,
@@ -14,7 +14,7 @@ const DialogLeaveProject = ({
     content={ ({ params }) => (
       <Container>
         <Text mostLeft mostRight>
-          Leave project?
+          You are about to leave project <Emphasize>&quot;{ params.project.name }&quot;</Emphasize>. You will lose access to it.
         </Text>
         <Break double />
         <Button.Group align="right">
@@ -23,13 +23,13 @@ const DialogLeaveProject = ({
             mostRight
             onClick={ onCancel }
           >
-            Cancel
+            Stay
           </Button>
           <Button
             variant="primary"
             onClick={ () => onConfirm(params) }
           >
-            Remove
+            Leave the Project
           </Button>
         </Button.Group>
       </Container>
