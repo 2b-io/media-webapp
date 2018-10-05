@@ -23,6 +23,10 @@ export const get = async (project, contentType) => {
 }
 
 export const create = async (project, data) => {
+  if(data.contentType === 'image/jpeg') {
+    data.parameters = { quality: 100 }
+  }
+
   const preset = await new Preset({
     ...data,
     project
