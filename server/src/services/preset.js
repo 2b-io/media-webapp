@@ -2,6 +2,43 @@ import Preset from 'models/Preset'
 
 // import { invalidateAllCache } from 'services/project'
 
+const defaultParameter = {
+  'image/jpeg': {
+    progressive: true,
+    quality: 100
+  },
+  'image/gif': {
+    optimize: '-O1'
+  },
+  'image/png': {
+    quality: 100,
+    speed: 3
+  },
+  'image/svg+xml': {
+    cleanupAttrs: true,
+    inlineStyles: false,
+    removeDoctype: false,
+    removeXMLProcInst: false,
+    removeComments: true,
+    removeEmptyAttrs: false,
+    removeHiddenElems: false,
+    removeEmptyText: true,
+    removeEmptyContainers: true,
+    minifyStyles: true,
+    convertColors: true,
+    convertPathData: true,
+    convertTransform: true,
+    removeUnknownsAndDefaults: true,
+    removeUselessStrokeAndFill: true,
+    cleanupNumericValues: true,
+    collapseGroups: true,
+    mergePaths: true,
+    removeNonInheritableGroupAttrs: true,
+    cleanupIDs: true,
+    removeStyleElement: true
+  }
+}
+
 export const list = async (project) => {
   const presets = await Preset.find({
     project
@@ -23,6 +60,8 @@ export const get = async (project, contentType) => {
 }
 
 export const create = async (project, data) => {
+  data.parameters = defaultParameter[ data.contentType ]
+
   const preset = await new Preset({
     ...data,
     project
