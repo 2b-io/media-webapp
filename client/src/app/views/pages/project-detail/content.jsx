@@ -1,8 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { connect } from 'react-redux'
-
-import { selectors } from 'state/interface'
 
 import { ApiKeys } from './api-keys-card'
 import { Collaborators } from './collaborator-card/'
@@ -40,21 +37,13 @@ const Project = ({
       <Container>
         <ProjectInfo ui={ ui } />
         <Presets ui={ ui } />
-        <PullSettings identifier={ identifier } />
-        <ApiKeys identifier={ identifier } />
+        <PullSettings />
+        <ApiKeys />
         <Collaborators ui={ ui } />
-        <ProjectTools identifier={ identifier } />
+        <ProjectTools />
       </Container>
     </Layout>
   )
 }
 
-export default connect(
-  (state) => {
-    const { identifier } = selectors.currentParams(state)
-
-    return {
-      identifier
-    }
-  }
-)(Project)
+export default Project
