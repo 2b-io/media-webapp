@@ -11,7 +11,7 @@ import { Panel, TitleBar } from 'ui/compounds'
 import { Button, Container, MasonryLayout, Paragraph } from 'ui/elements'
 import { CopyIcon } from 'ui/icons'
 
-import ProjectMediaModal from './project-media-modal'
+//import ProjectMediaModal from './project-media-modal'
 
 const MediaImage = styled.div`
   width: 100%;
@@ -78,10 +78,7 @@ const Media = ({
         </Panel.Content>
 
       </Panel>
-      <ProjectMediaModal
-        width="wide"
-        title="Project Media Info"
-      />
+
     </Fragment>
   )
 }

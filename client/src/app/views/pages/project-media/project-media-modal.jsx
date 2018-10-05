@@ -150,13 +150,13 @@ const ProjectMediaModal = ({
   )
 }
 
-export default modal({
-  name: 'ProjectMediaModal'
-})(
-  connect(
-    null,
-    mapDispatch({
-      removeProjectMedia: actions.removeProjectMedia
-    })
-  )(ProjectMediaModal)
-)
+// export default modal({
+//   name: 'ProjectMediaModal'
+// })(
+//   connect(
+//     null,
+//     mapDispatch({
+//       removeProjectMedia: actions.removeProjectMedia
+//     })
+//   )(ProjectMediaModal)
+// )
