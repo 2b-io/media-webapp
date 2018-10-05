@@ -29,7 +29,6 @@ const Container = styled.div`
 `
 
 const Project = ({
-  identifier,
   ui
 }) => {
   return (

@@ -1,7 +1,5 @@
 import * as UI from 'views/pages/ui'
 
-import { actions } from 'state/interface'
-
 import cacheInvalidate from './private/cache-invalidate'
 import dashboard from './private/dashboard'
 import inviteCollaborator from './private/invite-collaborator'

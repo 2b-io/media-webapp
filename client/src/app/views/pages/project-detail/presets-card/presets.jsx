@@ -51,12 +51,12 @@ const Presets = ({
         onOverlayClick={ hideCreateDialog }
         content={ () => (
           error ?
-          <ErrorBox>An error happens when invalidate cache.</ErrorBox> :
-          <CreateDialog
-            identifier={ identifier }
-            presets={ presets }
-            createPreset={ createPreset }
-          />
+            <ErrorBox>An error happens when invalidate cache.</ErrorBox> :
+            <CreateDialog
+              identifier={ identifier }
+              presets={ presets }
+              createPreset={ createPreset }
+            />
         ) }
       />
     </Fragment>
