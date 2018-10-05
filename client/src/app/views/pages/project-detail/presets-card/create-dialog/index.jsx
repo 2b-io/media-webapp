@@ -9,7 +9,7 @@ import _PresetForm from './form'
 const SUPPORTED_CONTENT_TYPES = [
   { label: 'image/jpeg', value: 'image/jpeg' },
   { label: 'image/png', value: 'image/png' },
-  { label: 'image/svg', value: 'image/svg' },
+  { label: 'image/svg+xml', value: 'image/svg+xml' },
   { label: 'image/gif', value: 'image/gif' }
 ]
 

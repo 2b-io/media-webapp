@@ -9,8 +9,6 @@ import Gif from './gif'
 import Png from './png'
 import Svg from './svg'
 
-
-
 const renderParameterForm = (contentType) => {
 
   switch (contentType) {
@@ -23,7 +21,7 @@ const renderParameterForm = (contentType) => {
     case 'image/png':
       return <Png />
 
-    case 'image/svg':
+    case 'image/svg+xml':
       return <Svg />
   }
 

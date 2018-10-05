@@ -17,7 +17,8 @@ const schema = mongoose.Schema({
   },
   domain: {
     type: String,
-    required: true
+    required: true,
+    index: true
   },
   settings: {
     type: mongoose.Schema.Types.Mixed
