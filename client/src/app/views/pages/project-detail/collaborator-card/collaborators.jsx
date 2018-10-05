@@ -79,7 +79,7 @@ const Collaborators = ({
             content={ () => (
               <List
                 items={ [
-                  {
+                  account.isActive ? {
                     content: () => <TextLine mostLeft mostRight>Make owner</TextLine>,
                     onClick: () => showMakeOwnerDialog({
                       accountId: account._id,
@@ -87,7 +87,7 @@ const Collaborators = ({
                       account,
                       project
                     })
-                  },
+                  } : null,
                   {
                     content: () => <TextLine mostLeft mostRight>Remove</TextLine>,
                     onClick: () => deleteCollaborator(identifier, account._id)

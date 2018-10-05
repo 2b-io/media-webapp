@@ -29,7 +29,13 @@ const List = ({ items }) => (
   <Wrapper>
     {
       items.map(
-        ({ key, leading, trailing, content, ...props }, index) => {
+        (item, index) => {
+          if (!item) {
+            return null
+          }
+
+          const { key, leading, trailing, content, ...props } = item
+
           const hasLeading = !!leading
           const hasTrailing = !!trailing
 
