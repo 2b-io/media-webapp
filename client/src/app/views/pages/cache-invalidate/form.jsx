@@ -6,9 +6,10 @@ import { DescriptionText } from 'ui/typo'
 import { TextArea } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
-const CacheInvalidForm = ({ handleSubmit }) => (
+const CacheInvalidForm = ({ idle, handleSubmit }) => (
   <Form handleSubmit={ handleSubmit }>
     <TextArea
+      disabled={ !idle }
       label="Patterns"
       name="patterns"
       placeholder="Patterns"
@@ -20,6 +21,7 @@ const CacheInvalidForm = ({ handleSubmit }) => (
     </DescriptionText>
     <Break double />
     <Button
+      disabled={ !idle }
       type="submit"
     >Invalidate</Button>
   </Form>

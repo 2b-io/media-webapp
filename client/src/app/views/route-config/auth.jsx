@@ -1,7 +1,4 @@
-import * as ProjectMedia from 'views/pages/project-detail/project-media'
 import * as UI from 'views/pages/ui'
-
-import { actions } from 'state/interface'
 
 import cacheInvalidate from './private/cache-invalidate'
 import dashboard from './private/dashboard'
@@ -12,6 +9,7 @@ import projectCreate from './private/project-create'
 import projectDetail from './private/project-detail'
 import projectEdit from './private/project-edit'
 import projectList from './private/project-list'
+import projectMedia from './private/project-media'
 import pullSetting from './private/pull-setting'
 
 export default {
@@ -20,13 +18,7 @@ export default {
   ...projectCreate,
   ...projectList,
   ...pullSetting,
-  '/projects/:identifier/media': {
-    component: ProjectMedia,
-    exact: true,
-    onEnter: ({ identifier }) => [
-      actions.fetchProjectMedia(identifier)
-    ]
-  },
+  ...projectMedia,
   ...cacheInvalidate,
   ...inviteCollaborator,
   ...projectEdit,

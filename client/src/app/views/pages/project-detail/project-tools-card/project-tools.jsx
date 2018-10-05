@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { actions } from 'state/interface'
+import { actions, selectors } from 'state/interface'
 import { mapDispatch } from 'services/redux-helpers'
 import { Card, List } from 'ui/elements'
 import { LaunchIcon } from 'ui/icons'
@@ -36,7 +36,13 @@ const ProjectTools = ({
 )
 
 export default connect(
-  null,
+  (state) => {
+    const { identifier } = selectors.currentParams(state)
+
+    return {
+      identifier
+    }
+  },
   mapDispatch({
     toCacheInvalidator: (identifier) => actions.requestLocation(`/projects/${ identifier }/cache-invalidator`),
     toProjectMedia: (identifier) => actions.requestLocation(`/projects/${ identifier }/media`)

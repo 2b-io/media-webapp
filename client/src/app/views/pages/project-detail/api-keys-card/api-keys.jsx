@@ -56,9 +56,18 @@ const ApiKeys = ({
 }
 
 export default connect(
-  (state, { identifier }) => ({
-    secretKeys: selectors.secretKeys(state, identifier),
-  }),
+  (state) => {
+    const { identifier } = selectors.currentParams(state)
+
+    if (!identifier) {
+      return {}
+    }
+
+    return {
+      identifier,
+      secretKeys: selectors.secretKeys(state, identifier)
+    }
+  },
   mapDispatch({
     createApiKey: actions.createSecretKey,
     removeSecretKey: actions.removeSecretKey,

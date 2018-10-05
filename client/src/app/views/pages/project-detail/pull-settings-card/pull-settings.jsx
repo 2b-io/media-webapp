@@ -62,9 +62,14 @@ const PullSettings = ({
 }
 
 export default connect(
-  (state, { identifier }) => ({
-    pullSetting: selectors.pullSetting(state, identifier)
-  }),
+  (state) => {
+    const { identifier } = selectors.currentParams(state)
+
+    return {
+      identifier,
+      pullSetting: selectors.pullSetting(state, identifier)
+    }
+  },
   mapDispatch({
     toEditPullSetting: (identifier) => actions.requestLocation(`/projects/${ identifier }/pull-setting`),
   })

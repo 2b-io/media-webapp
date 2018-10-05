@@ -11,8 +11,6 @@ import { Panel, TitleBar } from 'ui/compounds'
 import { Button, Container, MasonryLayout, Paragraph } from 'ui/elements'
 import { CopyIcon } from 'ui/icons'
 
-import ProjectMediaModal from './project-media-modal'
-
 const MediaImage = styled.div`
   width: 100%;
   height: 100px;
@@ -33,7 +31,7 @@ const resizeImage = (contentType, id, project, cdnUrl) => {
 const Media = ({
   mediaInfo,
   showToast,
-  toProjectMediaModal
+  toProjectMediaDialog
 }) => {
   const imgResized = resizeImage(mediaInfo.contentType, mediaInfo.id, mediaInfo.project, mediaInfo.cdnUrl)
 
@@ -44,7 +42,7 @@ const Media = ({
           <Container>
             <MediaImage
               url={ imgResized }
-              onClick={ () => toProjectMediaModal(mediaInfo) }
+              onClick={ () => toProjectMediaDialog(mediaInfo) }
             />
           </Container>
           <TitleBar>
@@ -78,10 +76,7 @@ const Media = ({
         </Panel.Content>
 
       </Panel>
-      <ProjectMediaModal
-        width="wide"
-        title="Project Media Info"
-      />
+
     </Fragment>
   )
 }
@@ -90,7 +85,7 @@ const Media = ({
 const ProjectMedia = ({
   listMedia,
   showToast,
-  toProjectMediaModal
+  toProjectMediaDialog
 }) => {
 
   if (!listMedia || !Object.keys(listMedia).length) {
@@ -113,7 +108,7 @@ const ProjectMedia = ({
         <Media
           mediaInfo={ mediaInfo }
           showToast={ showToast }
-          toProjectMediaModal={ toProjectMediaModal }
+          toProjectMediaDialog={ toProjectMediaDialog }
         />
       )
     })
@@ -135,10 +130,7 @@ export default connect(
     listMedia: selectors.listMedia,
   }),
   mapDispatch({
-    toProjectMediaModal: (mediaInfo) => actions.showModal({
-      modal: 'ProjectMediaModal',
-      params: { mediaInfo }
-    }),
+    toProjectMediaDialog: true,
     showToast: actions.copyMediaLink
   })
 
