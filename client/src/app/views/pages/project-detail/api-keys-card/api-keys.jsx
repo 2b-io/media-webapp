@@ -56,7 +56,6 @@ const ApiKeys = ({
 }
 
 export default connect(
-
   (state) => {
     const { identifier } = selectors.currentParams(state)
 
