@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 
 import { actions } from 'state/interface'
 import { Button, Link } from 'ui/elements'
-import { modal } from 'views/common/decorators'
 import { mapDispatch } from 'services/redux-helpers'
 import { Panel } from 'ui/compounds'
 
@@ -150,13 +149,10 @@ const ProjectMediaModal = ({
   )
 }
 
-// export default modal({
-//   name: 'ProjectMediaModal'
-// })(
-//   connect(
-//     null,
-//     mapDispatch({
-//       removeProjectMedia: actions.removeProjectMedia
-//     })
-//   )(ProjectMediaModal)
-// )
+export default connect(
+  null,
+  mapDispatch({
+    removeProjectMedia: actions.removeProjectMedia
+  })
+)(ProjectMediaModal)
+
