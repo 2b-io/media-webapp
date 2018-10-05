@@ -14,17 +14,22 @@ const ProjectName = styled.div`
   grid-template-columns: 40px 1fr;
 `
 
-const Project = ({ project }) => (
-  <section>
-    <ProjectName>
-      <StatusIndicator isActive={ project.isActive } />
-      <TextLine mostRight>{ project.name }</TextLine>
-    </ProjectName>
-    <Text mostLeft mostRight>
-      { project.infrastructure.domain }<br />
-      { project.status !== 'DEPLOYED' ? project.status : project.isActive ? 'DEPLOYED' : 'DISABLED' }
-    </Text>
-  </section>
-)
+const Project = ({ project }) => {
+  const { domain, provider } = project.infrastructure
+
+  return (
+    <section>
+      <ProjectName>
+        <StatusIndicator isActive={ project.isActive } />
+        <TextLine mostRight>{ project.name }</TextLine>
+      </ProjectName>
+      <Text mostLeft mostRight>
+        { provider === 'cloudfront' ? 'Amazon CloudFront' : 'Key CDN' }<br />
+        { domain }<br />
+        { project.status !== 'DEPLOYED' ? project.status : project.isActive ? 'DEPLOYED' : 'DISABLED' }
+      </Text>
+    </section>
+  )
+}
 
 export default Project
