@@ -39,8 +39,8 @@ export const update = async (projectIdentifier, { isActive, name }) => {
 
   return await Project.findByIdAndUpdate(_id, {
     name,
-    status: needUpdateDistribution ? 'UPDATING' : currentStatus,
-    isActive: isActive
+    isActive,
+    status: needUpdateDistribution ? 'UPDATING' : currentStatus
   }, {
     new: true
   })

@@ -6,9 +6,9 @@ import { actions, selectors, types } from 'state/interface'
 
 const loop = function*() {
   while (true) {
-    try {
-      const request = yield take(types['LOCATION/REQUEST'])
+    const request = yield take(types['LOCATION/REQUEST'])
 
+    try {
       const { pathname } = url.parse(request.payload.pathname)
 
       const isSignedIn = yield select(selectors.isSignedIn)

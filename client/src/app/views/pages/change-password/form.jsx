@@ -16,6 +16,9 @@ const ChangePasswordForm = ({ handleSubmit }) => (
       validate={ validateRequired }
       leading={ () => <KeyIcon /> }
     />
+    <DescriptionText mostLeft mostRight>
+      Re-enter your current password for security reason
+    </DescriptionText>
     <Break />
     <TextBox
       type="password"
