@@ -10,15 +10,17 @@ const TOKEN = 'jwt'
 
 const restoreSession = function*() {
   try {
-    const token = yield call(storage.get, TOKEN)
+    const token = yield storage.get(TOKEN)
 
     if (token) {
-      const session = yield call(Session.refresh, token)
+      const session = yield Session.refresh(token)
 
-      yield put(actions.restoreSession(session))
+      yield put(
+        actions.restoreSession(session)
+      )
     }
   } catch (e) {
-    yield call(storage.clear, TOKEN)
+    yield storage.clear(TOKEN)
   }
 }
 
@@ -33,10 +35,16 @@ const loop = function*() {
         action.payload.session
 
       yield all([
-        call(storage.set, TOKEN, session.token),
-        put(actions.createSessionCompleted(session)),
-        put(actions.requestLocation('/')),
-        put(actions.openLayout()),
+        storage.set(TOKEN, session.token),
+        put(
+          actions.createSessionCompleted(session)
+        ),
+        put(
+          actions.requestLocation('/')
+        ),
+        put(
+          actions.openLayout()
+        ),
         fork(addToast, {
           type: 'success',
           message: `Welcome back, ${ session.account.email }.`
@@ -48,12 +56,16 @@ const loop = function*() {
       continue
     }
 
-    yield take(types['SESSION/DESTROY'])
+    yield take(types.session.DESTROY)
 
     yield all([
-      call(storage.clear, TOKEN),
-      put(actions.destroySessionCompleted()),
-      put(actions.requestLocation('/sign-in')),
+      storage.clear(TOKEN),
+      put(
+        actions.destroySessionCompleted()
+      ),
+      put(
+        actions.requestLocation('/sign-in')
+      ),
       put({ type: '@@RESET' })
     ])
   }
