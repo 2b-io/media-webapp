@@ -79,8 +79,8 @@ const sortProjects = ({ type, ascending }, projects, currentAccountId) => {
       return projects.sort(
         (project, nextProject) => (
           ascending ?
-            project.created - nextProject.created :
-            nextProject.created - project.created
+            project.createdAt - nextProject.createdAt :
+            nextProject.createdAt - project.createdAt
         )
       )
   }

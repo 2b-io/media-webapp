@@ -18,34 +18,35 @@ const normalizePattern = (path, origin) => {
   }
 }
 
-export const update = async ( projectIdentifier, data ) => {
-  const { status, isActive } = data
-
-  const { status: currentStatus, isActive: currentIsActive, _id } = await Project.findOne({
+export const update = async (projectIdentifier, { isActive, name }) => {
+  const {
+    _id,
+    status: currentStatus,
+    isActive: currentIsActive,
+  } = await Project.findOne({
     identifier: projectIdentifier
   }).lean()
 
-  if (currentStatus !== status || isActive !== currentIsActive) {
-    const { identifier: distributionId } = await Infrastructure.findOne({ project: _id })
-    const enabled = status === 'DISABLED' ? false : true
-    await updateDistribution(distributionId, enabled)
+  const needUpdateDistribution = currentIsActive !== isActive
 
-    return await Project.findOneAndUpdate(
-      { identifier: projectIdentifier },
-      { ...data, status: 'UPDATING' },
-      { new: true }
-    ).lean()
+  if (needUpdateDistribution) {
+    const { identifier: distributionId } = await Infrastructure.findOne({ project: _id })
+
+    await updateDistribution(distributionId, {
+      enabled: isActive
+    })
   }
 
-  return await Project.findOneAndUpdate(
-    { identifier: projectIdentifier },
-    { ...data, status: 'DEPLOYED'  },
-    { new: true }
-  ).lean()
+  return await Project.findByIdAndUpdate(_id, {
+    name,
+    status: needUpdateDistribution ? 'UPDATING' : currentStatus,
+    isActive: isActive
+  }, {
+    new: true
+  })
 }
 
 export const getByIdentifier = async (projectIdentifier, account) => {
-
   const project = await Project.findOne({
     identifier: projectIdentifier
   }).lean()
@@ -59,7 +60,7 @@ export const getByIdentifier = async (projectIdentifier, account) => {
   }).lean()
 
   if (!permission) {
-    return {}
+    throw 'Forbidden'
   }
 
   const { status: projectStatus } = project

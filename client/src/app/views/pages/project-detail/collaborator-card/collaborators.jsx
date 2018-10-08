@@ -44,8 +44,6 @@ const Collaborators = ({
     ({ account }) => currentAccount && account.identifier === currentAccount.identifier
   )
 
-  console.log(signedInCollaborator)
-
   const items = Object.values(collaborators).map(
     ({ account, privilege }) => ({
       key: account.identifier,

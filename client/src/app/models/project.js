@@ -63,7 +63,7 @@ export default {
 
     return body.session.account.projects
   },
-  async create(token, name, description, provider) {
+  async create(token, name, provider) {
     const body = await request(`
       query createProject($project: ProjectStruct!, $token: String!, $provider: String!) {
         session(token: $token) {
@@ -75,7 +75,7 @@ export default {
         }
       }
     `, {
-      project: { name, description },
+      project: { name },
       provider,
       token,
     })
@@ -114,12 +114,7 @@ export default {
         }
       }
     `, {
-      project: pick(
-        {
-          ...project
-        },
-        [ 'name', 'status', 'description', 'isActive' ]
-      ),
+      project: pick(project, [ 'name', 'isActive' ]),
       token,
       identifier: project.identifier
     })

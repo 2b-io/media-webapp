@@ -19,14 +19,12 @@ export const createDistribution = async (projectName) => {
     })
   return distribution.body
 }
-export const updateDistribution = async (identifier, enabled) => {
+export const updateDistribution = async (identifier, data) => {
   const { cdnServer } = config
   const distribution = await request
     .put(`${ cdnServer }/distributions/${ identifier }`)
     .set('Content-Type', 'application/json')
-    .send({
-      enabled
-    })
+    .send(data)
   return distribution.body
 }
 export const removeDistribution = async (identifier) => {
