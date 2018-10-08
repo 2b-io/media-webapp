@@ -10,7 +10,10 @@ export const ACCOUNT_FRAGMENT = `
 `
 
 export default {
-  async changePassword(currentPassword, newPassword, token) {
+  async changePassword(params, options) {
+    const { currentPassword, newPassword } = params
+    const { token } = options
+
     const body = await request(`
       query changePassword($currentPassword: String!, $newPassword: String!, $token: String!) {
         session(token: $token) {
@@ -28,7 +31,10 @@ export default {
     return body.session.account._changePassword
   },
 
-  async get(identifier, token) {
+  async get(params, options) {
+    const { identifier } = params
+    const { token } = options
+
     const body = await request(`
       query getAccount($identifier: String, $token: String!) {
         session(token: $token) {
@@ -45,7 +51,9 @@ export default {
     return body.session.account
   },
 
-  async register(email) {
+  async register(params) {
+    const { email } = params
+
     const body = await request(`
       query register($account: AccountStruct!) {
         _createAccount(account: $account) {
@@ -59,23 +67,14 @@ export default {
     return body._createAccount
   },
 
-  async search(token, email) {
-    const body = await request(`
-      query search($token: String!, $email: String!) {
-        session(token: $token) {
-          accounts(email: $email) {
-            ${ ACCOUNT_FRAGMENT }
-          }
-        }
+  async update(params, options) {
+    const {
+      account: {
+        name
       }
-    `, {
-      token,
-      email
-    })
-    return body.session.accounts
-  },
+    } = params
+    const { token } = options
 
-  async update(token, account) {
     const body = await request(`
       query updateProfile($token: String!, $account: AccountStruct!) {
         session(token: $token) {
@@ -87,8 +86,8 @@ export default {
         }
       }
     `, {
+      account: { name },
       token,
-      account: pick(account, [ 'name' ])
     })
 
     return body.session.account._update

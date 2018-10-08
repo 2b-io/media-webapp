@@ -22,7 +22,12 @@ const changePasswordLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const result = yield call(Account.changePassword, currentPassword, newPassword, session.token)
+      const result = yield Account.changePassword({
+        currentPassword,
+        newPassword
+      }, {
+          token: session.token
+      })
 
       if (!result) {
         throw new 'Change password failed'
@@ -60,7 +65,11 @@ const getLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const account = yield Account.get(identifier, session.token)
+      const account = yield Account.get({
+        identifier
+      }, {
+        token: session.token
+      })
 
       if (!account) {
         throw 'Account not found'
@@ -86,7 +95,9 @@ const registerLoop = function*() {
         }
       } = yield take(types.account.REGISTER)
 
-      const account = yield Account.register(email)
+      const account = yield Account.register({
+        email
+      })
 
       yield put(
         actions.registerCompleted(account)
@@ -114,7 +125,11 @@ const updateProfileLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const updatedAccount = yield call(Account.update, session.token, account)
+      const updatedAccount = yield Account.update({
+        account
+      }, {
+        token: session.token
+      })
 
       yield put(
         actions.updateProfileCompleted(updatedAccount)
