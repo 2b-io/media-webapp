@@ -6,7 +6,7 @@ import { actions, selectors, types } from 'state/interface'
 
 const loop = function*() {
   while (true) {
-    const request = yield take(types['LOCATION/REQUEST'])
+    const request = yield take(types.location.REQUEST)
 
     try {
       const { pathname } = url.parse(request.payload.pathname)

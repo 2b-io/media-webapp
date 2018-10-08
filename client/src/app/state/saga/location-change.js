@@ -32,14 +32,20 @@ const state = {
 
 export default function*() {
   while (true) {
-    yield take(types['LOCATION/ACCEPT'])
+    yield take(types.location.ACCEPT)
 
     const currentLocation = yield select(selectors.currentLocation)
     const previousLocation = yield select(selectors.previousLocation)
 
-    const { pathname: current, search: currentSearch } = url.parse(currentLocation.pathname)
+    const {
+      pathname: current,
+      search: currentSearch
+    } = url.parse(currentLocation.pathname)
 
-    const { pathname: previous, search: previousSearch } = url.parse(previousLocation.pathname || currentLocation.pathname)
+    const {
+      pathname: previous,
+      search: previousSearch
+    } = url.parse(previousLocation.pathname || currentLocation.pathname)
 
     const currentQuery = currentSearch && querystring.parse(currentSearch.replace(/^\?/, ''))
     const previousQuery = previousSearch && querystring.parse(previousSearch.replace(/^\?/, ''))

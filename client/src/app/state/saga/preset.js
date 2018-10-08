@@ -8,163 +8,184 @@ import { addToast } from './toast'
 
 const createLoop = function*() {
   while (true) {
-    const action = yield take(types['PRESET/CREATE'])
-
     try {
+      const {
+        payload: {
+          identifier,
+          contentType
+        }
+      } = yield take(types.preset.CREATE)
+
       const session = yield select(selectors.currentSession)
 
       if (!session) {
-        continue
+        throw 'Unauthorized'
       }
 
-      const { identifier, contentType } = action.payload
-      const newPreset = yield call(
-        Preset.create,
-        session.token,
-        identifier,
-        contentType
-      )
+      const newPreset = yield Preset.create(session.token, identifier, contentType)
 
       yield all([
-        put(actions.createPresetCompleted({
-          preset: newPreset,
-          identifier
-        })),
+        put(
+          actions.createPresetCompleted({
+            preset: newPreset,
+            identifier
+          })
+        ),
         fork(addToast, {
           type: 'success',
           message: 'Preset created.'
         })
       ])
     } catch (e) {
-      yield put(actions.createPresetFailed(serializeError(e)))
-      continue
+      yield put(
+        actions.createPresetFailed(serializeError(e))
+      )
     }
   }
 }
 
 const deleteLoop = function*() {
   while (true) {
-    const action = yield take(types['PRESET/REMOVE'])
-
     try {
+      const {
+        payload: {
+          identifier,
+          contentType
+        }
+      } = yield take(types.preset.REMOVE)
+
       const session = yield select(selectors.currentSession)
 
       if (!session) {
-        continue
+        throw 'Unauthorized'
       }
 
-      const { contentType, identifier } = action.payload
+      const removed = yield Preset.remove(session.token, identifier, contentType)
 
-      const destroyed = yield call(
-        Preset.remove,
-        session.token,
-        identifier,
-        contentType
-      )
-      if (!destroyed) {
-        throw new Error('Cannot delete preset')
+      if (!removed) {
+        throw 'Remove preset failed'
       }
 
       yield all([
-        put(actions.removePresetCompleted({ contentType, identifier })),
-        put(actions.hideDialog('REMOVE_PRESET')),
+        put(
+          actions.removePresetCompleted({
+            contentType,
+            identifier
+          })
+        ),
         fork(addToast, {
           type: 'success',
           message: 'Preset deleted.'
         })
       ])
     } catch (e) {
-      yield put(actions.removePresetFailed(serializeError(e)))
-      continue
+      yield put(
+        actions.removePresetFailed(serializeError(e))
+      )
     }
   }
 }
 
 const getLoop = function*() {
   while (true) {
-    const action = yield take(types['PRESET/GET'])
-
     try {
+      const {
+        payload: {
+          contentType,
+          identifier
+        }
+      } = yield take(types.preset.GET)
+
       const session = yield select(selectors.currentSession)
 
       if (!session) {
-        continue
+        throw 'Unauthorized'
       }
 
-      const { contentType, identifier } = action.payload
+      const preset = yield Preset.get(session.token, identifier, contentType)
 
-      const preset = yield call(
-        Preset.get,
-        session.token,
-        identifier,
-        contentType
+      yield put(
+        actions.getPresetCompleted({
+          identifier,
+          preset
+        })
       )
-
-      yield put(actions.getPresetCompleted({ preset, identifier }))
     } catch (e) {
-      yield put(actions.getPresetFailed(serializeError(e)))
-      continue
+      yield put(
+        actions.getPresetFailed(serializeError(e))
+      )
     }
   }
 }
+
 const fetchLoop = function*() {
   while (true) {
-    const action = yield take(types['PRESET/FETCH'])
-
     try {
+      const {
+        payload: {
+          identifier
+        }
+      } = yield take(types.preset.FETCH)
+
       const session = yield select(selectors.currentSession)
 
       if (!session) {
-        continue
+        throw 'Unauthorized'
       }
 
-      const { identifier } = action.payload
       const presets = yield Preset.fetch(session.token, identifier)
-      yield put(actions.fetchPresetsCompleted({ presets, identifier }))
+
+      yield put(
+        actions.fetchPresetsCompleted({
+          presets,
+          identifier
+        })
+      )
     } catch (e) {
-      yield put(actions.fetchPresetsFailed(serializeError(e)))
-      continue
+      yield put(
+        actions.fetchPresetsFailed(serializeError(e))
+      )
     }
   }
 }
 
 const updateLoop = function*() {
   while (true) {
-    const action = yield take(types['PRESET/UPDATE'])
-
     try {
+      const {
+        payload: {
+          identifier,
+          preset
+        }
+      } = yield take(types.preset.UPDATE)
+
       const session = yield select(selectors.currentSession)
 
       if (!session) {
-        continue
+        throw 'Unauthorized'
       }
 
-      const { identifier, preset } = action.payload
-
-      const newPreset = yield call(
-        Preset.update,
-        session.token,
-        identifier,
-        preset
-      )
+      const updatedPreset = yield Preset.update(session.token, identifier, preset)
 
       yield all([
-        put(actions.updatePresetCompleted({
-          preset: newPreset,
-          identifier
-        })),
+        put(
+          actions.updatePresetCompleted({
+            preset: updatedPreset,
+            identifier
+          })
+        ),
         fork(addToast, {
           type: 'success',
           message: 'Preset updated.'
         })
       ])
     } catch (e) {
-      yield put(actions.updatePresetFailed(serializeError(e)))
-      continue
+      yield put(
+        actions.updatePresetFailed(serializeError(e))
+      )
     }
   }
 }
-
 
 export default function*() {
   yield take('@@INITIALIZED')

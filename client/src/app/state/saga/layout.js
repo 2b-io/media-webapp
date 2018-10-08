@@ -5,9 +5,9 @@ import { actions, types } from 'state/interface'
 
 const loop = function*() {
   while (true) {
-    yield take(types['LAYOUT/CLOSE'])
+    yield take(types.layout.CLOSE)
 
-    yield call(delay, 500)
+    yield delay(500)
 
     yield put(actions.destroySession())
   }
