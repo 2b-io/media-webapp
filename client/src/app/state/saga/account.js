@@ -8,30 +8,39 @@ import { addToast } from './toast'
 
 const changePasswordLoop = function*() {
   while (true) {
-    const { payload: { currentPassword, newPassword } } = yield take(types[ 'ACCOUNT/CHANGE_PASSWORD' ])
-
     try {
+      const {
+        payload: {
+          currentPassword,
+          newPassword
+        }
+      } = yield take(types.account.CHANGE_PASSWORD)
+
       const session = yield select(selectors.currentSession)
 
       if (!session) {
-        continue
+        throw 'Unauthorized'
       }
 
       const result = yield call(Account.changePassword, currentPassword, newPassword, session.token)
 
       if (!result) {
-        throw new Error('Change password failed')
+        throw new 'Change password failed'
       }
 
       yield all([
-        put(actions.changePasswordCompleted()),
+        put(
+          actions.changePasswordCompleted()
+        ),
         fork(addToast, {
           type: 'success',
           message: 'Password changed.'
         })
       ])
     } catch (e) {
-      yield put(actions.changePasswordFailed(serializeError(e)))
+      yield put(
+        actions.changePasswordFailed(serializeError(e))
+      )
     }
   }
 }
@@ -40,13 +49,15 @@ const getLoop = function*() {
   while (true) {
     try {
       const {
-        payload: { identifier }
+        payload: {
+          identifier
+        }
       } = yield take(types.account.GET)
 
       const session = yield select(selectors.currentSession)
 
       if (!session) {
-        continue
+        throw 'Unauthorized'
       }
 
       const account = yield Account.get(identifier, session.token)
@@ -55,9 +66,13 @@ const getLoop = function*() {
         throw 'Account not found'
       }
 
-      yield put(actions.getAccountCompleted(account))
+      yield put(
+        actions.getAccountCompleted(account)
+      )
     } catch (e) {
-      yield put(actions.getAccountFailed(serializeError(e)))
+      yield put(
+        actions.getAccountFailed(serializeError(e))
+      )
     }
   }
 }
@@ -66,35 +81,48 @@ const registerLoop = function*() {
   while (true) {
     try {
       const {
-        payload: { email }
+        payload: {
+          email
+        }
       } = yield take(types.account.REGISTER)
 
       const account = yield Account.register(email)
 
-      yield put(actions.registerCompleted(account))
+      yield put(
+        actions.registerCompleted(account)
+      )
     } catch (e) {
-      yield put(actions.registerFailed(serializeError(e)))
+      yield put(
+        actions.registerFailed(serializeError(e))
+      )
     }
   }
 }
 
 const updateProfileLoop = function*() {
   while (true) {
-    const action = yield take(types[ 'ACCOUNT/UPDATE' ])
-
     try {
+      const {
+        payload: {
+          account
+        }
+      } = yield take(types.account.UPDATE)
+
       const session = yield select(selectors.currentSession)
 
       if (!session) {
-        continue
+        throw 'Unauthorized'
       }
 
-      const updatedAccount = yield call(Account.update, session.token, action.payload.account)
+      const updatedAccount = yield call(Account.update, session.token, account)
 
-      yield put(actions.updateProfileCompleted(updatedAccount))
+      yield put(
+        actions.updateProfileCompleted(updatedAccount)
+      )
     } catch (e) {
-      yield put(actions.updateProfileFailed(serializeError(e)))
-      continue
+      yield put(
+        actions.updateProfileFailed(serializeError(e))
+      )
     }
   }
 }
