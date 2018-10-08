@@ -2,11 +2,13 @@ import request from 'services/graphql'
 
 export const PRESET_FRAGMENT = `
   contentType,
-  parameters,
-  isActive
+  isActive,
+  parameters
 `
 export default {
-  async fetch(token, identifier) {
+  async fetch(params, options) {
+    const { identifier } = params
+    const { token } = options
 
     const body = await request(`
       query fetchPresets($token: String!, $identifier: String!) {
@@ -20,10 +22,17 @@ export default {
           }
         }
       }
-    `, { token, identifier })
+    `, {
+      identifier,
+      token
+    })
+
     return body.session.account.project.presets
   },
-  async get(token, identifier, contentType) {
+
+  async get(params, options) {
+    const { contentType, identifier } = params
+    const { token } = options
 
     const body = await request(`
       query getPreset($token: String!, $identifier: String!, $contentType: String!) {
@@ -37,10 +46,26 @@ export default {
           }
         }
       }
-    `, { token, identifier, contentType })
+    `, {
+      contentType,
+      identifier,
+      token,
+    })
+
     return body.session.account.project.preset
   },
-  async update(token, identifier, preset) {
+
+  async update(params, options) {
+    const {
+      identifier,
+      preset: {
+        contentType,
+        isActive,
+        parameters
+      }
+    } = params
+    const { token } = options
+
     const body = await request(`
       query updatePreset($token: String!, $identifier: String!, $contentType: String!, $preset: PresetStruct!) {
         session(token: $token) {
@@ -59,13 +84,20 @@ export default {
     `, {
       token,
       identifier,
-      contentType: preset.contentType,
-      preset
+      contentType,
+      preset: {
+        isActive,
+        parameters
+      }
     })
-    return  body.session.account.project.preset._update
 
+    return  body.session.account.project.preset._update
   },
-  async remove(token, identifier, contentType) {
+
+  async remove(params, options) {
+    const { contentType, identifier } = params
+    const { token } = options
+
     const body = await request(`
       query removePreset($token: String!, $identifier: String!, $contentType: String!) {
         session(token: $token) {
@@ -74,19 +106,23 @@ export default {
               preset (contentType: $contentType){
                 _destroy
               }
-
             }
           }
         }
       }
     `, {
-      token,
-      identifier,
       contentType,
+      identifier,
+      token
     })
+
     return  body.session.account.project.preset._destroy
   },
-  async create(token, identifier, contentType) {
+
+  async create(params, options) {
+    const { contentType, identifier } = params
+    const { token } = options
+
     const body = await request(`
       query getPreset($token: String!, $identifier: String!, $preset: PresetStruct!) {
         session(token: $token) {
@@ -99,7 +135,15 @@ export default {
           }
         }
       }
-    `, { token, identifier, preset: { contentType } })
+    `, {
+      identifier,
+      preset: {
+        contentType,
+        isActive: true
+      },
+      token
+    })
+
     return body.session.account.project._createPreset
   }
 }

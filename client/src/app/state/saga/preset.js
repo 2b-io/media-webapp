@@ -11,8 +11,8 @@ const createLoop = function*() {
     try {
       const {
         payload: {
-          identifier,
-          contentType
+          contentType,
+          identifier
         }
       } = yield take(types.preset.CREATE)
 
@@ -22,7 +22,12 @@ const createLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const newPreset = yield Preset.create(session.token, identifier, contentType)
+      const newPreset = yield Preset.create({
+        contentType,
+        identifier
+      }, {
+        token: session.token
+      })
 
       yield all([
         put(
@@ -44,13 +49,13 @@ const createLoop = function*() {
   }
 }
 
-const deleteLoop = function*() {
+const removeLoop = function*() {
   while (true) {
     try {
       const {
         payload: {
-          identifier,
-          contentType
+          contentType,
+          identifier
         }
       } = yield take(types.preset.REMOVE)
 
@@ -60,7 +65,12 @@ const deleteLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const removed = yield Preset.remove(session.token, identifier, contentType)
+      const removed = yield Preset.remove({
+        contentType,
+        identifier
+      }, {
+        token: session.token
+      })
 
       if (!removed) {
         throw 'Remove preset failed'
@@ -102,7 +112,12 @@ const getLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const preset = yield Preset.get(session.token, identifier, contentType)
+      const preset = yield Preset.get({
+        contentType,
+        identifier
+      }, {
+        token: session.token
+      })
 
       yield put(
         actions.getPresetCompleted({
@@ -133,7 +148,11 @@ const fetchLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const presets = yield Preset.fetch(session.token, identifier)
+      const presets = yield Preset.fetch({
+        identifier
+      }, {
+        token: session.token
+      })
 
       yield put(
         actions.fetchPresetsCompleted({
@@ -165,7 +184,12 @@ const updateLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const updatedPreset = yield Preset.update(session.token, identifier, preset)
+      const updatedPreset = yield Preset.update({
+        identifier,
+        preset
+      }, {
+        token: session.token
+      })
 
       yield all([
         put(
@@ -190,7 +214,7 @@ const updateLoop = function*() {
 export default function*() {
   yield take('@@INITIALIZED')
   yield fork(createLoop)
-  yield fork(deleteLoop)
+  yield fork(removeLoop)
   yield fork(getLoop)
   yield fork(fetchLoop)
   yield fork(updateLoop)
