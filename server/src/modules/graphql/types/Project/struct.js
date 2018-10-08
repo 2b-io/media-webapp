@@ -8,9 +8,6 @@ export default {
   name: {
     type: GraphQLString
   },
-  identifier: {
-    type: GraphQLString
-  },
   description: {
     type: GraphQLString
   },

@@ -6,7 +6,6 @@ import { stringToList } from 'services/string-to-list'
 import { ACCOUNT_FRAGMENT } from './account'
 
 export const COLLABORATOR_FRAGMENT = `
-  _id,
   account {
     ${ ACCOUNT_FRAGMENT }
   }

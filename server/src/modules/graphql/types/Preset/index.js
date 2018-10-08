@@ -17,9 +17,6 @@ export const PresetStruct = new GraphQLInputObjectType({
 export const Preset = new GraphQLObjectType({
   name: 'Preset',
   fields: () => ({
-    _id: {
-      type: GraphQLID
-    },
     ...struct,
     ...actions({ Preset, PresetStruct })
   })

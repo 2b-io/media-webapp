@@ -18,7 +18,7 @@ export const ProjectStruct = new GraphQLInputObjectType({
 export const Project = new GraphQLObjectType({
   name: 'Project',
   fields: () => ({
-    _id: {
+    identifier: {
       type: GraphQLID
     },
     ...struct,
