@@ -22,7 +22,12 @@ const createLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const newProject = yield Project.create(session.token, name, provider)
+      const newProject = yield Project.create({
+        name,
+        provider
+      }, {
+        token: session.token
+      })
 
       yield all([
         put(
@@ -41,7 +46,7 @@ const createLoop = function*() {
   }
 }
 
-const deleteLoop = function*() {
+const removeLoop = function*() {
   while (true) {
     try {
       const {
@@ -56,7 +61,11 @@ const deleteLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const removed = yield Project.remove(identifier, session.token)
+      const removed = yield Project.remove({
+        identifier
+      }, {
+        token: session.token
+      })
 
       if (!removed) {
         throw new 'Remove project failed'
@@ -94,7 +103,11 @@ const getLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const project = yield Project.get(identifier, session.token)
+      const project = yield Project.get({
+        identifier
+      }, {
+        token: session.token
+      })
 
       yield put(
         actions.getProjectCompleted(project)
@@ -118,7 +131,9 @@ const fetchLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const projects = yield Project.fetch(session.token)
+      const projects = yield Project.fetch(null, {
+        token: session.token
+      })
 
       yield put(
         actions.fetchProjectsCompleted(projects)
@@ -146,7 +161,11 @@ const updateLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const updatedProject = yield Project.update(project, session.token)
+      const updatedProject = yield Project.update({
+        project
+      }, {
+        token: session.token
+      })
 
       yield all([
         put(
@@ -165,7 +184,7 @@ const updateLoop = function*() {
   }
 }
 
-const inviteCollaboratorLoop = function*() {
+const inviteCollaboratorsLoop = function*() {
   while (true) {
     try {
       const {
@@ -182,7 +201,13 @@ const inviteCollaboratorLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const collaborators = yield Project.inviteCollaborator(session.token, identifier, emails, message)
+      const collaborators = yield Project.inviteCollaborators({
+        identifier,
+        emails,
+        message
+      }, {
+        token: session.token
+      })
 
       yield all([
         put(
@@ -217,7 +242,12 @@ const deleteCollaboratorLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const removed = yield Project.deleteCollaborator(session.token, identifier, accountId)
+      const removed = yield Project.deleteCollaborator({
+        identifier,
+        accountId
+      }, {
+        token: session.token
+      })
 
       if (!removed) {
         throw 'Remove collaborator failed'
@@ -262,7 +292,12 @@ const makeOwnerLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const owner = yield Project.makeOwner(session.token, identifier, accountId)
+      const owner = yield Project.makeOwner({
+        identifier,
+        accountId
+      }, {
+        token: session.token
+      })
 
       if (!owner) {
         throw 'Make owner failed'
@@ -302,9 +337,14 @@ const invalidateCacheLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const invalidateCache = yield Project.invalidateCache(session.token, identifier, patterns)
+      const invalidated = yield Project.invalidateCache({
+        identifier,
+        patterns
+      }, {
+        token: session.token
+      })
 
-      if (!invalidateCache) {
+      if (!invalidated) {
         throw 'Invalidate cache failed'
       }
 
@@ -328,12 +368,12 @@ const invalidateCacheLoop = function*() {
 export default function*() {
   yield take('@@INITIALIZED')
   yield fork(createLoop)
-  yield fork(deleteLoop)
+  yield fork(removeLoop)
   yield fork(fetchLoop)
   yield fork(getLoop)
   yield fork(invalidateCacheLoop)
   yield fork(updateLoop)
-  yield fork(inviteCollaboratorLoop)
+  yield fork(inviteCollaboratorsLoop)
   yield fork(deleteCollaboratorLoop)
   yield fork(makeOwnerLoop)
 }

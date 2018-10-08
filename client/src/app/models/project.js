@@ -36,7 +36,10 @@ const PROJECTS_FRAGMENT = `
 `
 
 export default {
-  async get(identifier, token) {
+  async get(params, options) {
+    const { identifier } = params
+    const { token } = options
+
     const body = await request(`
       query getProject($identifier: String!, $token: String!) {
         session(token: $token) {
@@ -47,22 +50,34 @@ export default {
           }
         }
       }
-    `, { identifier, token })
+    `, {
+      identifier,
+      token
+    })
 
     return body.session.account.project
   },
-  async fetch(token) {
+
+  async fetch(params, options) {
+    const { token } = options
+
     const body = await request(`
       query projects($token: String!) {
         session(token: $token) {
           ${ PROJECTS_FRAGMENT }
         }
       }
-    `, { token })
+    `, {
+      token
+    })
 
     return body.session.account.projects
   },
-  async create(token, name, provider) {
+
+  async create(params, options) {
+    const { name, provider } = params
+    const { token } = options
+
     const body = await request(`
       query createProject($project: ProjectStruct!, $token: String!, $provider: String!) {
         session(token: $token) {
@@ -74,14 +89,20 @@ export default {
         }
       }
     `, {
-      project: { name },
+      project: {
+        name
+      },
       provider,
       token,
     })
 
     return body.session.account._createProject
   },
-  async remove(identifier, token) {
+
+  async remove(params, options) {
+    const { identifier } = params
+    const { token } = options
+
     const body = await request(`
       query removeProject($identifier: String!, $token: String!) {
         session(token: $token) {
@@ -99,7 +120,17 @@ export default {
 
     return body.session.account.project._destroy
   },
-  async update(project, token) {
+
+  async update(params, options) {
+    const {
+      project: {
+        identifier,
+        name,
+        isActive
+      }
+    } = params
+    const { token} = options
+
     const body = await request(`
       query updateProject($project: ProjectStruct!, $token: String!, $identifier: String!) {
         session(token: $token) {
@@ -113,15 +144,21 @@ export default {
         }
       }
     `, {
-      project: pick(project, [ 'name', 'isActive' ]),
-      token,
-      identifier: project.identifier
+      identifier,
+      project: {
+        name,
+        isActive
+      },
+      token
     })
 
     return body.session.account.project._update
   },
-  async inviteCollaborator(token, identifier, emailString, messenge) {
-    const emails = stringToList(emailString)
+
+  async inviteCollaborators(params, options) {
+    const { identifier, emails, message } = params
+    const { token } = options
+
     const body = await request(`
       query addCollaboratorsByEmails($token: String!, $identifier: String!, $emails: [String]!, $messenge: String) {
         session(token: $token) {
@@ -135,15 +172,19 @@ export default {
         }
       }
     `, {
-      token,
       identifier,
-      emails,
-      messenge
+      emails: stringToList(emails),
+      messenge,
+      token
     })
 
     return body.session.account.project._addCollaboratorsByEmails
   },
-  async deleteCollaborator(token, identifier, accountId) {
+
+  async deleteCollaborator(params, options) {
+    const { identifier, accountId } = params
+    const { token } = options
+
     const body = await request(`
       query removeCollaborator($token: String!, $identifier: String!, $accountId: String!) {
         session(token: $token) {
@@ -155,14 +196,18 @@ export default {
         }
       }
     `, {
-      token,
       identifier,
-      accountId
+      accountId,
+      token
     })
 
     return body.session.account.project._removeCollaborator
   },
-  async makeOwner(token, identifier, accountId) {
+
+  async makeOwner(params, options) {
+    const { identifier, accountId } = params
+    const { token } = options
+
     const body = await request(`
       query makeOwner($token: String!, $identifier: String!, $accountId: String!) {
         session(token: $token) {
@@ -174,15 +219,18 @@ export default {
         }
       }
     `, {
-      token,
       identifier,
-      accountId
+      accountId,
+      token
     })
 
     return body.session.account.project._makeOwner
   },
-  async invalidateCache(token, identifier, patternsInput) {
-    const patterns = stringToList(patternsInput)
+
+  async invalidateCache(params, options) {
+    const { identifier, patterns } = params
+    const { token } = options
+
     const body = await request(`
       query invalidateCache($token: String!, $identifier: String!, $patterns: [String]!) {
         session(token: $token) {
@@ -194,29 +242,11 @@ export default {
         }
       }
     `, {
-      token,
       identifier,
-      patterns
+      patterns: stringToList(patterns),
+      token
     })
 
     return body.session.account.project._invalidateCache
-  },
-  async invalidateAllCache(token, identifier) {
-    const body = await request(`
-      query invalidateAllCache($token: String!, $identifier: String!) {
-        session(token: $token) {
-          account {
-            project(identifier: $identifier) {
-              _invalidateAllCache
-            }
-          }
-        }
-      }
-    `, {
-      token,
-      identifier
-    })
-
-    return body.session.account.project._invalidateAllCache
   }
 }
