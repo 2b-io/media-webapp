@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
-import { reducers } from 'state/ducks'
+import { reducer as form } from 'redux-form'
 
-import form from './plugins/form'
+import { reducers } from 'state/ducks'
 
 const combined = combineReducers({
   ...reducers,
