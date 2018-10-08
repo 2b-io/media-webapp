@@ -1,4 +1,4 @@
-import { all, call, take, fork, put, select } from 'redux-saga/effects'
+import { all, take, fork, put, select } from 'redux-saga/effects'
 import serializeError from 'serialize-error'
 
 import Project from 'models/project'
@@ -182,7 +182,7 @@ const inviteCollaboratorLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const collaborators = yield Project.inviteCollaborator(session.token, identifier, emails, messenge)
+      const collaborators = yield Project.inviteCollaborator(session.token, identifier, emails, message)
 
       yield all([
         put(

@@ -1,5 +1,5 @@
 import delay from 'delay'
-import { call, fork, put, take } from 'redux-saga/effects'
+import { fork, put, take } from 'redux-saga/effects'
 
 import { actions, types } from 'state/interface'
 
