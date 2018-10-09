@@ -1,9 +1,8 @@
 import {
   GraphQLBoolean,
+  GraphQLList,
   GraphQLNonNull,
-  GraphQLString,
-  GraphQLList
-
+  GraphQLString
 } from 'graphql'
 
 import {
