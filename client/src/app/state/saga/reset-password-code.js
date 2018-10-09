@@ -12,7 +12,7 @@ const forgotPasswordLoop = function*() {
         payload: { email }
       } = yield take(types.resetPasswordCode.FORGOT_PASSWORD)
 
-      yield ResetPasswordCode.forgotPassword(email)
+      yield ResetPasswordCode.forgotPassword({ email })
 
       yield put(
         actions.forgotPasswordCompleted()
@@ -29,9 +29,17 @@ const resetPasswordLoop = function*() {
   while (true) {
     try {
       // TODO should put this action into account
-      const { payload } = yield take(types.resetPasswordCode.RESET_PASSWORD)
+      const {
+        payload: {
+          account: { name, password },
+          code
+        }
+      } = yield take(types.resetPasswordCode.RESET_PASSWORD)
 
-      const status = yield ResetPasswordCode.resetPassword(payload)
+      const status = yield ResetPasswordCode.resetPassword({
+        account: { name, password },
+        code
+      })
 
       if (!status) {
         throw new Error('Reset password failed')
@@ -58,7 +66,7 @@ const getResetCodeLoop = function*() {
       } = yield take(types.resetPasswordCode.GET_RESET_CODE)
 
       // TODO should be findAccountByResetCode
-      const account = yield ResetPasswordCode.getResetCode(code)
+      const account = yield ResetPasswordCode.get({ code })
 
       yield put(
         actions.getResetCodeCompleted(account)
