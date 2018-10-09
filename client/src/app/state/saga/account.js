@@ -1,4 +1,4 @@
-import { all, call, take, fork, put, select } from 'redux-saga/effects'
+import { all, take, fork, put, select } from 'redux-saga/effects'
 import serializeError from 'serialize-error'
 
 import Account from 'models/account'
@@ -26,7 +26,7 @@ const changePasswordLoop = function*() {
         currentPassword,
         newPassword
       }, {
-          token: session.token
+        token: session.token
       })
 
       if (!result) {

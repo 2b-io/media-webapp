@@ -1,5 +1,3 @@
-import pick from 'object.pick'
-
 import request from 'services/graphql'
 
 export const ACCOUNT_FRAGMENT = `

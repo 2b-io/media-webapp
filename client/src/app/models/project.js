@@ -1,5 +1,3 @@
-import pick from 'object.pick'
-
 import request from 'services/graphql'
 import { stringToList } from 'services/string-to-list'
 
@@ -129,7 +127,7 @@ export default {
         isActive
       }
     } = params
-    const { token} = options
+    const { token } = options
 
     const body = await request(`
       query updateProject($project: ProjectStruct!, $token: String!, $identifier: String!) {
@@ -160,11 +158,16 @@ export default {
     const { token } = options
 
     const body = await request(`
-      query addCollaboratorsByEmails($token: String!, $identifier: String!, $emails: [String]!, $messenge: String) {
+      query addCollaboratorsByEmails(
+        $token: String!,
+        $identifier: String!,
+        $emails: [String]!,
+        $message: String
+      ) {
         session(token: $token) {
           account {
             project(identifier: $identifier) {
-              _addCollaboratorsByEmails(emails: $emails, messenge: $messenge){
+              _addCollaboratorsByEmails(emails: $emails, message: $message){
                 ${ COLLABORATOR_FRAGMENT }
               }
             }
@@ -174,7 +177,7 @@ export default {
     `, {
       identifier,
       emails: stringToList(emails),
-      messenge,
+      message,
       token
     })
 

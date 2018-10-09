@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react'
 
-import { Break } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
 import { Radio } from 'views/common/form'
 
@@ -14,7 +13,6 @@ const GifParameterForm = () => (
     <DescriptionText mostLeft mostRight>
       Stores only the changed portion of each image. This is the default.
     </DescriptionText>
-    <Break />
     <Radio
       name="optimize"
       choice="-O2"
@@ -23,7 +21,6 @@ const GifParameterForm = () => (
     <DescriptionText mostLeft mostRight>
       Also uses transparency to shrink the file further.
     </DescriptionText>
-    <Break />
     <Radio
       name="optimize"
       choice="-O3"

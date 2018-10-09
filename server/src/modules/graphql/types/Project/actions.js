@@ -77,12 +77,12 @@ export default ({ Project, ProjectStruct }) => ({
       emails: {
         type: GraphQLNonNull(GraphQLList(GraphQLString))
       },
-      messenge: {
+      message: {
         type: GraphQLString
       }
     },
     type: GraphQLList(Collaborator),
-    resolve: async (project, { emails, messenge }) => {
+    resolve: async (project, { emails, message }) => {
       // create account & send email invite
 
       const existedAccounts = (await Promise.all(
@@ -109,7 +109,7 @@ export default ({ Project, ProjectStruct }) => ({
           async ({ email }) => {
             const resetPasswordCode = await createResetCode(email)
             const { code } = resetPasswordCode
-            await sendEmailInviteToRegister(email, code, messenge)
+            await sendEmailInviteToRegister(email, code, message)
           }
         )
       )

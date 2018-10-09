@@ -24,6 +24,10 @@ const ResetPaswordForm = ({ handleSubmit, isFinalizeStep }) => (
           leading={ () => <PersonIcon /> }
         />
         <Break />
+        <DescriptionText mostLeft mostRight>
+          Display names are what other users see in their collaborator list. Display names can be changed at any time and can include a variety of letters, numbers and characters.
+        </DescriptionText>
+        <Break />
       </Fragment>
     ) }
     <TextBox
