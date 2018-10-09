@@ -2,9 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
-import { mapState } from 'services/redux-helpers'
-import { selectors } from 'state/interface'
-// import { ErrorBox, InfoBox, SuccessBox, WarningBox } from 'ui/elements'
+import { mapDispatch, mapState } from 'services/redux-helpers'
+import { actions, selectors } from 'state/interface'
 import { Text } from 'ui/typo'
 
 const Wrapper = styled.section`
@@ -12,51 +11,54 @@ const Wrapper = styled.section`
   justify-content: center;
   position: fixed;
   top: 16px;
-  right: 40px;
-  left: 40px;
+  right: 32px;
+  left: 32px;
   z-index: 11;
 
 `
 
 const ToastList = styled.div`
+  width: 100%
 `
 
 const Shadow = styled.div`
-  box-shadow: 0 5px 20px ${ ({ theme }) => theme.secondary.limpid.base };
+  box-shadow: 4px 4px ${ ({ theme }) => theme.black.opaque.base };
 `
 
 const DisplayComponent = styled.div`
   border: 1px solid black;
-  padding: 16px 8px;
+  padding: 8px 0;
   margin-bottom: 16px;
   background: ${
-    ({ type }) => (
-      type === 'error' ? 'red' : 'white'
+    ({ theme, type }) => (
+      type === 'error' ? '#FF3333' : theme.white.base
+    )
+  };
+  color: ${
+    ({ theme, type }) => (
+      type === 'error' ? theme.white.base : theme.black.base
     )
   };
 `
 
 const Toast = ({
+  id,
+  removeToast,
   toast: {
     expiring,
     message,
     type
   }
 }) => {
-  // const DisplayComponent = (
-  //   type === 'error' ?
-  //     ErrorBox : (
-  //       type === 'warn' ?
-  //         WarningBox : (
-  //           type === 'success' ?
-  //             SuccessBox : InfoBox
-  //         )
-  //     )
-  // )
 
   return (
     <Shadow>
-      <DisplayComponent>
+      <DisplayComponent
+        expiring={ expiring }
+        interactable
+        type={ type }
+        onClick={ () => removeToast(id) }
+      >
         <Text mostLeft mostRight>
           { message }
         </Text>
@@ -66,17 +68,19 @@ const Toast = ({
   )
 }
 
-
-
-
-const ToastContainer = ({ toasts }) => (
+const ToastContainer = ({
+  removeToast,
+  toasts
+}) => (
   <Wrapper>
     <ToastList>
       {
         toasts.map(
           toast => (
             <Toast
+              id={ toast.id }
               key={ toast.id }
+              removeToast={ removeToast }
               toast={ toast }
             />
           )
@@ -89,9 +93,8 @@ const ToastContainer = ({ toasts }) => (
 export default connect(
   mapState({
     toasts: selectors.toasts
+  }),
+  mapDispatch({
+    removeToast: actions.removeToast
   })
 )(ToastContainer)
-
-// <DisplayComponent interactable expiring={ expiring } >
-//     { message }
-//   </DisplayComponent>

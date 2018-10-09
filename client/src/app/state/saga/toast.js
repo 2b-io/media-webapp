@@ -4,7 +4,7 @@ import { call, fork, put } from 'redux-saga/effects'
 
 import { actions } from 'state/interface'
 
-const expiring = '445s'
+const expiring = '5s'
 
 const toast = function*({ message, type }) {
   const id = Date.now().toString()
