@@ -2,13 +2,18 @@ import request from 'services/graphql'
 
 export const SECRET_KEY_FRAGMENT = `
   key,
-  description,
-  isActive,
+  isActive
 `
 export default {
-  async create(token, identifier) {
+  async create(params, options) {
+    const { identifier } = params
+    const { token } = options
+
     const body = await request(`
-      query createSecretKey($token: String!, $identifier: String!) {
+      query createSecretKey(
+        $token: String!,
+        $identifier: String!
+      ) {
         session(token: $token) {
           account {
             project(identifier: $identifier) {
@@ -21,13 +26,22 @@ export default {
           }
         }
       }
-    `, { token, identifier })
+    `, {
+      identifier,
+      token
+    })
 
     return body.session.account.project.pushSetting._createSecretKey
   },
-  async fetch(token, identifier) {
+  async fetch(params, options) {
+    const { identifier } = params
+    const { token } = options
+
     const body = await request(`
-      query listSecretKeys($token: String!, $identifier: String!) {
+      query listSecretKeys(
+        $token: String!,
+        $identifier: String!
+      ) {
         session(token: $token) {
           account {
             project(identifier: $identifier) {
@@ -40,33 +54,27 @@ export default {
           }
         }
       }
-    `, { token, identifier })
+    `, {
+      identifier,
+      token
+    })
 
     return body.session.account.project.pushSetting.secretKeys
   },
-  async get(token, identifier, key) {
-    const body = await request(`
-      query getSecretKey($token: String!, $identifier: String!, $key: String!) {
-        session(token: $token) {
-          account {
-            project(identifier: $identifier) {
-              pushSetting {
-                secretKey(key: $key) {
-                  ${ SECRET_KEY_FRAGMENT }
-                }
-              }
-            }
-          }
-        }
-      }
-    `, { token, identifier, key })
+  async update(params, options) {
+    const {
+      identifier,
+      secretKey: { key, isActive }
+    } = params
+    const { token } = options
 
-    return body.session.account.project.pushSetting.secretKey
-
-  },
-  async update(token, identifier, secretKey) {
     const body = await request(`
-      query updateSecretKey($token: String!, $identifier: String!, $key: String!, $secretKey: SecretKeyStruct!) {
+      query updateSecretKey(
+        $token: String!,
+        $identifier: String!,
+        $key: String!,
+        $secretKey: SecretKeyStruct!
+      ) {
         session(token: $token) {
           account {
             project(identifier: $identifier) {
@@ -82,17 +90,24 @@ export default {
         }
       }
     `, {
-      token,
       identifier,
-      key: secretKey.key,
-      secretKey
+      key: key,
+      secretKey: { isActive },
+      token
     })
 
     return body.session.account.project.pushSetting.secretKey._update
   },
-  async remove(token, identifier, key) {
+  async remove(params, options) {
+    const { identifier, key } = params
+    const { token } = options
+
     const body = await request(`
-      query updateSecretKey($token: String!, $identifier: String!, $key: String!) {
+      query updateSecretKey(
+        $token: String!,
+        $identifier: String!,
+        $key: String!
+      ) {
         session(token: $token) {
           account {
             project(identifier: $identifier) {
@@ -106,9 +121,9 @@ export default {
         }
       }
     `, {
-      token,
       identifier,
-      key
+      key,
+      token
     })
 
     return body.session.account.project.pushSetting.secretKey._destroy

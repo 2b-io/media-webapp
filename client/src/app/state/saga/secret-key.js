@@ -4,38 +4,6 @@ import serializeError from 'serialize-error'
 import SecretKey from 'models/secret-key'
 import { actions, types, selectors } from 'state/interface'
 
-const getLoop = function*() {
-  while (true) {
-    try {
-      const {
-        payload: {
-          identifier,
-          key
-        }
-      } = yield take(types.secretKey.GET)
-
-      const session = yield select(selectors.currentSession)
-
-      if (!session) {
-        throw 'Unauthorized'
-      }
-
-      const secretKey = yield SecretKey.get(session.token, identifier, key)
-
-      yield put(
-        actions.getSecretKeyCompleted({
-          identifier,
-          secretKey
-        })
-      )
-    } catch (e) {
-      yield put(
-        actions.getSecretKeyFailed(serializeError(e))
-      )
-    }
-  }
-}
-
 const fetchLoop = function*() {
   while (true) {
     try {
@@ -51,7 +19,12 @@ const fetchLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const secretKeys = yield SecretKey.fetch(session.token, identifier)
+      const secretKeys = yield SecretKey.fetch({
+        identifier
+      }, {
+        token: session.token
+      })
+
       yield put(
         actions.fetchSecretKeysCompleted({
           identifier,
@@ -81,7 +54,11 @@ const createLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const secretKey = yield SecretKey.create(session.token, identifier)
+      const secretKey = yield SecretKey.create({
+        identifier
+      }, {
+        token: session.token
+      })
 
       yield put(
         actions.createSecretKeyCompleted({
@@ -103,7 +80,7 @@ const updateLoop = function*() {
       const {
         payload: {
           identifier,
-          secretKey
+          secretKey: { key, isActive }
         }
       } = yield take(types.secretKey.UPDATE)
 
@@ -113,7 +90,12 @@ const updateLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const updatedSecretKey = yield SecretKey.update(session.token, identifier, secretKey)
+      const updatedSecretKey = yield SecretKey.update({
+        identifier,
+        secretKey: { key, isActive }
+      }, {
+        token: session.token
+      })
 
       yield put(
         actions.updateSecretKeyCompleted({
@@ -131,21 +113,29 @@ const updateLoop = function*() {
 
 const removeLoop = function*() {
   while (true) {
-    const action = yield take(types.secretKey.REMOVE)
-
     try {
+      const {
+        payload: {
+          identifier,
+          key
+        }
+      } = yield take(types.secretKey.REMOVE)
+
       const session = yield select(selectors.currentSession)
 
       if (!session) {
-        continue
+        throw 'Unauthorized'
       }
 
-      const { identifier, key } = action.payload
-
-      const removedSecretKey = yield SecretKey.remove(session.token, identifier, key)
+      const removedSecretKey = yield SecretKey.remove({
+        identifier,
+        key
+      }, {
+        token: session.token
+      })
 
       if (!removedSecretKey) {
-        throw new Error('Cannot delete secret key')
+        throw 'Remove secret key failed'
       }
 
       yield put(
@@ -167,7 +157,6 @@ export default function*() {
   yield take('@@INITIALIZED')
   yield fork(createLoop)
   yield fork(removeLoop)
-  yield fork(getLoop)
   yield fork(fetchLoop)
   yield fork(updateLoop)
 }
