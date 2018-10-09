@@ -42,10 +42,10 @@ const DisplayComponent = styled.div`
 `
 
 const Toast = ({
-  id,
   removeToast,
   toast: {
     expiring,
+    id,
     message,
     type
   }
@@ -78,7 +78,6 @@ const ToastContainer = ({
         toasts.map(
           toast => (
             <Toast
-              id={ toast.id }
               key={ toast.id }
               removeToast={ removeToast }
               toast={ toast }
