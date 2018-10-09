@@ -10,6 +10,8 @@ import Header from './header'
 import Logo from './logo'
 import Sidebar from './sidebar'
 
+import Toast from './toast/'
+
 const Surface = styled.main`
   display: grid;
   grid-template-columns: 100%;
@@ -46,6 +48,7 @@ const Layout = ({ isLayoutClosed, render, ...props }) => (
       </Body>
     </Surface>
     { !isLayoutClosed && <Sidebar /> }
+    <Toast />
   </Fragment>
 )
 

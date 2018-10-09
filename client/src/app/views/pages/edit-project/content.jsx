@@ -18,6 +18,7 @@ const ProjectForm = reduxForm({
 })(StatelessProjectForm)
 
 const EditProject = ({
+  copyMediaLink,
   project,
   updateProject,
   removeProject,
@@ -43,6 +44,7 @@ const EditProject = ({
     <Fragment>
       <Container>
         <ProjectForm
+          copyMediaLink={ copyMediaLink }
           onSubmit={ ( { name, status, isActive }) => updateProject(identifier, name, status, isActive) }
           initialValues={ {
             name,
@@ -99,6 +101,7 @@ export default connect(
     }
   },
   mapDispatch({
+    copyMediaLink: actions.copyMediaLink,
     updateProject: (identifier, name, status, isActive) => actions.updateProject({ identifier, name, status: isActive ? 'DEPLOYED' : 'DISABLED', isActive }),
     removeProject: actions.removeProject,
     showRemoveProjectDialog: () => actions.showDialog(REMOVE_PROJECT),

@@ -10,6 +10,7 @@ import { CheckBox, TextBox } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
 const ProjectForm = ({
+  copyMediaLink,
   handleSubmit,
   domain,
   status,
@@ -33,7 +34,7 @@ const ProjectForm = ({
       readOnly
       validate={ validateRequired }
       trailing={ () => (
-        <CopyToClipboard text={ domain }>
+        <CopyToClipboard onCopy={ copyMediaLink } text={ domain }>
           <Button plain >
             <CopyIcon />
           </Button>
