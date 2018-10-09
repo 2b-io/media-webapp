@@ -19,11 +19,16 @@ const getLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const pullSetting = yield PullSetting.getPullSetting(session.token, identifier)
+      const pullSetting = yield PullSetting.get({
+        identifier
+      }, {
+        token: session.token
+      })
 
       yield put(
         actions.getPullSettingCompleted({
-          identifier, pullSetting
+          identifier,
+          pullSetting
         })
       )
     } catch (e) {
@@ -50,7 +55,12 @@ const updateLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const updatedPullSetting = yield PullSetting.updatePullSetting(session.token, identifier, pullSetting)
+      const updatedPullSetting = yield PullSetting.update({
+        identifier,
+        pullSetting
+      }, {
+        token: session.token
+      })
 
       yield put(
         actions.updatePullSettingCompleted({

@@ -12,8 +12,12 @@ export const PULL_SETTING_FRAGMENT = `
     ${ HEADER_FRAGMENT }
   }
 `
+
 export default {
-  async getPullSetting(token, identifier) {
+  async get(params, options) {
+    const { identifier } = params
+    const { token } = options
+
     const body = await request(`
       query getProject($token: String!, $identifier: String!) {
         session(token: $token) {
@@ -26,7 +30,10 @@ export default {
           }
         }
       }
-    `, { token, identifier })
+    `, {
+      identifier,
+      token
+    })
 
     const pullSetting = body.session.account.project.pullSetting
 
@@ -36,12 +43,9 @@ export default {
       headers: [ ...(pullSetting.headers || []), {} ]
     }
   },
-  async updatePullSetting(token, identifier, pullSetting) {
-
-    const allowedOrigins = stringToList(pullSetting.allowedOrigins)
-
-    const { headers } = pullSetting
-    const _headers = headers.filter(({ name, value }) => name && value)
+  async update(params, options) {
+    const { identifier, pullSetting } = params
+    const { token } = options
 
     const body = await request(`
       query updateProject($pullSetting: PullSettingStruct!, $token: String!, $identifier: String!) {
@@ -58,13 +62,15 @@ export default {
         }
       }
     `, {
-      token,
       identifier,
       pullSetting: {
         ...pullSetting,
-        allowedOrigins,
-        headers: _headers
-      }
+        allowedOrigins: stringToList(pullSetting.allowedOrigins),
+        headers: pullSetting.headers.filter(
+          ({ name, value }) => name && value
+        )
+      },
+      token
     })
 
     const updatedPullSetting = body.session.account.project.pullSetting._update
