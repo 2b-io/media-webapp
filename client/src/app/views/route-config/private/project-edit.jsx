@@ -21,7 +21,7 @@ const watchCopyDomainLink = function*() {
 
     yield fork(addToast, {
       type: 'success',
-      message: 'Copied.'
+      message: 'The domain has been copied to clipboard.'
     })
     continue
   }

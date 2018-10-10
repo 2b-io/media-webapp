@@ -14,7 +14,6 @@ const Wrapper = styled.section`
   right: 32px;
   left: 32px;
   z-index: 11;
-
 `
 
 const ToastList = styled.div`
@@ -49,24 +48,21 @@ const Toast = ({
     message,
     type
   }
-}) => {
+}) => (
+  <Shadow>
+    <DisplayComponent
+      expiring={ expiring }
+      interactable
+      type={ type }
+      onClick={ () => removeToast(id) }
+    >
+      <Text mostLeft mostRight>
+        { message }
+      </Text>
+    </DisplayComponent>
+  </Shadow>
+)
 
-  return (
-    <Shadow>
-      <DisplayComponent
-        expiring={ expiring }
-        interactable
-        type={ type }
-        onClick={ () => removeToast(id) }
-      >
-        <Text mostLeft mostRight>
-          { message }
-        </Text>
-      </DisplayComponent>
-
-    </Shadow>
-  )
-}
 
 const ToastContainer = ({
   removeToast,
