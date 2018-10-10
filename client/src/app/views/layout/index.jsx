@@ -10,7 +10,7 @@ import Header from './header'
 import Logo from './logo'
 import Sidebar from './sidebar'
 
-import Toast from './toast/'
+import Toast from './toast'
 
 const Surface = styled.main`
   display: grid;
@@ -26,7 +26,11 @@ const LogoWrapper = styled.div`
   text-align: center;
 `
 
-const Layout = ({ isLayoutClosed, render, ...props }) => (
+const Layout = ({
+  isLayoutClosed,
+  render,
+  ...props
+}) => (
   <Fragment>
     <Surface>
       { !isLayoutClosed && (
@@ -47,8 +51,8 @@ const Layout = ({ isLayoutClosed, render, ...props }) => (
         }
       </Body>
     </Surface>
-    { !isLayoutClosed && <Sidebar /> }
     <Toast />
+    { !isLayoutClosed && <Sidebar /> }
   </Fragment>
 )
 

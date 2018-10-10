@@ -102,7 +102,17 @@ export default connect(
   },
   mapDispatch({
     copyDomainLink: actions.copyDomainLink,
-    updateProject: (identifier, name, status, isActive) => actions.updateProject({ identifier, name, status: isActive ? 'DEPLOYED' : 'DISABLED', isActive }),
+    updateProject: (
+      identifier,
+      name,
+      status,
+      isActive
+    ) => actions.updateProject({
+      identifier,
+      name,
+      status: isActive ? 'DEPLOYED' : 'DISABLED',
+      isActive
+    }),
     removeProject: actions.removeProject,
     showRemoveProjectDialog: () => actions.showDialog(REMOVE_PROJECT),
     hideRemoveProjectDialog: () => actions.hideDialog(REMOVE_PROJECT)

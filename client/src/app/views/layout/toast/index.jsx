@@ -43,7 +43,6 @@ const DisplayComponent = styled.div`
 const Toast = ({
   removeToast,
   toast: {
-    expiring,
     id,
     message,
     type
@@ -51,8 +50,6 @@ const Toast = ({
 }) => (
   <Shadow>
     <DisplayComponent
-      expiring={ expiring }
-      interactable
       type={ type }
       onClick={ () => removeToast(id) }
     >
@@ -62,7 +59,6 @@ const Toast = ({
     </DisplayComponent>
   </Shadow>
 )
-
 
 const ToastContainer = ({
   removeToast,

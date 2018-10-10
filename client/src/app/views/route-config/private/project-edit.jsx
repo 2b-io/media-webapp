@@ -14,7 +14,6 @@ const watchGetProject = function*() {
   }
 }
 
-
 const watchCopyDomainLink = function*() {
   while (true) {
     yield take(types.project.COPY_DOMAIN_LINK)
@@ -23,7 +22,6 @@ const watchCopyDomainLink = function*() {
       type: 'success',
       message: 'The domain has been copied to clipboard.'
     })
-    continue
   }
 }
 
