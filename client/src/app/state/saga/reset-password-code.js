@@ -12,7 +12,11 @@ const forgotPasswordLoop = function*() {
         payload: { email }
       } = yield take(types.resetPasswordCode.FORGOT_PASSWORD)
 
-      yield ResetPasswordCode.forgotPassword({ email })
+      const status = yield ResetPasswordCode.forgotPassword({ email })
+
+      if(!status) {
+        throw 'Forgot pasword failed.'
+      }
 
       yield put(
         actions.forgotPasswordCompleted()
@@ -42,7 +46,7 @@ const resetPasswordLoop = function*() {
       })
 
       if (!status) {
-        throw new Error('Reset password failed')
+        throw 'Reset password failed'
       }
 
       yield put(
