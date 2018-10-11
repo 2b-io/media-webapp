@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
 import { Break, Container, Link } from 'ui/elements'
-import { ErrorBox, SuccessBox } from 'ui/elements'
 import { Text } from 'ui/typo'
 
 import _RegisterForm from './form'

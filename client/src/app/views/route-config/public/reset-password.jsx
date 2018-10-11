@@ -1,14 +1,15 @@
 import { all, fork, put, race, select, take } from 'redux-saga/effects'
 
+import { addToast } from 'state/saga/toast'
 import { actions, selectors, types } from 'state/interface'
 import ResetPassword from 'views/pages/reset-password'
 
 const watchGetResetCode = function*(path) {
-  yield take(types[ 'RESETPASSWORDCODE/GET_RESET_CODE' ])
+  yield take(types.resetPasswordCode.GET_RESET_CODE)
 
   const { completed, failed } = yield race({
-    completed: take(types[ 'RESETPASSWORDCODE/GET_RESET_CODE_COMPLETED' ]),
-    failed: take(types[ 'RESETPASSWORDCODE/GET_RESET_CODE_FAILED' ])
+    completed: take(types.resetPasswordCode.GET_RESET_CODE_COMPLETED),
+    failed: take(types.resetPasswordCode.GET_RESET_CODE_FAILED)
   })
 
   yield put(
@@ -23,25 +24,32 @@ const watchGetResetCode = function*(path) {
 
 const watchResetPassword = function*(path) {
   while (true) {
-    yield take(types[ 'RESETPASSWORDCODE/RESET_PASSWORD'])
+    yield take(types.resetPasswordCode.RESET_PASSWORD)
 
     const { completed, failed } = yield race({
-      completed: take(types[ 'RESETPASSWORDCODE/RESET_PASSWORD_COMPLETED' ]),
-      failed: take(types[ 'RESETPASSWORDCODE/RESET_PASSWORD_FAILED' ])
+      completed: take(types.resetPasswordCode.RESET_PASSWORD_COMPLETED),
+      failed: take(types.resetPasswordCode.RESET_PASSWORD_FAILED)
     })
 
-    if (completed) {
-      yield put(
-        actions.requestLocation('/sign-in')
-      )
+    if(completed) {
+      yield all([
+        fork(addToast, {
+          type: 'success',
+          message: 'Your password has been successfully changed.'
+        }),
+        put(
+          actions.requestLocation('/sign-in')
+        )
+      ])
     }
 
-    if (failed) {
-      yield put(
-        actions.mergeUIState(path, {
-          resetPasswordError: failed.payload.reason
+    if(failed) {
+      yield all([
+        fork(addToast, {
+          type: 'error',
+          message: 'Change password failed. Please check your network connection and try again.'
         })
-      )
+      ])
     }
   }
 }
