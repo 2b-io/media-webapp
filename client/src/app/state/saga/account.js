@@ -30,18 +30,12 @@ const changePasswordLoop = function*() {
       })
 
       if (!result) {
-        throw new 'Change password failed'
+        throw 'Change password failed'
       }
 
-      yield all([
-        put(
-          actions.changePasswordCompleted()
-        ),
-        fork(addToast, {
-          type: 'success',
-          message: 'Password changed.'
-        })
-      ])
+      yield  put(
+        actions.changePasswordCompleted()
+      )
     } catch (e) {
       yield put(
         actions.changePasswordFailed(serializeError(e))
