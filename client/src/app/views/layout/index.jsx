@@ -10,6 +10,8 @@ import Header from './header'
 import Logo from './logo'
 import Sidebar from './sidebar'
 
+import Toast from './toast'
+
 const Surface = styled.main`
   display: grid;
   grid-template-columns: 100%;
@@ -24,7 +26,11 @@ const LogoWrapper = styled.div`
   text-align: center;
 `
 
-const Layout = ({ isLayoutClosed, render, ...props }) => (
+const Layout = ({
+  isLayoutClosed,
+  render,
+  ...props
+}) => (
   <Fragment>
     <Surface>
       { !isLayoutClosed && (
@@ -45,6 +51,7 @@ const Layout = ({ isLayoutClosed, render, ...props }) => (
         }
       </Body>
     </Surface>
+    <Toast />
     { !isLayoutClosed && <Sidebar /> }
   </Fragment>
 )

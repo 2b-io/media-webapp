@@ -2,6 +2,8 @@ import typePrefix from 'state/helpers/type-prefix'
 
 const prefix = typePrefix('project')
 
+export const COPY_DOMAIN_LINK = prefix('COPY_DOMAIN_LINK')
+
 export const CREATE = prefix('CREATE')
 export const CREATE_COMPLETED = prefix('CREATE_COMPLETED')
 export const CREATE_FAILED = prefix('CREATE_FAILED')

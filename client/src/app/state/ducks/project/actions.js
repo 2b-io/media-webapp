@@ -1,5 +1,9 @@
 import * as types from './types'
 
+export const copyDomainLink = () => ({
+  type: types.COPY_DOMAIN_LINK
+})
+
 export const fetchProjects = () => ({
   type: types.FETCH
 })

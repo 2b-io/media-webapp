@@ -91,7 +91,7 @@ export default {
       }
     `, {
       identifier,
-      key: key,
+      key,
       secretKey: { isActive },
       token
     })
