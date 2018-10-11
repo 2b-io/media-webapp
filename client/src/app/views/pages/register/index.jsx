@@ -18,16 +18,10 @@ const RegisterForm = reduxForm({
 const Register = ({
   register,
   toSignIn,
-  ui: { error, idle, result }
+  ui: { idle }
 }) => (
   <main>
     <Container center size="small">
-      { result &&
-        <SuccessBox>Register accepted! Please check your inbox to finish the register process.</SuccessBox>
-      }
-      { error &&
-        <ErrorBox>An error happens when registering.</ErrorBox>
-      }
       <RegisterForm
         onSubmit={ register }
         idle={ idle }
