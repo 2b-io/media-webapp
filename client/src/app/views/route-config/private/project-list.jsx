@@ -2,6 +2,16 @@ import { all, fork, put, take } from 'redux-saga/effects'
 
 import { actions, types } from 'state/interface'
 import * as ProjectList from 'views/pages/project-list'
+import { addToast } from 'state/saga/toast'
+
+const watchFetchProjects = function*() {
+  yield take(types.project.FETCH_FAILED)
+
+  yield fork(addToast, {
+    type: 'error',
+    message: 'Projects do not exists or network connection error.'
+  })
+}
 
 const watchHideDisabledProjects = function*(path) {
   while (true) {
@@ -53,6 +63,7 @@ export default {
     component: ProjectList,
     exact: true,
     *state(path) {
+      yield fork(watchFetchProjects)
       yield fork(watchFilterMenu, path)
       yield fork(watchHideDisabledProjects, path)
       yield fork(watchSortCondition, path)
