@@ -1,4 +1,4 @@
-import { all, fork, put, select, take } from 'redux-saga/effects'
+import { all, fork, put, race, select, take } from 'redux-saga/effects'
 
 import { addToast } from 'state/saga/toast'
 import { actions, types, selectors } from 'state/interface'
@@ -17,6 +17,33 @@ const watchGetProfile = function*() {
   yield put(
     actions.requestLocation('/')
   )
+}
+
+const watchUpdateProfile = function*() {
+  while (true) {
+    const { completed, failed } = yield race({
+      completed: take(types.account.UPDATE_COMPLETED),
+      failed: take(types.account.UPDATE_FAILED)
+    })
+
+    if (completed) {
+      yield all([
+        fork(addToast, {
+          type: 'success',
+          message: 'Your profile has been successfully updated.'
+        })
+      ])
+    }
+
+    if (failed) {
+      yield all([
+        fork(addToast, {
+          type: 'error',
+          message: 'Edit profile failed. Please check your network connection and try again.'
+        })
+      ])
+    }
+  }
 }
 
 const watchMenu = function*(path) {
@@ -44,6 +71,7 @@ export default {
     component: EditProfile,
     exact: true,
     *state() {
+      yield fork(watchUpdateProfile)
       yield fork(watchGetProfile)
 
       const { identifier } = yield select(selectors.currentParams)

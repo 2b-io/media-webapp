@@ -131,6 +131,10 @@ const updateProfileLoop = function*() {
         token: session.token
       })
 
+      if (!updatedAccount) {
+        throw 'Account can not update'
+      }
+
       yield put(
         actions.updateProfileCompleted(updatedAccount)
       )
