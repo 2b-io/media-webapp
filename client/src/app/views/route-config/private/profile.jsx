@@ -23,7 +23,7 @@ const watchChangePassword = function*(path) {
 
     if (completed) {
       yield all([
-        yield fork(addToast, {
+        fork(addToast, {
           type: 'success',
           message: 'Your password has been successfully changed. Please login back.'
         }),
