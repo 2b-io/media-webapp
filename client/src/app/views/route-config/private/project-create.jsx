@@ -25,7 +25,7 @@ const watchCreateProject = function*(path) {
       yield all([
         fork(addToast, {
           type: 'success',
-          message: 'create project successful.'
+          message: 'Create project successful.'
         }),
         put(
           actions.requestLocation(`/projects/${ identifier }`)

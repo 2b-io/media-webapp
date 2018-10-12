@@ -1,5 +1,6 @@
 import { all, fork, put, race, select, take } from 'redux-saga/effects'
 
+import { addToast } from 'state/saga/toast'
 import { actions, selectors, types } from 'state/interface'
 import * as ProjectDetail from 'views/pages/project-detail'
 
@@ -7,9 +8,15 @@ const watchGetProject = function*() {
   while (true) {
     yield take(types.project.GET_FAILED)
 
-    yield put(
-      actions.requestLocation('/projects')
-    )
+    yield all([
+      fork(addToast, {
+        type: 'error',
+        message: 'Project does not exist or internet connection error.'
+      }),
+      put(
+        actions.requestLocation('/projects')
+      )
+    ])
   }
 }
 
