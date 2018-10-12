@@ -36,7 +36,7 @@ const watchChangePassword = function*(path) {
     if (failed) {
       yield fork(addToast, {
         type: 'error',
-        message: 'Change password failed. Please check your network connection and try again.'
+        message: 'Change password failed. Please check your current password and try again.'
       })
     }
 
