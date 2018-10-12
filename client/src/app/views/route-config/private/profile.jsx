@@ -21,19 +21,19 @@ const watchChangePassword = function*(path) {
       failed: take(types.account.CHANGE_PASSWORD_FAILED)
     })
 
-    if(completed) {
+    if (completed) {
       yield all([
         yield fork(addToast, {
           type: 'success',
-          message: 'Your password has been successfully changed.'
+          message: 'Your password has been successfully changed. Please login back.'
         }),
         put(
-          actions.requestLocation('/sign-in')
+          actions.closeLayout()
         )
       ])
     }
 
-    if(failed) {
+    if (failed) {
       yield fork(addToast, {
         type: 'error',
         message: 'Change password failed. Please check your network connection and try again.'

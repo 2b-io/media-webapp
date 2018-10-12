@@ -31,22 +31,19 @@ const watchResetPassword = function*() {
       failed: take(types.resetPasswordCode.RESET_PASSWORD_FAILED)
     })
 
-    if(completed) {
+    if (completed) {
       yield all([
         fork(addToast, {
           type: 'success',
           message: 'Your password has been successfully changed.'
         }),
         put(
-          actions.destroySession()
-        ),
-        put(
           actions.requestLocation('/sign-in')
         )
       ])
     }
 
-    if(failed) {
+    if (failed) {
       yield all([
         fork(addToast, {
           type: 'error',
