@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { actions } from 'state/interface'
 import { mapDispatch } from 'services/redux-helpers'
 import { Break, Container, Link } from 'ui/elements'
-import { ErrorBox, SuccessBox } from 'ui/elements'
 import { Text } from 'ui/typo'
 
 import StatelessForm from './form'
@@ -19,32 +18,27 @@ const ForgotPassword=({
   forgotPassword,
   toSignIn,
   ui: {
-    completed,
-    failed
+    idle
   }
-}) => {
-  if (completed) {
-    return (
-      <Container>
-        <SuccessBox>We&apos;ve send a password reset link to your email. Please check your inbox.</SuccessBox>
-      </Container>
-    )
-  }
+}) => (
+  <Container>
+    <ForgotPasswordForm
+      onSubmit={ forgotPassword }
+      idle={ idle }
+    />
+    <Break double />
+    <Text mostLeft mostRight>
+      Remember your password?<br />
+      <Link
+        href='/sign-in'
+        onClick={ toSignIn }
+      >
+        Sign in now!
+      </Link>
+    </Text>
+  </Container>
+)
 
-  return (
-    <Container>
-      { failed &&
-        <ErrorBox>Fail to send the reset password email or the account does not exist.</ErrorBox>
-      }
-      <ForgotPasswordForm onSubmit={ forgotPassword } />
-      <Break double />
-      <Text mostLeft mostRight>
-        Remember your password?<br />
-        <Link href='/sign-in' onClick={ toSignIn }>Sign in now!</Link>
-      </Text>
-    </Container>
-  )
-}
 
 export default connect(
   null,

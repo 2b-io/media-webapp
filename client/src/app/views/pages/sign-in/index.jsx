@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
-import { Break, Container, ErrorBox, Link, TextButton } from 'ui/elements'
+import { Break, Container, Link, TextButton } from 'ui/elements'
 import { Text } from 'ui/typo'
 
 import StatelessSignInForm from './form'
@@ -18,12 +18,9 @@ const SignIn = ({
   signIn,
   toForgotPassword,
   toRegister,
-  ui: { error, idle }
+  ui: { idle }
 }) => (
   <Container>
-    { error &&
-      <ErrorBox>Email and password do not match.</ErrorBox>
-    }
     <SignInForm
       onSubmit={ signIn }
       idle={ idle }
