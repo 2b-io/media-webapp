@@ -4,8 +4,6 @@ import serializeError from 'serialize-error'
 import Project from 'models/project'
 import { actions, types, selectors } from 'state/interface'
 
-import { addToast } from './toast'
-
 const createLoop = function*() {
   while (true) {
     try {
@@ -29,14 +27,14 @@ const createLoop = function*() {
         token: session.token
       })
 
+      if (!newProject) {
+        throw 'Create project failed.'
+      }
+
       yield all([
         put(
           actions.createProjectCompleted(newProject)
-        ),
-        fork(addToast, {
-          type: 'success',
-          message: 'Project created.'
-        })
+        )
       ])
     } catch (e) {
       yield put(
@@ -74,11 +72,7 @@ const removeLoop = function*() {
       yield all([
         put(
           actions.removeProjectCompleted(identifier)
-        ),
-        fork(addToast, {
-          type: 'success',
-          message: 'Project deleted.'
-        })
+        )
       ])
     } catch (e) {
       yield put(
@@ -170,11 +164,7 @@ const updateLoop = function*() {
       yield all([
         put(
           actions.updateProjectCompleted(updatedProject)
-        ),
-        fork(addToast, {
-          type: 'success',
-          message: 'Project updated.'
-        })
+        )
       ])
     } catch (e) {
       yield put(
@@ -212,11 +202,7 @@ const inviteCollaboratorsLoop = function*() {
       yield all([
         put(
           actions.inviteCollaboratorCompleted(identifier, collaborators || [])
-        ),
-        fork(addToast, {
-          type: 'success',
-          message: 'Collaborator invited.'
-        })
+        )
       ])
     } catch (e) {
       yield put(
@@ -256,21 +242,13 @@ const deleteCollaboratorLoop = function*() {
       yield all([
         put(
           actions.deleteCollaboratorCompleted(identifier, accountId)
-        ),
-        fork(addToast, {
-          type: 'success',
-          message: 'Collaborator deleted.'
-        })
+        )
       ])
     } catch (e) {
       yield all([
         put(
           actions.deleteCollaboratorFailed(serializeError(e))
-        ),
-        fork(addToast, {
-          type: 'error',
-          message: 'Can not delete the collaborator.'
-        })
+        )
       ])
     }
   }
@@ -306,11 +284,7 @@ const makeOwnerLoop = function*() {
       yield all([
         put(
           actions.makeOwnerCompleted(identifier, session.account.identifier, accountId)
-        ),
-        fork(addToast, {
-          type: 'success',
-          message: 'Owner changed.'
-        })
+        )
       ])
 
     } catch (e) {
@@ -351,11 +325,7 @@ const invalidateCacheLoop = function*() {
       yield all([
         put(
           actions.invalidateCacheCompleted(identifier, patterns)
-        ),
-        fork(addToast, {
-          type: 'success',
-          message: 'Cache invalidated.'
-        })
+        )
       ])
     } catch (e) {
       yield put(
