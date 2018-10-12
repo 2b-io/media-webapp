@@ -19,14 +19,14 @@ const watchRegister = function*(path) {
       failed: take(types.account.REGISTER_FAILED)
     })
 
-    if(completed) {
+    if (completed) {
       yield fork(addToast, {
         type: 'success',
         message: 'Register accepted! Please check your inbox to finish the register process.'
       })
     }
 
-    if(failed) {
+    if (failed) {
       yield fork(addToast, {
         type: 'error',
         message: 'Register failed or email already exists on this domain.'
