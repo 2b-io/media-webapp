@@ -1,6 +1,5 @@
 import { all, fork, put, race, select, take } from 'redux-saga/effects'
 
-import { addToast } from 'state/saga/toast'
 import { actions, types, selectors } from 'state/interface'
 import * as ChangePassword from 'views/pages/change-password'
 import * as EditProfile from 'views/pages/edit-profile'
