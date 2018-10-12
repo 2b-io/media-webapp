@@ -31,11 +31,11 @@ const watchResetPassword = function*() {
       failed: take(types.resetPasswordCode.RESET_PASSWORD_FAILED)
     })
 
-    if(completed) {
+    if (completed) {
       yield all([
         fork(addToast, {
           type: 'success',
-          message: 'Your password has been successfully changed.'
+          message: 'Your password has been successfully reset.'
         }),
         put(
           actions.requestLocation('/sign-in')
@@ -43,11 +43,11 @@ const watchResetPassword = function*() {
       ])
     }
 
-    if(failed) {
+    if (failed) {
       yield all([
         fork(addToast, {
           type: 'error',
-          message: 'Change password failed. Please check your network connection and try again.'
+          message: 'Reset password failed. Please check your network connection and try again.'
         })
       ])
     }

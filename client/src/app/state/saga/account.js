@@ -1,10 +1,8 @@
-import { all, take, fork, put, select } from 'redux-saga/effects'
+import { take, fork, put, select } from 'redux-saga/effects'
 import serializeError from 'serialize-error'
 
 import Account from 'models/account'
 import { actions, selectors, types } from 'state/interface'
-
-import { addToast } from './toast'
 
 const changePasswordLoop = function*() {
   while (true) {
@@ -30,18 +28,12 @@ const changePasswordLoop = function*() {
       })
 
       if (!result) {
-        throw new 'Change password failed'
+        throw 'Change password failed'
       }
 
-      yield all([
-        put(
-          actions.changePasswordCompleted()
-        ),
-        fork(addToast, {
-          type: 'success',
-          message: 'Password changed.'
-        })
-      ])
+      yield  put(
+        actions.changePasswordCompleted()
+      )
     } catch (e) {
       yield put(
         actions.changePasswordFailed(serializeError(e))
@@ -130,6 +122,10 @@ const updateProfileLoop = function*() {
       }, {
         token: session.token
       })
+
+      if (!updatedAccount) {
+        throw 'Account can not update'
+      }
 
       yield put(
         actions.updateProfileCompleted(updatedAccount)
