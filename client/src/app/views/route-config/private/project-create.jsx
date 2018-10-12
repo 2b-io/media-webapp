@@ -1,4 +1,4 @@
-import { fork, put, race, take } from 'redux-saga/effects'
+import { all, fork, put, race, take } from 'redux-saga/effects'
 
 import { actions, types } from 'state/interface'
 import { addToast } from 'state/saga/toast'
@@ -20,10 +20,17 @@ const watchCreateProject = function*(path) {
     })
 
     if (completed) {
-      yield fork(addToast, {
-        type: 'success',
-        message: 'create project successful.'
-      })
+      const { identifier } = completed.payload.project
+
+      yield all([
+        fork(addToast, {
+          type: 'success',
+          message: 'create project successful.'
+        }),
+        put(
+          actions.requestLocation(`/projects/${ identifier }`)
+        )
+      ])
     }
 
     if (failed) {
