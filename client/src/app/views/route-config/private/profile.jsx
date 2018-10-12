@@ -1,5 +1,6 @@
 import { all, fork, put, select, take } from 'redux-saga/effects'
 
+import { addToast } from 'state/saga/toast'
 import { actions, types, selectors } from 'state/interface'
 import * as ChangePassword from 'views/pages/change-password'
 import * as EditProfile from 'views/pages/edit-profile'
@@ -7,6 +8,11 @@ import * as Profile from 'views/pages/profile'
 
 const watchGetProfile = function*() {
   yield take(types.account.GET_FAILED)
+
+  yield fork(addToast, {
+    type: 'error',
+    message: 'Cant not get your profile. Please check your network connection and try again.'
+  })
 
   yield put(
     actions.requestLocation('/')
