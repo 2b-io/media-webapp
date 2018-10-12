@@ -19,7 +19,7 @@ const watchSignIn = function*(path) {
       failed: take(types.session.CREATE_FAILED)
     })
 
-    if(results.failed) {
+    if (results.failed) {
       yield fork(addToast, {
         type: 'error',
         message: 'The information that you are provided does not match our record. Please check your email and password, then try again.'

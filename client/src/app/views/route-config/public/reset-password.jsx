@@ -22,7 +22,7 @@ const watchGetResetCode = function*(path) {
   )
 }
 
-const watchResetPassword = function*(path) {
+const watchResetPassword = function*() {
   while (true) {
     yield take(types.resetPasswordCode.RESET_PASSWORD)
 

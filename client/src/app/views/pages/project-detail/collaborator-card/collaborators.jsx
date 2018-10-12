@@ -34,7 +34,7 @@ const Collaborators = ({
     isMakeOwnerDialogActive
   }
 }) => {
-  if(!project) {
+  if (!project) {
     return null
   }
 

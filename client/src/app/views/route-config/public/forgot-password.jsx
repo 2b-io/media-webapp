@@ -20,14 +20,14 @@ const watchForgotPassword = function*(path) {
       failed: take(types.resetPasswordCode.FORGOT_PASSWORD_FAILED)
     })
 
-    if(completed) {
+    if (completed) {
       yield fork(addToast, {
         type: 'success',
         message: 'We\'ve send a password reset link to your email. Please check your inbox.'
       })
     }
 
-    if(failed) {
+    if (failed) {
       yield fork(addToast, {
         type: 'error',
         message: 'Failed to send the reset password. Email or the account does not exist.'
