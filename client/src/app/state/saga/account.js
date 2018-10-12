@@ -1,10 +1,8 @@
-import { all, take, fork, put, select } from 'redux-saga/effects'
+import { take, fork, put, select } from 'redux-saga/effects'
 import serializeError from 'serialize-error'
 
 import Account from 'models/account'
 import { actions, selectors, types } from 'state/interface'
-
-import { addToast } from './toast'
 
 const changePasswordLoop = function*() {
   while (true) {
