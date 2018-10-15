@@ -4,19 +4,52 @@ import { addToast } from 'state/saga/toast'
 import { actions, selectors, types } from 'state/interface'
 import * as ProjectDetail from 'views/pages/project-detail'
 
-const watchGetProject = function*() {
+const watchGetProjectDetail = function*() {
   while (true) {
-    yield take(types.project.GET_FAILED)
+    const {
+      fetchPresetsFailed,
+      fetchSecretKeyFailed,
+      getProjectFailed,
+      getPullSettingFailed
+    } = yield race({
+      fetchPresetsFailed: take(types.preset.FETCH_FAILED),
+      getProjectFailed: take(types.project.GET_FAILED),
+      getPullSettingFailed: take(types.pullSetting.GET_FAILED),
+      fetchSecretKeyFailed: take(types.secretKey.FETCH_FAILED)
+    })
 
-    yield all([
-      fork(addToast, {
+    if (getProjectFailed) {
+      yield all([
+        fork(addToast, {
+          type: 'error',
+          message: 'Project does not exist or internet connection error.'
+        }),
+        put(
+          actions.requestLocation('/projects')
+        )
+      ])
+    }
+
+    if (fetchPresetsFailed) {
+      yield fork(addToast, {
         type: 'error',
-        message: 'Project does not exist or internet connection error.'
-      }),
-      put(
-        actions.requestLocation('/projects')
-      )
-    ])
+        message: 'Fetch presets failed.'
+      })
+    }
+
+    if (getPullSettingFailed) {
+      yield fork(addToast, {
+        type: 'error',
+        message: 'Get pull setting failed.'
+      })
+    }
+
+    if (fetchSecretKeyFailed) {
+      yield fork(addToast, {
+        type: 'error',
+        message: 'Fetch secret key failed.'
+      })
+    }
   }
 }
 
@@ -83,7 +116,7 @@ const watchLeaveProject = function*(path) {
       })
     )
 
-    const { removeCompleted, removeFailed } = yield race({
+    yield race({
       hide: take(`${ types[ 'DIALOG/HIDE' ] }:LEAVE_PROJECT`),
       removeCompleted: take(types.project.DELETE_COLLABORATOR_COMPLETED),
       removeFailed: take(types.project.DELETE_COLLABORATOR_FAILED)
@@ -94,25 +127,6 @@ const watchLeaveProject = function*(path) {
         isLeaveProjectDialogActive: false
       })
     )
-
-    // if (removeCompleted) {
-    //   yield all([
-    //     fork(addToast, {
-    //       type: 'success',
-    //       message: 'Leave project successful.'
-    //     }),
-    //     put(
-    //       actions.requestLocation('/projects')
-    //     )
-    //   ])
-    // }
-
-    // if (removeFailed) {
-    //   yield fork(addToast, {
-    //     type: 'error',
-    //     message: 'Leave project failed.'
-    //   })
-    // }
   }
 }
 
@@ -127,22 +141,36 @@ const watchMakeOwner = function*(path) {
       })
     )
 
-    const { makeOwnerCompleted } = yield race({
+    const { makeOwnerCompleted, makeOwnerFailed } = yield race({
       hide: take(`${ types[ 'DIALOG/HIDE' ] }:MAKE_OWNER`),
-      makeOwnerCompleted: take(types.project.MAKE_OWNER_COMPLETED)
+      makeOwnerCompleted: take(types.project.MAKE_OWNER_COMPLETED),
+      makeOwnerFailed: take(types.project.MAKE_OWNER_FAILED)
     })
 
-    yield all([
-      put(
-        actions.mergeUIState(path, {
-          isMakeOwnerDialogActive: false
-        })
-      ),
-      makeOwnerCompleted ?
+    yield put(
+      actions.mergeUIState(path, {
+        isMakeOwnerDialogActive: false
+      })
+    )
+
+    if (makeOwnerCompleted) {
+      yield all([
+        yield fork(addToast, {
+          type: 'success',
+          message: 'The collaborator have been set to owner.'
+        }),
         put(
           actions.requestLocation(`/projects/${ identifier }`)
-        ) : null
-    ])
+        )
+      ])
+    }
+
+    if (makeOwnerFailed) {
+      yield fork(addToast, {
+        type: 'error',
+        message: 'Can not set this collaborator to owner. Please check your internet connection and try again.'
+      })
+    }
   }
 }
 
@@ -226,7 +254,7 @@ export default {
     component: ProjectDetail,
     exact: true,
     *state(path) {
-      yield fork(watchGetProject, path)
+      yield fork(watchGetProjectDetail)
       yield fork(watchCreateSecretKey)
       yield fork(watchRemoveSecretKey)
       yield fork(watchUpdateSecretKey)
