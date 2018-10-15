@@ -6,11 +6,17 @@ import { addToast } from 'state/saga/toast'
 
 const watchGetProject = function*() {
   while (true) {
-    yield take(types[ 'PROJECT/GET_FAILED' ])
+    yield take(types.project.GET_FAILED)
 
-    yield put(
-      actions.requestLocation('/projects')
-    )
+    yield all([
+      fork(addToast, {
+        type: 'error',
+        message: 'Project does not exist or internet connection error.'
+      }),
+      put(
+        actions.requestLocation('/projects')
+      )
+    ])
   }
 }
 
@@ -22,6 +28,33 @@ const watchCopyDomainLink = function*() {
       type: 'success',
       message: 'The domain has been copied to clipboard.'
     })
+  }
+}
+
+const watchUpdateProject = function*() {
+  while (true) {
+    const { updateCompleted, updateFailed } = yield race({
+      updateCompleted: take(types.project.UPDATE_COMPLETED),
+      updateFailed: take(types.project.UPDATE_FAILED)
+    })
+
+    if (updateCompleted) {
+      yield all([
+        fork(addToast, {
+          type: 'success',
+          message: 'Your project has been successfully changed.'
+        })
+      ])
+    }
+
+    if (updateFailed) {
+      yield all([
+        fork(addToast, {
+          type: 'error',
+          message: 'Edit project failed. Please check your network connection and try again.'
+        })
+      ])
+    }
   }
 }
 
@@ -62,6 +95,7 @@ export default {
     exact: true,
     *state(path) {
       yield fork(watchCopyDomainLink)
+      yield fork(watchUpdateProject)
       yield fork(watchGetProject)
       yield fork(watchRemoveProject, path)
 
