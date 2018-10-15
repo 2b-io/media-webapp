@@ -1,27 +1,40 @@
 import { all, fork, put, race, select, take } from 'redux-saga/effects'
 
+import { addToast } from 'state/saga/toast'
 import { actions, selectors, types } from 'state/interface'
 import * as Preset from 'views/pages/preset'
-
-const watchGetPreset = function*() {
-  while (true) {
-    yield take(types[ 'PRESET/GET_FAILED' ])
-
-    const { identifier } = yield select(selectors.currentParams)
-
-    yield put(
-      actions.requestLocation(`/projects/${ identifier }`)
-    )
-  }
-}
 
 const watchGetProject = function*() {
   while (true) {
     yield take(types[ 'PROJECT/GET_FAILED' ])
 
-    yield put(
-      actions.requestLocation('/projects')
-    )
+    yield all([
+      put(
+        actions.requestLocation('/projects')
+      ),
+      fork(addToast, {
+        type: 'error',
+        message: 'Project does not exist or internet connection error.'
+      })
+    ])
+  }
+}
+
+const watchGetPreset = function*() {
+  while (true) {
+    yield take(types.preset.GET_FAILED)
+
+    const { identifier } = yield select(selectors.currentParams)
+
+    yield all ([
+      yield fork(addToast, {
+        type: 'error',
+        message: 'Get preset failed.'
+      }),
+      put(
+        actions.requestLocation(`/projects/${ identifier }`)
+      )
+    ])
   }
 }
 
@@ -85,7 +98,7 @@ export default {
     exact: true,
     *state(path) {
       yield fork(watchGetPreset, path)
-      yield fork(watchGetProject, path)
+      yield fork(watchGetProject)
       yield fork(watchRemovePreset, path)
       yield fork(watchUpdatePreset, path)
 
