@@ -15,7 +15,7 @@ const removeToastLoop = function*() {
   while (true) {
     const { payload } = yield take(types.toast.ADD)
 
-    if (payload) {
+    if (payload.toast.type === 'success') {
       yield fork(removeToast, payload.toast)
     }
   }

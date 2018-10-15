@@ -1,4 +1,4 @@
-import { all, take, fork, put, select } from 'redux-saga/effects'
+import { take, fork, put, select } from 'redux-saga/effects'
 import serializeError from 'serialize-error'
 
 import Preset from 'models/preset'
