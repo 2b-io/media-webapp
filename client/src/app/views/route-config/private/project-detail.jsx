@@ -109,12 +109,90 @@ const watchMakeOwner = function*(path) {
   }
 }
 
+const watchCreateSecretKey = function*() {
+  while (true) {
+    const { createCompleted, createFailed } = yield race({
+      createCompleted: take(types.secretKey.CREATE_COMPLETED),
+      createFailed: take(types.secretKey.CREATE_FAILED)
+    })
+
+    if (createCompleted) {
+      yield fork(addToast, {
+        type: 'success',
+        message: 'Created a new API key.'
+      })
+    }
+
+    if (createFailed) {
+      yield fork(addToast, {
+        type: 'error',
+        message: 'Cannot create API key. Please check your internet connection and try again.'
+      })
+    }
+  }
+}
+
+const watchUpdateSecretKey = function*() {
+  while (true) {
+    const {
+      payload: {
+        secretKey: { isActive }
+      }
+    } = yield take(types.secretKey.UPDATE)
+
+    const { updateCompleted, updateFailed } = yield race({
+      updateCompleted: take(types.secretKey.UPDATE_COMPLETED),
+      updateFailed: take(types.secretKey.UPDATE_FAILED)
+    })
+
+    if (updateCompleted) {
+      yield fork(addToast, {
+        type: 'success',
+        message: `${ isActive ? 'Enable' : 'Disable' } the API key completed.`
+      })
+    }
+
+    if (updateFailed) {
+      yield fork(addToast, {
+        type: 'error',
+        message: `Can not ${ isActive ? 'enable' : 'disable' } the API key. Please check your internet connection and try again.`
+      })
+    }
+  }
+}
+
+const watchRemoveSecretKey = function*() {
+  while (true) {
+    const { removeCompleted, removeFailed } = yield race({
+      removeCompleted: take(types.secretKey.REMOVE_COMPLETED),
+      removeFailed: take(types.secretKey.REMOVE_FAILED)
+    })
+
+    if (removeCompleted) {
+      yield fork(addToast, {
+        type: 'success',
+        message: 'Remove the API key completed.'
+      })
+    }
+
+    if (removeFailed) {
+      yield fork(addToast, {
+        type: 'error',
+        message: 'Can not remove the API key. Please check your internet connection and try again.'
+      })
+    }
+  }
+}
+
 export default {
   '/projects/:identifier': {
     component: ProjectDetail,
     exact: true,
     *state(path) {
       yield fork(watchGetProject, path)
+      yield fork(watchCreateSecretKey)
+      yield fork(watchRemoveSecretKey)
+      yield fork(watchUpdateSecretKey)
       yield fork(watchCreatePreset, path)
       yield fork(watchLeaveProject, path)
       yield fork(watchMakeOwner, path)

@@ -97,6 +97,10 @@ const updateLoop = function*() {
         token: session.token
       })
 
+      if(!updatedSecretKey) {
+        throw 'Update secret key failed.'
+      }
+
       yield put(
         actions.updateSecretKeyCompleted({
           identifier,
