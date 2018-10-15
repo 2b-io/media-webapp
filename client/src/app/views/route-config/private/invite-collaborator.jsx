@@ -4,7 +4,6 @@ import { addToast } from 'state/saga/toast'
 import { actions, selectors, types } from 'state/interface'
 import * as InviteCollaborator from 'views/pages/invite-collaborator'
 
-
 const watchInviteCollaborator = function*() {
   while (true) {
     const { inviteCompleted, inviteFailed } = yield race({

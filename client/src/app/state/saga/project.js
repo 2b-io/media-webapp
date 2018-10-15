@@ -199,7 +199,7 @@ const inviteCollaboratorsLoop = function*() {
         token: session.token
       })
 
-      if(!collaborators.length) {
+      if (!collaborators.length) {
         throw 'Invite collaborator failed.'
       }
 

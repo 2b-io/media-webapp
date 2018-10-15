@@ -50,6 +50,29 @@ const watchCreatePreset = function*(path) {
   }
 }
 
+const watchRemoveCollaborator = function*() {
+  while (true) {
+    const { removeCompleted, removeFailed } = yield race({
+      removeCompleted: take(types.project.DELETE_COLLABORATOR_COMPLETED),
+      removeFailed: take(types.project.DELETE_COLLABORATOR_FAILED)
+    })
+
+    if (removeCompleted) {
+      yield fork(addToast, {
+        type: 'success',
+        message: 'The collaborator have been removed.'
+      })
+    }
+
+    if (removeFailed) {
+      yield fork(addToast, {
+        type: 'error',
+        message: 'Can not Remove the collaborator. Please check your internet connection and try again.'
+      })
+    }
+  }
+}
+
 const watchLeaveProject = function*(path) {
   while (true) {
     const action = yield take(`${ types[ 'DIALOG/SHOW' ] }:LEAVE_PROJECT`)
@@ -60,22 +83,36 @@ const watchLeaveProject = function*(path) {
       })
     )
 
-    const { removeCompleted } = yield race({
+    const { removeCompleted, removeFailed } = yield race({
       hide: take(`${ types[ 'DIALOG/HIDE' ] }:LEAVE_PROJECT`),
-      removeCompleted: take(types.project.DELETE_COLLABORATOR_COMPLETED)
+      removeCompleted: take(types.project.DELETE_COLLABORATOR_COMPLETED),
+      removeFailed: take(types.project.DELETE_COLLABORATOR_FAILED)
     })
 
-    yield all([
-      put(
-        actions.mergeUIState(path, {
-          isLeaveProjectDialogActive: false
-        })
-      ),
-      removeCompleted ?
-        put(
-          actions.requestLocation('/projects')
-        ) : null
-    ])
+    yield put(
+      actions.mergeUIState(path, {
+        isLeaveProjectDialogActive: false
+      })
+    )
+
+    // if (removeCompleted) {
+    //   yield all([
+    //     fork(addToast, {
+    //       type: 'success',
+    //       message: 'Leave project successful.'
+    //     }),
+    //     put(
+    //       actions.requestLocation('/projects')
+    //     )
+    //   ])
+    // }
+
+    // if (removeFailed) {
+    //   yield fork(addToast, {
+    //     type: 'error',
+    //     message: 'Leave project failed.'
+    //   })
+    // }
   }
 }
 
@@ -196,6 +233,7 @@ export default {
       yield fork(watchCreatePreset, path)
       yield fork(watchLeaveProject, path)
       yield fork(watchMakeOwner, path)
+      yield fork(watchRemoveCollaborator)
 
       const { identifier } = yield select(selectors.currentParams)
 

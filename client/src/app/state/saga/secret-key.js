@@ -97,7 +97,7 @@ const updateLoop = function*() {
         token: session.token
       })
 
-      if(!updatedSecretKey) {
+      if (!updatedSecretKey) {
         throw 'Update secret key failed.'
       }
 
