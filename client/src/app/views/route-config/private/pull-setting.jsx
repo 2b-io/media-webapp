@@ -35,12 +35,39 @@ const watchGetData = function*() {
   }
 }
 
+const watchUpdatePullSetting = function*() {
+  while (true) {
+    const {
+      updateComPleted,
+      updateFailed
+    } = yield race({
+      updateComPleted: take(types.pullSetting.UPDATE_COMPLETED),
+      updateFailed: take(types.pullSetting.UPDATE_FAILED)
+    })
+
+    if (updateComPleted) {
+      yield fork(addToast, {
+        type: 'success',
+        message: 'Update pull setting completed.'
+      })
+    }
+
+    if (updateFailed) {
+      yield fork(addToast, {
+        type: 'error',
+        message: 'Update pull setting failed.'
+      })
+    }
+  }
+}
+
 export default {
   '/projects/:identifier/pull-setting': {
     component: PullSetting,
     exact: true,
     *state() {
       yield fork(watchGetData)
+      yield fork(watchUpdatePullSetting)
 
       const { identifier } = yield select(selectors.currentParams)
 
