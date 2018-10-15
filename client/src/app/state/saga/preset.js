@@ -27,6 +27,10 @@ const createLoop = function*() {
         token: session.token
       })
 
+      if (!newPreset) {
+        throw 'Create preset failed.'
+      }
+
       yield put(
         actions.createPresetCompleted({
           preset: newPreset,
@@ -105,6 +109,10 @@ const getLoop = function*() {
         token: session.token
       })
 
+      if (!preset) {
+        throw 'Preset not found'
+      }
+
       yield put(
         actions.getPresetCompleted({
           identifier,
@@ -139,6 +147,10 @@ const fetchLoop = function*() {
       }, {
         token: session.token
       })
+
+      if (!presets) {
+        throw 'Presets not found'
+      }
 
       yield put(
         actions.fetchPresetsCompleted({
@@ -176,6 +188,10 @@ const updateLoop = function*() {
       }, {
         token: session.token
       })
+
+      if (!updatedPreset) {
+        throw 'Preset can not update'
+      }
 
       yield put(
         actions.updatePresetCompleted({

@@ -25,6 +25,10 @@ const getLoop = function*() {
         token: session.token
       })
 
+      if (!pullSetting) {
+        throw 'PullSetting not found'
+      }
+
       yield put(
         actions.getPullSettingCompleted({
           identifier,
@@ -61,6 +65,10 @@ const updateLoop = function*() {
       }, {
         token: session.token
       })
+
+      if (!updatedPullSetting) {
+        throw 'Update Pull setting failed.'
+      }
 
       yield put(
         actions.updatePullSettingCompleted({
