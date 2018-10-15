@@ -63,23 +63,30 @@ const watchCreatePreset = function*(path) {
       })
     )
 
-    const { createCompleted } = yield race({
+    const { createCompleted, createFailed } = yield race({
       hide: take(`${ types[ 'DIALOG/HIDE' ] }:CREATE_PRESET`),
       createCompleted: take(types.preset.CREATE_COMPLETED),
       createFailed: take(types.preset.CREATE_FAILED)
     })
 
-    yield all([
-      put(
-        actions.mergeUIState(path, {
-          isCreatePresetDialogActive: false
-        })
-      ),
-      createCompleted ?
-        put(
-          actions.requestLocation(`/projects/${ createCompleted.payload.identifier }/presets/${ createCompleted.payload.preset.contentType.replace('/', '_') }`)
-        ) : null
-    ])
+    yield put(
+      actions.mergeUIState(path, {
+        isCreatePresetDialogActive: false
+      })
+    )
+
+    if (createCompleted) {
+      yield put(
+        actions.requestLocation(`/projects/${ createCompleted.payload.identifier }/presets/${ createCompleted.payload.preset.contentType.replace('/', '_') }`)
+      )
+    }
+
+    if (createFailed) {
+      yield fork(addToast, {
+        type: 'error',
+        message: 'Can not add new preset. Please check your network connection and try again.'
+      })
+    }
   }
 }
 
