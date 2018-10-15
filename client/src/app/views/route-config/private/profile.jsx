@@ -69,21 +69,17 @@ const watchUpdateProfile = function*() {
     })
 
     if (completed) {
-      yield all([
-        fork(addToast, {
-          type: 'success',
-          message: 'Your profile has been successfully updated.'
-        })
-      ])
+      yield fork(addToast, {
+        type: 'success',
+        message: 'Your profile has been successfully updated.'
+      })
     }
 
     if (failed) {
-      yield all([
-        fork(addToast, {
-          type: 'error',
-          message: 'Edit profile failed. Please check your network connection and try again.'
-        })
-      ])
+      yield fork(addToast, {
+        type: 'error',
+        message: 'Edit profile failed. Please check your network connection and try again.'
+      })
     }
   }
 }

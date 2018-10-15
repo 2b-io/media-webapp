@@ -39,21 +39,17 @@ const watchUpdateProject = function*() {
     })
 
     if (updateCompleted) {
-      yield all([
-        fork(addToast, {
-          type: 'success',
-          message: 'Your project has been successfully changed.'
-        })
-      ])
+      yield fork(addToast, {
+        type: 'success',
+        message: 'Your project has been successfully changed.'
+      })
     }
 
     if (updateFailed) {
-      yield all([
-        fork(addToast, {
-          type: 'error',
-          message: 'Edit project failed. Please check your network connection and try again.'
-        })
-      ])
+      yield fork(addToast, {
+        type: 'error',
+        message: 'Edit project failed. Please check your network connection and try again.'
+      })
     }
   }
 }
@@ -68,24 +64,36 @@ const watchRemoveProject = function*(path) {
       })
     )
 
-    const { removeCompleted } = yield race({
+    const { removeCompleted, removeFailed } = yield race({
       hide: take(`${ types[ 'DIALOG/HIDE' ] }:REMOVE_PROJECT`),
-      removeCompleted: take(types[ 'PROJECT/REMOVE_COMPLETED' ]),
-      removeFailed: take(types[ 'PROJECT/REMOVE_FAILED' ])
+      removeCompleted: take(types.project.REMOVE_COMPLETED),
+      removeFailed: take(types.project.REMOVE_FAILED)
     })
 
-    yield all([
-      put(
-        actions.mergeUIState(path, {
-          isRemoveConfirmationDialogActive: false,
+    yield put(
+      actions.mergeUIState(path, {
+        isRemoveConfirmationDialogActive: false,
+      })
+    )
 
-        })
-      ),
-      removeCompleted ?
+    if (removeCompleted) {
+      yield all([
+        fork(addToast, {
+          type: 'success',
+          message: 'Your project has been successfully deleted. Please wait a minute to finish your change.'
+        }),
         put(
           actions.requestLocation('/projects')
-        ) : null
-    ])
+        )
+      ])
+    }
+
+    if (removeFailed) {
+      yield fork(addToast, {
+        type: 'error',
+        message: 'Delete project failed. Please check your network connection and try again.'
+      })
+    }
   }
 }
 
