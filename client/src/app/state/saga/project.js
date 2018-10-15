@@ -199,6 +199,10 @@ const inviteCollaboratorsLoop = function*() {
         token: session.token
       })
 
+      if(!collaborators.length) {
+        throw 'Invite collaborator failed.'
+      }
+
       yield all([
         put(
           actions.inviteCollaboratorCompleted(identifier, collaborators || [])
