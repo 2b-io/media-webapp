@@ -103,6 +103,10 @@ const getLoop = function*() {
         token: session.token
       })
 
+      if (!project) {
+        throw 'Project not found'
+      }
+
       yield put(
         actions.getProjectCompleted(project)
       )
@@ -128,6 +132,10 @@ const fetchLoop = function*() {
       const projects = yield Project.fetch(null, {
         token: session.token
       })
+
+      if (!projects) {
+        throw 'Projects not found'
+      }
 
       yield put(
         actions.fetchProjectsCompleted(projects)
@@ -160,6 +168,10 @@ const updateLoop = function*() {
       }, {
         token: session.token
       })
+
+      if (!updatedProject) {
+        throw 'Project can not update'
+      }
 
       yield all([
         put(
