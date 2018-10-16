@@ -3,7 +3,7 @@ import {
   GraphQLNonNull,
   GraphQLString
 } from 'graphql'
-import {
+import projectService, {
   getByIdentifier as getProjectByIdentifier,
   list as listProjectsByAccount
 } from 'services/project'
@@ -34,7 +34,10 @@ export default () => ({
     },
     type: Project,
     resolve: async (account, { identifier }) => {
-      const project = await getProjectByIdentifier(identifier, account._id)
+      const project = await projectService.get({
+        identifier
+      }, account._id)
+
       // add ref
       project.account = account
       return project

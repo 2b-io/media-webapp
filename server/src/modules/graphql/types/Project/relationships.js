@@ -22,9 +22,7 @@ import {
   list as listPermissions
 } from 'services/permission'
 
-import {
-  getInfrastructure
-} from 'services/infrastructure'
+import infrastructureService from 'services/infrastructure'
 
 import { Account } from '../Account'
 import { Collaborator } from '../Collaborator'
@@ -98,7 +96,12 @@ export default () => ({
   infrastructure: {
     type: Infrastructure,
     resolve: async (project) => {
-      return await getInfrastructure(project._id)
+      const infrastructure = await infrastructureService.get(project._id)
+
+      // add ref
+      infrastructure.project = project
+
+      return infrastructure
     }
   },
   pullSetting: {

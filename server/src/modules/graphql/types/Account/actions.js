@@ -56,7 +56,7 @@ export default ({ Account, AccountStruct }) => ({
       const p = await createProject(project, provider, account)
 
       // add ref
-      p._account = account
+      p.account = account
 
       return p
     }

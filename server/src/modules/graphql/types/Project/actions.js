@@ -18,7 +18,7 @@ import {
   remove as removeCollaborator,
   makeOwner as makeOwner
 } from 'services/permission'
-import {
+import projectService, {
   remove as removeProject,
   update as updateProject,
   invalidateCache,
@@ -42,10 +42,12 @@ export default ({ Project, ProjectStruct }) => ({
     },
     type: Project,
     resolve: async (self, { project }) => {
-      const p = await updateProject(self.identifier, project)
+      const p = await projectService.update({
+        identifier: self.identifier
+      }, self.account._id, project)
 
       // add ref
-      p._account = self._account
+      p.account = self.account
 
       return p
     }
@@ -53,7 +55,9 @@ export default ({ Project, ProjectStruct }) => ({
   _destroy: {
     type: GraphQLBoolean,
     resolve: async (self) => {
-      return removeProject(self)
+      return await removeProject({
+        identifier: self.identifier
+      }, self.account)
     }
   },
   _createPreset: {
@@ -67,7 +71,7 @@ export default ({ Project, ProjectStruct }) => ({
       const p = await createPreset(project._id, preset)
 
       // add ref
-      p._project = project
+      p.project = project
 
       return p
     }
