@@ -26,7 +26,14 @@ const Indicator = styled.div`
   left: 0;
   right: 0;
   height: 2px;
-  background: ${ ({ theme }) => theme.black.base };
+  background: ${
+    ({ disabled, theme }) => disabled ? '#e6e6e6' : theme.black.base
+  };
+`
+
+const DisableState = styled.div`
+
+  color: ${ ({ disabled, theme }) => disabled ? '#e6e6e6' : theme.black.base };
 `
 
 const renderOptions = (options, currentValue, onChoose) => {
@@ -66,11 +73,17 @@ const Select = ({
   <Wrapper>
     <Input>
       <TextLine mostLeft>
-        { findLabelByValue(options, value) }
+        <DisableState disabled={ disabled }>
+          { findLabelByValue(options, value) }
+        </DisableState>
       </TextLine>
       <ContextMenu.Menu
         disabled={ disabled }
-        icon={ () => <ExpandIcon /> }
+        icon={ () => (
+          <DisableState disabled={ disabled }>
+            <ExpandIcon />
+          </DisableState>
+        ) }
         content={ () => renderOptions(options, value, onChange) }
         stateless={ true }
         isActive={ active }
@@ -78,7 +91,7 @@ const Select = ({
         deactivate={ onBlur }
       />
     </Input>
-    <Indicator />
+    <Indicator disabled={ disabled } />
   </Wrapper>
 )
 
