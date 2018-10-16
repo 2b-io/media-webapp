@@ -15,13 +15,9 @@ const ProjectForm = ({
   domain,
   status,
   isActive,
-  showRemoveProjectDialog,
-  idle
+  showRemoveProjectDialog
 }) => (
-  <Form
-    handleSubmit={ handleSubmit }
-    idle={ idle=true }
-  >
+  <Form handleSubmit={ handleSubmit }>
     <TextBox
       label="Project Name"
       name="name"
@@ -64,10 +60,7 @@ const ProjectForm = ({
           {
             isActive ?
               null :
-              <TextButton
-                disabled={ !idle }
-                onClick={ showRemoveProjectDialog }
-              >
+              <TextButton onClick={ showRemoveProjectDialog }>
                 Permanently delete
               </TextButton>
           }
