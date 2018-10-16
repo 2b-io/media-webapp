@@ -51,13 +51,16 @@ const Fab = styled.button`
   line-height: 40px;
   appearance: none;
   background: ${
-    ({ theme }) => theme.white.base
+    ({ disabled, theme }) => disabled ? '#e6e6e6' : theme.white.base
   };
   color: ${
     ({ theme }) => theme.white.on.base
   };
   outline: none;
   border: none;
+  cursor: ${
+    ({ disabled }) => disabled ? 'not-allowed' : 'pointer'
+  };
 `
 
 const FabBorder = styled.div`
@@ -77,14 +80,19 @@ const FabContent = styled.div`
 const Content = styled.div`
 `
 
-const Card = ({ title, fab, content, ...props }) => (
+const Card = ({
+  disabled,
+  title,
+  fab,
+  content,
+  ...props }) => (
   <Wrapper { ...props }>
     { title && (
       <Fragment>
         <Header hasFab={ !!fab }>
           { title && title() }
           { fab && (
-            <Fab>
+            <Fab disabled={ disabled }>
               <FabBorder />
               <FabContent>{ fab() }</FabContent>
             </Fab>
