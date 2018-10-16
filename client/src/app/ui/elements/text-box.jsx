@@ -25,7 +25,7 @@ const Input = styled.input.attrs({
   display: block;
   appearance: none;
   background: ${ ({ theme }) => theme.white.base };
-  color: ${ ({ readOnly, theme }) => readOnly ? '#e6e6e6' : theme.black.base };
+  color: ${ ({ disabled, theme }) => disabled ? '#e6e6e6' : theme.black.base };
   border: none;
   border-radius: 0;
   outline: none;
@@ -53,7 +53,7 @@ const Indicator = styled.div`
   right: 0;
   height: 2px;
   background: ${
-    ({ readOnly, theme }) => readOnly ? '#e6e6e6' : theme.black.base
+    ({ disabled, theme }) => disabled ? '#e6e6e6' : theme.black.base
   };
 `
 
@@ -84,7 +84,7 @@ const TextBox = ({
         { ...props }
       />
       { trailing && trailing() }
-      <Indicator readOnly={ props.readOnly } />
+      <Indicator disabled={ props.disabled } />
     </Container>
     <Assistive>
       { props.readOnly &&
