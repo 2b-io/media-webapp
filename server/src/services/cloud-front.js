@@ -5,20 +5,20 @@ import config from 'infrastructure/config'
 const { cdnServer } = config
 
 const create = async (data) => {
-  const distribution = await request
+  const response = await request
     .post(`${ cdnServer }/distributions`)
     .set('Content-Type', 'application/json')
     .send(data)
 
-  return distribution.body
+  return response.body
 }
 
 const get = async (identifier) => {
-  const distribution = await request
+  const response = await request
     .get(`${ cdnServer }/distributions/${ identifier }`)
     .set('Content-Type', 'application/json')
 
-  return distribution.body
+  return response.body
 }
 
 const remove = async (identifier) => {
@@ -30,12 +30,12 @@ const remove = async (identifier) => {
 }
 
 const update = async (identifier, data) => {
-  const distribution = await request
+  const response = await request
     .put(`${ cdnServer }/distributions/${ identifier }`)
     .set('Content-Type', 'application/json')
     .send(data)
 
-  return distribution.body
+  return response.body
 }
 
 export default {

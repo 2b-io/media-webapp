@@ -7,16 +7,15 @@ export const create = async (project, provider) => {
     throw 'Invalid parameters: Not support [provider] value'
   }
 
-  const distribution = await cloudFront.create({
-    identifier: project.identifier,
-    cname: config.cdnCname
+  const { distribution, domain } = await cloudFront.create({
+    identifier: project.identifier
   })
 
   return await new Infrastructure({
     project: project._id,
     identifier: distribution.Id,
     domain: distribution.DomainName,
-    cname: config.cdnCname,
+    cname: domain,
     provider
   }).save()
 }

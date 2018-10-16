@@ -9,12 +9,6 @@ export default {
   },
   domain: {
     type: GraphQLString,
-    resolve: (self) => {
-      if (!self.cname) {
-        return self.domain
-      }
-
-      return `${ self.project.identifier }.${ self.cname }`
-    }
+    resolve: (self) => self.cname || self.domain
   }
 }
