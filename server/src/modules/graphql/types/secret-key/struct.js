@@ -1,5 +1,4 @@
 import {
-  GraphQLString,
   GraphQLBoolean
 } from 'graphql'
 

@@ -28,7 +28,11 @@ export const get = async (projectID) => {
 }
 
 export const remove = async (projectID) => {
-  const infrastructure = getInfrastructure(projectID)
+  const infrastructure = await get(projectID)
+
+  if (!infrastructure) {
+    throw 'Infrastructure not found'
+  }
 
   await Promise.all([
     Infrastructure.findOneAndRemove({

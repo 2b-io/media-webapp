@@ -1,7 +1,5 @@
 import { GraphQLString } from 'graphql'
 
-import config from 'infrastructure/config'
-
 export default {
   identifier: {
     type: GraphQLString

@@ -22,7 +22,7 @@ const get = async (identifier) => {
 }
 
 const remove = async (identifier) => {
-  const distribution = await request
+  await request
     .delete(`${ cdnServer }/distributions/${ identifier }`)
     .set('Content-Type', 'application/json')
 

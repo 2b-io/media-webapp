@@ -101,7 +101,6 @@ export const get = async (condition, account) => {
     DistributionConfig: infraConfig
   } = distribution
 
-  const isActive = infraConfig.Enabled
   const latestStatus = (infraStatus === 'InProgress') ? (
     project.status === 'INITIALIZING' ?
       'INITIALIZING' : 'UPDATING'
@@ -123,13 +122,13 @@ export const getByID = async (id) => {
   }).lean()
 }
 
-export const list = async (account) => {
-  if (!account) {
-    throw 'Invaid parameters: Missing [account]'
+export const list = async (accountID) => {
+  if (!accountID) {
+    throw 'Invaid parameters: Missing [accountID]'
   }
 
   const permissions = await Permission.find({
-    account
+    account: accountID
   }).lean()
 
   const projects = await Promise.all(
