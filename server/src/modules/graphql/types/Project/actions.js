@@ -1,9 +1,8 @@
 import {
   GraphQLBoolean,
+  GraphQLList,
   GraphQLNonNull,
-  GraphQLString,
-  GraphQLList
-
+  GraphQLString
 } from 'graphql'
 
 import {
@@ -19,12 +18,7 @@ import {
   remove as removeCollaborator,
   makeOwner as makeOwner
 } from 'services/permission'
-import {
-  remove as removeProject,
-  update as updateProject,
-  invalidateCache,
-  invalidateAllCache
-} from 'services/project'
+import projectService from 'services/project'
 import { get as getPullSetting } from 'services/pull-setting'
 import {
   forgotPassword as createResetCode
@@ -43,10 +37,12 @@ export default ({ Project, ProjectStruct }) => ({
     },
     type: Project,
     resolve: async (self, { project }) => {
-      const p = await updateProject(self.identifier, project)
+      const p = await projectService.update({
+        identifier: self.identifier
+      }, self.account._id, project)
 
       // add ref
-      p._account = self._account
+      p.account = self.account
 
       return p
     }
@@ -54,7 +50,9 @@ export default ({ Project, ProjectStruct }) => ({
   _destroy: {
     type: GraphQLBoolean,
     resolve: async (self) => {
-      return removeProject(self)
+      return await projectService.remove({
+        identifier: self.identifier
+      }, self.account)
     }
   },
   _createPreset: {
@@ -68,7 +66,7 @@ export default ({ Project, ProjectStruct }) => ({
       const p = await createPreset(project._id, preset)
 
       // add ref
-      p._project = project
+      p.project = project
 
       return p
     }
@@ -175,17 +173,10 @@ export default ({ Project, ProjectStruct }) => ({
     },
     type: GraphQLBoolean,
     resolve: async (project, { patterns }) => {
-      const { identifier, _id: _project } = project
-      const { pullURL } = await getPullSetting(_project)
-      return await invalidateCache(patterns, identifier, pullURL)
+      const { identifier } = project
+      const { pullURL } = await getPullSetting(project._id)
+
+      return await projectService.invalidateCache(patterns, identifier, pullURL)
     }
-  },
-  _invalidateAllCache: {
-    type: GraphQLBoolean,
-    resolve: async (project) => {
-      const { identifier, _id: _project } = project
-      const { pullURL } = await getPullSetting(_project)
-      return await invalidateAllCache(identifier, pullURL)
-    }
-  },
+  }
 })
