@@ -45,7 +45,9 @@ const CircleThumb = styled.div`
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: ${ ({ theme }) => theme.primary.base };
+  background: ${
+    ({ disabled, theme }) => disabled ? '#e6e6e6' : theme.primary.base
+  };
   position: absolute;
   top: -7px;
   right: -8px;
@@ -62,9 +64,13 @@ const Track = styled.div.attrs({
   transform: translate3d(0, 7px, 0);
   user-select: none;
   background: ${
-    ({ active, theme }) => active ?
-      theme.primary.base :
-      theme.black.base
+    ({ active, disabled, theme }) => {
+      if (disabled) {
+        return '#e6e6e6'
+      }
+
+      return active ? theme.primary.base : theme.black.base
+    }
   };
   ${
     ({ interactable }) => interactable && css`
@@ -82,7 +88,7 @@ const SlideBar = ({
   label,
   ...props
 }) => {
-  const { min, max, value } = props
+  const { disabled, min, max, value } = props
   const relativeValue = Math.abs((value - min) / (max - min)) * 100
 
   return (
@@ -92,14 +98,25 @@ const SlideBar = ({
         <TextLine align="center">{ value }</TextLine>
       </Header>
       <Container>
-        <Track active onClick={ () => props.onChange(min) } />
-        <Track interactable>
-          <Track active relativeValue={ relativeValue }>
-            <CircleThumb />
+        <Track
+          active
+          disabled={ disabled }
+          onClick={ () => !disabled && props.onChange(min) }
+        />
+        <Track disabled={ disabled } interactable>
+          <Track
+            active
+            disabled={ disabled }
+            relativeValue={ relativeValue }
+          >
+            <CircleThumb disabled={ disabled } />
           </Track>
           <Range { ...props } />
         </Track>
-        <Track onClick={ () => props.onChange(max) } />
+        <Track
+          disabled={ disabled }
+          onClick={ () => !disabled && props.onChange(max) }
+        />
       </Container>
     </Wrapper>
   )
