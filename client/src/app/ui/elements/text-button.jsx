@@ -23,12 +23,14 @@ const Button = styled.button.attrs({
     ({ disabled }) => disabled ? 'not-allowed' : 'pointer'
   };
 `
+
 const Wrapper = styled.div`
   text-align: center;
   display: block;
   line-height: 40px;
   height: 40px;
 `
+
 const TextButton = ({ ...props }) =>(
   <Wrapper>
     <Button { ...props } />

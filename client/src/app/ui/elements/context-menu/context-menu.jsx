@@ -35,6 +35,10 @@ const Content = styled.div`
   z-index: 1;
 `
 
+const MenuDisable = styled.div`
+  background-color: ${ ({ disabled }) => disabled && '#e6e6e6' };;
+`
+
 class ContextMenu extends Component {
   constructor(...args) {
     super(...args)
@@ -86,8 +90,10 @@ class ContextMenu extends Component {
 
     return (
       <Menu>
-        <Button plain onClick={ this.activate }>
-          { icon && icon({ isActive }) || <MoreIcon /> }
+        <Button disabled={ this.props.disabled } plain onClick={ this.activate }>
+          <MenuDisable disabled={ this.props.disabled }>
+            { icon && icon({ isActive }) || <MoreIcon /> }
+          </MenuDisable>
         </Button>
         { isActive && (
           <MenuContent>

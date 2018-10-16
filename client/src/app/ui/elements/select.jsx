@@ -58,6 +58,7 @@ const findLabelByValue = (options, value) => {
 }
 
 const Select = ({
+  disabled,
   options,
   active, value,
   onBlur, onChange, onFocus
@@ -68,6 +69,7 @@ const Select = ({
         { findLabelByValue(options, value) }
       </TextLine>
       <ContextMenu.Menu
+        disabled={ disabled }
         icon={ () => <ExpandIcon /> }
         content={ () => renderOptions(options, value, onChange) }
         stateless={ true }
