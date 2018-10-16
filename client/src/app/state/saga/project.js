@@ -1,4 +1,4 @@
-import { all, take, fork, put, select } from 'redux-saga/effects'
+import { take, fork, put, select } from 'redux-saga/effects'
 import serializeError from 'serialize-error'
 
 import Project from 'models/project'
@@ -28,14 +28,12 @@ const createLoop = function*() {
       })
 
       if (!newProject) {
-        throw 'Create project failed.'
+        throw 'Create project failed'
       }
 
-      yield all([
-        put(
-          actions.createProjectCompleted(newProject)
-        )
-      ])
+      yield put(
+        actions.createProjectCompleted(newProject)
+      )
     } catch (e) {
       yield put(
         actions.createProjectFailed(serializeError(e))
@@ -69,11 +67,9 @@ const removeLoop = function*() {
         throw new 'Remove project failed'
       }
 
-      yield all([
-        put(
-          actions.removeProjectCompleted(identifier)
-        )
-      ])
+      yield put(
+        actions.removeProjectCompleted(identifier)
+      )
     } catch (e) {
       yield put(
         actions.removeProjectFailed(serializeError(e))
@@ -104,7 +100,7 @@ const getLoop = function*() {
       })
 
       if (!project) {
-        throw 'Project not found'
+        throw 'Get project failed'
       }
 
       yield put(
@@ -134,7 +130,7 @@ const fetchLoop = function*() {
       })
 
       if (!projects) {
-        throw 'Projects not found'
+        throw 'Fetch project failed'
       }
 
       yield put(
@@ -173,11 +169,9 @@ const updateLoop = function*() {
         throw 'Project can not update'
       }
 
-      yield all([
-        put(
-          actions.updateProjectCompleted(updatedProject)
-        )
-      ])
+      yield put(
+        actions.updateProjectCompleted(updatedProject)
+      )
     } catch (e) {
       yield put(
         actions.updateProjectFailed(serializeError(e))
@@ -211,15 +205,13 @@ const inviteCollaboratorsLoop = function*() {
         token: session.token
       })
 
-      if (!collaborators.length) {
-        throw 'Invite collaborator failed.'
+      if (!collaborators) {
+        throw 'Invite collaborator failed'
       }
 
-      yield all([
-        put(
-          actions.inviteCollaboratorCompleted(identifier, collaborators || [])
-        )
-      ])
+      yield put(
+        actions.inviteCollaboratorCompleted(identifier, collaborators || [])
+      )
     } catch (e) {
       yield put(
         actions.inviteCollaboratorFailed(serializeError(e))
@@ -255,17 +247,13 @@ const deleteCollaboratorLoop = function*() {
         throw 'Remove collaborator failed'
       }
 
-      yield all([
-        put(
-          actions.deleteCollaboratorCompleted(identifier, accountId)
-        )
-      ])
+      yield put(
+        actions.deleteCollaboratorCompleted(identifier, accountId)
+      )
     } catch (e) {
-      yield all([
-        put(
-          actions.deleteCollaboratorFailed(serializeError(e))
-        )
-      ])
+      yield put(
+        actions.deleteCollaboratorFailed(serializeError(e))
+      )
     }
   }
 }
@@ -297,12 +285,9 @@ const makeOwnerLoop = function*() {
         throw 'Make owner failed'
       }
 
-      yield all([
-        put(
-          actions.makeOwnerCompleted(identifier, session.account.identifier, accountId)
-        )
-      ])
-
+      yield put(
+        actions.makeOwnerCompleted(identifier, session.account.identifier, accountId)
+      )
     } catch (e) {
       yield put(
         actions.makeOwnerFailed(serializeError(e))
@@ -338,11 +323,9 @@ const invalidateCacheLoop = function*() {
         throw 'Invalidate cache failed'
       }
 
-      yield all([
-        put(
-          actions.invalidateCacheCompleted(identifier, patterns)
-        )
-      ])
+      yield put(
+        actions.invalidateCacheCompleted(identifier, patterns)
+      )
     } catch (e) {
       yield put(
         actions.invalidateCacheFailed(serializeError(e))

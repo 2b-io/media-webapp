@@ -5,19 +5,17 @@ import { actions, types, selectors } from 'state/interface'
 import * as CacheInvalidate from 'views/pages/cache-invalidate'
 
 const watchGetProject = function*() {
-  while (true) {
-    yield take(types.project.GET_FAILED)
+  yield take(types.project.GET_FAILED)
 
-    yield all([
-      put(
-        actions.requestLocation('/projects')
-      ),
-      fork(addToast, {
-        type: 'error',
-        message: 'Project does not exist or internet connection error.'
-      })
-    ])
-  }
+  yield all([
+    put(
+      actions.requestLocation('/projects')
+    ),
+    fork(addToast, {
+      type: 'error',
+      message: 'Project does not exist or internet connection error.'
+    })
+  ])
 }
 
 const watchCacheInvalidator = function*(path) {

@@ -86,7 +86,7 @@ const watchUpdateProfile = function*() {
 
 const watchMenu = function*(path) {
   while (true) {
-    yield take(types[ 'MENU/SHOW' ])
+    yield take(types.menu.SHOW)
 
     yield put(
       actions.mergeUIState(path, {
@@ -94,7 +94,7 @@ const watchMenu = function*(path) {
       })
     )
 
-    yield take(types[ 'MENU/HIDE' ])
+    yield take(types.menu.HIDE)
 
     yield put(
       actions.mergeUIState(path, {

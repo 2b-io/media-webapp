@@ -5,19 +5,17 @@ import * as EditProject from 'views/pages/edit-project'
 import { addToast } from 'state/saga/toast'
 
 const watchGetProject = function*() {
-  while (true) {
-    yield take(types.project.GET_FAILED)
+  yield take(types.project.GET_FAILED)
 
-    yield all([
-      fork(addToast, {
-        type: 'error',
-        message: 'Project does not exist or internet connection error.'
-      }),
-      put(
-        actions.requestLocation('/projects')
-      )
-    ])
-  }
+  yield all([
+    fork(addToast, {
+      type: 'error',
+      message: 'Project does not exist or internet connection error.'
+    }),
+    put(
+      actions.requestLocation('/projects')
+    )
+  ])
 }
 
 const watchCopyDomainLink = function*() {
@@ -56,7 +54,7 @@ const watchUpdateProject = function*() {
 
 const watchRemoveProject = function*(path) {
   while (true) {
-    yield take(`${ types[ 'DIALOG/SHOW' ] }:REMOVE_PROJECT`)
+    yield take(`${ types.dialog.SHOW }:REMOVE_PROJECT`)
 
     yield put(
       actions.mergeUIState(path, {
@@ -65,7 +63,7 @@ const watchRemoveProject = function*(path) {
     )
 
     const { removeCompleted, removeFailed } = yield race({
-      hide: take(`${ types[ 'DIALOG/HIDE' ] }:REMOVE_PROJECT`),
+      hide: take(`${ types.dialog.HIDE }:REMOVE_PROJECT`),
       removeCompleted: take(types.project.REMOVE_COMPLETED),
       removeFailed: take(types.project.REMOVE_FAILED)
     })

@@ -4,35 +4,27 @@ import { addToast } from 'state/saga/toast'
 import { actions, types, selectors } from 'state/interface'
 import * as PullSetting from 'views/pages/pull-setting'
 
-const watchGetData = function*() {
-  while (true) {
-    const {
-      getProjectFailed,
-      getPullSettingFailed
-    } = yield race({
-      getProjectFailed: take(types.project.GET_FAILED),
-      getPullSettingFailed: take(types.pullSetting.GET_FAILED)
-    })
+const watchGetProject = function*() {
+  yield take(types.project.GET_FAILED)
 
-    if (getProjectFailed) {
-      yield all([
-        fork(addToast, {
-          type: 'error',
-          message: 'Project does not exist or internet connection error.'
-        }),
-        put(
-          actions.requestLocation('/projects')
-        )
-      ])
-    }
+  yield all([
+    fork(addToast, {
+      type: 'error',
+      message: 'Project does not exist or internet connection error.'
+    }),
+    put(
+      actions.requestLocation('/projects')
+    )
+  ])
+}
 
-    if (getPullSettingFailed) {
-      yield fork(addToast, {
-        type: 'error',
-        message: 'Get pull setting failed.'
-      })
-    }
-  }
+const watchGetPullSetting = function*() {
+  yield take(types.pullSetting.GET_FAILED)
+
+  yield fork(addToast, {
+    type: 'error',
+    message: 'Get pull setting failed.'
+  })
 }
 
 const watchUpdatePullSetting = function*() {
@@ -66,7 +58,8 @@ export default {
     component: PullSetting,
     exact: true,
     *state() {
-      yield fork(watchGetData)
+      yield fork(watchGetProject)
+      yield fork(watchGetPullSetting)
       yield fork(watchUpdatePullSetting)
 
       const { identifier } = yield select(selectors.currentParams)

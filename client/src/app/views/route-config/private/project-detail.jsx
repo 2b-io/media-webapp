@@ -4,58 +4,50 @@ import { addToast } from 'state/saga/toast'
 import { actions, selectors, types } from 'state/interface'
 import * as ProjectDetail from 'views/pages/project-detail'
 
-const watchGetProjectDetail = function*() {
-  while (true) {
-    const {
-      fetchPresetsFailed,
-      fetchSecretKeyFailed,
-      getProjectFailed,
-      getPullSettingFailed
-    } = yield race({
-      fetchPresetsFailed: take(types.preset.FETCH_FAILED),
-      getProjectFailed: take(types.project.GET_FAILED),
-      getPullSettingFailed: take(types.pullSetting.GET_FAILED),
-      fetchSecretKeyFailed: take(types.secretKey.FETCH_FAILED)
-    })
+const watchGetProject = function*() {
+  yield take(types.project.GET_FAILED)
 
-    if (getProjectFailed) {
-      yield all([
-        fork(addToast, {
-          type: 'error',
-          message: 'Project does not exist or internet connection error.'
-        }),
-        put(
-          actions.requestLocation('/projects')
-        )
-      ])
-    }
+  yield all([
+    fork(addToast, {
+      type: 'error',
+      message: 'Project does not exist or internet connection error.'
+    }),
+    put(
+      actions.requestLocation('/projects')
+    )
+  ])
+}
 
-    if (fetchPresetsFailed) {
-      yield fork(addToast, {
-        type: 'error',
-        message: 'Fetch presets failed.'
-      })
-    }
+const watchFetchPreset = function*() {
+  yield take(types.preset.FETCH_FAILED)
 
-    if (getPullSettingFailed) {
-      yield fork(addToast, {
-        type: 'error',
-        message: 'Get pull setting failed.'
-      })
-    }
+  yield fork(addToast, {
+    type: 'error',
+    message: 'Fetch presets failed.'
+  })
+}
 
-    if (fetchSecretKeyFailed) {
-      yield fork(addToast, {
-        type: 'error',
-        message: 'Fetch secret key failed.'
-      })
-    }
-  }
+const watchFetchSecretKey = function*() {
+  yield take(types.secretKey.FETCH_FAILED)
+
+  yield fork(addToast, {
+    type: 'error',
+    message: 'Fetch secret key failed.'
+  })
+}
+
+const watchGetPullSetting = function*() {
+  yield take(types.pullSetting.GET_FAILED)
+
+  yield fork(addToast, {
+    type: 'error',
+    message: 'Get pull setting failed.'
+  })
 }
 
 const watchCreatePreset = function*(path) {
   while (true) {
-    yield take(`${ types[ 'DIALOG/SHOW' ] }:CREATE_PRESET`)
+    yield take(`${ types.dialog.SHOW }:CREATE_PRESET`)
 
     yield put(
       actions.mergeUIState(path, {
@@ -64,7 +56,7 @@ const watchCreatePreset = function*(path) {
     )
 
     const { createCompleted, createFailed } = yield race({
-      hide: take(`${ types[ 'DIALOG/HIDE' ] }:CREATE_PRESET`),
+      hide: take(`${ types.dialog.HIDE }:CREATE_PRESET`),
       createCompleted: take(types.preset.CREATE_COMPLETED),
       createFailed: take(types.preset.CREATE_FAILED)
     })
@@ -115,7 +107,7 @@ const watchRemoveCollaborator = function*() {
 
 const watchLeaveProject = function*(path) {
   while (true) {
-    const action = yield take(`${ types[ 'DIALOG/SHOW' ] }:LEAVE_PROJECT`)
+    const action = yield take(`${ types.dialog.SHOW }:LEAVE_PROJECT`)
 
     yield put(
       actions.mergeUIState(path, {
@@ -124,7 +116,7 @@ const watchLeaveProject = function*(path) {
     )
 
     yield race({
-      hide: take(`${ types[ 'DIALOG/HIDE' ] }:LEAVE_PROJECT`),
+      hide: take(`${ types.dialog.HIDE }:LEAVE_PROJECT`),
       removeCompleted: take(types.project.DELETE_COLLABORATOR_COMPLETED),
       removeFailed: take(types.project.DELETE_COLLABORATOR_FAILED)
     })
@@ -139,7 +131,7 @@ const watchLeaveProject = function*(path) {
 
 const watchMakeOwner = function*(path) {
   while (true) {
-    const action = yield take(`${ types[ 'DIALOG/SHOW' ] }:MAKE_OWNER`)
+    const action = yield take(`${ types.dialog.SHOW }:MAKE_OWNER`)
     const { identifier } = action.payload.params
 
     yield put(
@@ -149,7 +141,7 @@ const watchMakeOwner = function*(path) {
     )
 
     const { makeOwnerCompleted, makeOwnerFailed } = yield race({
-      hide: take(`${ types[ 'DIALOG/HIDE' ] }:MAKE_OWNER`),
+      hide: take(`${ types.dialog.HIDE }:MAKE_OWNER`),
       makeOwnerCompleted: take(types.project.MAKE_OWNER_COMPLETED),
       makeOwnerFailed: take(types.project.MAKE_OWNER_FAILED)
     })
@@ -261,7 +253,10 @@ export default {
     component: ProjectDetail,
     exact: true,
     *state(path) {
-      yield fork(watchGetProjectDetail)
+      yield fork(watchGetProject)
+      yield fork(watchFetchPreset)
+      yield fork(watchFetchSecretKey)
+      yield fork(watchGetPullSetting)
       yield fork(watchCreateSecretKey)
       yield fork(watchRemoveSecretKey)
       yield fork(watchUpdateSecretKey)
