@@ -1,10 +1,8 @@
-import { all, take, fork, put, select } from 'redux-saga/effects'
+import { take, fork, put, select } from 'redux-saga/effects'
 import serializeError from 'serialize-error'
 
 import Project from 'models/project'
 import { actions, types, selectors } from 'state/interface'
-
-import { addToast } from './toast'
 
 const createLoop = function*() {
   while (true) {
@@ -29,15 +27,13 @@ const createLoop = function*() {
         token: session.token
       })
 
-      yield all([
-        put(
-          actions.createProjectCompleted(newProject)
-        ),
-        fork(addToast, {
-          type: 'success',
-          message: 'Project created.'
-        })
-      ])
+      if (!newProject) {
+        throw 'Create project failed'
+      }
+
+      yield put(
+        actions.createProjectCompleted(newProject)
+      )
     } catch (e) {
       yield put(
         actions.createProjectFailed(serializeError(e))
@@ -71,15 +67,9 @@ const removeLoop = function*() {
         throw new 'Remove project failed'
       }
 
-      yield all([
-        put(
-          actions.removeProjectCompleted(identifier)
-        ),
-        fork(addToast, {
-          type: 'success',
-          message: 'Project deleted.'
-        })
-      ])
+      yield put(
+        actions.removeProjectCompleted(identifier)
+      )
     } catch (e) {
       yield put(
         actions.removeProjectFailed(serializeError(e))
@@ -109,6 +99,10 @@ const getLoop = function*() {
         token: session.token
       })
 
+      if (!project) {
+        throw 'Get project failed'
+      }
+
       yield put(
         actions.getProjectCompleted(project)
       )
@@ -134,6 +128,10 @@ const fetchLoop = function*() {
       const projects = yield Project.fetch(null, {
         token: session.token
       })
+
+      if (!projects) {
+        throw 'Fetch project failed'
+      }
 
       yield put(
         actions.fetchProjectsCompleted(projects)
@@ -167,15 +165,13 @@ const updateLoop = function*() {
         token: session.token
       })
 
-      yield all([
-        put(
-          actions.updateProjectCompleted(updatedProject)
-        ),
-        fork(addToast, {
-          type: 'success',
-          message: 'Project updated.'
-        })
-      ])
+      if (!updatedProject) {
+        throw 'Project can not update'
+      }
+
+      yield put(
+        actions.updateProjectCompleted(updatedProject)
+      )
     } catch (e) {
       yield put(
         actions.updateProjectFailed(serializeError(e))
@@ -209,15 +205,13 @@ const inviteCollaboratorsLoop = function*() {
         token: session.token
       })
 
-      yield all([
-        put(
-          actions.inviteCollaboratorCompleted(identifier, collaborators || [])
-        ),
-        fork(addToast, {
-          type: 'success',
-          message: 'Collaborator invited.'
-        })
-      ])
+      if (!collaborators) {
+        throw 'Invite collaborator failed'
+      }
+
+      yield put(
+        actions.inviteCollaboratorCompleted(identifier, collaborators || [])
+      )
     } catch (e) {
       yield put(
         actions.inviteCollaboratorFailed(serializeError(e))
@@ -253,25 +247,13 @@ const deleteCollaboratorLoop = function*() {
         throw 'Remove collaborator failed'
       }
 
-      yield all([
-        put(
-          actions.deleteCollaboratorCompleted(identifier, accountId)
-        ),
-        fork(addToast, {
-          type: 'success',
-          message: 'Collaborator deleted.'
-        })
-      ])
+      yield put(
+        actions.deleteCollaboratorCompleted(identifier, accountId)
+      )
     } catch (e) {
-      yield all([
-        put(
-          actions.deleteCollaboratorFailed(serializeError(e))
-        ),
-        fork(addToast, {
-          type: 'error',
-          message: 'Can not delete the collaborator.'
-        })
-      ])
+      yield put(
+        actions.deleteCollaboratorFailed(serializeError(e))
+      )
     }
   }
 }
@@ -303,16 +285,9 @@ const makeOwnerLoop = function*() {
         throw 'Make owner failed'
       }
 
-      yield all([
-        put(
-          actions.makeOwnerCompleted(identifier, session.account.identifier, accountId)
-        ),
-        fork(addToast, {
-          type: 'success',
-          message: 'Owner changed.'
-        })
-      ])
-
+      yield put(
+        actions.makeOwnerCompleted(identifier, session.account.identifier, accountId)
+      )
     } catch (e) {
       yield put(
         actions.makeOwnerFailed(serializeError(e))
@@ -348,15 +323,9 @@ const invalidateCacheLoop = function*() {
         throw 'Invalidate cache failed'
       }
 
-      yield all([
-        put(
-          actions.invalidateCacheCompleted(identifier, patterns)
-        ),
-        fork(addToast, {
-          type: 'success',
-          message: 'Cache invalidated.'
-        })
-      ])
+      yield put(
+        actions.invalidateCacheCompleted(identifier, patterns)
+      )
     } catch (e) {
       yield put(
         actions.invalidateCacheFailed(serializeError(e))
