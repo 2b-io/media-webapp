@@ -13,12 +13,15 @@ const Button = styled.button.attrs({
   text-decoration: underline;
   border: none;
   outline: none;
-  cursor: ${
-    ({ disabled }) => disabled ? 'not-allowed' : 'pointer'
-  };
   &:focus {
     outline: none;
   }
+  color: ${
+    ({ disabled, theme }) => disabled ? '#e6e6e6' : theme.black.base
+  };
+  cursor: ${
+    ({ disabled }) => disabled ? 'not-allowed' : 'pointer'
+  };
 `
 const Wrapper = styled.div`
   text-align: center;

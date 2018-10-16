@@ -25,7 +25,7 @@ const Input = styled.input.attrs({
   display: block;
   appearance: none;
   background: ${ ({ theme }) => theme.white.base };
-  color: ${ ({ readOnly, theme }) => readOnly ? '#e6e6e6' : theme.white.on.base };
+  color: ${ ({ readOnly, theme }) => readOnly ? '#e6e6e6' : theme.black.base };
   border: none;
   border-radius: 0;
   outline: none;
