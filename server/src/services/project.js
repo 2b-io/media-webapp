@@ -35,11 +35,12 @@ const generateUniqueIdentifier = async (retry) => {
     return identifier
   }
 
-  // retry
+  // should retry?
   if (!retry) {
     throw 'Cannot create unique identifier'
   }
 
+  // retry
   return await generateUniqueIdentifier(retry - 1)
 }
 
@@ -61,7 +62,8 @@ export const update = async (condition, account, { isActive, name }) => {
   return await Project.findByIdAndUpdate(projectID, {
     name,
     isActive,
-    status: needUpdateDistribution ? 'UPDATING' : currentStatus
+    status: needUpdateDistribution ?
+      'UPDATING' : currentStatus
   }, {
     new: true
   })
@@ -114,7 +116,8 @@ export const get = async (condition, account) => {
     new: true
   }).lean()
 }
-export const getById = async (id) => {
+
+export const getByID = async (id) => {
   return await Project.findOne({
     _id: id
   }).lean()
@@ -194,11 +197,7 @@ export const remove = async (condition, account) => {
     throw 'Cannot remove enabled project'
   }
 
-  try {
-    await Project.findOneAndRemove({ _id })
-  } catch (error) {
-    throw 'Error Cannot remove project'
-  }
+  await Project.findOneAndRemove({ _id })
 
   await Promise.all([
     Preset.deleteMany({ project: _id }),
@@ -248,6 +247,7 @@ export const invalidateAllCache = async (identifier) => {
 export default {
   create,
   get,
+  getByID,
   list,
   remove,
   update,
