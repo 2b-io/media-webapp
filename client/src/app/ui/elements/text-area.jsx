@@ -15,8 +15,6 @@ const InputArea = styled.textarea.attrs({
   display: block;
   width: 100%;
   appearance: none;
-  background: ${ ({ theme }) => theme.white.base };
-  color: ${ ({ theme }) => theme.white.on.base };
   border: none;
   border-radius: none;
   outline: none;
@@ -24,6 +22,12 @@ const InputArea = styled.textarea.attrs({
   padding: 8px;
   resize: none;
   overflow-wrap: break-word;
+  background: ${
+    ({ theme }) => theme.white.base
+  };
+  color: ${
+    ({ disabled, theme }) => disabled ? '#e6e6e6' : theme.black.base
+  };
   cursor: ${
     ({ disabled, readOnly }) => (disabled || readOnly) ? 'not-allowed' : 'inherit'
   };
@@ -52,7 +56,9 @@ const Indicator = styled.div`
   left: 0;
   right: 0;
   height: 2px;
-  background: ${ ({ theme }) => theme.black.base };
+  background: ${
+    ({ disabled, theme }) => disabled ? '#e6e6e6' : theme.black.base
+  };
 `
 
 const Assistive = styled.div`
@@ -70,6 +76,7 @@ class TextArea extends Component {
 
     this.autoGrow = this.autoGrow.bind(this)
   }
+
   componentDidMount() {
     setTimeout(() => {
       this.autoGrow()
@@ -93,6 +100,7 @@ class TextArea extends Component {
 
   render() {
     const {
+      disabled,
       invalid,
       valid,
       ...props
@@ -102,13 +110,14 @@ class TextArea extends Component {
       <Wrapper>
         <Container>
           <InputArea
+            disabled={ disabled }
             valid={ valid }
             invalid={ invalid }
             { ...props }
             innerRef={ e => this._input = e }
             onInput={ this.autoGrow() }
           />
-          <Indicator />
+          <Indicator disabled={ disabled } />
         </Container>
         <Assistive>
           { props.readOnly &&
