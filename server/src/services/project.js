@@ -1,14 +1,15 @@
+import namor from 'namor'
 import request from 'superagent'
 import { URL } from 'url'
 
 import config from 'infrastructure/config'
-import Infrastructure from 'models/Infrastructure'
-import { createDistribution, getDistribution, updateDistribution } from 'services/cloudFront'
 import Permission from 'models/Permission'
-import PullSetting from 'models/pull-setting'
-import SecretKey from 'models/secret-key'
 import Preset from 'models/Preset'
 import Project from 'models/Project'
+import PullSetting from 'models/pull-setting'
+import SecretKey from 'models/secret-key'
+import infrastructureService from 'services/infrastructure'
+import cloudFront from 'services/cloud-front'
 
 const normalizePattern = (path, pullURL) => {
   try {
@@ -18,38 +19,58 @@ const normalizePattern = (path, pullURL) => {
   }
 }
 
-export const update = async (projectIdentifier, { isActive, name }) => {
+const generateUniqueIdentifier = async (retry) => {
+  const identifier = namor.generate({
+    words: 2,
+    numbers: 2,
+    manly: true
+  })
+
+  // check collision
+  const project = await Project.findOne({
+    identifier
+  }).lean()
+
+  if (!project) {
+    return identifier
+  }
+
+  // should retry?
+  if (!retry) {
+    throw 'Cannot create unique identifier'
+  }
+
+  // retry
+  return await generateUniqueIdentifier(retry - 1)
+}
+
+export const update = async (condition, account, { isActive, name }) => {
   const {
-    _id,
+    _id: projectID,
     status: currentStatus,
     isActive: currentIsActive,
-  } = await Project.findOne({
-    identifier: projectIdentifier
-  }).lean()
+  } = await get(condition, account)
 
   const needUpdateDistribution = currentIsActive !== isActive
 
   if (needUpdateDistribution) {
-    const { identifier: distributionId } = await Infrastructure.findOne({ project: _id })
-
-    await updateDistribution(distributionId, {
+    await infrastructureService.update(projectID, {
       enabled: isActive
     })
   }
 
-  return await Project.findByIdAndUpdate(_id, {
+  return await Project.findByIdAndUpdate(projectID, {
     name,
     isActive,
-    status: needUpdateDistribution ? 'UPDATING' : currentStatus
+    status: needUpdateDistribution ?
+      'UPDATING' : currentStatus
   }, {
     new: true
   })
 }
 
-export const getByIdentifier = async (projectIdentifier, account) => {
-  const project = await Project.findOne({
-    identifier: projectIdentifier
-  }).lean()
+export const get = async (condition, account) => {
+  const project = await Project.findOne(condition).lean()
 
   //  check permission
   const permission = await Permission.findOne({
@@ -63,106 +84,128 @@ export const getByIdentifier = async (projectIdentifier, account) => {
     throw 'Forbidden'
   }
 
-  const { status: projectStatus } = project
-
-  if (projectStatus === 'INITIALIZING' || projectStatus === 'UPDATING') {
-    const { identifier: distributionId } = await Infrastructure.findOne({ project: project._id })
-    const { Distribution: distribution } = await getDistribution(distributionId)
-    const { Status: distributionStatus, DistributionConfig } = distribution
-    const isActive = DistributionConfig.Enabled
-    const status = (distributionStatus === 'InProgress') ?
-      projectStatus === 'INITIALIZING' ? 'INITIALIZING' : 'UPDATING' :
-      distributionStatus.toUpperCase()
-
-    return await Project.findOneAndUpdate(
-      { identifier: projectIdentifier },
-      { status, isActive },
-      { new: true }
-    ).lean()
+  if (project.status === 'DEPLOYED' || project.status === 'DISABLED') {
+    return project
   }
 
-  return project
+  const {
+    identifier: infraIdentifier
+  } = await infrastructureService.get(project._id)
+
+  const {
+    Distribution: distribution
+  } = await cloudFront.get(infraIdentifier)
+
+  const {
+    Status: infraStatus,
+    DistributionConfig: infraConfig
+  } = distribution
+
+  const latestStatus = (infraStatus === 'InProgress') ? (
+    project.status === 'INITIALIZING' ?
+      'INITIALIZING' : 'UPDATING'
+  ) :  infraStatus.toUpperCase()
+
+  return await Project.findOneAndUpdate({
+    _id: project._id
+  }, {
+    status: latestStatus,
+    isActive: infraConfig.Enabled
+  }, {
+    new: true
+  }).lean()
 }
-export const getById = async (id) => {
+
+export const getByID = async (id) => {
   return await Project.findOne({
     _id: id
   }).lean()
 }
 
-export const list = async (account) => {
-  if (!account) {
-    throw new Error('Invaid parameter')
+export const list = async (accountID) => {
+  if (!accountID) {
+    throw 'Invaid parameters: Missing [accountID]'
   }
 
   const permissions = await Permission.find({
-    account
+    account: accountID
   }).lean()
 
-  const projects = await Project.find({
-    _id: {
-      $in: permissions.map(p => p.project)
-    }
-  })
+  const projects = await Promise.all(
+    permissions.map(
+      async (permission) => await get({
+        _id: permission.project
+      }, permission.account)
+    )
+  )
 
   return projects
 }
 
-export const create = async (data, provider, account) => {
-  const { name, description } = data
+export const create = async ({ name }, provider, account) => {
   if (!name) {
-    throw new Error('Invalid parameters')
+    throw 'Invalid parameters: Missing [name]'
   }
+
+  if (provider !== 'cloudfront') {
+    throw 'Invalid parameters: Not support [provider] value'
+  }
+
+  // retry 10 times
+  const identifier = await generateUniqueIdentifier(10)
+
   const project = await new Project({
     name,
-    description,
+    identifier,
     status: 'INITIALIZING'
   }).save()
 
-  await new Permission({
-    project: project._id,
-    account: account._id,
-    privilege: 'owner'
-  }).save()
-
-  await new PullSetting({
-    project: project._id
-  }).save()
-
   try {
-    const cloudfront = await createDistribution(project.name)
-    const { Id: identifier, DomainName: domain } = cloudfront.Distribution
-    await new Infrastructure({
+    await new Permission({
       project: project._id,
-      identifier,
-      domain,
-      provider
+      account: account._id,
+      privilege: 'owner'
     }).save()
+
+    await new PullSetting({
+      project: project._id
+    }).save()
+
+    await infrastructureService.create(project, provider)
+
+    return project
   } catch (error) {
     await Project.findOneAndRemove({ _id: project._id })
     await Permission.deleteMany({ project: project._id })
     await PullSetting.deleteMany({ project: project._id })
+
     throw error
   }
-  return project
 }
 
-export const remove = async (_project) => {
+export const remove = async (condition, account) => {
+  const project = await get(condition, account)
 
-  const { _id, isActive } = _project
+  if (!project) {
+    throw 'Project not found'
+  }
+
+  const { _id, isActive } = project
 
   if (isActive) {
-    return false
+    throw 'Cannot remove enabled project'
   }
 
-  try {
-    await Project.findOneAndRemove({ _id })
-  } catch (error) {
-    throw ('Error Cannot delete project')
-  }
-  await Preset.deleteMany({ project: _id })
-  await PullSetting.deleteMany({ project: _id })
-  await SecretKey.deleteMany({ project: _id })
-  await Permission.deleteMany({ project: _id })
+  await Project.findOneAndRemove({ _id })
+
+  await Promise.all([
+    Preset.deleteMany({ project: _id }),
+    PullSetting.deleteMany({ project: _id }),
+    SecretKey.deleteMany({ project: _id }),
+    Permission.deleteMany({ project: _id }),
+    infrastructureService.remove(_id)
+  ])
+
   return true
 }
 
@@ -177,7 +220,7 @@ export const invalidateCache = async (patterns = [], identifier, pullURL) => {
   if (!normalizedPatterns.length) {
     return true
   }
-  
+
   await request
     .post(`${ cdnServer }/projects/${ identifier }/cache-invalidations`)
     .set('Content-Type', 'application/json')
@@ -198,4 +241,14 @@ export const invalidateAllCache = async (identifier) => {
     })
 
   return true
+}
+
+export default {
+  create,
+  get,
+  getByID,
+  list,
+  remove,
+  update,
+  invalidateCache
 }

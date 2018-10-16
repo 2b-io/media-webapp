@@ -1,4 +1,5 @@
 import {
+  GraphQLID,
   GraphQLInputObjectType,
   GraphQLObjectType
 } from 'graphql'
@@ -15,6 +16,9 @@ export const SecretKeyStruct = new GraphQLInputObjectType({
 export const SecretKey = new GraphQLObjectType({
   name: 'SecretKey',
   fields: () => ({
+    key: {
+      type: GraphQLID
+    },
     ...actions({ SecretKey, SecretKeyStruct }),
     ...struct
   })

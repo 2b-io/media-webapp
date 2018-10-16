@@ -8,9 +8,13 @@ export default {
     type: GraphQLString
   },
   domain: {
-    type: GraphQLString
-  },
-  settings: {
-    type: GraphQLString
+    type: GraphQLString,
+    resolve: (self) => {
+      if (!self.cname) {
+        return self.domain
+      }
+
+      return `${ self.project.identifier }.${ self.cname }`
+    }
   }
 }
