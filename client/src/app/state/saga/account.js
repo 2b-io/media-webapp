@@ -92,7 +92,7 @@ const registerLoop = function*() {
       })
 
       if (!account) {
-        throw 'Register failed.'
+        throw 'Register failed'
       }
 
       yield put(

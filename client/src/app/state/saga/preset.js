@@ -28,7 +28,7 @@ const createLoop = function*() {
       })
 
       if (!newPreset) {
-        throw 'Create preset failed.'
+        throw 'Create preset failed'
       }
 
       yield put(
@@ -110,7 +110,7 @@ const getLoop = function*() {
       })
 
       if (!preset) {
-        throw 'Preset not found'
+        throw 'Get preset failed'
       }
 
       yield put(
@@ -149,7 +149,7 @@ const fetchLoop = function*() {
       })
 
       if (!presets) {
-        throw 'Presets not found'
+        throw 'Fetch presets failed'
       }
 
       yield put(
@@ -190,7 +190,7 @@ const updateLoop = function*() {
       })
 
       if (!updatedPreset) {
-        throw 'Preset can not update'
+        throw 'Update preset failed'
       }
 
       yield put(

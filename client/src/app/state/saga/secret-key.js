@@ -65,7 +65,7 @@ const createLoop = function*() {
       })
 
       if (!secretKey) {
-        throw 'Create secret key failed.'
+        throw 'Create secret key failed'
       }
 
       yield put(
@@ -106,7 +106,7 @@ const updateLoop = function*() {
       })
 
       if (!updatedSecretKey) {
-        throw 'Update secret key failed.'
+        throw 'Update secret key failed'
       }
 
       yield put(

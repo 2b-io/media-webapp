@@ -26,7 +26,7 @@ const getLoop = function*() {
       })
 
       if (!pullSetting) {
-        throw 'PullSetting not found'
+        throw 'Get pull setting failed'
       }
 
       yield put(
@@ -67,7 +67,7 @@ const updateLoop = function*() {
       })
 
       if (!updatedPullSetting) {
-        throw 'Update Pull setting failed.'
+        throw 'Update pull setting failed'
       }
 
       yield put(
