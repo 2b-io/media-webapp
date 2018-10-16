@@ -45,7 +45,7 @@ const CircleThumb = styled.div`
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: ${ ({ disabled, theme }) => disabled ? theme.secondary.base : theme.primary.base };
+  background: ${ ({ disabled, theme }) => disabled ? '#e6e6e6' : theme.primary.base };
   position: absolute;
   top: -7px;
   right: -8px;
@@ -63,8 +63,11 @@ const Track = styled.div.attrs({
   user-select: none;
   background: ${
     ({ active, disabled, theme }) => {
-      const trackActiveColor = disabled ? theme.secondary.base : theme.primary.base
-      return active ? trackActiveColor : theme.black.base
+      if (disabled) {
+        return '#e6e6e6'
+      }
+
+      return active ? theme.primary.base : theme.black.base
     }
   };
   ${
@@ -96,7 +99,7 @@ const SlideBar = ({
         <Track
           active
           disabled={ disabled }
-          onClick={ () => props.onChange(min) }
+          onClick={ () => !disabled && props.onChange(min) }
         />
         <Track disabled={ disabled } interactable>
           <Track
@@ -108,7 +111,10 @@ const SlideBar = ({
           </Track>
           <Range { ...props } />
         </Track>
-        <Track onClick={ () => props.onChange(max) } />
+        <Track
+          disabled={ disabled }
+          onClick={ () => !disabled && props.onChange(max) }
+        />
       </Container>
     </Wrapper>
   )
