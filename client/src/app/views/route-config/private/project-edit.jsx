@@ -2,6 +2,7 @@ import { all, fork, put, race, select, take } from 'redux-saga/effects'
 
 import { actions, types, selectors } from 'state/interface'
 import * as EditProject from 'views/pages/edit-project'
+import { addToast } from 'state/saga/toast'
 
 const watchGetProject = function*() {
   while (true) {
@@ -10,6 +11,17 @@ const watchGetProject = function*() {
     yield put(
       actions.requestLocation('/projects')
     )
+  }
+}
+
+const watchCopyDomainLink = function*() {
+  while (true) {
+    yield take(types.project.COPY_DOMAIN_LINK)
+
+    yield fork(addToast, {
+      type: 'success',
+      message: 'The domain has been copied to clipboard.'
+    })
   }
 }
 
@@ -49,7 +61,8 @@ export default {
     component: EditProject,
     exact: true,
     *state(path) {
-      yield fork(watchGetProject, path)
+      yield fork(watchCopyDomainLink)
+      yield fork(watchGetProject)
       yield fork(watchRemoveProject, path)
 
       const { identifier } = yield select(selectors.currentParams)

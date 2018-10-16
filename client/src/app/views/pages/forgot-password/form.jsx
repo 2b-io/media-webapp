@@ -7,9 +7,13 @@ import { DescriptionText } from 'ui/typo'
 import { TextBox } from 'views/common/form'
 import { validateEmail, validateRequired } from 'views/common/validate'
 
-const forgotPasswordForm = ({ handleSubmit }) => (
+const forgotPasswordForm = ({
+  idle,
+  handleSubmit
+}) => (
   <Form handleSubmit={ handleSubmit }>
     <TextBox
+      disabled={ !idle }
       label="Email"
       type="email"
       name="email"
@@ -21,7 +25,12 @@ const forgotPasswordForm = ({ handleSubmit }) => (
       We will send the procedure to reset your password to your inbox.
     </DescriptionText>
     <Break double />
-    <Button type="submit">Reset my password</Button>
+    <Button
+      disabled={ !idle }
+      type="submit"
+    >
+      Reset my password
+    </Button>
   </Form>
 )
 

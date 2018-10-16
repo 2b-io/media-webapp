@@ -10,9 +10,9 @@ import SecretKey from 'models/secret-key'
 import Preset from 'models/Preset'
 import Project from 'models/Project'
 
-const normalizePattern = (path, origin) => {
+const normalizePattern = (path, pullURL) => {
   try {
-    return new URL(path, origin || undefined).toString()
+    return new URL(path, pullURL || undefined).toString()
   } catch (e) {
     return null
   }
@@ -166,19 +166,20 @@ export const remove = async (_project) => {
   return true
 }
 
-export const invalidateCache = async (patterns = [], identifier, prettyOrigin) => {
+export const invalidateCache = async (patterns = [], identifier, pullURL) => {
   const { cdnServer } = config
   const normalizedPatterns = patterns
     .map(
-      (pattern) => normalizePattern(pattern, prettyOrigin)
+      (pattern) => normalizePattern(pattern, pullURL)
     )
     .filter(Boolean)
 
   if (!normalizedPatterns.length) {
     return true
   }
+  
   await request
-    .post(`${ cdnServer }/${ identifier }/cache-invalidations`)
+    .post(`${ cdnServer }/projects/${ identifier }/cache-invalidations`)
     .set('Content-Type', 'application/json')
     .send({
       patterns: normalizedPatterns

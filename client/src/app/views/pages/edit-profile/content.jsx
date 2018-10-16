@@ -18,7 +18,7 @@ const EditProfile = ({
   session,
   updateProfile
 }) => {
-  if(!account) {
+  if (!account) {
     return null
   }
 

@@ -24,6 +24,7 @@ import {
   invalidateCache,
   invalidateAllCache
 } from 'services/project'
+import { get as getPullSetting } from 'services/pull-setting'
 import {
   forgotPassword as createResetCode
 } from 'services/reset-password-code'
@@ -173,15 +174,17 @@ export default ({ Project, ProjectStruct }) => ({
     },
     type: GraphQLBoolean,
     resolve: async (project, { patterns }) => {
-      const { identifier, prettyOrigin } = project
-      return await invalidateCache(patterns, identifier, prettyOrigin)
+      const { identifier, _id: _project } = project
+      const { pullURL } = await getPullSetting(_project)
+      return await invalidateCache(patterns, identifier, pullURL)
     }
   },
   _invalidateAllCache: {
     type: GraphQLBoolean,
     resolve: async (project) => {
-      const { identifier, prettyOrigin } = project
-      return await invalidateAllCache(identifier, prettyOrigin)
+      const { identifier, _id: _project } = project
+      const { pullURL } = await getPullSetting(_project)
+      return await invalidateAllCache(identifier, pullURL)
     }
   },
 })
