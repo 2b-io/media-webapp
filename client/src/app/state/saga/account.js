@@ -91,6 +91,10 @@ const registerLoop = function*() {
         email
       })
 
+      if (!account) {
+        throw 'Register failed'
+      }
+
       yield put(
         actions.registerCompleted(account)
       )

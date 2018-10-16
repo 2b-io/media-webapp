@@ -69,28 +69,24 @@ const watchUpdateProfile = function*() {
     })
 
     if (completed) {
-      yield all([
-        fork(addToast, {
-          type: 'success',
-          message: 'Your profile has been successfully updated.'
-        })
-      ])
+      yield fork(addToast, {
+        type: 'success',
+        message: 'Your profile has been successfully updated.'
+      })
     }
 
     if (failed) {
-      yield all([
-        fork(addToast, {
-          type: 'error',
-          message: 'Edit profile failed. Please check your network connection and try again.'
-        })
-      ])
+      yield fork(addToast, {
+        type: 'error',
+        message: 'Edit profile failed. Please check your network connection and try again.'
+      })
     }
   }
 }
 
 const watchMenu = function*(path) {
   while (true) {
-    yield take(types[ 'MENU/SHOW' ])
+    yield take(types.menu.SHOW)
 
     yield put(
       actions.mergeUIState(path, {
@@ -98,7 +94,7 @@ const watchMenu = function*(path) {
       })
     )
 
-    yield take(types[ 'MENU/HIDE' ])
+    yield take(types.menu.HIDE)
 
     yield put(
       actions.mergeUIState(path, {
