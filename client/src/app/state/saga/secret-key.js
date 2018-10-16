@@ -25,6 +25,10 @@ const fetchLoop = function*() {
         token: session.token
       })
 
+      if (!secretKeys) {
+        throw 'SecretKeys not found'
+      }
+
       yield put(
         actions.fetchSecretKeysCompleted({
           identifier,
@@ -59,6 +63,10 @@ const createLoop = function*() {
       }, {
         token: session.token
       })
+
+      if (!secretKey) {
+        throw 'Create secret key failed'
+      }
 
       yield put(
         actions.createSecretKeyCompleted({
@@ -96,6 +104,10 @@ const updateLoop = function*() {
       }, {
         token: session.token
       })
+
+      if (!updatedSecretKey) {
+        throw 'Update secret key failed'
+      }
 
       yield put(
         actions.updateSecretKeyCompleted({

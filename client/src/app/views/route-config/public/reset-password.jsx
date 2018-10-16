@@ -44,12 +44,10 @@ const watchResetPassword = function*() {
     }
 
     if (failed) {
-      yield all([
-        fork(addToast, {
-          type: 'error',
-          message: 'Reset password failed. Please check your network connection and try again.'
-        })
-      ])
+      yield fork(addToast, {
+        type: 'error',
+        message: 'Reset password failed. Please check your network connection and try again.'
+      })
     }
   }
 }

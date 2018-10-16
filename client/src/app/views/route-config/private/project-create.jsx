@@ -1,28 +1,48 @@
-import { fork, put, race, take } from 'redux-saga/effects'
+import { all, fork, put, race, take } from 'redux-saga/effects'
 
 import { actions, types } from 'state/interface'
+import { addToast } from 'state/saga/toast'
 import * as CreateProject from 'views/pages/create-project'
 
 const watchCreateProject = function*(path) {
   while (true) {
-    yield take(types[ 'PROJECT/CREATE' ])
+    yield take(types.project.CREATE)
 
     yield put(
       actions.mergeUIState(path, {
-        idle: true
+        idle: false
       })
     )
 
-    const results = yield race({
-      completed: take(types[ 'PROJECT/CREATE_COMPLETED' ]),
-      failed: take(types[ 'PROJECT/CREATE_FAILED' ])
+    const { completed, failed } = yield race({
+      completed: take(types.project.CREATE_COMPLETED),
+      failed: take(types.project.CREATE_FAILED)
     })
+
+    if (completed) {
+      const { identifier } = completed.payload.project
+
+      yield all([
+        fork(addToast, {
+          type: 'success',
+          message: 'Create project successful.'
+        }),
+        put(
+          actions.requestLocation(`/projects/${ identifier }`)
+        )
+      ])
+    }
+
+    if (failed) {
+      yield fork(addToast, {
+        type: 'error',
+        message: 'Can not create project. Please check your network connection. Or contact admin for help.'
+      })
+    }
 
     yield put(
       actions.replaceUIState(path, {
-        idle: true,
-        error: results.failed || null,
-        result: results.completed || null
+        idle: true
       })
     )
   }

@@ -15,7 +15,7 @@ const forgotPasswordLoop = function*() {
       const status = yield ResetPasswordCode.forgotPassword({ email })
 
       if (!status) {
-        throw 'Forgot pasword failed.'
+        throw 'Forgot pasword failed'
       }
 
       yield put(

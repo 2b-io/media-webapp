@@ -4,8 +4,7 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
-import { Container, ErrorBox } from 'ui/elements'
-import { Redirect } from 'views/router'
+import { Container } from 'ui/elements'
 
 import _ProjectForm from './form'
 
@@ -16,27 +15,16 @@ const ProjectForm = reduxForm({
 
 const CreateProject = ({
   createProject,
-  ui: { idle, error, result }
-}) => {
-  if (result) {
-    return (
-      <Redirect to={ `/projects/${ result.identifier }` } />
-    )
-  }
-
-  return (
-    <Container>
-      { error &&
-        <ErrorBox>An error happens when creating the new project.</ErrorBox>
-      }
-      <ProjectForm
-        idle={ idle }
-        initialValues={ { provider: 'cloudfront' } }
-        onSubmit={ createProject }
-      />
-    </Container>
-  )
-}
+  ui: { idle }
+}) => (
+  <Container>
+    <ProjectForm
+      idle={ idle }
+      initialValues={ { provider: 'cloudfront' } }
+      onSubmit={ createProject }
+    />
+  </Container>
+)
 
 export default connect(
   null,
