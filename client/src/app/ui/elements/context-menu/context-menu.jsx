@@ -83,15 +83,15 @@ class ContextMenu extends Component {
   }
 
   render() {
-    const { icon, content, stateless } = this.props
+    const { disabled, icon, content, stateless } = this.props
     const isActive = stateless ?
       this.props.isActive :
       this.state.isActive
 
     return (
       <Menu>
-        <Button disabled={ this.props.disabled } plain onClick={ this.activate }>
-          <MenuDisable disabled={ this.props.disabled }>
+        <Button disabled={ disabled } plain onClick={ this.activate }>
+          <MenuDisable disabled={ disabled }>
             { icon && icon({ isActive }) || <MoreIcon /> }
           </MenuDisable>
         </Button>

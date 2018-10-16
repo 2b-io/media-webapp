@@ -42,7 +42,7 @@ const CheckBox = ({
   <Fragment>
     <Wrapper>
       { label && <TextLine mostLeft>{ label }</TextLine> }
-      <Switch { ...props }>
+      <Switch disabled={ props.disabled }>
         <Input { ...props } checked={ props.value } />
         { props.value &&
           <CheckedBox /> ||
