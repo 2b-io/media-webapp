@@ -45,7 +45,9 @@ const CircleThumb = styled.div`
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: ${ ({ disabled, theme }) => disabled ? '#e6e6e6' : theme.primary.base };
+  background: ${
+    ({ disabled, theme }) => disabled ? '#e6e6e6' : theme.primary.base
+  };
   position: absolute;
   top: -7px;
   right: -8px;

@@ -24,14 +24,16 @@ const Input = styled.input.attrs({
 })`
   display: block;
   appearance: none;
-  background: ${ ({ theme }) => theme.white.base };
-  color: ${ ({ disabled, theme }) => disabled ? '#e6e6e6' : theme.black.base };
   border: none;
   border-radius: 0;
   outline: none;
   width: auto;
   line-height: 40px;
   height: 40px;
+  background: ${ ({ theme }) => theme.white.base };
+  color: ${
+    ({ disabled, theme }) => disabled ? '#e6e6e6' : theme.black.base
+  };
   ${ ({ hasLeading }) => !hasLeading && 'padding-left: 8px;' }
   ${ ({ hasTrailing }) => !hasTrailing && 'padding-right: 8px;' }
   cursor: ${
