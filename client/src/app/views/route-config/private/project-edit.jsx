@@ -5,13 +5,17 @@ import * as EditProject from 'views/pages/edit-project'
 import { addToast } from 'state/saga/toast'
 
 const watchGetProject = function*() {
-  while (true) {
-    yield take(types[ 'PROJECT/GET_FAILED' ])
+  yield take(types.project.GET_FAILED)
 
-    yield put(
+  yield all([
+    fork(addToast, {
+      type: 'error',
+      message: 'Project does not exist or internet connection error.'
+    }),
+    put(
       actions.requestLocation('/projects')
     )
-  }
+  ])
 }
 
 const watchCopyDomainLink = function*() {
@@ -25,9 +29,32 @@ const watchCopyDomainLink = function*() {
   }
 }
 
+const watchUpdateProject = function*() {
+  while (true) {
+    const { updateCompleted, updateFailed } = yield race({
+      updateCompleted: take(types.project.UPDATE_COMPLETED),
+      updateFailed: take(types.project.UPDATE_FAILED)
+    })
+
+    if (updateCompleted) {
+      yield fork(addToast, {
+        type: 'success',
+        message: 'Your project has been successfully changed.'
+      })
+    }
+
+    if (updateFailed) {
+      yield fork(addToast, {
+        type: 'error',
+        message: 'Edit project failed. Please check your network connection and try again.'
+      })
+    }
+  }
+}
+
 const watchRemoveProject = function*(path) {
   while (true) {
-    yield take(`${ types[ 'DIALOG/SHOW' ] }:REMOVE_PROJECT`)
+    yield take(`${ types.dialog.SHOW }:REMOVE_PROJECT`)
 
     yield put(
       actions.mergeUIState(path, {
@@ -35,24 +62,36 @@ const watchRemoveProject = function*(path) {
       })
     )
 
-    const { removeCompleted } = yield race({
-      hide: take(`${ types[ 'DIALOG/HIDE' ] }:REMOVE_PROJECT`),
-      removeCompleted: take(types[ 'PROJECT/REMOVE_COMPLETED' ]),
-      removeFailed: take(types[ 'PROJECT/REMOVE_FAILED' ])
+    const { removeCompleted, removeFailed } = yield race({
+      hide: take(`${ types.dialog.HIDE }:REMOVE_PROJECT`),
+      removeCompleted: take(types.project.REMOVE_COMPLETED),
+      removeFailed: take(types.project.REMOVE_FAILED)
     })
 
-    yield all([
-      put(
-        actions.mergeUIState(path, {
-          isRemoveConfirmationDialogActive: false,
+    yield put(
+      actions.mergeUIState(path, {
+        isRemoveConfirmationDialogActive: false,
+      })
+    )
 
-        })
-      ),
-      removeCompleted ?
+    if (removeCompleted) {
+      yield all([
+        fork(addToast, {
+          type: 'success',
+          message: 'Your project has been successfully deleted. Please wait a minute to finish your change.'
+        }),
         put(
           actions.requestLocation('/projects')
-        ) : null
-    ])
+        )
+      ])
+    }
+
+    if (removeFailed) {
+      yield fork(addToast, {
+        type: 'error',
+        message: 'Delete project failed. Please check your network connection and try again.'
+      })
+    }
   }
 }
 
@@ -62,6 +101,7 @@ export default {
     exact: true,
     *state(path) {
       yield fork(watchCopyDomainLink)
+      yield fork(watchUpdateProject)
       yield fork(watchGetProject)
       yield fork(watchRemoveProject, path)
 

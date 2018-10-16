@@ -1,10 +1,8 @@
-import { all, take, fork, put, select } from 'redux-saga/effects'
+import { take, fork, put, select } from 'redux-saga/effects'
 import serializeError from 'serialize-error'
 
 import Preset from 'models/preset'
 import { actions, types, selectors } from 'state/interface'
-
-import { addToast } from './toast'
 
 const createLoop = function*() {
   while (true) {
@@ -29,18 +27,16 @@ const createLoop = function*() {
         token: session.token
       })
 
-      yield all([
-        put(
-          actions.createPresetCompleted({
-            preset: newPreset,
-            identifier
-          })
-        ),
-        fork(addToast, {
-          type: 'success',
-          message: 'Preset created.'
+      if (!newPreset) {
+        throw 'Create preset failed'
+      }
+
+      yield put(
+        actions.createPresetCompleted({
+          preset: newPreset,
+          identifier
         })
-      ])
+      )
     } catch (e) {
       yield put(
         actions.createPresetFailed(serializeError(e))
@@ -76,18 +72,12 @@ const removeLoop = function*() {
         throw 'Remove preset failed'
       }
 
-      yield all([
-        put(
-          actions.removePresetCompleted({
-            contentType,
-            identifier
-          })
-        ),
-        fork(addToast, {
-          type: 'success',
-          message: 'Preset deleted.'
+      yield put(
+        actions.removePresetCompleted({
+          contentType,
+          identifier
         })
-      ])
+      )
     } catch (e) {
       yield put(
         actions.removePresetFailed(serializeError(e))
@@ -118,6 +108,10 @@ const getLoop = function*() {
       }, {
         token: session.token
       })
+
+      if (!preset) {
+        throw 'Get preset failed'
+      }
 
       yield put(
         actions.getPresetCompleted({
@@ -153,6 +147,10 @@ const fetchLoop = function*() {
       }, {
         token: session.token
       })
+
+      if (!presets) {
+        throw 'Fetch presets failed'
+      }
 
       yield put(
         actions.fetchPresetsCompleted({
@@ -191,18 +189,16 @@ const updateLoop = function*() {
         token: session.token
       })
 
-      yield all([
-        put(
-          actions.updatePresetCompleted({
-            preset: updatedPreset,
-            identifier
-          })
-        ),
-        fork(addToast, {
-          type: 'success',
-          message: 'Preset updated.'
+      if (!updatedPreset) {
+        throw 'Update preset failed'
+      }
+
+      yield put(
+        actions.updatePresetCompleted({
+          preset: updatedPreset,
+          identifier
         })
-      ])
+      )
     } catch (e) {
       yield put(
         actions.updatePresetFailed(serializeError(e))
