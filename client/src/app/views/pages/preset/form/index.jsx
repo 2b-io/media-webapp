@@ -9,28 +9,33 @@ import Gif from './gif'
 import Png from './png'
 import Svg from './svg'
 
-const renderParameterForm = (contentType) => {
+const renderParameterForm = (contentType, idle) => {
 
   switch (contentType) {
     case 'image/jpeg':
-      return <Jpeg />
+      return <Jpeg idle={ idle } />
 
     case 'image/gif':
-      return <Gif />
+      return <Gif idle={ idle } />
 
     case 'image/png':
-      return <Png />
+      return <Png idle={ idle } />
 
     case 'image/svg+xml':
-      return <Svg />
+      return <Svg idle={ idle } />
   }
 
   return null
 }
 
-const PresetForm = ({ contentType, handleSubmit }) => (
+const PresetForm = ({
+  contentType,
+  handleSubmit,
+  idle
+}) => (
   <Form handleSubmit={ handleSubmit }>
     <TextBox
+      disabled={ !idle }
       label="Content Type"
       name="contentType"
       placeholder="Content Type"
@@ -38,15 +43,16 @@ const PresetForm = ({ contentType, handleSubmit }) => (
     />
     <Break />
     <CheckBox
+      disabled={ !idle }
       name="isActive"
       label="Enable"
     />
     <Break />
 
-    { renderParameterForm(contentType) }
+    { renderParameterForm(contentType, idle) }
 
     <Break double />
-    <Button type="submit">
+    <Button disabled={ !idle } type="submit">
       Save
     </Button>
   </Form>

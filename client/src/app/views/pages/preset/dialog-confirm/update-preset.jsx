@@ -5,9 +5,10 @@ import { Emphasize, Text } from 'ui/typo'
 
 const DialogUpdatePreset = ({
   contentType,
-  onConfirm,
+  idle,
   isUpdatePresetDialogActive,
-  onCancel
+  onCancel,
+  onConfirm
 }) => (
   <Dialog
     isActive={ isUpdatePresetDialogActive }
@@ -21,6 +22,7 @@ const DialogUpdatePreset = ({
         </Text>
         <Button.Group align="right">
           <Button
+            disabled={ !idle }
             variant="secondary"
             mostRight
             onClick={ onCancel }
@@ -28,6 +30,7 @@ const DialogUpdatePreset = ({
             Cancel
           </Button>
           <Button
+            disabled={ !idle }
             variant="primary"
             onClick={ () => onConfirm(params) }
           >

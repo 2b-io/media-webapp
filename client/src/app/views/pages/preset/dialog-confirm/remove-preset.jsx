@@ -5,6 +5,7 @@ import { Emphasize, Text } from 'ui/typo'
 
 const DialogRemovePreset = ({
   contentType,
+  idle,
   isActive,
   onCancel,
   onConfirm
@@ -22,6 +23,7 @@ const DialogRemovePreset = ({
         <Break double />
         <Button.Group align="right">
           <Button
+            disabled={ !idle }
             variant="secondary"
             mostRight
             onClick={ onCancel }
@@ -29,6 +31,7 @@ const DialogRemovePreset = ({
             Cancel
           </Button>
           <Button
+            disabled={ !idle }
             variant="primary"
             onClick={ onConfirm }
           >

@@ -44,6 +44,14 @@ const watchRemovePreset = function*(path) {
       })
     )
 
+    yield take(types.preset.REMOVE)
+
+    yield put(
+      actions.mergeUIState(path, {
+        idle: false
+      })
+    )
+
     const { removeCompleted, removeFailed } = yield race({
       hide: take(`${ types.dialog.HIDE }:REMOVE_PRESET`),
       removeCompleted: take(types.preset.REMOVE_COMPLETED),
@@ -54,6 +62,7 @@ const watchRemovePreset = function*(path) {
 
     yield put(
       actions.mergeUIState(path, {
+        idle: true,
         isRemovePresetDialogActive: false
       })
     )
@@ -89,6 +98,14 @@ const watchUpdatePreset = function*(path) {
       })
     )
 
+    yield take(types.preset.UPDATE)
+
+    yield put(
+      actions.mergeUIState(path, {
+        idle: false
+      })
+    )
+
     const { updateCompleted, updateFailed } = yield race({
       hide: take(`${ types.dialog.HIDE }:UPDATE_PRESET`),
       updateCompleted: take(types.preset.UPDATE_COMPLETED),
@@ -97,6 +114,7 @@ const watchUpdatePreset = function*(path) {
 
     yield put(
       actions.mergeUIState(path, {
+        idle: true,
         isUpdatePresetDialogActive: false
       })
     )
@@ -141,6 +159,7 @@ export default {
         ),
         put(
           actions.initializeUIState(path, {
+            idle: true,
             isRemovePresetDialogActive: false,
             isUpdatePresetDialogActive: false
           })
