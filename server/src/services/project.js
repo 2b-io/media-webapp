@@ -72,6 +72,10 @@ export const update = async (condition, account, { isActive, name }) => {
 export const get = async (condition, account) => {
   const project = await Project.findOne(condition).lean()
 
+  if (!project) {
+    return null
+  }
+
   //  check permission
   const permission = await Permission.findOne({
     account,
@@ -139,7 +143,7 @@ export const list = async (accountID) => {
     )
   )
 
-  return projects
+  return projects.filter(Boolean)
 }
 
 export const create = async ({ name }, provider, account) => {

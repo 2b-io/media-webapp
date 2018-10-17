@@ -24,9 +24,9 @@ const schema = mongoose.Schema({
     type: mongoose.Schema.Types.Mixed
   },
   cname: {
-    type: String
+    type: String,
+    index: true
   }
 })
-
 
 export default mongoose.model('Infrastructure', schema)

@@ -33,12 +33,11 @@ export const remove = async (projectID) => {
     throw 'Infrastructure not found'
   }
 
-  await Promise.all([
-    Infrastructure.findOneAndRemove({
-      _id: infrastructure._id
-    }),
-    cloudFront.remove(infrastructure.identifier)
-  ])
+  await cloudFront.remove(infrastructure.identifier)
+
+  await Infrastructure.findOneAndRemove({
+    _id: infrastructure._id
+  })
 
   return true
 }
