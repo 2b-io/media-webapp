@@ -72,6 +72,10 @@ export const update = async (condition, account, { isActive, name }) => {
 export const get = async (condition, account) => {
   const project = await Project.findOne(condition).lean()
 
+  if (!project) {
+    return null
+  }
+
   //  check permission
   const permission = await Permission.findOne({
     account,
@@ -139,7 +143,7 @@ export const list = async (accountID) => {
     )
   )
 
-  return projects
+  return projects.filter(Boolean)
 }
 
 export const create = async ({ name }, provider, account) => {
@@ -198,13 +202,12 @@ export const remove = async (condition, account) => {
 
   await Project.findOneAndRemove({ _id })
 
-  await infrastructureService.remove(_id)
-
   await Promise.all([
     Preset.deleteMany({ project: _id }),
     PullSetting.deleteMany({ project: _id }),
     SecretKey.deleteMany({ project: _id }),
-    Permission.deleteMany({ project: _id })
+    Permission.deleteMany({ project: _id }),
+    infrastructureService.remove(_id)
   ])
 
   return true
