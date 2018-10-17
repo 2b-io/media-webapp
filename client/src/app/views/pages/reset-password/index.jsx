@@ -18,6 +18,7 @@ const ResetPasswordForm = reduxForm({
 const ResetPassword = ({
   resetPassword,
   ui: {
+    idle,
     account,
     code
   }
@@ -29,6 +30,7 @@ const ResetPassword = ({
   return (
     <Container>
       <ResetPasswordForm
+        idle={ idle }
         isFinalizeStep={ !account.isActive }
         initialValues={ account }
         onSubmit={ (account) => resetPassword(code, account) }

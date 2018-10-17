@@ -7,9 +7,14 @@ import { DescriptionText } from 'ui/typo'
 import { TextBox } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
-const ResetPaswordForm = ({ handleSubmit, isFinalizeStep }) => (
-  <Form handleSubmit={ handleSubmit }>
+const ResetPaswordForm = ({
+  handleSubmit,
+  idle,
+  isFinalizeStep
+}) => (
+  <Form handleSubmit={ handleSubmit } idle={ idle }>
     <TextBox
+      disabled={ !idle }
       readOnly
       name="email"
       leading={ () => <EmailIcon /> }
@@ -18,6 +23,7 @@ const ResetPaswordForm = ({ handleSubmit, isFinalizeStep }) => (
     { isFinalizeStep && (
       <Fragment>
         <TextBox
+          disabled={ !idle }
           name="name"
           validate={ validateRequired }
           maxLength={ 20 }
@@ -31,6 +37,7 @@ const ResetPaswordForm = ({ handleSubmit, isFinalizeStep }) => (
       </Fragment>
     ) }
     <TextBox
+      disabled={ !idle }
       type="password"
       name="password"
       placeholder="* * * * * *"
@@ -41,6 +48,7 @@ const ResetPaswordForm = ({ handleSubmit, isFinalizeStep }) => (
       A strong password should consist of at least six characters and be a combination of letters, numbers and symbols
     </DescriptionText>
     <TextBox
+      disabled={ !idle }
       type="password"
       name="rePassword"
       placeholder="* * * * * *"
@@ -51,7 +59,7 @@ const ResetPaswordForm = ({ handleSubmit, isFinalizeStep }) => (
       Re-type your password
     </DescriptionText>
     <Break double />
-    <Button type="submit">
+    <Button disabled={ !idle } type="submit">
       { isFinalizeStep ?
         'Finalize my account' :
         'Change password'
