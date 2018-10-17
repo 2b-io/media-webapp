@@ -18,19 +18,11 @@ const CacheInvalidate = ({
   invalidateCache,
   identifier,
   ui: {
-    error,
-    idle,
-    result
+    idle
   }
 }) => {
   return (
     <Container>
-      { result &&
-        <Redirect to={ `/projects/${ identifier }` } />
-      }
-      { error &&
-        <ErrorBox>An error happens when invalidate cache.</ErrorBox>
-      }
       <CacheInvalidForm
         idle={ idle }
         onSubmit={ ({ patterns }) => invalidateCache(patterns, identifier) }
