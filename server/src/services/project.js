@@ -198,12 +198,13 @@ export const remove = async (condition, account) => {
 
   await Project.findOneAndRemove({ _id })
 
+  await infrastructureService.remove(_id)
+
   await Promise.all([
     Preset.deleteMany({ project: _id }),
     PullSetting.deleteMany({ project: _id }),
     SecretKey.deleteMany({ project: _id }),
-    Permission.deleteMany({ project: _id }),
-    infrastructureService.remove(_id)
+    Permission.deleteMany({ project: _id })
   ])
 
   return true
