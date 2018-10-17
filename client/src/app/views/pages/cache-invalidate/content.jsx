@@ -4,8 +4,7 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
-import { Container, ErrorBox } from 'ui/elements'
-import { Redirect } from 'views/router'
+import { Container } from 'ui/elements'
 
 import _CacheInvalidForm from './form'
 
@@ -18,19 +17,11 @@ const CacheInvalidate = ({
   invalidateCache,
   identifier,
   ui: {
-    error,
-    idle,
-    result
+    idle
   }
 }) => {
   return (
     <Container>
-      { result &&
-        <Redirect to={ `/projects/${ identifier }` } />
-      }
-      { error &&
-        <ErrorBox>An error happens when invalidate cache.</ErrorBox>
-      }
       <CacheInvalidForm
         idle={ idle }
         onSubmit={ ({ patterns }) => invalidateCache(patterns, identifier) }

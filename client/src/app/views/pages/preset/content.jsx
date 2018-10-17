@@ -25,6 +25,7 @@ const PresetJpeg = ({
   hideRemovePresetDialog,
   hideUpdatePresetDialog,
   ui: {
+    idle,
     isUpdatePresetDialogActive,
     isRemovePresetDialogActive,
   }
@@ -39,6 +40,7 @@ const PresetJpeg = ({
     <Container>
       <PresetForm
         contentType={ contentType }
+        idle={ idle }
         initialValues={ { contentType, isActive, ...parameters } }
         onSubmit={ ({ contentType, isActive, ...parameters }) => {
           showUpdatePresetDialog({
@@ -52,17 +54,22 @@ const PresetJpeg = ({
         } }
         isActive={ isActive }
       />
-      <TextButton onClick={ showRemovePresetDialog }>
+      <TextButton
+        onClick={ showRemovePresetDialog }
+        disabled={ !idle }
+      >
         Permanently delete
       </TextButton>
       <DialogRemovePreset
         contentType={ contentType }
+        idle={ idle }
         isActive={ isRemovePresetDialogActive }
         onConfirm={ () => removePreset({ identifier, contentType }) }
         onCancel={ hideRemovePresetDialog }
       />
       <DialogUpdatePreset
         contentType={ contentType }
+        idle={ idle }
         isUpdatePresetDialogActive={ isUpdatePresetDialogActive }
         onConfirm={ ({ identifier, preset }) => {
           updatePreset({ identifier, preset })

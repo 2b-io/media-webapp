@@ -4,9 +4,10 @@ import { Break } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
 import { SlideBar } from 'views/common/form'
 
-const PngParameterForm = () => (
+const PngParameterForm = ({ idle }) => (
   <Fragment>
     <SlideBar
+      disabled={ !idle }
       label="Quality"
       name="quality"
       min="0"
@@ -17,6 +18,7 @@ const PngParameterForm = () => (
     </DescriptionText>
     <Break />
     <SlideBar
+      disabled={ !idle }
       label="Speed"
       name="speed"
       min="1"

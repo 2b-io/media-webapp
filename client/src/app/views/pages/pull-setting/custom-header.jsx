@@ -17,27 +17,40 @@ const Wrapper = styled.div`
   position: relative;
 `
 
-const CustomHeaderList = ({ fields }) => (
+const CustomHeaderList = ({
+  fields,
+  idle
+}) => (
   fields.map(
     (header, index) => (
       <Wrapper key={ index }>
         <TextBox
+          disabled={ !idle }
           label="Header Name"
           type="text"
           name={ `${ header }.name` }
           placeholder="X-Pull"
         />
         <TextBox
+          disabled={ !idle }
           label="Header Value"
           type="text"
           name={ `${ header }.value` }
           placeholder="Media CDN"
         />
         { index === fields.length - 1 ?
-          <Button plain onClick={ () => fields.push({}) }>
+          <Button
+            disabled={ !idle }
+            plain
+            onClick={ () => fields.push({}) }
+          >
             <AddIcon />
           </Button> :
-          <Button plain onClick={ () => fields.remove(index) }>
+          <Button
+            disabled={ !idle }
+            plain
+            onClick={ () => fields.remove(index) }
+          >
             <TrashIcon />
           </Button>
         }
@@ -46,8 +59,9 @@ const CustomHeaderList = ({ fields }) => (
   )
 )
 
-const CustomHeader = () => (
+const CustomHeader = ({ idle }) => (
   <FieldArray
+    idle={ idle }
     name="headers"
     component={ CustomHeaderList }
   />

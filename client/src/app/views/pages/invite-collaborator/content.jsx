@@ -15,16 +15,19 @@ const InviteCollaboratorForm = reduxForm({
 
 const InviteCollaborator = ({
   identifier,
-  inviteCollaborator
-}) => {
-  return (
-    <Container>
-      <InviteCollaboratorForm
-        onSubmit={ ({ emails, messenge }) => inviteCollaborator(identifier, { emails, messenge }) }
-      />
-    </Container>
-  )
-}
+  inviteCollaborator,
+  ui: {
+    idle
+  }
+}) => (
+  <Container>
+    <InviteCollaboratorForm
+      idle={ idle }
+      onSubmit={ ({ emails, messenge }) => inviteCollaborator(identifier, { emails, messenge }) }
+    />
+  </Container>
+)
+
 export default connect(
   (state) => {
     const { identifier } = selectors.currentParams(state)

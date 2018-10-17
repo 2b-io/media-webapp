@@ -18,6 +18,7 @@ const projectForm = ({ handleSubmit, idle }) => (
     />
     <Break />
     <Radio
+      disabled={ !idle }
       name="provider"
       choice="cloudfront"
       label="Amazon CloudFront"

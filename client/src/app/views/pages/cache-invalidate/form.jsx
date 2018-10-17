@@ -6,7 +6,10 @@ import { DescriptionText } from 'ui/typo'
 import { TextArea } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
-const CacheInvalidForm = ({ idle, handleSubmit }) => (
+const CacheInvalidForm = ({
+  handleSubmit,
+  idle
+}) => (
   <Form handleSubmit={ handleSubmit }>
     <TextArea
       disabled={ !idle }

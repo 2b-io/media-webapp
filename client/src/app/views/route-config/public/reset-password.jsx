@@ -22,9 +22,15 @@ const watchGetResetCode = function*(path) {
   )
 }
 
-const watchResetPassword = function*() {
+const watchResetPassword = function*(path) {
   while (true) {
     yield take(types.resetPasswordCode.RESET_PASSWORD)
+
+    yield put(
+      actions.mergeUIState(path, {
+        idle: false
+      })
+    )
 
     const { completed, failed } = yield race({
       completed: take(types.resetPasswordCode.RESET_PASSWORD_COMPLETED),
@@ -49,6 +55,12 @@ const watchResetPassword = function*() {
         message: 'Reset password failed. Please check your network connection and try again.'
       })
     }
+
+    yield put(
+      actions.replaceUIState(path, {
+        idle: true
+      })
+    )
   }
 }
 
@@ -68,7 +80,8 @@ export default {
         ),
         put(
           actions.initializeUIState(path, {
-            code
+            code,
+            idle: true
           })
         )
       ])

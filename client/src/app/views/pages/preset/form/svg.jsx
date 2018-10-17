@@ -4,9 +4,10 @@ import { Break } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
 import { CheckBox } from 'views/common/form'
 
-const SvgParameterForm = () => (
+const SvgParameterForm = ({ idle }) => (
   <Fragment>
     <CheckBox
+      disabled={ !idle }
       name="cleanupAttrs"
       label="Cleanup Attrs"
     />
@@ -15,6 +16,7 @@ const SvgParameterForm = () => (
     </DescriptionText>
     <Break />
     <CheckBox
+      disabled={ !idle }
       name="inlineStyles"
       label="Inline Styles"
     />
@@ -23,6 +25,7 @@ const SvgParameterForm = () => (
     </DescriptionText>
     <Break />
     <CheckBox
+      disabled={ !idle }
       name="removeDoctype"
       label="Remove Doctype"
     />
@@ -31,6 +34,7 @@ const SvgParameterForm = () => (
     </DescriptionText>
     <Break />
     <CheckBox
+      disabled={ !idle }
       name="removeXMLProcInst"
       label="RemoveXML ProcInst"
     />
@@ -39,6 +43,7 @@ const SvgParameterForm = () => (
     </DescriptionText>
     <Break />
     <CheckBox
+      disabled={ !idle }
       name="removeComments"
       label="Remove Comments"
     />
@@ -47,6 +52,7 @@ const SvgParameterForm = () => (
     </DescriptionText>
     <Break />
     <CheckBox
+      disabled={ !idle }
       name="removeEmptyAttrs"
       label="Remove Empty Attrs"
     />
@@ -55,6 +61,7 @@ const SvgParameterForm = () => (
     </DescriptionText>
     <Break />
     <CheckBox
+      disabled={ !idle }
       name="removeHiddenElems"
       label="Remove Hidden Elements"
     />
@@ -63,6 +70,7 @@ const SvgParameterForm = () => (
     </DescriptionText>
     <Break />
     <CheckBox
+      disabled={ !idle }
       name="removeEmptyText"
       label="Remove Empty Text"
     />
@@ -71,6 +79,7 @@ const SvgParameterForm = () => (
     </DescriptionText>
     <Break />
     <CheckBox
+      disabled={ !idle }
       name="removeEmptyContainers"
       label="Remove Empty Containers"
     />
@@ -79,6 +88,7 @@ const SvgParameterForm = () => (
     </DescriptionText>
     <Break />
     <CheckBox
+      disabled={ !idle }
       name="minifyStyles"
       label="Minify Styles"
     />
@@ -87,6 +97,7 @@ const SvgParameterForm = () => (
     </DescriptionText>
     <Break />
     <CheckBox
+      disabled={ !idle }
       name="convertColors"
       label="Convert Colors"
     />
@@ -95,6 +106,7 @@ const SvgParameterForm = () => (
     </DescriptionText>
     <Break />
     <CheckBox
+      disabled={ !idle }
       name="convertPathData"
       label="Convert Path Data"
     />
@@ -103,6 +115,7 @@ const SvgParameterForm = () => (
     </DescriptionText>
     <Break />
     <CheckBox
+      disabled={ !idle }
       name="convertTransform"
       label="Convert Transform"
     />
@@ -111,6 +124,7 @@ const SvgParameterForm = () => (
     </DescriptionText>
     <Break />
     <CheckBox
+      disabled={ !idle }
       name="removeUnknownsAndDefaults"
       label="Remove Unknowns And Defaults"
     />
@@ -119,6 +133,7 @@ const SvgParameterForm = () => (
     </DescriptionText>
     <Break />
     <CheckBox
+      disabled={ !idle }
       name="removeUselessStrokeAndFill"
       label="Remove Useless Stroke And Fill"
     />
@@ -127,6 +142,7 @@ const SvgParameterForm = () => (
     </DescriptionText>
     <Break />
     <CheckBox
+      disabled={ !idle }
       name="cleanupNumericValues"
       label="Cleanup Numeric Values"
     />
@@ -135,6 +151,7 @@ const SvgParameterForm = () => (
     </DescriptionText>
     <Break />
     <CheckBox
+      disabled={ !idle }
       name="collapseGroups"
       label="Collapse Groups"
     />
@@ -143,6 +160,7 @@ const SvgParameterForm = () => (
     </DescriptionText>
     <Break />
     <CheckBox
+      disabled={ !idle }
       name="mergePaths"
       label="Merge Paths"
     />
@@ -151,6 +169,7 @@ const SvgParameterForm = () => (
     </DescriptionText>
     <Break />
     <CheckBox
+      disabled={ !idle }
       name="cleanupIDs"
       label="Clean Up IDs"
     />
@@ -159,6 +178,7 @@ const SvgParameterForm = () => (
     </DescriptionText>
     <Break />
     <CheckBox
+      disabled={ !idle }
       name="removeStyleElement"
       label="Remove Style Element"
     />
@@ -167,6 +187,7 @@ const SvgParameterForm = () => (
     </DescriptionText>
     <Break />
     <CheckBox
+      disabled={ !idle }
       name="removeNonInheritableGroupAttrs"
       label="Remove Non Inheritable GroupAttrs"
     />

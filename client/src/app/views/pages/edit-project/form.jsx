@@ -11,14 +11,16 @@ import { validateRequired } from 'views/common/validate'
 
 const ProjectForm = ({
   copyDomainLink,
-  handleSubmit,
   domain,
-  status,
+  handleSubmit,
+  idle,
   isActive,
-  showRemoveProjectDialog
+  showRemoveProjectDialog,
+  status
 }) => (
-  <Form handleSubmit={ handleSubmit }>
+  <Form handleSubmit={ handleSubmit } idle={ idle }>
     <TextBox
+      disabled={ !idle }
       label="Project Name"
       name="name"
       readOnly={ status === 'UPDATING' || status === 'INITIALIZING' }
@@ -28,6 +30,7 @@ const ProjectForm = ({
     />
     <Break />
     <TextBox
+      disabled={ !idle }
       label="Domain"
       name="domain"
       placeholder="Domain"
@@ -35,7 +38,7 @@ const ProjectForm = ({
       validate={ validateRequired }
       trailing={ () => (
         <CopyToClipboard onCopy={ copyDomainLink } text={ domain }>
-          <Button plain >
+          <Button disabled={ !idle } plain >
             <CopyIcon />
           </Button>
         </CopyToClipboard>
@@ -47,12 +50,14 @@ const ProjectForm = ({
         ? <TextLine>{ status }</TextLine>
         : <React.Fragment>
           <CheckBox
+            disabled={ !idle }
             name="isActive"
             label="Enable"
           />
 
           <Break double />
           <Button
+            disabled={ !idle }
             type="submit"
           >
             Save
@@ -60,7 +65,10 @@ const ProjectForm = ({
           {
             isActive ?
               null :
-              <TextButton onClick={ showRemoveProjectDialog }>
+              <TextButton
+                disabled={ !idle }
+                onClick={ showRemoveProjectDialog }
+              >
                 Permanently delete
               </TextButton>
           }
