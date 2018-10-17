@@ -15,11 +15,15 @@ const InviteCollaboratorForm = reduxForm({
 
 const InviteCollaborator = ({
   identifier,
-  inviteCollaborator
+  inviteCollaborator,
+  ui: {
+    idle
+  }
 }) => {
   return (
     <Container>
       <InviteCollaboratorForm
+        idle={ idle }
         onSubmit={ ({ emails, messenge }) => inviteCollaborator(identifier, { emails, messenge }) }
       />
     </Container>

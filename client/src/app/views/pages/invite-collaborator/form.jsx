@@ -6,9 +6,13 @@ import { DescriptionText } from 'ui/typo'
 import { TextArea } from 'views/common/form'
 import { validateRequired, validateMultiEmail } from 'views/common/validate'
 
-const InviteCollaboratorForm = ({ handleSubmit }) => (
+const InviteCollaboratorForm = ({
+  handleSubmit,
+  idle
+}) => (
   <Form handleSubmit={ handleSubmit }>
     <TextArea
+      disabled={ !idle }
       label="Emails"
       placeholder="Email to invite."
       name="emails"
@@ -19,6 +23,7 @@ const InviteCollaboratorForm = ({ handleSubmit }) => (
     </DescriptionText>
     <Break />
     <TextArea
+      disabled={ !idle }
       type="text"
       placeholder="Some text"
       name="messenge"
@@ -29,7 +34,7 @@ const InviteCollaboratorForm = ({ handleSubmit }) => (
       Optional. A personal note for the invitation email.
     </DescriptionText>
     <Break double />
-    <Button type="submit" >Send the invitations</Button>
+    <Button disabled={ !idle } type="submit" >Send the invitations</Button>
   </Form>
 )
 
