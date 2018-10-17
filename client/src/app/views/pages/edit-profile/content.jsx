@@ -16,7 +16,10 @@ const EditProfileForm = reduxForm({
 const EditProfile = ({
   account,
   session,
-  updateProfile
+  updateProfile,
+  ui: {
+    idle
+  }
 }) => {
   if (!account) {
     return null
@@ -26,6 +29,7 @@ const EditProfile = ({
     <Container>
       { account && session.account && session.account.identifier === account.identifier &&
         <EditProfileForm
+          idle={ idle }
           initialValues={ account }
           onSubmit={ updateProfile }
         />

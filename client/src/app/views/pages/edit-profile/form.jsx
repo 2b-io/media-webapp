@@ -7,7 +7,10 @@ import { DescriptionText } from 'ui/typo'
 import { TextBox } from 'views/common/form'
 import { validateEmail, validateRequired } from 'views/common/validate'
 
-const EditProfileForm = ({ handleSubmit, idle = true }) => (
+const EditProfileForm = ({
+  handleSubmit,
+  idle
+}) => (
   <Form handleSubmit={ handleSubmit }>
     <TextBox
       label="Profile Name"
