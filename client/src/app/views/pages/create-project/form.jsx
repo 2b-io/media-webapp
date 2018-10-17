@@ -18,6 +18,7 @@ const projectForm = ({ handleSubmit, idle }) => (
     />
     <Break />
     <Radio
+      disabled={ !idle }
       name="provider"
       choice="cloudfront"
       label="Amazon CloudFront"
@@ -27,6 +28,7 @@ const projectForm = ({ handleSubmit, idle }) => (
       <Link href="https://aws.amazon.com/cloudfront/">Read more</Link>
     </DescriptionText>
     <Radio
+      disabled={ !idle }
       name="provider"
       choice="keycdn"
       label="Key CDN"
