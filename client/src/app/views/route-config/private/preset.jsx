@@ -112,7 +112,7 @@ const watchUpdatePresetDialog = function*(path) {
       })
     )
 
-    const { updateCompleted, updateFailed } = yield race({
+    yield race({
       hide: take(`${ types.dialog.HIDE }:UPDATE_PRESET`),
       updateCompleted: take(types.preset.UPDATE_COMPLETED),
       updateFailed: take(types.preset.UPDATE_FAILED)

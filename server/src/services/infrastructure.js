@@ -1,4 +1,4 @@
-import config from 'infrastructure/config'
+//import config from 'infrastructure/config'
 import Infrastructure from 'models/Infrastructure'
 import cloudFront from 'services/cloud-front'
 
