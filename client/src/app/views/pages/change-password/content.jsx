@@ -16,12 +16,16 @@ const ChangePasswordForm = reduxForm({
 
 const ChangePassword = ({
   account,
+  changePassword,
   session,
-  changePassword
+  ui: {
+    idle
+  }
 }) => (
   <Container>
     { account && session && session.account && session.account.identifier === account.identifier &&
       <ChangePasswordForm
+        idle={ idle }
         onSubmit={ changePassword }
       />
     }

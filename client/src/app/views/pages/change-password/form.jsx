@@ -7,9 +7,13 @@ import { DescriptionText } from 'ui/typo'
 import { TextBox } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
-const ChangePasswordForm = ({ handleSubmit }) => (
+const ChangePasswordForm = ({
+  handleSubmit,
+  idle
+}) => (
   <Form handleSubmit={ handleSubmit }>
     <TextBox
+      disabled={ !idle }
       type="password"
       name="currentPassword"
       placeholder="Current password"
@@ -21,6 +25,7 @@ const ChangePasswordForm = ({ handleSubmit }) => (
     </DescriptionText>
     <Break />
     <TextBox
+      disabled={ !idle }
       type="password"
       name="password"
       placeholder="* * * * * *"
@@ -31,6 +36,7 @@ const ChangePasswordForm = ({ handleSubmit }) => (
       A strong password should consist of at least six characters and be a combination of letters, numbers and symbols
     </DescriptionText>
     <TextBox
+      disabled={ !idle }
       type="password"
       name="rePassword"
       placeholder="* * * * * *"
@@ -41,7 +47,7 @@ const ChangePasswordForm = ({ handleSubmit }) => (
       Re-type your password
     </DescriptionText>
     <Break double />
-    <Button type="submit">
+    <Button disabled={ !idle } type="submit">
       Change password
     </Button>
   </Form>
