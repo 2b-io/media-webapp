@@ -45,6 +45,12 @@ const ProjectForm = ({
       ) }
     />
     <Break />
+    <TextButton
+      disabled={ !idle }
+      onClick={ showRemoveProjectDialog }
+    >
+      Permanently delete
+    </TextButton>
     {
       (status === 'UPDATING' || status === 'INITIALIZING')
         ? <TextLine>{ status }</TextLine>

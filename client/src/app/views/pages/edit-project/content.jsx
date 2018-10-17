@@ -70,6 +70,7 @@ const EditProject = ({
             <Break double />
             <Button.Group align="right">
               <Button
+                disabled={ !idle }
                 variant="secondary"
                 mostRight
                 onClick={ hideRemoveProjectDialog }
@@ -77,6 +78,7 @@ const EditProject = ({
                 Cancel
               </Button>
               <Button
+                disabled={ !idle }
                 variant="primary"
                 onClick={ () => removeProject(identifier) }
               >
