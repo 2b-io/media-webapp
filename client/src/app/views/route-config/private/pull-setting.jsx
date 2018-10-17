@@ -27,8 +27,16 @@ const watchGetPullSetting = function*() {
   })
 }
 
-const watchUpdatePullSetting = function*() {
+const watchUpdatePullSetting = function*(path) {
   while (true) {
+    yield take(types.pullSetting.UPDATE)
+
+    yield put(
+      actions.mergeUIState(path, {
+        idle: false
+      })
+    )
+
     const {
       updateComPleted,
       updateFailed
@@ -50,6 +58,12 @@ const watchUpdatePullSetting = function*() {
         message: 'Update pull setting failed.'
       })
     }
+
+    yield put(
+      actions.replaceUIState(path, {
+        idle: true
+      })
+    )
   }
 }
 
@@ -57,10 +71,10 @@ export default {
   '/projects/:identifier/pull-setting': {
     component: PullSetting,
     exact: true,
-    *state() {
+    *state(path) {
       yield fork(watchGetProject)
       yield fork(watchGetPullSetting)
-      yield fork(watchUpdatePullSetting)
+      yield fork(watchUpdatePullSetting, path)
 
       const { identifier } = yield select(selectors.currentParams)
 
@@ -70,6 +84,11 @@ export default {
         ),
         put(
           actions.getPullSetting(identifier)
+        ),
+        put(
+          actions.initializeUIState(path, {
+            idle: true
+          })
         )
       ])
     }

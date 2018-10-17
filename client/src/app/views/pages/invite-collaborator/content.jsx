@@ -19,16 +19,15 @@ const InviteCollaborator = ({
   ui: {
     idle
   }
-}) => {
-  return (
-    <Container>
-      <InviteCollaboratorForm
-        idle={ idle }
-        onSubmit={ ({ emails, messenge }) => inviteCollaborator(identifier, { emails, messenge }) }
-      />
-    </Container>
-  )
-}
+}) => (
+  <Container>
+    <InviteCollaboratorForm
+      idle={ idle }
+      onSubmit={ ({ emails, messenge }) => inviteCollaborator(identifier, { emails, messenge }) }
+    />
+  </Container>
+)
+
 export default connect(
   (state) => {
     const { identifier } = selectors.currentParams(state)

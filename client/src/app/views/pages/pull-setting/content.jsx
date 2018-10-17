@@ -16,10 +16,14 @@ const PullSettingForm = reduxForm({
 const PullSetting = ({
   pullSetting,
   identifier,
-  updatePullSetting
+  updatePullSetting,
+  ui: {
+    idle
+  }
 }) => (
   <Container>
     <PullSettingForm
+      idle={ idle }
       initialValues={ pullSetting }
       onSubmit={ (pullSetting) => updatePullSetting({ identifier, pullSetting }) }
     />
