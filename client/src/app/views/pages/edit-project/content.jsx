@@ -25,6 +25,7 @@ const EditProject = ({
   hideRemoveProjectDialog,
   showRemoveProjectDialog,
   ui: {
+    idle,
     isRemoveConfirmationDialogActive
   }
 }) => {
@@ -45,16 +46,17 @@ const EditProject = ({
       <Container>
         <ProjectForm
           copyDomainLink={ copyDomainLink }
+          domain={ infrastructure && infrastructure.domain }
           onSubmit={ ( { name, status, isActive }) => updateProject(identifier, name, status, isActive) }
+          idle={ idle }
           initialValues={ {
             name,
             domain: infrastructure && infrastructure.domain,
             isActive
           } }
-          domain={ infrastructure && infrastructure.domain }
-          status={ status }
           isActive={ isActive }
           showRemoveProjectDialog={ showRemoveProjectDialog }
+          status={ status }
         />
       </Container>
       <Dialog

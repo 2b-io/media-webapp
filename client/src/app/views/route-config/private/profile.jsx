@@ -61,8 +61,16 @@ const watchGetProfile = function*() {
   )
 }
 
-const watchUpdateProfile = function*() {
+const watchUpdateProfile = function*(path) {
   while (true) {
+    yield take(types.account.UPDATE)
+
+    yield put(
+      actions.mergeUIState(path, {
+        idle: false
+      })
+    )
+
     const { completed, failed } = yield race({
       completed: take(types.account.UPDATE_COMPLETED),
       failed: take(types.account.UPDATE_FAILED)
@@ -81,6 +89,12 @@ const watchUpdateProfile = function*() {
         message: 'Edit profile failed. Please check your network connection and try again.'
       })
     }
+
+    yield put(
+      actions.replaceUIState(path, {
+        idle: true
+      })
+    )
   }
 }
 
@@ -108,15 +122,22 @@ export default {
   '/@:identifier/edit': {
     component: EditProfile,
     exact: true,
-    *state() {
-      yield fork(watchUpdateProfile)
+    *state(path) {
+      yield fork(watchUpdateProfile, path)
       yield fork(watchGetProfile)
 
       const { identifier } = yield select(selectors.currentParams)
 
-      yield put(
-        actions.getAccount(identifier)
-      )
+      yield all([
+        put(
+          actions.getAccount(identifier)
+        ),
+        put(
+          actions.initializeUIState(path, {
+            idle: true
+          })
+        )
+      ])
     }
   },
   '/@:identifier/change-password': {

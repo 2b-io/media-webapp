@@ -4,8 +4,7 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
-import { Container, ErrorBox } from 'ui/elements'
-import { Redirect } from 'views/router'
+import { Container } from 'ui/elements'
 
 import _CacheInvalidForm from './form'
 

@@ -29,8 +29,16 @@ const watchCopyDomainLink = function*() {
   }
 }
 
-const watchUpdateProject = function*() {
+const watchUpdateProject = function*(path) {
   while (true) {
+    yield take(types.project.UPDATE)
+
+    yield put(
+      actions.mergeUIState(path, {
+        idle: false
+      })
+    )
+
     const { updateCompleted, updateFailed } = yield race({
       updateCompleted: take(types.project.UPDATE_COMPLETED),
       updateFailed: take(types.project.UPDATE_FAILED)
@@ -49,6 +57,12 @@ const watchUpdateProject = function*() {
         message: 'Edit project failed. Please check your network connection and try again.'
       })
     }
+
+    yield put(
+      actions.replaceUIState(path, {
+        idle: true
+      })
+    )
   }
 }
 
@@ -101,7 +115,7 @@ export default {
     exact: true,
     *state(path) {
       yield fork(watchCopyDomainLink)
-      yield fork(watchUpdateProject)
+      yield fork(watchUpdateProject, path)
       yield fork(watchGetProject)
       yield fork(watchRemoveProject, path)
 
@@ -113,6 +127,7 @@ export default {
         ),
         put(
           actions.initializeUIState(path, {
+            idle: true,
             isRemoveConfirmationDialogActive: false
           })
         )
