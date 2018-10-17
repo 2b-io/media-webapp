@@ -20,19 +20,31 @@ const ToastList = styled.div`
   width: 100%
 `
 
-const Shadow = styled.div`
-  box-shadow: 4px 4px ${ ({ theme }) => theme.black.opaque.base };
+const Border = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  border: 1px solid ${ ({ theme }) => theme.secondary.base };
 `
 
-const DisplayComponent = styled.div`
-  border: 1px solid black;
-  padding: 8px 0;
-  margin-bottom: 16px;
+const Content = styled.div`
+  position: relative;
+  box-shadow: 4px 4px ${ ({ theme }) => theme.black.opaque.base };
   background: ${
     ({ theme, type }) => (
       type === 'error' ? '#FF3333' : theme.white.base
     )
   };
+`
+
+const ToastContent = styled.div`
+  position: relative;
+  z-index: 1;
+  margin-bottom: 16px;
+  background: transparent;
   color: ${
     ({ theme, type }) => (
       type === 'error' ? theme.white.base : theme.black.base
@@ -48,16 +60,17 @@ const Toast = ({
     type
   }
 }) => (
-  <Shadow>
-    <DisplayComponent
+  <Content type={ type }>
+    <Border />
+    <ToastContent
       type={ type }
       onClick={ () => removeToast(id) }
     >
       <Text mostLeft mostRight>
         { message }
       </Text>
-    </DisplayComponent>
-  </Shadow>
+    </ToastContent>
+  </Content>
 )
 
 const ToastContainer = ({
