@@ -10,7 +10,7 @@ import { EditIcon } from 'ui/icons'
 const CacheSetting = ({
   identifier,
   toEditCacheSetting,
-  cacheSetting
+  expired
 }) => {
 
   return (
@@ -21,7 +21,7 @@ const CacheSetting = ({
         content={ () => (
           <Fragment>
             <Text mostLeft mostRight>
-              Cache setting value: { cacheSetting } s
+              Cache setting value: { expired } s
             </Text>
           </Fragment>
         ) }
@@ -36,7 +36,7 @@ export default connect(
 
     return {
       identifier,
-      cacheSetting: 0
+      expired: selectors.cacheSetting(state, identifier)
     }
   },
   mapDispatch({
