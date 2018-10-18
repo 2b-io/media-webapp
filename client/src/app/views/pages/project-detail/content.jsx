@@ -2,11 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { ApiKeys } from './api-keys-card'
-import { Collaborators } from './collaborator-card/'
-import { ProjectInfo } from './project-info-card/'
+import { CacheSetting } from './cache-setting-card'
+import { Collaborators } from './collaborator-card'
+import { ProjectInfo } from './project-info-card'
 import { ProjectTools } from './project-tools-card'
 import { Presets } from './presets-card'
-import { PullSettings } from './pull-settings-card/'
+import { PullSettings } from './pull-settings-card'
 
 const Layout = styled.section`
   padding: 16px;
@@ -36,6 +37,7 @@ const Project = ({
       <Container>
         <ProjectInfo ui={ ui } />
         <Presets ui={ ui } />
+        <CacheSetting ui={ ui } />
         <PullSettings />
         <ApiKeys />
         <Collaborators ui={ ui } />
