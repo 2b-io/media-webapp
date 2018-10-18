@@ -27,6 +27,46 @@ const watchGetCacheSetting = function*() {
   })
 }
 
+const watchUpdateCacheSetting = function*(path) {
+  while (true) {
+    yield take(types.cacheSetting.UPDATE)
+
+    yield put(
+      actions.mergeUIState(path, {
+        idle: false
+      })
+    )
+
+    const {
+      completed,
+      failed
+    } = yield race({
+      completed: take(types.cacheSetting.UPDATE_COMPLETED),
+      failed: take(types.cacheSetting.UPDATE_FAILED)
+    })
+
+    if (completed) {
+      yield fork(addToast, {
+        type: 'success',
+        message: 'Update cache setting completed.'
+      })
+    }
+
+    if (failed) {
+      yield fork(addToast, {
+        type: 'error',
+        message: 'Update cache setting failed.'
+      })
+    }
+
+    yield put(
+      actions.replaceUIState(path, {
+        idle: true
+      })
+    )
+  }
+}
+
 export default {
   '/projects/:identifier/cache-setting': {
     component: CacheSetting,
@@ -34,6 +74,7 @@ export default {
     *state(path) {
       yield fork(watchGetProject)
       yield fork(watchGetCacheSetting)
+      yield fork(watchUpdateCacheSetting, path)
 
       const { identifier } = yield select(selectors.currentParams)
 
