@@ -4,6 +4,7 @@ const rootDir = path.resolve(__dirname, '..')
 
 export default {
   __rootDir: rootDir,
+  development: process.env.NODE_ENV === 'development',
   systemPort: process.env.PORT,
   webpackDevServer: process.env.DEV_SERVER,
   mongodb: process.env.MONGO,
