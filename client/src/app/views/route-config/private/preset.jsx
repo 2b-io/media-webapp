@@ -128,14 +128,6 @@ const watchUpdatePresetDialog = function*(path) {
 
 const watchUpdatePreset = function*(path) {
   while (true) {
-    const action = yield take(`${ types.dialog.SHOW }:UPDATE_PRESET`)
-
-    yield put(
-      actions.mergeUIState(path, {
-        isUpdatePresetDialogActive: action.payload.params
-      })
-    )
-
     yield take(types.preset.UPDATE)
 
     yield put(
@@ -145,15 +137,13 @@ const watchUpdatePreset = function*(path) {
     )
 
     const { updateCompleted, updateFailed } = yield race({
-      hide: take(`${ types.dialog.HIDE }:UPDATE_PRESET`),
       updateCompleted: take(types.preset.UPDATE_COMPLETED),
       updateFailed: take(types.preset.UPDATE_FAILED)
     })
 
     yield put(
       actions.mergeUIState(path, {
-        idle: true,
-        isUpdatePresetDialogActive: false
+        idle: true
       })
     )
 
