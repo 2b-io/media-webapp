@@ -19,6 +19,7 @@ const Presets = ({
   createPreset,
   toPreset,
   ui: {
+    idle,
     isCreatePresetDialogActive
   }
 }) => {
@@ -47,6 +48,7 @@ const Presets = ({
         onOverlayClick={ hideCreateDialog }
         content={ () => (
           <CreateDialog
+            idle={ idle }
             identifier={ identifier }
             presets={ presets }
             createPreset={ createPreset }

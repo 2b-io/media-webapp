@@ -45,7 +45,7 @@ const watchGetPullSetting = function*() {
   })
 }
 
-const watchCreatePreset = function*(path) {
+const watchCreatePresetDialog = function*(path) {
   while (true) {
     yield take(`${ types.dialog.SHOW }:CREATE_PRESET`)
 
@@ -55,7 +55,7 @@ const watchCreatePreset = function*(path) {
       })
     )
 
-    const { createCompleted, createFailed } = yield race({
+    yield race({
       hide: take(`${ types.dialog.HIDE }:CREATE_PRESET`),
       createCompleted: take(types.preset.CREATE_COMPLETED),
       createFailed: take(types.preset.CREATE_FAILED)
@@ -64,6 +64,29 @@ const watchCreatePreset = function*(path) {
     yield put(
       actions.mergeUIState(path, {
         isCreatePresetDialogActive: false
+      })
+    )
+  }
+}
+
+const watchCreatePreset = function*(path) {
+  while (true) {
+    yield take(types.preset.CREATE)
+
+    yield put(
+      actions.mergeUIState(path, {
+        idle: false
+      })
+    )
+
+    const { createCompleted, createFailed } = yield race({
+      createCompleted: take(types.preset.CREATE_COMPLETED),
+      createFailed: take(types.preset.CREATE_FAILED)
+    })
+
+    yield put(
+      actions.mergeUIState(path, {
+        idle: true
       })
     )
 
@@ -260,6 +283,7 @@ export default {
       yield fork(watchCreateSecretKey)
       yield fork(watchRemoveSecretKey)
       yield fork(watchUpdateSecretKey)
+      yield fork(watchCreatePresetDialog, path)
       yield fork(watchCreatePreset, path)
       yield fork(watchLeaveProject, path)
       yield fork(watchMakeOwner, path)
