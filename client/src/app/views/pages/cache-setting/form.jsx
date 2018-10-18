@@ -13,9 +13,9 @@ const CacheSettingForm = ({
   <Form handleSubmit={ handleSubmit }>
     <TextBox
       disabled={ !idle }
-      label="Seconds"
+      label="Expire time"
       name="expired"
-      placeholder="Seconds"
+      placeholder="Expire time"
       type="number"
       validate={ validateRequired }
     />
