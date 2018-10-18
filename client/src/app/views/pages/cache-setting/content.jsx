@@ -20,17 +20,15 @@ const CacheSetting = ({
   ui: {
     idle
   }
-}) => {
-  return (
-    <Container>
-      <CacheSettingForm
-        idle={ idle }
-        initialValues={ expired }
-        onSubmit={ ({ expired }) => updateCacheSetting({ identifier, expired }) }
-      />
-    </Container>
-  )
-}
+}) => (
+  <Container>
+    <CacheSettingForm
+      idle={ idle }
+      initialValues={ { expired } }
+      onSubmit={ ({ expired }) => updateCacheSetting({ identifier, expired }) }
+    />
+  </Container>
+)
 
 export default connect(
   (state) => {
