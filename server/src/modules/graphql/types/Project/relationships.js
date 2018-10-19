@@ -15,10 +15,6 @@ import {
 } from 'services/preset'
 
 import {
-  get as getCacheSetting,
-} from 'services/cache-setting'
-
-import {
   get as getPullSetting,
 } from 'services/pull-setting'
 
@@ -26,6 +22,7 @@ import {
   list as listPermissions
 } from 'services/permission'
 
+import cacheSetingService from 'services/cache-setting'
 import infrastructureService from 'services/infrastructure'
 
 import { Account } from '../Account'
@@ -112,7 +109,7 @@ export default () => ({
   cacheSetting: {
     type: CacheSetting,
     resolve: async (project) => {
-      return await getCacheSetting(project._id)
+      return await cacheSetingService.get(project._id)
     }
   },
   pullSetting: {
