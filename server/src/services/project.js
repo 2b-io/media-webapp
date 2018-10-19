@@ -218,26 +218,14 @@ export const invalidateCache = async (patterns = [], identifier, pullURL) => {
     .filter(Boolean)
 
   if (!normalizedPatterns.length) {
-    // return true
+    return true
   }
-  
+
   await request
     .post(`${ cdnServer }/projects/${ identifier }/cache-invalidations`)
     .set('Content-Type', 'application/json')
     .send({
       patterns: normalizedPatterns
-    })
-
-  return true
-}
-
-export const invalidateAllCache = async (identifier) => {
-  const { cdnServer } = config
-  await request
-    .post(`${ cdnServer }/projects/${ identifier }/cache-invalidations`)
-    .set('Content-Type', 'application/json')
-    .send({
-      patterns: [ '/*' ]
     })
 
   return true
