@@ -20,7 +20,7 @@ const getLoop = function*() {
         throw 'Unauthorized'
       }
 
-      //face data
+      //fake data
       // yield delay(10)
       // const cacheSetting = {
       //   expired: 10
@@ -66,7 +66,7 @@ const updateLoop = function*() {
         throw 'Unauthorized'
       }
 
-      //face data
+      //fake data
       // yield delay(10)
       // const newCacheSetting = cacheSetting
 

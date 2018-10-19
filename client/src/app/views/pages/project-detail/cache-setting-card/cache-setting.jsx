@@ -20,7 +20,7 @@ const CacheSetting = ({
         <Fragment>
           <Text mostLeft mostRight>
             { cacheSetting ?
-                `Cache setting value: ${ cacheSetting.expired } s`: 'Cache setting do not set.'
+                `Cache setting value: ${ cacheSetting.expired } s` : 'Cache setting do not set.'
             }
           </Text>
         </Fragment>
