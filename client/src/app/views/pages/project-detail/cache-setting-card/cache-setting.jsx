@@ -10,25 +10,24 @@ import { EditIcon } from 'ui/icons'
 const CacheSetting = ({
   identifier,
   toEditCacheSetting,
-  expired
-}) => {
-
-  return (
-    <Fragment>
-      <Card
-        title={ () => <Heading mostLeft mostRight>Cache Setting</Heading> }
-        fab={ () => <EditIcon onClick={ () => toEditCacheSetting(identifier) } /> }
-        content={ () => (
-          <Fragment>
-            <Text mostLeft mostRight>
-              Cache setting value: { expired } s
-            </Text>
-          </Fragment>
-        ) }
-      />
-    </Fragment>
-  )
-}
+  cacheSetting
+}) => (
+  <Fragment>
+    <Card
+      title={ () => <Heading mostLeft mostRight>Cache Setting</Heading> }
+      fab={ () => <EditIcon onClick={ () => toEditCacheSetting(identifier) } /> }
+      content={ () => (
+        <Fragment>
+          <Text mostLeft mostRight>
+            { cacheSetting ?
+                `Cache setting value: ${ cacheSetting.expired } s`: 'Cache setting do not set.'
+            }
+          </Text>
+        </Fragment>
+      ) }
+    />
+  </Fragment>
+)
 
 export default connect(
   (state) => {
@@ -36,7 +35,7 @@ export default connect(
 
     return {
       identifier,
-      expired: selectors.cacheSetting(state, identifier)
+      cacheSetting: selectors.cacheSetting(state, identifier)
     }
   },
   mapDispatch({

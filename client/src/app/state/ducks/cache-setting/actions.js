@@ -1,6 +1,6 @@
 import * as types from './types'
 
-export const getCacheSetting = identifier => ({
+export const getCacheSetting = (identifier) => ({
   type: types.GET,
   payload: { identifier }
 })
