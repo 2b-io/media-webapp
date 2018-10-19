@@ -33,7 +33,7 @@ export default {
     const { token } = options
 
     const body = await request(`
-      query updateProject($expired: String!, $token: String!, $identifier: String!) {
+      query updateProject($token: String!, $identifier: String!, $cacheSetting: CacheSettingStruct!) {
         session(token: $token) {
           account {
             project(identifier: $identifier) {
