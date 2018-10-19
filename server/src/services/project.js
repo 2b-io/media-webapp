@@ -3,7 +3,6 @@ import request from 'superagent'
 import { URL } from 'url'
 
 import config from 'infrastructure/config'
-
 import cacheSettingService from 'models/cache-setting'
 import Permission from 'models/Permission'
 import Preset from 'models/Preset'
