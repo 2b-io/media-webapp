@@ -1,6 +1,6 @@
 import { GraphQLNonNull } from 'graphql'
 
-import updateCacheSettingService from 'services/cache-setting'
+import cacheSettingService from 'services/cache-setting'
 
 export default ({ CacheSetting, CacheSettingStruct }) => ({
   _update: {
@@ -11,10 +11,12 @@ export default ({ CacheSetting, CacheSettingStruct }) => ({
     },
     type: CacheSetting,
     resolve: async (self, { cacheSetting }) => {
-      const p = await updateCacheSettingService.update(self.project, cacheSetting)
-      p.project = self.project
+      const updatedCacheSetting = await cacheSettingService.update(self.project, cacheSetting)
+      
+      // add ref
+      updatedCacheSetting.project = self.project
 
-      return p
+      return updatedCacheSetting
     }
   }
 })
