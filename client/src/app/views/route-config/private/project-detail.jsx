@@ -18,6 +18,15 @@ const watchGetProject = function*() {
   ])
 }
 
+const watchGetCacheSetting = function*() {
+  yield take(types.cacheSetting.GET_FAILED)
+
+  yield fork(addToast, {
+    type: 'error',
+    message: 'Get cache setting failed.'
+  })
+}
+
 const watchFetchPreset = function*() {
   yield take(types.preset.FETCH_FAILED)
 
@@ -271,6 +280,7 @@ export default {
       yield fork(watchFetchPreset)
       yield fork(watchFetchSecretKey)
       yield fork(watchGetPullSetting)
+      yield fork(watchGetCacheSetting)
       yield fork(watchCreateSecretKey)
       yield fork(watchRemoveSecretKey)
       yield fork(watchUpdateSecretKey)
@@ -287,6 +297,9 @@ export default {
         ),
         put(
           actions.fetchPresets({ identifier })
+        ),
+        put(
+          actions.getCacheSetting(identifier)
         ),
         put(
           actions.getPullSetting(identifier)
