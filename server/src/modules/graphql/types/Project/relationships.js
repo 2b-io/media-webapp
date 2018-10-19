@@ -15,6 +15,10 @@ import {
 } from 'services/preset'
 
 import {
+  get as getCacheSetting,
+} from 'services/cache-setting'
+
+import {
   get as getPullSetting,
 } from 'services/pull-setting'
 
@@ -25,6 +29,7 @@ import {
 import infrastructureService from 'services/infrastructure'
 
 import { Account } from '../Account'
+import { CacheSetting } from '../cache-setting'
 import { Collaborator } from '../Collaborator'
 import { Preset } from '../Preset'
 import { PushSetting } from '../push-setting'
@@ -102,6 +107,12 @@ export default () => ({
       infrastructure.project = project
 
       return infrastructure
+    }
+  },
+  cacheSetting: {
+    type: CacheSetting,
+    resolve: async (project) => {
+      return await getCacheSetting(project._id)
     }
   },
   pullSetting: {
