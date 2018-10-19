@@ -1,3 +1,4 @@
+import ms from 'ms'
 import namor from 'namor'
 import request from 'superagent'
 import { URL } from 'url'
@@ -178,7 +179,8 @@ export const create = async ({ name }, provider, account) => {
     }).save()
 
     await new CacheSetting({
-      project: project._id
+      project: project._id,
+      expired: ms('90d') / 1000
     }).save()
 
     await infrastructureService.create(project, provider)
@@ -187,8 +189,8 @@ export const create = async ({ name }, provider, account) => {
   } catch (error) {
     await Project.findOneAndRemove({ _id: project._id })
     await Permission.deleteMany({ project: project._id })
-    await CacheSetting.deleteMany({ project: project._id })
     await PullSetting.deleteMany({ project: project._id })
+    await CacheSetting.deleteMany({ project: project._id })
 
     throw error
   }
