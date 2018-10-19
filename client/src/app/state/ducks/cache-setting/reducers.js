@@ -6,7 +6,7 @@ export default (state = {}, action) => {
     case types.UPDATE_COMPLETED:
       return {
         ...state,
-        [ action.payload.identifier ]: action.payload.expired
+        [ action.payload.identifier ]: action.payload.cacheSetting
       }
   }
 

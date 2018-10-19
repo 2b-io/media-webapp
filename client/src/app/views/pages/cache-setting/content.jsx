@@ -14,7 +14,7 @@ const CacheSettingForm = reduxForm({
 })(_CacheSettingForm)
 
 const CacheSetting = ({
-  expired,
+  cacheSetting,
   identifier,
   updateCacheSetting,
   ui: {
@@ -24,8 +24,8 @@ const CacheSetting = ({
   <Container>
     <CacheSettingForm
       idle={ idle }
-      initialValues={ { expired } }
-      onSubmit={ ({ expired }) => updateCacheSetting({ identifier, expired }) }
+      initialValues={ cacheSetting }
+      onSubmit={ (cacheSetting) => updateCacheSetting({ identifier, cacheSetting }) }
     />
   </Container>
 )
@@ -39,7 +39,7 @@ export default connect(
     }
 
     return {
-      expired: selectors.cacheSetting(state, identifier),
+      cacheSetting: selectors.cacheSetting(state, identifier),
       identifier
     }
   },

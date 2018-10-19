@@ -4,7 +4,7 @@ import { Form } from 'ui/compounds'
 import { Button, Break } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
 import { TextBox } from 'views/common/form'
-import { validatePositiveNumbers, validateRequired } from 'views/common/validate'
+import { validatePositiveNumber, validateRequired } from 'views/common/validate'
 
 const CacheSettingForm = ({
   handleSubmit,
@@ -17,7 +17,7 @@ const CacheSettingForm = ({
       name="expired"
       placeholder="Expire time"
       type="number"
-      validate={ [ validatePositiveNumbers, validateRequired ] }
+      validate={ [ validateRequired, validatePositiveNumber ] }
     />
     <DescriptionText mostLeft mostRight>
       Expire time. (Must be numbers)

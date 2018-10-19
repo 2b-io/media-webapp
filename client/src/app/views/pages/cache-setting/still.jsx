@@ -17,6 +17,10 @@ export default connect(
   (state) => {
     const { identifier } = selectors.currentParams(state)
 
+    if (!identifier) {
+      return {}
+    }
+
     return {
       project: selectors.findProjectByIdentifier(state, identifier)
     }
