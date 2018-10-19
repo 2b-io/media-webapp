@@ -22,5 +22,6 @@ export default {
   },
   baseUrl: process.env.BASE_URL,
   cdnServer: process.env.CDN_SERVER,
-  cdnCname: process.env.CDN_CNAME
+  cdnCname: process.env.CDN_CNAME,
+  sendGrid: process.env.SENDGRID_API_KEY
 }
