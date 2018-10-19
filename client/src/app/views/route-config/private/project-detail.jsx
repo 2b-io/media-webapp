@@ -64,15 +64,29 @@ const watchCreatePreset = function*(path) {
       })
     )
 
-    const { createCompleted, createFailed } = yield race({
+    const { hide } = yield race({
       hide: take(`${ types.dialog.HIDE }:CREATE_PRESET`),
+      create: take(types.preset.CREATE)
+    })
+
+    yield put(
+      actions.mergeUIState(path, {
+        isCreatePresetDialogActive: false
+      })
+    )
+
+    if (hide) {
+      continue
+    }
+
+    const { createCompleted, createFailed } = yield race({
       createCompleted: take(types.preset.CREATE_COMPLETED),
       createFailed: take(types.preset.CREATE_FAILED)
     })
 
     yield put(
       actions.mergeUIState(path, {
-        isCreatePresetDialogActive: false
+        idle: true
       })
     )
 
