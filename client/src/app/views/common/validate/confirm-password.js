@@ -1,4 +1,4 @@
-const confirmPassword = values => {
+const confirmPassword = (values) => {
   const error = {}
   if (values.password !== values.rePassword) {
     error.rePassword = 'Confirm Password not match Password'
