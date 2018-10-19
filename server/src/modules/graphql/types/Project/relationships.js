@@ -109,7 +109,12 @@ export default () => ({
   cacheSetting: {
     type: CacheSetting,
     resolve: async (project) => {
-      return await cacheSetingService.get(project._id)
+      const cacheSetting = await cacheSetingService.get(project._id)
+      
+      // add ref
+      cacheSetting.project = project
+      
+      return cacheSetting
     }
   },
   pullSetting: {
