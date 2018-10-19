@@ -34,7 +34,7 @@ const watchGetPreset = function*() {
   ])
 }
 
-const watchRemovePresetDialog = function*(path) {
+const watchRemovePreset = function*(path) {
   while (true) {
     yield take(`${ types.dialog.SHOW}:REMOVE_PRESET`)
 
@@ -44,10 +44,9 @@ const watchRemovePresetDialog = function*(path) {
       })
     )
 
-    yield race({
+    const { hide } = yield race({
       hide: take(`${ types.dialog.HIDE }:REMOVE_PRESET`),
-      removeCompleted: take(types.preset.REMOVE_COMPLETED),
-      removeFailed: take(types.preset.REMOVE_FAILED)
+      remove: take(types.preset.REMOVE)
     })
 
     yield put(
@@ -55,12 +54,10 @@ const watchRemovePresetDialog = function*(path) {
         isRemovePresetDialogActive: false
       })
     )
-  }
-}
 
-const watchRemovePreset = function*(path) {
-  while (true) {
-    yield take(types.preset.REMOVE)
+    if (hide) {
+      continue
+    }
 
     yield put(
       actions.mergeUIState(path, {
@@ -102,7 +99,7 @@ const watchRemovePreset = function*(path) {
   }
 }
 
-const watchUpdatePresetDialog = function*(path) {
+const watchUpdatePreset = function*(path) {
   while (true) {
     const action = yield take(`${ types.dialog.SHOW }:UPDATE_PRESET`)
 
@@ -112,10 +109,9 @@ const watchUpdatePresetDialog = function*(path) {
       })
     )
 
-    yield race({
+    const { hide } = yield race({
       hide: take(`${ types.dialog.HIDE }:UPDATE_PRESET`),
-      updateCompleted: take(types.preset.UPDATE_COMPLETED),
-      updateFailed: take(types.preset.UPDATE_FAILED)
+      update: take(types.preset.UPDATE)
     })
 
     yield put(
@@ -123,12 +119,10 @@ const watchUpdatePresetDialog = function*(path) {
         isUpdatePresetDialogActive: false
       })
     )
-  }
-}
 
-const watchUpdatePreset = function*(path) {
-  while (true) {
-    yield take(types.preset.UPDATE)
+    if (hide) {
+      continue
+    }
 
     yield put(
       actions.mergeUIState(path, {
@@ -170,9 +164,7 @@ export default {
     *state(path) {
       yield fork(watchGetPreset, path)
       yield fork(watchGetProject)
-      yield fork(watchRemovePresetDialog, path)
       yield fork(watchRemovePreset, path)
-      yield fork(watchUpdatePresetDialog, path)
       yield fork(watchUpdatePreset, path)
 
       const { contentType, identifier } = yield select(selectors.currentParams)
