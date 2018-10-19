@@ -66,7 +66,7 @@ const watchUpdateProject = function*(path) {
   }
 }
 
-const watchRemoveProjectDialog = function*(path) {
+const watchRemoveProject = function*(path) {
   while (true) {
     yield take(`${ types.dialog.SHOW }:REMOVE_PROJECT`)
 
@@ -76,10 +76,9 @@ const watchRemoveProjectDialog = function*(path) {
       })
     )
 
-    yield race({
+    const { hide } = yield race({
       hide: take(`${ types.dialog.HIDE }:REMOVE_PROJECT`),
-      removeCompleted: take(types.project.REMOVE_COMPLETED),
-      removeFailed: take(types.project.REMOVE_FAILED)
+      remove: take(types.project.REMOVE)
     })
 
     yield put(
@@ -87,12 +86,10 @@ const watchRemoveProjectDialog = function*(path) {
         isRemoveConfirmationDialogActive: false
       })
     )
-  }
-}
 
-const watchRemoveProject = function*(path) {
-  while (true) {
-    yield take(types.project.REMOVE)
+    if (hide) {
+      continue
+    }
 
     yield put(
       actions.mergeUIState(path, {
@@ -140,7 +137,6 @@ export default {
       yield fork(watchCopyDomainLink)
       yield fork(watchUpdateProject, path)
       yield fork(watchGetProject)
-      yield fork(watchRemoveProjectDialog, path)
       yield fork(watchRemoveProject, path)
 
       const { identifier } = yield select(selectors.currentParams)

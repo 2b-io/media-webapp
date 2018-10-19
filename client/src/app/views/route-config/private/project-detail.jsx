@@ -18,6 +18,15 @@ const watchGetProject = function*() {
   ])
 }
 
+const watchGetCacheSetting = function*() {
+  yield take(types.cacheSetting.GET_FAILED)
+
+  yield fork(addToast, {
+    type: 'error',
+    message: 'Get cache setting failed.'
+  })
+}
+
 const watchFetchPreset = function*() {
   yield take(types.preset.FETCH_FAILED)
 
@@ -55,15 +64,29 @@ const watchCreatePreset = function*(path) {
       })
     )
 
-    const { createCompleted, createFailed } = yield race({
+    const { hide } = yield race({
       hide: take(`${ types.dialog.HIDE }:CREATE_PRESET`),
+      create: take(types.preset.CREATE)
+    })
+
+    yield put(
+      actions.mergeUIState(path, {
+        isCreatePresetDialogActive: false
+      })
+    )
+
+    if (hide) {
+      continue
+    }
+
+    const { createCompleted, createFailed } = yield race({
       createCompleted: take(types.preset.CREATE_COMPLETED),
       createFailed: take(types.preset.CREATE_FAILED)
     })
 
     yield put(
       actions.mergeUIState(path, {
-        isCreatePresetDialogActive: false
+        idle: true
       })
     )
 
@@ -257,6 +280,7 @@ export default {
       yield fork(watchFetchPreset)
       yield fork(watchFetchSecretKey)
       yield fork(watchGetPullSetting)
+      yield fork(watchGetCacheSetting)
       yield fork(watchCreateSecretKey)
       yield fork(watchRemoveSecretKey)
       yield fork(watchUpdateSecretKey)
@@ -273,6 +297,9 @@ export default {
         ),
         put(
           actions.fetchPresets({ identifier })
+        ),
+        put(
+          actions.getCacheSetting(identifier)
         ),
         put(
           actions.getPullSetting(identifier)

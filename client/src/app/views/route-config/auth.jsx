@@ -1,6 +1,7 @@
 import * as UI from 'views/pages/ui'
 
 import cacheInvalidate from './private/cache-invalidate'
+import cacheSetting from './private/cache-setting'
 import dashboard from './private/dashboard'
 import inviteCollaborator from './private/invite-collaborator'
 import preset from './private/preset'
@@ -24,6 +25,7 @@ export default {
   ...projectEdit,
   ...preset,
   ...projectDetail,
+  ...cacheSetting,
   '/ui': {
     component: UI,
     exact: true
