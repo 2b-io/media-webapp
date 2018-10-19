@@ -21,6 +21,7 @@ const PresetForm = reduxForm({
 const CreateDialog = ({
   createPreset,
   identifier,
+  idle,
   presets,
 }) => {
   if (!presets) {
@@ -42,7 +43,7 @@ const CreateDialog = ({
   return (
     <Container>
       <PresetForm
-        idle={ true }
+        idle={ idle }
         onSubmit={ ({ contentType }) => createPreset({ identifier, contentType }) }
         initialValues={ { contentType: filtered[0].value } }
         options={ filtered }
