@@ -11,7 +11,7 @@ export default ({ CacheSetting, CacheSettingStruct }) => ({
     },
     type: CacheSetting,
     resolve: async (self, { cacheSetting }) => {
-      const updatedCacheSetting = await cacheSettingService.update(self.project, cacheSetting)
+      const updatedCacheSetting = await cacheSettingService.update(self.project._id, cacheSetting)
       
       // add ref
       updatedCacheSetting.project = self.project
