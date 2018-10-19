@@ -239,18 +239,6 @@ export const invalidateCache = async (patterns = [], identifier, pullURL) => {
   return true
 }
 
-export const invalidateAllCache = async (identifier) => {
-  const { cdnServer } = config
-  await request
-    .post(`${ cdnServer }/projects/${ identifier }/cache-invalidations`)
-    .set('Content-Type', 'application/json')
-    .send({
-      patterns: [ '/*' ]
-    })
-
-  return true
-}
-
 export default {
   create,
   get,

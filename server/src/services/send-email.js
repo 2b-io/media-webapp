@@ -1,7 +1,7 @@
 import util from 'util'
 
 import config from 'infrastructure/config'
-import ses from 'infrastructure/mailer/ses'
+import sendgrid from 'infrastructure/mailer/sendgrid'
 
 import { register, inviteToRegister, resetPassword } from 'services/email-template'
 
@@ -9,11 +9,9 @@ const sendEmail = async (emailContent, email) => {
   const sender = config.aws.ses.sender
   const toAddresses = typeof email === 'string' ? [ email ] : email
   const params = {
-    ...emailContent,
-    Destination: {
-      ToAddresses: toAddresses
-    },
-    Source: sender
+    to: toAddresses,
+    from: sender,
+    ...emailContent
   }
 
   if (config.development) {
@@ -22,7 +20,7 @@ const sendEmail = async (emailContent, email) => {
     return
   }
 
-  return await ses.sendEmail(params).promise()
+  return await sendgrid.send(params)
 }
 
 export const sendEmailRegister = async (email, code) => {
