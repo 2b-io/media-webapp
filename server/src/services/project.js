@@ -3,6 +3,7 @@ import request from 'superagent'
 import { URL } from 'url'
 
 import config from 'infrastructure/config'
+import cacheSettingService from 'models/cache-setting'
 import Permission from 'models/Permission'
 import Preset from 'models/Preset'
 import Project from 'models/Project'
@@ -175,6 +176,7 @@ export const create = async ({ name }, provider, account) => {
       project: project._id
     }).save()
 
+    await cacheSettingService.create(project._id)
     await infrastructureService.create(project, provider)
 
     return project
@@ -182,6 +184,7 @@ export const create = async ({ name }, provider, account) => {
     await Project.findOneAndRemove({ _id: project._id })
     await Permission.deleteMany({ project: project._id })
     await PullSetting.deleteMany({ project: project._id })
+    await cacheSettingService.remove(project._id)
 
     throw error
   }
@@ -203,6 +206,7 @@ export const remove = async (condition, account) => {
   await Project.findOneAndRemove({ _id })
 
   await Promise.all([
+    cacheSettingService.remove(_id),
     Preset.deleteMany({ project: _id }),
     PullSetting.deleteMany({ project: _id }),
     SecretKey.deleteMany({ project: _id }),

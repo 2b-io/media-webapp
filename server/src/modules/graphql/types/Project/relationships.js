@@ -22,9 +22,11 @@ import {
   list as listPermissions
 } from 'services/permission'
 
+import cacheSetingService from 'services/cache-setting'
 import infrastructureService from 'services/infrastructure'
 
 import { Account } from '../Account'
+import { CacheSetting } from '../cache-setting'
 import { Collaborator } from '../Collaborator'
 import { Preset } from '../Preset'
 import { PushSetting } from '../push-setting'
@@ -102,6 +104,17 @@ export default () => ({
       infrastructure.project = project
 
       return infrastructure
+    }
+  },
+  cacheSetting: {
+    type: CacheSetting,
+    resolve: async (project) => {
+      const cacheSetting = await cacheSetingService.get(project._id)
+      
+      // add ref
+      cacheSetting.project = project
+      
+      return cacheSetting
     }
   },
   pullSetting: {
