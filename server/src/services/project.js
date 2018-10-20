@@ -3,14 +3,16 @@ import request from 'superagent'
 import { URL } from 'url'
 
 import config from 'infrastructure/config'
-import cacheSettingService from 'models/cache-setting'
+
 import Permission from 'models/Permission'
 import Preset from 'models/Preset'
 import Project from 'models/Project'
 import PullSetting from 'models/pull-setting'
 import SecretKey from 'models/secret-key'
-import infrastructureService from 'services/infrastructure'
+
+import cacheSettingService from 'services/cache-setting'
 import cloudFront from 'services/cloud-front'
+import infrastructureService from 'services/infrastructure'
 
 const normalizePattern = (path, pullURL) => {
   try {
