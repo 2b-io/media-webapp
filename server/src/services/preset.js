@@ -1,8 +1,6 @@
 import Preset from 'models/Preset'
 
-// import { invalidateAllCache } from 'services/project'
-
-const defaultParameter = {
+const DEFAULT_PARAMETERS = {
   'image/jpeg': {
     progressive: true,
     quality: 100
@@ -40,55 +38,44 @@ const defaultParameter = {
 }
 
 export const list = async (project) => {
-  const presets = await Preset.find({
+  return await Preset.find({
     project
   }).lean()
-
-  return presets
 }
 
-export const get = async (project, contentType) => {
+export const get = async (projectId, contentType) => {
   const preset = await Preset.findOne({
-    contentType,
-    project
+    project: projectId,
+    contentType
   }).lean()
 
   if (!preset.parameters) {
     return { ...preset, parameters: {} }
   }
+
   return preset
 }
 
-export const create = async (project, data) => {
-  data.parameters = defaultParameter[ data.contentType ]
-
-  const preset = await new Preset({
+export const create = async (projectId, data) => {
+  return await new Preset({
+    project: projectId,
     ...data,
-    project
+    parameters: DEFAULT_PARAMETERS[ data.contentType ]
   }).save()
-
-  return preset
 }
 
 export const update = async (project, contentType, data) => {
-  const { _id } = project
-  // const { isActive } = data
-  // if (!isActive) {
-  //   await invalidateAllCache(identifier)
-  // }
-  const preset = await Preset.findOneAndUpdate(
-    { project: _id, contentType },
-    data,
-    { new: true }
-  ).lean()
-
-  return preset
+  return await Preset.findOneAndUpdate({
+    project: project._id,
+    contentType
+  }, data, {
+    new: true
+  }).lean()
 }
 
-export const remove = async (project, contentType) => {
-  const preset = await Preset.findOneAndRemove(
-    { project, contentType }
-  )
-
-  return preset
+export const remove = async (projectId, contentType) => {
+  return await Preset.findOneAndRemove({
+    project: projectId,
+    contentType
+  })
 }

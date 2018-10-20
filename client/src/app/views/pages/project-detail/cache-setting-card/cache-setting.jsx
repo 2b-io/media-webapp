@@ -1,3 +1,4 @@
+import prettyMs from 'pretty-ms'
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 
@@ -20,7 +21,7 @@ const CacheSetting = ({
         <Fragment>
           <Text mostLeft mostRight>
             { cacheSetting ?
-              `Cache Expire: ${ cacheSetting.expired }s` : 'N/A'
+              `TTL: ${ prettyMs(cacheSetting.ttl * 1000) }` : 'N/A'
             }
           </Text>
         </Fragment>

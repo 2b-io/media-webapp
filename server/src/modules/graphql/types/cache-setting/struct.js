@@ -3,7 +3,7 @@ import {
 } from 'graphql'
 
 export default {
-  expired: {
+  ttl: {
     type: GraphQLFloat
   }
 }

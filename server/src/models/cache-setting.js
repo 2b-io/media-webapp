@@ -6,7 +6,7 @@ const schema = mongoose.Schema({
     required: true,
     index: true
   },
-  expired: {
+  ttl: {
     type: Number
   }
 }, {

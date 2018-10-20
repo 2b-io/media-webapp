@@ -1,7 +1,7 @@
 import request from 'services/graphql'
 
 export const CACHE_SETTING_FRAGMENT = `
-  expired
+  ttl
 `
 
 export default {

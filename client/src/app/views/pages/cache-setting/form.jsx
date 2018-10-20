@@ -13,14 +13,13 @@ const CacheSettingForm = ({
   <Form handleSubmit={ handleSubmit }>
     <TextBox
       disabled={ !idle }
-      label="Expire time"
-      name="expired"
-      placeholder="Expire time"
+      name="ttl"
+      placeholder="TTL"
       type="number"
       validate={ [ validateRequired, validatePositiveNumber ] }
     />
     <DescriptionText mostLeft mostRight>
-      Expire time. (Must be numbers)
+      The default amount of time, in seconds, that you want objects to stay in Media CDN caches before Media CDN forwards another request to your origin to determine whether the object has been updated.
     </DescriptionText>
     <Break double />
     <Button
