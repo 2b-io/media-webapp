@@ -25,9 +25,9 @@ export default () => ({
     type: Account,
     resolve: async (rootValue, { account }) => {
       const newAccount = await createAccount(account)
-      const { code }  = await forgotPassword(email)
+      const { code }  = await forgotPassword(newAccount.email)
 
-      await emailService.sendEmailRegister(email, {
+      await emailService.sendEmailRegister(newAccount.email, {
         code
       })
 

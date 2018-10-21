@@ -23,7 +23,7 @@ const InviteCollaborator = ({
   <Container>
     <InviteCollaboratorForm
       idle={ idle }
-      onSubmit={ ({ emails, messenge }) => inviteCollaborator(identifier, { emails, messenge }) }
+      onSubmit={ ({ emails, message }) => inviteCollaborator(identifier, { emails, message }) }
     />
   </Container>
 )

@@ -78,9 +78,9 @@ export const updateProjectFailed = reason => ({
   payload: { reason }
 })
 
-export const inviteCollaborator = (identifier, { emails, messenge }) => ({
+export const inviteCollaborator = (identifier, { emails, message }) => ({
   type: types.INVITE_COLLABORATOR,
-  payload: { identifier, emails, messenge }
+  payload: { identifier, emails, message }
 })
 
 export const inviteCollaboratorCompleted = (identifier, collaborators) => ({
