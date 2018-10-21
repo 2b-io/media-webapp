@@ -1,18 +1,23 @@
-import config from 'infrastructure/config'
-
-const InviteToRegister = ({ email, code, messenge }) => ({
-  html:`<body>
-    <h1>Hello ${ email }</h1>
-    <p style="color:red">
-      We invite you to register and join Media Network.
-    </p>
-    <p>
-      ${ messenge }
-    </p>
-    <p>Media Network welcome ! Click the link below to setup password</p>
-    <a href="${ config.baseUrl }/reset-password/${ code }">Click here setup new password</a>
-  </body>`,
-  subject: 'Invite To Join Media Network'
+export default ({
+  activateLink,
+  email,
+  inviterName, inviterEmail,
+  message
+}) => ({
+  subject: 'Invitation to join Media CDN',
+  content: `
+    <body>
+      <p>
+        Hello ${ email },<br /><br />
+        You receive this email because ${ inviterName } <${ inviterEmail }> has sent you an invitation to join Media CDN.<br />
+        ${ message ?
+          `You can see his personal message to you as follows:<br />
+          ${ message }<br /><br />` : ''
+        }
+        Welcome to Media CDN! Please click the link below to activate your account.<br />
+        <a href="${ activateLink }">Activate your account</a><br /><br />
+        Thanks for your trust in Media CDN!
+      </p>
+    </body>
+  `
 })
-
-export default InviteToRegister

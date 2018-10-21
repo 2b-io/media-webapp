@@ -1,15 +1,17 @@
-import config from 'infrastructure/config'
-
-const Register = ({ email, code }) => ({
-  html: `<body>
-    <h1>Hello ${ email }</h1>
-    <p style="color:red">
-      Thanks for Register
-    </p>
-    <p>Media Network welcome ! Click the link below to setup password</p>
-    <a href="${ config.baseUrl }/reset-password/${ code }">Click here setup new password</a>
-  </body>`,
-  subject: 'Register Media Network'
+export default ({
+  activateLink,
+  email
+}) => ({
+  subject: 'Welcome message from Media CDN',
+  content: `
+    <body>
+      <p>
+        Hello, ${ email },<br /><br />
+        Thank you for registering at Media CDN.<br />
+        Please click the link below to activate your account and set up your password:
+        <a href="${ activateLink }">Activate your account</a><br /><br />
+        Thanks for your trust in Media CDN!
+      </p>
+    </body>
+  `
 })
-
-export default Register

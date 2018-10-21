@@ -9,6 +9,7 @@ import {
   create as createAccount,
   findByEmail as findAccountByEmail
 } from 'services/account'
+import emailService from 'services/email'
 import {
   create as createPreset
 } from 'services/preset'
@@ -23,7 +24,6 @@ import { get as getPullSetting } from 'services/pull-setting'
 import {
   forgotPassword as createResetCode
 } from 'services/reset-password-code'
-import { sendEmailInviteToRegister } from 'services/send-email'
 
 import { Collaborator } from '../Collaborator'
 import { Preset, PresetStruct } from '../Preset'
@@ -83,7 +83,6 @@ export default ({ Project, ProjectStruct }) => ({
     type: GraphQLList(Collaborator),
     resolve: async (project, { emails, message }) => {
       // create account & send email invite
-
       const existedAccounts = (await Promise.all(
         emails.map(async (email) => await findAccountByEmail(email))
       )).filter(Boolean)
@@ -108,7 +107,11 @@ export default ({ Project, ProjectStruct }) => ({
           async ({ email }) => {
             const resetPasswordCode = await createResetCode(email)
             const { code } = resetPasswordCode
-            await sendEmailInviteToRegister(email, code, message)
+            await emailService.sendEmailInviteToRegister(email, {
+              code,
+              inviter: project.account,
+              message
+            })
           }
         )
       )

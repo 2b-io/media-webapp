@@ -9,6 +9,7 @@
     "express-graphql": "0.6.12",
     "graphql": "0.13.2",
     "graphql-type-json": "0.2.1",
+    "html-minifier": "3.5.20",
     "http-proxy-middleware": "0.18.0",
     "jsonwebtoken": "8.2.1",
     "mongoose": "5.0.17",
