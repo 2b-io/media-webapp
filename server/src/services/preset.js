@@ -6,13 +6,14 @@ import cache from 'services/cache'
 const DEFAULT_PARAMETERS = {
   'image/jpeg': {
     progressive: true,
-    quality: 100
+    quality: 90
   },
   'image/gif': {
     optimize: '-O1'
   },
   'image/png': {
-    quality: 100,
+    minQuality: 65,
+    maxQuality: 80,
     speed: 3
   },
   'image/svg+xml': {

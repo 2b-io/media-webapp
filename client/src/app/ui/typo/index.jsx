@@ -14,6 +14,7 @@ const Block = styled.div`
 
   & > * {
     display: inline-block;
+    max-width: 100%;
   }
 `
 
@@ -64,4 +65,11 @@ export const Heading = ({ children, ...props }) => (
 
 export const Emphasize = styled.span`
   font-weight: bold;
+`
+
+export const Code = styled.span`
+  padding-left: 8px;
+  padding-right: 8px;
+  color: ${ ({ theme }) => theme.black.base };
+  background: #e6e6e6;
 `
