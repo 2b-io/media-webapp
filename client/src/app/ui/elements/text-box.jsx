@@ -43,6 +43,12 @@ const Input = styled.input.attrs({
   &::placeholder {
     color: ${ ({ theme }) => theme.secondary.limpid.base };
   }
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+  }
 `
 
 const Wrapper = styled.div`
