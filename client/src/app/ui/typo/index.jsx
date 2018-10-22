@@ -14,6 +14,7 @@ const Block = styled.div`
 
   & > * {
     display: inline-block;
+    max-width: 100%;
   }
 `
 
