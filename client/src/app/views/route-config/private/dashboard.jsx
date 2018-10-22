@@ -9,7 +9,7 @@ const watchFetchProjects = function*() {
 
   yield fork(addToast, {
     type: 'error',
-    message: 'Projects do not exists or network connection error.'
+    message: 'Project does not exists or network connection has error(s).'
   })
 }
 

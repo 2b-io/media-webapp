@@ -10,7 +10,7 @@ const watchGetProject = function*() {
   yield all([
     fork(addToast, {
       type: 'error',
-      message: 'Project does not exist or internet connection error.'
+      message: 'Project does not exist or internet connection has error.'
     }),
     put(
       actions.requestLocation('/projects')
@@ -54,7 +54,7 @@ const watchUpdateProject = function*(path) {
     if (updateFailed) {
       yield fork(addToast, {
         type: 'error',
-        message: 'Edit project failed. Please check your network connection and try again.'
+        message: 'Failed to edit project. Please check your network connection and try again.'
       })
     }
 
@@ -123,7 +123,7 @@ const watchRemoveProject = function*(path) {
     if (removeFailed) {
       yield fork(addToast, {
         type: 'error',
-        message: 'Delete project failed. Please check your network connection and try again.'
+        message: 'Failed to delete the project. Please check your network connection and try again.'
       })
     }
   }

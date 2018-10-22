@@ -23,7 +23,7 @@ const watchForgotPassword = function*(path) {
     if (completed) {
       yield fork(addToast, {
         type: 'success',
-        message: 'We\'ve send a password reset link to your email. Please check your inbox.'
+        message: 'We\'ve sent a password-reset link to your email. Please check your inbox.'
       })
     }
 

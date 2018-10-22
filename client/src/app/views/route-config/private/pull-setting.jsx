@@ -10,7 +10,7 @@ const watchGetProject = function*() {
   yield all([
     fork(addToast, {
       type: 'error',
-      message: 'Project does not exist or internet connection error.'
+      message: 'Cannot connect to project. Project does not exist or network has error(s).'
     }),
     put(
       actions.requestLocation('/projects')

@@ -22,7 +22,7 @@ const watchSignIn = function*(path) {
     if (results.failed) {
       yield fork(addToast, {
         type: 'error',
-        message: 'The information that you are provided does not match our record. Please check your email and password, then try again.'
+        message: 'The information that you have provided does not match our record. Please check your email and password, then try again.'
       })
     }
 
