@@ -38,7 +38,7 @@ const DisableState = styled.div`
     ({ disabled, theme }) => disabled ?
       theme.secondary.base :
       theme.black.base
-};
+  };
 `
 
 const renderOptions = (options, currentValue, onChoose) => {
