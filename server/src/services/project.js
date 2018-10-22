@@ -231,7 +231,7 @@ const requestInvalidCache = async ({ patterns, identifier }) => {
 }
 
 export const invalidateCache = async (patterns = [], identifier, pullURL) => {
-  if (patterns[0] === ['/*']) {
+  if (patterns[0] === '/*') {
     await requestInvalidCache({ patterns, identifier })
     return true
   }
