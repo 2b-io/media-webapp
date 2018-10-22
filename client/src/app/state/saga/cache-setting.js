@@ -3,7 +3,6 @@ import serializeError from 'serialize-error'
 
 import CacheSetting from 'models/cache-setting'
 import { actions, types, selectors } from 'state/interface'
-//import delay from 'delay'
 
 const getLoop = function*() {
   while (true) {
@@ -19,12 +18,6 @@ const getLoop = function*() {
       if (!session) {
         throw 'Unauthorized'
       }
-
-      //fake data
-      // yield delay(10)
-      // const cacheSetting = {
-      //   expired: 10
-      // }
 
       const cacheSetting = yield CacheSetting.get({
         identifier
@@ -65,10 +58,6 @@ const updateLoop = function*() {
       if (!session) {
         throw 'Unauthorized'
       }
-
-      //fake data
-      // yield delay(10)
-      // const newCacheSetting = cacheSetting
 
       const newCacheSetting = yield CacheSetting.update({
         identifier,
