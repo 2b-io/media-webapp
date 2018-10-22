@@ -220,7 +220,7 @@ export const remove = async (condition, account) => {
   return true
 }
 
-const requestInvalidCache = async (patterns) => {
+const requestInvalidCache = async ({ patterns, identifier }) => {
   const { cdnServer } = config
   return await request
     .post(`${ cdnServer }/projects/${ identifier }/cache-invalidations`)
@@ -232,7 +232,7 @@ const requestInvalidCache = async (patterns) => {
 
 export const invalidateCache = async (patterns = [], identifier, pullURL) => {
   if (patterns[0] === ['/*']) {
-    await requestInvalidCache(patterns, identifier)
+    await requestInvalidCache({ patterns, identifier })
     return true
   }
 
@@ -243,11 +243,11 @@ export const invalidateCache = async (patterns = [], identifier, pullURL) => {
     .filter(Boolean)
 
   if (!normalizedPatterns.length) {
-    return true
+    return false
   } else {
-    await requestInvalidCache(normalizedPatterns, identifier)
-    return true
+    await requestInvalidCache({ patterns: normalizedPatterns, identifier })
   }
+  return true
 }
 
 export default {
