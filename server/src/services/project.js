@@ -213,14 +213,29 @@ export const remove = async (condition, account) => {
     PullSetting.deleteMany({ project: _id }),
     SecretKey.deleteMany({ project: _id }),
     Permission.deleteMany({ project: _id }),
-    infrastructureService.remove(_id)
+    infrastructureService.remove(_id),
+    invalidateCache(patterns = [ '/*' ])
   ])
 
   return true
 }
 
-export const invalidateCache = async (patterns = [], identifier, pullURL) => {
+const requestInvalidCache = async (patterns) => {
   const { cdnServer } = config
+  return await request
+    .post(`${ cdnServer }/projects/${ identifier }/cache-invalidations`)
+    .set('Content-Type', 'application/json')
+    .send({
+      patterns
+    })
+}
+
+export const invalidateCache = async (patterns = [], identifier, pullURL) => {
+  if (patterns[0] === ['/*']) {
+    await requestInvalidCache(patterns, identifier)
+    return true
+  }
+
   const normalizedPatterns = patterns
     .map(
       (pattern) => normalizePattern(pattern, pullURL)
@@ -229,16 +244,10 @@ export const invalidateCache = async (patterns = [], identifier, pullURL) => {
 
   if (!normalizedPatterns.length) {
     return true
+  } else {
+    await requestInvalidCache(normalizedPatterns, identifier)
+    return true
   }
-
-  await request
-    .post(`${ cdnServer }/projects/${ identifier }/cache-invalidations`)
-    .set('Content-Type', 'application/json')
-    .send({
-      patterns: normalizedPatterns
-    })
-
-  return true
 }
 
 export default {
