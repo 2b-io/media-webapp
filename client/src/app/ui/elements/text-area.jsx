@@ -26,7 +26,9 @@ const InputArea = styled.textarea.attrs({
     ({ theme }) => theme.white.base
   };
   color: ${
-    ({ disabled, theme }) => disabled ? '#e6e6e6' : theme.black.base
+    ({ disabled, theme }) => disabled ?
+      theme.secondary.base :
+      theme.black.base
   };
   cursor: ${
     ({ disabled, readOnly }) => (disabled || readOnly) ? 'not-allowed' : 'inherit'
@@ -57,7 +59,9 @@ const Indicator = styled.div`
   right: 0;
   height: 2px;
   background: ${
-    ({ disabled, theme }) => disabled ? '#e6e6e6' : theme.black.base
+    ({ disabled, theme }) => disabled ?
+      theme.secondary.base :
+      theme.black.base
   };
 `
 

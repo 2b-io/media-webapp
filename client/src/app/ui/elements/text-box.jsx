@@ -32,7 +32,9 @@ const Input = styled.input.attrs({
   height: 40px;
   background: ${ ({ theme }) => theme.white.base };
   color: ${
-    ({ disabled, theme }) => disabled ? '#e6e6e6' : theme.black.base
+    ({ disabled, theme }) => disabled ?
+      theme.secondary.base :
+      theme.black.base
   };
   ${ ({ hasLeading }) => !hasLeading && 'padding-left: 8px;' }
   ${ ({ hasTrailing }) => !hasTrailing && 'padding-right: 8px;' }
@@ -55,7 +57,9 @@ const Indicator = styled.div`
   right: 0;
   height: 2px;
   background: ${
-    ({ disabled, theme }) => disabled ? '#e6e6e6' : theme.black.base
+    ({ disabled, theme }) => disabled ?
+      theme.secondary.base :
+      theme.black.base
   };
 `
 

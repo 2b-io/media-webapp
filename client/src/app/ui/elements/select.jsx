@@ -27,13 +27,18 @@ const Indicator = styled.div`
   right: 0;
   height: 2px;
   background: ${
-    ({ disabled, theme }) => disabled ? '#e6e6e6' : theme.black.base
+    ({ disabled, theme }) => disabled ?
+      theme.secondary.base :
+      theme.black.base
   };
 `
 
 const DisableState = styled.div`
-
-  color: ${ ({ disabled, theme }) => disabled ? '#e6e6e6' : theme.black.base };
+  color: ${
+    ({ disabled, theme }) => disabled ?
+      theme.secondary.base :
+      theme.black.base
+};
 `
 
 const renderOptions = (options, currentValue, onChoose) => {

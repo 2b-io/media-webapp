@@ -17,7 +17,9 @@ const Button = styled.button.attrs({
     outline: none;
   }
   color: ${
-    ({ disabled, theme }) => disabled ? '#e6e6e6' : theme.black.base
+    ({ disabled, theme }) => disabled ?
+      theme.secondary.base :
+      theme.black.base
   };
   cursor: ${
     ({ disabled }) => disabled ? 'not-allowed' : 'pointer'

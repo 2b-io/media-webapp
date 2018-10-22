@@ -56,7 +56,7 @@ const sendEmailInviteToRegister = async (email, {
   return true
 }
 
-const sendEmailResetPassword = async (email, { name, code }) => {
+const sendEmailResetPassword = async (email, { code }) => {
   const emailContent = resetPassword({
     email,
     resetLink: `${ config.baseUrl }/reset-password/${ code }`
