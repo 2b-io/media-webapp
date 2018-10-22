@@ -9,7 +9,7 @@ import { TextBox } from 'views/common/form'
 const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 40px;
-  column-gap: 8px
+  grid-column-gap: 8px
   & > * {
     min-width: 0;
     min-height: 0;
