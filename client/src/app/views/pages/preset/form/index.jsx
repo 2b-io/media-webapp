@@ -1,4 +1,5 @@
 import React from 'react'
+import { FormSection } from 'redux-form'
 
 import { Form } from 'ui/compounds'
 import { Break, Button } from 'ui/elements'
@@ -9,20 +10,20 @@ import Gif from './gif'
 import Png from './png'
 import Svg from './svg'
 
-const renderParameterForm = (contentType, idle) => {
+const renderParameterForm = (contentType, props) => {
 
   switch (contentType) {
     case 'image/jpeg':
-      return <Jpeg idle={ idle } />
+      return <Jpeg { ...props } />
 
     case 'image/gif':
-      return <Gif idle={ idle } />
+      return <Gif { ...props } />
 
     case 'image/png':
-      return <Png idle={ idle } />
+      return <Png { ...props } />
 
     case 'image/svg+xml':
-      return <Svg idle={ idle } />
+      return <Svg { ...props } />
   }
 
   return null
@@ -30,6 +31,7 @@ const renderParameterForm = (contentType, idle) => {
 
 const PresetForm = ({
   contentType,
+  currentParameters,
   handleSubmit,
   idle
 }) => (
@@ -49,7 +51,14 @@ const PresetForm = ({
     />
     <Break />
 
-    { renderParameterForm(contentType, idle) }
+    <FormSection name="parameters">
+      {
+        renderParameterForm(contentType, {
+          currentParameters,
+          idle
+        })
+      }
+    </FormSection>
 
     <Break double />
     <Button disabled={ !idle } type="submit">

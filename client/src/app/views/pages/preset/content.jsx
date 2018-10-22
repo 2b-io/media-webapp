@@ -1,5 +1,5 @@
 import React from 'react'
-import { reduxForm } from 'redux-form'
+import { formValueSelector, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
@@ -15,44 +15,41 @@ const PresetForm = reduxForm({
   enableReinitialize: true
 })(StatelessPresetForm)
 
+const formSelector = formValueSelector('PRESET_FORM')
+
 const PresetJpeg = ({
-  preset,
   identifier,
+  parameters,
+  preset,
   updatePreset,
   removePreset,
   showRemovePresetDialog,
-  showUpdatePresetDialog,
   hideRemovePresetDialog,
+  showUpdatePresetDialog,
   hideUpdatePresetDialog,
   ui: {
     idle,
-    isUpdatePresetDialogActive,
     isRemovePresetDialogActive,
+    isUpdatePresetDialogActive
   }
 }) => {
   if (!preset) {
     return null
   }
 
-  const { contentType, parameters, isActive } = preset
-
   return (
     <Container>
       <PresetForm
-        contentType={ contentType }
+        contentType={ preset.contentType }
         idle={ idle }
-        initialValues={ { contentType, isActive, ...parameters } }
-        onSubmit={ ({ contentType, isActive, ...parameters }) => {
+        initialValues={ preset }
+        currentParameters={ parameters }
+        onSubmit={ (preset) => {
           showUpdatePresetDialog({
-            preset: {
-              contentType,
-              isActive,
-              parameters
-            },
+            preset,
             identifier
           })
         } }
-        isActive={ isActive }
       />
       <TextButton
         onClick={ showRemovePresetDialog }
@@ -61,14 +58,14 @@ const PresetJpeg = ({
         Permanently delete
       </TextButton>
       <DialogRemovePreset
-        contentType={ contentType }
+        contentType={ preset.contentType }
         idle={ idle }
         isActive={ isRemovePresetDialogActive }
         onConfirm={ () => removePreset({ identifier, contentType }) }
         onCancel={ hideRemovePresetDialog }
       />
       <DialogUpdatePreset
-        contentType={ contentType }
+        contentType={ preset.contentType }
         idle={ idle }
         isUpdatePresetDialogActive={ isUpdatePresetDialogActive }
         onConfirm={ ({ identifier, preset }) => {
@@ -89,8 +86,9 @@ export default connect(
     }
 
     return {
-      preset: selectors.findPreset(state, identifier, contentType.replace('_', '/')),
-      identifier
+      identifier,
+      parameters: formSelector(state, 'parameters'),
+      preset: selectors.findPreset(state, identifier, contentType.replace('_', '/'))
     }
   },
   mapDispatch({
