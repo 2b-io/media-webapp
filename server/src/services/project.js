@@ -246,7 +246,7 @@ export const invalidateCache = async (patterns = [], identifier, pullURL) => {
     throw 'Invalid patterns'
   }
 
-  await requestInvalidCache(normalizedPatterns, identifier, {
+  await requestInvalidateCache(normalizedPatterns, identifier, {
     deleteOnS3: true,
     deleteOnDistribution: true
   })
