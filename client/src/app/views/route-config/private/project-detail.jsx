@@ -107,22 +107,31 @@ const watchCreatePreset = function*(path) {
 
 const watchRemoveCollaborator = function*() {
   while (true) {
+    const action = yield take(types.project.DELETE_COLLABORATOR)
+
     const { removeCompleted, removeFailed } = yield race({
       removeCompleted: take(types.project.DELETE_COLLABORATOR_COMPLETED),
       removeFailed: take(types.project.DELETE_COLLABORATOR_FAILED)
     })
 
+    const session = yield select(selectors.currentSession)
+    const isLeaveProject = action.payload.accountId === session.account.identifier
+
     if (removeCompleted) {
       yield fork(addToast, {
         type: 'success',
-        message: 'The collaborator has been removed.'
+        message: isLeaveProject ?
+          'Successfully left the project.' :
+          'The collaborator has been removed.'
       })
     }
 
     if (removeFailed) {
       yield fork(addToast, {
         type: 'error',
-        message: 'Cannot Remove the collaborator. Please check your internet connection and try again.'
+        message: isLeaveProject ?
+          'Failed to leave the project.' :
+          'Cannot remove the collaborator. Please check your internet connection and try again.'
       })
     }
   }
