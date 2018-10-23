@@ -18,7 +18,7 @@ const InviteCollaboratorForm = ({
       validate={ [ validateRequired, validateMultiEmail ] }
     />
     <DescriptionText mostLeft mostRight>
-      We&#39;ll send the persons you invited an email with the invitation detail. If they don&#39;t have an account yet, we&#39;ll create one and send instructions for setting their password.
+      We&#39;ll send the person(s) you invited an email with the invitation detail. If they haven&#39;t got an account yet, we&#39;ll create one for each and send instructions for setting their passwords.
     </DescriptionText>
     <Break />
     <TextArea
@@ -29,10 +29,10 @@ const InviteCollaboratorForm = ({
       maxLength={ 200 }
     />
     <DescriptionText mostLeft mostRight>
-      Optional. A personal note for the invitation email.
+      (Optional) A personal note for the invitation email.
     </DescriptionText>
     <Break double />
-    <Button disabled={ !idle } type="submit" >Send the invitations</Button>
+    <Button disabled={ !idle } type="submit">Send the invitations</Button>
   </Form>
 )
 
