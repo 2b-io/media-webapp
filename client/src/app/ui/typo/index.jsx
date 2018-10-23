@@ -8,13 +8,12 @@ const Block = styled.div`
   ${ lineHeight }
   ${ padding }
   ${ textAlign }
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 
   & > * {
-    display: inline-block;
-    max-width: 100%;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 `
 
