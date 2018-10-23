@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import styled from 'styled-components'
 
 import { ApiKeys } from './api-keys-card'
@@ -36,12 +36,17 @@ const Project = ({
     <Layout>
       <Container>
         <ProjectInfo ui={ ui } />
-        <Presets ui={ ui } />
-        <CacheSetting ui={ ui } />
-        <PullSettings />
-        <ApiKeys />
-        <Collaborators ui={ ui } />
-        <ProjectTools />
+        {
+          ui.isProjectActive &&
+            <Fragment>
+              <Presets ui={ ui } />
+              <CacheSetting ui={ ui } />
+              <PullSettings />
+              <ApiKeys />
+              <Collaborators ui={ ui } />
+              <ProjectTools />
+            </Fragment>
+        }
       </Container>
     </Layout>
   )

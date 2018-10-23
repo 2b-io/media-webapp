@@ -4,18 +4,35 @@ import { addToast } from 'state/saga/toast'
 import { actions, selectors, types } from 'state/interface'
 import * as ProjectDetail from 'views/pages/project-detail'
 
-const watchGetProject = function*() {
-  yield take(types.project.GET_FAILED)
+const watchGetProject = function*(path) {
+  const { completed, failed } = yield race({
+    completed: take(types.project.GET_COMPLETED),
+    failed: take(types.project.GET_FAILED)
+  })
 
-  yield all([
-    fork(addToast, {
-      type: 'error',
-      message: 'Cannot connect to project. Project does not exist or network has error(s).'
-    }),
-    put(
-      actions.requestLocation('/projects')
-    )
-  ])
+  if (failed) {
+    yield all([
+      fork(addToast, {
+        type: 'error',
+        message: 'Cannot connect to project. Project does not exist or network has error(s).'
+      }),
+      put(
+        actions.requestLocation('/projects')
+      )
+    ])
+  }
+
+  if (completed) {
+    const { isActive, status } = completed.payload.project
+
+    if (isActive === true && status === 'DEPLOYED') {
+      yield put(
+        actions.mergeUIState(path, {
+          isProjectActive: true
+        })
+      )
+    }
+  }
 }
 
 const watchGetCacheSetting = function*() {
@@ -285,7 +302,7 @@ export default {
     component: ProjectDetail,
     exact: true,
     *state(path) {
-      yield fork(watchGetProject)
+      yield fork(watchGetProject, path)
       yield fork(watchFetchPreset)
       yield fork(watchFetchSecretKey)
       yield fork(watchGetPullSetting)
@@ -319,7 +336,7 @@ export default {
         put(
           actions.initializeUIState(path, {
             idle: true,
-            notFound: false,
+            isProjectActive: false,
             isCreatePresetDialogActive: false,
             isLeaveProjectDialogActive: false,
             isMakeOwnerDialogActive: false
