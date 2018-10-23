@@ -194,7 +194,7 @@ export const create = async ({ name }, provider, account) => {
 
 export const remove = async (condition, account) => {
   const project = await get(condition, account)
-
+  const patterns = ['/*']
   if (!project) {
     throw 'Project not found'
   }
@@ -214,7 +214,7 @@ export const remove = async (condition, account) => {
     SecretKey.deleteMany({ project: _id }),
     Permission.deleteMany({ project: _id }),
     infrastructureService.remove(_id),
-    invalidateCache(patterns = [ '/*' ])
+    invalidateCache(patterns)
   ])
 
   return true
