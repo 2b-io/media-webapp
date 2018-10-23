@@ -25,12 +25,12 @@ const SignIn = ({
       onSubmit={ signIn }
       idle={ idle }
     />
-    <TextButton disabled={ !idle } onClick={ toForgotPassword }>
+    <TextButton onClick={ toForgotPassword }>
       Can&apos;t sign in?
     </TextButton>
     <Break double />
     <Text mostLeft mostRight>
-      Don&apos;t have your account yet?<br />
+      Haven&apos;t got your account yet?<br />
       <Link href="/register" onClick={ toRegister }>Try it for free!</Link>
     </Text>
   </Container>

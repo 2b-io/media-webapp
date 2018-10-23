@@ -61,7 +61,10 @@ const PresetJpeg = ({
         contentType={ preset.contentType }
         idle={ idle }
         isActive={ isRemovePresetDialogActive }
-        onConfirm={ () => removePreset({ identifier, contentType }) }
+        onConfirm={ () => removePreset({
+          identifier,
+          contentType: preset.contentType
+        }) }
         onCancel={ hideRemovePresetDialog }
       />
       <DialogUpdatePreset

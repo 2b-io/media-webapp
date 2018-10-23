@@ -24,7 +24,7 @@ const PngParameterForm = ({
       />
       <DescriptionText mostLeft mostRight>
         Set minimum and maximum image quality factor.<br />
-        Instructs <Code>pngquant</Code> to use the least amount of colors required to meet or exceed the max quality. If conversion results in quality below the min quality the image won't be saved (if outputting to stdout, 24-bit original will be output) and <Code>pngquant</Code> will exit with status code 99.<br />
+        Instructs <Code>pngquant</Code> to use the least amount of colors required to meet or exceed the max quality. If conversion results in quality below the min quality the image won&apos;t be saved (if outputting to stdout, 24-bit original will be output) and <Code>pngquant</Code> will exit with status code 99.<br />
         <Code>Minimum</Code> and <Code>maximum</Code> are numbers in range 0 (worst) to 100 (perfect).
       </DescriptionText>
       <Break />

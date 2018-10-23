@@ -18,7 +18,7 @@ const pullSettingForm = ({
       placeholder="https://example.com/assets"
     />
     <DescriptionText mostLeft mostRight>
-      Optional. If you want Media CDN to request your content from a directory in your origin, enter the directory here, for example, https://example.com/assets. Do not include a / at the end of the directory.
+      (Optional) If you want Media CDN to request your content from a directory in your origin, enter the Pull URL here, for example, https://mywebsite.com/assets. Do not include a / at the end of the Pull URL.
     </DescriptionText>
     <Break />
     <TextArea
@@ -28,7 +28,7 @@ const pullSettingForm = ({
       placeholder="example.com"
     />
     <DescriptionText mostLeft mostRight>
-      Optional. If you want to restrict Media CDN requesting to specified origins, enter the allowed origins here.
+      (Optional) If you want to restrict Media CDN requesting to specified origins, enter the allowed origins here.
     </DescriptionText>
     <Break />
     <CustomHeader
