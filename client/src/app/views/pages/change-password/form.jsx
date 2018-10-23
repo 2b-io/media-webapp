@@ -1,7 +1,6 @@
 import React from 'react'
 
-import { Form } from 'ui/compounds'
-import { Button, Break } from 'ui/elements'
+import { Break, Button, Form } from 'ui/elements'
 import { KeyIcon } from 'ui/icons'
 import { DescriptionText } from 'ui/typo'
 import { TextBox } from 'views/common/form'
