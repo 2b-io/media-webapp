@@ -4,7 +4,7 @@ import { addToast } from 'state/saga/toast'
 import { actions, types, selectors } from 'state/interface'
 import * as PullSetting from 'views/pages/pull-setting'
 
-const watchGetProject = function*(path) {
+const watchGetProject = function*() {
   const { identifier } = yield select(selectors.currentParams)
 
   const { completed, failed } = yield race({

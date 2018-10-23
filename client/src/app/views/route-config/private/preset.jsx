@@ -4,7 +4,7 @@ import { addToast } from 'state/saga/toast'
 import { actions, selectors, types } from 'state/interface'
 import * as Preset from 'views/pages/preset'
 
-const watchGetProject = function*(path) {
+const watchGetProject = function*() {
   const { identifier } = yield select(selectors.currentParams)
 
   const { completed, failed } = yield race({
@@ -185,7 +185,7 @@ export default {
     component: Preset,
     exact: true,
     *state(path) {
-      yield fork(watchGetPreset, path)
+      yield fork(watchGetPreset)
       yield fork(watchGetProject, path)
       yield fork(watchRemovePreset, path)
       yield fork(watchUpdatePreset, path)
