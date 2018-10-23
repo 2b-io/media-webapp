@@ -2,14 +2,11 @@ import request from 'superagent'
 
 import config from 'infrastructure/config'
 
-export const invalidateCacheByPreset = async (identifier, presetHash) => {
-  const { cdnServer } = config
+const invalidateCacheByPreset = async (identifier, presetHash) => {
   return await request
-    .post(`${ cdnServer }/projects/${ identifier }/cache-invalidations`)
+    .post(`${ config.cdnServer }/projects/${ identifier }/presets/${ presetHash }/cache-invalidations`)
     .set('Content-Type', 'application/json')
-    .send({
-      presetHash
-    })
+    .send()
 }
 
 export default {

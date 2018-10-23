@@ -68,7 +68,7 @@ export const create = async (projectId, data) => {
   }).save()
 }
 
-const presetHash = (parameters) => {
+const hashPreset = (parameters) => {
   return sh.unique(
     JSON.stringify(
       parameters,
@@ -83,19 +83,21 @@ export const update = async (project, contentType, data) => {
     contentType
   }).lean()
 
-  const currentPresetHash = presetHash(currentPreset.parameters)
-  const newPresetHash = presetHash(data.parameters)
-
-  if (currentPresetHash !== newPresetHash || !data.isActive) {
-    await cache.invalidateCacheByPreset(project.identifier, currentPresetHash)
-  }
-
-  return await Preset.findOneAndUpdate({
+  const updatedPreset = await Preset.findOneAndUpdate({
     project: project._id,
     contentType
   }, data, {
     new: true
   }).lean()
+
+  const currentPresetHash = hashPreset(currentPreset.parameters)
+  const newPresetHash = hashPreset(updatedPreset.parameters)
+
+  if (currentPresetHash !== newPresetHash || !updatedPreset.isActive) {
+    await cache.invalidateCacheByPreset(project.identifier, currentPresetHash)
+  }
+
+  return updatedPreset
 }
 
 export const remove = async (projectId, contentType) => {
