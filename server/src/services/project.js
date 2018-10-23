@@ -213,14 +213,29 @@ export const remove = async (condition, account) => {
     PullSetting.deleteMany({ project: _id }),
     SecretKey.deleteMany({ project: _id }),
     Permission.deleteMany({ project: _id }),
-    infrastructureService.remove(_id)
+    infrastructureService.remove(_id),
+    requestInvalidateCache([ '/*' ], project.identifier, {
+      deleteOnS3: true,
+      deleteOnDistribution: false
+    })
   ])
 
   return true
 }
 
-export const invalidateCache = async (patterns = [], identifier, pullURL) => {
+const requestInvalidateCache = async (patterns, identifier, options) => {
   const { cdnServer } = config
+  return await request
+    .post(`${ cdnServer }/projects/${ identifier }/cache-invalidations`)
+    .set('Content-Type', 'application/json')
+    .send({
+      patterns,
+      options
+    })
+}
+
+export const invalidateCache = async (patterns = [], identifier, pullURL) => {
+
   const normalizedPatterns = patterns
     .map(
       (pattern) => normalizePattern(pattern, pullURL)
@@ -228,15 +243,13 @@ export const invalidateCache = async (patterns = [], identifier, pullURL) => {
     .filter(Boolean)
 
   if (!normalizedPatterns.length) {
-    return true
+    throw 'Invalid patterns'
   }
 
-  await request
-    .post(`${ cdnServer }/projects/${ identifier }/cache-invalidations`)
-    .set('Content-Type', 'application/json')
-    .send({
-      patterns: normalizedPatterns
-    })
+  await requestInvalidateCache(normalizedPatterns, identifier, {
+    deleteOnS3: true,
+    deleteOnDistribution: true
+  })
 
   return true
 }
@@ -245,8 +258,8 @@ export default {
   create,
   get,
   getByID,
+  invalidateCache,
   list,
   remove,
-  update,
-  invalidateCache
+  update
 }
