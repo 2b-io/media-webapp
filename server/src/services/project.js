@@ -194,7 +194,8 @@ export const create = async ({ name }, provider, account) => {
 
 export const remove = async (condition, account) => {
   const project = await get(condition, account)
-  const patterns = ['/*']
+  const patterns = [ '/*' ]
+
   if (!project) {
     throw 'Project not found'
   }
