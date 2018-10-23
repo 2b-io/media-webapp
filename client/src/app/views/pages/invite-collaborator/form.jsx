@@ -14,6 +14,7 @@ const InviteCollaboratorForm = ({
       disabled={ !idle }
       label="Emails"
       name="emails"
+      placeholder="Emails"
       validate={ [ validateRequired, validateMultiEmail ] }
     />
     <DescriptionText mostLeft mostRight>
