@@ -25,7 +25,7 @@ const SignIn = ({
       onSubmit={ signIn }
       idle={ idle }
     />
-    <TextButton disabled={ !idle } onClick={ toForgotPassword }>
+    <TextButton onClick={ toForgotPassword }>
       Can&apos;t sign in?
     </TextButton>
     <Break double />
