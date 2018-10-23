@@ -55,6 +55,10 @@ const Surface = styled.div`
       'translate3d(-100%, 0, 0)'
   };
   transition: transform .3s ${ easingFunc };
+  ${
+    ({ open, theme }) => open &&
+      `box-shadow: 4px 4px ${ theme.black.opaque.base };`
+  }
 `
 
 const CloseButton = styled.button`

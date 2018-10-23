@@ -1,7 +1,6 @@
 import React from 'react'
 
-import { Form } from 'ui/compounds'
-import { Break, Button } from 'ui/elements'
+import { Break, Button, Form } from 'ui/elements'
 import { EmailIcon, KeyIcon } from 'ui/icons'
 import { TextBox } from 'views/common/form'
 import { validateRequired, validateEmail } from 'views/common/validate'

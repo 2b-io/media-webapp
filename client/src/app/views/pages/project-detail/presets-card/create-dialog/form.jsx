@@ -1,7 +1,6 @@
 import React from 'react'
 
-import { Button, Break } from 'ui/elements'
-import { Form } from 'ui/compounds'
+import { Break, Button, Form } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
 import { Select  } from 'views/common/form'
 

@@ -1,7 +1,6 @@
 import React from 'react'
 
-import { Form } from 'ui/compounds'
-import { Button, Break, Link } from 'ui/elements'
+import { Break, Button, Form, Link } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
 import { Radio, TextBox } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'

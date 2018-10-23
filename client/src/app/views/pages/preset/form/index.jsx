@@ -1,8 +1,7 @@
 import React from 'react'
 import { FormSection } from 'redux-form'
 
-import { Form } from 'ui/compounds'
-import { Break, Button } from 'ui/elements'
+import { Break, Button, Form } from 'ui/elements'
 import { TextBox, CheckBox } from 'views/common/form'
 
 import Jpeg from './jpeg'

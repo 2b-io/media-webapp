@@ -1,8 +1,7 @@
 import React from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
-import { Form } from 'ui/compounds'
-import { Button, TextButton, Break } from 'ui/elements'
+import { Break, Button, Form, TextButton } from 'ui/elements'
 import { CopyIcon } from 'ui/icons'
 import { TextLine } from 'ui/typo'
 
