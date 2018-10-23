@@ -24,7 +24,7 @@ export default ({ Account, AccountStruct }) => ({
       const updatedAccount = await updateAccount(self._id, account)
 
       // add ref
-      updatedAccount.session = session
+      updatedAccount.session = self.session
 
       return updatedAccount
     }

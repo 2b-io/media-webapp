@@ -23,7 +23,7 @@ const Switch = styled.div`
   justify-content: center;
   color: ${
     ({ disabled, theme }) => disabled ?
-      '#e6e6e6' :
+      theme.secondary.base :
       theme.black.base
   };
 `

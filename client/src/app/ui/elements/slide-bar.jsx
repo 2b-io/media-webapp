@@ -46,7 +46,9 @@ const CircleThumb = styled.div`
   height: 16px;
   border-radius: 50%;
   background: ${
-    ({ disabled, theme }) => disabled ? '#e6e6e6' : theme.primary.base
+    ({ disabled, theme }) => disabled ?
+      theme.secondary.base :
+      theme.primary.base
   };
   position: absolute;
   top: -7px;
@@ -64,9 +66,13 @@ const Track = styled.div.attrs({
   transform: translate3d(0, 7px, 0);
   user-select: none;
   background: ${
-    ({ active, disabled, theme }) => {
+    ({
+      active,
+      disabled,
+      theme
+    }) => {
       if (disabled) {
-        return '#e6e6e6'
+        return theme.secondary.base
       }
 
       return active ? theme.primary.base : theme.black.base
