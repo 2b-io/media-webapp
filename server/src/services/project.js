@@ -14,14 +14,6 @@ import cacheSettingService from 'services/cache-setting'
 import cloudFront from 'services/cloud-front'
 import infrastructureService from 'services/infrastructure'
 
-const normalizePattern = (path, pullURL) => {
-  try {
-    return new URL(path, pullURL || undefined).toString()
-  } catch (e) {
-    return null
-  }
-}
-
 const generateUniqueIdentifier = async (retry) => {
   const identifier = namor.generate({
     words: 2,
@@ -214,42 +206,25 @@ export const remove = async (condition, account) => {
     SecretKey.deleteMany({ project: _id }),
     Permission.deleteMany({ project: _id }),
     infrastructureService.remove(_id),
-    requestInvalidateCache([ '/*' ], project.identifier, {
-      deleteOnS3: true,
-      deleteOnDistribution: false
-    })
+    requestInvalidateCache([ '/*' ], project.identifier)
   ])
 
   return true
 }
 
-const requestInvalidateCache = async (patterns, identifier, options) => {
+const requestInvalidateCache = async (patterns, identifier) => {
   const { cdnServer } = config
+
   return await request
     .post(`${ cdnServer }/projects/${ identifier }/cache-invalidations`)
     .set('Content-Type', 'application/json')
     .send({
-      patterns,
-      options
+      patterns
     })
 }
 
-export const invalidateCache = async (patterns = [], identifier, pullURL) => {
-
-  const normalizedPatterns = patterns
-    .map(
-      (pattern) => normalizePattern(pattern, pullURL)
-    )
-    .filter(Boolean)
-
-  if (!normalizedPatterns.length) {
-    throw 'Invalid patterns'
-  }
-
-  await requestInvalidateCache(normalizedPatterns, identifier, {
-    deleteOnS3: true,
-    deleteOnDistribution: true
-  })
+export const invalidateCache = async (patterns = [], identifier) => {
+  await requestInvalidateCache(patterns, identifier)
 
   return true
 }
