@@ -24,7 +24,7 @@ const watchGetResetCode = function*(path) {
 
 const watchResetPassword = function*(path) {
   while (true) {
-    yield take(types.resetPasswordCode.RESET_PASSWORD)
+    const { payload } = yield take(types.resetPasswordCode.RESET_PASSWORD)
 
     yield put(
       actions.mergeUIState(path, {
@@ -41,7 +41,9 @@ const watchResetPassword = function*(path) {
       yield all([
         fork(addToast, {
           type: 'success',
-          message: 'Your password has been successfully reset.'
+          message: payload.account.isActive ?
+            'Your password has been successfully changed.' :
+            'Your password was successfully set.'
         }),
         put(
           actions.requestLocation('/sign-in')
@@ -52,7 +54,9 @@ const watchResetPassword = function*(path) {
     if (failed) {
       yield fork(addToast, {
         type: 'error',
-        message: 'Reset password failed. Please check your network connection and try again.'
+        message: payload.account.isActive ?
+          'Password was unsuccessully changed. Please check your network connection and try again.' :
+          'Failed to set new password. Please check your network connection and try again.'
       })
     }
 

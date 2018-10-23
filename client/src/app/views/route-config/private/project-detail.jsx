@@ -10,7 +10,7 @@ const watchGetProject = function*() {
   yield all([
     fork(addToast, {
       type: 'error',
-      message: 'Project does not exist or internet connection error.'
+      message: 'Cannot connect to project. Project does not exist or network has error(s).'
     }),
     put(
       actions.requestLocation('/projects')
@@ -99,7 +99,7 @@ const watchCreatePreset = function*(path) {
     if (createFailed) {
       yield fork(addToast, {
         type: 'error',
-        message: 'Can not add new preset. Please check your network connection and try again.'
+        message: 'Cannot add new preset. Please check your network connection and try again.'
       })
     }
   }
@@ -115,14 +115,14 @@ const watchRemoveCollaborator = function*() {
     if (removeCompleted) {
       yield fork(addToast, {
         type: 'success',
-        message: 'The collaborator have been removed.'
+        message: 'The collaborator has been removed.'
       })
     }
 
     if (removeFailed) {
       yield fork(addToast, {
         type: 'error',
-        message: 'Can not Remove the collaborator. Please check your internet connection and try again.'
+        message: 'Cannot Remove the collaborator. Please check your internet connection and try again.'
       })
     }
   }
@@ -179,7 +179,7 @@ const watchMakeOwner = function*(path) {
       yield all([
         yield fork(addToast, {
           type: 'success',
-          message: 'The collaborator have been set to owner.'
+          message: 'The collaborator has been set to owner.'
         }),
         put(
           actions.requestLocation(`/projects/${ identifier }`)
@@ -190,7 +190,7 @@ const watchMakeOwner = function*(path) {
     if (makeOwnerFailed) {
       yield fork(addToast, {
         type: 'error',
-        message: 'Can not set this collaborator to owner. Please check your internet connection and try again.'
+        message: 'Cannot set this collaborator as owner. Please check your internet connection and try again.'
       })
     }
   }
@@ -206,7 +206,7 @@ const watchCreateSecretKey = function*() {
     if (createCompleted) {
       yield fork(addToast, {
         type: 'success',
-        message: 'Created a new API key.'
+        message: 'A new API key created.'
       })
     }
 
@@ -235,7 +235,7 @@ const watchUpdateSecretKey = function*() {
     if (updateCompleted) {
       yield fork(addToast, {
         type: 'success',
-        message: `${ isActive ? 'Enable' : 'Disable' } the API key completed.`
+        message: `Sucessfully ${ isActive ? 'enable' : 'disable' } the API key.`
       })
     }
 
@@ -258,7 +258,7 @@ const watchRemoveSecretKey = function*() {
     if (removeCompleted) {
       yield fork(addToast, {
         type: 'success',
-        message: 'Remove the API key completed.'
+        message: 'Sucessfully remove the API key.'
       })
     }
 

@@ -25,7 +25,7 @@ const watchCreateProject = function*(path) {
       yield all([
         fork(addToast, {
           type: 'success',
-          message: 'Create project successful.'
+          message: 'Successfully create project.'
         }),
         put(
           actions.requestLocation(`/projects/${ identifier }`)
@@ -36,7 +36,7 @@ const watchCreateProject = function*(path) {
     if (failed) {
       yield fork(addToast, {
         type: 'error',
-        message: 'Can not create project. Please check your network connection. Or contact admin for help.'
+        message: 'Cannot create project. Please check your network connection. Or contact admin for help.'
       })
     }
 

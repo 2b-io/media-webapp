@@ -25,7 +25,7 @@ const watchChangePassword = function*(path) {
       yield all([
         fork(addToast, {
           type: 'success',
-          message: 'Your password has been successfully changed. Please login back.'
+          message: 'Your password has been successfully changed.'
         }),
         put(
           actions.closeLayout()
@@ -36,7 +36,7 @@ const watchChangePassword = function*(path) {
     if (failed) {
       yield fork(addToast, {
         type: 'error',
-        message: 'Change password failed. Please check your current password and try again.'
+        message: 'Failed to change your password. Please check your network connection and try again.'
       })
     }
 
@@ -53,7 +53,7 @@ const watchGetProfile = function*() {
 
   yield fork(addToast, {
     type: 'error',
-    message: 'Cant not get your profile. Please check your network connection and try again.'
+    message: 'Cannot get your profile. Please check your network connection and try again.'
   })
 
   yield put(
@@ -86,7 +86,7 @@ const watchUpdateProfile = function*(path) {
     if (failed) {
       yield fork(addToast, {
         type: 'error',
-        message: 'Edit profile failed. Please check your network connection and try again.'
+        message: 'Failed to edit your profile. Please check your network connection and try again.'
       })
     }
 

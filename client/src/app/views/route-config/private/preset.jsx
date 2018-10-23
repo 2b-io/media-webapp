@@ -10,7 +10,7 @@ const watchGetProject = function*() {
   yield all([
     fork(addToast, {
       type: 'error',
-      message: 'Project does not exist or internet connection error.'
+      message: 'Cannot get your profile. Please check your network connection and try again.'
     }),
     put(
       actions.requestLocation('/projects')
@@ -26,7 +26,7 @@ const watchGetPreset = function*() {
   yield all ([
     yield fork(addToast, {
       type: 'error',
-      message: 'Get preset failed.'
+      message: 'Preset does not exist or internet connection has error(s).'
     }),
     put(
       actions.requestLocation(`/projects/${ identifier }`)
@@ -82,7 +82,7 @@ const watchRemovePreset = function*(path) {
       yield all ([
         fork(addToast, {
           type: 'success',
-          message: 'Preset have been removed.'
+          message: 'Preset has been removed.'
         }),
         put(
           actions.requestLocation(`/projects/${ identifier }`)
@@ -93,7 +93,7 @@ const watchRemovePreset = function*(path) {
     if (removeFailed) {
       yield fork(addToast, {
         type: 'error',
-        message: 'Remove preset failed.'
+        message: 'Failed to remove the preset'
       })
     }
   }
@@ -144,14 +144,14 @@ const watchUpdatePreset = function*(path) {
     if (updateCompleted) {
       yield fork(addToast, {
         type: 'success',
-        message: 'Preset have been updated.'
+        message: 'Preset has been updated.'
       })
     }
 
     if (updateFailed) {
       yield fork(addToast, {
         type: 'error',
-        message: 'Can not update the preset. Please check your network connection and try again.'
+        message: 'Cannot update the preset. Please check your network connection and try again.'
       })
     }
   }

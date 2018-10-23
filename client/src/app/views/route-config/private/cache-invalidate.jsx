@@ -13,7 +13,7 @@ const watchGetProject = function*() {
     ),
     fork(addToast, {
       type: 'error',
-      message: 'Project does not exist or internet connection error.'
+      message: 'Project does not exist or internet connection has error.'
     })
   ])
 }
@@ -49,7 +49,7 @@ const watchCacheInvalidator = function*(path) {
     if (failed) {
       yield fork(addToast, {
         type: 'error',
-        message: 'Cache invalidate failed. Please check your network connection and try again.'
+        message: 'Cache invalidation failed. Please check your network connection and try again.'
       })
     }
   }

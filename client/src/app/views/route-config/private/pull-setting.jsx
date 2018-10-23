@@ -10,7 +10,7 @@ const watchGetProject = function*() {
   yield all([
     fork(addToast, {
       type: 'error',
-      message: 'Project does not exist or internet connection error.'
+      message: 'Project does not exist or internet connection has error.'
     }),
     put(
       actions.requestLocation('/projects')
@@ -23,7 +23,7 @@ const watchGetPullSetting = function*() {
 
   yield fork(addToast, {
     type: 'error',
-    message: 'Get pull setting failed.'
+    message: 'Pull setting does not exist or internet connection has error.'
   })
 }
 
@@ -48,14 +48,14 @@ const watchUpdatePullSetting = function*(path) {
     if (updateComPleted) {
       yield fork(addToast, {
         type: 'success',
-        message: 'Update pull setting completed.'
+        message: 'Pull setting has been updated.'
       })
     }
 
     if (updateFailed) {
       yield fork(addToast, {
         type: 'error',
-        message: 'Update pull setting failed.'
+        message: 'Cannot update the pull setting. Please check your network connection and try again.'
       })
     }
 

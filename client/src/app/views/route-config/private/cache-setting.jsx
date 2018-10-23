@@ -5,20 +5,28 @@ import { actions, selectors, types } from 'state/interface'
 import * as CacheSetting from 'views/pages/cache-setting'
 
 const watchGetInitializeData = function*() {
-  yield race({
+  const { cacheSetting, project } = yield race({
     project: take(types.project.GET_FAILED),
     cacheSetting: take(types.cacheSetting.GET_FAILED)
   })
 
-  yield all([
-    fork(addToast, {
+  if (project) {
+    yield fork(addToast, {
       type: 'error',
-      message: 'Get initialize data failed.'
-    }),
-    put(
-      actions.requestLocation('/projects')
-    )
-  ])
+      message: 'Project does not exist or internet connection has error.'
+    })
+  }
+
+  if (cacheSetting) {
+    yield fork(addToast, {
+      type: 'error',
+      message: 'Cache setting does not exist or internet connection has error.'
+    })
+  }
+
+  yield put(
+    actions.requestLocation('/projects')
+  )
 }
 
 const watchUpdateCacheSetting = function*(path) {
@@ -42,14 +50,14 @@ const watchUpdateCacheSetting = function*(path) {
     if (completed) {
       yield fork(addToast, {
         type: 'success',
-        message: 'Update cache setting completed.'
+        message: 'Cache setting has been updated.'
       })
     }
 
     if (failed) {
       yield fork(addToast, {
         type: 'error',
-        message: 'Update cache setting failed.'
+        message: 'Cannot update the cache setting. Please check your network connection and try again.'
       })
     }
 

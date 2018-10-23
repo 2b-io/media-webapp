@@ -22,14 +22,14 @@ const watchRegister = function*(path) {
     if (completed) {
       yield fork(addToast, {
         type: 'success',
-        message: 'Register accepted! Please check your inbox to finish the register process.'
+        message: 'Registration accepted! Please check your inbox to finish the registration procedure.'
       })
     }
 
     if (failed) {
       yield fork(addToast, {
         type: 'error',
-        message: 'Register failed or email already exists on this domain.'
+        message: 'Register failed or email has already existed on this domain.'
       })
     }
 

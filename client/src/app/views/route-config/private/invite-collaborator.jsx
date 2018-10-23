@@ -23,7 +23,7 @@ const watchInviteCollaborator = function*(path) {
       yield all([
         fork(addToast, {
           type: 'success',
-          message: 'Your invitation has been successfully sent.'
+          message: 'Your invitations have been successfully sent.'
         }),
         put(
           actions.requestLocation(`/projects/${ inviteCompleted.payload.identifier }`)
@@ -34,7 +34,7 @@ const watchInviteCollaborator = function*(path) {
     if (inviteFailed) {
       yield fork(addToast, {
         type: 'error',
-        message: 'Your invitation could not be sent. Emails is exist or network connection error.'
+        message: 'Your invitation could not be sent. The email address(es) do not exist or network connection has error(s).'
       })
     }
 
