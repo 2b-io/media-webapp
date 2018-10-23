@@ -185,8 +185,8 @@ export default {
     component: Preset,
     exact: true,
     *state(path) {
+      yield fork(watchGetProject)
       yield fork(watchGetPreset)
-      yield fork(watchGetProject, path)
       yield fork(watchRemovePreset, path)
       yield fork(watchUpdatePreset, path)
 
