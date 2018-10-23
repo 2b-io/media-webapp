@@ -4,24 +4,53 @@ import { addToast } from 'state/saga/toast'
 import { actions, selectors, types } from 'state/interface'
 import * as CacheSetting from 'views/pages/cache-setting'
 
-const watchGetInitializeData = function*() {
-  const { cacheSetting, project } = yield race({
-    project: take(types.project.GET_FAILED),
+const watchGetInitializeData = function*(path) {
+  const { identifier } = yield select(selectors.currentParams)
+
+  const { cacheSetting, getProjectCompleted, getProjectFailed } = yield race({
+    getProjectCompleted: take(types.project.GET_COMPLETED),
+    getProjectFailed: take(types.project.GET_FAILED),
     cacheSetting: take(types.cacheSetting.GET_FAILED)
   })
 
-  if (project) {
-    yield fork(addToast, {
-      type: 'error',
-      message: 'Project does not exist or internet connection has error.'
-    })
+  if (getProjectFailed) {
+    yield all([
+      fork(addToast, {
+        type: 'error',
+        message: 'Cannot connect to project. Project does not exist or network has error(s).'
+      }),
+      put(
+        actions.requestLocation('/projects')
+      )
+    ])
+  }
+
+  if (getProjectCompleted) {
+    const { isActive, status } = getProjectCompleted.payload.project
+
+    if (!(isActive === true && status === 'DEPLOYED')) {
+      yield all([
+        fork(addToast, {
+          type: 'error',
+          message: 'Project is initializing or disabled.'
+        }),
+        put(
+          actions.requestLocation(`/projects/${ identifier }`)
+        )
+      ])
+    }
   }
 
   if (cacheSetting) {
-    yield fork(addToast, {
-      type: 'error',
-      message: 'Cache setting does not exist or internet connection has error.'
-    })
+    yield all([
+      fork(addToast, {
+        type: 'error',
+        message: 'Cache setting does not exist or internet connection has error.'
+      }),
+      put(
+        actions.requestLocation('/projects')
+      )
+    ])
   }
 
   yield put(
@@ -74,7 +103,7 @@ export default {
     component: CacheSetting,
     exact: true,
     *state(path) {
-      yield fork(watchGetInitializeData)
+      yield fork(watchGetInitializeData, path)
       yield fork(watchUpdateCacheSetting, path)
 
       const { identifier } = yield select(selectors.currentParams)
