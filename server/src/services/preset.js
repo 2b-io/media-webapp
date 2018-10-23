@@ -1,4 +1,7 @@
+import sh from 'shorthash'
+
 import Preset from 'models/Preset'
+import cache from 'services/cache'
 
 const DEFAULT_PARAMETERS = {
   'image/jpeg': {
@@ -65,13 +68,36 @@ export const create = async (projectId, data) => {
   }).save()
 }
 
+const hashPreset = (parameters) => {
+  return sh.unique(
+    JSON.stringify(
+      parameters,
+      Object.keys(parameters).sort()
+    )
+  )
+}
+
 export const update = async (project, contentType, data) => {
-  return await Preset.findOneAndUpdate({
+  const currentPreset = await Preset.findOne({
+    project: project._id,
+    contentType
+  }).lean()
+
+  const updatedPreset = await Preset.findOneAndUpdate({
     project: project._id,
     contentType
   }, data, {
     new: true
   }).lean()
+
+  const currentPresetHash = hashPreset(currentPreset.parameters)
+  const newPresetHash = hashPreset(updatedPreset.parameters)
+
+  if (currentPresetHash !== newPresetHash || !updatedPreset.isActive) {
+    await cache.invalidateCacheByPreset(project.identifier, currentPresetHash)
+  }
+
+  return updatedPreset
 }
 
 export const remove = async (projectId, contentType) => {
