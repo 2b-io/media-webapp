@@ -206,25 +206,32 @@ export const remove = async (condition, account) => {
     SecretKey.deleteMany({ project: _id }),
     Permission.deleteMany({ project: _id }),
     infrastructureService.remove(_id),
-    requestInvalidateCache([ '/*' ], project.identifier)
+    requestInvalidateCache([ '/*' ], project.identifier, {
+      deleteOnS3: true,
+      deleteOnDistribution: false
+    })
   ])
 
   return true
 }
 
-const requestInvalidateCache = async (patterns, identifier) => {
+const requestInvalidateCache = async (patterns, identifier, options) => {
   const { cdnServer } = config
 
   return await request
     .post(`${ cdnServer }/projects/${ identifier }/cache-invalidations`)
     .set('Content-Type', 'application/json')
     .send({
-      patterns
+      patterns,
+      options
     })
 }
 
 export const invalidateCache = async (patterns = [], identifier) => {
-  await requestInvalidateCache(patterns, identifier)
+  await requestInvalidateCache(patterns, identifier, {
+    deleteOnS3: true,
+    deleteOnDistribution: true
+  })
 
   return true
 }
