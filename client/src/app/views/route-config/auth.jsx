@@ -1,3 +1,4 @@
+import bandwidthReport from './private/bandwidth-report'
 import cacheInvalidate from './private/cache-invalidate'
 import cacheSetting from './private/cache-setting'
 import dashboard from './private/dashboard'
@@ -11,6 +12,7 @@ import projectList from './private/project-list'
 import pullSetting from './private/pull-setting'
 
 export default {
+  ...bandwidthReport,
   ...dashboard,
   ...profile,
   ...projectCreate,
