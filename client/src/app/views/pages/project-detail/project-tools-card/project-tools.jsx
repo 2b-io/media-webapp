@@ -9,6 +9,7 @@ import { Heading, TextLine } from 'ui/typo'
 
 const ProjectTools = ({
   identifier,
+  toBanwidthReport,
   toCacheInvalidator,
   toProjectMedia
 }) => (
@@ -28,6 +29,12 @@ const ProjectTools = ({
             trailing: () => (
               <LaunchIcon onClick={ () => toProjectMedia(identifier) } />
             )
+          },
+          {
+            content: () => <TextLine mostLeft>Bandwidth Report</TextLine>,
+            trailing: () => (
+              <LaunchIcon onClick={ () => toBanwidthReport(identifier) } />
+            )
           }
         ] }
       />
@@ -44,6 +51,7 @@ export default connect(
     }
   },
   mapDispatch({
+    toBanwidthReport: (identifier) => actions.requestLocation(`/projects/${ identifier }/bandwidth-report`),
     toCacheInvalidator: (identifier) => actions.requestLocation(`/projects/${ identifier }/cache-invalidator`),
     toProjectMedia: (identifier) => actions.requestLocation(`/projects/${ identifier }/media`)
   })
