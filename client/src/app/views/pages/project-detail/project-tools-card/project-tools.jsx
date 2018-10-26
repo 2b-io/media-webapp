@@ -9,7 +9,6 @@ import { Heading, TextLine } from 'ui/typo'
 
 const ProjectTools = ({
   identifier,
-  toUsageReport,
   toCacheInvalidator,
   toProjectMedia
 }) => (
@@ -29,12 +28,6 @@ const ProjectTools = ({
             trailing: () => (
               <LaunchIcon onClick={ () => toProjectMedia(identifier) } />
             )
-          },
-          {
-            content: () => <TextLine mostLeft>Usage Report</TextLine>,
-            trailing: () => (
-              <LaunchIcon onClick={ () => toUsageReport(identifier) } />
-            )
           }
         ] }
       />
@@ -51,7 +44,6 @@ export default connect(
     }
   },
   mapDispatch({
-    toUsageReport: (identifier) => actions.requestLocation(`/projects/${ identifier }/usage-report`),
     toCacheInvalidator: (identifier) => actions.requestLocation(`/projects/${ identifier }/cache-invalidator`),
     toProjectMedia: (identifier) => actions.requestLocation(`/projects/${ identifier }/media`)
   })

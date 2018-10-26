@@ -8,20 +8,14 @@ import { PageTitle } from 'ui/typo'
 
 const UsageReport = ({ navigateBack, project = {} }) => (
   <Fragment>
-    <BackIcon onClick={ navigateBack.bind(null, project.identifier) } />
+    <BackIcon onClick={ navigateBack } />
     <PageTitle>Usage Report</PageTitle>
   </Fragment>
 )
 
 export default connect(
-  (state) => {
-    const { identifier } = selectors.currentParams(state)
-
-    return {
-      project: selectors.findProjectByIdentifier(state, identifier)
-    }
-  },
+  null,
   mapDispatch({
-    navigateBack: (identifier) => actions.requestLocation(`/projects/${ identifier }`)
+    navigateBack: () => actions.requestLocation('/reports')
   })
 )(UsageReport)

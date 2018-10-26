@@ -9,6 +9,7 @@ import projectDetail from './private/project-detail'
 import projectEdit from './private/project-edit'
 import projectList from './private/project-list'
 import pullSetting from './private/pull-setting'
+import reports from './private/reports'
 import usageReport from './private/usage-report'
 
 export default {
@@ -23,5 +24,6 @@ export default {
   ...projectDetail,
   ...projectEdit,
   ...pullSetting,
+  ...reports,
   ...usageReport
 }
