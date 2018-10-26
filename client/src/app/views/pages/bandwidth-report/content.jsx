@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { selectors } from 'state/interface'
 import {
   CartesianGrid,
   Line,
@@ -12,6 +11,7 @@ import {
   YAxis
 } from 'recharts'
 
+import { selectors } from 'state/interface'
 import { Container } from 'ui/elements'
 
 //{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
