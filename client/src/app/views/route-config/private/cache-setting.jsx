@@ -52,10 +52,6 @@ const watchGetInitializeData = function*() {
       )
     ])
   }
-
-  yield put(
-    actions.requestLocation('/projects')
-  )
 }
 
 const watchUpdateCacheSetting = function*(path) {
