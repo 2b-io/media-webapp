@@ -33,8 +33,10 @@ const getDataArray = (startDate, endDate) => {
   return datas
 }
 
-const LineChartWrapper = ({ data }) => (
-  <ResponsiveContainer  width="100%" height={ 400 }>
+const LineChartWrapper = ({
+  data
+}) => (
+  <ResponsiveContainer width="100%" height={ 400 }>
     <LineChart data={ data }>
       <Line
         type="monotone"
@@ -53,7 +55,9 @@ const LineChartWrapper = ({ data }) => (
   </ResponsiveContainer>
 )
 
-const BandwidthReport = ({ data }) => (
+const BandwidthReport = ({
+  data
+}) => (
   <Container>
     <LineChartWrapper data={ data } />
   </Container>
