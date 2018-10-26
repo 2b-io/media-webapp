@@ -6,10 +6,10 @@ import { actions, selectors } from 'state/interface'
 import { BackIcon } from 'ui/icons'
 import { PageTitle } from 'ui/typo'
 
-const BandwidthReport = ({ navigateBack, project = {} }) => (
+const UsageReport = ({ navigateBack, project = {} }) => (
   <Fragment>
     <BackIcon onClick={ navigateBack.bind(null, project.identifier) } />
-    <PageTitle>Bandwidth Report</PageTitle>
+    <PageTitle>Usage Report</PageTitle>
   </Fragment>
 )
 
@@ -24,4 +24,4 @@ export default connect(
   mapDispatch({
     navigateBack: (identifier) => actions.requestLocation(`/projects/${ identifier }`)
   })
-)(BandwidthReport)
+)(UsageReport)

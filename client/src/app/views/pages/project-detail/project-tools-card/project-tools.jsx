@@ -9,7 +9,7 @@ import { Heading, TextLine } from 'ui/typo'
 
 const ProjectTools = ({
   identifier,
-  toBanwidthReport,
+  toUsageReport,
   toCacheInvalidator,
   toProjectMedia
 }) => (
@@ -31,9 +31,9 @@ const ProjectTools = ({
             )
           },
           {
-            content: () => <TextLine mostLeft>Bandwidth Report</TextLine>,
+            content: () => <TextLine mostLeft>Usage Report</TextLine>,
             trailing: () => (
-              <LaunchIcon onClick={ () => toBanwidthReport(identifier) } />
+              <LaunchIcon onClick={ () => toUsageReport(identifier) } />
             )
           }
         ] }
@@ -51,7 +51,7 @@ export default connect(
     }
   },
   mapDispatch({
-    toBanwidthReport: (identifier) => actions.requestLocation(`/projects/${ identifier }/bandwidth-report`),
+    toUsageReport: (identifier) => actions.requestLocation(`/projects/${ identifier }/usage-report`),
     toCacheInvalidator: (identifier) => actions.requestLocation(`/projects/${ identifier }/cache-invalidator`),
     toProjectMedia: (identifier) => actions.requestLocation(`/projects/${ identifier }/media`)
   })

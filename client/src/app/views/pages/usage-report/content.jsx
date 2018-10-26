@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+import ms from 'ms'
 import {
   CartesianGrid,
   Line,
@@ -19,18 +20,21 @@ const options = { month: 'short', day: 'numeric' }
 const startDate = new Date('2017-10-01')
 const endDate = new Date('2017-10-07')
 
-const getDataArray = (startDate, endDate) => {
-  const datas = new Array()
-  const date = new Date(startDate)
-  while (date <= endDate) {
-    datas.push({
-      'date': new Date(date).toLocaleDateString('en-US', options),
-      'bandwidth': Math.floor(Math.random() * 4e5)
+const getBandwidthByDate = (startDate, endDate) => {
+  const data = []
+  const reportDate =  new Date(startDate)
+
+  while (reportDate <= endDate) {
+    data.push({
+      date: reportDate.toLocaleDateString('en-US', options),
+      bandwidth: Math.floor(Math.random() * 1e4),
+      maxBandwidth: 10000
     })
-    date.setDate(date.getDate() + 1)
+
+    reportDate.setTime(reportDate.getTime()+ ms('1d'))
   }
 
-  return datas
+  return data
 }
 
 const LineChartWrapper = ({
@@ -49,13 +53,13 @@ const LineChartWrapper = ({
         vertical={ false }
       />
       <XAxis dataKey="date" />
-      <YAxis />
+      <YAxis dataKey="maxBandwidth"/>
       <Tooltip />
     </LineChart>
   </ResponsiveContainer>
 )
 
-const BandwidthReport = ({
+const UsageReport = ({
   data
 }) => (
   <Container>
@@ -66,7 +70,7 @@ const BandwidthReport = ({
 export default connect(
   (state) => {
     const { identifier } = selectors.currentParams(state)
-    const data = getDataArray(startDate, endDate)
+    const data = getBandwidthByDate(startDate, endDate)
 
     return {
       data,
@@ -74,4 +78,4 @@ export default connect(
     }
   },
   null
-)(BandwidthReport)
+)(UsageReport)

@@ -2,7 +2,7 @@ import { all, fork, put, take, race, select } from 'redux-saga/effects'
 
 import { addToast } from 'state/saga/toast'
 import { actions, types, selectors } from 'state/interface'
-import * as BandwidthReport from 'views/pages/bandwidth-report'
+import * as UsageReport from 'views/pages/usage-report'
 
 const watchGetProject = function*() {
   const { identifier } = yield select(selectors.currentParams)
@@ -42,8 +42,8 @@ const watchGetProject = function*() {
 }
 
 export default {
-  '/projects/:identifier/bandwidth-report': {
-    component: BandwidthReport,
+  '/projects/:identifier/usage-report': {
+    component: UsageReport,
     exact: true,
     *state(path) {
       yield fork(watchGetProject)
