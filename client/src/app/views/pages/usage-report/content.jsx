@@ -12,11 +12,11 @@ import { TextLine } from 'ui/typo'
 import _UsageReportForm from './form'
 
 const DATA_DEFAULT = {
-  DATE: {
-    endDate: dateFormat(new Date(), "yyyy-mm-dd"),
-    startDate: dateFormat(new Date()- ms('7d'), "yyyy-mm-dd")
+  date: {
+    endDate: dateFormat(new Date(), 'yyyy-mm-dd'),
+    startDate: dateFormat(new Date()- ms('7d'), 'yyyy-mm-dd')
   },
-  STEP: [
+  granularity: [
     {
       label: 'Daily (any period in previous 60 days)',
       value: 'daily'
@@ -52,8 +52,8 @@ const UsageReport = ({
         initialValues={ {
           identifier: options.projects[0].value,
           granularity: options.granularity[0].value,
-          startDate: DATA_DEFAULT.DATE.startDate,
-          endDate: DATA_DEFAULT.DATE.endDate
+          startDate: DATA_DEFAULT.date.startDate,
+          endDate: DATA_DEFAULT.date.endDate
         } }
         onSubmit={ generateReport }
         options={ options }
@@ -80,7 +80,7 @@ export default connect(
 
     const options = {
       projects: projectsSelect,
-      granularity: DATA_DEFAULT.STEP
+      granularity: DATA_DEFAULT.granularity
     }
 
     return {

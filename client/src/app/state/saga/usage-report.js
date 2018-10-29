@@ -1,4 +1,3 @@
-import humanSize from 'human-size'
 import dateFormat from 'dateformat'
 import delay from 'delay'
 import { fork, put, select, take } from 'redux-saga/effects'
@@ -6,7 +5,9 @@ import serializeError from 'serialize-error'
 
 import { actions, types, selectors } from 'state/interface'
 
-const convertDate = (date) => dateFormat(date, 'mmm, dd, yyyy')
+const convertDate = (date, granularity = 'daily') => granularity === 'daily' ?
+  dateFormat(date, 'mmm, dd, yyyy') :
+  dateFormat(date, 'mmm, dd, yyyy, HH:MM')
 
 const FAKE_DATA = [
   {
@@ -39,8 +40,7 @@ const FAKE_DATA = [
 const generateReportLoop = function*() {
   while (true) {
     try {
-      const { payload } = yield take(types.usageReport.GENERATE_REPORT)
-      console.log(payload);
+      yield take(types.usageReport.GENERATE_REPORT)
       const session = yield select(selectors.currentSession)
 
       if (!session) {
