@@ -13,7 +13,7 @@ import {
 const LineChartWrapper = ({
   data
 }) => (
-  <ResponsiveContainer width="100%" height={ 400 }>
+  <ResponsiveContainer width="100%" height={ 300 }>
     <LineChart data={ data }>
       <Line
         type="monotone"
@@ -26,7 +26,7 @@ const LineChartWrapper = ({
         vertical={ false }
       />
       <XAxis dataKey="date" />
-      <YAxis dataKey="maxBandwidth" />
+      <YAxis dataKey="bandwidth" />
       <Tooltip />
     </LineChart>
   </ResponsiveContainer>

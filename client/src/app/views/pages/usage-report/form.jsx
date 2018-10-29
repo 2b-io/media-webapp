@@ -45,8 +45,8 @@ const UsageReportForm = ({
     <Break />
     <Select
       disabled={ !idle }
-      name="project"
-      options={  options.projectsSelect }
+      name="identifier"
+      options={  options.projects }
     />
     <DescriptionText mostLeft mostRight>
       Project you need to see report.
