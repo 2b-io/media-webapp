@@ -1,11 +1,9 @@
 import React from 'react'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
 
-import { Break, Button, Form, TextButton } from 'ui/elements'
-import { CopyIcon } from 'ui/icons'
-import { DescriptionText, TextLine } from 'ui/typo'
+import { Break, Button, Form } from 'ui/elements'
+import { DescriptionText } from 'ui/typo'
 
-import { CheckBox, Select, TextBox } from 'views/common/form'
+import { Select, TextBox } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
 const UsageReportForm = ({
@@ -48,7 +46,7 @@ const UsageReportForm = ({
     <Select
       disabled={ !idle }
       name="project"
-      options={  options.projectSelect }
+      options={  options.projectsSelect }
     />
     <DescriptionText mostLeft mostRight>
       Project you need to see report.

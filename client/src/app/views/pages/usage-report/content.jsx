@@ -1,20 +1,11 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
 
 import ms from 'ms'
-import {
-  CartesianGrid,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis
-} from 'recharts'
 
 import { selectors } from 'state/interface'
-import { Break, Container } from 'ui/elements'
+import { Break, Container, LineChart } from 'ui/elements'
 import { TextLine } from 'ui/typo'
 
 import _UsageReportForm from './form'
@@ -46,24 +37,24 @@ const UsageReportForm = reduxForm({
   enableReinitialize: true
 })(_UsageReportForm)
 
-const LineChartWrapper = ({
+const UsageReport = ({
   data,
-  idle,
+  //idle,
   projects
 }) => {
   if (!projects.length) {
     return <TextLine mostLeft mostRight>No project found.</TextLine>
   }
 
-  const projectSelect = projects.map((project) => ({
+  const projectsSelect = projects.map((project) => ({
     label: `${ project.name } (${ project.identifier }) `,
     value: project.identifier
   }))
 
   const granularity = [
     {
-      label: 'Daily (any period in previous 60 days)', value:
-      'daily'
+      label: 'Daily (any period in previous 60 days)',
+      value: 'daily'
     },
     {
       label: 'Hourly (any 14-day period in previous 60 days)',
@@ -72,55 +63,29 @@ const LineChartWrapper = ({
   ]
 
   const options = {
-    projectSelect: projectSelect,
-    granularity: granularity
+    projectsSelect,
+    granularity
   }
 
   return (
-    <Fragment>
+    <Container>
       <UsageReportForm
         idle={ true }
         initialValues={ {
-          project: options.projectSelect[0].value,
+          project: options.projectsSelect[0].value,
           granularity: options.granularity[0].value
         } }
         onSubmit={ () => true }
         options={ options }
       />
       <Break double />
-      <ResponsiveContainer width="100%" height={ 400 }>
-        <LineChart data={ data }>
-          <Line
-            type="monotone"
-            dataKey="bandwidth"
-            stroke={ 'cyan' }
-            activeDot={ { r: 8 } }
-          />
-          <CartesianGrid
-            stroke={ '#ccc' }
-            vertical={ false }
-          />
-          <XAxis dataKey="date" />
-          <YAxis dataKey="maxBandwidth"/>
-          <Tooltip />
-        </LineChart>
-      </ResponsiveContainer>
-    </Fragment>
+      <LineChart
+        data={ data }
+        projects={ projects }
+      />
+    </Container>
   )
 }
-
-const UsageReport = ({
-  data,
-  projects
-}) => (
-  <Container>
-    <LineChartWrapper
-      data={ data }
-      projects={ projects }
-    />
-  </Container>
-)
-
 export default connect(
   (state) => {
     const data = getBandwidthByDate(startDate, endDate)

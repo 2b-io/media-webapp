@@ -154,7 +154,7 @@ const Sidebar = ({
     onClick: toReportPage,
     leading: () => <ActivityIcon />,
     content: () => <TextLine mostRight>Reports</TextLine>
-  },{
+  }, {
     leading: () => <BillingIcon />,
     content: () => <TextLine mostRight>Billing</TextLine>
   }, {

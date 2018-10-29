@@ -2,12 +2,9 @@ import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
-import { mapDispatch, mapState } from 'services/redux-helpers'
-import { actions, selectors } from 'state/interface'
+import { mapDispatch } from 'services/redux-helpers'
+import { actions } from 'state/interface'
 import { Card } from 'ui/elements'
-import { AddIcon } from 'ui/icons'
-import { Text } from 'ui/typo'
-import { Project } from 'views/common/compounds'
 
 import { DescriptionText, TextLine } from 'ui/typo'
 
@@ -26,7 +23,6 @@ const Container = styled.div`
     min-height: 0;
     min-width: 0;
   }
-
   grid-gap: 16px;
   grid-template-columns: 100%;
 `

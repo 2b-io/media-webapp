@@ -1,7 +1,7 @@
-import { all, fork, put, take, race, select } from 'redux-saga/effects'
+import { all, fork, put, take } from 'redux-saga/effects'
 
 import { addToast } from 'state/saga/toast'
-import { actions, types, selectors } from 'state/interface'
+import { actions, types } from 'state/interface'
 import * as UsageReport from 'views/pages/usage-report'
 
 const watchFetchProjects = function*() {
