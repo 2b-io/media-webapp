@@ -2,10 +2,12 @@
   "license": "MIT",
   "dependencies": {
     "color": "3.0.0",
+    "dateformat": "3.0.3",
     "delay": "3.0.0",
     "graphql-query-compress": "1.0.8",
     "graphql-request": "1.6.0",
     "history": "4.7.2",
+    "human-size": "1.1.0",
     "keycode": "2.2.0",
     "kouto-swiss": "1.1.0",
     "localforage": "1.7.2",
