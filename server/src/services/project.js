@@ -236,10 +236,17 @@ export const invalidateCache = async (patterns = [], identifier) => {
   return true
 }
 
+const getByIdentifier = async (identifier) => {
+  return await Project.findOne({
+    identifier
+  })
+}
+
 export default {
   create,
   get,
   getByID,
+  getByIdentifier,
   invalidateCache,
   list,
   remove,
