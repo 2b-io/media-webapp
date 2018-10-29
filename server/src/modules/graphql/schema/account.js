@@ -6,12 +6,13 @@ import {
 import {
   create as createAccount
 } from 'services/account'
+import emailService from 'services/email'
 import {
-  forgotPassword as forgotPassword,
-  resetPassword as resetPassword,
-  getResetCode as getResetCode
+  forgotPassword,
+  resetPassword,
+  getResetCode
 } from 'services/reset-password-code'
-import { sendEmailRegister, sendEmailResetPassword } from 'services/send-email'
+
 import { Account, AccountStruct } from '../types/Account'
 
 export default () => ({
@@ -23,15 +24,14 @@ export default () => ({
     },
     type: Account,
     resolve: async (rootValue, { account }) => {
-      const infoAccount = await createAccount(account)
-      if (!infoAccount) {
-        return infoAccount
-      }
-      const { email } = infoAccount
-      const resetPasswordCode = await forgotPassword(email)
-      const { code } = resetPasswordCode
-      await sendEmailRegister(email, code)
-      return infoAccount
+      const newAccount = await createAccount(account)
+      const { code }  = await forgotPassword(newAccount.email)
+
+      await emailService.sendEmailRegister(newAccount.email, {
+        code
+      })
+
+      return newAccount
     }
   },
   _forgotPassword: {
@@ -42,31 +42,28 @@ export default () => ({
     },
     type: GraphQLBoolean,
     resolve: async (rootValue, { email }) => {
-      const resetPasswordCode = await forgotPassword(email)
-      if (!resetPasswordCode) {
-        return false
-      }
-      const { code } = resetPasswordCode
-      const sendEmail = await sendEmailResetPassword(email, code)
-      return sendEmail
+      const { code } = await forgotPassword(email)
+
+      return await emailService.sendEmailResetPassword(email, {
+        code
+      })
     }
   },
   _resetPassword: {
     args: {
-      password: {
-        type: GraphQLNonNull(GraphQLString)
+      account: {
+        type: GraphQLNonNull(AccountStruct)
       },
       code: {
         type: GraphQLNonNull(GraphQLString)
       },
-
     },
     type: GraphQLBoolean,
-    resolve: async (rootValue, { password, code }) => {
-      return await resetPassword(password, code)
+    resolve: async (rootValue, { account, code }) => {
+      return await resetPassword(account, code)
     }
   },
-  getResetCode: {
+  resetCode: {
     args: {
       code: {
         type: GraphQLNonNull(GraphQLString)

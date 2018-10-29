@@ -3,7 +3,7 @@ import createMemoryHistory from 'history/createMemoryHistory'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { mapDispatch, mapState } from 'services/redux-helpers'
+import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 
 class HistoryManager extends Component {
@@ -29,7 +29,9 @@ class HistoryManager extends Component {
         return
       }
 
-      request(location.pathname)
+      const { pathname, search } = location
+
+      request(`${ pathname }${ search }`)
       updateKey(location.key)
     })
 
@@ -37,7 +39,9 @@ class HistoryManager extends Component {
       updateKey(location.key)
     })
 
-    init(this.browserHistory.location.pathname)
+    const { pathname, search } = this.browserHistory.location
+
+    init(`${ pathname }${ search }`)
   }
 
   componentDidUpdate() {
@@ -59,15 +63,27 @@ class HistoryManager extends Component {
 
     return React.cloneElement(children, {
       history: this.memoryHistory,
-      locationKey: this.memoryHistory.location.key
+      locationKey: this.memoryHistory.location.key,
+      ui: this.props.ui
     })
   }
 }
 
+const emptyObject = {}
+
 export default connect(
-  mapState({
-    current: selectors.currentLocation
-  }),
+  (state) => {
+    const current = selectors.currentLocation(state)
+
+    if (!current) {
+      return emptyObject
+    }
+
+    return {
+      current,
+      ui: selectors.uiState(state, current.pathname)
+    }
+  },
   mapDispatch({
     init: actions.initLocation,
     request: actions.requestLocation,

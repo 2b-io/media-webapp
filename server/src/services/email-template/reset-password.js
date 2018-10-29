@@ -1,32 +1,17 @@
-import config from 'infrastructure/config'
-
-const baseUrl = config.baseUrl
-
-const ResetPassword = ({ email, code }) => {
-  const params = {
-    Message: {
-      Body: {
-        Html: {
-          Charset: 'UTF-8',
-          Data:
-            `<html>
-              <body>
-                <h1>Hello ${ email }</h1>
-                <p style='color:red'>
-                  Please click the link below to reset your password
-                </p>
-                <a href="${ baseUrl }/reset-password/${ code }">Click here reset Password</a>
-              </body>
-            </html>`
-        }
-      },
-      Subject: {
-        Charset: 'UTF-8',
-        Data: 'Reset password Media Network'
-      }
-    }
-  }
-  return params
-}
-
-export default ResetPassword
+export default ({
+  email,
+  resetLink
+}) => ({
+  subject: 'Password reset in Media CDN',
+  content: `
+    <body>
+      <p>
+        Hello ${ email },<br /><br />
+        We have just received your request to reset your password.<br />
+        Please click the link below to reset your password:<br />
+        <a href="${ resetLink }">Reset your password</a><br /><br />
+        Thanks for your trust in Media CDN!
+      </p>
+    </body>
+  `
+})

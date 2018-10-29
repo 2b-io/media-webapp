@@ -1,116 +1,247 @@
+import namor from 'namor'
 import request from 'superagent'
 import { URL } from 'url'
 
 import config from 'infrastructure/config'
+
 import Permission from 'models/Permission'
 import Preset from 'models/Preset'
 import Project from 'models/Project'
+import PullSetting from 'models/pull-setting'
+import SecretKey from 'models/secret-key'
 
-const normalizePattern = (path, origin) => {
-  try {
-    return new URL(path, origin || undefined).toString()
-  } catch (e) {
-    return null
-  }
-}
+import cacheSettingService from 'services/cache-setting'
+import cloudFront from 'services/cloud-front'
+import infrastructureService from 'services/infrastructure'
 
-export const update = async ( slug, data ) => {
-  return await Project.findOneAndUpdate(
-    { slug }, { ...data },
-    { new: true }
-  ).lean()
-}
+const generateUniqueIdentifier = async (retry) => {
+  const identifier = namor.generate({
+    words: 2,
+    numbers: 2,
+    manly: true
+  })
 
-export const getBySlug = async (slug) => {
-  return await Project.findOne({
-    slug,
-    removed: false
-  }).lean()
-}
-export const getById = async (id) => {
-  return await Project.findOne({
-    _id: id,
-    removed: false
-  }).lean()
-}
-
-export const list = async (account) => {
-  if (!account) {
-    throw new Error('Invaid parameter')
-  }
-
-  const permissions = await Permission.find({
-    account
+  // check collision
+  const project = await Project.findOne({
+    identifier
   }).lean()
 
-  const projects = await Project.find({
-    _id: {
-      $in: permissions.map(p => p.project)
-    },
-    removed: false
-  }).sort('slug').lean()
-
-  return projects
-}
-
-export const create = async (data, account) => {
-  const { name, slug, prettyOrigin, origins = [] } = data
-
-  if (!name || !slug) {
-    throw new Error('Invalid parameters')
+  if (!project) {
+    return identifier
   }
 
-  const project = await new Project({
+  // should retry?
+  if (!retry) {
+    throw 'Cannot create unique identifier'
+  }
+
+  // retry
+  return await generateUniqueIdentifier(retry - 1)
+}
+
+export const update = async (condition, account, { isActive, name }) => {
+  const {
+    _id: projectID,
+    status: currentStatus,
+    isActive: currentIsActive,
+  } = await get(condition, account)
+
+  const needUpdateDistribution = currentIsActive !== isActive
+
+  if (needUpdateDistribution) {
+    await infrastructureService.update(projectID, {
+      enabled: isActive
+    })
+  }
+
+  return await Project.findByIdAndUpdate(projectID, {
     name,
-    slug,
-    prettyOrigin,
-    origins
-  }).save()
-
-  await new Permission({
-    project: project._id,
-    account: account._id,
-    privilege: 'owner'
-  }).save()
-
-  await new Preset({
-    project: project._id,
-    name: 'default',
-    isDefault: true
-  }).save()
-
-  return project
-}
-
-export const remove = async (slug) => {
-  return await Project.findOneAndUpdate({
-    slug
-  }, {
-    removed: true
+    isActive,
+    status: needUpdateDistribution ?
+      'UPDATING' : currentStatus
   }, {
     new: true
   })
 }
 
-export const invalidCache = async (patterns = [], slug, prettyOrigin) => {
-  const { cdnServer } = config
-  const normalizedPatterns = patterns
-    .map(
-      (pattern) => normalizePattern(pattern, prettyOrigin)
-    )
-    .filter(Boolean)
+export const get = async (condition, account) => {
+  const project = await Project.findOne(condition).lean()
 
-  if (!normalizedPatterns.length) {
-    return true
+  if (!project) {
+    return null
   }
 
-  await request
-    .post(`${ cdnServer }/cache-invalidations`)
-    .set('Content-Type', 'application/json')
-    .send({
-      patterns: normalizedPatterns,
-      slug
+  //  check permission
+  const permission = await Permission.findOne({
+    account,
+    project: {
+      $eq: project._id
+    }
+  }).lean()
+
+  if (!permission) {
+    throw 'Forbidden'
+  }
+
+  if (project.status === 'DEPLOYED' || project.status === 'DISABLED') {
+    return project
+  }
+
+  const {
+    identifier: infraIdentifier
+  } = await infrastructureService.get(project._id)
+
+  const {
+    Distribution: distribution
+  } = await cloudFront.get(infraIdentifier)
+
+  const {
+    Status: infraStatus,
+    DistributionConfig: infraConfig
+  } = distribution
+
+  const latestStatus = (infraStatus === 'InProgress') ? (
+    project.status === 'INITIALIZING' ?
+      'INITIALIZING' : 'UPDATING'
+  ) :  infraStatus.toUpperCase()
+
+  return await Project.findOneAndUpdate({
+    _id: project._id
+  }, {
+    status: latestStatus,
+    isActive: infraConfig.Enabled
+  }, {
+    new: true
+  }).lean()
+}
+
+export const getByID = async (id) => {
+  return await Project.findOne({
+    _id: id
+  }).lean()
+}
+
+export const list = async (accountID) => {
+  if (!accountID) {
+    throw 'Invaid parameters: Missing [accountID]'
+  }
+
+  const permissions = await Permission.find({
+    account: accountID
+  }).lean()
+
+  const projects = await Promise.all(
+    permissions.map(
+      async (permission) => await get({
+        _id: permission.project
+      }, permission.account)
+    )
+  )
+
+  return projects.filter(Boolean)
+}
+
+export const create = async ({ name }, provider, account) => {
+  if (!name) {
+    throw 'Invalid parameters: Missing [name]'
+  }
+
+  if (provider !== 'cloudfront') {
+    throw 'Invalid parameters: Not support [provider] value'
+  }
+
+  // retry 10 times
+  const identifier = await generateUniqueIdentifier(10)
+
+  const project = await new Project({
+    name,
+    identifier,
+    status: 'INITIALIZING'
+  }).save()
+
+  try {
+    await new Permission({
+      project: project._id,
+      account: account._id,
+      privilege: 'owner'
+    }).save()
+
+    await new PullSetting({
+      project: project._id
+    }).save()
+
+    await cacheSettingService.create(project._id)
+    await infrastructureService.create(project, provider)
+
+    return project
+  } catch (error) {
+    await Project.findOneAndRemove({ _id: project._id })
+    await Permission.deleteMany({ project: project._id })
+    await PullSetting.deleteMany({ project: project._id })
+    await cacheSettingService.remove(project._id)
+
+    throw error
+  }
+}
+
+export const remove = async (condition, account) => {
+  const project = await get(condition, account)
+
+  if (!project) {
+    throw 'Project not found'
+  }
+
+  const { _id, isActive } = project
+
+  if (isActive) {
+    throw 'Cannot remove enabled project'
+  }
+
+  await Project.findOneAndRemove({ _id })
+
+  await Promise.all([
+    cacheSettingService.remove(_id),
+    Preset.deleteMany({ project: _id }),
+    PullSetting.deleteMany({ project: _id }),
+    SecretKey.deleteMany({ project: _id }),
+    Permission.deleteMany({ project: _id }),
+    infrastructureService.remove(_id),
+    requestInvalidateCache([ '/*' ], project.identifier, {
+      deleteOnS3: true,
+      deleteOnDistribution: false
     })
+  ])
 
   return true
+}
+
+const requestInvalidateCache = async (patterns, identifier, options) => {
+  const { cdnServer } = config
+
+  return await request
+    .post(`${ cdnServer }/projects/${ identifier }/cache-invalidations`)
+    .set('Content-Type', 'application/json')
+    .send({
+      patterns,
+      options
+    })
+}
+
+export const invalidateCache = async (patterns = [], identifier) => {
+  await requestInvalidateCache(patterns, identifier, {
+    deleteOnS3: true,
+    deleteOnDistribution: true
+  })
+
+  return true
+}
+
+export default {
+  create,
+  get,
+  getByID,
+  invalidateCache,
+  list,
+  remove,
+  update
 }

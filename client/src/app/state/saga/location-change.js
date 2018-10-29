@@ -1,7 +1,9 @@
 import pathToRegexp from 'path-to-regexp'
-import { all, select, put, take } from 'redux-saga/effects'
+import querystring from 'querystring'
+import { all, fork, put, select, take } from 'redux-saga/effects'
+import url from 'url'
 
-import { selectors, types } from 'state/interface'
+import { actions, selectors, types } from 'state/interface'
 import { authRoutes, unauthRoutes } from 'views/route-config'
 
 const allPaths = {
@@ -9,24 +11,51 @@ const allPaths = {
   ...unauthRoutes
 }
 
-const regexes = Object.entries(allPaths).map(
-  ([ path, options ]) => {
+const routes = Object.entries(allPaths).map(
+  ([ path, { exact, ...defs } ]) => {
     const keys = []
-    const regex = pathToRegexp(path, keys, { end: options.exact })
+    const regex = pathToRegexp(path, keys, { end: exact })
 
-    return { keys, path, regex }
+    return {
+      keys,
+      path,
+      regex,
+      exact,
+      ...defs
+    }
   }
 )
 
+const state = {
+  forks: {}
+}
+
 export default function*() {
   while (true) {
-    yield take(types['LOCATION/ACCEPT'])
+    yield take(types.location.ACCEPT)
 
-    const { pathname: current } = yield select(selectors.currentLocation)
+    const currentLocation = yield select(selectors.currentLocation)
+    const previousLocation = yield select(selectors.previousLocation)
 
-    const { pathname: previous } = yield select(selectors.previousLocation)
+    const {
+      pathname: current,
+      search: currentSearch
+    } = url.parse(currentLocation.pathname)
 
-    const actions = regexes
+    const {
+      pathname: previous,
+      search: previousSearch
+    } = url.parse(previousLocation.pathname || currentLocation.pathname)
+
+    const currentQuery = currentSearch && querystring.parse(currentSearch.replace(/^\?/, ''))
+    const previousQuery = previousSearch && querystring.parse(previousSearch.replace(/^\?/, ''))
+
+    const {
+      actions: routingActions,
+      enteringParams,
+      leavingParams,
+      enteringStates
+    } = routes
       // check enter & leave
       .map(
         r => ({
@@ -41,7 +70,7 @@ export default function*() {
       .map(
         r => ({
           ...r,
-          leave: r.enter ? false : r.leave,
+          // leave: (r.enter && r.partial) ? false : r.leave,
           regexFrags: r.regex.exec(r.enter ? current : previous)
         })
       )
@@ -61,33 +90,108 @@ export default function*() {
       )
       // call onEnter * onLeave
       .reduce(
-        (actions, r) => {
+        (collector, r) => {
           let enteringActions = []
           let leavingActions = []
+          const enteringStates = {}
 
-          if (r.enter) {
+          if (!collector.enterEnd && r.enter) {
             console.debug(`Entering ${ current } [${ r.path }]`)
 
             if (r.onEnter) {
-              enteringActions = r.onEnter(r.parameters)
+              console.warn(`\`onEnter()\` on ${ r.path } is deprecated. Use \`*state()\` instead.`)
+
+              enteringActions = r.onEnter(r.parameters, currentQuery)
             }
 
-          } else if (r.leave) {
-            console.debug(`Leaving ${ previous } [${ r.path }]`)
-
-            if (r.onLeave) {
-              leavingActions = r.onLeave(r.parameters)
+            if (r.state) {
+              enteringStates[ current ] = r.state
             }
           }
 
-          return [
-            ...actions,
-            ...leavingActions,
-            ...enteringActions
-          ]
-        }, []
+          if (!collector.leaveEnd && r.leave) {
+            console.debug(`Leaving ${ previous } [${ r.path }]`)
+
+            if (r.onLeave) {
+              leavingActions = r.onLeave(r.parameters, previousQuery)
+            }
+          }
+
+          return {
+            enterEnd: r.enter ?
+              (collector.enterEnd || r.exact) :
+              collector.enterEnd,
+            leaveEnd: r.leave ?
+              (collector.leaveEnd || r.exact) :
+              collector.leaveEnd,
+            actions: [
+              ...collector.actions,
+              ...leavingActions,
+              ...enteringActions
+            ],
+            enteringParams: {
+              ...collector.enteringParams,
+              ...(r.enter ? r.parameters : {})
+            },
+            leavingParams: {
+              ...collector.leavingParams,
+              ...(r.leave ? r.parameters : {})
+            },
+            enteringStates: {
+              ...collector.enteringStates,
+              ...enteringStates
+            }
+          }
+        }, {
+          enterEnd: false,
+          leaveEnd: false,
+          actions: [],
+          enteringParams: {},
+          leavingParams: {},
+          enteringStates: {}
+        }
       )
 
-    yield all(actions.map(action => put(action)))
+    // dispatch actions onEnter, onLeave
+    yield all([
+      put(actions.updateParams({
+        currentParams: enteringParams,
+        previousParams: leavingParams,
+        currentQuery,
+        previousQuery
+      })),
+      ...routingActions.map(action => put(action))
+    ])
+
+    // start/stop state-controller
+    const stopForks = Object.keys(state.forks).filter(
+      (path) => !(path in enteringStates)
+    )
+
+    const startForks = Object.keys(enteringStates).filter(
+      (path) => !(path in state.forks)
+    )
+
+    if (stopForks.length) {
+      yield all(
+        stopForks.map(
+          (path) => state.forks[ path ].cancel()
+        )
+      )
+
+      state.forks = {}
+    }
+
+    if (startForks.length) {
+      state.forks = yield all(
+        startForks.reduce(
+          (forks, path) => ({
+            ...forks,
+            [ path ]: fork(enteringStates[path], path)
+          }),
+          {}
+        )
+      )
+    }
   }
 }

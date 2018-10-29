@@ -1,50 +1,108 @@
+import sh from 'shorthash'
+
 import Preset from 'models/Preset'
+import cache from 'services/cache'
+
+const DEFAULT_PARAMETERS = {
+  'image/jpeg': {
+    progressive: true,
+    quality: 90
+  },
+  'image/gif': {
+    optimize: '-O1'
+  },
+  'image/png': {
+    minQuality: 65,
+    maxQuality: 80,
+    speed: 3
+  },
+  'image/svg+xml': {
+    cleanupAttrs: true,
+    inlineStyles: false,
+    removeDoctype: false,
+    removeXMLProcInst: false,
+    removeComments: true,
+    removeEmptyAttrs: false,
+    removeHiddenElems: false,
+    removeEmptyText: true,
+    removeEmptyContainers: true,
+    minifyStyles: true,
+    convertColors: true,
+    convertPathData: true,
+    convertTransform: true,
+    removeUnknownsAndDefaults: true,
+    removeUselessStrokeAndFill: true,
+    cleanupNumericValues: true,
+    collapseGroups: true,
+    mergePaths: true,
+    removeNonInheritableGroupAttrs: true,
+    cleanupIDs: true,
+    removeStyleElement: true
+  }
+}
 
 export const list = async (project) => {
-  const presets = await Preset.find({
-    project: project._id,
-    removed: false
-  }).sort('-isDefault hash').lean()
-
-  return presets
+  return await Preset.find({
+    project
+  }).lean()
 }
 
-export const get = async (project, hash) => {
+export const get = async (projectId, contentType) => {
   const preset = await Preset.findOne({
-    hash,
-    project: project._id,
-    removed: false
+    project: projectId,
+    contentType
   }).lean()
 
+  if (!preset.parameters) {
+    return { ...preset, parameters: {} }
+  }
+
   return preset
 }
 
-export const create = async (project, data) => {
-  const preset = await new Preset({
+export const create = async (projectId, data) => {
+  return await new Preset({
+    project: projectId,
     ...data,
-    project: project._id,
-    isDefault: false
+    parameters: DEFAULT_PARAMETERS[ data.contentType ]
   }).save()
-
-  return preset
 }
 
-export const update = async (project, hash, data) => {
-  const preset = await Preset.findOneAndUpdate(
-    { project: project._id, hash },
-    data,
-    { new: true }
-  ).lean()
-
-  return preset
+const hashPreset = (parameters) => {
+  return sh.unique(
+    JSON.stringify(
+      parameters,
+      Object.keys(parameters).sort()
+    )
+  )
 }
 
-export const remove = async (project, hash) => {
-  const preset = await Preset.findOneAndUpdate(
-    { project: project._id, hash },
-    { removed: true },
-    { new: true }
-  ).lean()
+export const update = async (project, contentType, data) => {
+  const currentPreset = await Preset.findOne({
+    project: project._id,
+    contentType
+  }).lean()
 
-  return preset
+  const updatedPreset = await Preset.findOneAndUpdate({
+    project: project._id,
+    contentType
+  }, data, {
+    new: true
+  }).lean()
+
+  const currentPresetHash = hashPreset(currentPreset.parameters)
+  const newPresetHash = hashPreset(updatedPreset.parameters)
+
+  if (currentPresetHash !== newPresetHash || !updatedPreset.isActive) {
+    await cache.invalidateCacheByPreset(project.identifier, currentPresetHash)
+  }
+
+  return updatedPreset
+}
+
+export const remove = async (projectId, contentType) => {
+  return await Preset.findOneAndRemove({
+    project: projectId,
+    contentType
+  })
 }

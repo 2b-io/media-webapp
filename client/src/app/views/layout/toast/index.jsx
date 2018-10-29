@@ -2,54 +2,81 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
-import { mapState } from 'services/redux-helpers'
-import { selectors } from 'state/interface'
-import { ErrorBox, InfoBox, SuccessBox, WarningBox } from 'ui/elements'
+import { mapDispatch, mapState } from 'services/redux-helpers'
+import { actions, selectors } from 'state/interface'
+import { Text } from 'ui/typo'
 
 const Wrapper = styled.section`
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   position: fixed;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  padding: ${
-    ({ theme }) => `0 ${ theme.spacing.medium }`
-  };
+  top: 16px;
+  right: 32px;
+  left: 32px;
   z-index: 11;
 `
 
 const ToastList = styled.div`
+  width: 100%
 `
 
-const Shadow = styled.div`
-  box-shadow: 0 5px 20px ${ ({ theme }) => theme.secondary.limpid.base };
+const Border = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  border: 1px solid ${ ({ theme }) => theme.secondary.base };
 `
 
-const Toast = ({ toast: { expiring, message, type } }) => {
-  const DisplayComponent = (
-    type === 'error' ?
-      ErrorBox : (
-        type === 'warn' ?
-          WarningBox : (
-            type === 'success' ?
-              SuccessBox : InfoBox
-          )
-      )
-  )
+const Content = styled.div`
+  position: relative;
+  box-shadow: 4px 4px ${ ({ theme }) => theme.black.opaque.base };
+  background: ${
+    ({ theme, type }) => (
+      type === 'error' ? '#FF3333' : theme.white.base
+    )
+  };
+`
 
-  return (
-    <Shadow>
-      <DisplayComponent interactable
-        expiring={ expiring }
-      >
+const ToastContent = styled.div`
+  position: relative;
+  z-index: 1;
+  margin-bottom: 16px;
+  background: transparent;
+  color: ${
+    ({ theme, type }) => (
+      type === 'error' ? theme.white.base : theme.black.base
+    )
+  };
+`
+
+const Toast = ({
+  removeToast,
+  toast: {
+    id,
+    message,
+    type
+  }
+}) => (
+  <Content type={ type }>
+    <Border />
+    <ToastContent
+      type={ type }
+      onClick={ () => removeToast(id) }
+    >
+      <Text mostLeft mostRight>
         { message }
-      </DisplayComponent>
-    </Shadow>
-  )
-}
+      </Text>
+    </ToastContent>
+  </Content>
+)
 
-const ToastContainer = ({ toasts }) => (
+const ToastContainer = ({
+  removeToast,
+  toasts
+}) => (
   <Wrapper>
     <ToastList>
       {
@@ -57,6 +84,7 @@ const ToastContainer = ({ toasts }) => (
           toast => (
             <Toast
               key={ toast.id }
+              removeToast={ removeToast }
               toast={ toast }
             />
           )
@@ -69,5 +97,8 @@ const ToastContainer = ({ toasts }) => (
 export default connect(
   mapState({
     toasts: selectors.toasts
+  }),
+  mapDispatch({
+    removeToast: actions.removeToast
   })
 )(ToastContainer)

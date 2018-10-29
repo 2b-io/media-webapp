@@ -1,5 +1,9 @@
 import * as types from './types'
 
+export const copyDomainLink = () => ({
+  type: types.COPY_DOMAIN_LINK
+})
+
 export const fetchProjects = () => ({
   type: types.FETCH
 })
@@ -10,13 +14,13 @@ export const fetchProjectsCompleted = projects => ({
 })
 
 export const fetchProjectsFailed = reason => ({
-  type: types.FETCH_COMPLETED,
+  type: types.FETCH_FAILED,
   payload: { reason }
 })
 
-export const createProject = project => ({
+export const createProject = ({ name, description, provider }) => ({
   type: types.CREATE,
-  payload: { project }
+  payload: { name, description, provider }
 })
 
 export const createProjectCompleted = project => ({
@@ -29,9 +33,9 @@ export const createProjectFailed = reason => ({
   payload: { reason }
 })
 
-export const getProject = slug => ({
+export const getProject = identifier => ({
   type: types.GET,
-  payload: { slug }
+  payload: { identifier }
 })
 
 export const getProjectCompleted = project => ({
@@ -44,18 +48,18 @@ export const getProjectFailed = reason => ({
   payload: { reason }
 })
 
-export const deleteProject = slug => ({
-  type: types.DELETE,
-  payload: { slug }
+export const removeProject = identifier => ({
+  type: types.REMOVE,
+  payload: { identifier }
 })
 
-export const deleteProjectCompleted = slug => ({
-  type: types.DELETE_COMPLETED,
-  payload: { slug }
+export const removeProjectCompleted = identifier => ({
+  type: types.REMOVE_COMPLETED,
+  payload: { identifier }
 })
 
-export const deleteProjectFailed = reason => ({
-  type: types.DELETE_FAILED,
+export const removeProjectFailed = reason => ({
+  type: types.REMOVE_FAILED,
   payload: { reason }
 })
 
@@ -74,74 +78,14 @@ export const updateProjectFailed = reason => ({
   payload: { reason }
 })
 
-export const createPreset = ({ preset, slug }) => ({
-  type: types.CREATE_PRESET,
-  payload: ({ preset, slug })
-})
-
-export const createPresetCompleted = ({ preset, slug }) => ({
-  type: types.CREATE_PRESET_COMPLETED,
-  payload: ({ preset, slug })
-})
-
-export const createPresetFailed = reason => ({
-  type: types.CREATE_PRESET_FAILED,
-  payload: { reason }
-})
-
-export const getPreset = ({ hash, slug }) => ({
-  type: types.GET_PRESET,
-  payload: { hash, slug }
-})
-
-export const getPresetCompleted = ({ preset, slug }) => ({
-  type: types.GET_PRESET_COMPLETED,
-  payload: { preset, slug }
-})
-
-export const getPresetFailed = reason => ({
-  type: types.GET_PRESET_FAILED,
-  payload: { reason }
-})
-
-export const updatePreset = ({ preset, slug }) => ({
-  type: types.UPDATE_PRESET,
-  payload: { preset, slug }
-})
-
-export const updatePresetCompleted = ({ preset, slug }) => ({
-  type: types.UPDATE_PRESET_COMPLETED,
-  payload: { preset, slug }
-})
-
-export const updatePresetFailed = reason => ({
-  type: types.UPDATE_PRESET_FAILED,
-  payload: { reason }
-})
-
-export const deletePreset = ({ preset, slug }) => ({
-  type: types.DELETE_PRESET,
-  payload: { preset, slug }
-})
-
-export const deletePresetCompleted = ({ preset, slug }) => ({
-  type: types.DELETE_PRESET_COMPLETED,
-  payload: { preset, slug }
-})
-
-export const deletePresetFailed = reason => ({
-  type: types.DELETE_PRESET_FAILED,
-  payload: { reason }
-})
-
-export const inviteCollaborator = email => ({
+export const inviteCollaborator = (identifier, { emails, message }) => ({
   type: types.INVITE_COLLABORATOR,
-  payload: email
+  payload: { identifier, emails, message }
 })
 
-export const inviteCollaboratorCompleted = collaborator => ({
+export const inviteCollaboratorCompleted = (identifier, collaborators) => ({
   type: types.INVITE_COLLABORATOR_COMPLETED,
-  payload: { collaborator }
+  payload: { identifier, collaborators }
 })
 
 export const inviteCollaboratorFailed = reason => ({
@@ -149,15 +93,14 @@ export const inviteCollaboratorFailed = reason => ({
   payload: { reason }
 })
 
-export const deleteCollaborator = (slug, accountId) => ({
+export const deleteCollaborator = (identifier, accountId) => ({
   type: types.DELETE_COLLABORATOR,
-  payload: { slug, accountId }
+  payload: { identifier, accountId }
 })
 
-//?? what do action do when deleted collaborator?
-export const deleteCollaboratorCompleted = (slug, accountId) => ({
+export const deleteCollaboratorCompleted = (identifier, accountId) => ({
   type: types.DELETE_COLLABORATOR_COMPLETED,
-  payload: { slug, accountId }
+  payload: { identifier, accountId }
 })
 
 export const deleteCollaboratorFailed = reason => ({
@@ -165,14 +108,14 @@ export const deleteCollaboratorFailed = reason => ({
   payload: { reason }
 })
 
-export const makeOwner = (accountId, slug) => ({
+export const makeOwner = (accountId, identifier) => ({
   type: types.MAKE_OWNER,
-  payload: { accountId, slug }
+  payload: { accountId, identifier }
 })
 
-export const makeOwnerCompleted = (slug, currentAccountId, accountId) => ({
+export const makeOwnerCompleted = (identifier, currentAccountId, accountId) => ({
   type: types.MAKE_OWNER_COMPLETED,
-  payload: { slug, currentAccountId, accountId }
+  payload: { identifier, currentAccountId, accountId }
 })
 
 export const makeOwnerFailed = reason => ({
@@ -180,24 +123,27 @@ export const makeOwnerFailed = reason => ({
   payload: { reason }
 })
 
-export const invalidCache = (patterns, slug) => {
-  const patternArray = patterns.trim().split(/\s*[,\n+]\s*/).filter(Boolean)
+export const invalidateCache = (patterns, identifier) => ({
+  type: types.INVALIDATE_CACHE,
+  payload: { patterns, identifier }
+})
 
+export const invalidateCacheCompleted = () => {
   return ({
-    type: types.INVALID_CACHE,
-    payload: {
-      patterns: patternArray,
-      slug
-    }
+    type: types.INVALIDATE_CACHE_COMPLETED
   })
 }
 
-export const invalidCacheCompleted = (patterns, slug) => ({
-  type: types.INVALID_CACHE_COMPLETED,
-  payload: { patterns, slug }
+export const invalidateCacheFailed = reason => ({
+  type: types.INVALIDATE_CACHE_FAILED,
+  payload: { reason }
 })
 
-export const invalidCacheFailed = reason => ({
-  type: types.INVALID_CACHE_FAILED,
-  payload: { reason }
+export const sortProjects = (sortCondition) => ({
+  type: types.SORT,
+  payload: { sortCondition }
+})
+export const toggleDisabledProjects = (hide) => ({
+  type: types.HIDE_DISABLE,
+  payload: { hide }
 })

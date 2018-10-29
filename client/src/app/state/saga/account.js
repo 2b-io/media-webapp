@@ -1,104 +1,151 @@
-import { all, call, take, fork, put, select } from 'redux-saga/effects'
+import { take, fork, put, select } from 'redux-saga/effects'
 import serializeError from 'serialize-error'
 
 import Account from 'models/account'
 import { actions, selectors, types } from 'state/interface'
 
-import { addToast } from './toast'
-
 const changePasswordLoop = function*() {
   while (true) {
-    const { payload: { currentPassword, newPassword } } = yield take(types[ 'ACCOUNT/CHANGE_PASSWORD' ])
-
     try {
+      const {
+        payload: {
+          currentPassword,
+          newPassword
+        }
+      } = yield take(types.account.CHANGE_PASSWORD)
+
       const session = yield select(selectors.currentSession)
 
       if (!session) {
-        continue
+        throw 'Unauthorized'
       }
 
-      const result = yield call(Account.changePassword, currentPassword, newPassword, session.token)
+      const result = yield Account.changePassword({
+        currentPassword,
+        newPassword
+      }, {
+        token: session.token
+      })
 
       if (!result) {
-        throw new Error('Change password failed')
+        throw 'Change password failed'
       }
 
-      yield all([
-        put(actions.changePasswordCompleted()),
-        fork(addToast, {
-          type: 'success',
-          message: 'Password changed.'
-        })
-      ])
+      yield  put(
+        actions.changePasswordCompleted()
+      )
     } catch (e) {
-      yield put(actions.changePasswordFailed(serializeError(e)))
+      yield put(
+        actions.changePasswordFailed(serializeError(e))
+      )
     }
   }
 }
 
 const getLoop = function*() {
   while (true) {
-    const { payload: { id } } = yield take(types[ 'ACCOUNT/GET' ])
-
     try {
+      const {
+        payload: {
+          identifier
+        }
+      } = yield take(types.account.GET)
+
       const session = yield select(selectors.currentSession)
 
       if (!session) {
-        continue
+        throw 'Unauthorized'
       }
 
-      const account = yield call(Account.get, id === 'me' ? null : id, session.token)
+      const account = yield Account.get({
+        identifier
+      }, {
+        token: session.token
+      })
 
-      yield put(actions.getAccountCompleted(account))
+      if (!account) {
+        throw 'Account not found'
+      }
+
+      yield put(
+        actions.getAccountCompleted(account)
+      )
     } catch (e) {
-      yield put(actions.getAccountFailed(serializeError(e)))
+      yield put(
+        actions.getAccountFailed(serializeError(e))
+      )
     }
   }
 }
 
 const registerLoop = function*() {
   while (true) {
-    const { payload: { email } } = yield take(types[ 'ACCOUNT/REGISTER' ])
-
     try {
-      const account = yield call(Account.register, email)
+      const {
+        payload: {
+          email
+        }
+      } = yield take(types.account.REGISTER)
 
-      yield put(actions.registerCompleted(account))
+      const account = yield Account.register({
+        email
+      })
+
+      if (!account) {
+        throw 'Register failed'
+      }
+
+      yield put(
+        actions.registerCompleted(account)
+      )
     } catch (e) {
-      yield put(actions.registerFailed(serializeError(e)))
+      yield put(
+        actions.registerFailed(serializeError(e))
+      )
     }
   }
 }
-const searchAccountLoop = function*() {
+
+const updateProfileLoop = function*() {
   while (true) {
-
-    const action = yield take(types['ACCOUNT/SEARCH_ACCOUNT'])
-
     try {
+      const {
+        payload: {
+          account
+        }
+      } = yield take(types.account.UPDATE)
+
       const session = yield select(selectors.currentSession)
 
       if (!session) {
-        continue
+        throw 'Unauthorized'
       }
 
-      const accounts = yield call(Account.search, session.token, action.payload )
+      const updatedAccount = yield Account.update({
+        account
+      }, {
+        token: session.token
+      })
 
-      if (accounts[0] !== null) {
-        yield put(actions.searchAccountCompleted({ accounts }))
+      if (!updatedAccount) {
+        throw 'Account can not update'
       }
 
+      yield put(
+        actions.updateProfileCompleted(updatedAccount)
+      )
     } catch (e) {
-      yield put(actions.searchAccountFailed(serializeError(e)))
-      continue
+      yield put(
+        actions.updateProfileFailed(serializeError(e))
+      )
     }
   }
 }
-
 
 export default function*() {
   yield take('@@INITIALIZED')
   yield fork(changePasswordLoop)
   yield fork(getLoop)
   yield fork(registerLoop)
-  yield fork(searchAccountLoop)
+  yield fork(updateProfileLoop)
 }

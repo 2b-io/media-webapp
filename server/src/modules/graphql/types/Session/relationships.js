@@ -3,20 +3,20 @@ import { GraphQLString, GraphQLList } from 'graphql'
 import { Account } from '../Account'
 
 import {
-  findById as findAccountById,
-  findByEmail as findAccountByEmail
+  findByIdentifier as findAccountByIdentifier,
+  searchByEmail as searchAccountsByEmail
 } from 'services/account'
 
 export default () => ({
   account: {
     args: {
-      id: {
+      identifier: {
         type: GraphQLString
       }
     },
     type: Account,
-    resolve: async (session, { id }) => {
-      if (!id) {
+    resolve: async (session, { identifier }) => {
+      if (!identifier) {
         const { account } = session
 
         // add ref
@@ -25,7 +25,7 @@ export default () => ({
         return account
       }
 
-      return await findAccountById(id)
+      return await findAccountByIdentifier(identifier)
     }
   },
   accounts: {
@@ -36,10 +36,9 @@ export default () => ({
     },
     type: new GraphQLList(Account),
     resolve: async (session, { email }) => {
+      const accounts = await searchAccountsByEmail(email)
 
-      const account = await findAccountByEmail(email)
-
-      return [ account ]
+      return accounts
     }
   }
 })

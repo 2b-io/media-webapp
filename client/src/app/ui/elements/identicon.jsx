@@ -17,7 +17,7 @@ const StyledIdenticon = styled.img`
   }
 `
 
-const src = (id, size) => `//www.gravatar.com/avatar/${md5(id)}?d=identicon&f=y&s=${size}`
+const src = (id, size) => `https://www.gravatar.com/avatar/${md5(id)}?d=identicon&f=y&s=${size}`
 
 const Identicon = ({ id, size, ...props }) => {
   if (!id) {

@@ -1,123 +1,57 @@
-import React from 'react'
-import styled, { css } from 'styled-components'
+import React, { Fragment } from 'react'
+import styled from 'styled-components'
 
-const border = color => css`
-  border: 1px solid ${ color.base };
+import { CheckedBox, UncheckedBox } from 'ui/icons'
+import { TextLine } from 'ui/typo'
 
-  &:hover, focus {
-    border: 1px solid ${ color.light.base };
+const Wrapper = styled.label`
+  display: grid;
+  & > * {
+    min-width: 0;
+    min-height: 0;
   }
+
+  height: 40px;
+  grid-template-columns: 1fr 40px;
 `
 
-const Wrapper = styled.div`
+const Switch = styled.div`
   position: relative;
-  padding-top: ${
-    ({ theme }) => theme.spacing.small
-  };
-  padding-bottom: ${
-    ({ theme }) => theme.spacing.medium
-  };
-`
-
-const Container = styled.div`
-  position: relative;
-  display: inline-flex;
-  transition: border .3s linear;
-  background: ${ ({ theme }) => theme.white.base };
-  color: ${ ({ theme }) => theme.white.on.base };
-  padding: ${
-    ({ theme }) => theme.spacing.small
-  };
-  ${
-    ({ disabled, readOnly, theme }) =>
-      (disabled || readOnly) ? border(theme.secondary) : border(theme.primary)
-  };
-`
-
-const Button = styled.div`
   width: 100%;
   display: flex;
-  text-align: center;
+  align-items: center;
   justify-content: center;
-`
-
-const State = styled.span`
-  width: 100px;
-  flex-basis: 50%;
-  text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-`
-
-const Label = styled.label`
-  font-size: 0.9em;
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 6px;
-  background: ${ ({ theme }) => theme.background.base };
-  line-height: ${ ({ theme }) => theme.spacing.medium };
-  height: ${ ({ theme }) => theme.spacing.medium };
-  padding: ${ ({ theme }) => `0 ${ theme.spacing.tiny }` };
-`
-
-const Switch = styled.label`
-  position: relative;
-  display: block;
-  width: 100%;
-`
-
-const Slider = styled.span`
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  &:before {
-    position: absolute;
-    content: "";
-    height: 100%;
-    width: 50%;
-    left: 0;
-    background-color: ${ ({ theme }) => theme.secondary.base };
-    transition: transform .3s linear;
-  }
+  color: ${
+    ({ disabled, theme }) => disabled ?
+      theme.secondary.base :
+      theme.black.base
+  };
 `
 
 const Input = styled.input.attrs({
   type: 'checkbox'
 })`
-  display:none;
-
-  &:checked + ${ Slider }:before {
-    background-color: ${ ({ theme }) => theme.primary.base };
-    transform: translate3d(100%, 0, 0);
-  }
+  display: none;
 `
 
 const CheckBox = ({
   label,
-  checkedText, uncheckedText,
+  description,
   ...props
 }) => (
-  <Wrapper>
-    <Container { ...props }>
-      <Switch>
-        <Button>
-          <State>{ checkedText }</State>
-          <State>{ uncheckedText }</State>
-          <Input { ...props } checked={ props.value } />
-          <Slider />
-        </Button>
+  <Fragment>
+    <Wrapper>
+      { label && <TextLine mostLeft>{ label }</TextLine> }
+      <Switch disabled={ props.disabled }>
+        <Input { ...props } checked={ props.value } />
+        { props.value &&
+          <CheckedBox /> ||
+          <UncheckedBox />
+        }
       </Switch>
-    </Container>
-    { label &&
-      <Label>{ label }</Label>
-    }
-  </Wrapper>
+    </Wrapper>
+    { description && description() }
+  </Fragment>
 )
 
 export default CheckBox

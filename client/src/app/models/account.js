@@ -1,12 +1,17 @@
 import request from 'services/graphql'
 
 export const ACCOUNT_FRAGMENT = `
-  _id,
-  email
+  identifier,
+  email,
+  name,
+  isActive
 `
 
 export default {
-  async changePassword(currentPassword, newPassword, token) {
+  async changePassword(params, options) {
+    const { currentPassword, newPassword } = params
+    const { token } = options
+
     const body = await request(`
       query changePassword($currentPassword: String!, $newPassword: String!, $token: String!) {
         session(token: $token) {
@@ -24,24 +29,29 @@ export default {
     return body.session.account._changePassword
   },
 
-  async get(id, token) {
+  async get(params, options) {
+    const { identifier } = params
+    const { token } = options
+
     const body = await request(`
-      query getAccount($id: String, $token: String!) {
+      query getAccount($identifier: String, $token: String!) {
         session(token: $token) {
-          account(id: $id) {
+          account(identifier: $identifier) {
             ${ ACCOUNT_FRAGMENT }
           }
         }
       }
     `, {
-      id,
+      identifier,
       token
     })
 
     return body.session.account
   },
 
-  async register(email) {
+  async register(params) {
+    const { email } = params
+
     const body = await request(`
       query register($account: AccountStruct!) {
         _createAccount(account: $account) {
@@ -54,19 +64,30 @@ export default {
 
     return body._createAccount
   },
-  async search(token, email) {
+
+  async update(params, options) {
+    const {
+      account: {
+        name
+      }
+    } = params
+    const { token } = options
+
     const body = await request(`
-      query search($token: String!, $email: String!) {
+      query updateProfile($token: String!, $account: AccountStruct!) {
         session(token: $token) {
-          accounts(email: $email) {
-            ${ ACCOUNT_FRAGMENT }
+          account {
+            _update(account: $account) {
+              ${ ACCOUNT_FRAGMENT }
+            }
           }
         }
       }
     `, {
+      account: { name },
       token,
-      email
     })
-    return body.session.accounts
+
+    return body.session.account._update
   }
 }

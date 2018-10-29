@@ -1,12 +1,27 @@
-import React from 'react'
-import { TitleBar } from 'ui/compounds'
+import React, { Fragment } from 'react'
+import { connect } from 'react-redux'
 
-const ProjectDetail = () => (
-  <TitleBar>
-    <TitleBar.Title>
-      <h1>Project Detail</h1>
-    </TitleBar.Title>
-  </TitleBar>
+import { mapDispatch } from 'services/redux-helpers'
+import { actions, selectors } from 'state/interface'
+import { BackIcon } from 'ui/icons'
+import { PageTitle } from 'ui/typo'
+
+const ProjectDetail = ({ navigateBack, project = {} }) => (
+  <Fragment>
+    <BackIcon onClick={ navigateBack } />
+    <PageTitle>{ project.name }</PageTitle>
+  </Fragment>
 )
 
-export default ProjectDetail
+export default connect(
+  (state) => {
+    const { identifier } = selectors.currentParams(state)
+
+    return {
+      project: selectors.findProjectByIdentifier(state, identifier)
+    }
+  },
+  mapDispatch({
+    navigateBack: () => actions.requestLocation('/projects')
+  })
+)(ProjectDetail)

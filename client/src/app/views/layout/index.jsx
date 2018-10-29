@@ -1,93 +1,63 @@
-import React, { Component, Fragment } from 'react'
+import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
 
-import { mapDispatch } from 'services/redux-helpers'
-import { actions, selectors } from 'state/interface'
+import { selectors } from 'state/interface'
+import { Break } from 'ui/elements'
 
-import Content from './content'
-import Layer from './layer'
-import Overlay from './overlay'
-import Still from './still'
+import Body from './body'
+import Header from './header'
+import Logo from './logo'
+import Sidebar from './sidebar'
+
 import Toast from './toast'
-import Wrapper from './wrapper'
 
-export { default as LeftMenu } from './left-menu'
+const Surface = styled.main`
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: min-content 1fr;
+  height: 100%;
+  position: relative;
+  z-index: 0;
+`
 
-class Layout extends Component {
-  render() {
-    const {
-      isBackground,
-      isLayoutClosed,
-      email,
-      maximizeSidebar,
-      minimizeSidebar,
-      menuWidth,
-      render,
-      sidebarMaximized,
-      stillHeight,
-      toProfile
-    } = this.props
+const LogoWrapper = styled.div`
+  padding-top: 96px;
+  text-align: center;
+`
 
-    return (
-      <Fragment>
-        <Layer isBackground={ isBackground }>
-          <Overlay
-            shown={ isLayoutClosed }
-            width={ menuWidth }
-            email={ email }
-            toProfile={ toProfile }
-            sidebarMaximized={ sidebarMaximized }
-            toggleSidebar={ sidebarMaximized ? minimizeSidebar : maximizeSidebar }
-          >
-            { render.overlay(this.props) }
-          </Overlay>
-          <Wrapper
-            shown={ !isLayoutClosed }
-            menuWidth={ menuWidth }>
-            <Still
-              shown={ !isLayoutClosed }
-              onComponentDidMount={ this.updateStillHeight() }
-            >
-              { render.still(this.props) }
-            </Still>
-            <Content
-              shown={ !isLayoutClosed }
-              stillHeight={ stillHeight }>
-              { render.content(this.props) }
-            </Content>
-          </Wrapper>
-        </Layer>
-        <Toast />
-      </Fragment>
-    )
-  }
-
-  updateStillHeight() {
-    const { updateStillHeight } = this.props
-
-    return element => {
-      updateStillHeight(element.clientHeight)
-    }
-  }
-}
+const Layout = ({
+  isLayoutClosed,
+  render,
+  ...props
+}) => (
+  <Fragment>
+    <Surface>
+      { !isLayoutClosed && (
+        <Header className="header">
+          { render.still(props) }
+        </Header>
+      ) }
+      <Body className="body">
+        { isLayoutClosed &&
+          <Fragment>
+            <LogoWrapper>
+              <Logo />
+            </LogoWrapper>
+            <Break />
+            { render.overlay(props) }
+          </Fragment> ||
+          render.content(props)
+        }
+      </Body>
+    </Surface>
+    <Toast />
+    { !isLayoutClosed && <Sidebar /> }
+  </Fragment>
+)
 
 export default connect(
-  state => {
-    const session = selectors.currentSession(state)
-
-    return {
-      email: session && session.account.email,
-      isBackground: selectors.hasShownModals(state),
-      isLayoutClosed: selectors.isLayoutClosed(state),
-      menuWidth: selectors.menuWidth(state),
-      sidebarMaximized: selectors.sidebarMaximized(state),
-      stillHeight: selectors.stillHeight(state)
-    }
-  },
-  mapDispatch({
-    maximizeSidebar: actions.maximizeSidebar,
-    minimizeSidebar: actions.minimizeSidebar,
-    toProfile: () => actions.requestLocation('/@me'),
-    updateStillHeight: actions.updateStillHeight
+  state => ({
+    isLayoutClosed: selectors.isLayoutClosed(state)
   })
 )(Layout)

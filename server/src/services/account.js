@@ -1,4 +1,6 @@
+import escapeStringRegexp from 'escape-string-regexp'
 import uuid from 'uuid'
+
 import Account from 'models/Account'
 
 export const list = async () => {
@@ -17,12 +19,42 @@ export const create = async (info) => {
   }).save()
 }
 
+export const update = async (_id, data) => {
+  const account = await Account.findOneAndUpdate(
+    { _id },
+    { ...data },
+    { new: true }
+  ).lean()
+
+  return account
+}
+
 export const findById = async (id) => {
   return await Account.findById(id)
 }
 
+export const findByIdentifier = async (identifier) => {
+  return await Account.findOne({ identifier })
+}
+
 export const findByEmail = async (email) => {
+  if (!email) {
+    throw new Error('Invaid parameter')
+  }
+
   return await Account.findOne({ email })
+}
+
+export const searchByEmail = async (email) => {
+  if (!email) {
+    throw new Error('Invaid parameter')
+  }
+  const escapeString = escapeStringRegexp(email)
+
+  //regex to describes a pattern of character: matches beginning of email
+  const emailRegex = new RegExp(`^${ escapeString }`)
+
+  return await Account.find({ email: emailRegex })
 }
 
 export const changePassword = async (_id, currentPassword, newPassword) => {

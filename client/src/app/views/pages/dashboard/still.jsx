@@ -1,13 +1,21 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import { connect } from 'react-redux'
 
-import { TitleBar } from 'ui/compounds'
+import { mapDispatch } from 'services/redux-helpers'
+import { actions } from 'state/interface'
+import { MenuIcon } from 'ui/icons'
+import { PageTitle } from 'ui/typo'
 
-const Dashboard = () => (
-  <TitleBar>
-    <TitleBar.Title>
-      <h1>Dashboard</h1>
-    </TitleBar.Title>
-  </TitleBar>
+const Dashboard = ({ maximizeSidebar }) => (
+  <Fragment>
+    <MenuIcon onClick={ maximizeSidebar } />
+    <PageTitle>Dashboard</PageTitle>
+  </Fragment>
 )
 
-export default Dashboard
+export default connect(
+  null,
+  mapDispatch({
+    maximizeSidebar: actions.maximizeSidebar
+  })
+)(Dashboard)

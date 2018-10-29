@@ -14,6 +14,8 @@ const schema = mongoose.Schema({
     default: false,
     index: true
   }
+}, {
+  collection: 'resetCodes'
 })
 
 export default mongoose.model('ResetPasswordCode', schema)

@@ -1,57 +1,49 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
-import { Container, Link, Paragraph } from 'ui/elements'
-import { ErrorBox, SuccessBox } from 'ui/elements'
 import { actions } from 'state/interface'
 import { mapDispatch } from 'services/redux-helpers'
-import { stateful } from 'views/common/decorators'
+import { Break, Container, Link } from 'ui/elements'
+import { Text } from 'ui/typo'
 
-import _ForgotPasswordForm from './forgot-password-form'
+import StatelessForm from './form'
 
 const ForgotPasswordForm = reduxForm({
   form: 'forgotPassword',
   enableReinitialize: true
-})(_ForgotPasswordForm)
+})(StatelessForm)
 
 const ForgotPassword=({
   forgotPassword,
   toSignIn,
   ui: {
-    errorForgotPassword,
-    resultForgotPassword
+    idle
   }
 }) => (
-  <main>
-    <Container center size="small">
-      { resultForgotPassword &&
-        <SuccessBox>We&apos;ve send a password reset link to your email. Please check your inbox.</SuccessBox>
-      }
-      { errorForgotPassword &&
-        <ErrorBox>Fail to send the reset password email or the account does not exist.</ErrorBox>
-      }
-      { !resultForgotPassword &&
-        <Fragment>
-          <Paragraph>Enter your email</Paragraph>
-          <ForgotPasswordForm onSubmit={ forgotPassword } />
-        </Fragment>
-      }
-      <Paragraph>
-        <Link href='/sign-in' onClick={ toSignIn }>Back to sign in</Link>
-      </Paragraph>
-    </Container>
-  </main>
+  <Container>
+    <ForgotPasswordForm
+      onSubmit={ forgotPassword }
+      idle={ idle }
+    />
+    <Break double />
+    <Text mostLeft mostRight>
+      Remember your password?<br />
+      <Link
+        href='/sign-in'
+        onClick={ toSignIn }
+      >
+        Sign in now!
+      </Link>
+    </Text>
+  </Container>
 )
 
-export default stateful({
-  component: 'ResetPassword'
-})(
-  connect(
-    null,
-    mapDispatch({
-      forgotPassword: email => actions.forgotPassword(email),
-      toSignIn: () => actions.requestLocation('/sign-in')
-    })
-  )(ForgotPassword)
-)
+
+export default connect(
+  null,
+  mapDispatch({
+    forgotPassword: email => actions.forgotPassword(email),
+    toSignIn: () => actions.requestLocation('/sign-in')
+  })
+)(ForgotPassword)

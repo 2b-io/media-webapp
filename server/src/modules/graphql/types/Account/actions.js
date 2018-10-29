@@ -4,8 +4,11 @@ import {
   GraphQLString
 } from 'graphql'
 
-import { create as createProject } from 'services/project'
-import { changePassword } from 'services/account'
+import {
+  changePassword,
+  update as updateAccount
+} from 'services/account'
+import projectService from 'services/project'
 
 import { Project, ProjectStruct } from '../Project'
 
@@ -18,7 +21,12 @@ export default ({ Account, AccountStruct }) => ({
     },
     type: Account,
     resolve: async (self, { account }) => {
-      return account
+      const updatedAccount = await updateAccount(self._id, account)
+
+      // add ref
+      updatedAccount.session = self.session
+
+      return updatedAccount
     }
   },
   _changePassword: {
@@ -45,14 +53,17 @@ export default ({ Account, AccountStruct }) => ({
     args: {
       project: {
         type: new GraphQLNonNull(ProjectStruct)
+      },
+      provider: {
+        type: new GraphQLNonNull(GraphQLString)
       }
     },
     type: Project,
-    resolve: async (account, { project }) => {
-      const p = await createProject(project, account)
+    resolve: async (account, { project, provider }) => {
+      const p = await projectService.create(project, provider, account)
 
       // add ref
-      p._account = account
+      p.account = account
 
       return p
     }

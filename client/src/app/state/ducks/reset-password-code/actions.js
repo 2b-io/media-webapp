@@ -13,9 +13,9 @@ export const forgotPasswordFailed = error => ({
   payload: error
 })
 
-export const resetPassword = (password, code) => ({
+export const resetPassword = (code, account) => ({
   type: types.RESET_PASSWORD,
-  payload: { password, code }
+  payload: { code, account }
 })
 export const resetPasswordCompleted = statusReset => ({
   type: types.RESET_PASSWORD_COMPLETED,
@@ -26,15 +26,17 @@ export const resetPasswordFailed = error => ({
   payload: error
 })
 
-export const getResetCode = code => ({
+export const getResetCode = (code) => ({
   type: types.GET_RESET_CODE,
-  payload: code
+  payload: { code }
 })
-export const getResetCodeCompleted = resetPasswordCode => ({
+export const getResetCodeCompleted = (account) => ({
   type: types.GET_RESET_CODE_COMPLETED,
-  payload: resetPasswordCode
+  payload: { account }
 })
-export const getResetCodeFailed = error => ({
+export const getResetCodeFailed = (error) => ({
   type: types.GET_RESET_CODE_FAILED,
-  payload: error
+  payload: {
+    reason: error
+  }
 })

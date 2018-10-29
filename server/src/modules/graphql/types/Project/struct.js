@@ -1,26 +1,23 @@
 import {
   GraphQLBoolean,
-  GraphQLList,
-  GraphQLString
+  GraphQLString,
+  GraphQLFloat
 } from 'graphql'
 
 export default {
   name: {
     type: GraphQLString
   },
-  slug: {
+  description: {
     type: GraphQLString
   },
-  prettyOrigin: {
+  status: {
     type: GraphQLString
   },
-  origins: {
-    type: new GraphQLList(GraphQLString)
+  createdAt: {
+    type: GraphQLFloat
   },
-  disabled: {
-    type: GraphQLBoolean
-  },
-  removed: {
+  isActive: {
     type: GraphQLBoolean
   }
 }

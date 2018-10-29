@@ -1,260 +1,335 @@
-import { all, call, take, fork, put, select } from 'redux-saga/effects'
+import { take, fork, put, select } from 'redux-saga/effects'
 import serializeError from 'serialize-error'
 
 import Project from 'models/project'
 import { actions, types, selectors } from 'state/interface'
 
-import { addToast } from './toast'
-
 const createLoop = function*() {
   while (true) {
-    const action = yield take(types['PROJECT/CREATE'])
-    const { project } = action.payload
-
     try {
+      const {
+        payload: {
+          name,
+          provider
+        }
+      } = yield take(types.project.CREATE)
+
       const session = yield select(selectors.currentSession)
 
       if (!session) {
-        continue
+        throw 'Unauthorized'
       }
 
-      const newProject = yield call(Project.create, project, session.token)
+      const newProject = yield Project.create({
+        name,
+        provider
+      }, {
+        token: session.token
+      })
 
-      yield all([
-        put(actions.createProjectCompleted(newProject)),
-        fork(addToast, {
-          type: 'success',
-          message: 'Project created.'
-        })
-      ])
+      if (!newProject) {
+        throw 'Create project failed'
+      }
+
+      yield put(
+        actions.createProjectCompleted(newProject)
+      )
     } catch (e) {
-      yield put(actions.createProjectFailed(serializeError(e)))
-      continue
+      yield put(
+        actions.createProjectFailed(serializeError(e))
+      )
     }
   }
 }
 
-const deleteLoop = function*() {
+const removeLoop = function*() {
   while (true) {
-    const action = yield take(types['PROJECT/DELETE'])
-    const { slug } = action.payload
-
     try {
+      const {
+        payload: {
+          identifier
+        }
+      } = yield take(types.project.REMOVE)
+
       const session = yield select(selectors.currentSession)
 
       if (!session) {
-        continue
+        throw 'Unauthorized'
       }
 
-      const deleted = yield Project.delete(slug, session.token)
+      const removed = yield Project.remove({
+        identifier
+      }, {
+        token: session.token
+      })
 
-      if (!deleted) {
-        throw new Error('Cannot delete project')
+      if (!removed) {
+        throw new 'Remove project failed'
       }
 
-      yield all([
-        put(actions.deleteProjectCompleted(slug)),
-        fork(addToast, {
-          type: 'success',
-          message: 'Project deleted.'
-        })
-      ])
+      yield put(
+        actions.removeProjectCompleted(identifier)
+      )
     } catch (e) {
-      yield put(actions.deleteProjectFailed(serializeError(e)))
-      continue
+      yield put(
+        actions.removeProjectFailed(serializeError(e))
+      )
     }
   }
 }
 
 const getLoop = function*() {
   while (true) {
-    const action = yield take(types['PROJECT/GET'])
-    const { slug } = action.payload
-
     try {
+      const {
+        payload: {
+          identifier
+        }
+      } = yield take(types.project.GET)
+
       const session = yield select(selectors.currentSession)
 
       if (!session) {
-        continue
+        throw 'Unauthorized'
       }
 
-      const project = yield call(Project.get, slug, session.token)
+      const project = yield Project.get({
+        identifier
+      }, {
+        token: session.token
+      })
 
-      yield put(actions.getProjectCompleted(project))
+      if (!project) {
+        throw 'Get project failed'
+      }
+
+      yield put(
+        actions.getProjectCompleted(project)
+      )
     } catch (e) {
-      yield put(actions.getProjectFailed(serializeError(e)))
-      continue
+      yield put(
+        actions.getProjectFailed(serializeError(e))
+      )
     }
   }
 }
 
 const fetchLoop = function*() {
   while (true) {
-    yield take(types['PROJECT/FETCH'])
-
     try {
+      yield take(types.project.FETCH)
+
       const session = yield select(selectors.currentSession)
 
       if (!session) {
-        continue
+        throw 'Unauthorized'
       }
 
-      const projects = yield call(Project.fetch, session.token)
+      const projects = yield Project.fetch(null, {
+        token: session.token
+      })
 
-      yield put(actions.fetchProjectsCompleted(projects))
+      if (!projects) {
+        throw 'Fetch project failed'
+      }
+
+      yield put(
+        actions.fetchProjectsCompleted(projects)
+      )
     } catch (e) {
-      yield put(actions.fetchProjectsFailed(serializeError(e)))
-      continue
+      yield put(
+        actions.fetchProjectsFailed(serializeError(e))
+      )
     }
   }
 }
 
 const updateLoop = function*() {
   while (true) {
-    const action = yield take(types['PROJECT/UPDATE'])
-
     try {
+      const {
+        payload: {
+          project
+        }
+      } = yield take(types.project.UPDATE)
+
       const session = yield select(selectors.currentSession)
 
       if (!session) {
-        continue
+        throw 'Unauthorized'
       }
 
-      const project = yield call(Project.update, action.payload.project, session.token)
+      const updatedProject = yield Project.update({
+        project
+      }, {
+        token: session.token
+      })
 
-      yield all([
-        put(actions.updateProjectCompleted(project)),
-        fork(addToast, {
-          type: 'success',
-          message: 'Project updated.'
-        })
-      ])
+      if (!updatedProject) {
+        throw 'Project can not update'
+      }
+
+      yield put(
+        actions.updateProjectCompleted(updatedProject)
+      )
     } catch (e) {
-      yield put(actions.updateProjectFailed(serializeError(e)))
-      continue
+      yield put(
+        actions.updateProjectFailed(serializeError(e))
+      )
     }
   }
 }
 
-const inviteCollaboratorLoop = function*() {
+const inviteCollaboratorsLoop = function*() {
   while (true) {
-    const action = yield take(types['PROJECT/INVITE_COLLABORATOR'])
-    const currentLocation = yield select(selectors.currentLocation)
-    const slug = currentLocation.pathname.split('/')[2]
     try {
+      const {
+        payload: {
+          identifier,
+          emails,
+          message
+        }
+      } = yield take(types.project.INVITE_COLLABORATOR)
+
       const session = yield select(selectors.currentSession)
 
       if (!session) {
-        continue
+        throw 'Unauthorized'
       }
 
-      const collaborator = yield call(Project.inviteCollaborator, session.token, slug, action.payload )
-      collaborator.slug = slug
-      if (collaborator) {
-        yield all([
-          put(actions.inviteCollaboratorCompleted(collaborator)),
-          fork(addToast, {
-            type: 'success',
-            message: 'Collaborator invited.'
-          })
-        ])
+      const collaborators = yield Project.inviteCollaborators({
+        identifier,
+        emails,
+        message
+      }, {
+        token: session.token
+      })
+
+      if (!collaborators) {
+        throw 'Invite collaborator failed'
       }
 
+      yield put(
+        actions.inviteCollaboratorCompleted(identifier, collaborators || [])
+      )
     } catch (e) {
-      yield put(actions.inviteCollaboratorFailed(serializeError(e)))
-      continue
+      yield put(
+        actions.inviteCollaboratorFailed(serializeError(e))
+      )
     }
   }
 }
 
 const deleteCollaboratorLoop = function*() {
   while (true) {
-    const action = yield take(types['PROJECT/DELETE_COLLABORATOR'])
     try {
+      const {
+        payload: {
+          identifier,
+          accountId
+        }
+      } = yield take(types.project.DELETE_COLLABORATOR)
+
       const session = yield select(selectors.currentSession)
 
       if (!session) {
-        continue
+        throw 'Unauthorized'
       }
 
-      const deleted = yield Project.deleteCollaborator(session.token, action.payload.slug, action.payload.accountId)
+      const removed = yield Project.deleteCollaborator({
+        identifier,
+        accountId
+      }, {
+        token: session.token
+      })
 
-      if (!deleted) {
-        throw new Error('Can not delete the collaborator.')
+      if (!removed) {
+        throw 'Remove collaborator failed'
       }
 
-      yield all([
-        put(actions.deleteCollaboratorCompleted(action.payload.slug, action.payload.accountId)),
-        fork(addToast, {
-          type: 'success',
-          message: 'Collaborator deleted.'
-        })
-      ])
-
+      yield put(
+        actions.deleteCollaboratorCompleted(identifier, accountId)
+      )
     } catch (e) {
-      yield all([
-        put(actions.deleteCollaboratorFailed(serializeError(e))),
-        fork(addToast, {
-          type: 'error',
-          message: 'Can not delete the collaborator.'
-        })
-      ])
-      continue
+      yield put(
+        actions.deleteCollaboratorFailed(serializeError(e))
+      )
     }
   }
 }
 
 const makeOwnerLoop = function*() {
   while (true) {
-    const action = yield take(types['PROJECT/MAKE_OWNER'])
-
     try {
+      const {
+        payload: {
+          identifier,
+          accountId
+        }
+      } = yield take(types.project.MAKE_OWNER)
+
       const session = yield select(selectors.currentSession)
+
       if (!session) {
-        continue
+        throw 'Unauthorized'
       }
 
-      const owner = yield call(Project.makeOwner, session.token, action.payload.slug, action.payload.accountId)
-      if (owner) {
-        yield all([
-          put(actions.makeOwnerCompleted(action.payload.slug, session.account._id, action.payload.accountId)),
-          fork(addToast, {
-            type: 'success',
-            message: 'Owner changed.'
-          })
-        ])
+      const owner = yield Project.makeOwner({
+        identifier,
+        accountId
+      }, {
+        token: session.token
+      })
+
+      if (!owner) {
+        throw 'Make owner failed'
       }
 
+      yield put(
+        actions.makeOwnerCompleted(identifier, session.account.identifier, accountId)
+      )
     } catch (e) {
-      yield put(actions.makeOwnerFailed(serializeError(e)))
-      continue
+      yield put(
+        actions.makeOwnerFailed(serializeError(e))
+      )
     }
   }
 }
 
-const invalidCacheLoop = function*() {
+const invalidateCacheLoop = function*() {
   while(true) {
-    const action = yield take(types['PROJECT/INVALID_CACHE'])
-
     try {
+      const {
+        payload: {
+          identifier,
+          patterns
+        }
+      } = yield take(types.project.INVALIDATE_CACHE)
+
       const session = yield select(selectors.currentSession)
 
       if (!session) {
-        continue
+        throw 'Unauthorized'
       }
 
-      const invalidCache = yield call(Project.invalidCache, session.token, action.payload.slug, action.payload.patterns)
+      const invalidated = yield Project.invalidateCache({
+        identifier,
+        patterns
+      }, {
+        token: session.token
+      })
 
-      if (invalidCache) {
-        yield all([
-          fork(addToast, {
-            type: 'success',
-            message: 'Cache invalidated.'
-          })
-        ])
+      if (!invalidated) {
+        throw 'Invalidate cache failed'
       }
+
+      yield put(
+        actions.invalidateCacheCompleted(identifier, patterns)
+      )
     } catch (e) {
-      continue
+      yield put(
+        actions.invalidateCacheFailed(serializeError(e))
+      )
     }
   }
 }
@@ -262,12 +337,12 @@ const invalidCacheLoop = function*() {
 export default function*() {
   yield take('@@INITIALIZED')
   yield fork(createLoop)
-  yield fork(deleteLoop)
+  yield fork(removeLoop)
   yield fork(fetchLoop)
   yield fork(getLoop)
-  yield fork(invalidCacheLoop)
+  yield fork(invalidateCacheLoop)
   yield fork(updateLoop)
-  yield fork(inviteCollaboratorLoop)
+  yield fork(inviteCollaboratorsLoop)
   yield fork(deleteCollaboratorLoop)
   yield fork(makeOwnerLoop)
 }

@@ -1,6 +1,8 @@
 {
+  "version": "1.0.0",
   "license": "MIT",
   "dependencies": {
+    "@sendgrid/mail": "6.3.1",
     "aws-sdk": "2.283.1",
     "bcrypt": "2.0.1",
     "body-parser": "1.18.2",
@@ -8,15 +10,18 @@
     "express-graphql": "0.6.12",
     "graphql": "0.13.2",
     "graphql-type-json": "0.2.1",
+    "html-minifier": "3.5.20",
     "http-proxy-middleware": "0.18.0",
     "jsonwebtoken": "8.2.1",
     "mongoose": "5.0.17",
     "morgan": "1.9.0",
     "ms": "2.1.1",
+    "namor": "1.1.1",
     "random-int": "1.0.0",
     "serialize-error": "2.1.0",
     "shorthash": "0.0.2",
     "superagent": "3.8.3",
+    "uniqid": "5.0.3",
     "uuid": "3.2.1"
   },
   "devDependencies": {

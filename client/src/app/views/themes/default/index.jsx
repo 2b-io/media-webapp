@@ -1,6 +1,6 @@
 import ntc from 'ntc'
 import palx from 'palx'
-import treeify from 'treeify'
+// import treeify from 'treeify'
 
 import makeColor from 'ui/color'
 
@@ -101,7 +101,7 @@ const theme = {
   }
 }
 
-console.debug(treeify.asTree(theme, true))
+// console.debug(treeify.asTree(theme, true))
 
 export { base, black, white, palettes }
 export default theme

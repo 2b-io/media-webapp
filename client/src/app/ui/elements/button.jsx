@@ -4,12 +4,17 @@ const Button = styled.button.attrs({
   type: ({ type = 'button' }) => type
 })`
   appearance: none;
-  display: inline-flex;
+  border: none;
+  outline: none;
   align-items: center;
   margin: 0;
+  padding: 0 8px;
   white-space: nowrap;
-  transition: background .3s linear;
-  transition: color .3s linear;
+  transition:
+    background .3s linear,
+    color .3s linear;
+  line-height: 40px;
+  height: 40px;
   cursor: ${
     ({ disabled }) => disabled ? 'not-allowed' : 'pointer'
   };
@@ -17,9 +22,7 @@ const Button = styled.button.attrs({
   ${
     ({ disabled, plain, theme, variant }) => (variant || plain) ?
       css`
-        text-transform: uppercase;
-        border: none;
-        outline: none;
+        display: inline-flex;
         font-weight: 600;
         ${
           plain && `
@@ -29,8 +32,6 @@ const Button = styled.button.attrs({
         }
         ${
           variant && `
-            padding: 0 ${ theme.spacing.small };
-            line-height: 2.5em;
             background: ${ theme.background.base };
             color: ${
               disabled ?
@@ -57,10 +58,8 @@ const Button = styled.button.attrs({
         }
       ` :
       css`
-        border: none;
-        outline: none;
-        padding: 0 ${ theme.spacing.medium };
-        line-height: 2.5em;
+        display: block;
+        width: 100%;
         background: ${
           disabled ?
             theme.secondary.base :
@@ -106,19 +105,17 @@ const Button = styled.button.attrs({
 `
 
 Button.Group = styled.div`
-  display: inline-flex;
+  display: flex;
 
-  & > ${ Button } {
-    margin-right: ${
-      ({ theme, loosed }) => loosed ?
-        theme.spacing.medium :
-        theme.spacing.small
-    };
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
+  ${
+    ({ align }) => align === 'right' ?
+      css`
+        justify-content: flex-end;
+      ` :
+      css`
+        justify-content: flex-start;
+      `
+  };
 `
 
 export default Button

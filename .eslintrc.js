@@ -26,6 +26,7 @@ module.exports = {
     "ecmaVersion": 2018
   },
   "rules": {
+    "react/display-name": "off",
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "react/jsx-curly-spacing": [

@@ -3,10 +3,7 @@ import {
   GraphQLNonNull,
   GraphQLString
 } from 'graphql'
-import {
-  getBySlug as getProjectBySlug,
-  list as listProjectsByAccount
-} from 'services/project'
+import projectService from 'services/project'
 
 import { Project } from '../Project'
 import { Session } from '../Session'
@@ -18,23 +15,28 @@ export default () => ({
   projects: {
     type: new GraphQLList(Project),
     resolve: async (account) => {
-      const projects = await listProjectsByAccount(account._id)
+      const projects = await projectService.list(account._id)
+
+      // add ref
       return projects.map(project => {
-        // add ref
         project.account = account
+
         return project
       })
     }
   },
   project: {
     args: {
-      slug: {
+      identifier: {
         type: new GraphQLNonNull(GraphQLString)
       }
     },
     type: Project,
-    resolve: async (account, { slug }) => {
-      const project = await getProjectBySlug(slug)
+    resolve: async (account, { identifier }) => {
+      const project = await projectService.get({
+        identifier
+      }, account._id)
+
       // add ref
       project.account = account
       return project

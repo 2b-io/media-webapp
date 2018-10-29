@@ -4,55 +4,43 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
-import { Container, ErrorBox, Link, Paragraph } from 'ui/elements'
-import { stateful } from 'views/common/decorators'
+import { Break, Container, Link, TextButton } from 'ui/elements'
+import { Text } from 'ui/typo'
 
-import _SignInForm from './form'
+import StatelessSignInForm from './form'
 
 const SignInForm = reduxForm({
   form: 'signIn',
   enableReinitialize: true,
-})(_SignInForm)
+})(StatelessSignInForm)
 
 const SignIn = ({
   signIn,
   toForgotPassword,
   toRegister,
-  ui: { error, idle }
+  ui: { idle }
 }) => (
-  <main>
-    <Container center size="small">
-      { error &&
-        <ErrorBox>Email and password do not match.</ErrorBox>
-      }
-      <Paragraph>
-        Enter your email and password
-      </Paragraph>
-      <SignInForm
-        onSubmit={ signIn }
-        idle={ idle }
-      />
-      <Paragraph>
-        Don&apos;t have your account yet?<br />
-        <Link href="/register" onClick={ toRegister }>Try it for free!</Link>
-      </Paragraph>
-      <Paragraph>
-        Trouble at signing in?<br />
-        <Link href="/forgot-password" onClick={ toForgotPassword }>We are here for help.</Link>
-      </Paragraph>
-    </Container>
-  </main>
+  <Container>
+    <SignInForm
+      onSubmit={ signIn }
+      idle={ idle }
+    />
+    <TextButton onClick={ toForgotPassword }>
+      Can&apos;t sign in?
+    </TextButton>
+    <Break double />
+    <Text mostLeft mostRight>
+      Haven&apos;t got your account yet?<br />
+      <Link href="/register" onClick={ toRegister }>Try it for free!</Link>
+    </Text>
+  </Container>
 )
 
-export default stateful({
-  component: 'SignIn'
-})(
-  connect(
-    null,
-    mapDispatch({
-      signIn: credential => actions.createSession(credential),
-      toForgotPassword: () => actions.requestLocation('/forgot-password'),
-      toRegister: () => actions.requestLocation('/register')
-    })
-  )(SignIn)
-)
+export default connect(
+  null,
+  mapDispatch({
+    signIn: actions.createSession,
+    toForgotPassword: () => actions.requestLocation('/forgot-password'),
+    toRegister: () => actions.requestLocation('/register')
+  })
+)(SignIn)

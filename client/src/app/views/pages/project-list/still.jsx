@@ -1,45 +1,88 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 
-import { actions, selectors } from 'state/interface'
-import { mapDispatch, mapState } from 'services/redux-helpers'
-import { TitleBar } from 'ui/compounds'
-import { Button, CollapsibleMenu } from 'ui/elements'
-import { AddIcon, HelpIcon } from 'ui/icons'
-import CreateProject from 'views/common/modals/create-project'
+import { mapDispatch } from 'services/redux-helpers'
+import { actions } from 'state/interface'
 
-const ProjectList = ({ showModal, stillHeight }) => (
+import {
+  FilterIcon,
+  MenuIcon,
+  EyeIcon,
+  EyeOffIcon,
+  SortAscIcon,
+  SortDescIcon,
+  SortAlphaAscIcon,
+  SortAlphaDescIcon,
+  SortNumericAscIcon,
+  SortNumericDescIcon
+} from 'ui/icons'
+import { ContextMenu, List } from 'ui/elements'
+import { PageTitle, TextLine } from 'ui/typo'
+
+const ProjectList = ({
+  maximizeSidebar,
+  sortProjects,
+  toggleDisabledProjects,
+  showFilterMenu, hideFilterMenu,
+  ui: {
+    isFilterMenuActive,
+    hideDisabledProjects,
+    sortAscending,
+    sortType
+  }
+}) => (
   <Fragment>
-    <TitleBar>
-      <TitleBar.Title>
-        <h1>All Projects</h1>
-      </TitleBar.Title>
-
-      <TitleBar.Menu>
-        <CollapsibleMenu dock={ stillHeight }>
-          <Button plain onClick={ showModal }>
-            <AddIcon size="medium" />
-          </Button>
-          <Button plain>
-            <HelpIcon size="medium" />
-          </Button>
-        </CollapsibleMenu>
-      </TitleBar.Menu>
-    </TitleBar>
-    <CreateProject
-      width="wide"
-      title="Create New Project"
+    <MenuIcon onClick={ maximizeSidebar } />
+    <PageTitle>Projects</PageTitle>
+    <ContextMenu.Menu
+      stateless={ true }
+      isActive={ isFilterMenuActive }
+      activate={ showFilterMenu }
+      deactivate={ hideFilterMenu }
+      icon={ () => <FilterIcon /> }
+      content={ () => (
+        <List
+          items={ [
+            {
+              content: () => <TextLine mostLeft mostRight>Sort by privilege</TextLine>,
+              onClick: () => sortProjects({ type: 'privilege', ascending: !sortAscending }),
+              trailing: sortType === 'privilege' ? () =>  sortAscending ? <SortAscIcon /> : <SortDescIcon /> : null
+            },
+            {
+              content: () => <TextLine mostLeft mostRight>Sort by name</TextLine>,
+              onClick: () => sortProjects({ type: 'name', ascending: !sortAscending }),
+              trailing: sortType === 'name' ? () =>  sortAscending ? <SortAlphaAscIcon /> : <SortAlphaDescIcon /> : null
+            },
+            {
+              content: () => <TextLine mostLeft mostRight>Sort by created date</TextLine>,
+              onClick: () => sortProjects({ type: 'created', ascending: !sortAscending }),
+              trailing: sortType === 'created' ? () =>  sortAscending ? <SortNumericAscIcon /> : <SortNumericDescIcon /> : null
+            },
+            {
+              content: () => (
+                <TextLine mostLeft mostRight>
+                  {
+                    hideDisabledProjects ? 'Show disabled projects' : 'Hide disabled projects'
+                  }
+                </TextLine>
+              ),
+              onClick: toggleDisabledProjects.bind(null, !hideDisabledProjects),
+              trailing: () => hideDisabledProjects ? <EyeIcon /> : <EyeOffIcon />
+            }
+          ] }
+        />
+      ) }
     />
   </Fragment>
 )
 
 export default connect(
-  mapState({
-    stillHeight: selectors.stillHeight
-  }),
+  null,
   mapDispatch({
-    showModal: () => actions.showModal({
-      modal: 'CreateProject'
-    })
+    sortProjects: actions.sortProjects,
+    toggleDisabledProjects: actions.toggleDisabledProjects,
+    maximizeSidebar: actions.maximizeSidebar,
+    showFilterMenu: () => actions.showMenu('FILTER_PROJECTS'),
+    hideFilterMenu: () => actions.hideMenu('FILTER_PROJECTS')
   })
 )(ProjectList)

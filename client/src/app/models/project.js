@@ -1,44 +1,28 @@
 import request from 'services/graphql'
-import pick from 'object.pick'
+import { stringToList } from 'services/string-to-list'
 
 import { ACCOUNT_FRAGMENT } from './account'
 
-export const PERMISSION_FRAGMENT = `
-  _id,
+export const COLLABORATOR_FRAGMENT = `
   account {
     ${ ACCOUNT_FRAGMENT }
   }
   privilege,
 `
-export const PRESET_FRAGMENT = `
-  name,
-  hash,
-  values,
-  removed,
-  isDefault
-`
 
 export const PROJECT_FRAGMENT = `
-  _id,
+  identifier,
   name,
-  slug,
-  disabled,
-  origins,
-  prettyOrigin,
-  presets {
-    ${ PRESET_FRAGMENT }
+  infrastructure {
+    domain,
+    provider
   },
+  status,
+  createdAt,
+  isActive,
   collaborators {
-    _id,
-    account {
-      ${ ACCOUNT_FRAGMENT }
-    },
-    privilege
-  },
-  headers {
-    name,
-    value
-  },
+    ${ COLLABORATOR_FRAGMENT }
+  }
 `
 
 const PROJECTS_FRAGMENT = `
@@ -50,99 +34,106 @@ const PROJECTS_FRAGMENT = `
 `
 
 export default {
-  async get(slug, token) {
+  async get(params, options) {
+    const { identifier } = params
+    const { token } = options
+
     const body = await request(`
-      query getProject($slug: String!, $token: String!) {
+      query getProject($identifier: String!, $token: String!) {
         session(token: $token) {
           account {
-            project(slug: $slug) {
+            project(identifier: $identifier) {
               ${ PROJECT_FRAGMENT }
             }
           }
         }
       }
-    `, { slug, token })
+    `, {
+      identifier,
+      token
+    })
 
-    const getProject = body.session.account.project
-
-    return {
-      ...getProject,
-      origins: getProject.origins.join('\n')
-    }
+    return body.session.account.project
   },
-  async fetch(token) {
+
+  async fetch(params, options) {
+    const { token } = options
+
     const body = await request(`
       query projects($token: String!) {
         session(token: $token) {
           ${ PROJECTS_FRAGMENT }
         }
       }
-    `, { token })
+    `, {
+      token
+    })
 
-    const fetchedProjects = body.session.account.projects
-
-    return fetchedProjects.map(fetchedProject =>
-      ({
-        ...fetchedProject,
-        origins: fetchedProject.origins.join('\n')
-      })
-    )
+    return body.session.account.projects
   },
-  async create(project, token) {
+
+  async create(params, options) {
+    const { name, provider } = params
+    const { token } = options
+
     const body = await request(`
-      query createProject($project: ProjectStruct!, $token: String!) {
+      query createProject($project: ProjectStruct!, $token: String!, $provider: String!) {
         session(token: $token) {
           account {
-            _createProject(project: $project) {
+            _createProject(project: $project, provider: $provider) {
               ${ PROJECT_FRAGMENT }
             }
           }
         }
       }
     `, {
-      project: pick(project, [ 'name', 'slug' ]),
-      token
+      project: {
+        name
+      },
+      provider,
+      token,
     })
 
-    const createdProject = body.session.account._createProject
-
-    return {
-      ...createdProject,
-      origins: createdProject.origins.join('\n')
-    }
+    return body.session.account._createProject
   },
-  async delete(slug, token) {
+
+  async remove(params, options) {
+    const { identifier } = params
+    const { token } = options
+
     const body = await request(`
-      query deleteProject($slug: String!, $token: String!) {
+      query removeProject($identifier: String!, $token: String!) {
         session(token: $token) {
           account {
-            project(slug: $slug) {
+            project(identifier: $identifier) {
               _destroy
             }
           }
         }
       }
     `, {
-      slug,
+      identifier,
       token
     })
 
     return body.session.account.project._destroy
   },
-  async update(project, token) {
-    /*
-    regex to describes a pattern of character:
-      \s* Find multi space, multi tab and multi newline
-      [,\n+] Find any character between the brackets
-    */
-    const delimiter = /\s*[,\n+]\s*/
-    const origins = (project.origins || '').trim().split(delimiter).filter(Boolean)
+
+  async update(params, options) {
+    const {
+      project: {
+        identifier,
+        name,
+        isActive
+      }
+    } = params
+    const { token } = options
 
     const body = await request(`
-      query updateProject($project: ProjectStruct!, $token: String!, $slug: String!) {
+      query updateProject($project: ProjectStruct!, $token: String!, $identifier: String!) {
         session(token: $token) {
           account {
-            project(slug: $slug) {
+            project(identifier: $identifier) {
               _update(project: $project) {
                 ${ PROJECT_FRAGMENT }
               }
@@ -151,190 +142,114 @@ export default {
         }
       }
     `, {
-      project: pick(
-        {
-          ...project,
-          origins
-        },
-        [ 'name', 'origins', 'prettyOrigin', 'headers', 'disabled' ]
-      ),
-      token,
-      slug: project.slug
-    })
-
-    const updatedProject = body.session.account.project._update
-
-    return {
-      ...updatedProject,
-      origins: updatedProject.origins.join('\n')
-    }
-  },
-
-  async createPreset({ preset, slug }, token) {
-    const body = await request(`
-      query createPreset($preset: PresetStruct!, $slug: String!, $token: String!) {
-        session(token: $token) {
-          account {
-            project (slug: $slug) {
-              _createPreset(preset: $preset) {
-                ${ PRESET_FRAGMENT }
-              }
-            }
-          }
-        }
-      }
-    `, {
-      preset: pick(preset, [ 'name', 'values' ]),
-      slug,
+      identifier,
+      project: {
+        name,
+        isActive
+      },
       token
     })
 
-    return body.session.account.project._createPreset
+    return body.session.account.project._update
   },
 
-  async getPreset({ hash, slug }, token) {
+  async inviteCollaborators(params, options) {
+    const { identifier, emails, message } = params
+    const { token } = options
+
     const body = await request(`
-      query getPreset($hash: String!, $slug: String!, $token: String!) {
+      query addCollaboratorsByEmails(
+        $token: String!,
+        $identifier: String!,
+        $emails: [String]!,
+        $message: String
+      ) {
         session(token: $token) {
           account {
-            project(slug: $slug) {
-              preset(hash: $hash) {
-                ${ PRESET_FRAGMENT }
+            project(identifier: $identifier) {
+              _addCollaboratorsByEmails(emails: $emails, message: $message){
+                ${ COLLABORATOR_FRAGMENT }
               }
             }
           }
         }
       }
     `, {
-      hash,
-      slug,
+      identifier,
+      emails: stringToList(emails),
+      message,
       token
     })
 
-    return body.session.account.project.preset
+    return body.session.account.project._addCollaboratorsByEmails
   },
 
-  async updatePreset({ preset, slug }, token) {
+  async deleteCollaborator(params, options) {
+    const { identifier, accountId } = params
+    const { token } = options
+
     const body = await request(`
-      query updatePreset($hash: String!, $preset: PresetStruct!, $slug: String!, $token: String!) {
+      query removeCollaborator($token: String!, $identifier: String!, $accountId: String!) {
         session(token: $token) {
           account {
-            project(slug: $slug) {
-              preset(hash: $hash){
-                _update(preset: $preset) {
-                  ${ PRESET_FRAGMENT }
-                }
-              }
+            project(identifier: $identifier) {
+              _removeCollaborator(accountId: $accountId)
             }
           }
         }
       }
     `, {
-      hash: preset.hash,
-      preset: pick(preset, [ 'name', 'hash', 'values' ]),
-      slug,
+      identifier,
+      accountId,
       token
     })
 
-    return body.session.account.project.preset._update
+    return body.session.account.project._removeCollaborator
   },
 
-  async deletePreset({ preset, slug }, token) {
+  async makeOwner(params, options) {
+    const { identifier, accountId } = params
+    const { token } = options
+
     const body = await request(`
-      query deletePreset($hash: String!, $slug: String!, $token: String!) {
+      query makeOwner($token: String!, $identifier: String!, $accountId: String!) {
         session(token: $token) {
           account {
-            project(slug: $slug) {
-              preset(hash: $hash){
-                _destroy
-              }
-            }
-          }
-        }
-      }
-    `, {
-      hash: preset.hash,
-      slug,
-      token
-    })
-
-    return body.session.account.project.preset._destroy
-  },
-
-  async inviteCollaborator(token, slug, email) {
-    const body = await request(`
-      query inviteCollaborator($token: String!, $slug: String!, $email: String!) {
-        session(token: $token) {
-          account {
-            project(slug: $slug) {
-              _inviteCollaborator(email: $email){
-                ${ PERMISSION_FRAGMENT }
-              }
-            }
-          }
-        }
-      }
-    `, {
-      token,
-      slug,
-      email
-    })
-    return body.session.account.project._inviteCollaborator
-  },
-
-  async deleteCollaborator(token, slug, accountId) {
-    const body = await request(`
-      query deleteCollaborator($token: String!, $slug: String!, $accountId: String!) {
-        session(token: $token) {
-          account {
-            project(slug: $slug) {
-              _deleteCollaborator(accountId: $accountId)
-            }
-          }
-        }
-      }
-    `, {
-      token,
-      slug,
-      accountId
-    })
-    return body.session.account.project._deleteCollaborator
-  },
-
-  async makeOwner(token, slug, accountId) {
-    const body = await request(`
-      query makeOwner($token: String!, $slug: String!, $accountId: String!) {
-        session(token: $token) {
-          account {
-            project(slug: $slug) {
+            project(identifier: $identifier) {
               _makeOwner(accountId: $accountId)
             }
           }
         }
       }
     `, {
-      token,
-      slug,
-      accountId
+      identifier,
+      accountId,
+      token
     })
+
     return body.session.account.project._makeOwner
   },
-  async invalidCache(token, slug, patterns) {
+
+  async invalidateCache(params, options) {
+    const { identifier, patterns } = params
+    const { token } = options
+
     const body = await request(`
-      query invalidCache($token: String!, $slug: String!, $patterns: [String]!) {
+      query invalidateCache($token: String!, $identifier: String!, $patterns: [String]!) {
         session(token: $token) {
           account {
-            project(slug: $slug) {
-              _invalidCache(patterns: $patterns)
+            project(identifier: $identifier) {
+              _invalidateCache(patterns: $patterns)
             }
           }
         }
       }
     `, {
-      token,
-      slug,
-      patterns
+      identifier,
+      patterns: stringToList(patterns),
+      token
     })
-    return body.session.account.project._invalidCache
+
+    return body.session.account.project._invalidateCache
   }
 }

@@ -5,5 +5,6 @@ export default {
   }),
   previousLocation: state => ({
     pathname: state.previous
-  })
+  }),
+  currentParams: state => state.currentParams || {},
 }

@@ -4,6 +4,7 @@ const rootDir = path.resolve(__dirname, '..')
 
 export default {
   __rootDir: rootDir,
+  development: process.env.NODE_ENV === 'development',
   systemPort: process.env.PORT,
   webpackDevServer: process.env.DEV_SERVER,
   mongodb: process.env.MONGO,
@@ -21,5 +22,9 @@ export default {
     }
   },
   baseUrl: process.env.BASE_URL,
-  cdnServer: process.env.CDN_SERVER
+  cdnServer: process.env.CDN_SERVER,
+  sendGrid: {
+    key: process.env.SENDGRID_API_KEY,
+    sender: process.env.SENDGRID_SENDER
+  }
 }

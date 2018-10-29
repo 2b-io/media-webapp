@@ -1,62 +1,84 @@
-import { call, take, fork, put } from 'redux-saga/effects'
+import { take, fork, put } from 'redux-saga/effects'
+
 import ResetPasswordCode from 'models/reset-password-code'
 import { actions, types } from 'state/interface'
 import serializeError from 'serialize-error'
 
 const forgotPasswordLoop = function*() {
   while (true) {
-    const action = yield take(types['RESETPASSWORDCODE/FORGOT_PASSWORD'])
-
     try {
-      const status = yield call(ResetPasswordCode.forgotPassword, action.payload.email)
+      // TODO should put this action into account
+      const {
+        payload: { email }
+      } = yield take(types.resetPasswordCode.FORGOT_PASSWORD)
+
+      const status = yield ResetPasswordCode.forgotPassword({ email })
 
       if (!status) {
-        throw new Error('Reset password failed')
+        throw 'Forgot pasword failed'
       }
 
-      yield put(actions.forgotPasswordCompleted(status))
+      yield put(
+        actions.forgotPasswordCompleted()
+      )
     } catch (e) {
-      yield put(actions.forgotPasswordFailed(serializeError(e)))
-      continue
+      yield put(
+        actions.forgotPasswordFailed(serializeError(e))
+      )
     }
   }
 }
 
 const resetPasswordLoop = function*() {
   while (true) {
-    const action = yield take(types['RESETPASSWORDCODE/RESET_PASSWORD'])
-
     try {
-      const { password, code } = action.payload
+      // TODO should put this action into account
+      const {
+        payload: {
+          account: { name, password },
+          code
+        }
+      } = yield take(types.resetPasswordCode.RESET_PASSWORD)
 
-      const status = yield call(ResetPasswordCode.resetPassword, password, code)
+      const status = yield ResetPasswordCode.resetPassword({
+        account: { name, password },
+        code
+      })
 
       if (!status) {
-        throw new Error('Reset password failed')
+        throw 'Reset password failed'
       }
 
-      yield put(actions.resetPasswordCompleted(status))
+      yield put(
+        actions.resetPasswordCompleted(status)
+      )
     } catch (e) {
-      yield put(actions.resetPasswordFailed(serializeError(e)))
-      continue
+      yield put(
+        actions.resetPasswordFailed(serializeError(e))
+      )
     }
   }
 }
 
 const getResetCodeLoop = function*() {
   while (true) {
-
-    const action = yield take(types['RESETPASSWORDCODE/GET_RESET_CODE'])
-
     try {
-      const { code } = action.payload
+      const {
+        payload: {
+          code
+        }
+      } = yield take(types.resetPasswordCode.GET_RESET_CODE)
 
-      const account = yield call(ResetPasswordCode.getResetCode, code)
+      // TODO should be findAccountByResetCode
+      const account = yield ResetPasswordCode.get({ code })
 
-      yield put(actions.getResetCodeCompleted(account))
+      yield put(
+        actions.getResetCodeCompleted(account)
+      )
     } catch (e) {
-      yield put(actions.getResetCodeFailed(serializeError(e)))
-      continue
+      yield put(
+        actions.getResetCodeFailed(serializeError(e))
+      )
     }
   }
 }

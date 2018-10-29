@@ -1,24 +1,29 @@
 import {
   GraphQLBoolean,
+  GraphQLList,
   GraphQLNonNull,
-  GraphQLString,
-  GraphQLList
-
+  GraphQLString
 } from 'graphql'
 
+import {
+  create as createAccount,
+  findByEmail as findAccountByEmail
+} from 'services/account'
+import emailService from 'services/email'
 import {
   create as createPreset
 } from 'services/preset'
 import {
   invite as inviteCollaborator,
-  deleteCollaborator as deleteCollaborator,
+  list as getPermissionList,
+  remove as removeCollaborator,
   makeOwner as makeOwner
 } from 'services/permission'
+import projectService from 'services/project'
+import { get as getPullSetting } from 'services/pull-setting'
 import {
-  remove as removeProject,
-  update as updateProject,
-  invalidCache as invalidCache
-} from 'services/project'
+  forgotPassword as createResetCode
+} from 'services/reset-password-code'
 
 import { Collaborator } from '../Collaborator'
 import { Preset, PresetStruct } from '../Preset'
@@ -32,10 +37,12 @@ export default ({ Project, ProjectStruct }) => ({
     },
     type: Project,
     resolve: async (self, { project }) => {
-      const p = await updateProject(self.slug, project)
+      const p = await projectService.update({
+        identifier: self.identifier
+      }, self.account._id, project)
 
       // add ref
-      p._account = self._account
+      p.account = self.account
 
       return p
     }
@@ -43,9 +50,9 @@ export default ({ Project, ProjectStruct }) => ({
   _destroy: {
     type: GraphQLBoolean,
     resolve: async (self) => {
-      await removeProject(self.slug)
-
-      return true
+      return await projectService.remove({
+        identifier: self.identifier
+      }, self.account)
     }
   },
   _createPreset: {
@@ -56,23 +63,7 @@ export default ({ Project, ProjectStruct }) => ({
     },
     type: Preset,
     resolve: async (project, { preset }) => {
-      const p = await createPreset(project, preset)
-
-      // add ref
-      p._project = project
-
-      return p
-    }
-  },
-  _inviteCollaborator: {
-    args: {
-      email: {
-        type: GraphQLNonNull(GraphQLString)
-      }
-    },
-    type: Collaborator,
-    resolve: async (project, { email }) => {
-      const p = await inviteCollaborator(project, email)
+      const p = await createPreset(project._id, preset)
 
       // add ref
       p.project = project
@@ -80,7 +71,79 @@ export default ({ Project, ProjectStruct }) => ({
       return p
     }
   },
-  _deleteCollaborator: {
+  _addCollaboratorsByEmails: {
+    args: {
+      emails: {
+        type: GraphQLNonNull(GraphQLList(GraphQLString))
+      },
+      message: {
+        type: GraphQLString
+      }
+    },
+    type: GraphQLList(Collaborator),
+    resolve: async (project, { emails, message }) => {
+      // create account & send email invite
+      const existedAccounts = (await Promise.all(
+        emails.map(async (email) => await findAccountByEmail(email))
+      )).filter(Boolean)
+
+      // Emails do not exist on systems
+      const notExistedEmails = emails.filter(
+        (email) => !existedAccounts.some(
+          (account) => account.email === email
+        )
+      )
+
+      // create accounts
+      const newAccounts = await Promise.all(
+        notExistedEmails.map(
+          async (email) => await createAccount({ email })
+        )
+      )
+
+      // Invite: create code & send email
+      await Promise.all(
+        newAccounts.map(
+          async ({ email }) => {
+            const resetPasswordCode = await createResetCode(email)
+            const { code } = resetPasswordCode
+            await emailService.sendEmailInviteToRegister(email, {
+              code,
+              inviter: project.account,
+              message
+            })
+          }
+        )
+      )
+
+      // get account id on permission
+      const collaboratorIDs = (await getPermissionList(project)).map(permission => permission.account)
+
+      //filter account are not collaborator
+      const notCollaborators = existedAccounts.filter(
+        (account) => !collaboratorIDs.some(
+          (id) => String(id) === String(account._id)
+        )
+      )
+
+      const accountsToInvite = [ ...notCollaborators, ...newAccounts ]
+
+      // add to project
+      const collaborators = await Promise.all(
+        accountsToInvite.map(
+          async (account) => await inviteCollaborator(project, account)
+        )
+      )
+
+      return collaborators.map(
+        (collaborator) => ({
+          project,
+          ...collaborator.toJSON()
+        })
+      )
+    }
+  },
+  _removeCollaborator: {
     args: {
       accountId: {
         type: GraphQLNonNull(GraphQLString)
@@ -89,7 +152,7 @@ export default ({ Project, ProjectStruct }) => ({
     type: GraphQLBoolean,
     resolve: async (project, { accountId }) => {
       const { _id } = project
-      return await deleteCollaborator(_id, accountId)
+      return await removeCollaborator(_id, accountId)
     }
   },
   _makeOwner: {
@@ -100,11 +163,12 @@ export default ({ Project, ProjectStruct }) => ({
     },
     type: GraphQLBoolean,
     resolve: async (project, { accountId }) => {
+      await makeOwner(project, { accountId })
 
-      return await makeOwner(project, { accountId })
+      return true
     }
   },
-  _invalidCache: {
+  _invalidateCache: {
     args: {
       patterns: {
         type: GraphQLNonNull(GraphQLList(GraphQLString))
@@ -112,8 +176,10 @@ export default ({ Project, ProjectStruct }) => ({
     },
     type: GraphQLBoolean,
     resolve: async (project, { patterns }) => {
-      const { slug, prettyOrigin } = project
-      return await invalidCache(patterns, slug, prettyOrigin)
+      const { identifier } = project
+      const { pullURL } = await getPullSetting(project._id)
+
+      return await projectService.invalidateCache(patterns, identifier, pullURL)
     }
   }
 })
