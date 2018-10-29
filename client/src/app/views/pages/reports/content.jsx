@@ -27,7 +27,7 @@ const Container = styled.div`
   grid-template-columns: 100%;
 `
 
-const ProjectList = ({
+const Reports = ({
   toUsageReport
 }) => {
   return (
@@ -56,4 +56,4 @@ export default connect(
   mapDispatch({
     toUsageReport: () => actions.requestLocation('/reports/usage-report')
   })
-)(ProjectList)
+)(Reports)

@@ -39,8 +39,10 @@ const UsageReportForm = reduxForm({
 
 const UsageReport = ({
   data,
-  //idle,
-  projects
+  projects,
+  ui: {
+    idle
+  }
 }) => {
   if (!projects.length) {
     return <TextLine mostLeft mostRight>No project found.</TextLine>
@@ -70,7 +72,7 @@ const UsageReport = ({
   return (
     <Container>
       <UsageReportForm
-        idle={ true }
+        idle={ idle }
         initialValues={ {
           project: options.projectsSelect[0].value,
           granularity: options.granularity[0].value
