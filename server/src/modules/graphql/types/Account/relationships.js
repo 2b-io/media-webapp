@@ -63,7 +63,7 @@ export default () => ({
     },
     type: Metric,
     resolve: async (account, { identifier, startTime, endTime, period }) => {
-      return metric = await cloudWatch.metricDownload({
+      return await cloudWatch.metricDownload({
         projectIdentifier: identifier,
         startTime,
         endTime,
@@ -88,7 +88,7 @@ export default () => ({
     },
     type: Metric,
     resolve: async (account, { identifier, startTime, endTime, period }) => {
-      return metric = await cloudWatch.metricUpload({
+      return await cloudWatch.metricUpload({
         projectIdentifier: identifier,
         startTime,
         endTime,

@@ -19,7 +19,7 @@ const formatParamsMetric = ({
     Dimensions: [
       {
         Name: 'DistributionId',
-        Value: 'distributionIdentifier'
+        Value: distributionIdentifier
       },
       {
         Name: 'Region',
@@ -46,7 +46,7 @@ const metricUpload = async ({ projectIdentifier, startTime, endTime, period }) =
   const { _id: projectID } = await project.getByIdentifier(projectIdentifier)
   const { identifier: distributionIdentifier } = await infrastructure.get(projectID)
   const params = formatParamsMetric({ distributionIdentifier, startTime, endTime, period })
-  
+
   const response = await request
     .post(`${ cdnServer }/distributions/metric/upload`)
     .set('Content-Type', 'application/json')
