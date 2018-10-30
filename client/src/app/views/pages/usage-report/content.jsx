@@ -1,8 +1,10 @@
 import dateFormat from 'dateformat'
+import humanSize from 'human-size'
 import ms from 'ms'
 import React, { Fragment } from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
@@ -28,6 +30,14 @@ const DATA_DEFAULT = {
   ]
 }
 
+const Analysis = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`
+
 const UsageReportForm = reduxForm({
   form: 'usageReportForm',
   enableReinitialize: true
@@ -39,7 +49,9 @@ const UsageReport = ({
   ui: {
     data,
     idle,
-    period
+    period,
+    usageData,
+    requestData
   }
 }) => {
   if (!options.projects.length) {
@@ -61,33 +73,52 @@ const UsageReport = ({
       />
       <Break double />
       {
-        data &&
+        data && data.bytesDownloaded  &&
           <Fragment>
-            {
-              data.bytesDownloaded  &&
-                <AreaChart
-                  data={ data.bytesDownloaded }
-                  name="Bytes Downloaded"
-                  period={ period }
-                  valueKey="value"
-                  xKey="timestamp"
-                  yKey="value"
-                  type="linear"
-                />
-            }
-            <Break double />
-            {
-              data.requests &&
-                <AreaChart
-                  data={ data.requests }
-                  name="Requests"
-                  period={ period }
-                  valueKey="value"
-                  xKey="timestamp"
-                  yKey="value"
-                  type="linear"
-                />
-            }
+            <AreaChart
+              data={ data.bytesDownloaded }
+              name="Bytes Downloaded"
+              period={ period }
+              valueKey="value"
+              xKey="timestamp"
+              yKey="value"
+              type="linear"
+            />
+            <Analysis>
+              <TextLine mostLeft mostRight>
+                Total Bytes: { humanSize(usageData.totalBytes) }
+              </TextLine>
+            </Analysis>
+            <Break />
+          </Fragment>
+      }
+      {
+        data && data.requests &&
+          <Fragment>
+            <AreaChart
+              data={ data.requests }
+              name="Requests"
+              period={ period }
+              valueKey="value"
+              xKey="timestamp"
+              yKey="value"
+              type="linear"
+            />
+            <Analysis>
+              <TextLine mostLeft mostRight>
+                Average: { humanSize(requestData.average) }
+              </TextLine>
+              <TextLine mostLeft mostRight>
+                Total: { humanSize(requestData.total) }
+              </TextLine>
+              <TextLine mostLeft mostRight>
+                Maximum: { humanSize(requestData.maximum) }
+              </TextLine>
+              <TextLine mostLeft mostRight>
+                Minimum: { humanSize(requestData.minimum) }
+              </TextLine>
+            </Analysis>
+            <Break />
           </Fragment>
       }
     </Container>

@@ -152,7 +152,7 @@ const AreaChartWrapper = ({
         type={ type }
       />
       <Legend
-        iconSize={ 12 }
+        iconSize={ 16 }
         verticalAlign="top"
         height={ 40 }
       />
