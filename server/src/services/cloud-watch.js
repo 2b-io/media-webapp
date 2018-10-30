@@ -10,7 +10,7 @@ const metriCloudfront = async (projectId, name, startTime, endTime, period) => {
   const params = querystring.stringify({ startTime, endTime, period })
 
   const response = await request
-    .get(`${ config.cdnServer }/distributions/:${ distributionIdentifier }/metrics/:${ name }?params`)
+    .get(`${ config.cdnServer }/distributions/:${ distributionIdentifier }/metrics/:${ name }?${ params }`)
     .set('Content-Type', 'application/json')
   return response.body
 }
