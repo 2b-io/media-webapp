@@ -37,7 +37,7 @@ const UsageReportForm = ({
     <Select
       disabled={ !idle }
       name="granularity"
-      options={  options.granularity }
+      options={ options.granularity }
     />
     <DescriptionText mostLeft mostRight>
       Granularity (Daily or Hourly).
@@ -45,8 +45,8 @@ const UsageReportForm = ({
     <Break />
     <Select
       disabled={ !idle }
-      name="identifier"
-      options={  options.projects }
+      name="projectIdentifier"
+      options={ options.projects }
     />
     <DescriptionText mostLeft mostRight>
       Project you need to see report.
@@ -56,7 +56,7 @@ const UsageReportForm = ({
       disabled={ !idle }
       type="submit"
     >
-      Print Report
+      Generate Report
     </Button>
   </Form>
 )

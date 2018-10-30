@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
-import { Break, Container, LineChart } from 'ui/elements'
+import { AreaChart, Break, Container } from 'ui/elements'
 import { TextLine } from 'ui/typo'
 
 import _UsageReportForm from './form'
@@ -50,7 +50,7 @@ const UsageReport = ({
       <UsageReportForm
         idle={ idle }
         initialValues={ {
-          identifier: options.projects[0].value,
+          projectIdentifier: options.projects[0].value,
           granularity: options.granularity[0].value,
           startDate: DATA_DEFAULT.date.startDate,
           endDate: DATA_DEFAULT.date.endDate
@@ -60,7 +60,16 @@ const UsageReport = ({
       />
       <Break double />
       {
-        data && <LineChart data={ data } />
+        data &&
+          <AreaChart
+            data={ data.datapoints }
+            name={ data.name }
+            period={ data.period }
+            valueKey="value"
+            xKey="timestamp"
+            yKey="value"
+            type="linear"
+          />
       }
     </Container>
   )
