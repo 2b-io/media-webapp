@@ -4,21 +4,6 @@ import { addToast } from 'state/saga/toast'
 import { actions, types } from 'state/interface'
 import * as UsageReport from 'views/pages/usage-report'
 
-const analysisData = (requests) => {
-  const values = requests.map((item) => item.value)
-  const minimum = Math.min(...values)
-  const maximum = Math.max(...values)
-  const total = values.reduce((a, b) => a + b)
-  const average = total / values.length
-
-  return {
-    average,
-    total,
-    maximum,
-    minimum
-  }
-}
-
 const watchFetchProjects = function*() {
   yield take(types.project.FETCH_FAILED)
 
@@ -58,18 +43,17 @@ const watchGenerateReport = function*(path) {
 
     if (completed) {
       const {
-        bytesDownloaded,
-        requests
-      } = completed.payload.data
-
-      const totalBytes = bytesDownloaded.map((item) => item.value).reduce((a, b) => a + b)
-      const requestData = analysisData(requests)
+        data,
+        period,
+        requestData,
+        usageData
+      } = completed.payload
 
       yield put(
         actions.mergeUIState(path, {
-          data: completed.payload.data,
-          period: completed.payload.period,
-          usageData: { totalBytes },
+          data,
+          period,
+          usageData,
           requestData
         })
       )

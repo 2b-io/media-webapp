@@ -9,6 +9,21 @@ const convertDate = (date, granularity = 'daily') => granularity === 'daily' ?
   dateFormat(date, 'mmm, dd, yyyy') :
   dateFormat(date, 'mmm, dd, yyyy, HH:MM')
 
+const analysisData = (requests) => {
+  const values = requests.map((item) => item.value)
+  const minimum = Math.min(...values)
+  const maximum = Math.max(...values)
+  const total = values.reduce((a, b) => a + b)
+  const average = total / values.length
+
+  return {
+    average,
+    total,
+    maximum,
+    minimum
+  }
+}
+
 const DATA = {
   bytesDownloaded: [
     {
@@ -74,8 +89,16 @@ const generateReportLoop = function*() {
         throw 'Generate report failed'
       }
 
+      const {
+        bytesDownloaded,
+        requests
+      } = data
+
+      const totalBytes = bytesDownloaded.map((item) => item.value).reduce((a, b) => a + b)
+      const requestData = analysisData(requests)
+
       yield put(
-        actions.generateReportCompleted(data, payload.data.granularity)
+        actions.generateReportCompleted(data, payload.data.granularity, requestData, { totalBytes })
       )
     } catch (e) {
       yield put(
