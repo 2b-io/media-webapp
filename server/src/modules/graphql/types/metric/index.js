@@ -1,19 +1,16 @@
 import {
   GraphQLInputObjectType,
-  GraphQLObjectType,
-  GraphQLList
+  GraphQLObjectType
 } from 'graphql'
 
 import { Datapoint, DatapointStruct } from '../datapoint'
 import struct from './struct'
+import relationships from './relationships'
 
 export const MetricStruct = new GraphQLInputObjectType({
   name: 'MetricStruct',
   fields: () => ({
-    ...struct,
-    datapoints: {
-      type: new GraphQLList(DatapointStruct)
-    }
+    ...struct
   })
 })
 
@@ -21,8 +18,6 @@ export const Metric = new GraphQLObjectType({
   name: 'Metric',
   fields: () => ({
     ...struct,
-    datapoints: {
-      type: new GraphQLList(Datapoint)
-    }
+    ...relationships({ Metric, MetricStruct })
   })
 })

@@ -1,10 +1,10 @@
-import { GraphQLString, GraphQLFloat } from 'graphql'
+import { GraphQLFloat } from 'graphql'
 
 export default {
   timestamp: {
-    type: GraphQLString
+    type: GraphQLFloat
   },
-  sum: {
+  value: {
     type: GraphQLFloat
   }
 }
