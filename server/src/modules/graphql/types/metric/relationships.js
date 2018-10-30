@@ -1,5 +1,6 @@
 import {
-  GraphQLFloat
+  GraphQLFloat,
+  GraphQLList
 } from 'graphql'
 
 import cloudWatch from 'services/cloud-watch'
@@ -18,15 +19,22 @@ export default () => ({
         type: GraphQLFloat
       }
     },
-    type: Datapoint,
-    resolve: async (metric, { startTime, endTime, period }) => {
-      return await cloudWatch.metriCloudfront(
-        metric.projectId,
-        metric.name,
+    type: new GraphQLList(Datapoint),
+    resolve: async (self, { startTime, endTime, period }) => {
+      const { datapoints } = await cloudWatch.metriCloudfront(
+        self.projectId,
+        self.name,
         startTime,
         endTime,
         period
       )
+
+      return datapoints.map(({ value, timestamp }) => {
+        return {
+          value,
+          timestamp
+        }
+      })
     }
   }
 })
