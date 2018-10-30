@@ -5,9 +5,9 @@ export const generateReport = (data) => ({
   payload: { data }
 })
 
-export const generateReportCompleted = (data) => ({
+export const generateReportCompleted = (data, period) => ({
   type: types.GENERATE_REPORT_COMPLETED,
-  payload: { data }
+  payload: { data, period }
 })
 
 export const generateReportFailed = reason => ({

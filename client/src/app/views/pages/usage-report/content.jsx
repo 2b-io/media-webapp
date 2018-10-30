@@ -1,6 +1,6 @@
 import dateFormat from 'dateformat'
 import ms from 'ms'
-import React from 'react'
+import React, { Fragment } from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
@@ -38,7 +38,8 @@ const UsageReport = ({
   options,
   ui: {
     data,
-    idle
+    idle,
+    period
   }
 }) => {
   if (!options.projects.length) {
@@ -61,15 +62,33 @@ const UsageReport = ({
       <Break double />
       {
         data &&
-          <AreaChart
-            data={ data.datapoints }
-            name={ data.name }
-            period={ data.period }
-            valueKey="value"
-            xKey="timestamp"
-            yKey="value"
-            type="linear"
-          />
+          <Fragment>
+            {
+              data.bytesDownloaded  &&
+                <AreaChart
+                  data={ data.bytesDownloaded }
+                  name="Bytes Downloaded"
+                  period={ period }
+                  valueKey="value"
+                  xKey="timestamp"
+                  yKey="value"
+                  type="linear"
+                />
+            }
+            <Break double />
+            {
+              data.requests &&
+                <AreaChart
+                  data={ data.requests }
+                  name="Requests"
+                  period={ period }
+                  valueKey="value"
+                  xKey="timestamp"
+                  yKey="value"
+                  type="linear"
+                />
+            }
+          </Fragment>
       }
     </Container>
   )

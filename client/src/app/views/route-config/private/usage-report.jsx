@@ -44,7 +44,8 @@ const watchGenerateReport = function*(path) {
     if (completed) {
       yield put(
         actions.mergeUIState(path, {
-          data: completed.payload.data
+          data: completed.payload.data,
+          period: completed.payload.period
         })
       )
     }

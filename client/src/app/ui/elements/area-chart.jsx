@@ -68,7 +68,7 @@ const _CustomizedXAxisTick = ({
         dateFormat(payload.value, 'mmm, dd')
       }
     </text>
-    { period === 3600 &&
+    { period === 'hourly' &&
       <text x={ 0 } y={ 0 } dy={ 32 } textAnchor="middle" fill="currentColor">
         {
           dateFormat(payload.value, 'HH:MM')
