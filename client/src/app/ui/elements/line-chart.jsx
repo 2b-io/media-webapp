@@ -1,3 +1,4 @@
+import dateFormat from 'dateformat'
 import humanSize from 'human-size'
 import React from 'react'
 import {
@@ -17,16 +18,15 @@ import { DescriptionTextLine } from 'ui/typo'
 const LINE_CHART_STYLE = {
   color: {
     cartesianGrid: '#e6e6e6',
-    line: [
-      'cyan',
-      '#FFE69A',
-      '#BAA6CA',
-      '#788195'
+    lines: [
+      '#ed8b45',
+      '#25ba90',
+      '#e8af87',
+      '#a05de8',
+      '#b4a3c7'
     ],
     xAxis: '#111111',
-    yAxis: '#111111',
-    xAxisTick: '#111111',
-    yAxisTick: '#111111'
+    yAxis: '#111111'
   }
 }
 
@@ -56,75 +56,119 @@ const LineChartContent = styled.div`
   color: ${ ({ theme }) => theme.black.base };
 `
 
-const CustomizedXAxisTick = ({
-  x, y,
-  payload
+const _CustomizedXAxisTick = ({
+  className,
+  payload,
+  period,
+  x, y
 }) => (
-  <g transform={ `translate(${ x },${ y })` }>
-    <text
-      x={ 0 } y={ 0 } dy={ 25 }
-      textAnchor="end"
-      fill={ LINE_CHART_STYLE.color.xAxisTick }
-      transform="rotate(-45)"
-    >{ payload.value }</text>
+  <g transform={ `translate(${x},${y})` } className={ className }>
+    <text x={ 0 } y={ 0 } dy={ 16 } textAnchor="middle" fill="currentColor">
+      {
+        dateFormat(payload.value, 'mmm, dd')
+      }
+    </text>
+    { period === 3600 &&
+      <text x={ 0 } y={ 0 } dy={ 32 } textAnchor="middle" fill="currentColor">
+        {
+          dateFormat(payload.value, 'HH:MM')
+        }
+      </text>
+    }
   </g>
 )
 
-const CustomizedYAxisTick = ({
-  x, y,
-  payload
+const CustomizedXAxisTick = styled(_CustomizedXAxisTick)`
+  & text {
+    color: ${ ({ theme }) => theme.secondary.base };
+    line-height: 24px;
+    font-size: 12px;
+  }
+`
+
+const _CustomizedYAxisTick = ({
+  className,
+  payload,
+  x, y
 }) => (
-  <g transform={ `translate(${ x },${ y })` }>
+  <g transform={ `translate(${ x },${ y })` } className={ className }>
     <text
-      x={ -20 } y={ 0 } dy={ 5 }
+      x={ -16 } y={ 0 } dy={ 8 }
       textAnchor="middle"
-      fill={ LINE_CHART_STYLE.color.yAxisTick }
+      fill="currentColor"
     >{ humanSize(payload.value) }</text>
   </g>
 )
+
+const CustomizedYAxisTick = styled(_CustomizedYAxisTick)`
+  & text {
+    color: ${ ({ theme }) => theme.secondary.base };
+    line-height: 24px;
+    font-size: 12px;
+  }
+`
 
 const CustomTooltip = ({
   active,
   payload,
   label
-}) => {
-  return active ? (
-    <Content>
-      <Border />
-      <LineChartContent>
-        <DescriptionTextLine mostLeft mostRight>{ `Date: ${ label }` }</DescriptionTextLine>
-        <DescriptionTextLine mostLeft mostRight>{ `Total Bytes: ${ humanSize(payload[0].value) }` }</DescriptionTextLine>
-        <DescriptionTextLine mostLeft mostRight>{ `Total Bytes from Misses: ${ humanSize(payload[0].value) }` }</DescriptionTextLine>
-      </LineChartContent>
-    </Content>
-  ) : null
-}
+}) => active ? (
+  <Content>
+    <Border />
+    <LineChartContent>
+      <DescriptionTextLine mostLeft mostRight>
+        {
+          `Date: ${ label }`
+        }
+      </DescriptionTextLine>
+      <DescriptionTextLine mostLeft mostRight>
+        {
+          `Total Bytes: ${ humanSize(payload[0].value) }`
+        }
+      </DescriptionTextLine>
+      <DescriptionTextLine mostLeft mostRight>
+        {
+          `Total Bytes from Misses: ${ humanSize(payload[0].value) }`
+        }
+      </DescriptionTextLine>
+    </LineChartContent>
+  </Content>
+) : null
 
 const LineChartWrapper = ({
-  data
+  data,
+  name,
+  period,
+  valueKey, xKey, yKey,
+  type
 }) => (
   <ResponsiveContainer width="100%" height={ 300 }>
     <LineChart data={ data }>
       <Line
-        type="linear"
-        dataKey="bandwidth"
-        stroke={ LINE_CHART_STYLE.color.line[0] }
         activeDot={ { r: 8 } }
+        dataKey={ valueKey }
+        name={ name }
+        stroke={ LINE_CHART_STYLE.color.lines[0] }
+        type={ type }
       />
-      <Legend verticalAlign="top" height={ 36 } />
+      <Legend
+        iconSize={ 12 }
+        verticalAlign="top"
+        height={ 40 }
+      />
       <CartesianGrid
         stroke={ LINE_CHART_STYLE.color.cartesianGrid }
         vertical={ false }
       />
       <XAxis
         stroke={ LINE_CHART_STYLE.color.xAxis }
-        dataKey="date"
-        height={ 140 }
-        tick={ <CustomizedXAxisTick /> }
+        dataKey={ xKey }
+        height={ 40 }
+        tick={ <CustomizedXAxisTick period={ period } /> }
       />
       <YAxis
         stroke={ LINE_CHART_STYLE.color.yAxis }
-        dataKey="bandwidth"
+        dataKey={ yKey }
         tick={ <CustomizedYAxisTick /> }
       />
       <Tooltip
