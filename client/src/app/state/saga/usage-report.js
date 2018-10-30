@@ -9,33 +9,35 @@ const convertDate = (date, granularity = 'daily') => granularity === 'daily' ?
   dateFormat(date, 'mmm, dd, yyyy') :
   dateFormat(date, 'mmm, dd, yyyy, HH:MM')
 
-const FAKE_DATA = [
-  {
-    date: convertDate('2018-10-20T20:59:00.000Z'),
-    bandwidth: 53930,
-    Unit: 'None'
-  },
-  {
-    date: convertDate('2018-10-21T20:59:00.000Z'),
-    bandwidth: 23930,
-    Unit: 'None'
-  },
-  {
-    date: convertDate('2018-10-22T20:59:00.000Z'),
-    bandwidth: 43930,
-    Unit: 'None'
-  },
-  {
-    date: convertDate('2018-10-23T20:59:00.000Z'),
-    bandwidth: 19230,
-    Unit: 'None'
-  },
-  {
-    date: convertDate('2018-10-24T20:59:00.000Z'),
-    bandwidth: 66310,
-    Unit: 'None'
-  },
-]
+const DATA = {
+  name: 'Bytes Downloaded',
+  projectIdentifier: 'sksss-kwrjklw-ss',
+  startTime: 0,
+  endTime: 0,
+  period: 3600,
+  datapoints: [
+    {
+      timestamp: convertDate(1540069140000),
+      value: 53930,
+    },
+    {
+      timestamp: convertDate(1540155540000),
+      value: 23930,
+    },
+    {
+      timestamp: convertDate(1540241940000),
+      value: 43930,
+    },
+    {
+      timestamp: convertDate(1540328340000),
+      value: 19230,
+    },
+    {
+      timestamp: convertDate(1540414740000),
+      value: 66310,
+    }
+  ]
+}
 
 const generateReportLoop = function*() {
   while (true) {
@@ -48,7 +50,8 @@ const generateReportLoop = function*() {
       }
 
       yield delay(1e3)
-      const data = FAKE_DATA
+      const data = DATA
+      //const data = yield Metric
 
       if (!data) {
         throw 'Generate report failed'
