@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
 import { Card } from 'ui/elements'
-
 import { DescriptionText, TextLine } from 'ui/typo'
 
 const Layout = styled.section`

@@ -62,7 +62,7 @@ const _CustomizedXAxisTick = ({
   period,
   x, y
 }) => (
-  <g transform={ `translate(${x},${y})` } className={ className }>
+  <g transform={ `translate(${ x },${ y })` } className={ className }>
     <text x={ 0 } y={ 0 } dy={ 16 } textAnchor="middle" fill="currentColor">
       {
         dateFormat(payload.value, 'mmm, dd')

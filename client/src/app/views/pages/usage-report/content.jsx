@@ -133,7 +133,7 @@ export default connect(
     }
 
     const projectsSelect = projects.map((project) => ({
-      label: `${ project.name } (${ project.identifier }) `,
+      label: `${ project.name } (${ project.identifier })`,
       value: project.identifier
     }))
 
