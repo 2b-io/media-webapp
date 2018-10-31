@@ -1,5 +1,4 @@
 import dateFormat from 'dateformat'
-import humanSize from 'human-size'
 import React from 'react'
 import {
   Area,
@@ -87,6 +86,7 @@ const CustomizedXAxisTick = styled(_CustomizedXAxisTick)`
 `
 
 const _CustomizedYAxisTick = ({
+  dataConvert,
   className,
   payload,
   x, y
@@ -96,7 +96,13 @@ const _CustomizedYAxisTick = ({
       x={ -16 } y={ 0 } dy={ 8 }
       textAnchor="middle"
       fill="currentColor"
-    >{ humanSize(payload.value) }</text>
+    >
+      {
+        dataConvert ?
+          dataConvert(payload.value) :
+          payload.value
+      }
+    </text>
   </g>
 )
 
@@ -110,7 +116,9 @@ const CustomizedYAxisTick = styled(_CustomizedYAxisTick)`
 
 const CustomTooltip = ({
   active,
+  dataConvert,
   payload,
+  period,
   label
 }) => active ? (
   <Content>
@@ -118,17 +126,16 @@ const CustomTooltip = ({
     <AreaChartContent>
       <DescriptionTextLine mostLeft mostRight>
         {
-          `Date: ${ label }`
+          `Date: ${
+            period === 'hourly' ?
+              dateFormat(label, 'mmm, dd, HH:MM') :
+              dateFormat(label, 'mmm, dd, HH:MM')
+          }`
         }
       </DescriptionTextLine>
       <DescriptionTextLine mostLeft mostRight>
         {
-          `Total Bytes: ${ humanSize(payload[0].value) }`
-        }
-      </DescriptionTextLine>
-      <DescriptionTextLine mostLeft mostRight>
-        {
-          `Total Bytes from Misses: ${ humanSize(payload[0].value) }`
+          `Total Bytes: ${ dataConvert ? dataConvert(payload[0].value) : payload[0].value }`
         }
       </DescriptionTextLine>
     </AreaChartContent>
@@ -137,6 +144,7 @@ const CustomTooltip = ({
 
 const AreaChartWrapper = ({
   data,
+  dataConvert,
   name,
   period,
   valueKey, xKey, yKey,
@@ -169,10 +177,10 @@ const AreaChartWrapper = ({
       <YAxis
         stroke={ AREA_CHART_STYLE.color.yAxis }
         dataKey={ yKey }
-        tick={ <CustomizedYAxisTick /> }
+        tick={ <CustomizedYAxisTick dataConvert={ dataConvert } /> }
       />
       <Tooltip
-        content={ <CustomTooltip /> }
+        content={ <CustomTooltip dataConvert={ dataConvert } period={ period } /> }
       />
     </AreaChart>
   </ResponsiveContainer>

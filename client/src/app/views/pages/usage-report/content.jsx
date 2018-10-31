@@ -20,11 +20,11 @@ const DATA_DEFAULT = {
   },
   granularity: [
     {
-      label: 'Daily (any period in previous 60 days)',
+      label: 'Daily',
       value: 'daily'
     },
     {
-      label: 'Hourly (any 14-day period in previous 60 days)',
+      label: 'Hourly',
       value: 'hourly'
     }
   ]
@@ -76,7 +76,8 @@ const UsageReport = ({
         data && data.bytesDownloaded  &&
           <Fragment>
             <AreaChart
-              data={ data.bytesDownloaded }
+              data={ data.bytesDownloaded.datapoints }
+              dataConvert={ humanSize }
               name="Bytes Downloaded"
               period={ period }
               valueKey="value"
@@ -96,7 +97,8 @@ const UsageReport = ({
         data && data.requests &&
           <Fragment>
             <AreaChart
-              data={ data.requests }
+              data={ data.requests.datapoints }
+              //dataConvert={ humanFormat }
               name="Requests"
               period={ period }
               valueKey="value"
@@ -106,16 +108,16 @@ const UsageReport = ({
             />
             <Analysis>
               <TextLine mostLeft mostRight>
-                Average: { humanSize(requestData.average) }
+                Average: { requestData.average }
               </TextLine>
               <TextLine mostLeft mostRight>
-                Total: { humanSize(requestData.total) }
+                Total: { requestData.total }
               </TextLine>
               <TextLine mostLeft mostRight>
-                Maximum: { humanSize(requestData.maximum) }
+                Maximum: { requestData.maximum }
               </TextLine>
               <TextLine mostLeft mostRight>
-                Minimum: { humanSize(requestData.minimum) }
+                Minimum: { requestData.minimum }
               </TextLine>
             </Analysis>
             <Break />
