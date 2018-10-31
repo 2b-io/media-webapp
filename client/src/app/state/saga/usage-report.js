@@ -15,7 +15,7 @@ const analysisData = (requests) => {
   const minimum = Math.min(...values)
   const maximum = Math.max(...values)
   const total = values.reduce((a, b) => a + b)
-  const average = total / values.length
+  const average = Math.trunc(total / values.length)
 
   return {
     average,

@@ -1,4 +1,5 @@
 import dateFormat from 'dateformat'
+import humanFormat from 'human-format'
 import humanSize from 'human-size'
 import ms from 'ms'
 import React, { Fragment } from 'react'
@@ -98,7 +99,7 @@ const UsageReport = ({
           <Fragment>
             <AreaChart
               data={ data.requests.datapoints }
-              //dataConvert={ humanFormat }
+              dataConvert={ humanFormat }
               name="Requests"
               period={ period }
               valueKey="value"
@@ -108,16 +109,16 @@ const UsageReport = ({
             />
             <Analysis>
               <TextLine mostLeft mostRight>
-                Average: { requestData.average }
+                Average: { humanFormat(requestData.average) }
               </TextLine>
               <TextLine mostLeft mostRight>
-                Total: { requestData.total }
+                Total: { humanFormat(requestData.total) }
               </TextLine>
               <TextLine mostLeft mostRight>
-                Maximum: { requestData.maximum }
+                Maximum: { humanFormat(requestData.maximum) }
               </TextLine>
               <TextLine mostLeft mostRight>
-                Minimum: { requestData.minimum }
+                Minimum: { humanFormat(requestData.minimum) }
               </TextLine>
             </Analysis>
             <Break />
