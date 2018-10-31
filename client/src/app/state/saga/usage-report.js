@@ -1,4 +1,3 @@
-import dateFormat from 'dateformat'
 import { fork, put, select, take } from 'redux-saga/effects'
 import serializeError from 'serialize-error'
 

@@ -10,7 +10,7 @@ import styled from 'styled-components'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { AreaChart, Break, Container } from 'ui/elements'
-import { TextLine } from 'ui/typo'
+import { DescriptionTextLine, TextLine } from 'ui/typo'
 
 import _UsageReportForm from './form'
 
@@ -37,6 +37,32 @@ const Analysis = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
+`
+
+const Border = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  border: 1px solid ${ ({ theme }) => theme.secondary.base };
+`
+
+const Content = styled.div`
+  position: relative;
+  box-shadow: 4px 4px ${ ({ theme }) => theme.black.opaque.base };
+  background: ${
+    ({ theme }) => theme.white.base
+  };
+`
+
+const AreaChartContent = styled.div`
+  position: relative;
+  z-index: 1;
+  margin-bottom: 16px;
+  background: transparent;
+  color: ${ ({ theme }) => theme.black.base };
 `
 
 const UsageReportForm = reduxForm({
@@ -85,6 +111,27 @@ const UsageReport = ({
               xKey="timestamp"
               yKey="value"
               type="linear"
+              customTooltip={ ({ payload, label }) => (
+                <Content>
+                  <Border />
+                  <AreaChartContent>
+                    <DescriptionTextLine mostLeft mostRight>
+                      {
+                        `Date: ${
+                          period === 'hourly' ?
+                            dateFormat(label, 'mmm, dd, HH:MM') :
+                            dateFormat(label, 'mmm, dd')
+                        }`
+                      }
+                    </DescriptionTextLine>
+                    <DescriptionTextLine mostLeft mostRight>
+                      {
+                        `Total Bytes: ${ humanSize(payload[0].value) }`
+                      }
+                    </DescriptionTextLine>
+                  </AreaChartContent>
+                </Content>
+              ) }
             />
             <Analysis>
               <TextLine mostLeft mostRight>
@@ -106,6 +153,27 @@ const UsageReport = ({
               xKey="timestamp"
               yKey="value"
               type="linear"
+              customTooltip={ ({ payload, label }) => (
+                <Content>
+                  <Border />
+                  <AreaChartContent>
+                    <DescriptionTextLine mostLeft mostRight>
+                      {
+                        `Date: ${
+                          period === 'hourly' ?
+                            dateFormat(label, 'mmm, dd, HH:MM') :
+                            dateFormat(label, 'mmm, dd')
+                        }`
+                      }
+                    </DescriptionTextLine>
+                    <DescriptionTextLine mostLeft mostRight>
+                      {
+                        `Reports: ${ humanFormat(payload[0].value) }`
+                      }
+                    </DescriptionTextLine>
+                  </AreaChartContent>
+                </Content>
+              ) }
             />
             <Analysis>
               <TextLine mostLeft mostRight>

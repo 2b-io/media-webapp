@@ -12,8 +12,6 @@ import {
 } from 'recharts'
 import styled from 'styled-components'
 
-import { DescriptionTextLine } from 'ui/typo'
-
 const AREA_CHART_STYLE = {
   color: {
     cartesianGrid: '#e6e6e6',
@@ -28,32 +26,6 @@ const AREA_CHART_STYLE = {
     yAxis: '#111111'
   }
 }
-
-const Border = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 0;
-  border: 1px solid ${ ({ theme }) => theme.secondary.base };
-`
-
-const Content = styled.div`
-  position: relative;
-  box-shadow: 4px 4px ${ ({ theme }) => theme.black.opaque.base };
-  background: ${
-    ({ theme }) => theme.white.base
-  };
-`
-
-const AreaChartContent = styled.div`
-  position: relative;
-  z-index: 1;
-  margin-bottom: 16px;
-  background: transparent;
-  color: ${ ({ theme }) => theme.black.base };
-`
 
 const _CustomizedXAxisTick = ({
   className,
@@ -114,35 +86,16 @@ const CustomizedYAxisTick = styled(_CustomizedYAxisTick)`
   }
 `
 
-const CustomTooltip = ({
-  active,
-  dataConvert,
-  payload,
-  period,
-  label
-}) => active ? (
-  <Content>
-    <Border />
-    <AreaChartContent>
-      <DescriptionTextLine mostLeft mostRight>
-        {
-          `Date: ${
-            period === 'hourly' ?
-              dateFormat(label, 'mmm, dd, HH:MM') :
-              dateFormat(label, 'mmm, dd, HH:MM')
-          }`
-        }
-      </DescriptionTextLine>
-      <DescriptionTextLine mostLeft mostRight>
-        {
-          `Total Bytes: ${ dataConvert ? dataConvert(payload[0].value) : payload[0].value }`
-        }
-      </DescriptionTextLine>
-    </AreaChartContent>
-  </Content>
-) : null
+const renderTooltip = (content) => ({ active, label, payload }) => {
+  if (!active) {
+    return null
+  }
+
+  return content({ label, payload })
+}
 
 const AreaChartWrapper = ({
+  customTooltip,
   data,
   dataConvert,
   name,
@@ -180,10 +133,12 @@ const AreaChartWrapper = ({
         tick={ <CustomizedYAxisTick dataConvert={ dataConvert } /> }
       />
       <Tooltip
-        content={ <CustomTooltip dataConvert={ dataConvert } period={ period } /> }
+        content={ renderTooltip(customTooltip) }
       />
     </AreaChart>
   </ResponsiveContainer>
 )
+
+
 
 export default AreaChartWrapper
