@@ -29,12 +29,17 @@ export default () => ({
         period
       )
 
-      return datapoints.map(({ value, timestamp }) => {
-        return {
-          value,
-          timestamp
-        }
-      })
+      return datapoints.map(({
+        value,
+        timestamp
+      }) => ({
+        value,
+        timestamp
+      })).sort(
+        (datapoint, nextDatapoint) => (
+          datapoint.timestamp - nextDatapoint.timestamp
+        )
+      )
     }
   }
 })
