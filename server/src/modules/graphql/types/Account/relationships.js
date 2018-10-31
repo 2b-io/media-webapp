@@ -1,8 +1,7 @@
 import {
   GraphQLList,
   GraphQLNonNull,
-  GraphQLString,
-  GraphQLFloat
+  GraphQLString
 } from 'graphql'
 
 import projectService from 'services/project'
