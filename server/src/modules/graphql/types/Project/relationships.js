@@ -1,8 +1,7 @@
 import {
   GraphQLList,
   GraphQLString,
-  GraphQLNonNull,
-  GraphQLFloat
+  GraphQLNonNull
 } from 'graphql'
 
 import {
@@ -29,7 +28,6 @@ import infrastructureService from 'services/infrastructure'
 import { Account } from '../Account'
 import { CacheSetting } from '../cache-setting'
 import { Collaborator } from '../Collaborator'
-import { Metric, MetricStruct } from '../metric'
 import { Preset } from '../Preset'
 import { PushSetting } from '../push-setting'
 import { PullSetting } from '../pull-setting'

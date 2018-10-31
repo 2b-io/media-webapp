@@ -1,4 +1,4 @@
-import { GraphQLString, GraphQLFloat } from 'graphql'
+import { GraphQLString } from 'graphql'
 
 export default {
   name: {

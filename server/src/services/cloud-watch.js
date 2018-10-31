@@ -2,7 +2,6 @@ import querystring from 'querystring'
 import request from 'superagent'
 
 import infrastructure from 'services/infrastructure'
-import project from 'services/project'
 import config from 'infrastructure/config'
 
 const metriCloudfront = async (projectId, name, startTime, endTime, period) => {

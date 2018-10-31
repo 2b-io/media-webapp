@@ -3,7 +3,6 @@ import {
   GraphQLObjectType
 } from 'graphql'
 
-import { Datapoint, DatapointStruct } from '../datapoint'
 import struct from './struct'
 import relationships from './relationships'
 
