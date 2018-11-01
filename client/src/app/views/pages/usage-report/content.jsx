@@ -14,8 +14,8 @@ import _UsageReportForm from './form'
 
 const DATA_DEFAULT = {
   date: {
-    endDate: dataFormat.dateFormat(new Date(), 'yyyy-mm-dd'),
-    startDate: dataFormat.dateFormat(new Date()- ms('7d'), 'yyyy-mm-dd')
+    endDate: dataFormat.formatDate(new Date(), 'yyyy-mm-dd'),
+    startDate: dataFormat.formatDate(new Date()- ms('7d'), 'yyyy-mm-dd')
   },
   granularity: [
     {
@@ -63,6 +63,103 @@ const AreaChartContent = styled.div`
   color: ${ ({ theme }) => theme.black.base };
 `
 
+const renderTooltip = (period) => ({ payload, label }) => (
+  <Content>
+    <Border />
+    <AreaChartContent>
+      <DescriptionTextLine mostLeft mostRight>
+        {
+          `Date: ${
+            period === 'hourly' ?
+              dataFormat.formatDate(label, 'mmm, dd, HH:MM') :
+              dataFormat.formatDate(label, 'mmm, dd')
+          }`
+        }
+      </DescriptionTextLine>
+      <DescriptionTextLine mostLeft mostRight>
+        {
+          `Reports: ${ dataFormat.formatNumber(payload[0].value) }`
+        }
+      </DescriptionTextLine>
+    </AreaChartContent>
+  </Content>
+)
+
+const _CustomizedXAxisTick = ({
+  className,
+  payload,
+  period,
+  x, y
+}) => (
+  <g transform={ `translate(${ x },${ y })` } className={ className }>
+    <text x={ 0 } y={ 0 } dy={ 16 } textAnchor="middle" fill="currentColor">
+      {
+        dataFormat.formatDate(payload.value, 'mmm, dd')
+      }
+    </text>
+    { period === 'hourly' &&
+      <text x={ 0 } y={ 0 } dy={ 32 } textAnchor="middle" fill="currentColor">
+        {
+          dataFormat.formatDate(payload.value, 'HH:MM')
+        }
+      </text>
+    }
+  </g>
+)
+
+const CustomizedXAxisTick = styled(_CustomizedXAxisTick)`
+  & text {
+    color: ${ ({ theme }) => theme.secondary.base };
+    line-height: 24px;
+    font-size: 12px;
+  }
+`
+
+const renderXAxisTick = (period) => ({ payload, x, y }) => (
+  <CustomizedXAxisTick
+    payload={ payload }
+    period={ period }
+    x={ x } y={ y }
+  />
+)
+
+const _CustomizedYAxisTick = ({
+  convertData,
+  className,
+  payload,
+  x, y
+}) => (
+  <g transform={ `translate(${ x },${ y })` } className={ className }>
+    <text
+      x={ -16 } y={ 0 } dy={ 8 }
+      textAnchor="middle"
+      fill="currentColor"
+    >
+      {
+        convertData ?
+          convertData(payload.value) :
+          payload.value
+      }
+    </text>
+  </g>
+)
+
+const CustomizedYAxisTick = styled(_CustomizedYAxisTick)`
+  & text {
+    color: ${ ({ theme }) => theme.secondary.base };
+    line-height: 24px;
+    font-size: 12px;
+  }
+`
+
+const renderYAxisTick = (convertData) => ({ payload, x, y }) => (
+  <CustomizedYAxisTick
+    convertData={ convertData }
+    payload={ payload }
+    x={ x } y={ y }
+  />
+)
+
 const UsageReportForm = reduxForm({
   form: 'usageReportForm',
   enableReinitialize: true
@@ -102,38 +199,18 @@ const UsageReport = ({
           <Fragment>
             <AreaChart
               data={ data.bytesDownloaded.datapoints }
-              dataConvert={ dataFormat.dataSize }
               name="Bytes Downloaded"
-              period={ period }
               valueKey="value"
               xKey="timestamp"
               yKey="value"
               type="linear"
-              customTooltip={ ({ payload, label }) => (
-                <Content>
-                  <Border />
-                  <AreaChartContent>
-                    <DescriptionTextLine mostLeft mostRight>
-                      {
-                        `Date: ${
-                          period === 'hourly' ?
-                            dataFormat.dateFormat(label, 'mmm, dd, HH:MM') :
-                            dataFormat.dateFormat(label, 'mmm, dd')
-                        }`
-                      }
-                    </DescriptionTextLine>
-                    <DescriptionTextLine mostLeft mostRight>
-                      {
-                        `Total Bytes: ${ dataFormat.dataSize(payload[0].value) }`
-                      }
-                    </DescriptionTextLine>
-                  </AreaChartContent>
-                </Content>
-              ) }
+              customTooltip={ renderTooltip(period) }
+              customXAxisTick={ renderXAxisTick(period) }
+              customYAxisTick={ renderYAxisTick(dataFormat.formatSize) }
             />
             <Analysis>
               <TextLine mostLeft mostRight>
-                Total Bytes: { dataFormat.dataSize(usageData.totalBytes) }
+                Total Bytes: { dataFormat.formatSize(usageData.totalBytes) }
               </TextLine>
             </Analysis>
             <Break />
@@ -144,47 +221,27 @@ const UsageReport = ({
           <Fragment>
             <AreaChart
               data={ data.requests.datapoints }
-              dataConvert={ dataFormat.numberFormat }
               name="Requests"
-              period={ period }
               valueKey="value"
               xKey="timestamp"
               yKey="value"
               type="linear"
-              customTooltip={ ({ payload, label }) => (
-                <Content>
-                  <Border />
-                  <AreaChartContent>
-                    <DescriptionTextLine mostLeft mostRight>
-                      {
-                        `Date: ${
-                          period === 'hourly' ?
-                            dataFormat.dateFormat(label, 'mmm, dd, HH:MM') :
-                            dataFormat.dateFormat(label, 'mmm, dd')
-                        }`
-                      }
-                    </DescriptionTextLine>
-                    <DescriptionTextLine mostLeft mostRight>
-                      {
-                        `Reports: ${ dataFormat.numberFormat(payload[0].value) }`
-                      }
-                    </DescriptionTextLine>
-                  </AreaChartContent>
-                </Content>
-              ) }
+              customTooltip={ renderTooltip(period) }
+              customXAxisTick={ renderXAxisTick(period) }
+              customYAxisTick={ renderYAxisTick(dataFormat.formatNumber) }
             />
             <Analysis>
               <TextLine mostLeft mostRight>
-                Average: { dataFormat.numberFormat(requestData.average) }
+                Average: { dataFormat.formatNumber(requestData.average) }
               </TextLine>
               <TextLine mostLeft mostRight>
-                Total: { dataFormat.numberFormat(requestData.total) }
+                Total: { dataFormat.formatNumber(requestData.total) }
               </TextLine>
               <TextLine mostLeft mostRight>
-                Maximum: { dataFormat.numberFormat(requestData.maximum) }
+                Maximum: { dataFormat.formatNumber(requestData.maximum) }
               </TextLine>
               <TextLine mostLeft mostRight>
-                Minimum: { dataFormat.numberFormat(requestData.minimum) }
+                Minimum: { dataFormat.formatNumber(requestData.minimum) }
               </TextLine>
             </Analysis>
             <Break />

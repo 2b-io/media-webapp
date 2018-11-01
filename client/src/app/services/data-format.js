@@ -2,14 +2,14 @@ import dateFormat from 'dateformat'
 import humanFormat from 'human-format'
 import humanSize from 'human-size'
 
-const dateFomart = (time, format) => dateFormat(time, format)
+const formatDate = (time, format) => dateFormat(time, format)
 
-const numberFormat = (value) => humanFormat(value)
+const formatNumber = (value) => humanFormat(value)
 
-const dataSize = (value) => humanSize(value)
+const formatSize = (value) => humanSize(value)
 
 export default {
-  dateFormat,
-  dataSize,
-  numberFormat
+  formatDate,
+  formatNumber,
+  formatSize
 }

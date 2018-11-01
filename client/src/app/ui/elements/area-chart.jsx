@@ -9,9 +9,6 @@ import {
   XAxis,
   YAxis
 } from 'recharts'
-import styled from 'styled-components'
-
-import dataFormat from 'services/data-format'
 
 const AREA_CHART_STYLE = {
   color: {
@@ -28,64 +25,25 @@ const AREA_CHART_STYLE = {
   }
 }
 
-const _CustomizedXAxisTick = ({
+const renderXAxisTick = (content) => ({
   className,
   payload,
   period,
   x, y
-}) => (
-  <g transform={ `translate(${ x },${ y })` } className={ className }>
-    <text x={ 0 } y={ 0 } dy={ 16 } textAnchor="middle" fill="currentColor">
-      {
-        dataFormat.dateFormat(payload.value, 'mmm, dd')
-      }
-    </text>
-    { period === 'hourly' &&
-      <text x={ 0 } y={ 0 } dy={ 32 } textAnchor="middle" fill="currentColor">
-        {
-          dataFormat.dateFormat(payload.value, 'HH:MM')
-        }
-      </text>
-    }
-  </g>
-)
+}) => {
 
-const CustomizedXAxisTick = styled(_CustomizedXAxisTick)`
-  & text {
-    color: ${ ({ theme }) => theme.secondary.base };
-    line-height: 24px;
-    font-size: 12px;
-  }
-`
+  return content({ className, payload, period, x, y })
+}
 
-const _CustomizedYAxisTick = ({
-  dataConvert,
+const renderYAxisTick = (content) => ({
   className,
   payload,
+  convertData,
   x, y
-}) => (
-  <g transform={ `translate(${ x },${ y })` } className={ className }>
-    <text
-      x={ -16 } y={ 0 } dy={ 8 }
-      textAnchor="middle"
-      fill="currentColor"
-    >
-      {
-        dataConvert ?
-          dataConvert(payload.value) :
-          payload.value
-      }
-    </text>
-  </g>
-)
+}) => {
 
-const CustomizedYAxisTick = styled(_CustomizedYAxisTick)`
-  & text {
-    color: ${ ({ theme }) => theme.secondary.base };
-    line-height: 24px;
-    font-size: 12px;
-  }
-`
+  return content({ className, payload, convertData, x, y })
+}
 
 const renderTooltip = (content) => ({ active, label, payload }) => {
   if (!active) {
@@ -97,10 +55,10 @@ const renderTooltip = (content) => ({ active, label, payload }) => {
 
 const AreaChartWrapper = ({
   customTooltip,
+  customXAxisTick,
+  customYAxisTick,
   data,
-  dataConvert,
   name,
-  period,
   valueKey, xKey, yKey,
   type
 }) => (
@@ -126,15 +84,15 @@ const AreaChartWrapper = ({
         stroke={ AREA_CHART_STYLE.color.xAxis }
         dataKey={ xKey }
         height={ 40 }
-        tick={ <CustomizedXAxisTick period={ period } /> }
+        tick={ customXAxisTick && renderXAxisTick(customXAxisTick) }
       />
       <YAxis
         stroke={ AREA_CHART_STYLE.color.yAxis }
         dataKey={ yKey }
-        tick={ <CustomizedYAxisTick dataConvert={ dataConvert } /> }
+        tick={ customYAxisTick && renderYAxisTick(customYAxisTick) }
       />
       <Tooltip
-        content={ renderTooltip(customTooltip) }
+        content={ customTooltip && renderTooltip(customTooltip) }
       />
     </AreaChart>
   </ResponsiveContainer>
