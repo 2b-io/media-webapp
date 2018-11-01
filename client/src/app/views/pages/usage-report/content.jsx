@@ -1,12 +1,10 @@
-import dateFormat from 'dateformat'
-import humanFormat from 'human-format'
-import humanSize from 'human-size'
 import ms from 'ms'
 import React, { Fragment } from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
+import dataFormat from 'services/data-format'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { AreaChart, Break, Container } from 'ui/elements'
@@ -16,8 +14,8 @@ import _UsageReportForm from './form'
 
 const DATA_DEFAULT = {
   date: {
-    endDate: dateFormat(new Date(), 'yyyy-mm-dd'),
-    startDate: dateFormat(new Date()- ms('7d'), 'yyyy-mm-dd')
+    endDate: dataFormat.dateFormat(new Date(), 'yyyy-mm-dd'),
+    startDate: dataFormat.dateFormat(new Date()- ms('7d'), 'yyyy-mm-dd')
   },
   granularity: [
     {
@@ -104,7 +102,7 @@ const UsageReport = ({
           <Fragment>
             <AreaChart
               data={ data.bytesDownloaded.datapoints }
-              dataConvert={ humanSize }
+              dataConvert={ dataFormat.dataSize }
               name="Bytes Downloaded"
               period={ period }
               valueKey="value"
@@ -119,14 +117,14 @@ const UsageReport = ({
                       {
                         `Date: ${
                           period === 'hourly' ?
-                            dateFormat(label, 'mmm, dd, HH:MM') :
-                            dateFormat(label, 'mmm, dd')
+                            dataFormat.dateFormat(label, 'mmm, dd, HH:MM') :
+                            dataFormat.dateFormat(label, 'mmm, dd')
                         }`
                       }
                     </DescriptionTextLine>
                     <DescriptionTextLine mostLeft mostRight>
                       {
-                        `Total Bytes: ${ humanSize(payload[0].value) }`
+                        `Total Bytes: ${ dataFormat.dataSize(payload[0].value) }`
                       }
                     </DescriptionTextLine>
                   </AreaChartContent>
@@ -135,7 +133,7 @@ const UsageReport = ({
             />
             <Analysis>
               <TextLine mostLeft mostRight>
-                Total Bytes: { humanSize(usageData.totalBytes) }
+                Total Bytes: { dataFormat.dataSize(usageData.totalBytes) }
               </TextLine>
             </Analysis>
             <Break />
@@ -146,7 +144,7 @@ const UsageReport = ({
           <Fragment>
             <AreaChart
               data={ data.requests.datapoints }
-              dataConvert={ humanFormat }
+              dataConvert={ dataFormat.numberFormat }
               name="Requests"
               period={ period }
               valueKey="value"
@@ -161,14 +159,14 @@ const UsageReport = ({
                       {
                         `Date: ${
                           period === 'hourly' ?
-                            dateFormat(label, 'mmm, dd, HH:MM') :
-                            dateFormat(label, 'mmm, dd')
+                            dataFormat.dateFormat(label, 'mmm, dd, HH:MM') :
+                            dataFormat.dateFormat(label, 'mmm, dd')
                         }`
                       }
                     </DescriptionTextLine>
                     <DescriptionTextLine mostLeft mostRight>
                       {
-                        `Reports: ${ humanFormat(payload[0].value) }`
+                        `Reports: ${ dataFormat.numberFormat(payload[0].value) }`
                       }
                     </DescriptionTextLine>
                   </AreaChartContent>
@@ -177,16 +175,16 @@ const UsageReport = ({
             />
             <Analysis>
               <TextLine mostLeft mostRight>
-                Average: { humanFormat(requestData.average) }
+                Average: { dataFormat.numberFormat(requestData.average) }
               </TextLine>
               <TextLine mostLeft mostRight>
-                Total: { humanFormat(requestData.total) }
+                Total: { dataFormat.numberFormat(requestData.total) }
               </TextLine>
               <TextLine mostLeft mostRight>
-                Maximum: { humanFormat(requestData.maximum) }
+                Maximum: { dataFormat.numberFormat(requestData.maximum) }
               </TextLine>
               <TextLine mostLeft mostRight>
-                Minimum: { humanFormat(requestData.minimum) }
+                Minimum: { dataFormat.numberFormat(requestData.minimum) }
               </TextLine>
             </Analysis>
             <Break />

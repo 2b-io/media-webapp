@@ -1,4 +1,3 @@
-import dateFormat from 'dateformat'
 import React from 'react'
 import {
   Area,
@@ -11,6 +10,8 @@ import {
   YAxis
 } from 'recharts'
 import styled from 'styled-components'
+
+import dataFormat from 'services/data-format'
 
 const AREA_CHART_STYLE = {
   color: {
@@ -36,13 +37,13 @@ const _CustomizedXAxisTick = ({
   <g transform={ `translate(${ x },${ y })` } className={ className }>
     <text x={ 0 } y={ 0 } dy={ 16 } textAnchor="middle" fill="currentColor">
       {
-        dateFormat(payload.value, 'mmm, dd')
+        dataFormat.dateFormat(payload.value, 'mmm, dd')
       }
     </text>
     { period === 'hourly' &&
       <text x={ 0 } y={ 0 } dy={ 32 } textAnchor="middle" fill="currentColor">
         {
-          dateFormat(payload.value, 'HH:MM')
+          dataFormat.dateFormat(payload.value, 'HH:MM')
         }
       </text>
     }
@@ -138,7 +139,5 @@ const AreaChartWrapper = ({
     </AreaChart>
   </ResponsiveContainer>
 )
-
-
 
 export default AreaChartWrapper
