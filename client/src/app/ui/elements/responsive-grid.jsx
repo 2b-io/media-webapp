@@ -23,6 +23,7 @@ const generateTemplateColumns = (name) => css`
 const Container = styled.div`
   display: grid;
   grid-gap: 16px;
+  direction: ${ ( { direction }) => direction }
 
   & > * {
     min-width: 0;
@@ -50,8 +51,8 @@ const Container = styled.div`
   }
 `
 
-const ResponsiveGrid = ({ items, breakpoints }) => (
-  <Container breakpoints={ breakpoints } >
+const ResponsiveGrid = ({ items, breakpoints, direction }) => (
+  <Container breakpoints={ breakpoints } direction={ direction } >
     {
       items.map(
         (item, index) => {
