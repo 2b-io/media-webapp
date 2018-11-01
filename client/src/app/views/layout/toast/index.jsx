@@ -30,7 +30,7 @@ const Border = styled.div`
   border: 1px solid ${ ({ theme }) => theme.secondary.base };
 `
 
-const lineProgress = keyframes`
+const toastProgress = keyframes`
   from {
     width: 0%;
   }
@@ -49,7 +49,7 @@ const Progress = styled.div`
   background: ${
     ({ theme }) => theme.secondary.base
   };
-  animation: ${ lineProgress } ${ ({ expiring }) => expiring } linear;
+  animation: ${ toastProgress } ${ ({ expiring }) => expiring } linear;
 `
 
 const Content = styled.div`

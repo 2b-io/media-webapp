@@ -4,7 +4,7 @@ import { call, fork, put, take } from 'redux-saga/effects'
 
 import { actions, types } from 'state/interface'
 
-const removeToast = function*({ id, expiring }) {
+const removeToast = function*({ expiring, id }) {
   yield call(delay, ms(expiring) + 200)
   yield put(actions.removeToast(id))
 }
