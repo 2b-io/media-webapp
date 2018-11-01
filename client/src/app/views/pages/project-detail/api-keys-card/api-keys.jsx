@@ -44,6 +44,7 @@ const ApiKeys = ({
 
   return (
     <Card
+      height='100%'
       title={ () => <Heading mostLeft mostRight>API Keys</Heading> }
       fab={ () => <AddIcon onClick={ () => createApiKey(identifier) } /> }
       content={ () => (

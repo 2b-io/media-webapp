@@ -13,6 +13,7 @@ const ProjectTools = ({
   toProjectMedia
 }) => (
   <Card
+    height='100%'
     title={ () => <Heading mostLeft mostRight>Tools</Heading> }
     content={ () => (
       <List

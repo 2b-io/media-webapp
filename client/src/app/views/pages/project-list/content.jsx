@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
-import { Card } from 'ui/elements'
+import { Card, ResponsiveGrid } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 import { Text } from 'ui/typo'
 import { Project } from 'views/common/compounds'
@@ -111,22 +111,32 @@ const ProjectList = ({
 
   const cards = sortedProjects.map(
     project => (
-      <Card
-        key={ project.identifier }
-        onClick={ toProjectDetail.bind(null, project.identifier) }
-        content={ () => <Project project={ project } /> }
-      />
+      {
+        content: () => (
+          <Card
+            height='100%'
+            key={ project.identifier }
+            onClick={ toProjectDetail.bind(null, project.identifier) }
+            content={ () => <Project project={ project } /> }
+          />
+        )
+      }
     )
   )
-
   return (
     <Layout>
-      <Container>
-        { projects.length &&
-          cards ||
-          <Text>You do not have any projects yet.</Text>
+      <ResponsiveGrid
+        breakpoints= {
+          {
+            phone: 1,
+            tablet: 2,
+            laptop: 3,
+            desktop: 4,
+            otherwise: 5
+          }
         }
-      </Container>
+        items={ cards }
+      />
       <Fab onClick={ toCreateProject }>
         <AddIcon />
       </Fab>

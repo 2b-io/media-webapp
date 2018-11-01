@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { ApiKeys } from './api-keys-card'
 import { CacheSetting } from './cache-setting-card'
 import { Collaborators } from './collaborator-card'
+import { ResponsiveGrid } from 'ui/elements'
 import { ProjectInfo } from './project-info-card'
 import { ProjectTools } from './project-tools-card'
 import { Presets } from './presets-card'
@@ -35,17 +36,49 @@ const Project = ({
   return (
     <Layout>
       <Container>
-        <ProjectInfo ui={ ui } />
         {
-          ui.isProjectActive &&
-            <Fragment>
-              <Presets ui={ ui } />
-              <CacheSetting ui={ ui } />
-              <PullSettings />
-              <ApiKeys />
-              <Collaborators ui={ ui } />
-              <ProjectTools />
-            </Fragment>
+          <ResponsiveGrid
+            breakpoints={
+              {
+                phone: 1,
+                tablet: 2,
+                laptop: 3,
+                desktop: 4,
+                otherwise: 5
+              }
+            }
+            items={
+              [
+                {
+                  content: () => <ProjectInfo ui={ ui } />
+                },
+                {
+                  content: () => <Presets ui={ ui } />,
+                  enabled: ui.isProjectActive
+                },
+                {
+                  content: () => <CacheSetting ui={ ui } />,
+                  enabled: ui.isProjectActive
+                },
+                {
+                  content: () => <PullSettings ui={ ui } />,
+                  enabled: ui.isProjectActive
+                },
+                {
+                  content: () => <ApiKeys ui={ ui } />,
+                  enabled: ui.isProjectActive
+                },
+                {
+                  content: () => <Collaborators ui={ ui } />,
+                  enabled: ui.isProjectActive
+                },
+                {
+                  content: () => <ProjectTools ui={ ui } />,
+                  enabled: ui.isProjectActive
+                },
+              ]
+            }
+          />
         }
       </Container>
     </Layout>
