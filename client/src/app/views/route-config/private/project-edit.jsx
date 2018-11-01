@@ -23,6 +23,7 @@ const watchCopyDomainLink = function*() {
     yield take(types.project.COPY_DOMAIN_LINK)
 
     yield fork(addToast, {
+      expiring: '5s',
       type: 'success',
       message: 'The domain has been copied to clipboard.'
     })
@@ -46,6 +47,7 @@ const watchUpdateProject = function*(path) {
 
     if (updateCompleted) {
       yield fork(addToast, {
+        expiring: '5s',
         type: 'success',
         message: 'Your project has been successfully changed.'
       })
@@ -111,6 +113,7 @@ const watchRemoveProject = function*(path) {
     if (removeCompleted) {
       yield all([
         fork(addToast, {
+          expiring: '5s',
           type: 'success',
           message: 'Your project has been successfully deleted. Please wait a minute to finish your change.'
         }),

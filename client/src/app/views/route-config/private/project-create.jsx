@@ -24,6 +24,7 @@ const watchCreateProject = function*(path) {
 
       yield all([
         fork(addToast, {
+          expiring: '5s',
           type: 'success',
           message: 'Successfully create project.'
         }),

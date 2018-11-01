@@ -40,6 +40,7 @@ const watchResetPassword = function*(path) {
     if (completed) {
       yield all([
         fork(addToast, {
+          expiring: '5s',
           type: 'success',
           message: payload.account.isActive ?
             'Your password has been successfully changed.' :
