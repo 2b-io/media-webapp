@@ -31,6 +31,9 @@ const renderXAxisTick = (content) => ({
   period,
   x, y
 }) => {
+  if (!payload) {
+    return null
+  }
 
   return content({ className, payload, period, x, y })
 }
@@ -41,16 +44,19 @@ const renderYAxisTick = (content) => ({
   convertData,
   x, y
 }) => {
+  if (!payload) {
+    return null
+  }
 
   return content({ className, payload, convertData, x, y })
 }
 
 const renderTooltip = (content) => ({ active, label, payload }) => {
-  if (!active) {
-    return null
+  if (active && payload && label ) {
+    return content({ label, payload })
   }
 
-  return content({ label, payload })
+  return null
 }
 
 const AreaChartWrapper = ({
@@ -60,10 +66,11 @@ const AreaChartWrapper = ({
   data,
   name,
   valueKey, xKey, yKey,
-  type
+  type,
+  ...props
 }) => (
   <ResponsiveContainer width="100%" height={ 300 }>
-    <AreaChart data={ data }>
+    <AreaChart data={ data } { ...props }>
       <Area
         activeDot={ { r: 8 } }
         dataKey={ valueKey }

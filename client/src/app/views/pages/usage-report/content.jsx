@@ -195,7 +195,7 @@ const UsageReport = ({
       />
       <Break double />
       {
-        data && data.bytesDownloaded.datapoints.length > 0 &&
+        data && data.bytesDownloaded &&
           <Fragment>
             <AreaChart
               data={ data.bytesDownloaded.datapoints }
@@ -217,7 +217,7 @@ const UsageReport = ({
           </Fragment>
       }
       {
-        data && data.requests.datapoints.length > 0 &&
+        data && data.requests &&
           <Fragment>
             <AreaChart
               data={ data.requests.datapoints }
