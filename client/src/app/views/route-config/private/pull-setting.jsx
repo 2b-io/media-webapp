@@ -70,6 +70,7 @@ const watchUpdatePullSetting = function*(path) {
 
     if (updateComPleted) {
       yield fork(addToast, {
+        expiring: '5s',
         type: 'success',
         message: 'Pull setting has been updated.'
       })

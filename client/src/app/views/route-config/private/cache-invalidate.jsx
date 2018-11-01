@@ -64,6 +64,7 @@ const watchCacheInvalidator = function*(path) {
 
     if (completed) {
       yield fork(addToast, {
+        expiring: '5s',
         type: 'success',
         message: 'Cache invalidate completed. Please wait a minute to finish your change.'
       })
