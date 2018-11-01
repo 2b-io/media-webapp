@@ -5,11 +5,16 @@ import { actions, types, selectors } from 'state/interface'
 
 import Metric from 'models/metric'
 
-// const convertDate = (date, granularity = 'daily') => granularity === 'daily' ?
-//   dateFormat(date, 'mmm, dd, yyyy') :
-//   dateFormat(date, 'mmm, dd, yyyy, HH:MM')
-
 const analysisData = (requests) => {
+  if (!requests.length) {
+    return {
+      average: 0,
+      total: 0,
+      maximum: 0,
+      minimum: 0
+    }
+  }
+
   const values = requests.map((item) => item.value)
   const minimum = Math.min(...values)
   const maximum = Math.max(...values)
@@ -61,11 +66,17 @@ const generateReportLoop = function*() {
         requests
       } = data
 
-      const totalBytes = bytesDownloaded.datapoints.map((item) => item.value).reduce((a, b) => a + b)
+      const bandwidthData = {}
+      if (!bytesDownloaded.datapoints.length) {
+        bandwidthData.totalBytes = 0
+      } else {
+        bandwidthData.totalBytes = bytesDownloaded.datapoints.map((item) => item.value).reduce((a, b) => a + b)
+      }
+      
       const requestData = analysisData(requests.datapoints)
 
       yield put(
-        actions.generateReportCompleted(data, granularity, requestData, { totalBytes })
+        actions.generateReportCompleted(data, granularity, requestData, bandwidthData)
       )
     } catch (e) {
       yield put(
