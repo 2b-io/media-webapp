@@ -60,13 +60,13 @@ const ResponsiveGrid = ({ items, breakpoints, direction }) => (
             return null
           }
 
-          const { key, content, ...props } = item
+          const { key, content, enabled, ...props } = item
 
           return (
             <div { ...props }
               key={ key || index }
             >
-              { content() }
+              { enabled === false ? null : content() }
             </div>
           )
         }
