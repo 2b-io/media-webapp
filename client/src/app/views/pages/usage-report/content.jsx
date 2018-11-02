@@ -14,8 +14,8 @@ import _UsageReportForm from './form'
 
 const DATA_DEFAULT = {
   date: {
-    endDate: dataFormat.formatDate(new Date(), 'yyyy-mm-dd'),
-    startDate: dataFormat.formatDate(new Date()- ms('7d'), 'yyyy-mm-dd')
+    endDate: dataFormat.formatTime(new Date(), 'yyyy-mm-dd'),
+    startDate: dataFormat.formatTime(new Date()- ms('7d'), 'yyyy-mm-dd')
   },
   granularity: [
     {
@@ -71,8 +71,8 @@ const renderTooltip = (period) => ({ payload, label }) => (
         {
           `Date: ${
             period === 'hourly' ?
-              dataFormat.formatDate(label, 'mmm, dd, HH:MM') :
-              dataFormat.formatDate(label, 'mmm, dd')
+              dataFormat.formatTime(label, 'mmm, dd, HH:MM') :
+              dataFormat.formatTime(label, 'mmm, dd')
           }`
         }
       </DescriptionTextLine>
@@ -94,13 +94,13 @@ const _CustomizedXAxisTick = ({
   <g transform={ `translate(${ x },${ y })` } className={ className }>
     <text x={ 0 } y={ 0 } dy={ 16 } textAnchor="middle" fill="currentColor">
       {
-        dataFormat.formatDate(payload.value, 'mmm, dd')
+        dataFormat.formatTime(payload.value, 'mmm, dd')
       }
     </text>
     { period === 'hourly' &&
       <text x={ 0 } y={ 0 } dy={ 32 } textAnchor="middle" fill="currentColor">
         {
-          dataFormat.formatDate(payload.value, 'HH:MM')
+          dataFormat.formatTime(payload.value, 'HH:MM')
         }
       </text>
     }
