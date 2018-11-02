@@ -62,7 +62,7 @@ const watchGenerateReport = function*(path) {
 }
 
 export default {
-  '/reports/usage-report': {
+  '/reports/usage': {
     component: UsageReport,
     exact: true,
     *state(path) {
