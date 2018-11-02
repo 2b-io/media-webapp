@@ -54,6 +54,14 @@ const Container = styled.div`
   grid-template-columns: 100%;
 `
 
+const BREAK_POINTS = {
+  phone: 1,
+  tablet: 2,
+  laptop: 3,
+  desktop: 4,
+  otherwise: 5
+}
+
 const sortProjects = ({ type, ascending }, projects, currentAccountId) => {
   switch (type) {
     case 'privilege': {
@@ -114,7 +122,6 @@ const ProjectList = ({
       {
         content: () => (
           <Card
-            height='100%'
             key={ project.identifier }
             onClick={ toProjectDetail.bind(null, project.identifier) }
             content={ () => <Project project={ project } /> }
@@ -126,15 +133,7 @@ const ProjectList = ({
   return (
     <Layout>
       <ResponsiveGrid
-        breakpoints= {
-          {
-            phone: 1,
-            tablet: 2,
-            laptop: 3,
-            desktop: 4,
-            otherwise: 5
-          }
-        }
+        breakpoints={ BREAK_POINTS }
         items={ cards }
       />
       <Fab onClick={ toCreateProject }>

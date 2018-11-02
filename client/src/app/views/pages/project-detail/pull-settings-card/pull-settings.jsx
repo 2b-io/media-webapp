@@ -24,7 +24,6 @@ const PullSettings = ({
   return (
     <Fragment>
       <Card
-        height='100%'
         title={ () => <Heading mostLeft mostRight>Pull Settings</Heading> }
         fab={ () => <EditIcon onClick={ () => toEditPullSetting(identifier) } /> }
         content={ () => (

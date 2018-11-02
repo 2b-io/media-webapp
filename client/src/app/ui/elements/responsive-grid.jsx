@@ -1,13 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-const BREAK_POINT_DEFAULT = {
-  phone: 1,
-  tablet: 2,
-  laptop: 3,
-  desktop: 4,
-  otherwise: 5,
-}
 const generateTemplateColumns = (name) => css`
   grid-template-columns: ${
     ({ breakpoints }) => {
@@ -23,7 +16,7 @@ const generateTemplateColumns = (name) => css`
 const Container = styled.div`
   display: grid;
   grid-gap: 16px;
-  direction: ${ ( { direction }) => direction }
+  direction: ${ ({ direction }) => direction }
 
   & > * {
     min-width: 0;
@@ -50,30 +43,30 @@ const Container = styled.div`
     ${ generateTemplateColumns('2k') }
   }
 `
+const Item = styled.div``
 
 const ResponsiveGrid = ({ items, breakpoints, direction }) => (
-  <Container breakpoints={ breakpoints } direction={ direction } >
+  <Container breakpoints={ breakpoints } direction={ direction }>
     {
       items.map(
         (item, index) => {
-          if (!item) {
+          const { key, content } = item
+
+          if (!content) {
             return null
           }
 
-          const { key, content, enabled, ...props } = item
-
           return (
-            <div { ...props }
+            <Item
               key={ key || index }
             >
-              { enabled === false ? null : content() }
-            </div>
+              { content() }
+            </Item>
           )
         }
       )
     }
   </Container>
 )
-
 
 export default ResponsiveGrid

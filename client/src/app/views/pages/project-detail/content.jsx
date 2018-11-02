@@ -29,6 +29,47 @@ const Container = styled.div`
   grid-gap: 16px;
   grid-template-columns: 100%;
 `
+const BREAK_POINTS = {
+  phone: 1,
+  tablet: 2,
+  laptop: 3,
+  desktop: 4,
+  otherwise: 5
+}
+
+const generateContentProject = (isActive, ui) => {
+  if (isActive) {
+    return [
+      {
+        content: () => <ProjectInfo ui={ ui } />
+      },
+      {
+        content: () => <Presets ui={ ui } />,
+      },
+      {
+        content: () => <CacheSetting ui={ ui } />,
+      },
+      {
+        content: () => <PullSettings ui={ ui } />,
+      },
+      {
+        content: () => <ApiKeys ui={ ui } />,
+      },
+      {
+        content: () => <Collaborators ui={ ui } />,
+      },
+      {
+        content: () => <ProjectTools ui={ ui } />,
+      }
+    ]
+  } else {
+    return [
+      {
+        content: () => <ProjectInfo ui={ ui } />
+      }
+    ]
+  }
+}
 
 const Project = ({
   ui
@@ -38,46 +79,8 @@ const Project = ({
       <Container>
         {
           <ResponsiveGrid
-            breakpoints={
-              {
-                phone: 1,
-                tablet: 2,
-                laptop: 3,
-                desktop: 4,
-                otherwise: 5
-              }
-            }
-            items={
-              [
-                {
-                  content: () => <ProjectInfo ui={ ui } />
-                },
-                {
-                  content: () => <Presets ui={ ui } />,
-                  enabled: ui.isProjectActive
-                },
-                {
-                  content: () => <CacheSetting ui={ ui } />,
-                  enabled: ui.isProjectActive
-                },
-                {
-                  content: () => <PullSettings ui={ ui } />,
-                  enabled: ui.isProjectActive
-                },
-                {
-                  content: () => <ApiKeys ui={ ui } />,
-                  enabled: ui.isProjectActive
-                },
-                {
-                  content: () => <Collaborators ui={ ui } />,
-                  enabled: ui.isProjectActive
-                },
-                {
-                  content: () => <ProjectTools ui={ ui } />,
-                  enabled: ui.isProjectActive
-                },
-              ]
-            }
+            breakpoints={ BREAK_POINTS }
+            items={ generateContentProject(ui.isProjectActive, ui) }
           />
         }
       </Container>

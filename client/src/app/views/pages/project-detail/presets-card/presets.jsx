@@ -35,7 +35,6 @@ const Presets = ({
   return (
     <Fragment>
       <Card
-        height='100%'
         title={ () => <Heading mostLeft mostRight>Presets</Heading> }
         fab={ () => <AddIcon onClick={ showCreateDialog } /> }
         content={ () => (
