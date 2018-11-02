@@ -21,6 +21,7 @@ const watchRegister = function*(path) {
 
     if (completed) {
       yield fork(addToast, {
+        expiring: '5s',
         type: 'success',
         message: 'Registration accepted! Please check your inbox to finish the registration procedure.'
       })
