@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { ApiKeys } from './api-keys-card'
 import { CacheSetting } from './cache-setting-card'
 import { Collaborators } from './collaborator-card'
+import { ResponsiveGrid } from 'ui/elements'
 import { ProjectInfo } from './project-info-card'
 import { ProjectTools } from './project-tools-card'
 import { Presets } from './presets-card'
@@ -28,6 +29,47 @@ const Container = styled.div`
   grid-gap: 16px;
   grid-template-columns: 100%;
 `
+const BREAK_POINTS = {
+  phone: 1,
+  tablet: 2,
+  laptop: 3,
+  desktop: 4,
+  otherwise: 5
+}
+
+const generateContentProject = (isActive, ui) => {
+  if (isActive) {
+    return [
+      {
+        content: () => <ProjectInfo ui={ ui } />
+      },
+      {
+        content: () => <Presets ui={ ui } />,
+      },
+      {
+        content: () => <CacheSetting ui={ ui } />,
+      },
+      {
+        content: () => <PullSettings ui={ ui } />,
+      },
+      {
+        content: () => <ApiKeys ui={ ui } />,
+      },
+      {
+        content: () => <Collaborators ui={ ui } />,
+      },
+      {
+        content: () => <ProjectTools ui={ ui } />,
+      }
+    ]
+  } else {
+    return [
+      {
+        content: () => <ProjectInfo ui={ ui } />
+      }
+    ]
+  }
+}
 
 const Project = ({
   ui
@@ -35,17 +77,11 @@ const Project = ({
   return (
     <Layout>
       <Container>
-        <ProjectInfo ui={ ui } />
         {
-          ui.isProjectActive &&
-            <Fragment>
-              <Presets ui={ ui } />
-              <CacheSetting ui={ ui } />
-              <PullSettings />
-              <ApiKeys />
-              <Collaborators ui={ ui } />
-              <ProjectTools />
-            </Fragment>
+          <ResponsiveGrid
+            breakpoints={ BREAK_POINTS }
+            items={ generateContentProject(ui.isProjectActive, ui) }
+          />
         }
       </Container>
     </Layout>
