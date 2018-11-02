@@ -21,13 +21,13 @@ export default {
           account {
             project(identifier: $projectIdentifier) {
               bytesDownloaded: metric(name: "BYTES_DOWNLOADED") {
-                name
+                name,
                 datapoints(startTime: $startTime, endTime: $endTime, period: $period) {
                   ${ USAGE_REPORT_FRAGMENT }
                 }
               },
               requests: metric(name: "REQUESTS") {
-                name
+                name,
                 datapoints(startTime: $startTime, endTime: $endTime, period: $period) {
                   ${ USAGE_REPORT_FRAGMENT }
                 }

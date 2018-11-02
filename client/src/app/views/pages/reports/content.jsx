@@ -53,6 +53,6 @@ const Reports = ({
 export default connect(
   null,
   mapDispatch({
-    toUsageReport: () => actions.requestLocation('/reports/usage-report')
+    toUsageReport: () => actions.requestLocation('/reports/usage')
   })
 )(Reports)

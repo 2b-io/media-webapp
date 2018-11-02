@@ -28,35 +28,37 @@ const AREA_CHART_STYLE = {
 const renderXAxisTick = (content) => ({
   className,
   payload,
-  period,
   x, y
 }) => {
   if (!payload) {
     return null
   }
 
-  return content({ className, payload, period, x, y })
+  return content({ className, payload, x, y })
 }
 
 const renderYAxisTick = (content) => ({
   className,
   payload,
-  convertData,
   x, y
 }) => {
   if (!payload) {
     return null
   }
 
-  return content({ className, payload, convertData, x, y })
+  return content({ className, payload, x, y })
 }
 
-const renderTooltip = (content) => ({ active, label, payload }) => {
-  if (active && payload && label ) {
-    return content({ label, payload })
+const renderTooltip = (content) => ({
+  active,
+  label,
+  payload
+}) => {
+  if (!active || !payload || !label) {
+    return null
   }
 
-  return null
+  return content({ label, payload })
 }
 
 const AreaChartWrapper = ({
