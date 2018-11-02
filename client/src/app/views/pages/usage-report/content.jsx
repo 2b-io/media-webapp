@@ -35,7 +35,7 @@ const UsageReportForm = reduxForm({
 })(_UsageReportForm)
 
 const UsageReport = ({
-  generateReport,
+  generateUsageReport,
   projects,
   ui: {
     data,
@@ -64,7 +64,7 @@ const UsageReport = ({
           startDate: DATA_DEFAULT.date.startDate,
           endDate: DATA_DEFAULT.date.endDate
         } }
-        onSubmit={ generateReport }
+        onSubmit={ generateUsageReport }
         options={ {
           projects: projectsSelectData,
           granularity: DATA_DEFAULT.granularity
@@ -94,6 +94,6 @@ export default connect(
     }
   },
   mapDispatch({
-    generateReport: actions.generateReport
+    generateUsageReport: actions.generateUsageReport
   })
 )(UsageReport)

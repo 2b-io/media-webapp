@@ -13,9 +13,9 @@ const watchFetchProjects = function*() {
   })
 }
 
-const watchGenerateReport = function*(path) {
+const watchGenerateUsageReport = function*(path) {
   while (true) {
-    yield take(types.usageReport.GENERATE_REPORT)
+    yield take(types.reports.GENERATE_USAGE_REPORT)
 
     yield put(
       actions.mergeUIState(path, {
@@ -24,8 +24,8 @@ const watchGenerateReport = function*(path) {
     )
 
     const { completed, failed } = yield race({
-      completed: take(types.usageReport.GENERATE_REPORT_COMPLETED),
-      failed: take(types.usageReport.GENERATE_REPORT_FAILED)
+      completed: take(types.reports.GENERATE_USAGE_REPORT_COMPLETED),
+      failed: take(types.reports.GENERATE_USAGE_REPORT_FAILED)
     })
 
     yield put(
@@ -67,7 +67,7 @@ export default {
     exact: true,
     *state(path) {
       yield fork(watchFetchProjects)
-      yield fork(watchGenerateReport, path)
+      yield fork(watchGenerateUsageReport, path)
 
       yield all([
         put(

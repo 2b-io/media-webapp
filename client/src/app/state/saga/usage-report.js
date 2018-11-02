@@ -30,7 +30,7 @@ const synthesizeData = (requests) => {
   }
 }
 
-const generateReportLoop = function*() {
+const generateUsageReportLoop = function*() {
   while (true) {
     try {
       const {
@@ -42,7 +42,7 @@ const generateReportLoop = function*() {
             startDate
           }
         }
-      } = yield take(types.usageReport.GENERATE_REPORT)
+      } = yield take(types.reports.GENERATE_USAGE_REPORT)
       const session = yield select(selectors.currentSession)
 
       if (!session) {
@@ -78,11 +78,11 @@ const generateReportLoop = function*() {
       const requestData = synthesizeData(requests.datapoints)
 
       yield put(
-        actions.generateReportCompleted(data, granularity, requestData, bytesDownloadData)
+        actions.generateUsageReportCompleted(data, granularity, requestData, bytesDownloadData)
       )
     } catch (e) {
       yield put(
-        actions.generateReportFailed(serializeError(e))
+        actions.generateUsageReportFailed(serializeError(e))
       )
     }
   }
@@ -90,5 +90,5 @@ const generateReportLoop = function*() {
 
 export default function*() {
   yield take('@@INITIALIZED')
-  yield fork(generateReportLoop)
+  yield fork(generateUsageReportLoop)
 }
