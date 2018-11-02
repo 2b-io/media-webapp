@@ -1,11 +1,11 @@
-import React from 'react'
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
-import ms from 'ms'
+import dateFormat from 'dateformat'
 import { Calendar } from 'calendar'
+import ms from 'ms'
+import React, { Fragment } from 'react'
+import styled from 'styled-components'
 
 import { List, ContextMenu } from 'ui/elements'
-import { CheckIcon, CalendarIcon } from 'ui/icons'
+import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from 'ui/icons'
 import { TextLine } from 'ui/typo'
 
 const Wrapper = styled.div`
@@ -49,42 +49,88 @@ const renderOptions = () => {
   )
 }
 
-const findLabelByValue = (options, value) => {
-  const option = options.filter(option => option.value === value).shift()
-
-  return option && option.label
-}
-
-
 const CalendarMonth = styled.ul`
   display: grid;
+  & > * {
+    min-width: 0;
+    min-height: 0;
+  }
   grid-template-columns: repeat(7, 40px);
   line-height: 40px;
   margin: 0 auto;
   text-align: center;
 `
 
+const WeekDay = styled.span`
+  font-weight: bold;
+`
+
+const Weekend = styled.span`
+  color: ${ ({ theme }) => theme.secondary.base };
+`
+
+const ToDay = styled.span`
+  color: ${ ({ theme }) => theme.primary.base };
+  font-weight: bold;
+`
+
+const HeaderCalendar = styled.div`
+  display: grid;
+  & > * {
+    min-width: 0;
+    min-height: 0;
+  }
+  grid-template-columns: 40px 1fr 40px;
+  line-height: 40px;
+  margin: 0 auto;
+  text-align: center;
+`
 
 const CalendarWrapper = () => {
   const today = new Date()
+  const weekDays = [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' ]
+  const weekends = [ 6, 0 ]
+
   const cal = new Calendar(1)
-  console.log(today);
-  console.log(today.getYear());
-  console.log(today.getMonth());
-  const monthDays = cal.monthDays(today)
-  console.log('monthDays', monthDays);
+  const thisMonth = today.getMonth()
+  const thisYear = today.getFullYear()
+  const monthDates = cal.monthDates(thisYear, thisMonth)
+  const mergedDates = weekDays.concat(...monthDates)
 
   return (
-    <CalendarMonth>
-      <li>1 </li>
-      <li>1 </li>
-      <li>1 </li>
-      <li>1 </li>
-      <li>1 </li>
-      <li>1 </li>
-      <li>1 </li>
-      <li>1 </li>
-    </CalendarMonth>
+    <Fragment>
+      <HeaderCalendar>
+        <ChevronLeftIcon />
+        <TextLine>
+          {
+            dateFormat(today, 'mmm, yyyy')
+          }
+        </TextLine>
+        <ChevronRightIcon />
+      </HeaderCalendar>
+      <CalendarMonth>
+        {
+          mergedDates.map(
+            (date, index) => {
+
+              if (weekDays.some((weekDay) => weekDay === date)) {
+                return <WeekDay key={ index }>{ date }</WeekDay>
+              }
+
+              if (date.toLocaleDateString() === today.toLocaleDateString()) {
+                return <ToDay key={ index }>{ date.getDate() }</ToDay>
+              }
+
+              if (weekends.some((weekend) => weekend === date.getDay())) {
+                return <Weekend key={ index }>{ date.getDate() }</Weekend>
+              }
+
+              return <span key={ index }>{ date.getDate() }</span>
+            }
+          )
+        }
+      </CalendarMonth>
+    </Fragment>
   )
 }
 
@@ -92,7 +138,7 @@ const DatePicker = ({
   disabled,
   options,
   active, value,
-  onBlur, onChange, onFocus
+  onBlur, onChange, onFocus,
 }) => (
   <Wrapper>
     <Input>
