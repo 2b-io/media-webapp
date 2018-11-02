@@ -13,7 +13,7 @@ const MenuContent = styled.div`
   position: absolute;
   top: 32px;
   right: 8px;
-  width: 240px;
+  width: 280px;
   z-index: 2;
   background: ${ ({ theme }) => theme.white.base };
   color: ${ ({ theme }) => theme.white.on.base };
