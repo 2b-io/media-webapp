@@ -1,3 +1,4 @@
+import ms from 'ms'
 import { fork, put, select, take } from 'redux-saga/effects'
 import serializeError from 'serialize-error'
 
@@ -5,7 +6,7 @@ import { actions, types, selectors } from 'state/interface'
 
 import Metric from 'models/metric'
 
-const analysisData = (requests) => {
+const synthesizeData = (requests) => {
   if (!requests.length) {
     return {
       average: 0,
@@ -50,7 +51,7 @@ const generateReportLoop = function*() {
 
       const data = yield Metric.generateUsageReport({
         endTime: Date.parse(endDate),
-        period: granularity === 'daily' ? 86400 : 3600,
+        period: granularity === 'daily' ? ms('1d') / 1000 : ms('1h') / 1000, //86400s : 3600s
         projectIdentifier,
         startTime: Date.parse(startDate)
       }, {
@@ -66,17 +67,18 @@ const generateReportLoop = function*() {
         requests
       } = data
 
-      const bandwidthData = {}
+      const bytesDownloadData = {}
+
       if (!bytesDownloaded.datapoints.length) {
-        bandwidthData.totalBytes = 0
+        bytesDownloadData.totalBytes = 0
       } else {
-        bandwidthData.totalBytes = bytesDownloaded.datapoints.map((item) => item.value).reduce((a, b) => a + b)
+        bytesDownloadData.totalBytes = bytesDownloaded.datapoints.map((item) => item.value).reduce((a, b) => a + b)
       }
-      
-      const requestData = analysisData(requests.datapoints)
+
+      const requestData = synthesizeData(requests.datapoints)
 
       yield put(
-        actions.generateReportCompleted(data, granularity, requestData, bandwidthData)
+        actions.generateReportCompleted(data, granularity, requestData, bytesDownloadData)
       )
     } catch (e) {
       yield put(
