@@ -11,6 +11,8 @@ import {
   checkCircle,
   checkSquare,
   chevronDown,
+  chevronLeft,
+  chevronRight,
   circle,
   copy,
   creditCard,
@@ -44,6 +46,8 @@ export const CalendarIcon = icon(calendar)
 export const CloseIcon = icon(x)
 export const CopyIcon = icon(copy)
 export const CheckIcon = icon(check)
+export const ChevronLeftIcon = icon(chevronLeft)
+export const ChevronRightIcon = icon(chevronRight)
 export const DashboardIcon = icon(grid)
 export const EditIcon = icon(edit2)
 export const EmailIcon = icon(mail)
