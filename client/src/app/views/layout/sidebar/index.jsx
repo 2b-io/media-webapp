@@ -7,7 +7,7 @@ import Sidebar from './sidebar'
 
 export default connect(
   mapState({
-    open: selectors.isSidebarOpen,
+    open: selectors.maximizeSidebar,
     currentAccount: selectors.currentAccount,
     projectCount: selectors.projectCount
   }),

@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import styled, { keyframes } from 'styled-components'
 
 import { Badge, Identicon, List } from 'ui/elements'
-import { CloseIcon } from 'ui/icons'
+import { MenuIcon } from 'ui/icons'
 import { DescriptionTextLine, TextLine } from 'ui/typo'
 
 import {
@@ -24,18 +24,6 @@ const fadeIn = keyframes`
   }
 `
 
-const Overlay = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: ${ ({ theme }) => theme.black.opaque.base };
-  z-index: 1;
-  animation: ${ fadeIn } .6s;
-  animation-timing-function: ${ easingFunc };
-`
-
 const Surface = styled.div`
   position: absolute;
   width: 280px;
@@ -55,13 +43,10 @@ const Surface = styled.div`
       'translate3d(-100%, 0, 0)'
   };
   transition: transform .3s ${ easingFunc };
-  ${
-    ({ open, theme }) => open &&
-      `box-shadow: 4px 4px ${ theme.black.opaque.base };`
-  }
+  border-right: solid 1px rgb(17,17,17);
 `
 
-const CloseButton = styled.button`
+const MenuButton = styled.button`
   position: absolute;
   top: 0;
   right: 0;
@@ -162,11 +147,10 @@ const Sidebar = ({
 
   return (
     <Fragment>
-      { open && <Overlay onClick={ minimizeSidebar } /> }
       <Surface open={ open }>
-        <CloseButton onClick={ minimizeSidebar }>
-          <CloseIcon />
-        </CloseButton>
+        <MenuButton onClick={ minimizeSidebar }>
+          <MenuIcon />
+        </MenuButton>
         <Content>
           <Profile>
             <UserName>

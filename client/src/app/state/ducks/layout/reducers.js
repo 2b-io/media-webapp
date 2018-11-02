@@ -10,7 +10,7 @@ export default combineReducers({
   }),
   sidebar: createReducer(false)({
     [ types.MAXIMIZE_SIDEBAR ]: () => true,
-    [ types.MINIMIZE_SIDEBAR ]: () => false
+    [ types.MINIMIZE_SIDEBAR ]: () => true
   }),
   stillHeight: createReducer(0)({
     [ types.UPDATE_STILL_HEIGHT ]: (state, action) => action.payload.height
@@ -18,5 +18,9 @@ export default combineReducers({
   sidebarMaximized: createReducer(false)({
     [ types.MAXIMIZE_SIDEBAR ]: () => true,
     [ types.MINIMIZE_SIDEBAR ]: () => false
+  }),
+  sidebarMinimized: createReducer(false)({
+    [ types.MINIMIZE_SIDEBAR ]: () => true,
+    [ types.MAXIMIZE_SIDEBAR ]: () => false
   })
 })
