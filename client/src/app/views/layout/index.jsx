@@ -15,9 +15,9 @@ import Toast from './toast'
 
 const Surface = styled.main`
   margin-left: ${
-    ({ minimizeSidebar }) => {
-      return minimizeSidebar ? '40px' : '280px'
-    }
+    ({ minimizeSidebar }) => (
+      minimizeSidebar ? '40px' : '280px'
+    )
   };
   display: grid;
   grid-template-columns: 100%;
@@ -43,10 +43,10 @@ const Layout = ({
     { minimizeSidebar && <SidebarMini /> }
     { maximizeSidebar && <Sidebar /> }
     <Surface minimizeSidebar={ minimizeSidebar }>
-      <Header className="header">
+      <Header className='header'>
         { render.still(props) }
       </Header>
-      <Body className="body">
+      <Body className='body'>
         { isLayoutClosed &&
           <Fragment>
             <LogoWrapper>

@@ -9,7 +9,7 @@ export default combineReducers({
     [ types.OPEN ]: () => false
   }),
   sidebar: createReducer(false)({
-    [ types.MAXIMIZE_SIDEBAR ]: () => true,
+    [ types.MAXIMIZE_SIDEBAR ]: () => false,
     [ types.MINIMIZE_SIDEBAR ]: () => true
   }),
   stillHeight: createReducer(0)({
