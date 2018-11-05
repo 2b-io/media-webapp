@@ -152,25 +152,27 @@ const Sidebar = ({
           <MenuIcon />
         </MenuButton>
         <Content>
-          <Profile>
-            <UserName>
-              <TextLine mostLeft mostRight>
-                { currentAccount.name }
-              </TextLine>
-            </UserName>
-            <UserEmail>
-              <DescriptionTextLine mostLeft mostRight>
-                { currentAccount.email }
-              </DescriptionTextLine>
-            </UserEmail>
-            <UserAvatar onClick={ () => toProfile(currentAccount.identifier) }>
-              <Identicon circle
-                size={ 56 }
-                id={ currentAccount.email }
-              />
-            </UserAvatar>
-          </Profile>
-          <div className="menu">
+          { currentAccount && (
+            <Profile>
+              <UserName>
+                <TextLine mostLeft mostRight>
+                  { currentAccount.name }
+                </TextLine>
+              </UserName>
+              <UserEmail>
+                <DescriptionTextLine mostLeft mostRight>
+                  { currentAccount.email }
+                </DescriptionTextLine>
+              </UserEmail>
+              <UserAvatar onClick={ () => toProfile(currentAccount.identifier) }>
+                <Identicon circle
+                  size={ 56 }
+                  id={ currentAccount.email }
+                />
+              </UserAvatar>
+            </Profile>
+          ) }
+          <div className='menu'>
             <List items={ menuItems } />
           </div>
         </Content>

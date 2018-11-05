@@ -1,4 +1,6 @@
 import React, { Fragment } from 'react'
+import MediaQuery from 'react-responsive'
+import styled from 'styled-components'
 import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
@@ -8,7 +10,12 @@ import { PageTitle } from 'ui/typo'
 
 const Dashboard = ({ maximizeSidebar }) => (
   <Fragment>
-    <MenuIcon onClick={ maximizeSidebar } />
+    <MediaQuery query='(max-device-width: 599px)'>
+      <MenuIcon onClick={ maximizeSidebar } />
+    </MediaQuery>
+    <MediaQuery query='(min-device-width: 600px)'>
+      <div></div>
+    </MediaQuery>
     <PageTitle>Dashboard</PageTitle>
   </Fragment>
 )

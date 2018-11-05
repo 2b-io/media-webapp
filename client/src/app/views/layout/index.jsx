@@ -25,6 +25,9 @@ const Surface = styled.main`
   height: 100%;
   position: relative;
   z-index: 0;
+  @media (max-width: 599px) {
+    margin-left: 0;
+  }
 `
 
 const LogoWrapper = styled.div`

@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import MediaQuery from 'react-responsive'
 import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
@@ -32,7 +33,12 @@ const ProjectList = ({
   }
 }) => (
   <Fragment>
-    <MenuIcon onClick={ maximizeSidebar } />
+    <MediaQuery query='(max-device-width: 599px)'>
+      <MenuIcon onClick={ maximizeSidebar } />
+    </MediaQuery>
+    <MediaQuery query='(min-device-width: 600px)'>
+      <div></div>
+    </MediaQuery>
     <PageTitle>Projects</PageTitle>
     <ContextMenu.Menu
       stateless={ true }

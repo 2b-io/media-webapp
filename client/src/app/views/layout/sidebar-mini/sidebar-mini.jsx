@@ -30,6 +30,9 @@ const Surface = styled.div`
   z-index: 1;
   transition: transform .3s ${ easingFunc };
   border-right: solid 1px rgb(17,17,17);
+  @media (max-width: 599px) {
+    display: none;
+  }
 `
 
 const MenuButton = styled.button`
@@ -119,14 +122,16 @@ const Sidebar = ({
           <MenuIcon />
         </MenuButton>
         <Content>
-          <Profile>
-            <UserAvatar onClick={ () => toProfile(currentAccount.identifier) }>
-              <Identicon circle
-                size={ 40 }
-                id={ currentAccount.email }
-              />
-            </UserAvatar>
-          </Profile>
+          { currentAccount && (
+            <Profile>
+              <UserAvatar onClick={ () => toProfile(currentAccount.identifier) }>
+                <Identicon circle
+                  size={ 40 }
+                  id={ currentAccount.email }
+                />
+              </UserAvatar>
+            </Profile>
+          ) }
           <div className="menu">
             <List items={ menuItems } />
           </div>
