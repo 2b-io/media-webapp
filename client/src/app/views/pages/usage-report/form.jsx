@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Break, Button, Form } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
-import { Select, TextBox } from 'views/common/form'
+import { DatePicker, Select, TextBox } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
 const UsageReportForm = ({
@@ -11,7 +11,7 @@ const UsageReportForm = ({
   idle
 }) => (
   <Form handleSubmit={ handleSubmit } idle={ idle }>
-    <TextBox
+    <DatePicker
       disabled={ !idle }
       name="startDate"
       placeholder="Start date"
@@ -22,7 +22,7 @@ const UsageReportForm = ({
       Start date.
     </DescriptionText>
     <Break />
-    <TextBox
+    <DatePicker
       disabled={ !idle }
       name="endDate"
       placeholder="End date"

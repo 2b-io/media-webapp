@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components'
 const Button = styled.button.attrs({
   type: ({ type = 'button' }) => type
 })`
+  width: 100%;
   appearance: none;
   border: none;
   outline: none;
@@ -59,7 +60,7 @@ const Button = styled.button.attrs({
       ` :
       css`
         display: block;
-        width: 100%;
+        margin: auto;
         background: ${
           disabled ?
             theme.secondary.base :

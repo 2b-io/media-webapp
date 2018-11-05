@@ -14,6 +14,9 @@ const Wrapper = styled.section`
   right: 32px;
   left: 32px;
   z-index: 11;
+  min-width: 320px;
+  max-width: 1024px;
+  margin: auto;
 `
 
 const ToastList = styled.div`

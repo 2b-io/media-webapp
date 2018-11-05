@@ -14,8 +14,8 @@ import _UsageReportForm from './form'
 
 const DATA_DEFAULT = {
   date: {
-    endDate: dataFormat.formatTime(new Date(), 'yyyy-mm-dd'),
-    startDate: dataFormat.formatTime(new Date()- ms('7d'), 'yyyy-mm-dd')
+    endDate: Date.now(),
+    startDate: Date.now() - ms('7d')
   },
   granularity: [
     {

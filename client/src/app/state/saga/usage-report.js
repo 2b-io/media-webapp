@@ -50,10 +50,10 @@ const generateUsageReportLoop = function*() {
       }
 
       const data = yield Metric.generateUsageReport({
-        endTime: Date.parse(endDate),
-        period: granularity === 'daily' ? ms('1d') / 1000 : ms('1h') / 1000, //86400s : 3600s
         projectIdentifier,
-        startTime: Date.parse(startDate)
+        period: granularity === 'daily' ? ms('1d') / 1000 : ms('1h') / 1000, //86400s : 3600s
+        startTime: startDate,
+        endTime: endDate
       }, {
         token: session.token
       })

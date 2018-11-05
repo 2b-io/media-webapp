@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
 import { List, ContextMenu } from 'ui/elements'
-import { CheckIcon, ExpandIcon } from 'ui/icons'
+import { ExpandIcon } from 'ui/icons'
 import { TextLine } from 'ui/typo'
 
 const Wrapper = styled.div`
@@ -41,19 +41,21 @@ const DisableState = styled.div`
   };
 `
 
+const OptionLabel = styled.span`
+  color: ${
+    ({ selected, theme }) => selected ? theme.primary.base : theme.black.base
+  };
+`
+
 const renderOptions = (options, currentValue, onChoose) => {
   const items = options.map(
     ({ label, value }) => ({
       key: value,
       content: () => (
-        <TextLine mostLeft
-          mostRight={ value !== currentValue }>
-          { label }
+        <TextLine mostLeft mostRight>
+          <OptionLabel selected={ value === currentValue }>{ label }</OptionLabel>
         </TextLine>
       ),
-      trailing: value === currentValue ?
-        () => <CheckIcon /> :
-        null,
       onClick: () => onChoose(value)
     })
   )
@@ -89,7 +91,10 @@ const Select = ({
             <ExpandIcon />
           </DisableState>
         ) }
-        content={ () => renderOptions(options, value, onChange) }
+        content={ () => renderOptions(options, value, (...args) => {
+          onChange(...args)
+          onBlur()
+        }) }
         stateless={ true }
         isActive={ active }
         activate={ onFocus }
