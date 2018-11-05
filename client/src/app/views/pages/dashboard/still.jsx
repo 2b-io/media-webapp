@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react'
 import MediaQuery from 'react-responsive'
-import styled from 'styled-components'
 import { connect } from 'react-redux'
 
 import { mapDispatch, mapState } from 'services/redux-helpers'
@@ -12,8 +11,8 @@ const Dashboard = ({ maximizeSidebar, openSidebar }) => (
   <Fragment>
     <MediaQuery query='(max-device-width: 599px)'>
       { openSidebar ?
-          <div></div> :
-          <MenuIcon onClick={ maximizeSidebar } />
+        <div></div> :
+        <MenuIcon onClick={ maximizeSidebar } />
       }
     </MediaQuery>
     <MediaQuery query='(min-device-width: 600px)'>

@@ -36,8 +36,8 @@ const ProjectList = ({
   <Fragment>
     <MediaQuery query='(max-device-width: 599px)'>
       { openSidebar ?
-          <div></div> :
-          <MenuIcon onClick={ maximizeSidebar } />
+        <div></div> :
+        <MenuIcon onClick={ maximizeSidebar } />
       }
     </MediaQuery>
     <MediaQuery query='(min-device-width: 600px)'>

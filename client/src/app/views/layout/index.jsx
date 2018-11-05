@@ -17,7 +17,6 @@ const Surface = styled.main`
   margin-left: ${
     ({
       minimizeSidebar,
-      maximizeSidebar,
       isLayoutClosed
     }) => {
       if (isLayoutClosed) {
@@ -59,12 +58,12 @@ const Layout = ({
 }) => (
   <Fragment>
     { !isLayoutClosed && (
-        minimizeSidebar ?
-          <SidebarMini /> :
-          <Sidebar />
+      minimizeSidebar ?
+        <SidebarMini /> :
+        <Sidebar />
     ) }
     <Surface
-      minimizeSidebar={ minimizeSidebar}
+      minimizeSidebar={ minimizeSidebar }
       isLayoutClosed={ isLayoutClosed }
       maximizeSidebar={ maximizeSidebar }>
       <Header className='header'>

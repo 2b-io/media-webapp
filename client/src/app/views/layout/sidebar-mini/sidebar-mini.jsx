@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 import { Identicon, List } from 'ui/elements'
 import { MenuIcon } from 'ui/icons'
-import { DescriptionTextLine, TextLine } from 'ui/typo'
 
 import {
   BillingIcon,
@@ -93,7 +92,6 @@ const Sidebar = ({
   currentAccount = {},
   maximizeSidebar,
   open,
-  projectCount = 0,
   signOut,
   toDashboard,
   toProfile,
