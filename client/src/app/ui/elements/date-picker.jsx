@@ -1,11 +1,38 @@
 import dateFormat from 'dateformat'
 import { Calendar } from 'calendar'
-import React, { Fragment } from 'react'
+import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 
 import { ContextMenu } from 'ui/elements'
 import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from 'ui/icons'
 import { TextLine } from 'ui/typo'
+
+const WEEKDAYS = [
+  {
+    name: 'Mon',
+    isWeekend: false
+  }, {
+    name: 'Tue',
+    isWeekend: false
+  }, {
+    name: 'Wed',
+    isWeekend: false
+  }, {
+    name: 'Thu',
+    isWeekend: false
+  }, {
+    name: 'Fri',
+    isWeekend: false
+  }, {
+    name: 'Sat',
+    isWeekend: true
+  }, {
+    name: 'Sun',
+    isWeekend: true
+  }
+]
+
+const WEEKENDS = [ 6, 0 ]
 
 const Wrapper = styled.div`
   position: relative;
@@ -41,16 +68,6 @@ const DisableState = styled.div`
   };
 `
 
-const renderOptions = (inputDate, onChoose) => {
-
-  return (
-    <CalendarWrapper
-      inputDate={ inputDate }
-      onChoose={ onChoose }
-    />
-  )
-}
-
 const CalendarMonth = styled.ul`
   display: grid;
   & > * {
@@ -64,28 +81,61 @@ const CalendarMonth = styled.ul`
 `
 
 const WeekDay = styled.span`
-  font-weight: bold;
+  color: ${ ({ isWeekend, theme }) => isWeekend && theme.secondary.base };
 `
 
-const Weekend = styled.span`
-  color: ${ ({ theme }) => theme.secondary.base };
+const CalendarDate = styled.span`
+  text-decoration: ${ ({ isToday }) => isToday ? 'underline' : 'none' };
+  color: ${
+    ({ isValue, isWeekend, selectable, theme }) => {
+      if (!selectable) {
+        return '#e6e6e6'
+      }
+
+      if (isValue) {
+        return theme.primary.base
+      }
+
+      if (isWeekend) {
+        return theme.secondary.base
+      }
+
+      return '#111111'
+    }
+  };
+  cursor: ${ ({ selectable }) => selectable ? 'pointer' : 'unset' };
 `
 
-const ToDay = styled.span`
-  color: ${ ({ theme }) => theme.primary.base };
-  font-weight: bold;
-`
+const isSelectableDate = (date, selectedView, today, maxDay, minDay) => {
+  const firstDayOfMonth = new Date(selectedView.getFullYear(), selectedView.getMonth(), 1)
+  const lastDayOfMonth = new Date(selectedView.getFullYear(), selectedView.getMonth() + 1, 0)
 
-const DisableDay = styled.span`
-  color: #e6e6e6;
-`
+  const isDateOfOtherMonth = Date.parse(firstDayOfMonth) > Date.parse(date) ||
+    Date.parse(date) > Date.parse(lastDayOfMonth)
 
-const isDateOfOtherMonth = (compareDate, currentDate) => {
-  const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1)
-  const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0)
+  if (isDateOfOtherMonth) {
+    return false
+  }
 
-  return Date.parse(compareDate) < Date.parse(firstDayOfMonth) || Date.parse(compareDate) > Date.parse(lastDayOfMonth)
+  if (maxDay && minDay) {
+    return Date.parse(date) >= Date.parse(today) - minDay &&
+      Date.parse(today) + maxDay >= Date.parse(date)
+  }
+
+  if (maxDay) {
+    return Date.parse(today) + maxDay >= Date.parse(date)
+  }
+
+  if (minDay) {
+    return Date.parse(today) - minDay <= Date.parse(date)
+  }
+
+  return true
 }
+
+const isSameDate = (date, otherDate) => date.toLocaleDateString() === otherDate.toLocaleDateString()
+
+const isWeekend = (date) => WEEKENDS.some((weekend) => weekend === date.getDay())
 
 const HeaderCalendar = styled.div`
   display: grid;
@@ -99,76 +149,70 @@ const HeaderCalendar = styled.div`
   text-align: center;
 `
 
-const CalendarWrapper = ({ inputDate, onChoose }) => {
+const CalendarWrapper = ({
+  maxDay,
+  minDay,
+  next,
+  onChoose,
+  prev,
+  selectedMonth,
+  selectedYear,
+  value
+}) => {
+  const selectedView = new Date(selectedYear, selectedMonth, 1)
   const today = new Date()
-  const weekDays = [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' ]
-  const weekends = [ 6, 0 ]
-  const selectedDate = inputDate ? inputDate : today
 
   const cal = new Calendar(1)
-  const selectedMonth = selectedDate.getMonth()
-  const selectedYear = selectedDate.getFullYear()
   const monthDates = cal.monthDates(selectedYear, selectedMonth)
+  const mergedDates = [].concat(...monthDates)
 
-  const mergedDates = weekDays.concat(...monthDates)
+  const allDates = mergedDates.map(
+    (date) => ({
+      date,
+      selectable: isSelectableDate(date, selectedView, today, maxDay, minDay),
+      isToday: isSameDate(date, today),
+      isValue: isSameDate(date, new Date(value)),
+      isWeekend: isWeekend(date)
+    })
+  )
 
   return (
     <Fragment>
       <HeaderCalendar>
-        <ChevronLeftIcon />
+        <ChevronLeftIcon
+          onClick={ () => prev(today) }
+        />
         <TextLine>
           {
-            dateFormat(selectedDate, 'mmm, yyyy')
+            dateFormat(selectedView, 'mmm, yyyy')
           }
         </TextLine>
-        <ChevronRightIcon />
+        <ChevronRightIcon
+          onClick={ () => next(today) }
+        />
       </HeaderCalendar>
       <CalendarMonth>
         {
-          mergedDates.map(
-            (date, index) => {
-              // return day of week
-              if (weekDays.some((weekDay) => weekDay === date)) {
-                return <WeekDay key={ index } value={ date }>{ date }</WeekDay>
-              }
-
-              // Format for other day of current month in calendar
-              if (isDateOfOtherMonth(date, selectedDate)) {
-                return <DisableDay key={ index } value={ date }>{ date.getDate() }</DisableDay>
-              }
-
-              if (date.toLocaleDateString() === today.toLocaleDateString()) {
-                return (
-                  <ToDay
-                    key={ index }
-                    onClick={ () => onChoose(date) }
-                    value={ date }
-                  >
-                    { date.getDate() }
-                  </ToDay>
-                )
-              }
-
-              if (weekends.some((weekend) => weekend === date.getDay())) {
-                return (
-                  <Weekend
-                    key={ index }
-                    onClick={ () => onChoose(date) }
-                    value={ date }
-                  >
-                    { date.getDate() }
-                  </Weekend>
-                )
-              }
+          WEEKDAYS.map(
+            (weekDay, index) => <WeekDay key={ index } isWeekend={ weekDay.isWeekend }>{ weekDay.name }</WeekDay>
+          )
+        }
+        {
+          allDates.map(
+            (dateInfo, index) => {
+              const { date, selectable, isToday, isValue, isWeekend } = dateInfo
 
               return (
-                <span
+                <CalendarDate
                   key={ index }
-                  onClick={ () => onChoose(date) }
-                  value={ date }
+                  onClick={ () => selectable ? onChoose(date) : false }
+                  selectable={ selectable }
+                  isToday={ isToday }
+                  isValue={ isValue }
+                  isWeekend={ isWeekend }
                 >
                   { date.getDate() }
-                </span>
+                </CalendarDate>
               )
             }
           )
@@ -178,39 +222,110 @@ const CalendarWrapper = ({ inputDate, onChoose }) => {
   )
 }
 
-const DatePicker = ({
-  disabled,
-  //options,
-  active,
-  value,
-  onBlur, onChange, onFocus
-}) => {
+const renderOptions = (value, maxDay, minDay, { month, year }, onChoose, next, prev) => (
+  <CalendarWrapper
+    maxDay={ maxDay }
+    minDay={ minDay }
+    next={ next }
+    onChoose={ onChoose }
+    prev={ prev }
+    selectedMonth={ month }
+    selectedYear={ year }
+    value={ value }
+  />
+)
 
-  return (
-    <Wrapper>
-      <Input>
-        <TextLine mostLeft>
-          <DisableState disabled={ disabled }>
-            { dateFormat(value, 'mm/dd/yyyy') }
-          </DisableState>
-        </TextLine>
-        <ContextMenu.Menu
-          disabled={ disabled }
-          icon={ () => (
+class DatePicker extends Component {
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (!nextProps.value) {
+      return prevState
+    }
+
+    const { month, year } = prevState
+
+    if (month === null || year === null) {
+      const date = new Date(nextProps.value)
+
+      return {
+        month: date.getMonth(),
+        year: date.getFullYear()
+      }
+    }
+
+    return prevState
+  }
+
+  constructor(...args) {
+    super(...args)
+
+    this.state = {
+      month: null,
+      year: null
+    }
+  }
+
+  changeMonth(offset) {
+    return () => {
+      const { year, month } = this.state
+
+      const changedMonth = month + offset
+
+      if (changedMonth < 0) {
+        this.setState({
+          year: year - 1,
+          month: 11
+        })
+      } else if (changedMonth > 11) {
+        this.setState({
+          year: year + 1,
+          month: 0
+        })
+      } else {
+        this.setState({
+          month: changedMonth
+        })
+      }
+    }
+  }
+
+  render() {
+    const {
+      disabled,
+      active,
+      maxDay, minDay,
+      value,
+      onBlur, onChange, onFocus
+    } = this.props
+
+    return (
+      <Wrapper>
+        <Input>
+          <TextLine mostLeft>
             <DisableState disabled={ disabled }>
-              <CalendarIcon />
+              { dateFormat(value, 'mm/dd/yyyy') }
             </DisableState>
-          ) }
-          content={ () => renderOptions(null, onChange) }
-          stateless={ true }
-          isActive={ active }
-          activate={ onFocus }
-          deactivate={ onChange }
-        />
-      </Input>
-      <Indicator disabled={ disabled } />
-    </Wrapper>
-  )
+          </TextLine>
+          <ContextMenu.Menu
+            disabled={ disabled }
+            icon={ () => (
+              <DisableState disabled={ disabled }>
+                <CalendarIcon />
+              </DisableState>
+            ) }
+            content={ () => renderOptions(value, maxDay, minDay, this.state, (...args) => {
+              onChange(...args)
+              onBlur()
+            }, this.changeMonth(1), this.changeMonth(-1)) }
+            stateless={ true }
+            isActive={ active }
+            activate={ onFocus }
+            deactivate={ onBlur }
+          />
+        </Input>
+        <Indicator disabled={ disabled } />
+      </Wrapper>
+    )
+  }
 }
 
 export default DatePicker
