@@ -41,10 +41,13 @@ const DisableState = styled.div`
   };
 `
 
-const renderOptions = () => {
+const renderOptions = (inputDate, onChoose) => {
 
   return (
-    <CalendarWrapper inputDate={ null }/>
+    <CalendarWrapper
+      inputDate={ inputDate }
+      onChoose={ onChoose }
+    />
   )
 }
 
@@ -96,15 +99,13 @@ const HeaderCalendar = styled.div`
   text-align: center;
 `
 
-const CalendarWrapper = ({ inputDate }) => {
+const CalendarWrapper = ({ inputDate, onChoose }) => {
   const today = new Date()
   const weekDays = [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' ]
   const weekends = [ 6, 0 ]
-
   const selectedDate = inputDate ? inputDate : today
 
   const cal = new Calendar(1)
-
   const selectedMonth = selectedDate.getMonth()
   const selectedYear = selectedDate.getFullYear()
   const monthDates = cal.monthDates(selectedYear, selectedMonth)
@@ -137,14 +138,38 @@ const CalendarWrapper = ({ inputDate }) => {
               }
 
               if (date.toLocaleDateString() === today.toLocaleDateString()) {
-                return <ToDay key={ index } value={ date }>{ date.getDate() }</ToDay>
+                return (
+                  <ToDay
+                    key={ index }
+                    onClick={ () => onChoose(date) }
+                    value={ date }
+                  >
+                    { date.getDate() }
+                  </ToDay>
+                )
               }
 
               if (weekends.some((weekend) => weekend === date.getDay())) {
-                return <Weekend key={ index } value={ date }>{ date.getDate() }</Weekend>
+                return (
+                  <Weekend
+                    key={ index }
+                    onClick={ () => onChoose(date) }
+                    value={ date }
+                  >
+                    { date.getDate() }
+                  </Weekend>
+                )
               }
 
-              return <span key={ index } value={ date }>{ date.getDate() }</span>
+              return (
+                <span
+                  key={ index }
+                  onClick={ () => onChoose(date) }
+                  value={ date }
+                >
+                  { date.getDate() }
+                </span>
+              )
             }
           )
         }
@@ -157,15 +182,16 @@ const DatePicker = ({
   disabled,
   //options,
   active,
-  //value,
-  onBlur, onFocus
+  value,
+  onBlur, onChange, onFocus
 }) => {
+
   return (
     <Wrapper>
       <Input>
         <TextLine mostLeft>
           <DisableState disabled={ disabled }>
-          10/26/2018
+            { dateFormat(value, 'mm/dd/yyyy') }
           </DisableState>
         </TextLine>
         <ContextMenu.Menu
@@ -175,11 +201,11 @@ const DatePicker = ({
               <CalendarIcon />
             </DisableState>
           ) }
-          content={ renderOptions }
+          content={ () => renderOptions(null, onChange) }
           stateless={ true }
           isActive={ active }
           activate={ onFocus }
-          deactivate={ onBlur }
+          deactivate={ onChange }
         />
       </Input>
       <Indicator disabled={ disabled } />
