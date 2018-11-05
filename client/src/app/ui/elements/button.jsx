@@ -59,7 +59,8 @@ const Button = styled.button.attrs({
       ` :
       css`
         display: block;
-        width: 100%;
+        min-width: 288px;
+        margin: auto;
         background: ${
           disabled ?
             theme.secondary.base :
