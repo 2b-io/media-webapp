@@ -2,6 +2,7 @@ import icon from './icon'
 
 // APPLICATION ICON: http://wmira.github.io/react-icons-kit/#/iconset/feather
 import {
+  activity,
   alertTriangle,
   arrowDown,
   arrowLeft,
@@ -39,6 +40,7 @@ import {
   xCircle
 } from 'react-icons-kit/feather'
 
+export const ActivityIcon = icon(activity)
 export const AddIcon = icon(plus)
 export const BackIcon = icon(arrowLeft)
 export const BillingIcon = icon(dollarSign)

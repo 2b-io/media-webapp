@@ -2,11 +2,12 @@ import React, { Fragment } from 'react'
 import styled, { keyframes } from 'styled-components'
 
 import { Badge, Identicon, List } from 'ui/elements'
-import { CloseIcon } from 'ui/icons'
 import { DescriptionTextLine, TextLine } from 'ui/typo'
 
 import {
+  ActivityIcon,
   BillingIcon,
+  CloseIcon,
   DashboardIcon,
   PaymentIcon,
   ProjectListIcon,
@@ -135,7 +136,8 @@ const Sidebar = ({
   signOut,
   toDashboard,
   toProfile,
-  toProjectList
+  toProjectList,
+  toReportPage
 }) => {
   const menuItems = [ {
     onClick: toDashboard,
@@ -148,6 +150,10 @@ const Sidebar = ({
       <Badge content={ projectCount } /> :
       null,
     content: () => <TextLine mostRight={ !projectCount }>Projects</TextLine>
+  }, {
+    onClick: toReportPage,
+    leading: () => <ActivityIcon />,
+    content: () => <TextLine mostRight>Reports</TextLine>
   }, {
     leading: () => <BillingIcon />,
     content: () => <TextLine mostRight>Billing</TextLine>

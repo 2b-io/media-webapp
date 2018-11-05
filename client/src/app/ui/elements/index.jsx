@@ -1,3 +1,4 @@
+export { default as AreaChart } from './area-chart'
 export { default as Badge } from './badge'
 export { default as Break } from './break'
 export { default as Button } from './button'

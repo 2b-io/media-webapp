@@ -205,7 +205,7 @@ const CalendarWrapper = ({
               return (
                 <CalendarDate
                   key={ index }
-                  onClick={ () => selectable ? onChoose(Date.parse(date)) : false }
+                  onClick={ selectable ? () => onChoose(date.valueOf()) : null }
                   selectable={ selectable }
                   isToday={ isToday }
                   isValue={ isValue }
