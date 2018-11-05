@@ -13,7 +13,7 @@ const MenuContent = styled.div`
   position: absolute;
   top: 32px;
   right: 8px;
-  width: 240px;
+  width: 280px;
   z-index: 2;
   background: ${ ({ theme }) => theme.white.base };
   color: ${ ({ theme }) => theme.white.on.base };
@@ -56,8 +56,6 @@ class ContextMenu extends Component {
         isActive: true
       })
     }
-
-    document.addEventListener('click', this.deactivate)
   }
 
   deactivate() {
@@ -70,12 +68,20 @@ class ContextMenu extends Component {
         isActive: false
       })
     }
-
-    document.removeEventListener('click', this.deactivate)
   }
 
   componentWillUnmount() {
     this.deactivate()
+  }
+
+  toggleActivation(currentState) {
+    return () => {
+      if (currentState) {
+        this.deactivate()
+      } else {
+        this.activate()
+      }
+    }
   }
 
   render() {
@@ -86,7 +92,7 @@ class ContextMenu extends Component {
 
     return (
       <Menu>
-        <Button disabled={ disabled } plain onClick={ this.activate }>
+        <Button disabled={ disabled } plain onClick={ this.toggleActivation(isActive) }>
           { icon && icon({ isActive }) || <MoreIcon /> }
         </Button>
         { isActive && (

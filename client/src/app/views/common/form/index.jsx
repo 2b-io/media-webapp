@@ -1,4 +1,5 @@
 export { default as CheckBox } from './check-box'
+export { default as DatePicker } from './date-picker'
 export { default as Radio } from './radio'
 export { default as Select } from './select'
 export { default as SlideBar } from './slide-bar'

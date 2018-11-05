@@ -2,6 +2,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "dependencies": {
+    "calendar": "0.1.0",
     "color": "3.0.0",
     "delay": "3.0.0",
     "graphql-query-compress": "1.0.8",
