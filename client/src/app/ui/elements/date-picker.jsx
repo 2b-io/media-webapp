@@ -1,10 +1,9 @@
 import dateFormat from 'dateformat'
 import { Calendar } from 'calendar'
-import ms from 'ms'
 import React, { Fragment } from 'react'
 import styled from 'styled-components'
 
-import { List, ContextMenu } from 'ui/elements'
+import { ContextMenu } from 'ui/elements'
 import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from 'ui/icons'
 import { TextLine } from 'ui/typo'
 
@@ -45,7 +44,7 @@ const DisableState = styled.div`
 const renderOptions = () => {
 
   return (
-    <CalendarWrapper />
+    <CalendarWrapper inputDate={ null }/>
   )
 }
 
@@ -74,6 +73,17 @@ const ToDay = styled.span`
   font-weight: bold;
 `
 
+const DisableDay = styled.span`
+  color: #e6e6e6;
+`
+
+const isDateOfOtherMonth = (compareDate, currentDate) => {
+  const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1)
+  const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0)
+
+  return Date.parse(compareDate) < Date.parse(firstDayOfMonth) || Date.parse(compareDate) > Date.parse(lastDayOfMonth)
+}
+
 const HeaderCalendar = styled.div`
   display: grid;
   & > * {
@@ -86,15 +96,19 @@ const HeaderCalendar = styled.div`
   text-align: center;
 `
 
-const CalendarWrapper = () => {
+const CalendarWrapper = ({ inputDate }) => {
   const today = new Date()
   const weekDays = [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' ]
   const weekends = [ 6, 0 ]
 
+  const selectedDate = inputDate ? inputDate : today
+
   const cal = new Calendar(1)
-  const thisMonth = today.getMonth()
-  const thisYear = today.getFullYear()
-  const monthDates = cal.monthDates(thisYear, thisMonth)
+
+  const selectedMonth = selectedDate.getMonth()
+  const selectedYear = selectedDate.getFullYear()
+  const monthDates = cal.monthDates(selectedYear, selectedMonth)
+
   const mergedDates = weekDays.concat(...monthDates)
 
   return (
@@ -103,7 +117,7 @@ const CalendarWrapper = () => {
         <ChevronLeftIcon />
         <TextLine>
           {
-            dateFormat(today, 'mmm, yyyy')
+            dateFormat(selectedDate, 'mmm, yyyy')
           }
         </TextLine>
         <ChevronRightIcon />
@@ -112,20 +126,25 @@ const CalendarWrapper = () => {
         {
           mergedDates.map(
             (date, index) => {
-
+              // return day of week
               if (weekDays.some((weekDay) => weekDay === date)) {
-                return <WeekDay key={ index }>{ date }</WeekDay>
+                return <WeekDay key={ index } value={ date }>{ date }</WeekDay>
+              }
+
+              // Format for other day of current month in calendar
+              if (isDateOfOtherMonth(date, selectedDate)) {
+                return <DisableDay key={ index } value={ date }>{ date.getDate() }</DisableDay>
               }
 
               if (date.toLocaleDateString() === today.toLocaleDateString()) {
-                return <ToDay key={ index }>{ date.getDate() }</ToDay>
+                return <ToDay key={ index } value={ date }>{ date.getDate() }</ToDay>
               }
 
               if (weekends.some((weekend) => weekend === date.getDay())) {
-                return <Weekend key={ index }>{ date.getDate() }</Weekend>
+                return <Weekend key={ index } value={ date }>{ date.getDate() }</Weekend>
               }
 
-              return <span key={ index }>{ date.getDate() }</span>
+              return <span key={ index } value={ date }>{ date.getDate() }</span>
             }
           )
         }
@@ -136,33 +155,36 @@ const CalendarWrapper = () => {
 
 const DatePicker = ({
   disabled,
-  options,
-  active, value,
-  onBlur, onChange, onFocus,
-}) => (
-  <Wrapper>
-    <Input>
-      <TextLine mostLeft>
-        <DisableState disabled={ disabled }>
-        10/26/2018
-        </DisableState>
-      </TextLine>
-      <ContextMenu.Menu
-        disabled={ disabled }
-        icon={ () => (
+  //options,
+  active,
+  //value,
+  onBlur, onFocus
+}) => {
+  return (
+    <Wrapper>
+      <Input>
+        <TextLine mostLeft>
           <DisableState disabled={ disabled }>
-            <CalendarIcon />
+          10/26/2018
           </DisableState>
-        ) }
-        content={ renderOptions }
-        stateless={ true }
-        isActive={ active }
-        activate={ onFocus }
-        deactivate={ onBlur }
-      />
-    </Input>
-    <Indicator disabled={ disabled } />
-  </Wrapper>
-)
+        </TextLine>
+        <ContextMenu.Menu
+          disabled={ disabled }
+          icon={ () => (
+            <DisableState disabled={ disabled }>
+              <CalendarIcon />
+            </DisableState>
+          ) }
+          content={ renderOptions }
+          stateless={ true }
+          isActive={ active }
+          activate={ onFocus }
+          deactivate={ onBlur }
+        />
+      </Input>
+      <Indicator disabled={ disabled } />
+    </Wrapper>
+  )
+}
 
 export default DatePicker
