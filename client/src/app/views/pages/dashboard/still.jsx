@@ -3,15 +3,18 @@ import MediaQuery from 'react-responsive'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
-import { mapDispatch } from 'services/redux-helpers'
-import { actions } from 'state/interface'
+import { mapDispatch, mapState } from 'services/redux-helpers'
+import { actions, selectors } from 'state/interface'
 import { MenuIcon } from 'ui/icons'
 import { PageTitle } from 'ui/typo'
 
-const Dashboard = ({ maximizeSidebar }) => (
+const Dashboard = ({ maximizeSidebar, openSidebar }) => (
   <Fragment>
     <MediaQuery query='(max-device-width: 599px)'>
-      <MenuIcon onClick={ maximizeSidebar } />
+      { openSidebar ?
+          <div></div> :
+          <MenuIcon onClick={ maximizeSidebar } />
+      }
     </MediaQuery>
     <MediaQuery query='(min-device-width: 600px)'>
       <div></div>
@@ -21,7 +24,9 @@ const Dashboard = ({ maximizeSidebar }) => (
 )
 
 export default connect(
-  null,
+  mapState({
+    openSidebar: selectors.maximizeSidebar
+  }),
   mapDispatch({
     maximizeSidebar: actions.maximizeSidebar
   })

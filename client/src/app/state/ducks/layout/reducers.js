@@ -8,9 +8,9 @@ export default combineReducers({
     [ types.CLOSE ]: () => true,
     [ types.OPEN ]: () => false
   }),
-  sidebar: createReducer(false)({
+  sidebarMinimized: createReducer(false)({
     [ types.MAXIMIZE_SIDEBAR ]: () => false,
-    [ types.MINIMIZE_SIDEBAR ]: () => true
+    [ types.MINIMIZE_SIDEBAR ]: () => false
   }),
   stillHeight: createReducer(0)({
     [ types.UPDATE_STILL_HEIGHT ]: (state, action) => action.payload.height

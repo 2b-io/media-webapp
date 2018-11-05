@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import styled, { keyframes } from 'styled-components'
 
 import { Badge, Identicon, List } from 'ui/elements'
-import { MenuIcon } from 'ui/icons'
+import { CloseIcon } from 'ui/icons'
 import { DescriptionTextLine, TextLine } from 'ui/typo'
 
 import {
@@ -43,7 +43,6 @@ const Surface = styled.div`
       'translate3d(-100%, 0, 0)'
   };
   transition: transform .3s ${ easingFunc };
-  border-right: solid 1px rgb(17,17,17);
 `
 
 const MenuButton = styled.button`
@@ -149,7 +148,7 @@ const Sidebar = ({
     <Fragment>
       <Surface open={ open }>
         <MenuButton onClick={ minimizeSidebar }>
-          <MenuIcon />
+          <CloseIcon />
         </MenuButton>
         <Content>
           { currentAccount && (

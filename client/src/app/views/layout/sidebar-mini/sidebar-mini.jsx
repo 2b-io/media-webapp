@@ -29,7 +29,6 @@ const Surface = styled.div`
   };
   z-index: 1;
   transition: transform .3s ${ easingFunc };
-  border-right: solid 1px rgb(17,17,17);
   @media (max-width: 599px) {
     display: none;
   }
@@ -55,7 +54,7 @@ const MenuButton = styled.button`
 const Content = styled.div`
   display: grid;
   grid-template-rows: min-content 1fr;
-  grid-row-gap: 16px;
+  grid-row-gap: 40px;
   height: 100%;
 
   & > * {
