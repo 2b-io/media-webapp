@@ -41,19 +41,14 @@ const DisableState = styled.div`
   };
 `
 
-const OptionLabel = styled.span`
-  color: ${
-    ({ selected, theme }) => selected ? theme.primary.base : theme.black.base
-  };
-`
-
 const renderOptions = (options, currentValue, onChoose) => {
   const items = options.map(
     ({ label, value }) => ({
       key: value,
       content: () => (
-        <TextLine mostLeft mostRight>
-          <OptionLabel selected={ value === currentValue }>{ label }</OptionLabel>
+        <TextLine mostLeft mostRight
+          variant={ value === currentValue ? 'primary' : null }>
+          { label }
         </TextLine>
       ),
       onClick: () => onChoose(value)
