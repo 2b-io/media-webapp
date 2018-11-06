@@ -77,7 +77,7 @@ const AreaChartWrapper = ({
         activeDot={ { r: 8 } }
         dataKey={ valueKey }
         name={ name }
-        stroke={ AREA_CHART_STYLE.color.lines[0] }
+        stroke="none"
         type={ type }
       />
       <Legend
