@@ -2,6 +2,7 @@ import ms from 'ms'
 import { fork, put, select, take } from 'redux-saga/effects'
 import serializeError from 'serialize-error'
 
+import dateTimeService from 'services/date-time'
 import { actions, types, selectors } from 'state/interface'
 
 import Metric from 'models/metric'
@@ -53,7 +54,7 @@ const generateUsageReportLoop = function*() {
         projectIdentifier,
         period: granularity === 'daily' ? ms('1d') / 1000 : ms('1h') / 1000, //86400s : 3600s
         startTime: startDate,
-        endTime: endDate
+        endTime: dateTimeService.getEndOfUTCDay(new Date(endDate))
       }, {
         token: session.token
       })
