@@ -5,6 +5,12 @@ import dataFormat from 'services/data-format'
 import { AreaChart, Break } from 'ui/elements'
 import { DescriptionTextLine, TextLine } from 'ui/typo'
 
+const AreaChartDetail = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+`
+
 const Analysis = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -107,8 +113,8 @@ const _CustomizedYAxisTick = ({
 }) => (
   <g transform={ `translate(${ x },${ y })` } className={ className }>
     <text
-      x={ -16 } y={ 0 } dy={ 8 }
-      textAnchor="middle"
+      x={ -8 } y={ 0 } dy={ 8 }
+      textAnchor="end"
       fill="currentColor"
     >
       {
@@ -157,11 +163,14 @@ const UsageReportChart = ({
             customXAxisTick={ renderXAxisTick(period) }
             customYAxisTick={ renderYAxisTick(dataFormat.formatSize) }
           />
-          <Analysis>
-            <TextLine mostLeft mostRight>
-              Total Bytes: { dataFormat.formatSize(usageData.totalBytes) }
-            </TextLine>
-          </Analysis>
+          <AreaChartDetail>
+            <DescriptionTextLine>Time UTC</DescriptionTextLine>
+            <Analysis>
+              <TextLine mostLeft mostRight>
+                Total Bytes: { dataFormat.formatSize(usageData.totalBytes) }
+              </TextLine>
+            </Analysis>
+          </AreaChartDetail>
           <Break />
         </Fragment>
     }
@@ -179,20 +188,23 @@ const UsageReportChart = ({
             customXAxisTick={ renderXAxisTick(period) }
             customYAxisTick={ renderYAxisTick(dataFormat.formatNumber) }
           />
-          <Analysis>
-            <TextLine mostLeft mostRight>
-              Average: { dataFormat.formatNumber(requestData.average) }
-            </TextLine>
-            <TextLine mostLeft mostRight>
-              Total: { dataFormat.formatNumber(requestData.total) }
-            </TextLine>
-            <TextLine mostLeft mostRight>
-              Maximum: { dataFormat.formatNumber(requestData.maximum) }
-            </TextLine>
-            <TextLine mostLeft mostRight>
-              Minimum: { dataFormat.formatNumber(requestData.minimum) }
-            </TextLine>
-          </Analysis>
+          <AreaChartDetail>
+            <DescriptionTextLine>Time UTC</DescriptionTextLine>
+            <Analysis>
+              <TextLine mostLeft mostRight>
+                Average: { dataFormat.formatNumber(requestData.average) }
+              </TextLine>
+              <TextLine mostLeft mostRight>
+                Total: { dataFormat.formatNumber(requestData.total) }
+              </TextLine>
+              <TextLine mostLeft mostRight>
+                Maximum: { dataFormat.formatNumber(requestData.maximum) }
+              </TextLine>
+              <TextLine mostLeft mostRight>
+                Minimum: { dataFormat.formatNumber(requestData.minimum) }
+              </TextLine>
+            </Analysis>
+          </AreaChartDetail>
           <Break />
         </Fragment>
     }

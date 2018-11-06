@@ -116,6 +116,7 @@ const HeaderCalendar = styled.div`
   line-height: 40px;
   margin: 0 auto;
   text-align: center;
+  user-select: none;
 `
 
 const isSelectableDate = (date, selectedView, today, maxDay, minDay) => {
