@@ -17,9 +17,11 @@ export const font = ({ bold, size, variant, theme }) => css`
   line-height: 24px;
   ${ bold && 'font-weight: bold;' }
   color: ${
-    variant === 'error' ? theme.error.base : (
-      variant === 'secondary' ? theme.secondary.base :
-        'inherit'
+    variant === 'primary' ? theme.primary.base : (
+      variant === 'error' ? theme.error.base : (
+        variant === 'secondary' ? theme.secondary.base :
+          'inherit'
+      )
     )
   };
 `
