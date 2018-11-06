@@ -83,7 +83,7 @@ const CalendarDate = styled.span`
         return theme.secondary.base
       }
 
-      return '#111111'
+      return theme.black.base
     }
   };
   cursor: ${ ({ selectable }) => selectable ? 'pointer' : 'unset' };
@@ -102,28 +102,21 @@ const HeaderCalendar = styled.div`
   user-select: none;
 `
 
-const isSelectableDate = (date, selectedView, today, maxDay, minDay) => {
-  const firstDayOfMonth = new Date(selectedView.getFullYear(), selectedView.getMonth(), 1)
-  const lastDayOfMonth = new Date(selectedView.getFullYear(), selectedView.getMonth() + 1, 0)
-
-  const isDateOfOtherMonth = Date.parse(firstDayOfMonth) > Date.parse(date) ||
-    Date.parse(date) > Date.parse(lastDayOfMonth)
-
-  if (isDateOfOtherMonth) {
+const checkSelectable = (date, firstDayInMonth, lastDayInMonth, max, min) => {
+  if (date < firstDayInMonth || lastDayInMonth < date) {
     return false
   }
 
-  if (maxDay && minDay) {
-    return Date.parse(date) >= Date.parse(today) - minDay &&
-      Date.parse(today) + maxDay >= Date.parse(date)
+  if (min && max) {
+    return min <= date && date <= max
   }
 
-  if (maxDay) {
-    return Date.parse(today) + maxDay >= Date.parse(date)
+  if (min) {
+    return date >= min
   }
 
-  if (minDay) {
-    return Date.parse(today) - minDay <= Date.parse(date)
+  if (max) {
+    return date <= max
   }
 
   return true
@@ -134,8 +127,8 @@ const isSameDate = (date, otherDate) => date.toLocaleDateString() === otherDate.
 const isWeekend = (date) => WEEKDAYS[ dataFormat.formatTime(date, 'UTC:ddd') ].isWeekend
 
 const CalendarWrapper = ({
-  maxDay,
-  minDay,
+  max,
+  min,
   next,
   onChoose,
   prev,
@@ -143,7 +136,9 @@ const CalendarWrapper = ({
   selectedYear,
   value
 }) => {
-  const selectedView = new Date(Date.UTC(selectedYear, selectedMonth, 1, 0, 0, 0))
+  const selectedView = new Date(
+    Date.UTC(selectedYear, selectedMonth, 1, 0, 0, 0)
+  )
   const today = new Date()
 
   const cal = new Calendar(1)
@@ -152,10 +147,17 @@ const CalendarWrapper = ({
     date => new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0))
   )
 
+  const firstDayInMonth = new Date(
+    Date.UTC(selectedYear, selectedMonth, 1, 0, 0, 0)
+  )
+  const lastDayInMonth = new Date(
+    Date.UTC(selectedYear, selectedMonth + 1, 0, 0, 0)
+  )
+
   const allDates = mergedDates.map(
     (date) => ({
       date,
-      selectable: isSelectableDate(date, selectedView, today, maxDay, minDay),
+      selectable: checkSelectable(date, firstDayInMonth, lastDayInMonth, max, min),
       isToday: isSameDate(date, today),
       isValue: isSameDate(date, new Date(value)),
       isWeekend: isWeekend(date)
@@ -208,10 +210,10 @@ const CalendarWrapper = ({
   )
 }
 
-const renderOptions = (value, maxDay, minDay, { month, year }, onChoose, next, prev) => (
+const renderOptions = (value, max, min, { month, year }, onChoose, next, prev) => (
   <CalendarWrapper
-    maxDay={ maxDay }
-    minDay={ minDay }
+    max={ max }
+    min={ min }
     next={ next }
     onChoose={ onChoose }
     prev={ prev }
@@ -278,7 +280,7 @@ class DatePicker extends Component {
     const {
       disabled,
       active,
-      maxDay, minDay,
+      max, min,
       value,
       onBlur, onChange, onFocus
     } = this.props
@@ -298,7 +300,7 @@ class DatePicker extends Component {
                 <CalendarIcon />
               </DisableState>
             ) }
-            content={ () => renderOptions(value, maxDay, minDay, this.state, (...args) => {
+            content={ () => renderOptions(value, max, min, this.state, (...args) => {
               onChange(...args)
               onBlur()
             }, this.changeMonth(1), this.changeMonth(-1)) }

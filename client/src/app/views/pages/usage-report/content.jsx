@@ -1,6 +1,6 @@
 import ms from 'ms'
 import React from 'react'
-import { reduxForm } from 'redux-form'
+import { formValueSelector, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
 import dateTimeService from 'services/date-time'
@@ -30,13 +30,17 @@ const DATA_DEFAULT = {
 }
 
 const UsageReportForm = reduxForm({
-  form: 'usageReportForm',
+  form: 'USAGE_REPORT_FORM',
   enableReinitialize: true
 })(_UsageReportForm)
+
+const formSelector = formValueSelector('USAGE_REPORT_FORM')
 
 const UsageReport = ({
   generateUsageReport,
   projects,
+  startDate,
+  endDate,
   ui: {
     data,
     idle,
@@ -69,6 +73,7 @@ const UsageReport = ({
           projects: projectsSelectData,
           granularity: DATA_DEFAULT.granularity
         } }
+        currentDateRange={ { startDate, endDate } }
       />
       <Break double />
       <UsageReportChart
@@ -90,7 +95,9 @@ export default connect(
     }
 
     return {
-      projects
+      projects,
+      startDate: formSelector(state, 'startDate'),
+      endDate: formSelector(state, 'endDate')
     }
   },
   mapDispatch({
