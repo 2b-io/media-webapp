@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import styled, { keyframes } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 
 import { Badge, Identicon, List } from 'ui/elements'
 import { DescriptionTextLine, TextLine } from 'ui/typo'
@@ -9,6 +9,7 @@ import {
   BillingIcon,
   CloseIcon,
   DashboardIcon,
+  MenuIcon,
   PaymentIcon,
   ProjectListIcon,
   SignOutIcon
@@ -27,7 +28,21 @@ const fadeIn = keyframes`
 
 const Surface = styled.div`
   position: absolute;
-  width: 280px;
+  overflow: hidden;
+  width: ${
+    ({ open }) => open ?
+      '280px' :
+      '0'
+  };
+
+  @media (min-width: 600px) {
+    width: ${
+      ({ open }) => open ?
+        '280px' :
+        '40px'
+    };
+  }
+
   top: 0;
   bottom: 0;
   left: 0;
@@ -38,12 +53,7 @@ const Surface = styled.div`
     ({ theme }) => theme.white.on.base
   };
   z-index: 1;
-  transform: ${
-    ({ open }) => open ?
-      'translate3d(0, 0, 0)' :
-      'translate3d(-100%, 0, 0)'
-  };
-  transition: transform .3s ${ easingFunc };
+  transition: width .3s ${ easingFunc };
 `
 
 const MenuButton = styled.button`
@@ -102,19 +112,44 @@ const UserAvatar = styled.div`
   color: ${
     ({ theme }) => theme.white.on.base
   };
-  width: 64px;
-  height: 64px;
-  bottom: 8px;
-  left: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
+  transition:
+    width .3s ${ easingFunc },
+    height .3s ${ easingFunc },
+    left .3s ${ easingFunc },
+    bottom .3s ${ easingFunc };
+
+  width: 64px;
+  height: 64px;
+  left: 8px;
+  bottom: 8px;
+
+  @media (min-width: 600px) {
+    ${
+      ({ open }) => open ?
+        css`
+          width: 64px;
+          height: 64px;
+          left: 8px;
+          bottom: 8px;
+        ` :
+        css `
+          width: 40px;
+          height: 40px;
+          left: 0px;
+          bottom: 8px;
+        `
+    }
+  }
 `
 
 const Sidebar = ({
   currentAccount = {},
   minimizeSidebar,
+  maximizeSidebar,
   open,
   projectCount = 0,
   signOut,
@@ -153,8 +188,8 @@ const Sidebar = ({
   return (
     <Fragment>
       <Surface open={ open }>
-        <MenuButton onClick={ minimizeSidebar }>
-          <CloseIcon />
+        <MenuButton onClick={ open ? minimizeSidebar : maximizeSidebar }>
+          { open ? <CloseIcon /> : <MenuIcon /> }
         </MenuButton>
         <Content>
           { currentAccount && (
@@ -169,9 +204,11 @@ const Sidebar = ({
                   { currentAccount.email }
                 </DescriptionTextLine>
               </UserEmail>
-              <UserAvatar onClick={ () => toProfile(currentAccount.identifier) }>
+              <UserAvatar
+                open={ open }
+                onClick={ () => toProfile(currentAccount.identifier) }>
                 <Identicon circle
-                  size={ 56 }
+                  size={ open ? 56 : 32 }
                   id={ currentAccount.email }
                 />
               </UserAvatar>

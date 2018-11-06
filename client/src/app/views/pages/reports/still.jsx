@@ -3,12 +3,12 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
-import { MenuIcon } from 'ui/icons'
 import { PageTitle } from 'ui/typo'
+import { MenuButton } from 'views/common/compounds'
 
 const Reports = ({ maximizeSidebar }) => (
   <Fragment>
-    <MenuIcon onClick={ maximizeSidebar } />
+    <MenuButton onClick={ maximizeSidebar } />
     <PageTitle>Reports</PageTitle>
   </Fragment>
 )

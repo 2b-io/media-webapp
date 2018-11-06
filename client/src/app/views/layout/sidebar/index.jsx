@@ -13,6 +13,7 @@ export default connect(
   }),
   mapDispatch({
     minimizeSidebar: actions.minimizeSidebar,
+    maximizeSidebar: actions.maximizeSidebar,
     signOut: () => actions.closeLayout(),
     toDashboard: () => actions.requestLocation('/'),
     toProfile: (identifier) => actions.requestLocation(`/@${ identifier }`),
