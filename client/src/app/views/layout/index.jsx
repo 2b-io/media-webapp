@@ -12,6 +12,8 @@ import Sidebar from './sidebar'
 
 import Toast from './toast'
 
+const easingFunc = 'cubic-bezier(.4, 0, .2, 1)'
+
 const Surface = styled.main`
   display: grid;
   grid-template-columns: 100%;
@@ -19,6 +21,28 @@ const Surface = styled.main`
   height: 100%;
   position: relative;
   z-index: 0;
+  transition:
+    transform .3s ${ easingFunc },
+    margin-left .3s ${ easingFunc };
+
+  margin-left: 0;
+  transform: ${
+    ({ maximizeSidebar }) => maximizeSidebar ?
+      'translateX(280px)' :
+      'translateX(0)'
+  };
+
+  @media (min-width: 600px) {
+    margin-left: ${
+      ({ isLayoutClosed }) => isLayoutClosed ? '0' : '40px'
+    };
+
+    transform: ${
+      ({ maximizeSidebar }) => maximizeSidebar ?
+        'translateX(240px)' :
+        'translateX(0)'
+    };
+  }
 `
 
 const LogoWrapper = styled.div`
@@ -28,17 +52,19 @@ const LogoWrapper = styled.div`
 
 const Layout = ({
   isLayoutClosed,
+  maximizeSidebar,
   render,
   ...props
 }) => (
   <Fragment>
-    <Surface>
-      { !isLayoutClosed && (
-        <Header className="header">
-          { render.still(props) }
-        </Header>
-      ) }
-      <Body className="body">
+    { !isLayoutClosed && <Sidebar /> }
+    <Surface
+      isLayoutClosed={ isLayoutClosed }
+      maximizeSidebar={ maximizeSidebar }>
+      <Header className='header'>
+        { render.still(props) }
+      </Header>
+      <Body className='body'>
         { isLayoutClosed &&
           <Fragment>
             <LogoWrapper>
@@ -52,12 +78,12 @@ const Layout = ({
       </Body>
     </Surface>
     <Toast />
-    { !isLayoutClosed && <Sidebar /> }
   </Fragment>
 )
 
 export default connect(
   state => ({
+    maximizeSidebar: selectors.maximizeSidebar(state),
     isLayoutClosed: selectors.isLayoutClosed(state)
   })
 )(Layout)

@@ -1,6 +1,7 @@
 export default {
   isLayoutClosed: state => state.closed,
-  isSidebarOpen: state => state.sidebar,
+  minimizeSidebar: state => state.sidebarMinimized,
+  maximizeSidebar: state => state.sidebarMaximized,
   menuWidth: state => state.menuWidth,
   stillHeight: state => state.stillHeight
 }

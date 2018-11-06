@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { ContextMenu, List } from 'ui/elements'
-import { MenuIcon } from 'ui/icons'
 import { Text } from 'ui/typo'
+import { MenuButton } from 'views/common/compounds'
 
 import Top from './top'
 
@@ -30,7 +30,7 @@ const Profile = ({
 
   return (
     <Fragment>
-      <MenuIcon onClick={ maximizeSidebar } />
+      <MenuButton onClick={ maximizeSidebar } />
       <Top account={ account } />
       { account && session && session.account &&
         account.identifier === session.account.identifier && (
@@ -56,7 +56,8 @@ export default connect(
         identifier,
         selectors.currentSession(state)
       ),
-      session: selectors.currentSession(state)
+      session: selectors.currentSession(state),
+      openSidebar: selectors.maximizeSidebar(state)
     }
   },
   mapDispatch({

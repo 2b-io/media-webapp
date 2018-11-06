@@ -2,6 +2,8 @@ import md5 from 'md5'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
+const easingFunc = 'cubic-bezier(.4, 0, .2, 1)'
+
 const StyledIdenticon = styled.img`
   display: inline-block;
   ${
@@ -15,6 +17,9 @@ const StyledIdenticon = styled.img`
       border-radius: 50%;
     ` : null
   }
+  transition:
+    width .3s ${ easingFunc },
+    height .3s ${ easingFunc };
 `
 
 const src = (id, size) => `https://www.gravatar.com/avatar/${md5(id)}?d=identicon&f=y&s=${size}`

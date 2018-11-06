@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 
-import { mapDispatch } from 'services/redux-helpers'
-import { actions } from 'state/interface'
+import { mapDispatch, mapState } from 'services/redux-helpers'
+import { actions, selectors } from 'state/interface'
+import { MenuButton } from 'views/common/compounds'
 
 import {
   FilterIcon,
-  MenuIcon,
   EyeIcon,
   EyeOffIcon,
   SortAscIcon,
@@ -32,7 +32,7 @@ const ProjectList = ({
   }
 }) => (
   <Fragment>
-    <MenuIcon onClick={ maximizeSidebar } />
+    <MenuButton onClick={ maximizeSidebar } />
     <PageTitle>Projects</PageTitle>
     <ContextMenu.Menu
       stateless={ true }
@@ -77,7 +77,9 @@ const ProjectList = ({
 )
 
 export default connect(
-  null,
+  mapState({
+    openSidebar: selectors.maximizeSidebar
+  }),
   mapDispatch({
     sortProjects: actions.sortProjects,
     toggleDisabledProjects: actions.toggleDisabledProjects,
