@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import MediaQuery from 'react-responsive'
 import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
@@ -12,6 +13,7 @@ import Top from './top'
 const Profile = ({
   account,
   session,
+  openSidebar,
   maximizeSidebar,
   toEditProfile,
   toChangePassword,
@@ -30,7 +32,15 @@ const Profile = ({
 
   return (
     <Fragment>
-      <MenuIcon onClick={ maximizeSidebar } />
+      <MediaQuery query='(max-device-width: 599px)'>
+        { openSidebar ?
+          <div></div> :
+          <MenuIcon onClick={ maximizeSidebar } />
+        }
+      </MediaQuery>
+      <MediaQuery query='(min-device-width: 600px)'>
+        <div></div>
+      </MediaQuery>
       <Top account={ account } />
       { account && session && session.account &&
         account.identifier === session.account.identifier && (
@@ -56,7 +66,8 @@ export default connect(
         identifier,
         selectors.currentSession(state)
       ),
-      session: selectors.currentSession(state)
+      session: selectors.currentSession(state),
+      openSidebar: selectors.maximizeSidebar(state)
     }
   },
   mapDispatch({

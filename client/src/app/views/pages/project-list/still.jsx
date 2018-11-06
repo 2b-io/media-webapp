@@ -1,8 +1,9 @@
 import React, { Fragment } from 'react'
+import MediaQuery from 'react-responsive'
 import { connect } from 'react-redux'
 
-import { mapDispatch } from 'services/redux-helpers'
-import { actions } from 'state/interface'
+import { mapDispatch, mapState } from 'services/redux-helpers'
+import { actions, selectors } from 'state/interface'
 
 import {
   FilterIcon,
@@ -20,6 +21,7 @@ import { ContextMenu, List } from 'ui/elements'
 import { PageTitle, TextLine } from 'ui/typo'
 
 const ProjectList = ({
+  openSidebar,
   maximizeSidebar,
   sortProjects,
   toggleDisabledProjects,
@@ -32,7 +34,15 @@ const ProjectList = ({
   }
 }) => (
   <Fragment>
-    <MenuIcon onClick={ maximizeSidebar } />
+    <MediaQuery query='(max-device-width: 599px)'>
+      { openSidebar ?
+        <div></div> :
+        <MenuIcon onClick={ maximizeSidebar } />
+      }
+    </MediaQuery>
+    <MediaQuery query='(min-device-width: 600px)'>
+      <div></div>
+    </MediaQuery>
     <PageTitle>Projects</PageTitle>
     <ContextMenu.Menu
       stateless={ true }
@@ -77,7 +87,9 @@ const ProjectList = ({
 )
 
 export default connect(
-  null,
+  mapState({
+    openSidebar: selectors.maximizeSidebar
+  }),
   mapDispatch({
     sortProjects: actions.sortProjects,
     toggleDisabledProjects: actions.toggleDisabledProjects,
