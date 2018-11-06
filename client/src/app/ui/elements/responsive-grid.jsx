@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { Component } from 'react'
+import ContainerDimensions from 'react-container-dimensions'
 import styled, { css } from 'styled-components'
 
 const generateTemplateColumns = (name) => css`
@@ -23,6 +24,12 @@ const Container = styled.div`
     min-height: 0;
   }
 
+  ${
+    ({ height = 'fixed' }) => height === 'auto' && css`
+      grid-auto-rows: 16px;
+    `
+  }
+
   @media (min-width: 320px) {
     ${ generateTemplateColumns('phone') }
   }
@@ -43,36 +50,89 @@ const Container = styled.div`
     ${ generateTemplateColumns('2k') }
   }
 `
-const Item = styled.div``
 
-const ResponsiveGrid = ({ items, breakpoints, direction }) => {
-  if (!items.length) {
-    return null
+const Item = styled.div`
+  background: ${ ({ theme }) => theme.white.base };
+`
+
+class ResponsiveGrid extends Component {
+  constructor(...args) {
+    super(...args)
+
+    this._items = {}
   }
 
-  return (
-    <Container breakpoints={ breakpoints } direction={ direction }>
-      {
-        items.map(
-          (item, index) => {
-            const { key, content } = item
+  renderContent(key, content) {
+    return ({ width, height }) => {
+      const item = this._items[ key ]
 
-            if (!content) {
-              return null
-            }
+      if (!item) {
+        return
+      }
 
-            return (
-              <Item
-                key={ key || index }
-              >
-                { content() }
-              </Item>
+      const rowSpan = Math.ceil((height + 16) / (16 + 16))
+
+      item.style.gridRowEnd = `span ${ rowSpan }`
+
+      return content()
+    }
+  }
+
+  renderAutoItem(index, { key, content }) {
+    return (
+      <Item key={ key || index } innerRef={ e => this._items[ key || index ] = e }>
+        <div>
+          <ContainerDimensions key={ key || index }>
+            { this.renderContent(key || index, content) }
+          </ContainerDimensions>
+        </div>
+      </Item>
+    )
+  }
+
+  renderFixedItem(index, { key, content }) {
+    return (
+      <Item key={ key || index }>
+        { content() }
+      </Item>
+    )
+  }
+
+  renderContainer({ items, breakpoints, direction, height = 'fixed' }) {
+    return () => {
+      return (
+        <Container breakpoints={ breakpoints } direction={ direction }>
+          {
+            items.map(
+              (item, index) => {
+                const { key, content } = item
+
+                if (!content) {
+                  return null
+                }
+
+                if (height === 'auto') {
+                  return this.renderAutoItem(index, item)
+                }
+
+                return this.renderFixedItem(index, item)
+              }
             )
           }
-        )
-      }
-    </Container>
-  )
+        </Container>
+      )
+    }
+  }
+
+  render() {
+    const { items } = this.props
+
+    if (!items.length) {
+      return null
+    }
+
+    return this.renderContainer(this.props)()
+  }
 }
 
 export default ResponsiveGrid
