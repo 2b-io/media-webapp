@@ -6,11 +6,11 @@ import { DescriptionTextLine, TextLine } from 'ui/typo'
 
 import {
   ActivityIcon,
-  BillingIcon,
+  // BillingIcon,
   CloseIcon,
   DashboardIcon,
   MenuIcon,
-  PaymentIcon,
+  // PaymentIcon,
   ProjectListIcon,
   SignOutIcon
 } from 'ui/icons'
@@ -164,12 +164,12 @@ const Sidebar = ({
     onClick: toReportPage,
     leading: () => <ActivityIcon />,
     content: () => <TextLine mostRight>Reports</TextLine>
-  }, {
-    leading: () => <BillingIcon />,
-    content: () => <TextLine mostRight>Billing</TextLine>
-  }, {
-    leading: () => <PaymentIcon />,
-    content: () => <TextLine mostRight>Payment Methods</TextLine>
+  // }, {
+  //   leading: () => <BillingIcon />,
+  //   content: () => <TextLine mostRight>Billing</TextLine>
+  // }, {
+  //   leading: () => <PaymentIcon />,
+  //   content: () => <TextLine mostRight>Payment Methods</TextLine>
   }, {
     onClick: signOut,
     leading: () => <SignOutIcon />,
