@@ -53,8 +53,8 @@ const renderTooltip = (period, format) => ({ payload, label }) => (
         {
           `Date: ${
             period === 'hourly' ?
-              dataFormat.formatTime(label, 'mmm, dd, HH:MM') :
-              dataFormat.formatTime(label, 'mmm, dd')
+              dataFormat.formatTime(label, 'UTC:mmm, dd, HH:MM', true) :
+              dataFormat.formatTime(label, 'UTC:mmm, dd', true)
           }`
         }
       </DescriptionTextLine>
@@ -76,13 +76,13 @@ const _CustomizedXAxisTick = ({
   <g transform={ `translate(${ x },${ y })` } className={ className }>
     <text x={ 0 } y={ 0 } dy={ 16 } textAnchor="middle" fill="currentColor">
       {
-        dataFormat.formatTime(payload.value, 'mmm, dd')
+        dataFormat.formatTime(payload.value, 'UTC:mmm, dd')
       }
     </text>
     { period === 'hourly' &&
       <text x={ 0 } y={ 0 } dy={ 32 } textAnchor="middle" fill="currentColor">
         {
-          dataFormat.formatTime(payload.value, 'HH:MM')
+          dataFormat.formatTime(payload.value, 'UTC:HH:MM')
         }
       </text>
     }
