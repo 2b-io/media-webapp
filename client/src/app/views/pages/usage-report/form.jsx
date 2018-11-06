@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Break, Button, Form } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
-import { DatePicker, Select, TextBox } from 'views/common/form'
+import { DatePicker, Select } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
 const UsageReportForm = ({

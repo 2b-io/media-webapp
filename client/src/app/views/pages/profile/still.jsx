@@ -12,7 +12,6 @@ import Top from './top'
 const Profile = ({
   account,
   session,
-  openSidebar,
   maximizeSidebar,
   toEditProfile,
   toChangePassword,

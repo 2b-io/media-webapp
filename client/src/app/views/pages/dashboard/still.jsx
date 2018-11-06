@@ -6,7 +6,7 @@ import { actions, selectors } from 'state/interface'
 import { PageTitle } from 'ui/typo'
 import { MenuButton } from 'views/common/compounds'
 
-const Dashboard = ({ maximizeSidebar, openSidebar }) => (
+const Dashboard = ({ maximizeSidebar }) => (
   <Fragment>
     <MenuButton onClick={ maximizeSidebar } />
     <PageTitle>Dashboard</PageTitle>

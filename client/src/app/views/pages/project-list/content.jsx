@@ -6,7 +6,6 @@ import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Card, ResponsiveGrid } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
-import { Text } from 'ui/typo'
 import { Project } from 'views/common/compounds'
 
 const Fab = styled.button`

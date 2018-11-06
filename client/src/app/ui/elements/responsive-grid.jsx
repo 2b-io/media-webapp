@@ -53,7 +53,7 @@ const ResponsiveGrid = ({ items, breakpoints, direction }) => {
   return (
     <Container breakpoints={ breakpoints } direction={ direction }>
       {
-         items.map(
+        items.map(
           (item, index) => {
             const { key, content } = item
 

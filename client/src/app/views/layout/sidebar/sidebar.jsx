@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react'
-import styled, { css, keyframes } from 'styled-components'
+import React from 'react'
+import styled, { css } from 'styled-components'
 
 import { Badge, Identicon, List } from 'ui/elements'
 import { DescriptionTextLine, TextLine } from 'ui/typo'
@@ -16,15 +16,6 @@ import {
 } from 'ui/icons'
 
 const easingFunc = 'cubic-bezier(.4, 0, .2, 1)'
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`
 
 const Surface = styled.div`
   position: absolute;
@@ -186,40 +177,38 @@ const Sidebar = ({
   } ]
 
   return (
-    <Fragment>
-      <Surface open={ open }>
-        <MenuButton onClick={ open ? minimizeSidebar : maximizeSidebar }>
-          { open ? <CloseIcon /> : <MenuIcon /> }
-        </MenuButton>
-        <Content>
-          { currentAccount && (
-            <Profile>
-              <UserName>
-                <TextLine mostLeft mostRight>
-                  { currentAccount.name }
-                </TextLine>
-              </UserName>
-              <UserEmail>
-                <DescriptionTextLine mostLeft mostRight>
-                  { currentAccount.email }
-                </DescriptionTextLine>
-              </UserEmail>
-              <UserAvatar
-                open={ open }
-                onClick={ () => toProfile(currentAccount.identifier) }>
-                <Identicon circle
-                  size={ open ? 56 : 32 }
-                  id={ currentAccount.email }
-                />
-              </UserAvatar>
-            </Profile>
-          ) }
-          <div className='menu'>
-            <List items={ menuItems } />
-          </div>
-        </Content>
-      </Surface>
-    </Fragment>
+    <Surface open={ open }>
+      <MenuButton onClick={ open ? minimizeSidebar : maximizeSidebar }>
+        { open ? <CloseIcon /> : <MenuIcon /> }
+      </MenuButton>
+      <Content>
+        { currentAccount && (
+          <Profile>
+            <UserName>
+              <TextLine mostLeft mostRight>
+                { currentAccount.name }
+              </TextLine>
+            </UserName>
+            <UserEmail>
+              <DescriptionTextLine mostLeft mostRight>
+                { currentAccount.email }
+              </DescriptionTextLine>
+            </UserEmail>
+            <UserAvatar
+              open={ open }
+              onClick={ () => toProfile(currentAccount.identifier) }>
+              <Identicon circle
+                size={ open ? 56 : 32 }
+                id={ currentAccount.email }
+              />
+            </UserAvatar>
+          </Profile>
+        ) }
+        <div className='menu'>
+          <List items={ menuItems } />
+        </div>
+      </Content>
+    </Surface>
   )
 }
 

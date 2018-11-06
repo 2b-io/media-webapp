@@ -27,7 +27,7 @@ const Surface = styled.main`
 
   margin-left: 0;
   transform: ${
-    ({ isLayoutClosed, maximizeSidebar }) => maximizeSidebar ?
+    ({ maximizeSidebar }) => maximizeSidebar ?
       'translateX(280px)' :
       'translateX(0)'
   };
@@ -38,7 +38,7 @@ const Surface = styled.main`
     };
 
     transform: ${
-      ({ isLayoutClosed, maximizeSidebar }) => maximizeSidebar ?
+      ({ maximizeSidebar }) => maximizeSidebar ?
         'translateX(240px)' :
         'translateX(0)'
     };
@@ -52,7 +52,6 @@ const LogoWrapper = styled.div`
 
 const Layout = ({
   isLayoutClosed,
-  minimizeSidebar,
   maximizeSidebar,
   render,
   ...props
@@ -84,7 +83,6 @@ const Layout = ({
 
 export default connect(
   state => ({
-    minimizeSidebar: selectors.minimizeSidebar(state),
     maximizeSidebar: selectors.maximizeSidebar(state),
     isLayoutClosed: selectors.isLayoutClosed(state)
   })

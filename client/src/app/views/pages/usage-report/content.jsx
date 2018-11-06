@@ -3,7 +3,6 @@ import React from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
-import dataFormat from 'services/data-format'
 import dateTimeService from 'services/date-time'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'

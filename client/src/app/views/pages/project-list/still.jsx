@@ -20,7 +20,6 @@ import { ContextMenu, List } from 'ui/elements'
 import { PageTitle, TextLine } from 'ui/typo'
 
 const ProjectList = ({
-  openSidebar,
   maximizeSidebar,
   sortProjects,
   toggleDisabledProjects,
