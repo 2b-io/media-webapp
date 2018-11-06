@@ -74,6 +74,7 @@ const watchUpdateCacheSetting = function*(path) {
 
     if (completed) {
       yield fork(addToast, {
+        expiring: '5s',
         type: 'success',
         message: 'Cache setting has been updated.'
       })

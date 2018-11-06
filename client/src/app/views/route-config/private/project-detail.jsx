@@ -136,6 +136,7 @@ const watchRemoveCollaborator = function*() {
 
     if (removeCompleted) {
       yield fork(addToast, {
+        expiring: '5s',
         type: 'success',
         message: isLeaveProject ?
           'Successfully left the project.' :
@@ -204,6 +205,7 @@ const watchMakeOwner = function*(path) {
     if (makeOwnerCompleted) {
       yield all([
         yield fork(addToast, {
+          expiring: '5s',
           type: 'success',
           message: 'The collaborator has been set to owner.'
         }),
@@ -231,6 +233,7 @@ const watchCreateSecretKey = function*() {
 
     if (createCompleted) {
       yield fork(addToast, {
+        expiring: '5s',
         type: 'success',
         message: 'A new API key created.'
       })
@@ -260,6 +263,7 @@ const watchUpdateSecretKey = function*() {
 
     if (updateCompleted) {
       yield fork(addToast, {
+        expiring: '5s',
         type: 'success',
         message: `Sucessfully ${ isActive ? 'enable' : 'disable' } the API key.`
       })
@@ -283,6 +287,7 @@ const watchRemoveSecretKey = function*() {
 
     if (removeCompleted) {
       yield fork(addToast, {
+        expiring: '5s',
         type: 'success',
         message: 'Sucessfully remove the API key.'
       })

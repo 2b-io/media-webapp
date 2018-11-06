@@ -4,9 +4,8 @@ import styled from 'styled-components'
 
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
-import { Card } from 'ui/elements'
+import { Card, ResponsiveGrid } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
-import { Text } from 'ui/typo'
 import { Project } from 'views/common/compounds'
 
 const Fab = styled.button`
@@ -43,16 +42,13 @@ const Layout = styled.section`
   background: #e6e6e6;
 `
 
-const Container = styled.div`
-  display: grid;
-  & > * {
-    min-height: 0;
-    min-width: 0;
-  }
-
-  grid-gap: 16px;
-  grid-template-columns: 100%;
-`
+const BREAK_POINTS = {
+  phone: 1,
+  tablet: 2,
+  laptop: 3,
+  desktop: 4,
+  otherwise: 5
+}
 
 const sortProjects = ({ type, ascending }, projects, currentAccountId) => {
   switch (type) {
@@ -111,22 +107,23 @@ const ProjectList = ({
 
   const cards = sortedProjects.map(
     project => (
-      <Card
-        key={ project.identifier }
-        onClick={ toProjectDetail.bind(null, project.identifier) }
-        content={ () => <Project project={ project } /> }
-      />
+      {
+        content: () => (
+          <Card
+            key={ project.identifier }
+            onClick={ toProjectDetail.bind(null, project.identifier) }
+            content={ () => <Project project={ project } /> }
+          />
+        )
+      }
     )
   )
-
   return (
     <Layout>
-      <Container>
-        { projects.length &&
-          cards ||
-          <Text>You do not have any projects yet.</Text>
-        }
-      </Container>
+      <ResponsiveGrid
+        breakpoints={ BREAK_POINTS }
+        items={ cards }
+      />
       <Fab onClick={ toCreateProject }>
         <AddIcon />
       </Fab>

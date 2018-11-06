@@ -1,20 +1,22 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 
-import { mapDispatch } from 'services/redux-helpers'
-import { actions } from 'state/interface'
-import { MenuIcon } from 'ui/icons'
+import { mapDispatch, mapState } from 'services/redux-helpers'
+import { actions, selectors } from 'state/interface'
 import { PageTitle } from 'ui/typo'
+import { MenuButton } from 'views/common/compounds'
 
 const Dashboard = ({ maximizeSidebar }) => (
   <Fragment>
-    <MenuIcon onClick={ maximizeSidebar } />
+    <MenuButton onClick={ maximizeSidebar } />
     <PageTitle>Dashboard</PageTitle>
   </Fragment>
 )
 
 export default connect(
-  null,
+  mapState({
+    openSidebar: selectors.maximizeSidebar
+  }),
   mapDispatch({
     maximizeSidebar: actions.maximizeSidebar
   })

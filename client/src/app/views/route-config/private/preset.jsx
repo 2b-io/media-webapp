@@ -104,6 +104,7 @@ const watchRemovePreset = function*(path) {
     if (removeCompleted) {
       yield all ([
         fork(addToast, {
+          expiring: '5s',
           type: 'success',
           message: 'Preset has been removed.'
         }),
@@ -166,6 +167,7 @@ const watchUpdatePreset = function*(path) {
 
     if (updateCompleted) {
       yield fork(addToast, {
+        expiring: '5s',
         type: 'success',
         message: 'Preset has been updated.'
       })

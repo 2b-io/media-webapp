@@ -28,6 +28,7 @@ import infrastructureService from 'services/infrastructure'
 import { Account } from '../Account'
 import { CacheSetting } from '../cache-setting'
 import { Collaborator } from '../Collaborator'
+import { Metric } from '../metric'
 import { Preset } from '../Preset'
 import { PushSetting } from '../push-setting'
 import { PullSetting } from '../pull-setting'
@@ -110,10 +111,10 @@ export default () => ({
     type: CacheSetting,
     resolve: async (project) => {
       const cacheSetting = await cacheSetingService.get(project._id)
-      
+
       // add ref
       cacheSetting.project = project
-      
+
       return cacheSetting
     }
   },
@@ -126,5 +127,16 @@ export default () => ({
   pushSetting: {
     type: PushSetting,
     resolve: async (project) => ({ project })
+  },
+  metric: {
+    args: {
+      name: {
+        type: new GraphQLNonNull(GraphQLString)
+      }
+    },
+    type: Metric,
+    resolve: async (project, { name }) => {
+      return ({ projectId: project._id, name })
+    }
   }
 })

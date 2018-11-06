@@ -2,14 +2,18 @@ import icon from './icon'
 
 // APPLICATION ICON: http://wmira.github.io/react-icons-kit/#/iconset/feather
 import {
+  activity,
   alertTriangle,
   arrowDown,
   arrowLeft,
   arrowUp,
+  calendar,
   check,
   checkCircle,
   checkSquare,
   chevronDown,
+  chevronLeft,
+  chevronRight,
   circle,
   copy,
   creditCard,
@@ -36,12 +40,16 @@ import {
   xCircle
 } from 'react-icons-kit/feather'
 
+export const ActivityIcon = icon(activity)
 export const AddIcon = icon(plus)
 export const BackIcon = icon(arrowLeft)
 export const BillingIcon = icon(dollarSign)
+export const CalendarIcon = icon(calendar)
 export const CloseIcon = icon(x)
 export const CopyIcon = icon(copy)
 export const CheckIcon = icon(check)
+export const ChevronLeftIcon = icon(chevronLeft)
+export const ChevronRightIcon = icon(chevronRight)
 export const DashboardIcon = icon(grid)
 export const EditIcon = icon(edit2)
 export const EmailIcon = icon(mail)

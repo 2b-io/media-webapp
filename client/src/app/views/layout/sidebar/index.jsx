@@ -7,15 +7,17 @@ import Sidebar from './sidebar'
 
 export default connect(
   mapState({
-    open: selectors.isSidebarOpen,
+    open: selectors.maximizeSidebar,
     currentAccount: selectors.currentAccount,
     projectCount: selectors.projectCount
   }),
   mapDispatch({
     minimizeSidebar: actions.minimizeSidebar,
+    maximizeSidebar: actions.maximizeSidebar,
     signOut: () => actions.closeLayout(),
     toDashboard: () => actions.requestLocation('/'),
     toProfile: (identifier) => actions.requestLocation(`/@${ identifier }`),
-    toProjectList: () => actions.requestLocation('/projects')
+    toProjectList: () => actions.requestLocation('/projects'),
+    toReportPage: () => actions.requestLocation('/reports')
   })
 )(Sidebar)

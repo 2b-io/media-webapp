@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
@@ -14,6 +14,9 @@ const Wrapper = styled.section`
   right: 32px;
   left: 32px;
   z-index: 11;
+  min-width: 320px;
+  max-width: 1024px;
+  margin: auto;
 `
 
 const ToastList = styled.div`
@@ -28,6 +31,28 @@ const Border = styled.div`
   bottom: 0;
   z-index: 0;
   border: 1px solid ${ ({ theme }) => theme.secondary.base };
+`
+
+const toastProgress = keyframes`
+  from {
+    width: 0%;
+  }
+
+  to {
+    width: 100%;
+  }
+`
+
+const Progress = styled.div`
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: ${
+    ({ theme }) => theme.secondary.base
+  };
+  animation: ${ toastProgress } ${ ({ expiring }) => expiring } linear;
 `
 
 const Content = styled.div`
@@ -55,6 +80,7 @@ const ToastContent = styled.div`
 const Toast = ({
   removeToast,
   toast: {
+    expiring,
     id,
     message,
     type
@@ -62,6 +88,7 @@ const Toast = ({
 }) => (
   <Content type={ type }>
     <Border />
+    { expiring && <Progress expiring={ expiring } /> }
     <ToastContent
       type={ type }
       onClick={ () => removeToast(id) }

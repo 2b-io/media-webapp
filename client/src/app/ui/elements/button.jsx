@@ -59,6 +59,7 @@ const Button = styled.button.attrs({
       ` :
       css`
         display: block;
+        margin: auto;
         width: 100%;
         background: ${
           disabled ?

@@ -3,8 +3,8 @@ import {
   GraphQLNonNull,
   GraphQLString
 } from 'graphql'
-import projectService from 'services/project'
 
+import projectService from 'services/project'
 import { Project } from '../Project'
 import { Session } from '../Session'
 

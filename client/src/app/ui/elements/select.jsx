@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
 import { List, ContextMenu } from 'ui/elements'
-import { CheckIcon, ExpandIcon } from 'ui/icons'
+import { ExpandIcon } from 'ui/icons'
 import { TextLine } from 'ui/typo'
 
 const Wrapper = styled.div`
@@ -46,14 +46,11 @@ const renderOptions = (options, currentValue, onChoose) => {
     ({ label, value }) => ({
       key: value,
       content: () => (
-        <TextLine mostLeft
-          mostRight={ value !== currentValue }>
+        <TextLine mostLeft mostRight
+          variant={ value === currentValue ? 'primary' : null }>
           { label }
         </TextLine>
       ),
-      trailing: value === currentValue ?
-        () => <CheckIcon /> :
-        null,
       onClick: () => onChoose(value)
     })
   )
@@ -89,7 +86,10 @@ const Select = ({
             <ExpandIcon />
           </DisableState>
         ) }
-        content={ () => renderOptions(options, value, onChange) }
+        content={ () => renderOptions(options, value, (...args) => {
+          onChange(...args)
+          onBlur()
+        }) }
         stateless={ true }
         isActive={ active }
         activate={ onFocus }

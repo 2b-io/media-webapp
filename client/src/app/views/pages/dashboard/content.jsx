@@ -2,6 +2,15 @@ import React from 'react'
 import styled from 'styled-components'
 
 import ProjectBlock from './project-block'
+import { ResponsiveGrid } from 'ui/elements'
+
+const BREAK_POINTS = {
+  phone: 1,
+  tablet: 2,
+  laptop: 3,
+  desktop: 4,
+  otherwise: 5
+}
 
 const Layout = styled.section`
   padding: 16px;
@@ -12,23 +21,19 @@ const Layout = styled.section`
   background: #e6e6e6;
 `
 
-const Container = styled.div`
-  display: grid;
-  & > * {
-    min-height: 0;
-    min-width: 0;
-  }
+const Dashboard = () => {
+  const items = [ {
+    content: () => <ProjectBlock />
+  } ]
 
-  grid-gap: 16px;
-  grid-template-columns: 100%;
-`
-
-const Dashboard = () => (
-  <Layout>
-    <Container>
-      <ProjectBlock />
-    </Container>
-  </Layout>
-)
+  return (
+    <Layout>
+      <ResponsiveGrid
+        breakpoints={ BREAK_POINTS }
+        items={ items }
+      />
+    </Layout>
+  )
+}
 
 export default Dashboard

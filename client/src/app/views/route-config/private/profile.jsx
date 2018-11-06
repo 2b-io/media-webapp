@@ -24,6 +24,7 @@ const watchChangePassword = function*(path) {
     if (completed) {
       yield all([
         fork(addToast, {
+          expiring: '5s',
           type: 'success',
           message: 'Your password has been successfully changed.'
         }),
@@ -78,6 +79,7 @@ const watchUpdateProfile = function*(path) {
 
     if (completed) {
       yield fork(addToast, {
+        expiring: '5s',
         type: 'success',
         message: 'Your profile has been successfully updated.'
       })

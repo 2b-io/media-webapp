@@ -10,7 +10,6 @@ import Png from './png'
 import Svg from './svg'
 
 const renderParameterForm = (contentType, props) => {
-
   switch (contentType) {
     case 'image/jpeg':
       return <Jpeg { ...props } />

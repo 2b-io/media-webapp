@@ -26,6 +26,7 @@ const Content = styled.div`
     ({ theme }) => theme.black.opaque.base
   };
   min-width: 280px; /* support iphone5s */
+  max-width: 1024px;
 `
 
 const Dialog = ({

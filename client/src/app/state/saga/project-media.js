@@ -56,6 +56,7 @@ const removeProjectMediaLoop = function*() {
         put(actions.removeProjectMediaCompleted(action.payload.id)),
         put(actions.hideModal({ modal: 'ProjectMediaModal' })),
         fork(addToast, {
+          expiring: '5s',
           type: 'success',
           message: 'Removed.'
         })
