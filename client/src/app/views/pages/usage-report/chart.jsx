@@ -53,8 +53,8 @@ const renderTooltip = (period, format) => ({ payload, label }) => (
         {
           `Date: ${
             period === 'hourly' ?
-              dataFormat.formatTime(label, 'UTC:mmm, dd, HH:MM', true) :
-              dataFormat.formatTime(label, 'UTC:mmm, dd', true)
+              dataFormat.formatTime(label, 'UTC:mmm, dd, HH:MM') :
+              dataFormat.formatTime(label, 'UTC:mmm, dd')
           }`
         }
       </DescriptionTextLine>
