@@ -4,6 +4,7 @@ import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
 import dataFormat from 'services/data-format'
+import dateTimeService from 'services/date-time'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Break, Container } from 'ui/elements'
@@ -14,8 +15,8 @@ import _UsageReportForm from './form'
 
 const DATA_DEFAULT = {
   date: {
-    endDate: Date.now(),
-    startDate: Date.now() - ms('7d')
+    endDate: dateTimeService.getStartOfUTCDay(new Date()),
+    startDate: dateTimeService.getStartOfUTCDay(new Date()) - ms('7d')
   },
   granularity: [
     {

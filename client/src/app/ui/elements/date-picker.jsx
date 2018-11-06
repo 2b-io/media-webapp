@@ -106,6 +106,18 @@ const CalendarDate = styled.span`
   cursor: ${ ({ selectable }) => selectable ? 'pointer' : 'unset' };
 `
 
+const HeaderCalendar = styled.div`
+  display: grid;
+  & > * {
+    min-width: 0;
+    min-height: 0;
+  }
+  grid-template-columns: 40px 1fr 40px;
+  line-height: 40px;
+  margin: 0 auto;
+  text-align: center;
+`
+
 const isSelectableDate = (date, selectedView, today, maxDay, minDay) => {
   const firstDayOfMonth = new Date(selectedView.getFullYear(), selectedView.getMonth(), 1)
   const lastDayOfMonth = new Date(selectedView.getFullYear(), selectedView.getMonth() + 1, 0)
@@ -136,18 +148,6 @@ const isSelectableDate = (date, selectedView, today, maxDay, minDay) => {
 const isSameDate = (date, otherDate) => date.toLocaleDateString() === otherDate.toLocaleDateString()
 
 const isWeekend = (date) => WEEKENDS.some((weekend) => weekend === date.getDay())
-
-const HeaderCalendar = styled.div`
-  display: grid;
-  & > * {
-    min-width: 0;
-    min-height: 0;
-  }
-  grid-template-columns: 40px 1fr 40px;
-  line-height: 40px;
-  margin: 0 auto;
-  text-align: center;
-`
 
 const CalendarWrapper = ({
   maxDay,
@@ -180,7 +180,7 @@ const CalendarWrapper = ({
     <Fragment>
       <HeaderCalendar>
         <ChevronLeftIcon
-          onClick={ () => prev(today) }
+          onClick={ prev }
         />
         <TextLine>
           {
@@ -188,7 +188,7 @@ const CalendarWrapper = ({
           }
         </TextLine>
         <ChevronRightIcon
-          onClick={ () => next(today) }
+          onClick={ next }
         />
       </HeaderCalendar>
       <CalendarMonth>
