@@ -4,7 +4,6 @@ import styled, { css } from 'styled-components'
 import { Break } from 'ui/elements'
 
 const Wrapper = styled.section`
-  min-height: 100%;
   background: ${
     ({ theme }) => theme.white.base
   };

@@ -19,16 +19,6 @@ const Layout = styled.section`
   background: #e6e6e6;
 `
 
-const Container = styled.div`
-  display: grid;
-  & > * {
-    min-height: 0;
-    min-width: 0;
-  }
-
-  grid-gap: 16px;
-  grid-template-columns: 100%;
-`
 const BREAK_POINTS = {
   phone: 1,
   tablet: 2,
@@ -71,21 +61,14 @@ const generateContentProject = (isActive, ui) => {
   }
 }
 
-const Project = ({
-  ui
-}) => {
-  return (
-    <Layout>
-      <Container>
-        {
-          <ResponsiveGrid
-            breakpoints={ BREAK_POINTS }
-            items={ generateContentProject(ui.isProjectActive, ui) }
-          />
-        }
-      </Container>
-    </Layout>
-  )
-}
+const Project = ({ ui }) => (
+  <Layout>
+    <ResponsiveGrid
+      breakpoints={ BREAK_POINTS }
+      items={ generateContentProject(ui.isProjectActive, ui) }
+      height="auto"
+    />
+  </Layout>
+)
 
 export default Project
