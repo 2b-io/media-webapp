@@ -1,38 +1,21 @@
-import dateFormat from 'dateformat'
 import { Calendar } from 'calendar'
 import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 
+import dataFormat from 'services/data-format'
 import { ContextMenu } from 'ui/elements'
 import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from 'ui/icons'
 import { TextLine } from 'ui/typo'
 
-const WEEKDAYS = [
-  {
-    name: 'Mon',
-    isWeekend: false
-  }, {
-    name: 'Tue',
-    isWeekend: false
-  }, {
-    name: 'Wed',
-    isWeekend: false
-  }, {
-    name: 'Thu',
-    isWeekend: false
-  }, {
-    name: 'Fri',
-    isWeekend: false
-  }, {
-    name: 'Sat',
-    isWeekend: true
-  }, {
-    name: 'Sun',
-    isWeekend: true
-  }
-]
-
-const WEEKENDS = [ 6, 0 ]
+const WEEKDAYS = {
+  Mon: { isWeekend: false },
+  Tue: { isWeekend: false },
+  Wed: { isWeekend: false },
+  Thu: { isWeekend: false },
+  Fri: { isWeekend: false },
+  Sat: { isWeekend: true },
+  Sun: { isWeekend: true }
+}
 
 const Wrapper = styled.div`
   position: relative;
@@ -148,7 +131,7 @@ const isSelectableDate = (date, selectedView, today, maxDay, minDay) => {
 
 const isSameDate = (date, otherDate) => date.toLocaleDateString() === otherDate.toLocaleDateString()
 
-const isWeekend = (date) => WEEKENDS.some((weekend) => weekend === date.getDay())
+const isWeekend = (date) => WEEKDAYS[ dataFormat.formatTime(date, 'UTC:ddd') ].isWeekend
 
 const CalendarWrapper = ({
   maxDay,
@@ -160,12 +143,14 @@ const CalendarWrapper = ({
   selectedYear,
   value
 }) => {
-  const selectedView = new Date(selectedYear, selectedMonth, 1)
+  const selectedView = new Date(Date.UTC(selectedYear, selectedMonth, 1, 0, 0, 0))
   const today = new Date()
 
   const cal = new Calendar(1)
   const monthDates = cal.monthDates(selectedYear, selectedMonth)
-  const mergedDates = [].concat(...monthDates)
+  const mergedDates = [].concat(...monthDates).map(
+    date => new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0))
+  )
 
   const allDates = mergedDates.map(
     (date) => ({
@@ -185,7 +170,7 @@ const CalendarWrapper = ({
         />
         <TextLine>
           {
-            dateFormat(selectedView, 'mmm, yyyy')
+            dataFormat.formatTime(selectedView, 'UTC:mmm, yyyy')
           }
         </TextLine>
         <ChevronRightIcon
@@ -194,8 +179,8 @@ const CalendarWrapper = ({
       </HeaderCalendar>
       <CalendarMonth>
         {
-          WEEKDAYS.map(
-            (weekDay, index) => <WeekDay key={ index } isWeekend={ weekDay.isWeekend }>{ weekDay.name }</WeekDay>
+          Object.entries(WEEKDAYS).map(
+            ([ name, { isWeekend }]) => <WeekDay key={ name } isWeekend={ isWeekend }>{ name }</WeekDay>
           )
         }
         {
@@ -212,7 +197,7 @@ const CalendarWrapper = ({
                   isValue={ isValue }
                   isWeekend={ isWeekend }
                 >
-                  { date.getDate() }
+                  { dataFormat.formatTime(date, 'UTC:d') }
                 </CalendarDate>
               )
             }
@@ -248,8 +233,8 @@ class DatePicker extends Component {
       const date = new Date(nextProps.value)
 
       return {
-        month: date.getMonth(),
-        year: date.getFullYear()
+        month: date.getUTCMonth(),
+        year: date.getUTCFullYear()
       }
     }
 
@@ -303,7 +288,7 @@ class DatePicker extends Component {
         <Input>
           <TextLine mostLeft>
             <DisableState disabled={ disabled }>
-              { dateFormat(value, 'mm/dd/yyyy') }
+              { dataFormat.formatTime(value, 'UTC:mm/dd/yyyy') }
             </DisableState>
           </TextLine>
           <ContextMenu.Menu
