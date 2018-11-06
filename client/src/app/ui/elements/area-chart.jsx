@@ -76,6 +76,7 @@ const AreaChartWrapper = ({
       <Area
         activeDot={ { r: 8 } }
         dataKey={ valueKey }
+        isAnimationActive={ false }
         name={ name }
         stroke="none"
         type={ type }
@@ -98,6 +99,7 @@ const AreaChartWrapper = ({
       <YAxis
         stroke={ AREA_CHART_STYLE.color.yAxis }
         dataKey={ yKey }
+        width={ 80 }
         tick={ customYAxisTick && renderYAxisTick(customYAxisTick) }
       />
       <Tooltip
