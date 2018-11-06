@@ -9,38 +9,39 @@ import Body from './body'
 import Header from './header'
 import Logo from './logo'
 import Sidebar from './sidebar'
-import SidebarMini from './sidebar-mini'
 
 import Toast from './toast'
 
+const easingFunc = 'cubic-bezier(.4, 0, .2, 1)'
+
 const Surface = styled.main`
-  margin-left: ${
-    ({
-      minimizeSidebar,
-      isLayoutClosed
-    }) => {
-      if (isLayoutClosed) {
-        return '0px'
-      } else {
-        return (
-          minimizeSidebar ? '40px' : '280px'
-        )
-      }
-    }
-  };
-  min-width: 320px;
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: min-content 1fr;
   height: 100%;
   position: relative;
   z-index: 0;
-  @media (max-width: 599px) {
+  transition:
+    transform .3s ${ easingFunc },
+    margin-left .3s ${ easingFunc };
+
+  margin-left: 0;
+  transform: ${
+    ({ isLayoutClosed, maximizeSidebar }) => maximizeSidebar ?
+      'translateX(280px)' :
+      'translateX(0)'
+  };
+
+  @media (min-width: 600px) {
     margin-left: ${
-      ({ maximizeSidebar }) => (
-        maximizeSidebar ? '280px' : '0px'
-      )
-    }
+      ({ isLayoutClosed }) => isLayoutClosed ? '0' : '40px'
+    };
+
+    transform: ${
+      ({ isLayoutClosed, maximizeSidebar }) => maximizeSidebar ?
+        'translateX(240px)' :
+        'translateX(0)'
+    };
   }
 `
 
@@ -57,13 +58,8 @@ const Layout = ({
   ...props
 }) => (
   <Fragment>
-    { !isLayoutClosed && (
-      minimizeSidebar ?
-        <SidebarMini /> :
-        <Sidebar />
-    ) }
+    { !isLayoutClosed && <Sidebar /> }
     <Surface
-      minimizeSidebar={ minimizeSidebar }
       isLayoutClosed={ isLayoutClosed }
       maximizeSidebar={ maximizeSidebar }>
       <Header className='header'>

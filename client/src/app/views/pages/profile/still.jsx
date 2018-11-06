@@ -1,12 +1,11 @@
 import React, { Fragment } from 'react'
-import MediaQuery from 'react-responsive'
 import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { ContextMenu, List } from 'ui/elements'
-import { MenuIcon } from 'ui/icons'
 import { Text } from 'ui/typo'
+import { MenuButton } from 'views/common/compounds'
 
 import Top from './top'
 
@@ -32,15 +31,7 @@ const Profile = ({
 
   return (
     <Fragment>
-      <MediaQuery query='(max-device-width: 599px)'>
-        { openSidebar ?
-          <div></div> :
-          <MenuIcon onClick={ maximizeSidebar } />
-        }
-      </MediaQuery>
-      <MediaQuery query='(min-device-width: 600px)'>
-        <div></div>
-      </MediaQuery>
+      <MenuButton onClick={ maximizeSidebar } />
       <Top account={ account } />
       { account && session && session.account &&
         account.identifier === session.account.identifier && (

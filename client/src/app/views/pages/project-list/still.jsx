@@ -1,13 +1,12 @@
 import React, { Fragment } from 'react'
-import MediaQuery from 'react-responsive'
 import { connect } from 'react-redux'
 
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
+import { MenuButton } from 'views/common/compounds'
 
 import {
   FilterIcon,
-  MenuIcon,
   EyeIcon,
   EyeOffIcon,
   SortAscIcon,
@@ -34,15 +33,7 @@ const ProjectList = ({
   }
 }) => (
   <Fragment>
-    <MediaQuery query='(max-device-width: 599px)'>
-      { openSidebar ?
-        <div></div> :
-        <MenuIcon onClick={ maximizeSidebar } />
-      }
-    </MediaQuery>
-    <MediaQuery query='(min-device-width: 600px)'>
-      <div></div>
-    </MediaQuery>
+    <MenuButton onClick={ maximizeSidebar } />
     <PageTitle>Projects</PageTitle>
     <ContextMenu.Menu
       stateless={ true }
