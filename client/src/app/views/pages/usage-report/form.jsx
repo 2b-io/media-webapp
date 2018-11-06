@@ -1,4 +1,5 @@
 import React from 'react'
+import ms from 'ms'
 
 import { Break, Button, Form } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
@@ -16,6 +17,8 @@ const UsageReportForm = ({
       name="startDate"
       placeholder="Start date"
       type="date"
+      maxDay={ 0 }
+      minDay={ ms('60d') }
       validate={ validateRequired }
     />
     <DescriptionText mostLeft mostRight>
@@ -27,6 +30,8 @@ const UsageReportForm = ({
       name="endDate"
       placeholder="End date"
       type="date"
+      maxDay={ 0 }
+      minDay={ ms('60d') }
       validate={ validateRequired }
     />
     <DescriptionText mostLeft mostRight>

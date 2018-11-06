@@ -130,16 +130,16 @@ const isSelectableDate = (date, selectedView, today, maxDay, minDay) => {
     return false
   }
 
-  if (maxDay && minDay) {
+  if ((maxDay || maxDay === 0) && (minDay || minDay === 0)) {
     return Date.parse(date) >= Date.parse(today) - minDay &&
       Date.parse(today) + maxDay >= Date.parse(date)
   }
 
-  if (maxDay) {
+  if (maxDay || maxDay === 0) {
     return Date.parse(today) + maxDay >= Date.parse(date)
   }
 
-  if (minDay) {
+  if (minDay || minDay === 0) {
     return Date.parse(today) - minDay <= Date.parse(date)
   }
 
