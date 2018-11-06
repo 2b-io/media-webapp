@@ -1,6 +1,5 @@
 import namor from 'namor'
 import request from 'superagent'
-import { URL } from 'url'
 
 import config from 'infrastructure/config'
 

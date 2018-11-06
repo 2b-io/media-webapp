@@ -16,6 +16,7 @@ export default connect(
     signOut: () => actions.closeLayout(),
     toDashboard: () => actions.requestLocation('/'),
     toProfile: (identifier) => actions.requestLocation(`/@${ identifier }`),
-    toProjectList: () => actions.requestLocation('/projects')
+    toProjectList: () => actions.requestLocation('/projects'),
+    toReportPage: () => actions.requestLocation('/reports')
   })
 )(Sidebar)

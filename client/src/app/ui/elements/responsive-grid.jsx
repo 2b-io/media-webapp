@@ -45,28 +45,34 @@ const Container = styled.div`
 `
 const Item = styled.div``
 
-const ResponsiveGrid = ({ items, breakpoints, direction }) => (
-  <Container breakpoints={ breakpoints } direction={ direction }>
-    {
-      items.map(
-        (item, index) => {
-          const { key, content } = item
+const ResponsiveGrid = ({ items, breakpoints, direction }) => {
+  if (!items.length) {
+    return null
+  }
 
-          if (!content) {
-            return null
+  return (
+    <Container breakpoints={ breakpoints } direction={ direction }>
+      {
+         items.map(
+          (item, index) => {
+            const { key, content } = item
+
+            if (!content) {
+              return null
+            }
+
+            return (
+              <Item
+                key={ key || index }
+              >
+                { content() }
+              </Item>
+            )
           }
-
-          return (
-            <Item
-              key={ key || index }
-            >
-              { content() }
-            </Item>
-          )
-        }
-      )
-    }
-  </Container>
-)
+        )
+      }
+    </Container>
+  )
+}
 
 export default ResponsiveGrid

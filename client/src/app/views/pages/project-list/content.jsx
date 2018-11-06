@@ -43,17 +43,6 @@ const Layout = styled.section`
   background: #e6e6e6;
 `
 
-const Container = styled.div`
-  display: grid;
-  & > * {
-    min-height: 0;
-    min-width: 0;
-  }
-
-  grid-gap: 16px;
-  grid-template-columns: 100%;
-`
-
 const BREAK_POINTS = {
   phone: 1,
   tablet: 2,

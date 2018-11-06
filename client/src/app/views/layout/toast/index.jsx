@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import styled, { css, keyframes } from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
@@ -14,6 +14,9 @@ const Wrapper = styled.section`
   right: 32px;
   left: 32px;
   z-index: 11;
+  min-width: 320px;
+  max-width: 1024px;
+  margin: auto;
 `
 
 const ToastList = styled.div`
