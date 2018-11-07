@@ -45,7 +45,7 @@ const AreaChartContent = styled.div`
   color: ${ ({ theme }) => theme.black.base };
 `
 
-const renderTooltip = (period, format) => ({ payload, label }) => (
+const renderTooltip = (period, format, tooltipText) => ({ payload, label }) => (
   <Content>
     <Border />
     <AreaChartContent>
@@ -60,7 +60,7 @@ const renderTooltip = (period, format) => ({ payload, label }) => (
       </DescriptionTextLine>
       <DescriptionTextLine mostLeft mostRight>
         {
-          `Reports: ${ format(payload[0].value) }`
+          `${ tooltipText }: ${ format(payload[0].value) }`
         }
       </DescriptionTextLine>
     </AreaChartContent>
@@ -159,7 +159,7 @@ const UsageReportChart = ({
             xKey="timestamp"
             yKey="value"
             type="linear"
-            customTooltip={ renderTooltip(period, dataFormat.formatSize) }
+            customTooltip={ renderTooltip(period, dataFormat.formatSize, 'Bytes Downloaded') }
             customXAxisTick={ renderXAxisTick(period) }
             customYAxisTick={ renderYAxisTick(dataFormat.formatSize) }
           />
@@ -184,7 +184,7 @@ const UsageReportChart = ({
             xKey="timestamp"
             yKey="value"
             type="linear"
-            customTooltip={ renderTooltip(period, dataFormat.formatNumber) }
+            customTooltip={ renderTooltip(period, dataFormat.formatNumber, 'Requests') }
             customXAxisTick={ renderXAxisTick(period) }
             customYAxisTick={ renderYAxisTick(dataFormat.formatNumber) }
           />
