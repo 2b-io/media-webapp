@@ -1,6 +1,6 @@
 import path from 'path'
 import webpack from 'webpack'
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
+// import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import CleanWebpackPlugin from 'clean-webpack-plugin'
 
 import common from './webpack.common'
@@ -17,9 +17,9 @@ export default common({
       watch: false,
       allowExternal: true
     }),
-    new BundleAnalyzerPlugin({
-      analyzerHost: '0.0.0.0'
-    }),
+    // new BundleAnalyzerPlugin({
+    //   analyzerHost: '0.0.0.0'
+    // }),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
