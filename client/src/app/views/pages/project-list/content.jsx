@@ -1,4 +1,5 @@
 import React from 'react'
+import { Portal } from 'react-portal'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
@@ -124,9 +125,11 @@ const ProjectList = ({
         breakpoints={ BREAK_POINTS }
         items={ cards }
       />
-      <Fab onClick={ toCreateProject }>
-        <AddIcon />
-      </Fab>
+      <Portal node={ document.getElementById('root') }>
+        <Fab onClick={ toCreateProject }>
+          <AddIcon />
+        </Fab>
+      </Portal>
     </Layout>
   )
 }
