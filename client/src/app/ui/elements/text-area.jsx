@@ -67,6 +67,7 @@ const Indicator = styled.div`
 
 const Assistive = styled.div`
   display: grid;
+  height: 24px;
   & > * {
     min-height: 0;
     min-width: 0;
