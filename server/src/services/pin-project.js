@@ -6,10 +6,10 @@ const get = async (account) => {
   }).lean()
 }
 
-const update = async (account, project) => {
+const update = async (account, projects) => {
   return await PinProject.findOneAndUpdate(
     { account },
-    { project },
+    { projects },
     { new: true, upsert: true }
   ).lean()
 }
