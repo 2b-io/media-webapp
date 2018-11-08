@@ -25,7 +25,7 @@ export const PROJECT_FRAGMENT = `
   }
 `
 
-const PROJECTS_FRAGMENT = `
+export const PROJECTS_FRAGMENT = `
   account {
     projects {
       ${ PROJECT_FRAGMENT }

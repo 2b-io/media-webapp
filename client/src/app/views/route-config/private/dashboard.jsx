@@ -4,8 +4,8 @@ import { actions, types } from 'state/interface'
 import * as Dashboard from 'views/pages/dashboard'
 import { addToast } from 'state/saga/toast'
 
-const watchFetchProjects = function*() {
-  yield take(types.project.FETCH_FAILED)
+const watchFetchPinnedProjects = function*() {
+  yield take(types.pinProject.FETCH_FAILED)
 
   yield fork(addToast, {
     type: 'error',
@@ -19,13 +19,11 @@ export default {
     component: Dashboard,
     exact: true,
     *state() {
-      yield fork(watchFetchProjects)
+      yield fork(watchFetchPinnedProjects)
 
       yield put(
-        actions.fetchProjects()
+        actions.fetchPinnedProjects()
       )
     }
   }
 }
-
-

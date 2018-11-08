@@ -76,7 +76,7 @@ export default ({ Account, AccountStruct }) => ({
         type: new GraphQLList(GraphQLString)
       }
     },
-    type: GraphQLBoolean,
+    type: new GraphQLList(Project),
     resolve: async (account, { projectIdentifiers }) => {
       return await pinProjectService.update(account._id, projectIdentifiers)
     }

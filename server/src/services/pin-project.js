@@ -7,11 +7,19 @@ const get = async (account) => {
 }
 
 const update = async (account, projects) => {
-  return await PinProject.findOneAndUpdate(
+  const updatePinnedProjects = await PinProject.findOneAndUpdate(
     { account },
     { projects },
     { new: true, upsert: true }
   ).lean()
+
+  if (updatePinnedProjects) {
+    return await PinProject.findOne({
+      account
+    }).lean()
+  } else {
+    return []
+  }
 }
 
 export default {
