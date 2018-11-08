@@ -16,6 +16,11 @@ const Wrapper = styled.div`
   }
   position: relative;
 `
+const WrapperButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
 
 const CustomHeaderList = ({
   fields,
@@ -36,22 +41,24 @@ const CustomHeaderList = ({
           type="text"
           name={ `${ header }.value` }
         />
-        { index === fields.length - 1 ?
-          <Button
-            disabled={ !idle }
-            plain
-            onClick={ () => fields.push({}) }
-          >
-            <AddIcon />
-          </Button> :
-          <Button
-            disabled={ !idle }
-            plain
-            onClick={ () => fields.remove(index) }
-          >
-            <TrashIcon />
-          </Button>
-        }
+        <WrapperButton>
+          { index === fields.length - 1 ?
+            <Button
+              disabled={ !idle }
+              plain
+              onClick={ () => fields.push({}) }
+            >
+              <AddIcon />
+            </Button> :
+            <Button
+              disabled={ !idle }
+              plain
+              onClick={ () => fields.remove(index) }
+            >
+              <TrashIcon />
+            </Button>
+          }
+        </WrapperButton>
       </Wrapper>
     )
   )
