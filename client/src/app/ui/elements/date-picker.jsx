@@ -182,7 +182,7 @@ const CalendarWrapper = ({
       <CalendarMonth>
         {
           Object.entries(WEEKDAYS).map(
-            ([ name, { isWeekend }]) => <WeekDay key={ name } isWeekend={ isWeekend }>{ name }</WeekDay>
+            ([ name, { isWeekend } ]) => <WeekDay key={ name } isWeekend={ isWeekend }>{ name }</WeekDay>
           )
         }
         {
