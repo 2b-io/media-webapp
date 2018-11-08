@@ -20,7 +20,6 @@ const UsageReportForm = ({
       <DatePicker
         disabled={ !idle }
         name="startDate"
-        placeholder="Start date"
         label="Start Date"
         type="date"
         validate={ validateRequired }
@@ -31,7 +30,6 @@ const UsageReportForm = ({
       <DatePicker
         disabled={ !idle }
         name="endDate"
-        placeholder="End date"
         label="End date"
         type="date"
         validate={ validateRequired }

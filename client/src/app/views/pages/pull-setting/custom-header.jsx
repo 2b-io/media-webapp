@@ -29,14 +29,12 @@ const CustomHeaderList = ({
           label="Header Name"
           type="text"
           name={ `${ header }.name` }
-          placeholder="X-Pull"
         />
         <TextBox
           disabled={ !idle }
           label="Header Value"
           type="text"
           name={ `${ header }.value` }
-          placeholder="Media CDN"
         />
         { index === fields.length - 1 ?
           <Button
