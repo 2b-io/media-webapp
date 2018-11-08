@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 
 import { Break, Button, Form } from 'ui/elements'
-import { EmailIcon, KeyIcon, PersonIcon } from 'ui/icons'
 import { DescriptionText } from 'ui/typo'
 import { TextBox } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
@@ -15,18 +14,18 @@ const ResetPaswordForm = ({
     <TextBox
       disabled={ !idle }
       readOnly
+      label="Email"
       name="email"
-      leading={ () => <EmailIcon /> }
     />
     <Break />
     { isFinalizeStep && (
       <Fragment>
         <TextBox
           disabled={ !idle }
+          label="Name"
           name="name"
           validate={ validateRequired }
           maxLength={ 20 }
-          leading={ () => <PersonIcon /> }
         />
         <Break />
         <DescriptionText mostLeft mostRight>
@@ -38,10 +37,9 @@ const ResetPaswordForm = ({
     <TextBox
       disabled={ !idle }
       type="password"
+      label="Password"
       name="password"
-      placeholder="* * * * * *"
       validate={ validateRequired }
-      leading={ () => <KeyIcon /> }
     />
     <DescriptionText mostLeft mostRight>
       A strong password should consist of at least six characters and be a combination of letters, numbers and symbols
@@ -49,10 +47,9 @@ const ResetPaswordForm = ({
     <TextBox
       disabled={ !idle }
       type="password"
+      label="Retype Password"
       name="rePassword"
-      placeholder="* * * * * *"
       validate={ validateRequired }
-      leading={ () => <KeyIcon /> }
     />
     <DescriptionText mostLeft mostRight>
       Re-type your password

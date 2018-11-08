@@ -38,7 +38,6 @@ const PresetForm = ({
       disabled={ !idle }
       label="Content Type"
       name="contentType"
-      placeholder="Content Type"
       readOnly
     />
     <Break />

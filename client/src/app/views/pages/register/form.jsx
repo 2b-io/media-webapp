@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { Break, Button, Form } from 'ui/elements'
-import { EmailIcon } from 'ui/icons'
 import { DescriptionText } from 'ui/typo'
 import { TextBox } from 'views/common/form'
 import { validateEmail, validateRequired } from 'views/common/validate'
@@ -12,10 +11,8 @@ const RegisterForm = ({ handleSubmit, idle }) => (
       label="Email"
       type="email"
       name="email"
-      placeholder="name@example.com"
       disabled={ !idle }
       validate={ [ validateEmail, validateRequired ] }
-      leading={ () => <EmailIcon /> }
     />
     <DescriptionText mostLeft mostRight>
       We will send our activation link to this email. Please make sure you can access your email.
