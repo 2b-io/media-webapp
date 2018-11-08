@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import dataFormat from 'services/data-format'
 import { ContextMenu } from 'ui/elements'
 import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from 'ui/icons'
-import { TextLine } from 'ui/typo'
+import { DescriptionTextLine, TextLine } from 'ui/typo'
 
 const WEEKDAYS = {
   Mon: { isWeekend: false },
@@ -281,12 +281,16 @@ class DatePicker extends Component {
       disabled,
       active,
       max, min,
+      label,
       value,
       onBlur, onChange, onFocus
     } = this.props
 
     return (
       <Wrapper>
+        <DescriptionTextLine mostLeft mostRight>
+          { label }
+        </DescriptionTextLine>
         <Input>
           <TextLine mostLeft>
             <DisableState disabled={ disabled }>
