@@ -1,7 +1,8 @@
 import {
   GraphQLBoolean,
   GraphQLNonNull,
-  GraphQLString
+  GraphQLString,
+  GraphQLList
 } from 'graphql'
 
 import {
@@ -9,6 +10,7 @@ import {
   update as updateAccount
 } from 'services/account'
 import projectService from 'services/project'
+import pinProjectService from 'services/pin-project'
 
 import { Project, ProjectStruct } from '../Project'
 
@@ -66,6 +68,17 @@ export default ({ Account, AccountStruct }) => ({
       p.account = account
 
       return p
+    }
+  },
+  _pinProjects: {
+    args: {
+      projectIdentifiers: {
+        type: new GraphQLList(GraphQLString)
+      }
+    },
+    type: GraphQLBoolean,
+    resolve: async (account, { projectIdentifiers }) => {
+      return await pinProjectService.update(account._id, projectIdentifiers)
     }
   }
 })

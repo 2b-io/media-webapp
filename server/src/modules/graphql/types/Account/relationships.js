@@ -5,6 +5,7 @@ import {
 } from 'graphql'
 
 import projectService from 'services/project'
+import pinProjectService from 'services/pin-project'
 import { Project } from '../Project'
 import { Session } from '../Session'
 
@@ -40,6 +41,19 @@ export default () => ({
       // add ref
       project.account = account
       return project
+    }
+  },
+  projectPins: {
+  type: new GraphQLList(Project),
+  resolve: async (account) => {
+    const { project: projectPins } = await pinProjectService.get(account._id)
+
+    const projectList = await projectService.list(account._id)
+
+    return projectList.filter((
+      {
+        identifier: projectIdentifier
+      }) => projectPins.some((projectPin) => projectIdentifier === projectPin))
     }
   }
 })
