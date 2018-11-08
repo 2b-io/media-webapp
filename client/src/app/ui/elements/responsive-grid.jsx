@@ -63,7 +63,7 @@ class ResponsiveGrid extends Component {
   }
 
   renderContent(key, content) {
-    return ({ width, height }) => {
+    return ({ height }) => {
       const item = this._items[ key ]
 
       if (!item) {
@@ -105,7 +105,7 @@ class ResponsiveGrid extends Component {
           {
             items.map(
               (item, index) => {
-                const { key, content } = item
+                const { content } = item
 
                 if (!content) {
                   return null

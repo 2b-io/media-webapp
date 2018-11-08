@@ -14,7 +14,6 @@ const InviteCollaboratorForm = ({
       disabled={ !idle }
       label="Emails"
       name="emails"
-      placeholder="Emails"
       validate={ [ validateRequired, validateMultiEmail ] }
     />
     <DescriptionText mostLeft mostRight>
@@ -24,7 +23,7 @@ const InviteCollaboratorForm = ({
     <TextArea
       disabled={ !idle }
       type="text"
-      placeholder="You've been grant access to a project in Media CDN."
+      label="Message"
       name="message"
       maxLength={ 200 }
     />

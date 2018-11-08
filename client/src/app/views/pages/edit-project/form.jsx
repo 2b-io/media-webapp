@@ -23,7 +23,6 @@ const ProjectForm = ({
       label="Project Name"
       name="name"
       readOnly={ status === 'UPDATING' || status === 'INITIALIZING' }
-      placeholder="My Awesome Project"
       validate={ validateRequired }
       maxLength={ 50 }
     />
@@ -32,7 +31,6 @@ const ProjectForm = ({
       disabled={ !idle }
       label="Domain"
       name="domain"
-      placeholder="Domain"
       readOnly
       validate={ validateRequired }
       trailing={ () => (
