@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { AssistiveTextLine } from 'ui/typo'
+import { AssistiveTextLine, DescriptionTextLine } from 'ui/typo'
+
+const easingFunc = 'cubic-bezier(.4, 0, .2, 1)'
 
 const Container = styled.div`
   display: grid;
@@ -11,10 +13,9 @@ const Container = styled.div`
   }
 
   position: relative;
-  background: ${ ({ theme }) => theme.white.base };
+  background: transparent;
   color: ${ ({ theme }) => theme.white.on.base };
   grid-template-columns:
-    ${ ({ hasLeading }) => hasLeading && '40px' }
     1fr
     ${ ({ hasTrailing }) => hasTrailing && '40px' };
 `
@@ -22,6 +23,7 @@ const Container = styled.div`
 const Input = styled.input.attrs({
   type: 'text'
 })`
+  z-index: 1;
   display: block;
   appearance: none;
   border: none;
@@ -30,13 +32,13 @@ const Input = styled.input.attrs({
   width: auto;
   line-height: 40px;
   height: 40px;
-  background: ${ ({ theme }) => theme.white.base };
+  background: transparent;
   color: ${
     ({ disabled, theme }) => disabled ?
       theme.secondary.base :
       theme.black.base
   };
-  ${ ({ hasLeading }) => !hasLeading && 'padding-left: 8px;' }
+  padding-left: 8px;
   ${ ({ hasTrailing }) => !hasTrailing && 'padding-right: 8px;' }
   cursor: ${
     ({ disabled, readOnly }) => (disabled || readOnly) ? 'not-allowed' : 'inherit'
@@ -58,6 +60,7 @@ const Wrapper = styled.div`
 
 const Indicator = styled.div`
   position: absolute;
+  z-index: 1;
   bottom: 0;
   left: 0;
   right: 0;
@@ -78,20 +81,31 @@ const Assistive = styled.div`
   grid-template-columns: 1fr min-content;
 `
 
+const Label = styled.div`
+  transition: transform .3s ${ easingFunc };
+  height: 24px;
+  z-index: 0;
+  position: relative;
+  transform: ${
+    ({ hasValue }) => hasValue ?
+      'translate3d(0, 0, 0)' :
+      'translate3d(0, 32px, 0)'
+  };
+`
+
 const TextBox = ({
   invalid,
-  leading,
   trailing,
   ...props
 }) => (
   <Wrapper>
+    <Label hasValue={ !!props.value }>
+      <DescriptionTextLine mostLeft mostRight>{ props.label }</DescriptionTextLine>
+    </Label>
     <Container
-      hasLeading={ !!leading }
       hasTrailing={ !!trailing }
     >
-      { leading && leading() }
       <Input
-        hasLeading={ !!leading }
         hasTrailing={ !!trailing }
         { ...props }
       />
