@@ -74,7 +74,7 @@ const AreaChartWrapper = ({
   <ResponsiveContainer width="100%" height={ 300 }>
     <AreaChart data={ data } { ...props }>
       <Area
-        activeDot={ { r: 8 } }
+        activeDot={ { stroke: '#009EFF', strokeWidth: 2, r: 6 } }
         dataKey={ valueKey }
         isAnimationActive={ false }
         name={ name }

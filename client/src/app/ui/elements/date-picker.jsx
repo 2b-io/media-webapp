@@ -252,6 +252,13 @@ class DatePicker extends Component {
     }
   }
 
+  resetState() {
+    this.setState({
+      month: null,
+      year: null
+    })
+  }
+
   changeMonth(offset) {
     return () => {
       const { year, month } = this.state
@@ -306,12 +313,16 @@ class DatePicker extends Component {
             ) }
             content={ () => renderOptions(value, max, min, this.state, (...args) => {
               onChange(...args)
+              this.resetState()
               onBlur()
             }, this.changeMonth(1), this.changeMonth(-1)) }
             stateless={ true }
             isActive={ active }
             activate={ onFocus }
-            deactivate={ onBlur }
+            deactivate={ () => {
+              this.resetState()
+              onBlur()
+            } }
           />
         </Input>
         <Indicator disabled={ disabled } />
