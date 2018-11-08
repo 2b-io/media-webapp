@@ -43,7 +43,7 @@ export default () => ({
       return project
     }
   },
-  projectPins: {
+  pinnedProjects: {
   type: new GraphQLList(Project),
   resolve: async (account) => {
     const { projects: projectPins } = await pinProjectService.get(account._id)
