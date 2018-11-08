@@ -23,7 +23,6 @@ const Container = styled.div`
 const Input = styled.input.attrs({
   type: 'text'
 })`
-  z-index: 1;
   display: block;
   appearance: none;
   border: none;
@@ -60,7 +59,6 @@ const Wrapper = styled.div`
 
 const Indicator = styled.div`
   position: absolute;
-  z-index: 1;
   bottom: 0;
   left: 0;
   right: 0;
@@ -84,8 +82,6 @@ const Assistive = styled.div`
 const Label = styled.div`
   transition: transform .3s ${ easingFunc };
   height: 24px;
-  z-index: 0;
-  position: relative;
   transform: ${
     ({ hasValue }) => hasValue ?
       'translate3d(0, 0, 0)' :
