@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-import { AssistiveTextLine } from 'ui/typo'
+import { AssistiveTextLine, DescriptionTextLine } from 'ui/typo'
+
+const easingFunc = 'cubic-bezier(.4, 0, .2, 1)'
 
 const Container = styled.div`
   position: relative;
-  background: ${ ({ theme }) => theme.white.base };
+  background: transparent;
   color: ${ ({ theme }) => theme.white.on.base };
 `
 
@@ -22,9 +24,7 @@ const InputArea = styled.textarea.attrs({
   padding: 8px;
   resize: none;
   overflow-wrap: break-word;
-  background: ${
-    ({ theme }) => theme.white.base
-  };
+  background: transparent;
   color: ${
     ({ disabled, theme }) => disabled ?
       theme.secondary.base :
@@ -67,11 +67,22 @@ const Indicator = styled.div`
 
 const Assistive = styled.div`
   display: grid;
+  height: 24px;
   & > * {
     min-height: 0;
     min-width: 0;
   }
   grid-template-columns: 1fr min-content;
+`
+
+const Label = styled.div`
+  transition: transform .3s ${ easingFunc };
+  height: 24px;
+  transform: ${
+    ({ hasValue }) => hasValue ?
+      'translate3d(0, 0, 0)' :
+      'translate3d(0, 32px, 0)'
+  };
 `
 
 class TextArea extends Component {
@@ -112,6 +123,11 @@ class TextArea extends Component {
 
     return (
       <Wrapper>
+        <Label hasValue={ !!this.props.value }>
+          <DescriptionTextLine mostLeft mostRight>
+            { props.label }
+          </DescriptionTextLine>
+        </Label>
         <Container>
           <InputArea
             disabled={ disabled }

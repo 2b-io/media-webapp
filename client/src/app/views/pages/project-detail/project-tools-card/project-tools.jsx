@@ -4,13 +4,11 @@ import { connect } from 'react-redux'
 import { actions, selectors } from 'state/interface'
 import { mapDispatch } from 'services/redux-helpers'
 import { Card, List } from 'ui/elements'
-import { LaunchIcon } from 'ui/icons'
 import { Heading, TextLine } from 'ui/typo'
 
 const ProjectTools = ({
   identifier,
-  toCacheInvalidator,
-  toProjectMedia
+  toCacheInvalidator
 }) => (
   <Card
     title={ () => <Heading mostLeft mostRight>Tools</Heading> }
@@ -19,15 +17,7 @@ const ProjectTools = ({
         items={ [
           {
             content: () => <TextLine mostLeft>Cache Invalidator</TextLine>,
-            trailing: () => (
-              <LaunchIcon onClick={ () => toCacheInvalidator(identifier) } />
-            )
-          },
-          {
-            content: () => <TextLine mostLeft>Media Manager</TextLine>,
-            trailing: () => (
-              <LaunchIcon onClick={ () => toProjectMedia(identifier) } />
-            )
+            onClick: () => toCacheInvalidator(identifier)
           }
         ] }
       />
@@ -44,7 +34,6 @@ export default connect(
     }
   },
   mapDispatch({
-    toCacheInvalidator: (identifier) => actions.requestLocation(`/projects/${ identifier }/cache-invalidator`),
-    toProjectMedia: (identifier) => actions.requestLocation(`/projects/${ identifier }/media`)
+    toCacheInvalidator: (identifier) => actions.requestLocation(`/projects/${ identifier }/cache-invalidator`)
   })
 )(ProjectTools)

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import { List, ContextMenu } from 'ui/elements'
 import { ExpandIcon } from 'ui/icons'
-import { TextLine } from 'ui/typo'
+import { DescriptionTextLine, TextLine } from 'ui/typo'
 
 const Wrapper = styled.div`
   position: relative;
@@ -70,9 +70,13 @@ const Select = ({
   disabled,
   options,
   active, value,
+  label,
   onBlur, onChange, onFocus
 }) => (
   <Wrapper>
+    <DescriptionTextLine mostLeft mostRight>
+      { label }
+    </DescriptionTextLine>
     <Input>
       <TextLine mostLeft>
         <DisableState disabled={ disabled }>

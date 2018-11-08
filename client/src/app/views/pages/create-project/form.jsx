@@ -10,7 +10,6 @@ const projectForm = ({ handleSubmit, idle }) => (
     <TextBox
       label="Project Name"
       name="name"
-      placeholder="My Awesome Project"
       disabled={ !idle }
       validate={ validateRequired }
       maxLength={ 50 }

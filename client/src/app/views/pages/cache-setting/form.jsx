@@ -13,7 +13,7 @@ const CacheSettingForm = ({
     <TextBox
       disabled={ !idle }
       name="ttl"
-      placeholder="TTL"
+      label="TTL"
       type="number"
       validate={ [ validateRequired, validatePositiveNumber ] }
     />
