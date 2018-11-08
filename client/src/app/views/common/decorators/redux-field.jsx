@@ -5,7 +5,7 @@ export default WrappedComponent => {
   const Input = ({
     hasValidator,
     input,
-    meta: { error, valid, touched, ...meta },
+    ...meta,
     ...props
   }) => (
     <Fragment>
@@ -13,8 +13,8 @@ export default WrappedComponent => {
         { ...props }
         { ...input }
         { ...meta }
-        valid={ hasValidator && touched && valid }
-        invalid={ touched && error }
+        valid={ hasValidator && meta.meta.touched && meta.meta.valid }
+        invalid={ meta.meta.touched && meta.meta.error }
       />
     </Fragment>
   )
