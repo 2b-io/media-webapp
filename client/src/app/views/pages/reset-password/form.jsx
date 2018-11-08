@@ -44,6 +44,7 @@ const ResetPaswordForm = ({
     <DescriptionText mostLeft mostRight>
       A strong password should consist of at least six characters and be a combination of letters, numbers and symbols
     </DescriptionText>
+    <Break />
     <TextBox
       disabled={ !idle }
       type="password"
