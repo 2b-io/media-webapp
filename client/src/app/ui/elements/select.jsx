@@ -17,7 +17,6 @@ const Input = styled.div`
     min-height: 0;
   };
   grid-template-columns: 1fr 40px;
-  cursor: pointer;
 `
 
 const Indicator = styled.div`
