@@ -98,10 +98,13 @@ const theme = {
     medium: '20px',
     big: '30px',
     huge: '90px'
-  }
+  },
+
+  //detect mouse & touch
+  mouseDetected: 'onmousemove' in window,
+  touchDetected: 'ontouchstart' in window
 }
 
 // console.debug(treeify.asTree(theme, true))
-
 export { base, black, white, palettes }
 export default theme
