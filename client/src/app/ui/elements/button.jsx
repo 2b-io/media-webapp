@@ -34,6 +34,21 @@ const Button = styled.button.attrs({
           plain && `
             padding: 0;
             background: transparent;
+
+            ${ theme.mouseDetected && !theme.touchDetected && `
+              &:hover {
+                background: ${
+                  disabled ?
+                    theme.secondary.light.base :
+                    theme.primary.light.base
+                };
+                color: ${
+                  disabled ?
+                    theme.secondary.light.on.base :
+                    theme.primary.light.on.base
+                };
+              }`
+            }
           `
         }
         ${
