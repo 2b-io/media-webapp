@@ -1,14 +1,14 @@
 import * as types from './types'
 
-export const fetchPinnedProjects = () => ({
-  type: types.FETCH
+export const listPinnedProjects = () => ({
+  type: types.LIST
 })
-export const fetchPinnedProjectsCompleted = (pinnedProjects) => ({
-  type: types.FETCH_COMPLETED,
+export const listPinnedProjectsCompleted = (pinnedProjects) => ({
+  type: types.LIST_COMPLETED,
   payload: { pinnedProjects }
 })
-export const fetchPinnedProjectsFailed = (reason) => ({
-  type: types.FETCH_FAILED,
+export const listPinnedProjectsFailed = (reason) => ({
+  type: types.LIST_FAILED,
   payload: { reason }
 })
 

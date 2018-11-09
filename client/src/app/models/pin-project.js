@@ -9,8 +9,8 @@ export default {
       query get($token: String!) {
         session(token: $token) {
           account {
-            projectPins {
-              ${ PROJECT_FRAGMENT }
+            pinnedProjects {
+              identifier
             }
           }
         }
@@ -19,14 +19,14 @@ export default {
       token
     })
 
-    return body.session.account.projectPins
+    return body.session.account.pinnedProjects
   },
   async update(params, options) {
     const { projectIdentifiers } = params
     const { token } = options
 
     const body = await request(`
-      query update($token: String!, $projectIdentifiers: projectIdentifiers!) {
+      query update($token: String!, $projectIdentifiers: [ String ]!) {
         session(token: $token) {
           account {
             _pinProjects(projectIdentifiers: $projectIdentifiers) {

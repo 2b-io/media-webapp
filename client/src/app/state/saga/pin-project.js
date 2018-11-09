@@ -4,10 +4,10 @@ import serializeError from 'serialize-error'
 import PinProject from 'models/pin-project'
 import { actions, types, selectors } from 'state/interface'
 
-const fetchLoop = function*() {
+const listLoop = function*() {
   while (true) {
     try {
-      yield take(types.pinProject.FETCH)
+      yield take(types.pinnedProjects.LIST)
 
       const session = yield select(selectors.currentSession)
 
@@ -24,13 +24,13 @@ const fetchLoop = function*() {
       }
 
       yield put(
-        actions.fetchPinnedProjectsCompleted(
+        actions.listPinnedProjectsCompleted(
           pinnedProjects
         )
       )
     } catch (e) {
       yield put(
-        actions.fetchPinnedProjectsFailed(serializeError(e))
+        actions.listPinnedProjectsFailed(serializeError(e))
       )
     }
   }
@@ -43,7 +43,7 @@ const updateLoop = function*() {
         payload: {
           projectIdentifiers
         }
-      } = yield take(types.pinProject.UPDATE)
+      } = yield take(types.pinnedProjects.UPDATE)
 
       const session = yield select(selectors.currentSession)
 
@@ -74,6 +74,6 @@ const updateLoop = function*() {
 
 export default function*() {
   yield take('@@INITIALIZED')
-  yield fork(fetchLoop)
+  yield fork(listLoop)
   yield fork(updateLoop)
 }

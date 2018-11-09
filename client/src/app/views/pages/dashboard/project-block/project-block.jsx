@@ -5,11 +5,11 @@ import { AddIcon } from 'ui/icons'
 import { Heading, Text, TextLine } from 'ui/typo'
 
 const ProjectBlock = ({
-  projects,
+  pinnedProjects,
   toCreateProject,
   toProjectDetail
 }) => {
-  const items = projects.map(
+  const items = pinnedProjects.map(
     project => ({
       key: project._id,
       leading: () => <StatusIndicator isActive={ project.isActive } />,
