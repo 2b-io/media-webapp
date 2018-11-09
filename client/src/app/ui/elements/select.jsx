@@ -69,9 +69,12 @@ const findLabelByValue = (options, value) => {
 const Select = ({
   disabled,
   options,
-  active, value,
+  value,
   label,
-  onBlur, onChange, onFocus
+  onBlur, onChange, onFocus,
+  meta: {
+    active
+  }
 }) => (
   <Wrapper>
     <DescriptionTextLine mostLeft mostRight>
