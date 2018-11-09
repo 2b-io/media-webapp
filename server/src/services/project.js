@@ -120,7 +120,7 @@ export const getByID = async (id) => {
   }).lean()
 }
 
-export const list = async (accountID) => {
+export const list = async (accountID, condition = {}) => {
   if (!accountID) {
     throw 'Invaid parameters: Missing [accountID]'
   }
@@ -132,7 +132,8 @@ export const list = async (accountID) => {
   const projects = await Promise.all(
     permissions.map(
       async (permission) => await get({
-        _id: permission.project
+        _id: permission.project,
+        ...condition
       }, permission.account)
     )
   )

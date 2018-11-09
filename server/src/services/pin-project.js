@@ -1,28 +1,23 @@
 import PinProject from 'models/pin-project'
 
-const get = async (account) => {
-  return await PinProject.findOne({
-    account
+const list = async (accountID) => {
+  const { projects } = await PinProject.findOne({
+    account: accountID
   }).lean()
+  return projects
 }
 
-const update = async (account, projects) => {
-  const updatePinnedProjects = await PinProject.findOneAndUpdate(
-    { account },
-    { projects },
+const update = async (accountID, projectIdentifiers) => {
+  const { projects } = await PinProject.findOneAndUpdate(
+    { account: accountID },
+    { projects: projectIdentifiers },
     { new: true, upsert: true }
   ).lean()
 
-  if (updatePinnedProjects) {
-    return await PinProject.findOne({
-      account
-    }).lean()
-  } else {
-    return []
-  }
+  return projects
 }
 
 export default {
-  get,
+  list,
   update
 }

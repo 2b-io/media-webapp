@@ -73,12 +73,15 @@ export default ({ Account, AccountStruct }) => ({
   _pinProjects: {
     args: {
       projectIdentifiers: {
-        type: new GraphQLList(GraphQLString)
+        type: new GraphQLNonNull (GraphQLList(GraphQLString))
       }
     },
     type: new GraphQLList(Project),
     resolve: async (account, { projectIdentifiers }) => {
-      return await pinProjectService.update(account._id, projectIdentifiers)
+      const pinnedProjects = await pinProjectService.update(account._id, projectIdentifiers)
+      const condition = { identifier: { $in: pinnedProjects } }
+
+      return await projectService.list(account._id, condition)
     }
   }
 })

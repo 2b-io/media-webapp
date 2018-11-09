@@ -43,18 +43,13 @@ export default () => ({
       return project
     }
   },
-  projectPins: {
+  pinnedProjects: {
     type: new GraphQLList(Project),
     resolve: async (account) => {
-      const {
-        projects: projectPins
-      } = await pinProjectService.get(account._id)
+      const pinnedProjects = await pinProjectService.list(account._id)
+      const condition = { identifier: { $in: pinnedProjects } }
 
-      const projectList = await projectService.list(account._id)
-
-      return projectList.filter(({
-        identifier: projectIdentifier
-      }) => projectPins.some((projectPin) => projectIdentifier === projectPin))
+      return await projectService.list(account._id, condition)
     }
   }
 })
