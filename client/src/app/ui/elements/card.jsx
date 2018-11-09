@@ -58,6 +58,27 @@ const Fab = styled.button`
   };
   outline: none;
   border: none;
+  cursor: ${
+    ({
+      disabled,
+      theme: { mouseDetected }
+    }) => disabled ? 'not-allowed' : (
+      mouseDetected ? 'pointer' : 'unset'
+    )
+  };
+  ${
+    ({ disabled, theme }) => css`
+      ${ theme.mouseDetected && !theme.touchDetected && `
+        &:hover {
+          background-color: ${
+            disabled ?
+              theme.secondary.light.base :
+              theme.hoverColor
+          };
+        }`
+      }
+    `
+  }
 `
 
 const FabBorder = styled.div`

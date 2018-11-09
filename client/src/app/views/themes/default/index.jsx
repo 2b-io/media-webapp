@@ -102,7 +102,10 @@ const theme = {
 
   //detect mouse & touch
   mouseDetected: 'onmousemove' in window,
-  touchDetected: 'ontouchstart' in window
+  touchDetected: 'ontouchstart' in window,
+
+  //HOVER COLOR
+  hoverColor: '#f5f5f5'
 }
 
 // console.debug(treeify.asTree(theme, true))
