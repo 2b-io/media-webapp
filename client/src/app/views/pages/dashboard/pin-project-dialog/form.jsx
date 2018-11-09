@@ -12,12 +12,12 @@ const PinnedProjectForm = ({
   <Form handleSubmit={ handleSubmit }>
     {
       allProjects &&
-        allProjects.map(({ identifier }) => (
+        allProjects.map(({ identifier, name }) => (
           <CheckBox
             key={ identifier }
             disabled={ !idle }
             name={ identifier }
-            label={ identifier }
+            label={ `${ name } (${ identifier })` }
           />
         ))
     }

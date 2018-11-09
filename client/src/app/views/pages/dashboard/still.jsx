@@ -33,7 +33,7 @@ const Dashboard = ({
           items={ [
             {
               content: () => <TextLine mostLeft mostRight>Pin project</TextLine>,
-              onClick: () => showPinProjectDialog({})
+              onClick: () => showPinProjectDialog()
             }
           ] }
         />
