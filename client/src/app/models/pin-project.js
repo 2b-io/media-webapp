@@ -30,7 +30,7 @@ export default {
         session(token: $token) {
           account {
             _pinProjects(projectIdentifiers: $projectIdentifiers) {
-              ${ PROJECTS_FRAGMENT }
+              ${ PROJECT_FRAGMENT }
             }
           }
         }

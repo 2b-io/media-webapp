@@ -13,7 +13,8 @@ export const fetchPinnedProjectsFailed = (reason) => ({
 })
 
 export const updatePinnedProjects = (projectIdentifiers) => ({
-  type: types.UPDATE
+  type: types.UPDATE,
+  payload: { projectIdentifiers }
 })
 export const updatePinnedProjectsCompleted = (pinnedProjects) => ({
   type: types.UPDATE_COMPLETED,
