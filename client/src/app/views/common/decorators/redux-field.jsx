@@ -5,16 +5,14 @@ export default WrappedComponent => {
   const Input = ({
     hasValidator,
     input,
-    ...meta,
     ...props
   }) => (
     <Fragment>
       <WrappedComponent
         { ...props }
         { ...input }
-        { ...meta }
-        valid={ hasValidator && meta.meta.touched && meta.meta.valid }
-        invalid={ meta.meta.touched && meta.meta.error }
+        valid={ hasValidator && props.meta.touched && props.meta.valid }
+        invalid={ hasValidator && props.meta.touched && props.meta.error }
       />
     </Fragment>
   )
@@ -22,7 +20,7 @@ export default WrappedComponent => {
   const ReduxField = props => (
     <Field
       component={ Input }
-      hasValidator={ props.validate }
+      hasValidator={ !!props.validate }
       { ...props }
     />
   )
