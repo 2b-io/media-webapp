@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
@@ -7,6 +7,7 @@ import { actions, selectors } from 'state/interface'
 
 import { Card, ResponsiveGrid } from 'ui/elements'
 import { Project } from 'views/common/compounds'
+import UsageReportChart from 'views/pages/usage-report/chart'
 
 const BREAK_POINTS = {
   phone: 1,
@@ -27,12 +28,24 @@ const Dashboard = ({
   toProjectDetail
 }) => {
   const items = pinnedProjects.map((project) => {
+    const { bytesDownloaded, requests } = project
+
     return {
-      content: () => <Card
-        key={ project.identifier }
-        onClick={ toProjectDetail.bind(null, project.identifier) }
-        content={ () => <Project project={ project } /> }
-      />
+      content: () => (
+        <Fragment>
+          <Card
+            key={ project.identifier }
+            onClick={ toProjectDetail.bind(null, project.identifier) }
+            content={ () => <Project project={ project } /> }
+          />
+          <UsageReportChart
+            data={ { bytesDownloaded, requests } }
+            period={ 'hourly' }
+            usageData={ null }
+            requestData={ null }
+          />
+        </Fragment>
+      )
     }
   })
   return (
