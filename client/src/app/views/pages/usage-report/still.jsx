@@ -3,12 +3,15 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
+import { Button } from 'ui/elements'
 import { BackIcon } from 'ui/icons'
 import { PageTitle } from 'ui/typo'
 
 const UsageReport = ({ navigateBack }) => (
   <Fragment>
-    <BackIcon onClick={ navigateBack } />
+    <Button>
+      <BackIcon onClick={ navigateBack } />
+    </Button>
     <PageTitle>Usage Report</PageTitle>
   </Fragment>
 )
