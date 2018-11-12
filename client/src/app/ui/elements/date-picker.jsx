@@ -286,7 +286,9 @@ class DatePicker extends Component {
   render() {
     const {
       disabled,
-      active,
+      meta: {
+        active
+      },
       max, min,
       label,
       value,
