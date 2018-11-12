@@ -1,7 +1,7 @@
 import React from 'react'
 import { Portal } from 'react-portal'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
@@ -32,6 +32,23 @@ const Fab = styled.button`
   border: none;
   bottom: 8px;
   right: 8px;
+  cursor: ${
+    ({
+      disabled,
+      theme: { mouseDetected }
+    }) => disabled ? 'not-allowed' : (
+      mouseDetected ? 'pointer' : 'unset'
+    )
+  };
+  ${
+    ({ theme }) => theme.mouseDetected && !theme.touchDetected &&
+      css`
+        &:hover {
+          background: ${ theme.primary.light.base };
+          color: ${ theme.primary.light.on.base }
+        };
+      `
+  };
 `
 
 const Layout = styled.section`
@@ -128,9 +145,7 @@ const ProjectList = ({
       />
       <Portal node={ document.getElementById('root') }>
         <Fab onClick={ toCreateProject }>
-          <Button>
-            <AddIcon />
-          </Button>
+          <AddIcon />
         </Fab>
       </Portal>
     </Layout>
