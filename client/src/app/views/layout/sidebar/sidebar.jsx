@@ -62,6 +62,23 @@ const MenuButton = styled.button`
   height: 40px;
   line-height: 40px;
   z-index: 1;
+  cursor: ${
+    ({
+      disabled,
+      theme: { mouseDetected }
+    }) => disabled ? 'not-allowed' : (
+      mouseDetected ? 'pointer' : 'unset'
+    )
+  };
+  ${
+    ({ theme }) => theme.mouseDetected && !theme.touchDetected &&
+      css`
+        transition: opacity .3s;
+        &:hover {
+          opacity: 0.7
+        };
+      `
+  };
 `
 
 const Content = styled.div`
