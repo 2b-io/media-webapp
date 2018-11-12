@@ -6,6 +6,10 @@ import PinnedProject from 'models/pinned-project'
 import dateTimeService from 'services/date-time'
 import { actions, types, selectors } from 'state/interface'
 
+const startTime = dateTimeService.getStartOfUTCDay(new Date()) - ms('3d')
+const endTime = dateTimeService.getStartOfUTCDay(new Date())
+const period = ms('1h') / 1000
+
 const listLoop = function*() {
   while (true) {
     try {
@@ -16,10 +20,6 @@ const listLoop = function*() {
       if (!session) {
         throw 'Unauthorized'
       }
-
-      const startTime = dateTimeService.getStartOfUTCDay(new Date()) - ms('3d')
-      const endTime = dateTimeService.getStartOfUTCDay(new Date())
-      const period = ms('1h') / 1000
 
       const pinnedProjects = yield PinnedProject.get({
         startTime,
@@ -62,7 +62,10 @@ const updateLoop = function*() {
       }
 
       const pinnedProjects = yield PinnedProject.update({
-        projectIdentifiers
+        projectIdentifiers,
+        startTime,
+        endTime,
+        period
       }, {
         token: session.token
       })

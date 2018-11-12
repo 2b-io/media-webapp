@@ -1,5 +1,4 @@
 import request from 'services/graphql'
-import { PROJECT_FRAGMENT } from './project'
 import { USAGE_REPORT_FRAGMENT } from './metric'
 
 export default {
@@ -39,22 +38,37 @@ export default {
     return body.session.account.pinnedProjects
   },
   async update(params, options) {
-    const { projectIdentifiers } = params
+    const { projectIdentifiers, startTime, endTime, period } = params
     const { token } = options
 
     const body = await request(`
-      query update($token: String!, $projectIdentifiers: [ String ]!) {
+      query update($token: String!, $projectIdentifiers: [ String ]!, $startTime: Float!, $endTime: Float! ,$period: Float!) {
         session(token: $token) {
           account {
             _pinProjects(projectIdentifiers: $projectIdentifiers) {
-              ${ PROJECT_FRAGMENT }
+              identifier
+              bytesDownloaded: metric(name: "BYTES_DOWNLOADED") {
+                name,
+                datapoints(startTime: $startTime, endTime: $endTime, period: $period) {
+                  ${ USAGE_REPORT_FRAGMENT }
+                }
+              },
+              requests: metric(name: "REQUESTS") {
+                name,
+                datapoints(startTime: $startTime, endTime: $endTime, period: $period) {
+                  ${ USAGE_REPORT_FRAGMENT }
+                }
+              }
             }
           }
         }
       }
     `, {
       token,
-      projectIdentifiers
+      projectIdentifiers,
+      startTime,
+      endTime,
+      period
     })
 
     return body.session.account._pinProjects
