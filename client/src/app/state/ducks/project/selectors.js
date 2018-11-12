@@ -1,11 +1,14 @@
 export default {
   pinnedProjects: (state, pinnedProjectIdentifiers) => {
-    if (Object.keys(state).length) {
+    if (Object.keys(state).length && pinnedProjectIdentifiers) {
       return Object.values(state).filter((project) =>
-        pinnedProjectIdentifiers.some((pinnedProject) =>
+        Object.values(pinnedProjectIdentifiers).some((pinnedProject) =>
           pinnedProject.identifier === project.identifier
         )
-      )
+      ).map((_project) => {
+        const { bytesDownloaded, requests } = pinnedProjectIdentifiers[ _project.identifier ]
+        return { ..._project, bytesDownloaded, requests }
+      })
     } else {
       return []
     }

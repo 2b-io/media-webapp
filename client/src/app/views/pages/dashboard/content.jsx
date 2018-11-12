@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
-import { mapDispatch, mapState } from 'services/redux-helpers'
+import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 
 import { Card, ResponsiveGrid } from 'ui/elements'
@@ -29,10 +29,10 @@ const Dashboard = ({
   const items = pinnedProjects.map((project) => {
     return {
       content: () => <Card
-          key={ project.identifier }
-          onClick={ toProjectDetail.bind(null, project.identifier) }
-          content={ () => <Project project={ project } /> }
-        />
+        key={ project.identifier }
+        onClick={ toProjectDetail.bind(null, project.identifier) }
+        content={ () => <Project project={ project } /> }
+      />
     }
   })
   return (

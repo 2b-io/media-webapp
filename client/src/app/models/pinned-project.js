@@ -4,6 +4,7 @@ import { USAGE_REPORT_FRAGMENT } from './metric'
 
 export default {
   async get(params, options) {
+    const { startTime, endTime, period } = params
     const { token } = options
 
     const body = await request(`

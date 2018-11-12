@@ -1,3 +1,3 @@
 export default {
-  pinnedProjectIdentifiers: state => Object.values(state || {} )
+  pinnedProjectIdentifiers: state => state
 }

@@ -1,7 +1,9 @@
+import ms from 'ms'
 import { take, fork, put, select } from 'redux-saga/effects'
 import serializeError from 'serialize-error'
 
 import PinnedProject from 'models/pinned-project'
+import dateTimeService from 'services/date-time'
 import { actions, types, selectors } from 'state/interface'
 
 const listLoop = function*() {
@@ -15,7 +17,15 @@ const listLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const pinnedProjects = yield PinnedProject.get(null, {
+      const startTime = dateTimeService.getStartOfUTCDay(new Date()) - ms('3d')
+      const endTime = dateTimeService.getStartOfUTCDay(new Date())
+      const period = ms('1h') / 1000
+
+      const pinnedProjects = yield PinnedProject.get({
+        startTime,
+        endTime,
+        period
+      }, {
         token: session.token
       })
 
