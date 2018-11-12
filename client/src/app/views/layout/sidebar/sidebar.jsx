@@ -127,7 +127,7 @@ const UserAvatar = styled.div`
           left: 8px;
           bottom: 8px;
         ` :
-        css `
+        css`
           width: 40px;
           height: 40px;
           left: 0px;

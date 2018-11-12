@@ -12,6 +12,7 @@ const PresetForm = ({
   <Form handleSubmit={ handleSubmit }>
     <Select
       disabled={ !idle }
+      label="Content Type"
       name="contentType"
       options={ options }
     />

@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import dataFormat from 'services/data-format'
 import { ContextMenu } from 'ui/elements'
 import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from 'ui/icons'
-import { TextLine } from 'ui/typo'
+import { DescriptionTextLine, TextLine } from 'ui/typo'
 
 const WEEKDAYS = {
   Mon: { isWeekend: false },
@@ -182,7 +182,7 @@ const CalendarWrapper = ({
       <CalendarMonth>
         {
           Object.entries(WEEKDAYS).map(
-            ([ name, { isWeekend }]) => <WeekDay key={ name } isWeekend={ isWeekend }>{ name }</WeekDay>
+            ([ name, { isWeekend } ]) => <WeekDay key={ name } isWeekend={ isWeekend }>{ name }</WeekDay>
           )
         }
         {
@@ -286,14 +286,20 @@ class DatePicker extends Component {
   render() {
     const {
       disabled,
-      active,
+      meta: {
+        active
+      },
       max, min,
+      label,
       value,
       onBlur, onChange, onFocus
     } = this.props
 
     return (
       <Wrapper>
+        <DescriptionTextLine mostLeft mostRight>
+          { label }
+        </DescriptionTextLine>
         <Input>
           <TextLine mostLeft>
             <DisableState disabled={ disabled }>

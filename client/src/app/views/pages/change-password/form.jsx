@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { Break, Button, Form } from 'ui/elements'
-import { KeyIcon } from 'ui/icons'
 import { DescriptionText } from 'ui/typo'
 import { TextBox } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
@@ -15,9 +14,8 @@ const ChangePasswordForm = ({
       disabled={ !idle }
       type="password"
       name="currentPassword"
-      placeholder="Current password"
+      label="Current password"
       validate={ validateRequired }
-      leading={ () => <KeyIcon /> }
     />
     <DescriptionText mostLeft mostRight>
       Re-enter your current password for security reason
@@ -26,21 +24,20 @@ const ChangePasswordForm = ({
     <TextBox
       disabled={ !idle }
       type="password"
+      label="New password"
       name="password"
-      placeholder="* * * * * *"
       validate={ validateRequired }
-      leading={ () => <KeyIcon /> }
     />
     <DescriptionText mostLeft mostRight>
       A strong password should consist of at least six characters and be a combination of letters, numbers and symbols
     </DescriptionText>
+    <Break />
     <TextBox
       disabled={ !idle }
       type="password"
+      label="Retype new password"
       name="rePassword"
-      placeholder="* * * * * *"
       validate={ validateRequired }
-      leading={ () => <KeyIcon /> }
     />
     <DescriptionText mostLeft mostRight>
       Re-type your password

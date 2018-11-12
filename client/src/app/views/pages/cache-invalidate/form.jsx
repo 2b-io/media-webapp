@@ -14,7 +14,6 @@ const CacheInvalidForm = ({
       disabled={ !idle }
       label="Patterns"
       name="patterns"
-      placeholder="Patterns"
       validate={ validateRequired }
     />
     <DescriptionText mostLeft mostRight>
