@@ -59,7 +59,7 @@ const UsageReport = ({
   }))
 
   return (
-    <Container>
+    <Container allowFullWidth={ true } >
       <UsageReportForm
         idle={ idle }
         initialValues={ {
