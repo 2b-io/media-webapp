@@ -1,6 +1,6 @@
 import typePrefix from 'state/helpers/type-prefix'
 
-const prefix = typePrefix('pinProject')
+const prefix = typePrefix('pinnedProject')
 
 export const LIST = prefix('LIST')
 export const LIST_COMPLETED = prefix('LIST_COMPLETED')

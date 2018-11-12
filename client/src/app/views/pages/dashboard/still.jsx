@@ -32,7 +32,7 @@ const Dashboard = ({
         <List
           items={ [
             {
-              content: () => <TextLine mostLeft mostRight>Pin project</TextLine>,
+              content: () => <TextLine mostLeft mostRight>Customize pinned projects</TextLine>,
               onClick: () => showPinProjectDialog()
             }
           ] }
