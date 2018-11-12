@@ -151,7 +151,15 @@ const UserAvatar = styled.div`
           bottom: 8px;
         `
     }
-  }
+  };
+  cursor: ${
+    ({
+      disabled,
+      theme: { mouseDetected }
+    }) => disabled ? 'not-allowed' : (
+      mouseDetected ? 'pointer' : 'unset'
+    )
+  };
 `
 
 const Sidebar = ({
