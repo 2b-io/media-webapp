@@ -16,7 +16,7 @@ const UpdateProjectPinnedDialog = ({
   pinnedProjectIdentifiers
 }) => {
   const listPinnedProjects = allProjects.reduce((projects, project) => {
-    const pinnedProject = pinnedProjectIdentifiers.some((pinnedProjectIdentifier) =>
+    const pinnedProject = Object.values(pinnedProjectIdentifiers).some((pinnedProjectIdentifier) =>
       project.identifier === pinnedProjectIdentifier.identifier
     )
     return { ...projects, [ project.identifier ]: pinnedProject }
