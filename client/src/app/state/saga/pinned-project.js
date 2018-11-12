@@ -1,7 +1,7 @@
 import { take, fork, put, select } from 'redux-saga/effects'
 import serializeError from 'serialize-error'
 
-import PinProject from 'models/pin-project'
+import PinnedProject from 'models/pinned-project'
 import { actions, types, selectors } from 'state/interface'
 
 const listLoop = function*() {
@@ -15,7 +15,7 @@ const listLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const pinnedProjects = yield PinProject.get(null, {
+      const pinnedProjects = yield PinnedProject.get(null, {
         token: session.token
       })
 
@@ -51,7 +51,7 @@ const updateLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const pinnedProjects = yield PinProject.update({
+      const pinnedProjects = yield PinnedProject.update({
         projectIdentifiers
       }, {
         token: session.token
