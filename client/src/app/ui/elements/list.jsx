@@ -14,7 +14,6 @@ const grid = () => css`
 const Wrapper = styled.ul`
   ${ grid }
   grid-template-columns: 100%
-  // grid-auto-rows: 40px;
 `
 
 const Item = styled.li`
@@ -24,27 +23,24 @@ const Item = styled.li`
     ${ ({ hasLeading }) => hasLeading ? 'min-content' : '' }
     1fr
     ${ ({ hasTrailing }) => hasTrailing ? 'min-content' : '' };
+
   ${
-    ({
-      interactable,
-      theme
-    }) => interactable &&
-      css`
-        ${
-          theme.mouseDetected && `
-            cursor: pointer;
-          `
-        };
-        transition: background .3s;
-        ${
-          theme.mouseDetected && !theme.touchDetected && `
-            &:hover {
-              background: ${ theme.hoverColor };
-              opacity: 0.7;
-            }
-          `
-        }
-      `
+    ({ interactable, theme }) => interactable && css`
+      transition: background .3s, opacity .3s;
+      ${
+        theme.mouseDetected && `
+          cursor: pointer;
+        `
+      }
+
+      ${
+        theme.mouseDetected && !theme.touchDetected && css`
+          &:hover {
+            background: ${ theme.white.dark.base };
+          }
+        `
+      }
+    `
   }
 `
 

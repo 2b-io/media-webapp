@@ -112,6 +112,7 @@ const ProjectList = ({
         content: () => (
           <Card
             key={ project.identifier }
+            interactable={ true }
             onClick={ toProjectDetail.bind(null, project.identifier) }
             content={ () => <Project project={ project } /> }
           />

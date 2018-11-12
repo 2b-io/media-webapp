@@ -10,6 +10,21 @@ const Wrapper = styled.section`
   color: ${
     ({ theme }) => theme.white.on.base
   };
+
+  ${
+    ({ interactable, theme }) => interactable && css`
+      transition: background .3s;
+      cursor: ${ theme.mouseDetected ? 'pointer' : 'unset' };
+
+      ${
+        theme.mouseDetected && !theme.touchDetected && css`
+          &:hover {
+            background: ${ theme.white.dark.base };
+          }
+        `
+      }
+    `
+  }
 `
 
 const Header = styled.div`
@@ -58,24 +73,17 @@ const Fab = styled.button`
   };
   outline: none;
   border: none;
-  cursor: ${
-    ({
-      disabled,
-      theme: { mouseDetected }
-    }) => disabled ? 'not-allowed' : (
-      mouseDetected ? 'pointer' : 'unset'
-    )
-  };
+
   ${
-    ({ disabled, theme }) => css`
-      ${ theme.mouseDetected && !theme.touchDetected && `
-        &:hover {
-          background-color: ${
-            disabled ?
-              theme.secondary.light.base :
-              theme.hoverColor
-          };
-        }`
+    ({ disabled, theme }) => theme.mouseDetected && css`
+      cursor: ${ disabled ? 'not-allowed' : 'pointer' };
+
+      ${
+        !theme.touchDetected && css`
+          &:hover {
+            background: ${ theme.white.dark.base };
+          }
+        `
       }
     `
   }

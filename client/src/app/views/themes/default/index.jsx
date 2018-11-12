@@ -1,6 +1,6 @@
 import ntc from 'ntc'
 import palx from 'palx'
-// import treeify from 'treeify'
+import treeify from 'treeify'
 
 import makeColor from 'ui/color'
 
@@ -44,7 +44,9 @@ const theme = {
     autoGenerateVariants: true
   }),
   white: color({
-    plain: { base: white },
+    plain: {
+      base: white
+    },
     autoGenerateVariants: true
   }),
 
@@ -108,6 +110,9 @@ const theme = {
   hoverColor: '#f5f5f5'
 }
 
-// console.debug(treeify.asTree(theme, true))
+// add custom colors
+theme.white.dark.base = 'rgb(227, 242, 253)'
+
+console.debug(treeify.asTree(theme, true))
 export { base, black, white, palettes }
 export default theme

@@ -34,13 +34,14 @@ const Button = styled.button.attrs({
           plain && `
             padding: 0;
             background: transparent;
-            transition: background .3s;
+            transition: opacity .3s;
 
-            ${ theme.mouseDetected && !theme.touchDetected && `
-              &:hover {
-                opacity: 0.7;
-                background: ${ theme.hoverColor };
-              }`
+            ${
+              theme.mouseDetected && !theme.touchDetected && `
+                &:hover {
+                  opacity: 0.7;
+                }
+              `
             }
           `
         }
