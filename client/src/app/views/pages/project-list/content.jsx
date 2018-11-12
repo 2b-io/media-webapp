@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
-import { Card, ResponsiveGrid } from 'ui/elements'
+import { Button, Card, ResponsiveGrid } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 import { Project } from 'views/common/compounds'
 
@@ -128,7 +128,9 @@ const ProjectList = ({
       />
       <Portal node={ document.getElementById('root') }>
         <Fab onClick={ toCreateProject }>
-          <AddIcon />
+          <Button>
+            <AddIcon />
+          </Button>
         </Fab>
       </Portal>
     </Layout>
