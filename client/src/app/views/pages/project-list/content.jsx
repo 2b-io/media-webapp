@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components'
 
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
-import { Button, Card, ResponsiveGrid } from 'ui/elements'
+import { Card, ResponsiveGrid } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 import { Project } from 'views/common/compounds'
 
