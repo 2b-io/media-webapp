@@ -1,14 +1,14 @@
-import PinProject from 'models/pin-project'
+import PinnedProject from 'models/pinned-project'
 
 const list = async (accountID) => {
-  const { projects } = await PinProject.findOne({
+  const pinnedProjects = await PinnedProject.findOne({
     account: accountID
   }).lean()
-  return projects
+  return pinnedProjects
 }
 
 const update = async (accountID, projectIdentifiers) => {
-  const { projects } = await PinProject.findOneAndUpdate(
+  const { projects } = await PinnedProject.findOneAndUpdate(
     { account: accountID },
     { projects: projectIdentifiers },
     { new: true, upsert: true }

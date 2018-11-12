@@ -12,7 +12,7 @@ const schema = mongoose.Schema({
     }
   ]
 }, {
-  collection: 'pinProject'
+  collection: 'pinnedProjects'
 })
 
-export default mongoose.model('PinProject', schema)
+export default mongoose.model('PinnedProject', schema)

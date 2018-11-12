@@ -10,7 +10,7 @@ import {
   update as updateAccount
 } from 'services/account'
 import projectService from 'services/project'
-import pinProjectService from 'services/pin-project'
+import pinnedProjectService from 'services/pinned-project'
 
 import { Project, ProjectStruct } from '../Project'
 
@@ -78,7 +78,7 @@ export default ({ Account, AccountStruct }) => ({
     },
     type: new GraphQLList(Project),
     resolve: async (account, { projectIdentifiers }) => {
-      const pinnedProjects = await pinProjectService.update(account._id, projectIdentifiers)
+      const pinnedProjects = await pinnedProjectService.update(account._id, projectIdentifiers)
       const condition = { identifier: { $in: pinnedProjects } }
 
       return await projectService.list(account._id, condition)
