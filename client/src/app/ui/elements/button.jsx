@@ -37,16 +37,7 @@ const Button = styled.button.attrs({
 
             ${ theme.mouseDetected && !theme.touchDetected && `
               &:hover {
-                background: ${
-                  disabled ?
-                    theme.secondary.light.base :
-                    theme.primary.light.base
-                };
-                color: ${
-                  disabled ?
-                    theme.secondary.light.on.base :
-                    theme.primary.light.on.base
-                };
+                opacity: 0.7;
               }`
             }
           `
