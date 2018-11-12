@@ -91,6 +91,8 @@ const CalendarDate = styled.span`
   cursor: ${ ({ selectable }) => selectable ? 'pointer' : 'unset' };
   ${
     ({ selectable, theme }) => selectable && theme.mouseDetected && !theme.touchDetected && `
+      transition: background .3s;
+
       &:hover {
         background: ${ theme.hoverColor };
         color: ${ theme.primary.base };

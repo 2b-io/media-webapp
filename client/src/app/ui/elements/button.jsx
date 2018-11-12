@@ -34,6 +34,7 @@ const Button = styled.button.attrs({
           plain && `
             padding: 0;
             background: transparent;
+            transition: background .3s;
 
             ${ theme.mouseDetected && !theme.touchDetected && `
               &:hover {
