@@ -24,7 +24,7 @@ const ProjectBlock = ({
       fab={ () => <AddIcon onClick={ toCreateProject } /> }
       content={ () => (
         items.length &&
-          <List items={ items } /> ||
+          <List items={ items } interactable={ true } /> ||
           <Text mostLeft mostRight>
             You do not have any projects yet.
           </Text>

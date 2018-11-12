@@ -92,7 +92,9 @@ const CalendarDate = styled.span`
   ${
     ({ selectable, theme }) => selectable && theme.mouseDetected && !theme.touchDetected && `
       &:hover {
-        color: ${ theme.primary.base }
+        background: ${ theme.hoverColor };
+        color: ${ theme.primary.base };
+        opacity: 0.7;
       }`
   }
 `

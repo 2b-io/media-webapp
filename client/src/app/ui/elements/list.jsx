@@ -35,6 +35,7 @@ const Item = styled.li`
             cursor: pointer;
           `
         };
+        transition: background .3s;
         ${
           theme.mouseDetected && !theme.touchDetected && `
             &:hover {

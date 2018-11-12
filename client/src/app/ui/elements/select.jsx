@@ -55,7 +55,7 @@ const renderOptions = (options, currentValue, onChoose) => {
   )
 
   return (
-    <List items={ items } />
+    <List items={ items } interactable={ true } />
   )
 }
 

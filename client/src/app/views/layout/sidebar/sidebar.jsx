@@ -205,7 +205,7 @@ const Sidebar = ({
           </Profile>
         ) }
         <div className='menu'>
-          <List items={ menuItems } />
+          <List items={ menuItems } interactable={ true } />
         </div>
       </Content>
     </Surface>

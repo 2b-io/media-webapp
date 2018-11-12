@@ -42,6 +42,7 @@ const ProjectList = ({
       icon={ () => <FilterIcon /> }
       content={ () => (
         <List
+          interactable={ true }
           items={ [
             {
               content: () => <TextLine mostLeft mostRight>Sort by privilege</TextLine>,
