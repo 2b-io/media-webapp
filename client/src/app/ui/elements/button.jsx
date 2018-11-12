@@ -25,8 +25,7 @@ const Button = styled.button.attrs({
   };
 
   ${
-    ({
-      disabled, plain, theme, variant }) => (variant || plain) ?
+    ({ disabled, plain, theme, variant }) => (variant || plain) ?
       css`
         display: inline-flex;
         font-weight: 600;
@@ -54,14 +53,16 @@ const Button = styled.button.attrs({
                 theme[variant].base
             };
 
-            ${ theme.mouseDetected && !theme.touchDetected && `
-              &:hover {
-                color: ${
-                  disabled ?
-                    theme.secondary.light.base :
-                    theme[variant].light.base
-                };
-              }`
+            ${
+              theme.mouseDetected && !theme.touchDetected && `
+                &:hover {
+                  color: ${
+                    disabled ?
+                      theme.secondary.light.base :
+                      theme[variant].light.base
+                  };
+                }
+              `
             }
 
             &:active {
@@ -88,19 +89,21 @@ const Button = styled.button.attrs({
             theme.secondary.on.base :
             theme.primary.on.base
         };
-        ${ theme.mouseDetected && !theme.touchDetected && `
-          &:hover {
-            background: ${
-              disabled ?
-                theme.secondary.light.base :
-                theme.primary.light.base
-            };
-            color: ${
-              disabled ?
-                theme.secondary.light.on.base :
-                theme.primary.light.on.base
-            };
-          }`
+        ${
+          theme.mouseDetected && !theme.touchDetected && `
+            &:hover {
+              background: ${
+                disabled ?
+                  theme.secondary.light.base :
+                  theme.primary.light.base
+              };
+              color: ${
+                disabled ?
+                  theme.secondary.light.on.base :
+                  theme.primary.light.on.base
+              };
+            }
+          `
         }
 
         &:active {
