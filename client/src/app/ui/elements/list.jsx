@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
@@ -23,9 +24,30 @@ const Item = styled.li`
     ${ ({ hasLeading }) => hasLeading ? 'min-content' : '' }
     1fr
     ${ ({ hasTrailing }) => hasTrailing ? 'min-content' : '' };
+  ${
+    ({
+      interactable,
+      theme
+    }) => interactable &&
+      css`
+        ${
+          theme.mouseDetected && `
+            cursor: pointer;
+          `
+        };
+        ${
+          theme.mouseDetected && !theme.touchDetected && `
+            &:hover {
+              background: ${ theme.hoverColor };
+              opacity: 0.7;
+            }
+          `
+        }
+      `
+  }
 `
 
-const List = ({ items }) => (
+const List = ({ interactable, items }) => (
   <Wrapper>
     {
       items.map(
@@ -41,6 +63,7 @@ const List = ({ items }) => (
 
           return (
             <Item { ...props }
+              interactable={ interactable }
               key={ key || index }
               hasLeading={ hasLeading }
               hasTrailing={ hasTrailing }
@@ -55,5 +78,9 @@ const List = ({ items }) => (
     }
   </Wrapper>
 )
+
+List.propTypes = {
+  interactable: PropTypes.bool
+}
 
 export default List
