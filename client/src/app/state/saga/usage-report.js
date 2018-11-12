@@ -7,8 +7,8 @@ import { actions, types, selectors } from 'state/interface'
 
 import Metric from 'models/metric'
 
-const synthesizeData = (requests) => {
-  if (!requests.length) {
+const synthesizeRequestData = (datapoints) => {
+  if (!datapoints.length) {
     return {
       average: 0,
       total: 0,
@@ -17,7 +17,7 @@ const synthesizeData = (requests) => {
     }
   }
 
-  const values = requests.map((item) => item.value)
+  const values = datapoints.map((item) => item.value)
   const minimum = Math.min(...values)
   const maximum = Math.max(...values)
   const total = values.reduce((a, b) => a + b)
@@ -29,6 +29,16 @@ const synthesizeData = (requests) => {
     maximum,
     minimum
   }
+}
+
+const synthesizeBytesDownloadData = (datapoints) => {
+  if (!datapoints.length) {
+    return { totalBytes: 0 }
+  }
+
+  const totalBytes = datapoints.map((item) => item.value).reduce((total, value) => total + value)
+
+  return { totalBytes }
 }
 
 const generateUsageReportLoop = function*() {
@@ -68,15 +78,8 @@ const generateUsageReportLoop = function*() {
         requests
       } = data
 
-      const bytesDownloadData = {}
-
-      if (!bytesDownloaded.datapoints.length) {
-        bytesDownloadData.totalBytes = 0
-      } else {
-        bytesDownloadData.totalBytes = bytesDownloaded.datapoints.map((item) => item.value).reduce((a, b) => a + b)
-      }
-
-      const requestData = synthesizeData(requests.datapoints)
+      const bytesDownloadData = synthesizeBytesDownloadData(bytesDownloaded.datapoints)
+      const requestData = synthesizeRequestData(requests.datapoints)
 
       yield put(
         actions.generateUsageReportCompleted(data, granularity, requestData, bytesDownloadData)
