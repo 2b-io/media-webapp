@@ -25,56 +25,54 @@ const UsageReportForm = ({
     <Form handleSubmit={ handleSubmit } idle={ idle }>
       <ResponsiveGrid
         breakpoints={ BREAK_POINTS }
-        items={
-          [
-            {
-              content: () => (
-                <DatePicker
-                  disabled={ !idle }
-                  name="startDate"
-                  label="Start Date"
-                  type="date"
-                  validate={ validateRequired }
-                  min={ min }
-                  max={ currentDateRange.endDate }
-                />
-              )
-            },
-            {
-              content: () => (
-                <DatePicker
-                  disabled={ !idle }
-                  name="endDate"
-                  label="End date"
-                  type="date"
-                  validate={ validateRequired }
-                  min={ currentDateRange.startDate }
-                  max={ max }
-                />
-              )
-            },
-            {
-              content: () => (
-                <Select
-                  disabled={ !idle }
-                  name="granularity"
-                  label="Granularity (Daily or Hourly)."
-                  options={ options.granularity }
-                />
-              )
-            },
-            {
-              content: () => (
-                <Select
-                  disabled={ !idle }
-                  name="projectIdentifier"
-                  label="Project"
-                  options={ options.projects }
-                />
-              )
-            }
-          ]
-        }
+        items={ [
+          {
+            content: () => (
+              <DatePicker
+                disabled={ !idle }
+                name="startDate"
+                label="Start Date"
+                type="date"
+                validate={ validateRequired }
+                min={ min }
+                max={ currentDateRange.endDate }
+              />
+            )
+          },
+          {
+            content: () => (
+              <DatePicker
+                disabled={ !idle }
+                name="endDate"
+                label="End date"
+                type="date"
+                validate={ validateRequired }
+                min={ currentDateRange.startDate }
+                max={ max }
+              />
+            )
+          },
+          {
+            content: () => (
+              <Select
+                disabled={ !idle }
+                name="granularity"
+                label="Granularity (Daily or Hourly)."
+                options={ options.granularity }
+              />
+            )
+          },
+          {
+            content: () => (
+              <Select
+                disabled={ !idle }
+                name="projectIdentifier"
+                label="Project"
+                options={ options.projects }
+              />
+            )
+          }
+        ] }
       />
       <Break double />
       <Button
