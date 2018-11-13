@@ -9,8 +9,8 @@ import { PageTitle } from 'ui/typo'
 
 const ProjectMedia = ({ navigateBack, identifier }) => (
   <Fragment>
-    <Button>
-      <BackIcon onClick={ navigateBack.bind(null, identifier) } />
+    <Button onClick={ navigateBack.bind(null, identifier) }>
+      <BackIcon />
     </Button>
     <PageTitle>Media List</PageTitle>
   </Fragment>

@@ -9,8 +9,8 @@ import { PageTitle } from 'ui/typo'
 
 const InviteCollaborator = ({ navigateBack, project = {} }) => (
   <Fragment>
-    <Button>
-      <BackIcon onClick={ navigateBack.bind(null, project.identifier) } />
+    <Button onClick={ navigateBack.bind(null, project.identifier) }>
+      <BackIcon />
     </Button>
     <PageTitle>Invite Collaborator</PageTitle>
   </Fragment>

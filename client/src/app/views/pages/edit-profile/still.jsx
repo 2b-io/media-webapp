@@ -9,8 +9,8 @@ import { PageTitle } from 'ui/typo'
 
 const EditProfile = ({ identifier, navigateBack }) => (
   <Fragment>
-    <Button>
-      <BackIcon onClick={ () => navigateBack(identifier) } />
+    <Button onClick={ () => navigateBack(identifier) }>
+      <BackIcon />
     </Button>
     <PageTitle>Edit Profile</PageTitle>
   </Fragment>

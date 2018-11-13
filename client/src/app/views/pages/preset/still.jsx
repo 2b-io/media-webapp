@@ -9,8 +9,8 @@ import { PageTitle } from 'ui/typo'
 
 const Preset = ({ navigateBack, project = {}, contentType }) => (
   <Fragment>
-    <Button>
-      <BackIcon onClick={ navigateBack.bind(null, project.identifier) } />
+    <Button onClick={ navigateBack.bind(null, project.identifier) }>
+      <BackIcon />
     </Button>
     <PageTitle>{ contentType }</PageTitle>
   </Fragment>

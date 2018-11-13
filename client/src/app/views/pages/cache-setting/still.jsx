@@ -9,8 +9,8 @@ import { PageTitle } from 'ui/typo'
 
 const CacheSetting = ({ navigateBack, project = {} }) => (
   <Fragment>
-    <Button>
-      <BackIcon onClick={ navigateBack.bind(null, project.identifier) } />
+    <Button onClick={ navigateBack.bind(null, project.identifier) }>
+      <BackIcon />
     </Button>
     <PageTitle>Cache Setting</PageTitle>
   </Fragment>

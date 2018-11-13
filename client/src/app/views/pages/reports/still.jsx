@@ -7,8 +7,8 @@ import { PageTitle } from 'ui/typo'
 import { MenuButton } from 'views/common/compounds'
 
 const Reports = ({ maximizeSidebar }) => (
-  <Fragment>
-    <MenuButton onClick={ maximizeSidebar } />
+  <Fragment onClick={ maximizeSidebar }>
+    <MenuButton />
     <PageTitle>Reports</PageTitle>
   </Fragment>
 )

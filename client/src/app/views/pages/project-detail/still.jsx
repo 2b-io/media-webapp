@@ -9,8 +9,8 @@ import { PageTitle } from 'ui/typo'
 
 const ProjectDetail = ({ navigateBack, project = {} }) => (
   <Fragment>
-    <Button>
-      <BackIcon onClick={ navigateBack } />
+    <Button onClick={ navigateBack }>
+      <BackIcon />
     </Button>
     <PageTitle>{ project.name }</PageTitle>
   </Fragment>
