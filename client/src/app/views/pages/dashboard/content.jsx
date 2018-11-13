@@ -28,7 +28,12 @@ const Dashboard = ({
   toProjectDetail
 }) => {
   const items = pinnedProjects.map((project) => {
-    const { bytesDownloaded, requests } = project
+    const {
+      bytesDownloaded,
+      bytesDownloadData,
+      requests,
+      requestData
+    } = project
 
     return {
       content: () => (
@@ -41,8 +46,8 @@ const Dashboard = ({
           <UsageReportChart
             data={ { bytesDownloaded, requests } }
             period={ 'hourly' }
-            usageData={ null }
-            requestData={ null }
+            usageData={ bytesDownloadData }
+            requestData={ requestData }
           />
         </Fragment>
       )
@@ -61,6 +66,7 @@ const Dashboard = ({
 export default connect(
   (state) => {
     const pinnedProjectIdentifiers = selectors.pinnedProjectIdentifiers(state)
+
     return {
       pinnedProjects: selectors.pinnedProjects(state, pinnedProjectIdentifiers)
     }

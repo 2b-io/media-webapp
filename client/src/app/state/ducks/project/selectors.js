@@ -6,8 +6,20 @@ export default {
           pinnedProject.identifier === project.identifier
         )
       ).map((_project) => {
-        const { bytesDownloaded, requests } = pinnedProjectIdentifiers[ _project.identifier ]
-        return { ..._project, bytesDownloaded, requests }
+        const {
+          bytesDownloaded,
+          bytesDownloadData,
+          requests,
+          requestData
+        } = pinnedProjectIdentifiers[ _project.identifier ]
+
+        return {
+          ..._project,
+          bytesDownloaded,
+          bytesDownloadData,
+          requests,
+          requestData
+        }
       })
     } else {
       return []
