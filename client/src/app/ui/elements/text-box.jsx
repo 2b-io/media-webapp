@@ -25,6 +25,7 @@ const Input = styled.input.attrs({
 })`
   display: block;
   appearance: none;
+  -moz-appearance: textfield;
   border: none;
   border-radius: 0;
   outline: none;
