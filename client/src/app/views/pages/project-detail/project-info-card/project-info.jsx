@@ -15,7 +15,8 @@ const ProjectInfoCard = ({
   project && (
     <Card
       title={ () => <Heading mostLeft mostRight>General</Heading> }
-      fab={ () => <EditIcon onClick={ () => toEditProject(project.identifier) } /> }
+      fab={ () => <EditIcon /> }
+      fabClick={ () => toEditProject(project.identifier) }
       content={ () => <Project project={ project } /> }
     />
   ) || <Nothing />

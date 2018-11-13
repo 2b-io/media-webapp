@@ -126,7 +126,8 @@ const Collaborators = ({
     <Fragment>
       <Card
         title={ () => <Heading mostLeft mostRight>Collaborators</Heading> }
-        fab={ () => <OwnerAddIcon onClick={ () => toInviteCollaborator(identifier) } /> }
+        fab={ () => <OwnerAddIcon /> }
+        fabClick={ () => toInviteCollaborator(identifier) }
         content={ () => (
           items.length > 0 ?
             <List items={ items } /> :

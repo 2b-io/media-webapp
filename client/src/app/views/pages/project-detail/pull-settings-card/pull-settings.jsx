@@ -25,7 +25,8 @@ const PullSettings = ({
     <Fragment>
       <Card
         title={ () => <Heading mostLeft mostRight>Pull Settings</Heading> }
-        fab={ () => <EditIcon onClick={ () => toEditPullSetting(identifier) } /> }
+        fab={ () => <EditIcon /> }
+        fabClick={ () => toEditPullSetting(identifier) }
         content={ () => (
           <Fragment>
             <Text mostLeft mostRight>

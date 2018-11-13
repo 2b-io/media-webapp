@@ -16,7 +16,8 @@ const CacheSetting = ({
   <Fragment>
     <Card
       title={ () => <Heading mostLeft mostRight>Cache Setting</Heading> }
-      fab={ () => <EditIcon onClick={ () => toEditCacheSetting(identifier) } /> }
+      fab={ () => <EditIcon /> }
+      fabClick={ () => toEditCacheSetting(identifier) }
       content={ () => (
         <Fragment>
           <Text mostLeft mostRight>
