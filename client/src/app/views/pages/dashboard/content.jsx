@@ -25,9 +25,13 @@ const Layout = styled.section`
 `
 
 const Dashboard = ({
-  pinnedProjects,
-  toProjectDetail
+  toProjectDetail,
+  ui: { pinnedProjects }
 }) => {
+  if (!pinnedProjects) {
+    return null
+  }
+
   const items = pinnedProjects.map((project) => {
     const {
       bytesDownloaded,
@@ -54,6 +58,7 @@ const Dashboard = ({
       )
     }
   })
+
   return (
     <Layout>
       <ResponsiveGrid
@@ -65,13 +70,7 @@ const Dashboard = ({
 }
 
 export default connect(
-  (state) => {
-    const pinnedProjectIdentifiers = selectors.pinnedProjectIdentifiers(state)
-
-    return {
-      pinnedProjects: selectors.pinnedProjects(state, pinnedProjectIdentifiers)
-    }
-  },
+  null,
   mapDispatch({
     toProjectDetail: slug => actions.requestLocation(`/projects/${ slug }`)
   })

@@ -13,14 +13,19 @@ const UpdateProjectPinnedDialog = ({
   idle,
   updatePinnedProjects,
   allProjects,
-  pinnedProjectIdentifiers
+  pinnedProjects
 }) => {
-  const listPinnedProjects = allProjects.reduce((projects, project) => {
-    const pinnedProject = Object.values(pinnedProjectIdentifiers).some((pinnedProjectIdentifier) =>
-      project.identifier === pinnedProjectIdentifier.identifier
+  if (!allProjects || !pinnedProjects) {
+    return
+  }
+
+  const pinnedState = pinnedProjects
+    .reduce(
+      (state, project) => ({
+        ...state,
+        [ project.identifier ]: true
+      }), {}
     )
-    return { ...projects, [ project.identifier ]: pinnedProject }
-  }, {})
 
   return (
     <Container>
@@ -28,7 +33,7 @@ const UpdateProjectPinnedDialog = ({
         idle={ idle }
         onSubmit={ updatePinnedProjects }
         allProjects={ allProjects }
-        initialValues={ listPinnedProjects }
+        initialValues={ pinnedState }
       />
     </Container>
   )

@@ -1,5 +1,7 @@
 import request from 'services/graphql'
+
 import { USAGE_REPORT_FRAGMENT } from './metric'
+import { PROJECT_FRAGMENT } from './project'
 
 export default {
   async get(params, options) {
@@ -11,7 +13,7 @@ export default {
         session(token: $token) {
           account {
             pinnedProjects {
-              identifier
+              ${ PROJECT_FRAGMENT },
               bytesDownloaded: metric(name: "BYTES_DOWNLOADED") {
                 name,
                 datapoints(startTime: $startTime, endTime: $endTime, period: $period) {
@@ -46,7 +48,7 @@ export default {
         session(token: $token) {
           account {
             _pinProjects(projectIdentifiers: $projectIdentifiers) {
-              identifier
+              ${ PROJECT_FRAGMENT },
               bytesDownloaded: metric(name: "BYTES_DOWNLOADED") {
                 name,
                 datapoints(startTime: $startTime, endTime: $endTime, period: $period) {

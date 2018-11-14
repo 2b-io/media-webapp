@@ -13,7 +13,6 @@ const PIN_PROJECT = 'PIN_PROJECT'
 
 const Dashboard = ({
   allProjects,
-  pinnedProjectIdentifiers,
   maximizeSidebar,
   showPinProjectDialog,
   hidePinProjectDialog,
@@ -21,7 +20,8 @@ const Dashboard = ({
   updatePinnedProjects,
   ui: {
     idle,
-    isPinProjectsDialogActive
+    isPinProjectsDialogActive,
+    pinnedProjects
   }
 }) => (
   <Fragment>
@@ -52,7 +52,7 @@ const Dashboard = ({
           idle={ idle }
           updatePinnedProjects={ updatePinnedProjects }
           allProjects={ allProjects }
-          pinnedProjectIdentifiers={ pinnedProjectIdentifiers }
+          pinnedProjects={ pinnedProjects }
         />
       ) }
     />
@@ -61,7 +61,6 @@ const Dashboard = ({
 
 export default connect(
   mapState({
-    pinnedProjectIdentifiers: selectors.pinnedProjectIdentifiers,
     allProjects: selectors.allProjects
   }),
   mapDispatch({

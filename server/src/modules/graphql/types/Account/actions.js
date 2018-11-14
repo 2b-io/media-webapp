@@ -86,8 +86,6 @@ export default ({ Account, AccountStruct }) => ({
         }
       })
 
-      console.log(filtered)
-
       // add ref
       return filtered.map((project) => {
         project.account = account

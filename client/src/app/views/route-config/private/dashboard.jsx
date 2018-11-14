@@ -4,19 +4,17 @@ import { actions, types } from 'state/interface'
 import * as Dashboard from 'views/pages/dashboard'
 import { addToast } from 'state/saga/toast'
 
-const watchListPinnedProjects = function*() {
+const watchInitialData = function*() {
   yield race({
     failedListPinnedProjects: take(types.pinnedProjects.LIST_FAILED),
     failedListProjects: take(types.project.FETCH_FAILED)
   })
-
 
   yield fork(addToast, {
     type: 'error',
     message: 'Project does not exists or network connection has error(s).'
   })
 }
-
 
 const watchUpdatePinProject = function*(path) {
   while (true) {
@@ -43,7 +41,7 @@ const watchUpdatePinProject = function*(path) {
       continue
     }
 
-    const { updateCompleted, updateFailed } = yield race({
+    const { updateFailed } = yield race({
       updateCompleted: take(types.pinnedProjects.UPDATE_COMPLETED),
       updateFailed: take(types.pinnedProjects.UPDATE_FAILED)
     })
@@ -54,18 +52,29 @@ const watchUpdatePinProject = function*(path) {
       })
     )
 
-    if (updateCompleted) {
-      yield put(
-        actions.requestLocation('/')
-      )
-    }
-
     if (updateFailed) {
       yield fork(addToast, {
         type: 'error',
-        message: 'Cannot update pin project. Please check your network connection and try again.'
+        message: 'Cannot pin projects. Please check your network connection and try again.'
       })
     }
+  }
+}
+
+const watchPinnedProjects = function*(path) {
+  while (true) {
+    const { list, update } = yield race({
+      list: take(types.pinnedProjects.LIST_COMPLETED),
+      update: take(types.pinnedProjects.UPDATE_COMPLETED)
+    })
+
+    const { pinnedProjects } = (list || update).payload
+
+    yield put(
+      actions.mergeUIState(path, {
+        pinnedProjects
+      })
+    )
   }
 }
 
@@ -75,8 +84,9 @@ export default {
     component: Dashboard,
     exact: true,
     *state(path) {
-      yield fork(watchListPinnedProjects)
+      yield fork(watchInitialData)
       yield fork(watchUpdatePinProject, path)
+      yield fork(watchPinnedProjects, path)
 
       yield all([
         put(
