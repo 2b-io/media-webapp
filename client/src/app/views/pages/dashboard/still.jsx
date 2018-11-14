@@ -17,6 +17,7 @@ const Dashboard = ({
   maximizeSidebar,
   showPinProjectDialog,
   hidePinProjectDialog,
+  hidePinnedProjectMenu,
   updatePinnedProjects,
   ui: {
     idle,
@@ -33,7 +34,10 @@ const Dashboard = ({
           items={ [
             {
               content: () => <TextLine mostLeft mostRight>Customize pinned projects</TextLine>,
-              onClick: () => showPinProjectDialog()
+              onClick: () => {
+                showPinProjectDialog()
+                hidePinnedProjectMenu('pinnedProject')
+              }
             }
           ] }
         />
@@ -60,6 +64,7 @@ export default connect(
     allProjects: selectors.allProjects
   }),
   mapDispatch({
+    hidePinnedProjectMenu: actions.hideMenu,
     showPinProjectDialog: () => actions.showDialog(PIN_PROJECT),
     hidePinProjectDialog: () => actions.hideDialog(PIN_PROJECT),
     updatePinnedProjects: (listPinnedProjects) => {
