@@ -6,11 +6,9 @@ const schema = mongoose.Schema({
     required: true,
     index: true
   },
-  projects: [
-    {
-      type: String
-    }
-  ]
+  projects: [ {
+    type: String
+  } ]
 }, {
   collection: 'pinnedProjects'
 })

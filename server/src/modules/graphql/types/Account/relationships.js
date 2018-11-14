@@ -19,7 +19,7 @@ export default () => ({
       const projects = await projectService.list(account._id)
 
       // add ref
-      return projects.map(project => {
+      return projects.map((project) => {
         project.account = account
 
         return project
@@ -47,10 +47,19 @@ export default () => ({
     type: new GraphQLList(Project),
     resolve: async (account) => {
       const pinnedProjects = await pinnedProjectService.list(account._id)
-      const { projects } = pinnedProjects || []
-      const condition = { identifier: { $in: projects } }
 
-      return await projectService.list(account._id, condition)
+      const filtered = await projectService.list(account._id, {
+        identifier: {
+          $in: pinnedProjects
+        }
+      })
+
+      // add ref
+      return filtered.map((project) => {
+        project.account = account
+
+        return project
+      })
     }
   }
 })

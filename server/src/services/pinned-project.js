@@ -1,18 +1,26 @@
 import PinnedProject from 'models/pinned-project'
 
 const list = async (accountID) => {
-  const pinnedProjects = await PinnedProject.findOne({
+  const data = await PinnedProject.findOne({
     account: accountID
   }).lean()
-  return pinnedProjects
+
+  if (!data) {
+    return []
+  }
+
+  return data.projects
 }
 
 const update = async (accountID, projectIdentifiers) => {
-  const { projects } = await PinnedProject.findOneAndUpdate(
-    { account: accountID },
-    { projects: projectIdentifiers },
-    { new: true, upsert: true }
-  ).lean()
+  const { projects } = await PinnedProject.findOneAndUpdate({
+    account: accountID
+  }, {
+    projects: projectIdentifiers
+  },{
+    new: true,
+    upsert: true
+  }).lean()
 
   return projects
 }

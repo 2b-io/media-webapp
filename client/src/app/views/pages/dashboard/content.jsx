@@ -11,6 +11,7 @@ import { UsageReportChart } from 'views/common/compounds'
 
 const BREAK_POINTS = {
   phone: 1,
+  tablet: 1,
   otherwise: 2
 }
 

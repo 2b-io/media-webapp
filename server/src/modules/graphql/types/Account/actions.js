@@ -9,8 +9,8 @@ import {
   changePassword,
   update as updateAccount
 } from 'services/account'
-import projectService from 'services/project'
 import pinnedProjectService from 'services/pinned-project'
+import projectService from 'services/project'
 
 import { Project, ProjectStruct } from '../Project'
 
@@ -73,15 +73,27 @@ export default ({ Account, AccountStruct }) => ({
   _pinProjects: {
     args: {
       projectIdentifiers: {
-        type: new GraphQLNonNull (GraphQLList(GraphQLString))
+        type: new GraphQLNonNull(GraphQLList(GraphQLString))
       }
     },
     type: new GraphQLList(Project),
     resolve: async (account, { projectIdentifiers }) => {
       const pinnedProjects = await pinnedProjectService.update(account._id, projectIdentifiers)
-      const condition = { identifier: { $in: pinnedProjects } }
 
-      return await projectService.list(account._id, condition)
+      const filtered = await projectService.list(account._id, {
+        identifier: {
+          $in: pinnedProjects
+        }
+      })
+
+      console.log(filtered)
+
+      // add ref
+      return filtered.map((project) => {
+        project.account = account
+
+        return project
+      })
     }
   }
 })
