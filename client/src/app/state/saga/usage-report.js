@@ -27,17 +27,11 @@ const generateUsageReportLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const todayUTC = dateTimeService.getToDayOfUTCDay()
-      //if end date is today then set end time equal utc time now
-      const endTime = endDate === todayUTC ?
-        dateTimeService.getNowOfUTCDay() :
-        dateTimeService.getEndOfUTCDay(new Date(endDate))
-
       const data = yield Metric.generateUsageReport({
         projectIdentifier,
         period: granularity === 'daily' ? ms('1d') / 1000 : ms('1h') / 1000, //86400s : 3600s
         startTime: dateTimeService.getStartOfUTCDay(new Date(startDate)),
-        endTime
+        endTime: dateTimeService.getEndOfUTCDay(new Date(endDate))
       }, {
         token: session.token
       })
