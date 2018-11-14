@@ -34,6 +34,7 @@ const Reports = ({
         {
           content: () => (
             <Card
+              interactable
               onClick={ toUsageReport }
               content={ () => (
                 <Fragment>

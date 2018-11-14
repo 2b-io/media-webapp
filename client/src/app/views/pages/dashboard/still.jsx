@@ -31,6 +31,7 @@ const Dashboard = ({
       name={ 'pinnedProject' }
       content={ () => (
         <List
+          interactable
           items={ [
             {
               content: () => <TextLine mostLeft mostRight>Customize pinned projects</TextLine>,
