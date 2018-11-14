@@ -7,6 +7,6 @@ const urlRegex = new RegExp('^(https?:\\/\\/)?'+ // protocol
   '(\\?[;&a-z\\d%@_.,~+&:=-]*)?'+ // query string
   '(\\#[-a-z\\d_]*)?$', 'i') // fragment locator
 
-const validURL = (url) => url && !urlRegex.test(url) ? 'Invalid url' : undefined
+const validUrl = (url) => url && !urlRegex.test(url) ? 'Invalid url' : undefined
 
-export default validURL
+export default validUrl
