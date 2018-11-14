@@ -29,7 +29,7 @@ const Dashboard = ({
   ui: { pinnedProjects }
 }) => {
   if (!pinnedProjects) {
-    return null
+    return <Layout />
   }
 
   const items = pinnedProjects.map((project) => {
@@ -42,19 +42,21 @@ const Dashboard = ({
 
     return {
       content: () => (
-        <Fragment>
-          <Card
-            key={ project.identifier }
-            onClick={ toProjectDetail.bind(null, project.identifier) }
-            content={ () => <Project project={ project } /> }
-          />
-          <UsageReportChart
-            data={ { bytesDownloaded, requests } }
-            period={ 'hourly' }
-            usageData={ bytesDownloadData }
-            requestData={ requestData }
-          />
-        </Fragment>
+        <Card
+          key={ project.identifier }
+          onClick={ toProjectDetail.bind(null, project.identifier) }
+          content={ () => (
+            <Fragment>
+              <Project project={ project } />
+              <UsageReportChart
+                data={ { bytesDownloaded, requests } }
+                period={ 'hourly' }
+                usageData={ bytesDownloadData }
+                requestData={ requestData }
+              />
+            </Fragment>
+          ) }
+        />
       )
     }
   })
