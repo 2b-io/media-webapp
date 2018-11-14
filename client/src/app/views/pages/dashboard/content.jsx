@@ -7,7 +7,7 @@ import { actions, selectors } from 'state/interface'
 
 import { Card, ResponsiveGrid } from 'ui/elements'
 import { Project } from 'views/common/compounds'
-import UsageReportChart from 'views/pages/usage-report/chart'
+import { UsageReportChart } from 'views/common/compounds'
 
 const BREAK_POINTS = {
   phone: 1,
