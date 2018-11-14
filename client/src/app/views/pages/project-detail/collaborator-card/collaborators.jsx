@@ -22,6 +22,7 @@ const Collaborators = ({
   currentAccount,
   deleteCollaborator,
   identifier,
+  hideCollaboratorMenu,
   hideLeaveProjectDialog,
   hideMakeOwnerDialog,
   showLeaveProjectDialog,
@@ -83,12 +84,15 @@ const Collaborators = ({
                 items={ [
                   account.isActive ? {
                     content: () => <TextLine mostLeft mostRight>Make owner</TextLine>,
-                    onClick: () => showMakeOwnerDialog({
-                      accountId: account.identifier,
-                      identifier,
-                      account,
-                      project
-                    })
+                    onClick: () => {
+                      showMakeOwnerDialog({
+                        accountId: account.identifier,
+                        identifier,
+                        account,
+                        project
+                      })
+                      hideCollaboratorMenu(`collaborator-${ account.identifier }`)
+                    }
                   } : null,
                   {
                     content: () => <TextLine mostLeft mostRight>Remove</TextLine>,
@@ -109,11 +113,14 @@ const Collaborators = ({
                     items={ [
                       {
                         content: () => <TextLine mostLeft mostRight>Leave project</TextLine>,
-                        onClick: () => showLeaveProjectDialog({
-                          accountId: account.identifier,
-                          identifier,
-                          project
-                        })
+                        onClick: () => {
+                          showLeaveProjectDialog({
+                            accountId: account.identifier,
+                            identifier,
+                            project
+                          })
+                          hideCollaboratorMenu(`collaborator-${ account.identifier }`)
+                        }
                       }
                     ] }
                   />
@@ -167,6 +174,7 @@ export default connect(
   mapDispatch({
     makeOwner: actions.makeOwner,
     deleteCollaborator: actions.deleteCollaborator,
+    hideCollaboratorMenu: actions.hideMenu,
     toProfile: (identifier) => actions.requestLocation(`/@${ identifier }`),
     toInviteCollaborator: (identifier) => actions.requestLocation(`/projects/${ identifier }/invite-collaborator`),
     hideLeaveProjectDialog: () => actions.hideDialog('LEAVE_PROJECT'),
