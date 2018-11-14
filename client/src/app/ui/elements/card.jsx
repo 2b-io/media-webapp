@@ -106,14 +106,15 @@ const FabContent = styled.div`
 const Content = styled.div`
 `
 
-const Card = ({ title, fab, content, ...props }) => (
+//fabClick is action to change click from icon into Fab
+const Card = ({ title, fab, fabClick, content, ...props }) => (
   <Wrapper { ...props }>
     { title && (
       <Fragment>
         <Header hasFab={ !!fab }>
           { title && title() }
           { fab && (
-            <Fab>
+            <Fab onClick={ fabClick && fabClick }>
               <FabBorder />
               <FabContent>{ fab() }</FabContent>
             </Fab>

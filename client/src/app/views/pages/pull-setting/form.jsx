@@ -3,6 +3,7 @@ import React from 'react'
 import { Break, Button, Form } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
 import { TextArea, TextBox } from 'views/common/form'
+import { validateUrl } from 'views/common/validate'
 
 import CustomHeader from './custom-header'
 
@@ -15,6 +16,7 @@ const pullSettingForm = ({
       disabled={ !idle }
       label="Pull URL"
       name="pullURL"
+      validate={ validateUrl }
     />
     <DescriptionText mostLeft mostRight>
       (Optional) If you want Media CDN to request your content from a directory in your origin, enter the Pull URL here, for example, https://mywebsite.com/assets. Do not include a / at the end of the Pull URL.

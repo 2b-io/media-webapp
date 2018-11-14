@@ -46,7 +46,8 @@ const ApiKeys = ({
   return (
     <Card
       title={ () => <Heading mostLeft mostRight>API Keys</Heading> }
-      fab={ () => <AddIcon onClick={ () => createApiKey(identifier) } /> }
+      fab={ () => <AddIcon /> }
+      fabClick={ () => createApiKey(identifier) }
       content={ () => (
         lists.length > 0 &&
           <List items={ lists } /> ||

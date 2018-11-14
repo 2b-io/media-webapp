@@ -21,7 +21,8 @@ const ProjectBlock = ({
   return (
     <Card
       title={ () => <Heading mostLeft mostRight>Projects</Heading> }
-      fab={ () => <AddIcon onClick={ toCreateProject } /> }
+      fab={ () => <AddIcon /> }
+      fabClick={ toCreateProject }
       content={ () => (
         items.length &&
           <List items={ items } interactable={ true } /> ||
