@@ -17,6 +17,13 @@ const Block = styled.div`
   }
 `
 
+const PageTitleConntent = styled.div`
+  @media (min-width: 600px) {
+    text-align: left;
+    padding: 0 8px;
+  }
+`
+
 export const Text = styled.p`
   ${ font }
   ${ textAlign }
@@ -52,7 +59,9 @@ export const AssistiveTextLine = ({ children, ...props }) => (
 
 export const PageTitle = ({ children, ...props }) => (
   <Block size="large" align="center" { ...props }>
-    <h1>{ children }</h1>
+    <PageTitleConntent>
+      <h1>{ children }</h1>
+    </PageTitleConntent>
   </Block>
 )
 

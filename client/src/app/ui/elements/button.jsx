@@ -83,7 +83,7 @@ const Button = styled.button.attrs({
               theme.secondary.light.on.base :
               theme.primary.light.on.base
           };
-        }
+        };
 
         &:active {
           background: ${
@@ -96,6 +96,13 @@ const Button = styled.button.attrs({
               theme.secondary.dark.on.base :
               theme.primary.dark.on.base
           };
+        };
+
+        @media (min-width: 600px) {
+          width: auto;
+          min-width: 280px;
+          text-align: center;
+          margin: 0px 0px 0px auto;
         }
       `
   }
