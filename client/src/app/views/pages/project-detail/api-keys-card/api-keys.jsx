@@ -25,6 +25,7 @@ const ApiKeys = ({
           name={ `secret-key-${ key }` }
           content={ () => (
             <List
+              interactable={ true }
               items={ [
                 {
                   content: () => <TextLine mostLeft mostRight>{ isActive ? 'Disable' : 'Enable' }</TextLine>,

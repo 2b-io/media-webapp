@@ -22,7 +22,19 @@ const Button = styled.button.attrs({
       theme.black.base
   };
   cursor: ${
-    ({ disabled }) => disabled ? 'not-allowed' : 'pointer'
+    ({
+      disabled,
+      theme: { mouseDetected }
+    }) => disabled ? 'not-allowed' : (
+      mouseDetected ? 'pointer' : 'unset'
+    )
+  };
+  &:hover {
+    opacity: ${
+      ({ theme }) => theme.mouseDetected && !theme.touchDetected ?
+        '0.7' :
+        'unset'
+    }
   };
 `
 

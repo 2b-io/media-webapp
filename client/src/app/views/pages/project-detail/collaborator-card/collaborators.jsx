@@ -79,6 +79,7 @@ const Collaborators = ({
             name={ `collaborator-${ account.identifier }` }
             content={ () => (
               <List
+                interactable={ true }
                 items={ [
                   account.isActive ? {
                     content: () => <TextLine mostLeft mostRight>Make owner</TextLine>,
@@ -104,6 +105,7 @@ const Collaborators = ({
                 name={ `collaborator-${ account.identifier }` }
                 content={ () => (
                   <List
+                    interactable={ true }
                     items={ [
                       {
                         content: () => <TextLine mostLeft mostRight>Leave project</TextLine>,

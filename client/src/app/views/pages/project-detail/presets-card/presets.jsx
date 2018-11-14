@@ -39,7 +39,7 @@ const Presets = ({
         fab={ () => <AddIcon onClick={ showCreateDialog } /> }
         content={ () => (
           items.length &&
-            <List items={ items } /> ||
+            <List items={ items } interactable={ true } /> ||
             <TextLine mostLeft mostRight>No preset found</TextLine>
         ) }
       />

@@ -39,7 +39,7 @@ const Profile = ({
           isActive={ isMenuActive }
           activate={ showMenu }
           deactivate={ hideMenu }
-          content={ () => <List items={ menuItems } /> }
+          content={ () => <List items={ menuItems } interactable={ true } /> }
         />
       ) }
     </Fragment>

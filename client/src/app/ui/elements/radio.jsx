@@ -13,6 +13,21 @@ const Wrapper = styled.label`
 
   height: 40px;
   grid-template-columns: 1fr 40px;
+  cursor: ${
+    ({
+      disabled,
+      theme: { mouseDetected }
+    }) => disabled ? 'not-allowed' : (
+      mouseDetected ? 'pointer' : 'unset'
+    )
+  };
+  &:hover {
+    background-color: ${
+      ({ theme }) => theme.mouseDetected && !theme.touchDetected ?
+        theme.hoverColor :
+        'unset'
+    }
+  }
 `
 
 const Switch = styled.div`
