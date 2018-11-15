@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { MoreIcon } from 'ui/icons'
 import { Button } from 'ui/elements'
@@ -22,17 +22,48 @@ const MenuContent = styled.div`
 
 const Border = styled.div`
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border: 1px solid ${ ({ theme }) => theme.secondary.base };
-  z-index: 0;
+  background: ${ ({ theme }) => theme.secondary.base };
+  z-index: 1;
+
+  ${
+    ({ side }) => {
+      switch (side) {
+        case 'top':
+          return css`
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+          `
+        case 'bottom':
+          return css`
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+          `
+        case 'right':
+          return css`
+            top: 0;
+            bottom: 0;
+            right: 0;
+            width: 1px;
+          `
+        case 'left':
+          return css`
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 1px;
+          `
+      }
+    }
+  }
 `
 
 const Content = styled.div`
   position: relative;
-  z-index: 1;
+  z-index: 0;
 `
 
 class ContextMenu extends Component {
@@ -97,8 +128,11 @@ class ContextMenu extends Component {
         </Button>
         { isActive && (
           <MenuContent>
-            <Border />
             <Content>{ content() }</Content>
+            <Border side="top" />
+            <Border side="right" />
+            <Border side="bottom" />
+            <Border side="left" />
           </MenuContent>
         ) }
       </Menu>
