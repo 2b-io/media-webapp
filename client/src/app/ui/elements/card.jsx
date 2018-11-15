@@ -49,7 +49,7 @@ const HeaderBorder = styled.div`
   z-index: 0;
 `
 
-const Fab = styled.button`
+const Fab = styled.div`
   position: absolute;
   right: 16px;
   bottom: -16px;
@@ -73,20 +73,6 @@ const Fab = styled.button`
   };
   outline: none;
   border: none;
-
-  ${
-    ({ disabled, theme }) => theme.mouseDetected && css`
-      cursor: ${ disabled ? 'not-allowed' : 'pointer' };
-
-      ${
-        !theme.touchDetected && css`
-          &:hover {
-            background: ${ theme.white.dark.base };
-          }
-        `
-      }
-    `
-  }
 `
 
 const FabBorder = styled.div`
@@ -106,15 +92,14 @@ const FabContent = styled.div`
 const Content = styled.div`
 `
 
-//fabClick is action to change click from icon into Fab
-const Card = ({ title, fab, fabClick, content, ...props }) => (
+const Card = ({ title, fab, content, ...props }) => (
   <Wrapper { ...props }>
     { title && (
       <Fragment>
         <Header hasFab={ !!fab }>
           { title && title() }
           { fab && (
-            <Fab onClick={ fabClick && fabClick }>
+            <Fab>
               <FabBorder />
               <FabContent>{ fab() }</FabContent>
             </Fab>
