@@ -138,7 +138,7 @@ const Collaborators = ({
         fab={ () => (
           <PlainButton onClick={ () => toInviteCollaborator(identifier) }>
             <OwnerAddIcon />
-            </PlainButton>
+          </PlainButton>
         ) }
         content={ () => (
           items.length > 0 ?
