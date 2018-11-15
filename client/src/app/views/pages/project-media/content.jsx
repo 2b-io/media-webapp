@@ -8,7 +8,7 @@ import { mapDispatch } from 'services/redux-helpers'
 import { mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { Panel, TitleBar } from 'ui/compounds'
-import { Button, Container, MasonryLayout, Paragraph } from 'ui/elements'
+import { Container, MasonryLayout, Paragraph, PlainButton } from 'ui/elements'
 import { CopyIcon } from 'ui/icons'
 
 const MediaImage = styled.div`
