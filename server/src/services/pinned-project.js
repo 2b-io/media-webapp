@@ -17,7 +17,7 @@ const update = async (accountID, projectIdentifiers) => {
     account: accountID
   }, {
     projects: projectIdentifiers
-  },{
+  }, {
     new: true,
     upsert: true
   }).lean()

@@ -3,15 +3,15 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
-import { Button } from 'ui/elements'
+import { PlainButton } from 'ui/elements'
 import { BackIcon } from 'ui/icons'
 import { PageTitle } from 'ui/typo'
 
 const ProjectDetail = ({ navigateBack, project = {} }) => (
   <Fragment>
-    <Button onClick={ navigateBack }>
+    <PlainButton onClick={ navigateBack }>
       <BackIcon />
-    </Button>
+    </PlainButton>
     <PageTitle>{ project.name }</PageTitle>
   </Fragment>
 )

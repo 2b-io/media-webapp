@@ -75,8 +75,8 @@ const MenuButton = styled.button`
       css`
         transition: opacity .3s;
         &:hover {
-          opacity: 0.7
-        };
+          opacity: 0.7;
+        }
       `
   };
 `

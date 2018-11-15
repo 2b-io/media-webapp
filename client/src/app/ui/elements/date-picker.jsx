@@ -1,9 +1,9 @@
 import { Calendar } from 'calendar'
 import React, { Component, Fragment } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import dataFormat from 'services/data-format'
-import { Button, ContextMenu } from 'ui/elements'
+import { ContextMenu, PlainButton } from 'ui/elements'
 import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from 'ui/icons'
 import { DescriptionTextLine, TextLine } from 'ui/typo'
 
@@ -90,14 +90,13 @@ const CalendarDate = styled.span`
   };
   cursor: ${ ({ selectable }) => selectable ? 'pointer' : 'unset' };
   ${
-    ({ selectable, theme }) => selectable && theme.mouseDetected && !theme.touchDetected && `
-      transition: background .3s;
-
-      &:hover {
-        background: ${ theme.hoverColor };
-        color: ${ theme.primary.base };
-        opacity: 0.7;
-      }`
+    ({ selectable, theme }) => selectable && theme.mouseDetected && !theme.touchDetected &&
+      css`
+        transition: opacity .3s;
+        &:hover {
+          opacity: 0.7;
+        }
+      `
   }
 `
 
@@ -179,21 +178,21 @@ const CalendarWrapper = ({
   return (
     <Fragment>
       <HeaderCalendar>
-        <Button plain>
+        <PlainButton>
           <ChevronLeftIcon
             onClick={ prev }
           />
-        </Button>
+        </PlainButton>
         <TextLine>
           {
             dataFormat.formatTime(selectedView, 'UTC:mmm, yyyy')
           }
         </TextLine>
-        <Button plain>
+        <PlainButton>
           <ChevronRightIcon
             onClick={ next }
           />
-        </Button>
+        </PlainButton>
       </HeaderCalendar>
       <CalendarMonth>
         {

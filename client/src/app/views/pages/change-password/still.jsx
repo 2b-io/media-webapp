@@ -3,15 +3,15 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
-import { Button } from 'ui/elements'
+import { PlainButton } from 'ui/elements'
 import { BackIcon } from 'ui/icons'
 import { PageTitle } from 'ui/typo'
 
 const ChangePassword = ({ identifier, navigateBack }) => (
   <Fragment>
-    <Button onClick={ () => navigateBack(identifier) }>
+    <PlainButton onClick={ () => navigateBack(identifier) }>
       <BackIcon />
-    </Button>
+    </PlainButton>
     <PageTitle>Change Password</PageTitle>
   </Fragment>
 )
