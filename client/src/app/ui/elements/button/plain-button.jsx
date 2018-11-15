@@ -8,24 +8,23 @@ const PlainButton = styled.button.attrs({
   outline: none;
   background: transparent;
   margin: 0;
+  padding: 0;
   white-space: nowrap;
   line-height: 40px;
   height: 40px;
-  cursor: ${
-    ({
-      disabled,
-      theme: { mouseDetected }
-    }) => disabled ? 'not-allowed' : (
-      mouseDetected ? 'pointer' : 'unset'
-    )
-  };
 
   ${
-    ({ theme }) => theme.mouseDetected && !theme.touchDetected &&
+    ({ disabled, theme: { mouseDetected } }) => mouseDetected && css`
+      cursor: ${ disabled ? 'not-allowed' : 'pointer' };
+    `
+  }
+
+  ${
+    ({ disabled, theme }) => !disabled && theme.mouseDetected && !theme.touchDetected &&
       css`
-        transition:  opacity .3s;
+        transition: opacity .3s;
         &:hover {
-          opacity: 0.7;
+          opacity: 0.3;
         }
       `
   }

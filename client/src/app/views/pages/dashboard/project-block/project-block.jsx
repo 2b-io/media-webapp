@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Card, List, StatusIndicator } from 'ui/elements'
+import { Card, List, PlainButton, StatusIndicator } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 import { Heading, Text, TextLine } from 'ui/typo'
 
@@ -21,8 +21,11 @@ const ProjectBlock = ({
   return (
     <Card
       title={ () => <Heading mostLeft mostRight>Projects</Heading> }
-      fab={ () => <AddIcon /> }
-      fabClick={ toCreateProject }
+      fab={ () => (
+        <PlainButton onClick={ toCreateProject }>
+          <AddIcon />
+        </PlainButton>
+      ) }
       content={ () => (
         items.length &&
           <List items={ items } interactable={ true } /> ||

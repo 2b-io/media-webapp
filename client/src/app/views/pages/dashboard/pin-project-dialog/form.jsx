@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Break, Button, Form } from 'ui/elements'
+import { Break, Form, PrimaryButton } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
 import { CheckBox  } from 'views/common/form'
 
@@ -25,7 +25,12 @@ const PinnedProjectForm = ({
       Pin your favorite projects
     </DescriptionText>
     <Break double />
-    <Button type="submit" disabled={ !idle }>Pin</Button>
+    <PrimaryButton
+      type="submit"
+      disabled={ !idle }
+    >
+      Pin
+    </PrimaryButton>
   </Form>
 )
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 
 import { MoreIcon } from 'ui/icons'
-import { Button } from 'ui/elements'
+import { PlainButton } from 'ui/elements'
 
 const Menu = styled.div`
   position: relative;
@@ -123,9 +123,12 @@ class ContextMenu extends Component {
 
     return (
       <Menu>
-        <Button disabled={ disabled } plain onClick={ this.toggleActivation(isActive) }>
+        <PlainButton
+          disabled={ disabled }
+          onClick={ this.toggleActivation(isActive) }
+        >
           { icon && icon({ isActive }) || <MoreIcon /> }
-        </Button>
+        </PlainButton>
         { isActive && (
           <MenuContent>
             <Content>{ content() }</Content>

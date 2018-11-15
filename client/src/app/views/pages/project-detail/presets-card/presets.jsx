@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { actions, selectors } from 'state/interface'
 import { mapDispatch } from 'services/redux-helpers'
-import { Card, Dialog, List, StatusIndicator } from 'ui/elements'
+import { Card, Dialog, List, PlainButton, StatusIndicator } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 import { Heading, TextLine } from 'ui/typo'
 
@@ -36,8 +36,11 @@ const Presets = ({
     <Fragment>
       <Card
         title={ () => <Heading mostLeft mostRight>Presets</Heading> }
-        fab={ () => <AddIcon /> }
-        fabClick={ showCreateDialog }
+        fab={ () => (
+          <PlainButton onClick={ showCreateDialog }>
+            <AddIcon />
+          </PlainButton>
+        )  }
         content={ () => (
           items.length &&
             <List items={ items } interactable={ true } /> ||

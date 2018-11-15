@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Break, Button, Form, Link } from 'ui/elements'
+import { Break, Form, Link, PrimaryButton } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
 import { TextArea } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
@@ -21,10 +21,12 @@ const CacheInvalidForm = ({
       <Link href="#">Read more.</Link>
     </DescriptionText>
     <Break double />
-    <Button
+    <PrimaryButton
       disabled={ !idle }
       type="submit"
-    >Invalidate</Button>
+    >
+      Invalidate
+    </PrimaryButton>
   </Form>
 )
 

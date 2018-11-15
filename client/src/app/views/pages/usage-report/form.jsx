@@ -2,7 +2,7 @@ import ms from 'ms'
 import React from 'react'
 
 import dateTimeService from 'services/date-time'
-import { Break, Button, Form, ResponsiveGrid } from 'ui/elements'
+import { Break, Form, PrimaryButton, ResponsiveGrid } from 'ui/elements'
 import { DatePicker, Select } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
@@ -75,12 +75,12 @@ const UsageReportForm = ({
         ] }
       />
       <Break double />
-      <Button
+      <PrimaryButton
         disabled={ !idle }
         type="submit"
       >
         Generate Report
-      </Button>
+      </PrimaryButton>
     </Form>
   )
 }

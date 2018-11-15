@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
 import { Heading, TextLine } from 'ui/typo'
-import { Card, ContextMenu, List, StatusIndicator } from 'ui/elements'
+import { Card, ContextMenu, List, StatusIndicator, PlainButton } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 
 const ApiKeys = ({
@@ -50,8 +50,11 @@ const ApiKeys = ({
   return (
     <Card
       title={ () => <Heading mostLeft mostRight>API Keys</Heading> }
-      fab={ () => <AddIcon /> }
-      fabClick={ () => createApiKey(identifier) }
+      fab={ () => (
+        <PlainButton onClick={ () => createApiKey(identifier) }>
+          <AddIcon />
+        </PlainButton>
+      ) }
       content={ () => (
         lists.length > 0 &&
           <List items={ lists } /> ||

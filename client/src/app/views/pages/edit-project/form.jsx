@@ -1,7 +1,11 @@
 import React from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
-import { Break, Button, Form, TextButton } from 'ui/elements'
+import {
+  Break,
+  Form,
+  PlainButton, PrimaryButton, TextButton
+} from 'ui/elements'
 import { CopyIcon } from 'ui/icons'
 import { TextLine } from 'ui/typo'
 
@@ -35,9 +39,9 @@ const ProjectForm = ({
       validate={ validateRequired }
       trailing={ () => (
         <CopyToClipboard onCopy={ copyDomainLink } text={ domain }>
-          <Button disabled={ !idle } plain >
+          <PlainButton disabled={ !idle }>
             <CopyIcon />
-          </Button>
+          </PlainButton>
         </CopyToClipboard>
       ) }
     />
@@ -51,14 +55,13 @@ const ProjectForm = ({
             name="isActive"
             label="Enable"
           />
-
           <Break double />
-          <Button
+          <PrimaryButton
             disabled={ !idle }
             type="submit"
           >
             Save
-          </Button>
+          </PrimaryButton>
           {
             isActive ?
               null :

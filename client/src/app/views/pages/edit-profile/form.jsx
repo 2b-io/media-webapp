@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Break, Button, Form } from 'ui/elements'
+import { Break, Form, PrimaryButton } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
 import { TextBox } from 'views/common/form'
 import { validateEmail, validateRequired } from 'views/common/validate'
@@ -30,7 +30,12 @@ const EditProfileForm = ({
       validate={ [ validateRequired, validateEmail ] }
     />
     <Break double />
-    <Button type="submit" disabled={ !idle }>Save</Button>
+    <PrimaryButton
+      type="submit"
+      disabled={ !idle }
+    >
+      Save
+    </PrimaryButton>
   </Form>
 )
 

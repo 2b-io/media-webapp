@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { actions, selectors } from 'state/interface'
 import { mapDispatch } from 'services/redux-helpers'
 import { Heading, Text } from 'ui/typo'
-import { Card } from 'ui/elements'
+import { Card, PlainButton } from 'ui/elements'
 import { EditIcon } from 'ui/icons'
 
 const CacheSetting = ({
@@ -16,8 +16,11 @@ const CacheSetting = ({
   <Fragment>
     <Card
       title={ () => <Heading mostLeft mostRight>Cache Setting</Heading> }
-      fab={ () => <EditIcon /> }
-      fabClick={ () => toEditCacheSetting(identifier) }
+      fab={ () => (
+        <PlainButton onClick={ () => toEditCacheSetting(identifier) }>
+          <EditIcon />
+        </PlainButton>
+      ) }
       content={ () => (
         <Fragment>
           <Text mostLeft mostRight>
