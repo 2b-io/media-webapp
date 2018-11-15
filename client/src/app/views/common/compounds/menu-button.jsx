@@ -20,10 +20,10 @@ const Button = styled.div`
       css`
         transition: opacity .3s;
         &:hover {
-          opacity: 0.7
-        };
+          opacity: 0.7;
+        }
       `
-  };
+  }
 `
 
 const MenuButton = ({ onClick }) => (

@@ -1,6 +1,6 @@
 import { Calendar } from 'calendar'
 import React, { Component, Fragment } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import dataFormat from 'services/data-format'
 import { ContextMenu, PlainButton } from 'ui/elements'
@@ -90,14 +90,13 @@ const CalendarDate = styled.span`
   };
   cursor: ${ ({ selectable }) => selectable ? 'pointer' : 'unset' };
   ${
-    ({ selectable, theme }) => selectable && theme.mouseDetected && !theme.touchDetected && `
-      transition: background .3s;
-
-      &:hover {
-        background: ${ theme.hoverColor };
-        color: ${ theme.primary.base };
-        opacity: 0.7;
-      }`
+    ({ selectable, theme }) => selectable && theme.mouseDetected && !theme.touchDetected &&
+      css`
+        transition: opacity .3s;
+        &:hover {
+          opacity: 0.7;
+        }
+      `
   }
 `
 

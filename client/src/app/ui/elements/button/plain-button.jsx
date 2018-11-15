@@ -21,14 +21,14 @@ const PlainButton = styled.button.attrs({
   };
 
   ${
-    ({ theme }) => theme.mouseDetected && !theme.touchDetected && css`
-      transition:  opacity .3s;
-
-      &:hover {
-        opacity: 0.7;
-      }
-    `
-  };
+    ({ theme }) => theme.mouseDetected && !theme.touchDetected &&
+      css`
+        transition:  opacity .3s;
+        &:hover {
+          opacity: 0.7;
+        }
+      `
+  }
 
   &:focus {
     outline: none;
