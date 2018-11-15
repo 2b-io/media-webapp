@@ -1,7 +1,7 @@
 import React from 'react'
 import { FormSection } from 'redux-form'
 
-import { Break, Button, Form } from 'ui/elements'
+import { Break, Form, PrimaryButton } from 'ui/elements'
 import { TextBox, CheckBox } from 'views/common/form'
 
 import Jpeg from './jpeg'
@@ -58,9 +58,12 @@ const PresetForm = ({
     </FormSection>
 
     <Break double />
-    <Button disabled={ !idle } type="submit">
+    <PrimaryButton
+      disabled={ !idle }
+      type="submit"
+    >
       Save
-    </Button>
+    </PrimaryButton>
   </Form>
 )
 

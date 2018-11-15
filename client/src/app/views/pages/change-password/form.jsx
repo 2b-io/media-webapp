@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Break, Button, Form } from 'ui/elements'
+import { Break, Form, PrimaryButton } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
 import { TextBox } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
@@ -43,9 +43,12 @@ const ChangePasswordForm = ({
       Re-type your password
     </DescriptionText>
     <Break double />
-    <Button disabled={ !idle } type="submit">
+    <PrimaryButton
+      disabled={ !idle }
+      type="submit"
+    >
       Change password
-    </Button>
+    </PrimaryButton>
   </Form>
 )
 

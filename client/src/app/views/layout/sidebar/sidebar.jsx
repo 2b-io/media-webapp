@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { Badge, Identicon, List } from 'ui/elements'
+import { Badge, Identicon, List, PlainButton } from 'ui/elements'
 import { DescriptionTextLine, TextLine } from 'ui/typo'
 
 import {
@@ -47,38 +47,12 @@ const Surface = styled.div`
   transition: width .3s ${ easingFunc };
 `
 
-const MenuButton = styled.button`
+const MenuButton = styled(PlainButton)`
   position: absolute;
   top: 0;
   right: 0;
-  appearance: none;
-  outline: none;
-  border: none;
-  background: transparent;
   color: ${ ({ theme }) => theme.white.base };
-  padding: 0;
-  margin: 0;
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
   z-index: 1;
-  cursor: ${
-    ({
-      disabled,
-      theme: { mouseDetected }
-    }) => disabled ? 'not-allowed' : (
-      mouseDetected ? 'pointer' : 'unset'
-    )
-  };
-  ${
-    ({ theme }) => theme.mouseDetected && !theme.touchDetected &&
-      css`
-        transition: opacity .3s;
-        &:hover {
-          opacity: 0.7;
-        }
-      `
-  };
 `
 
 const Content = styled.div`

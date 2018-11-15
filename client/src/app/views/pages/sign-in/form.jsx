@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Break, Button, Form } from 'ui/elements'
+import { Break, Form, PrimaryButton } from 'ui/elements'
 import { TextBox } from 'views/common/form'
 import { validateRequired, validateEmail } from 'views/common/validate'
 
@@ -21,7 +21,12 @@ const SignInForm = ({ handleSubmit, idle }) => (
       disabled={ !idle }
     />
     <Break double />
-    <Button type="submit" disabled={ !idle }>Sign in</Button>
+    <PrimaryButton
+      disabled={ !idle }
+      type="submit"
+    >
+      Sign in
+    </PrimaryButton>
   </Form>
 )
 

@@ -3,7 +3,7 @@ import { FieldArray } from 'redux-form'
 import styled from 'styled-components'
 
 import { AddIcon, TrashIcon } from 'ui/icons'
-import { Button } from 'ui/elements'
+import { PlainButton } from 'ui/elements'
 import { TextBox } from 'views/common/form'
 
 const Wrapper = styled.div`
@@ -43,20 +43,18 @@ const CustomHeaderList = ({
         />
         <WrapperButton>
           { index === fields.length - 1 ?
-            <Button
+            <PlainButton
               disabled={ !idle }
-              plain
               onClick={ () => fields.push({}) }
             >
               <AddIcon />
-            </Button> :
-            <Button
+            </PlainButton> :
+            <PlainButton
               disabled={ !idle }
-              plain
               onClick={ () => fields.remove(index) }
             >
               <TrashIcon />
-            </Button>
+            </PlainButton>
           }
         </WrapperButton>
       </Wrapper>

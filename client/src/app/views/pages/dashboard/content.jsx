@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
-import { actions, selectors } from 'state/interface'
+import { actions } from 'state/interface'
 
 import { Card, ResponsiveGrid } from 'ui/elements'
 import { Project } from 'views/common/compounds'

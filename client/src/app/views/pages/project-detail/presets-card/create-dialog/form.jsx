@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Break, Button, Form } from 'ui/elements'
+import { Break, Form, PrimaryButton } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
 import { Select  } from 'views/common/form'
 
@@ -20,7 +20,12 @@ const PresetForm = ({
       The Content-Type entity header is used to indicate the media type of the resource.
     </DescriptionText>
     <Break double />
-    <Button type="submit" disabled={ !idle }>Add</Button>
+    <PrimaryButton
+      disabled={ !idle }
+      type="submit"
+    >
+      Add
+    </PrimaryButton>
   </Form>
 )
 

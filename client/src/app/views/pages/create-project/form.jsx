@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Break, Button, Form, Link } from 'ui/elements'
+import { Break, Form, Link, PrimaryButton } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
 import { Radio, TextBox } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
@@ -36,7 +36,12 @@ const projectForm = ({ handleSubmit, idle }) => (
       <Link href="https://www.keycdn.com/">Read more</Link>
     </DescriptionText>
     <Break double />
-    <Button type="submit" disabled={ !idle }>Create</Button>
+    <PrimaryButton
+      disabled={ !idle }
+      type="submit"
+    >
+      Create
+    </PrimaryButton>
   </Form>
 )
 
