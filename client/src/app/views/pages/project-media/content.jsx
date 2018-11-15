@@ -53,9 +53,9 @@ const Media = ({
             </TitleBar.Title>
             <TitleBar.Menu>
               <CopyToClipboard onCopy={ showToast } text={ mediaInfo.path }>
-                <Button plain>
+                <PlainButton>
                   <CopyIcon size="small" />
-                </Button>
+                </PlainButton>
               </CopyToClipboard>
             </TitleBar.Menu>
           </TitleBar>
@@ -67,9 +67,9 @@ const Media = ({
             </TitleBar.Title>
             <TitleBar.Menu>
               <CopyToClipboard onCopy={ showToast } text={ mediaInfo.originUrl }>
-                <Button plain>
+                <PlainButton>
                   <CopyIcon size="small" />
-                </Button>
+                </PlainButton>
               </CopyToClipboard>
             </TitleBar.Menu>
           </TitleBar>

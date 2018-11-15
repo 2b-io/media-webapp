@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 
 import dataFormat from 'services/data-format'
-import { Button, ContextMenu } from 'ui/elements'
+import { ContextMenu, PlainButton } from 'ui/elements'
 import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from 'ui/icons'
 import { DescriptionTextLine, TextLine } from 'ui/typo'
 
@@ -179,21 +179,21 @@ const CalendarWrapper = ({
   return (
     <Fragment>
       <HeaderCalendar>
-        <Button plain>
+        <PlainButton>
           <ChevronLeftIcon
             onClick={ prev }
           />
-        </Button>
+        </PlainButton>
         <TextLine>
           {
             dataFormat.formatTime(selectedView, 'UTC:mmm, yyyy')
           }
         </TextLine>
-        <Button plain>
+        <PlainButton>
           <ChevronRightIcon
             onClick={ next }
           />
-        </Button>
+        </PlainButton>
       </HeaderCalendar>
       <CalendarMonth>
         {

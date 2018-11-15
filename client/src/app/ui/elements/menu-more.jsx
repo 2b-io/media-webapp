@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
-import { Button } from 'ui/elements'
+import { PlainButton } from 'ui/elements'
 import { MoreIcon } from 'ui/icons'
 
 const Wrapper = styled.div`
@@ -50,9 +50,9 @@ class MenuMore extends React.Component {
 
     return (
       <Wrapper>
-        <Button plain onClick={ this.showDropdownMenu }>
+        <PlainButton onClick={ this.showDropdownMenu }>
           <MoreIcon />
-        </Button>
+        </PlainButton>
         { content &&
           <DropdownMenu isOpen={ isOpen }>
             { content() }
