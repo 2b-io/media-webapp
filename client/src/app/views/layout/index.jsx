@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react'
+import Favicon from 'react-favicon'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
+import favicon from 'img/favicon.ico'
 import { selectors } from 'state/interface'
 import { Break } from 'ui/elements'
 
@@ -57,6 +59,7 @@ const Layout = ({
   ...props
 }) => (
   <Fragment>
+    <Favicon url={ favicon } />
     { !isLayoutClosed && <Sidebar /> }
     <Surface
       isLayoutClosed={ isLayoutClosed }

@@ -60,7 +60,7 @@ export default ({
           ]
         },
         {
-          test: /\.(jpg|png|gif|svg|bmp|webp)$/,
+          test: /\.(ico|jpg|png|gif|svg|bmp|webp)$/,
           use: [
             {
               loader: 'file-loader',
