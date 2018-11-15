@@ -60,10 +60,12 @@ const Layout = ({
     { !isLayoutClosed && <Sidebar /> }
     <Surface
       isLayoutClosed={ isLayoutClosed }
-      maximizeSidebar={ maximizeSidebar }>
-      <Header className='header'>
-        { render.still(props) }
-      </Header>
+      maximizeSidebar={ !isLayoutClosed && maximizeSidebar }>
+      { !isLayoutClosed &&
+        <Header className='header'>
+          { render.still(props) }
+        </Header>
+      }
       <Body className='body'>
         { isLayoutClosed &&
           <Fragment>
