@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 
 import { actions } from 'state/interface'
-import { Button, Link } from 'ui/elements'
+import { Link, PlainButton } from 'ui/elements'
 import { mapDispatch } from 'services/redux-helpers'
 import { Panel } from 'ui/compounds'
 
@@ -139,10 +139,9 @@ const ProjectMediaModal = ({
           </Wrapper>
         </Panel.Footer>
         <StyleButton>
-          <Button
-            plain
+          <PlainButton
             onClick={ () => removeProjectMedia(mediaInfo.project, mediaInfo.id) }
-          >Remove media</Button>
+          >Remove media</PlainButton>
         </StyleButton>
       </Panel>
     </Fragment>

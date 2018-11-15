@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Break, Button, Form } from 'ui/elements'
+import { Break, Form, PrimaryButton } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
 import { TextBox } from 'views/common/form'
 import { validateEmail, validateRequired } from 'views/common/validate'
@@ -18,7 +18,12 @@ const RegisterForm = ({ handleSubmit, idle }) => (
       We will send our activation link to this email. Please make sure you can access your email.
     </DescriptionText>
     <Break double />
-    <Button type="submit" disabled={ !idle }>Send me the invitation</Button>
+    <PrimaryButton
+      disabled={ !idle }
+      type="submit"
+    >
+      Send me the invitation
+    </PrimaryButton>
   </Form>
 )
 

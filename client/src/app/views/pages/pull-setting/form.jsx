@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Break, Button, Form } from 'ui/elements'
+import { Break, Form, PrimaryButton } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
 import { TextArea, TextBox } from 'views/common/form'
 import { validateDomain, validateUrl } from 'views/common/validate'
@@ -40,7 +40,12 @@ const pullSettingForm = ({
       All custom header keys and values you specify here will be included in every request to the origin.
     </DescriptionText>
     <Break double />
-    <Button disabled={ !idle } type="submit" >Save</Button>
+    <PrimaryButton
+      disabled={ !idle }
+      type="submit"
+    >
+      Save
+    </PrimaryButton>
   </Form>
 )
 

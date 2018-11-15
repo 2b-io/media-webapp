@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Break, Button, Form } from 'ui/elements'
+import { Break, Form, PrimaryButton } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
 import { TextArea } from 'views/common/form'
 import { validateRequired, validateMultiEmail } from 'views/common/validate'
@@ -31,7 +31,12 @@ const InviteCollaboratorForm = ({
       (Optional) A personal note for the invitation email.
     </DescriptionText>
     <Break double />
-    <Button disabled={ !idle } type="submit">Send the invitations</Button>
+    <PrimaryButton
+      disabled={ !idle }
+      type="submit"
+    >
+      Send the invitations
+    </PrimaryButton>
   </Form>
 )
 
