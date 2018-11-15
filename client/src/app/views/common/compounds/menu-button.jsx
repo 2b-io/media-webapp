@@ -1,29 +1,13 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
+import { PlainButton } from 'ui/elements'
 import { MenuIcon } from 'ui/icons'
 
-const Button = styled.div`
+const Button = styled(PlainButton)`
   @media (min-width: 600px) {
     visibility: hidden;
   };
-  cursor: ${
-    ({
-      disabled,
-      theme: { mouseDetected }
-    }) => disabled ? 'not-allowed' : (
-      mouseDetected ? 'pointer' : 'unset'
-    )
-  };
-  ${
-    ({ theme }) => theme.mouseDetected && !theme.touchDetected &&
-      css`
-        transition: opacity .3s;
-        &:hover {
-          opacity: 0.7;
-        }
-      `
-  }
 `
 
 const MenuButton = ({ onClick }) => (

@@ -16,14 +16,11 @@ const PrimaryButton = styled.button.attrs({
   transition:
     background .3s linear,
     color .3s linear;
-  cursor: ${
-    ({
-      disabled,
-      theme: { mouseDetected }
-    }) => disabled ? 'not-allowed' : (
-      mouseDetected ? 'pointer' : 'unset'
-    )
-  };
+  ${
+    ({ disabled, theme: { mouseDetected } }) => mouseDetected && css`
+      cursor: ${ disabled ? 'not-allowed' : 'pointer' };
+    `
+  }
 
   ${
     ({ disabled, theme }) => disabled ?

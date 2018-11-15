@@ -15,14 +15,14 @@ const PlainButton = styled.button.attrs({
 
   ${
     ({ disabled, theme: { mouseDetected } }) => mouseDetected && css`
-      cursor: ${ disabled ? 'not-allowed' : 'pointer' }
+      cursor: ${ disabled ? 'not-allowed' : 'pointer' };
     `
   }
 
   ${
     ({ disabled, theme }) => !disabled && theme.mouseDetected && !theme.touchDetected &&
       css`
-        transition:  opacity .3s;
+        transition: opacity .3s;
         &:hover {
           opacity: 0.3;
         }
