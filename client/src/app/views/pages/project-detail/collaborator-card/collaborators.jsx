@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
 import { DescriptionTextLine, Heading, TextLine } from 'ui/typo'
-import { Card, ContextMenu, Identicon, Link, List } from 'ui/elements'
+import { Card, ContextMenu, Identicon, Link, List, PlainButton } from 'ui/elements'
 import { OwnerAddIcon } from 'ui/icons'
 import { DialogLeaveProject, DialogMakeOwner } from './dialog'
 
@@ -135,8 +135,11 @@ const Collaborators = ({
     <Fragment>
       <Card
         title={ () => <Heading mostLeft mostRight>Collaborators</Heading> }
-        fab={ () => <OwnerAddIcon /> }
-        fabClick={ () => toInviteCollaborator(identifier) }
+        fab={ () => (
+          <PlainButton onClick={ () => toInviteCollaborator(identifier) }>
+            <OwnerAddIcon />
+            </PlainButton>
+        ) }
         content={ () => (
           items.length > 0 ?
             <List items={ items } /> :

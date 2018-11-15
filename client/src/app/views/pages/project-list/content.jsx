@@ -1,7 +1,7 @@
 import React from 'react'
 import { Portal } from 'react-portal'
 import { connect } from 'react-redux'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'

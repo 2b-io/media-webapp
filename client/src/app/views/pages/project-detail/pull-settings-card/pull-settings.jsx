@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { actions, selectors } from 'state/interface'
 import { mapDispatch } from 'services/redux-helpers'
 import { Heading, Text } from 'ui/typo'
-import { Card } from 'ui/elements'
+import { Card, PlainButton } from 'ui/elements'
 import { EditIcon } from 'ui/icons'
 
 import { stringToList } from 'services/string-to-list'
@@ -25,8 +25,11 @@ const PullSettings = ({
     <Fragment>
       <Card
         title={ () => <Heading mostLeft mostRight>Pull Settings</Heading> }
-        fab={ () => <EditIcon /> }
-        fabClick={ () => toEditPullSetting(identifier) }
+        fab={ () => (
+          <PlainButton onClick={ () => toEditPullSetting(identifier) }>
+            <EditIcon />
+          </PlainButton>
+        ) }
         content={ () => (
           <Fragment>
             <Text mostLeft mostRight>

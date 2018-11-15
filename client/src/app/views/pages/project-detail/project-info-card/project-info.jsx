@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { selectors, actions } from 'state/interface'
 import { Heading } from 'ui/typo'
-import { Card, Nothing } from 'ui/elements'
+import { Card, Nothing, PlainButton } from 'ui/elements'
 import { EditIcon } from 'ui/icons'
 import { Project } from 'views/common/compounds'
 
@@ -15,8 +15,11 @@ const ProjectInfoCard = ({
   project && (
     <Card
       title={ () => <Heading mostLeft mostRight>General</Heading> }
-      fab={ () => <EditIcon /> }
-      fabClick={ () => toEditProject(project.identifier) }
+      fab={ () => (
+        <PlainButton onClick={ () => toEditProject(project.identifier) }>
+          <EditIcon />
+        </PlainButton>
+      ) }
       content={ () => <Project project={ project } /> }
     />
   ) || <Nothing />
