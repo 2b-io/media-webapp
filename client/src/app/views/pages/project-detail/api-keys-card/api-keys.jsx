@@ -10,6 +10,7 @@ import { AddIcon } from 'ui/icons'
 const ApiKeys = ({
   createApiKey,
   identifier,
+  hideSecretKeyMenu,
   secretKeys = {},
   removeSecretKey,
   updateSecretKey
@@ -25,10 +26,14 @@ const ApiKeys = ({
           name={ `secret-key-${ key }` }
           content={ () => (
             <List
+              interactable={ true }
               items={ [
                 {
                   content: () => <TextLine mostLeft mostRight>{ isActive ? 'Disable' : 'Enable' }</TextLine>,
-                  onClick: () => updateSecretKey(identifier, { key, isActive: !isActive })
+                  onClick: () => {
+                    updateSecretKey(identifier, { key, isActive: !isActive })
+                    hideSecretKeyMenu(`secret-key-${ key }`)
+                  }
                 },
                 {
                   content: () => <TextLine mostLeft mostRight>Remove</TextLine>,
@@ -45,7 +50,8 @@ const ApiKeys = ({
   return (
     <Card
       title={ () => <Heading mostLeft mostRight>API Keys</Heading> }
-      fab={ () => <AddIcon onClick={ () => createApiKey(identifier) } /> }
+      fab={ () => <AddIcon /> }
+      fabClick={ () => createApiKey(identifier) }
       content={ () => (
         lists.length > 0 &&
           <List items={ lists } /> ||
@@ -70,6 +76,7 @@ export default connect(
   },
   mapDispatch({
     createApiKey: actions.createSecretKey,
+    hideSecretKeyMenu: actions.hideMenu,
     removeSecretKey: actions.removeSecretKey,
     updateSecretKey: actions.updateSecretKey
   })

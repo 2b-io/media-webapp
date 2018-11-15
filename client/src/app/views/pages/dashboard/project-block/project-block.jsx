@@ -5,11 +5,11 @@ import { AddIcon } from 'ui/icons'
 import { Heading, Text, TextLine } from 'ui/typo'
 
 const ProjectBlock = ({
-  projects,
+  pinnedProjects,
   toCreateProject,
   toProjectDetail
 }) => {
-  const items = projects.map(
+  const items = pinnedProjects.map(
     project => ({
       key: project._id,
       leading: () => <StatusIndicator isActive={ project.isActive } />,
@@ -21,10 +21,11 @@ const ProjectBlock = ({
   return (
     <Card
       title={ () => <Heading mostLeft mostRight>Projects</Heading> }
-      fab={ () => <AddIcon onClick={ toCreateProject } /> }
+      fab={ () => <AddIcon /> }
+      fabClick={ toCreateProject }
       content={ () => (
         items.length &&
-          <List items={ items } /> ||
+          <List items={ items } interactable={ true } /> ||
           <Text mostLeft mostRight>
             You do not have any projects yet.
           </Text>

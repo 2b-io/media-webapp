@@ -62,6 +62,23 @@ const MenuButton = styled.button`
   height: 40px;
   line-height: 40px;
   z-index: 1;
+  cursor: ${
+    ({
+      disabled,
+      theme: { mouseDetected }
+    }) => disabled ? 'not-allowed' : (
+      mouseDetected ? 'pointer' : 'unset'
+    )
+  };
+  ${
+    ({ theme }) => theme.mouseDetected && !theme.touchDetected &&
+      css`
+        transition: opacity .3s;
+        &:hover {
+          opacity: 0.7
+        };
+      `
+  };
 `
 
 const Content = styled.div`
@@ -134,7 +151,15 @@ const UserAvatar = styled.div`
           bottom: 8px;
         `
     }
-  }
+  };
+  cursor: ${
+    ({
+      disabled,
+      theme: { mouseDetected }
+    }) => disabled ? 'not-allowed' : (
+      mouseDetected ? 'pointer' : 'unset'
+    )
+  };
 `
 
 const Sidebar = ({
@@ -205,7 +230,7 @@ const Sidebar = ({
           </Profile>
         ) }
         <div className='menu'>
-          <List items={ menuItems } />
+          <List items={ menuItems } interactable={ true } />
         </div>
       </Content>
     </Surface>

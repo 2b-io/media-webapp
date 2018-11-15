@@ -36,10 +36,11 @@ const Presets = ({
     <Fragment>
       <Card
         title={ () => <Heading mostLeft mostRight>Presets</Heading> }
-        fab={ () => <AddIcon onClick={ showCreateDialog } /> }
+        fab={ () => <AddIcon /> }
+        fabClick={ showCreateDialog }
         content={ () => (
           items.length &&
-            <List items={ items } /> ||
+            <List items={ items } interactable={ true } /> ||
             <TextLine mostLeft mostRight>No preset found</TextLine>
         ) }
       />

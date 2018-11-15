@@ -14,6 +14,7 @@ const ProjectTools = ({
     title={ () => <Heading mostLeft mostRight>Tools</Heading> }
     content={ () => (
       <List
+        interactable={ true }
         items={ [
           {
             content: () => <TextLine mostLeft>Cache Invalidator</TextLine>,

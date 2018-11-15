@@ -59,6 +59,7 @@ const watchInviteCollaborator = function*(path) {
     if (inviteCompleted) {
       yield all([
         fork(addToast, {
+          expiring: '5s',
           type: 'success',
           message: 'Your invitations have been successfully sent.'
         }),

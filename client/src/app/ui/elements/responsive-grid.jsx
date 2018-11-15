@@ -17,7 +17,7 @@ const generateTemplateColumns = (name) => css`
 const Container = styled.div`
   display: grid;
   grid-gap: 16px;
-  direction: ${ ({ direction }) => direction }
+  direction: ${ ({ direction }) => direction };
 
   & > * {
     min-width: 0;

@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 
 import dataFormat from 'services/data-format'
-import { ContextMenu } from 'ui/elements'
+import { Button, ContextMenu } from 'ui/elements'
 import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from 'ui/icons'
 import { DescriptionTextLine, TextLine } from 'ui/typo'
 
@@ -64,10 +64,12 @@ const CalendarMonth = styled.ul`
 `
 
 const WeekDay = styled.span`
+  user-select: none;
   color: ${ ({ isWeekend, theme }) => isWeekend && theme.secondary.base };
 `
 
 const CalendarDate = styled.span`
+  user-select: none;
   text-decoration: ${ ({ isToday }) => isToday ? 'underline' : 'none' };
   color: ${
     ({ isValue, isWeekend, selectable, theme }) => {
@@ -87,6 +89,16 @@ const CalendarDate = styled.span`
     }
   };
   cursor: ${ ({ selectable }) => selectable ? 'pointer' : 'unset' };
+  ${
+    ({ selectable, theme }) => selectable && theme.mouseDetected && !theme.touchDetected && `
+      transition: background .3s;
+
+      &:hover {
+        background: ${ theme.hoverColor };
+        color: ${ theme.primary.base };
+        opacity: 0.7;
+      }`
+  }
 `
 
 const HeaderCalendar = styled.div`
@@ -167,17 +179,21 @@ const CalendarWrapper = ({
   return (
     <Fragment>
       <HeaderCalendar>
-        <ChevronLeftIcon
-          onClick={ prev }
-        />
+        <Button plain>
+          <ChevronLeftIcon
+            onClick={ prev }
+          />
+        </Button>
         <TextLine>
           {
             dataFormat.formatTime(selectedView, 'UTC:mmm, yyyy')
           }
         </TextLine>
-        <ChevronRightIcon
-          onClick={ next }
-        />
+        <Button plain>
+          <ChevronRightIcon
+            onClick={ next }
+          />
+        </Button>
       </HeaderCalendar>
       <CalendarMonth>
         {

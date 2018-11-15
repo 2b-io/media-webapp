@@ -16,7 +16,12 @@ const Button = styled.button.attrs({
   line-height: 40px;
   height: 40px;
   cursor: ${
-    ({ disabled }) => disabled ? 'not-allowed' : 'pointer'
+    ({
+      disabled,
+      theme: { mouseDetected }
+    }) => disabled ? 'not-allowed' : (
+      mouseDetected ? 'pointer' : 'unset'
+    )
   };
 
   ${
@@ -28,6 +33,15 @@ const Button = styled.button.attrs({
           plain && `
             padding: 0;
             background: transparent;
+            transition: opacity .3s;
+
+            ${
+              theme.mouseDetected && !theme.touchDetected && `
+                &:hover {
+                  opacity: 0.7;
+                }
+              `
+            }
           `
         }
         ${
@@ -39,12 +53,16 @@ const Button = styled.button.attrs({
                 theme[variant].base
             };
 
-            &:hover {
-              color: ${
-                disabled ?
-                  theme.secondary.light.base :
-                  theme[variant].light.base
-              };
+            ${
+              theme.mouseDetected && !theme.touchDetected && `
+                &:hover {
+                  color: ${
+                    disabled ?
+                      theme.secondary.light.base :
+                      theme[variant].light.base
+                  };
+                }
+              `
             }
 
             &:active {
@@ -71,18 +89,21 @@ const Button = styled.button.attrs({
             theme.secondary.on.base :
             theme.primary.on.base
         };
-
-        &:hover {
-          background: ${
-            disabled ?
-              theme.secondary.light.base :
-              theme.primary.light.base
-          };
-          color: ${
-            disabled ?
-              theme.secondary.light.on.base :
-              theme.primary.light.on.base
-          };
+        ${
+          theme.mouseDetected && !theme.touchDetected && `
+            &:hover {
+              background: ${
+                disabled ?
+                  theme.secondary.light.base :
+                  theme.primary.light.base
+              };
+              color: ${
+                disabled ?
+                  theme.secondary.light.on.base :
+                  theme.primary.light.on.base
+              };
+            }
+          `
         }
 
         &:active {
@@ -96,6 +117,13 @@ const Button = styled.button.attrs({
               theme.secondary.dark.on.base :
               theme.primary.dark.on.base
           };
+        };
+
+        @media (min-width: 600px) {
+          width: auto;
+          min-width: 280px;
+          text-align: center;
+          margin: 0px 0px 0px auto;
         }
       `
   }
