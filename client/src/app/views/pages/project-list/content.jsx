@@ -5,11 +5,11 @@ import styled, { css } from 'styled-components'
 
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
-import { Card, ResponsiveGrid } from 'ui/elements'
+import { Card, PlainButton, ResponsiveGrid } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 import { Project } from 'views/common/compounds'
 
-const Fab = styled.button`
+const Fab = styled.div`
   position: fixed;
   width: 40px;
   height: 40px;
@@ -32,23 +32,6 @@ const Fab = styled.button`
   border: none;
   bottom: 8px;
   right: 8px;
-  cursor: ${
-    ({
-      disabled,
-      theme: { mouseDetected }
-    }) => disabled ? 'not-allowed' : (
-      mouseDetected ? 'pointer' : 'unset'
-    )
-  };
-  ${
-    ({ theme }) => theme.mouseDetected && !theme.touchDetected &&
-      css`
-        &:hover {
-          background: ${ theme.primary.light.base };
-          color: ${ theme.primary.light.on.base }
-        };
-      `
-  };
 `
 
 const Layout = styled.section`
@@ -144,8 +127,10 @@ const ProjectList = ({
         items={ cards }
       />
       <Portal node={ document.getElementById('root') }>
-        <Fab onClick={ toCreateProject }>
-          <AddIcon />
+        <Fab>
+          <PlainButton onClick={ toCreateProject }>
+            <AddIcon />
+          </PlainButton>
         </Fab>
       </Portal>
     </Layout>
