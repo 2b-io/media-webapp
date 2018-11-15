@@ -11,7 +11,7 @@ const generateTemplateColumns = (name) => css`
         breakpoint :
         `repeat(${ breakpoint }, 1fr)`
     }
-  }
+  };
 `
 
 const Container = styled.div`
@@ -53,6 +53,14 @@ const Container = styled.div`
 
 const Item = styled.div`
   background: ${ ({ theme }) => theme.white.base };
+
+  ${
+    ({ fixed }) => fixed && css`
+      & > * {
+        min-height: 100%;
+      }
+    `
+  }
 `
 
 class ResponsiveGrid extends Component {
@@ -92,7 +100,7 @@ class ResponsiveGrid extends Component {
 
   renderFixedItem(index, { key, content }) {
     return (
-      <Item key={ key || index }>
+      <Item key={ key || index } fixed>
         { content() }
       </Item>
     )
