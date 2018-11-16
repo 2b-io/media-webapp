@@ -12,6 +12,9 @@ const LinkButton = styled.button.attrs({
   text-decoration: underline;
   border: none;
   outline: none;
+  line-height: 40px;
+  height: 40px;
+  padding: 0 8px;
   &:focus {
     outline: none;
   }
