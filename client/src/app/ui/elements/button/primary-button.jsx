@@ -48,9 +48,9 @@ const PrimaryButton = styled.button.attrs({
 
   @media (min-width: 600px) {
     width: auto;
-    min-width: 280px;
+    min-width: 128px;
     text-align: center;
-    margin: 0px 0px 0px auto;
+    margin: 0 0 0 auto;
   }
 `
 
