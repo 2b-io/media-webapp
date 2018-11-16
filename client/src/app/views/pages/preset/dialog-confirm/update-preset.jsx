@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Button, Container, Dialog } from 'ui/elements'
+import { Button, Container, Dialog, TextButton } from 'ui/elements'
 import { Emphasize, Text } from 'ui/typo'
 
 const DialogUpdatePreset = ({
@@ -21,21 +21,21 @@ const DialogUpdatePreset = ({
           This operation should take a while to finish.
         </Text>
         <Button.Group align="right">
-          <Button
+          <TextButton
             disabled={ !idle }
             variant="secondary"
             mostRight
             onClick={ onCancel }
           >
             Cancel
-          </Button>
-          <Button
+          </TextButton>
+          <TextButton
             disabled={ !idle }
             variant="primary"
             onClick={ () => onConfirm(params) }
           >
             Update
-          </Button>
+          </TextButton>
         </Button.Group>
       </Container>
     ) }

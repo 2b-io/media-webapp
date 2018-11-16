@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Break, Button, Container, Dialog } from 'ui/elements'
+import { Break, Button, Container, Dialog, TextButton } from 'ui/elements'
 import { Emphasize, Text } from 'ui/typo'
 
 const DialogLeaveProject = ({
@@ -18,19 +18,19 @@ const DialogLeaveProject = ({
         </Text>
         <Break double />
         <Button.Group align="right">
-          <Button
+          <TextButton
             variant="secondary"
             mostRight
             onClick={ onCancel }
           >
             Stay
-          </Button>
-          <Button
+          </TextButton>
+          <TextButton
             variant="primary"
             onClick={ () => onConfirm(params) }
           >
             Leave the Project
-          </Button>
+          </TextButton>
         </Button.Group>
       </Container>
     ) }

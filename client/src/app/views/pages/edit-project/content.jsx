@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
-import { Break, Button, Container, Dialog } from 'ui/elements'
+import { Break, Button, Container, Dialog, TextButton } from 'ui/elements'
 import { Emphasize, Text } from 'ui/typo'
 
 import { mapDispatch } from 'services/redux-helpers'
@@ -69,21 +69,20 @@ const EditProject = ({
             </Text>
             <Break double />
             <Button.Group align="right">
-              <Button
+              <TextButton
                 disabled={ !idle }
-                variant="secondary"
                 mostRight
                 onClick={ hideRemoveProjectDialog }
               >
                 Cancel
-              </Button>
-              <Button
+              </TextButton>
+              <TextButton
                 disabled={ !idle }
                 variant="primary"
                 onClick={ () => removeProject(identifier) }
               >
                 Delete
-              </Button>
+              </TextButton>
             </Button.Group>
           </Container>
         ) }

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Break, Button, Container, Dialog } from 'ui/elements'
+import { Break, Button, Container, Dialog, TextButton } from 'ui/elements'
 import { Emphasize, Text } from 'ui/typo'
 
 const DialogRemovePreset = ({
@@ -22,21 +22,21 @@ const DialogRemovePreset = ({
         </Text>
         <Break double />
         <Button.Group align="right">
-          <Button
+          <TextButton
             disabled={ !idle }
             variant="secondary"
             mostRight
             onClick={ onCancel }
           >
             Cancel
-          </Button>
-          <Button
+          </TextButton>
+          <TextButton
             disabled={ !idle }
             variant="primary"
             onClick={ onConfirm }
           >
             Delete
-          </Button>
+          </TextButton>
         </Button.Group>
       </Container>
     ) }
