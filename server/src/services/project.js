@@ -82,36 +82,7 @@ export const get = async (condition, account) => {
     throw 'Forbidden'
   }
 
-  if (project.status === 'DEPLOYED' || project.status === 'DISABLED') {
-    return project
-  }
-
-  const {
-    identifier: infraIdentifier
-  } = await infrastructureService.get(project._id)
-
-  const {
-    Distribution: distribution
-  } = await cloudFront.get(infraIdentifier)
-
-  const {
-    Status: infraStatus,
-    DistributionConfig: infraConfig
-  } = distribution
-
-  const latestStatus = (infraStatus === 'InProgress') ? (
-    project.status === 'INITIALIZING' ?
-      'INITIALIZING' : 'UPDATING'
-  ) :  infraStatus.toUpperCase()
-
-  return await Project.findOneAndUpdate({
-    _id: project._id
-  }, {
-    status: latestStatus,
-    isActive: infraConfig.Enabled
-  }, {
-    new: true
-  }).lean()
+  return project
 }
 
 export const getByID = async (id) => {
