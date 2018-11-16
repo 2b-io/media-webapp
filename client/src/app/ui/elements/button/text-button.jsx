@@ -6,7 +6,6 @@ const TextButton = styled.button.attrs({
   appearance: none;
   margin: 0;
   background: transparent;
-  padding: 0;
   white-space: nowrap;
   border: none;
   outline: none;
