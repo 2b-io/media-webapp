@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
-import { Break, Container, Link, TextButton } from 'ui/elements'
+import { Break, Container, Link, LinkButton } from 'ui/elements'
 import { Text } from 'ui/typo'
 
 import StatelessSignInForm from './form'
@@ -25,9 +25,9 @@ const SignIn = ({
       onSubmit={ signIn }
       idle={ idle }
     />
-    <TextButton onClick={ toForgotPassword }>
+    <LinkButton onClick={ toForgotPassword }>
       Can&apos;t sign in?
-    </TextButton>
+    </LinkButton>
     <Break double />
     <Text mostLeft mostRight>
       Haven&apos;t got your account yet?<br />

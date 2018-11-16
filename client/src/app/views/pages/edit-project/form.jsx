@@ -4,7 +4,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import {
   Break,
   Form,
-  PlainButton, PrimaryButton, TextButton
+  LinkButton, PlainButton, PrimaryButton
 } from 'ui/elements'
 import { CopyIcon } from 'ui/icons'
 import { TextLine } from 'ui/typo'
@@ -65,12 +65,12 @@ const ProjectForm = ({
           {
             isActive ?
               null :
-              <TextButton
+              <LinkButton
                 disabled={ !idle }
                 onClick={ showRemoveProjectDialog }
               >
                 Permanently delete
-              </TextButton>
+              </LinkButton>
           }
         </React.Fragment>
     }

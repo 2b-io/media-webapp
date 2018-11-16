@@ -71,6 +71,7 @@ const EditProject = ({
             <Button.Group align="right">
               <TextButton
                 disabled={ !idle }
+                variant="secondary"
                 mostRight
                 onClick={ hideRemoveProjectDialog }
               >

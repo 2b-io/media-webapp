@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
-import { Container, TextButton } from 'ui/elements'
+import { Container, LinkButton } from 'ui/elements'
 import DialogRemovePreset from './dialog-confirm/remove-preset'
 import DialogUpdatePreset from './dialog-confirm/update-preset'
 
@@ -51,12 +51,12 @@ const PresetJpeg = ({
           })
         } }
       />
-      <TextButton
+      <LinkButton
         onClick={ showRemovePresetDialog }
         disabled={ !idle }
       >
         Permanently delete
-      </TextButton>
+      </LinkButton>
       <DialogRemovePreset
         contentType={ preset.contentType }
         idle={ idle }
