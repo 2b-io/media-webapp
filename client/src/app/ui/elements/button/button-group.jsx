@@ -1,21 +1,33 @@
-import styled, { css } from 'styled-components'
+import React from 'react'
+import styled from 'styled-components'
 
-import PrimaryButton from './primary-button'
-
-const ButtonGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-
+const Wrapper = styled.div`
   @media (min-width: 600px) {
-    flex-direction: row-reverse;
+    display: grid;
+    grid-template-columns: min-content min-content;
+    grid-gap: 16px;
+    width: min-content;
+    margin: 0 0 0 auto;
 
-    & > ${ PrimaryButton } {
-      margin: 0;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+    & > * {
+      min-width: 0;
+      min-height: 0;
     }
   }
 `
+
+const Primary = styled.div`
+`
+
+const Secondary = styled.div`
+  grid-row-start: -1;
+`
+
+const ButtonGroup = ({ primary, secondary }) => (
+  <Wrapper>
+    { primary && <Primary>{ primary() }</Primary> }
+    { secondary && <Secondary>{ secondary() }</Secondary> }
+  </Wrapper>
+)
 
 export default ButtonGroup
