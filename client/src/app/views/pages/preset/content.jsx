@@ -44,6 +44,7 @@ const PresetJpeg = ({
         idle={ idle }
         initialValues={ preset }
         currentParameters={ parameters }
+        showRemovePresetDialog={ showRemovePresetDialog }
         onSubmit={ (preset) => {
           showUpdatePresetDialog({
             preset,
@@ -51,12 +52,6 @@ const PresetJpeg = ({
           })
         } }
       />
-      <LinkButton
-        onClick={ showRemovePresetDialog }
-        disabled={ !idle }
-      >
-        Permanently delete
-      </LinkButton>
       <DialogRemovePreset
         contentType={ preset.contentType }
         idle={ idle }
