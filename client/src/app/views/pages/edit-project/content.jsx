@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
-import { Break, Button, Container, Dialog, TextButton } from 'ui/elements'
+import { Break, ButtonGroup, Container, Dialog, TextButton } from 'ui/elements'
 import { Emphasize, Text } from 'ui/typo'
 
 import { mapDispatch } from 'services/redux-helpers'
@@ -68,23 +68,27 @@ const EditProject = ({
               You are about to permanently delete project <Emphasize>{ name }</Emphasize> and all its media. This operation cannot be undone.
             </Text>
             <Break double />
-            <Button.Group align="right">
-              <TextButton
-                disabled={ !idle }
-                variant="secondary"
-                mostRight
-                onClick={ hideRemoveProjectDialog }
-              >
-                Cancel
-              </TextButton>
-              <TextButton
-                disabled={ !idle }
-                variant="primary"
-                onClick={ () => removeProject(identifier) }
-              >
-                Delete
-              </TextButton>
-            </Button.Group>
+            <ButtonGroup
+              primary={ () => (
+                <TextButton
+                  disabled={ !idle }
+                  variant="primary"
+                  onClick={ () => removeProject(identifier) }
+                >
+                  Delete
+                </TextButton>
+              ) }
+              secondary={ () => (
+                <TextButton
+                  disabled={ !idle }
+                  variant="secondary"
+                  mostRight
+                  onClick={ hideRemoveProjectDialog }
+                >
+                  Cancel
+                </TextButton>
+              ) }
+            />
           </Container>
         ) }
       />

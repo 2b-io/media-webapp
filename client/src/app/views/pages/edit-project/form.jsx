@@ -56,24 +56,27 @@ const ProjectForm = ({
             label="Enable"
           />
           <Break double />
-          <ButtonGroup>
-            <PrimaryButton
-              disabled={ !idle }
-              type="submit"
-            >
-              Save
-            </PrimaryButton>
-            {
-              isActive ?
-                null :
-                <LinkButton
-                  disabled={ !idle }
-                  onClick={ showRemoveProjectDialog }
-                >
-                  Permanently delete
-                </LinkButton>
-            }
-          </ButtonGroup>
+          <ButtonGroup
+            primary={ () => (
+              <PrimaryButton disabled={ !idle } type="submit">
+                Save
+              </PrimaryButton>
+            ) }
+            secondary={ () => (
+              <div style={ { textAlign: 'center' } }>
+                {
+                  isActive ?
+                    null :
+                    <LinkButton
+                      disabled={ !idle }
+                      onClick={ showRemoveProjectDialog }
+                    >
+                      Permanently delete
+                    </LinkButton>
+                }
+              </div>
+            ) }
+          />
         </React.Fragment>
     }
   </Form>

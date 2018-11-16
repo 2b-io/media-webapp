@@ -52,7 +52,6 @@ const PresetForm = ({
       label="Enable"
     />
     <Break />
-
     <FormSection name="parameters">
       {
         renderParameterForm(contentType, {
@@ -61,22 +60,24 @@ const PresetForm = ({
         })
       }
     </FormSection>
-
     <Break double />
-    <ButtonGroup>
-      <PrimaryButton
-        disabled={ !idle }
-        type="submit"
-      >
-        Save
-      </PrimaryButton>
-      <LinkButton
-        onClick={ showRemovePresetDialog }
-        disabled={ !idle }
-      >
-        Permanently delete
-      </LinkButton>
-    </ButtonGroup>
+    <ButtonGroup
+      primary={ () => (
+        <PrimaryButton disabled={ !idle } type="submit">
+          Save
+        </PrimaryButton>
+      ) }
+      secondary={ () => (
+        <div style={ { textAlign: 'center' } }>
+          <LinkButton
+            onClick={ showRemovePresetDialog }
+            disabled={ !idle }
+          >
+            Permanently delete
+          </LinkButton>
+        </div>
+      ) }
+    />
   </Form>
 )
 

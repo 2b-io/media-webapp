@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Break, Button, Container, Dialog, TextButton } from 'ui/elements'
+import { Break, ButtonGroup, Container, Dialog, TextButton } from 'ui/elements'
 import { Emphasize, Text } from 'ui/typo'
 
 const DialogRemovePreset = ({
@@ -21,23 +21,27 @@ const DialogRemovePreset = ({
           This operation cannot be undone and it should take a while to finish.
         </Text>
         <Break double />
-        <Button.Group align="right">
-          <TextButton
-            disabled={ !idle }
-            variant="secondary"
-            mostRight
-            onClick={ onCancel }
-          >
-            Cancel
-          </TextButton>
-          <TextButton
-            disabled={ !idle }
-            variant="primary"
-            onClick={ onConfirm }
-          >
-            Delete
-          </TextButton>
-        </Button.Group>
+        <ButtonGroup
+          primary={ () => (
+            <TextButton
+              disabled={ !idle }
+              variant="primary"
+              onClick={ onConfirm }
+            >
+              Delete
+            </TextButton>
+          ) }
+          secondary={ () => (
+            <TextButton
+              disabled={ !idle }
+              variant="secondary"
+              mostRight
+              onClick={ onCancel }
+            >
+              Cancel
+            </TextButton>
+          ) }
+        />
       </Container>
     ) }
   />
