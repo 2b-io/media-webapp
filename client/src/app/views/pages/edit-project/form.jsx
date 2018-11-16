@@ -4,7 +4,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import {
   Break,
   Form,
-  LinkButton, PlainButton, PrimaryButton
+  ButtonGroup, LinkButton, PlainButton, PrimaryButton
 } from 'ui/elements'
 import { CopyIcon } from 'ui/icons'
 import { TextLine } from 'ui/typo'
@@ -56,22 +56,24 @@ const ProjectForm = ({
             label="Enable"
           />
           <Break double />
-          <PrimaryButton
-            disabled={ !idle }
-            type="submit"
-          >
-            Save
-          </PrimaryButton>
-          {
-            isActive ?
-              null :
-              <LinkButton
-                disabled={ !idle }
-                onClick={ showRemoveProjectDialog }
-              >
-                Permanently delete
-              </LinkButton>
-          }
+          <ButtonGroup>
+            <PrimaryButton
+              disabled={ !idle }
+              type="submit"
+            >
+              Save
+            </PrimaryButton>
+            {
+              isActive ?
+                null :
+                <LinkButton
+                  disabled={ !idle }
+                  onClick={ showRemoveProjectDialog }
+                >
+                  Permanently delete
+                </LinkButton>
+            }
+          </ButtonGroup>
         </React.Fragment>
     }
   </Form>
