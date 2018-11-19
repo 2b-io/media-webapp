@@ -1,7 +1,11 @@
 import React from 'react'
 import { FormSection } from 'redux-form'
 
-import { Break, Form, PrimaryButton } from 'ui/elements'
+import {
+  Break,
+  Form,
+  ButtonGroup, LinkButton, PrimaryButton
+} from 'ui/elements'
 import { TextBox, CheckBox } from 'views/common/form'
 
 import Jpeg from './jpeg'
@@ -31,7 +35,8 @@ const PresetForm = ({
   contentType,
   currentParameters,
   handleSubmit,
-  idle
+  idle,
+  showRemovePresetDialog
 }) => (
   <Form handleSubmit={ handleSubmit }>
     <TextBox
@@ -47,7 +52,6 @@ const PresetForm = ({
       label="Enable"
     />
     <Break />
-
     <FormSection name="parameters">
       {
         renderParameterForm(contentType, {
@@ -56,14 +60,24 @@ const PresetForm = ({
         })
       }
     </FormSection>
-
     <Break double />
-    <PrimaryButton
-      disabled={ !idle }
-      type="submit"
-    >
-      Save
-    </PrimaryButton>
+    <ButtonGroup
+      primary={ () => (
+        <PrimaryButton disabled={ !idle } type="submit">
+          Save
+        </PrimaryButton>
+      ) }
+      secondary={ () => (
+        <div style={ { textAlign: 'center' } }>
+          <LinkButton
+            onClick={ showRemovePresetDialog }
+            disabled={ !idle }
+          >
+            Permanently delete
+          </LinkButton>
+        </div>
+      ) }
+    />
   </Form>
 )
 
