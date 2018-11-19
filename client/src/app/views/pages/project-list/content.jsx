@@ -5,31 +5,18 @@ import styled from 'styled-components'
 
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
-import { Card, PlainButton, ResponsiveGrid } from 'ui/elements'
+import { Card, PrimaryButton, ResponsiveGrid } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 import { Project } from 'views/common/compounds'
 
-const Fab = styled.div`
+const Fab = styled(PrimaryButton)`
   position: fixed;
+  min-width: 40px;
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  overflow: hidden;
   padding: 0;
   margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  line-height: 40px;
-  appearance: none;
-  background: ${
-    ({ theme }) => theme.primary.base
-  };
-  color: ${
-    ({ theme }) => theme.primary.on.base
-  };
-  outline: none;
-  border: none;
   bottom: 8px;
   right: 8px;
 `
@@ -127,10 +114,8 @@ const ProjectList = ({
         items={ cards }
       />
       <Portal node={ document.getElementById('root') }>
-        <Fab>
-          <PlainButton onClick={ toCreateProject }>
-            <AddIcon />
-          </PlainButton>
+        <Fab onClick={ toCreateProject }>
+          <AddIcon />
         </Fab>
       </Portal>
     </Layout>
