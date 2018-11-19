@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import styled, { css } from 'styled-components'
 
 import { Badge, Identicon, List, PlainButton } from 'ui/elements'
@@ -141,6 +141,23 @@ const UserAvatar = styled.div`
   };
 `
 
+const Overlay = styled.div`
+  background: ${ ({ theme }) => theme.black.opaque.base };
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0
+  z-index: 1;
+
+  transition: height .3s ${ easingFunc };
+
+  height: ${
+    ({ open }) => open ?
+      '100vh' :
+      '0'
+  };
+`
+
 const Sidebar = ({
   currentAccount = {},
   minimizeSidebar,
@@ -181,42 +198,45 @@ const Sidebar = ({
   } ]
 
   return (
-    <Surface open={ open }>
-      <MenuButton onClick={ open ? minimizeSidebar : maximizeSidebar }>
-        { open ? <CloseIcon /> : <MenuIcon /> }
-      </MenuButton>
-      <Content>
-        { currentAccount && (
-          <Profile>
-            <UserName>
-              <TextLine mostLeft mostRight>
-                { currentAccount.name }
-              </TextLine>
-            </UserName>
-            <UserEmail>
-              <DescriptionTextLine mostLeft mostRight>
-                { currentAccount.email }
-              </DescriptionTextLine>
-            </UserEmail>
-            <UserAvatar
-              open={ open }
-              onClick={ () => toProfile(currentAccount.identifier) }>
-              <Identicon circle
-                size={ open ? 56 : 32 }
-                id={ currentAccount.email }
-              />
-            </UserAvatar>
-          </Profile>
-        ) }
-        <div className='menu'>
-          <List items={ menuItems } interactable={ true } />
-        </div>
-        <Meta open={ open }>
-          <AssistiveTextLine align="right" mostRight>{
-            VERSION }</AssistiveTextLine>
-        </Meta>
-      </Content>
-    </Surface>
+    <Fragment>
+      <Overlay open={ open } />
+      <Surface open={ open }>
+        <MenuButton onClick={ open ? minimizeSidebar : maximizeSidebar }>
+          { open ? <CloseIcon /> : <MenuIcon /> }
+        </MenuButton>
+        <Content>
+          { currentAccount && (
+            <Profile>
+              <UserName>
+                <TextLine mostLeft mostRight>
+                  { currentAccount.name }
+                </TextLine>
+              </UserName>
+              <UserEmail>
+                <DescriptionTextLine mostLeft mostRight>
+                  { currentAccount.email }
+                </DescriptionTextLine>
+              </UserEmail>
+              <UserAvatar
+                open={ open }
+                onClick={ () => toProfile(currentAccount.identifier) }>
+                <Identicon circle
+                  size={ open ? 56 : 32 }
+                  id={ currentAccount.email }
+                />
+              </UserAvatar>
+            </Profile>
+          ) }
+          <div className='menu'>
+            <List items={ menuItems } interactable={ true } />
+          </div>
+          <Meta open={ open }>
+            <AssistiveTextLine align="right" mostRight>{
+              VERSION }</AssistiveTextLine>
+          </Meta>
+        </Content>
+      </Surface>
+    </Fragment>
   )
 }
 
