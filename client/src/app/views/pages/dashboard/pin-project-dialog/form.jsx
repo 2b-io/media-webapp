@@ -1,8 +1,7 @@
 import React from 'react'
 
 import { Break, Form, PrimaryButton } from 'ui/elements'
-import { DescriptionText } from 'ui/typo'
-import { CheckBox  } from 'views/common/form'
+import { CheckBox } from 'views/common/form'
 
 const PinnedProjectForm = ({
   handleSubmit,
@@ -21,15 +20,12 @@ const PinnedProjectForm = ({
           />
         ))
     }
-    <DescriptionText mostLeft mostRight>
-      Pin your favorite projects
-    </DescriptionText>
     <Break double />
     <PrimaryButton
       type="submit"
       disabled={ !idle }
     >
-      Pin
+      Save pinned projects
     </PrimaryButton>
   </Form>
 )
