@@ -2,7 +2,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { Badge, Identicon, List, PlainButton } from 'ui/elements'
-import { DescriptionTextLine, TextLine } from 'ui/typo'
+import { AssistiveTextLine, DescriptionTextLine, TextLine } from 'ui/typo'
 
 import {
   ActivityIcon,
@@ -57,7 +57,7 @@ const MenuButton = styled(PlainButton)`
 
 const Content = styled.div`
   display: grid;
-  grid-template-rows: min-content 1fr;
+  grid-template-rows: min-content 1fr min-content;
   grid-row-gap: 16px;
   height: 100%;
 
@@ -65,6 +65,11 @@ const Content = styled.div`
     min-width: 0;
     min-height: 0;
   }
+`
+
+const Meta = styled.div`
+  transition: opacity .3s ${ easingFunc };
+  opacity: ${ ({ open }) => open ? 1 : 0 };
 `
 
 const Profile = styled.div`
@@ -206,6 +211,10 @@ const Sidebar = ({
         <div className='menu'>
           <List items={ menuItems } interactable={ true } />
         </div>
+        <Meta open={ open }>
+          <AssistiveTextLine align="right" mostRight>{
+            VERSION }</AssistiveTextLine>
+        </Meta>
       </Content>
     </Surface>
   )

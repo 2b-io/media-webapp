@@ -112,6 +112,7 @@ const theme = {
 
 // add custom colors
 theme.white.dark.base = 'rgb(227, 242, 253)'
+theme.black.light = theme.black.limpid
 
 console.debug(treeify.asTree(theme, true))
 export { base, black, white, palettes }

@@ -17,7 +17,8 @@ export default common({
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development'),
-      PRODUCTION: JSON.stringify(false)
+      PRODUCTION: JSON.stringify(false),
+      VERSION: JSON.stringify(require('../../package.json').version)
     }),
     new webpack.HotModuleReplacementPlugin(),
     // new BundleAnalyzerPlugin({

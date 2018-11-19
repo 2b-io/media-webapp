@@ -25,7 +25,8 @@ export default common({
       'process.env': {
         'NODE_ENV': JSON.stringify('production'),
       },
-      PRODUCTION: JSON.stringify(true)
+      PRODUCTION: JSON.stringify(true),
+      VERSION: JSON.stringify(require('../../package.json').version)
     })
   ]
 })

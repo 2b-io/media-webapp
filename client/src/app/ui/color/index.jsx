@@ -95,14 +95,14 @@ export default ({
         plain,
         palette,
         value,
-        alpha: .8
+        alpha: .7
       })
 
       c.opaque = c.opaque || color({
         plain,
         palette,
         value,
-        alpha: .2
+        alpha: .3
       })
     }
 
