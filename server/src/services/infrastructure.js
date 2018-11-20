@@ -1,4 +1,6 @@
-//import config from 'infrastructure/config'
+import request from 'superagent'
+
+import config from 'infrastructure/config'
 import Infrastructure from 'models/Infrastructure'
 import cloudFront from 'services/cloud-front'
 
@@ -48,9 +50,23 @@ export const update = async (projectID, data) => {
   return await cloudFront.update(identifier, data)
 }
 
+const createInfraJob = async (projectIdentifier) => {
+  return await request
+    .post(`${ config.jobServer }/jobs`)
+    .set('Content-Type', 'application/json')
+    .send({
+      name: 'UPDATE_STATUS_INFRASTRUCTURE',
+      when: Date.now(),
+      payload: {
+        projectIdentifier
+      }
+    })
+}
+
 export default {
   create,
   get,
   remove,
-  update
+  update,
+  createInfraJob
 }
