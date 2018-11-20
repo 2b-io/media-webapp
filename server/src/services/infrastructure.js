@@ -55,7 +55,7 @@ const createInfraJob = async (projectIdentifier) => {
     .post(`${ config.jobServer }/jobs`)
     .set('Content-Type', 'application/json')
     .send({
-      name: 'UPDATE_STATUS_INFRASTRUCTURE',
+      name: 'CHECK_INFRASTRUCTURE',
       when: Date.now(),
       payload: {
         projectIdentifier
