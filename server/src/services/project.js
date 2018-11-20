@@ -51,6 +51,7 @@ export const update = async (condition, account, { isActive, name }) => {
     await infrastructureService.update(projectID, {
       enabled: isActive
     })
+    await infrastructureService.createInfraJob(project.identifier)
   }
 
   return await Project.findByIdAndUpdate(projectID, {
