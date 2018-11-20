@@ -23,6 +23,7 @@ export default {
   },
   baseUrl: process.env.BASE_URL,
   cdnServer: process.env.CDN_SERVER,
+  jobServer: process.env.JOB_SERVER,
   sendGrid: {
     key: process.env.SENDGRID_API_KEY,
     sender: process.env.SENDGRID_SENDER

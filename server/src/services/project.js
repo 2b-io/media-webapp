@@ -143,6 +143,7 @@ export const create = async ({ name }, provider, account) => {
 
     await cacheSettingService.create(project._id)
     await infrastructureService.create(project, provider)
+    await infrastructureService.createInfraJob(project.identifier)
 
     return project
   } catch (error) {
