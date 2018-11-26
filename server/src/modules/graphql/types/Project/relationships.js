@@ -4,6 +4,8 @@ import {
   GraphQLNonNull
 } from 'graphql'
 
+import invalidationService from 'services/invalidation'
+
 import {
   getListMedia,
   getMedia
@@ -28,12 +30,13 @@ import infrastructureService from 'services/infrastructure'
 import { Account } from '../Account'
 import { CacheSetting } from '../cache-setting'
 import { Collaborator } from '../Collaborator'
+import { Invalidation } from '../invalidation'
+import { Infrastructure } from '../Infrastructure'
 import { Metric } from '../metric'
+import { Media } from '../Media'
 import { Preset } from '../Preset'
 import { PushSetting } from '../push-setting'
 import { PullSetting } from '../pull-setting'
-import { Media } from '../Media'
-import { Infrastructure } from '../Infrastructure'
 
 export default () => ({
   account: {
@@ -137,6 +140,12 @@ export default () => ({
     type: Metric,
     resolve: async (project, { name }) => {
       return ({ projectId: project._id, name })
+    }
+  },
+  invalidation: {
+    type: new GraphQLList(Invalidation),
+    resolve: async (project) => {
+      return await invalidationService.list(project.identifier)
     }
   }
 })
