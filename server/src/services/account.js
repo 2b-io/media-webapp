@@ -39,8 +39,17 @@ export const findById = async (id) => {
   return await Account.findById(id)
 }
 
-export const findByIdentifier = async (identifier) => {
-  return await Account.findOne({ identifier })
+export const findByIdentifier = async (accountIdentifier) => {
+  const { body } = await request
+    .get(`${ config.apiServer }/accounts/${ accountIdentifier }`)
+    .set('Authorization', 'MEDIA_CDN app=webapp')
+    .set('Content-Type', 'application/json')
+
+  if(!body) {
+    throw new Error('Get account failed')
+  }
+
+  return body
 }
 
 export const findByEmail = async (email) => {
