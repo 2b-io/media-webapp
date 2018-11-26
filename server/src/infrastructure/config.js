@@ -8,6 +8,7 @@ export default {
   systemPort: process.env.PORT,
   webpackDevServer: process.env.DEV_SERVER,
   mongodb: process.env.MONGO,
+  apiServer: process.env.API_SERVER,
   session: {
     secret: process.env.SESSION_SECRET,
     ttl: process.env.SESSION_TTL
