@@ -23,12 +23,9 @@ export default ({ Account, AccountStruct }) => ({
     },
     type: Account,
     resolve: async (self, { account }) => {
-      const updatedAccount = await updateAccount(self._id, account)
+      const updatedAccount = await updateAccount(self.identifier, account, self.session.account.identifier)
 
-      // add ref
-      updatedAccount.session = self.session
-
-      return updatedAccount
+      return { updatedAccount, session: self.session }
     }
   },
   _changePassword: {

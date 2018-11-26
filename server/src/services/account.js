@@ -1,6 +1,8 @@
 import escapeStringRegexp from 'escape-string-regexp'
+import request from 'superagent'
 import uuid from 'uuid'
 
+import config from 'infrastructure/config'
 import Account from 'models/Account'
 
 export const list = async () => {
@@ -19,14 +21,18 @@ export const create = async (info) => {
   }).save()
 }
 
-export const update = async (_id, data) => {
-  const account = await Account.findOneAndUpdate(
-    { _id },
-    { ...data },
-    { new: true }
-  ).lean()
+export const update = async (accountIdentifier, data, sessionAccountIdentifier) => {
+  const { body } = await request
+    .patch(`${ config.apiServer }/accounts/${ accountIdentifier }`)
+    .set('Authorization', `MEDIA_CDN app=webapp,account=${ sessionAccountIdentifier }`)
+    .set('Content-Type', 'application/json')
+    .send(data)
 
-  return account
+  if(!body) {
+    throw new Error('Update account failed')
+  }
+
+  return body
 }
 
 export const findById = async (id) => {
