@@ -11,13 +11,14 @@ const list = async (projectIdentifier) => {
   return body
 }
 
-const create = async (projectIdentifier) => {
+const create = async (projectIdentifier, patterns, options) => {
   const { body } = await request
     .post(`${ config.apiServer }/projects/${ projectIdentifier }/invalidations`)
     .set('Content-Type', 'application/json')
     .set('Authorization', 'MEDIA_CDN app=webapp')
     .send({
-      patterns
+      patterns,
+      options
     })
 
   return body

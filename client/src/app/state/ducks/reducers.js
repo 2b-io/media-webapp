@@ -1,6 +1,7 @@
 export { reducers as account } from './account'
 export { reducers as cacheSetting } from './cache-setting'
 export { reducers as dialog } from './dialog'
+export { reducers as invalidation } from './invalidation'
 export { reducers as resetPasswordCode } from './reset-password-code'
 export { reducers as layout } from './layout'
 export { reducers as location } from './location'

@@ -24,7 +24,7 @@ const CacheInvalidate = ({
     <Container>
       <CacheInvalidForm
         idle={ idle }
-        onSubmit={ ({ patterns }) => invalidateCache(patterns, identifier) }
+        onSubmit={ ({ patterns }) => invalidateCache(identifier, patterns) }
       />
     </Container>
   )

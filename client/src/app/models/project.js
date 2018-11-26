@@ -228,28 +228,5 @@ export default {
     })
 
     return body.session.account.project._makeOwner
-  },
-
-  async invalidateCache(params, options) {
-    const { identifier, patterns } = params
-    const { token } = options
-
-    const body = await request(`
-      query invalidateCache($token: String!, $identifier: String!, $patterns: [String]!) {
-        session(token: $token) {
-          account {
-            project(identifier: $identifier) {
-              _invalidateCache(patterns: $patterns)
-            }
-          }
-        }
-      }
-    `, {
-      identifier,
-      patterns: stringToList(patterns),
-      token
-    })
-
-    return body.session.account.project._invalidateCache
   }
 }

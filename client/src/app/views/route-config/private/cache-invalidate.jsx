@@ -88,12 +88,13 @@ export default {
       yield fork(watchCacheInvalidator, path)
 
       const { identifier } = yield select(selectors.currentParams)
-
       yield all([
         put(
           actions.getProject(identifier)
         ),
-
+        put(
+          actions.listInvalidateCache(identifier)
+        ),
         put(
           actions.initializeUIState(path, {
             idle: true
