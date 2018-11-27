@@ -1,9 +1,8 @@
 import escapeStringRegexp from 'escape-string-regexp'
-import request from 'superagent'
 import uuid from 'uuid'
 
-import config from 'infrastructure/config'
 import Account from 'models/Account'
+import ApiService from 'services/api'
 
 export const list = async () => {
   return await Account.find().lean().exec()
@@ -21,35 +20,8 @@ export const create = async (info) => {
   }).save()
 }
 
-export const update = async (accountIdentifier, data, sessionAccountIdentifier) => {
-  const { body } = await request
-    .patch(`${ config.apiServer }/accounts/${ accountIdentifier }`)
-    .set('Authorization', `MEDIA_CDN app=webapp,account=${ sessionAccountIdentifier }`)
-    .set('Content-Type', 'application/json')
-    .send(data)
-
-  if(!body) {
-    throw new Error('Update account failed')
-  }
-
-  return body
-}
-
 export const findById = async (id) => {
   return await Account.findById(id)
-}
-
-export const findByIdentifier = async (accountIdentifier) => {
-  const { body } = await request
-    .get(`${ config.apiServer }/accounts/${ accountIdentifier }`)
-    .set('Authorization', 'MEDIA_CDN app=webapp')
-    .set('Content-Type', 'application/json')
-
-  if(!body) {
-    throw new Error('Get account failed')
-  }
-
-  return body
 }
 
 export const findByEmail = async (email) => {
@@ -83,4 +55,25 @@ export const changePassword = async (_id, currentPassword, newPassword) => {
   await account.save()
 
   return true
+}
+
+//use new api
+
+class AccountService extends ApiService {
+  async changePassword(identifier, body) {
+    await this.callApi('put', `/accounts/${ identifier }/password`, body)
+    return true
+  }
+
+  async findByIdentifier(identifier) {
+    return await this.callApi('get', `/accounts/${ identifier }`)
+  }
+
+  async update(identifier, body) {
+    return await this.callApi('patch', `/accounts/${ identifier }`, body)
+  }
+}
+
+export default (account) => {
+  return new AccountService('webapp', account)
 }

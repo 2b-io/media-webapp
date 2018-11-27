@@ -25,7 +25,7 @@ import {
 import cacheSetingService from 'services/cache-setting'
 import infrastructureService from 'services/infrastructure'
 
-import { Account } from '../Account'
+import { Account } from '../account'
 import { CacheSetting } from '../cache-setting'
 import { Collaborator } from '../Collaborator'
 import { Metric } from '../metric'

@@ -13,7 +13,7 @@ import {
   getResetCode
 } from 'services/reset-password-code'
 
-import { Account, AccountStruct } from '../types/Account'
+import { Account, AccountStruct } from '../types/account'
 
 export default () => ({
   _createAccount: {

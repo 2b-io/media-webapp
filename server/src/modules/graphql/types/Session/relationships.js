@@ -1,11 +1,12 @@
 import { GraphQLString, GraphQLList } from 'graphql'
 
-import { Account } from '../Account'
+import { Account } from '../account'
 
 import {
-  findByIdentifier as findAccountByIdentifier,
   searchByEmail as searchAccountsByEmail
 } from 'services/account'
+
+import createAccountService from 'services/account'
 
 export default () => ({
   account: {
@@ -15,7 +16,7 @@ export default () => ({
       }
     },
     type: Account,
-    resolve: async (session, { identifier }) => {
+    resolve: async (session, { identifier }, ctx) => {
       if (!identifier) {
         const { account } = session
 
@@ -25,7 +26,10 @@ export default () => ({
         return account
       }
 
-      return await findAccountByIdentifier(identifier)
+      ctx._accountService = ctx._accountService ||
+        createAccountService(ctx._session.account.identifier)
+
+      return await ctx._accountService.findByIdentifier(identifier)
     }
   },
   accounts: {

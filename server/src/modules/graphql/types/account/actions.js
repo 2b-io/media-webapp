@@ -5,10 +5,7 @@ import {
   GraphQLList
 } from 'graphql'
 
-import {
-  changePassword,
-  update as updateAccount
-} from 'services/account'
+import createAccountService from 'services/account'
 import pinnedProjectService from 'services/pinned-project'
 import projectService from 'services/project'
 
@@ -22,10 +19,16 @@ export default ({ Account, AccountStruct }) => ({
       },
     },
     type: Account,
-    resolve: async (self, { account }) => {
-      const updatedAccount = await updateAccount(self.identifier, account, self.session.account.identifier)
+    resolve: async (self, { account }, ctx) => {
+      ctx._accountService = ctx._accountService ||
+        createAccountService(ctx._session.account.identifier)
 
-      return { updatedAccount, session: self.session }
+      const updatedAccount = await ctx._accountService.update(self.identifier, account)
+
+      return {
+        ...updatedAccount,
+        session: self.session
+      }
     }
   },
   _changePassword: {
@@ -38,8 +41,16 @@ export default ({ Account, AccountStruct }) => ({
       }
     },
     type: GraphQLBoolean,
-    resolve: async (self, { currentPassword, newPassword }) => {
-      return await changePassword(self._id, currentPassword, newPassword)
+    resolve: async (self, { currentPassword, newPassword }, ctx) => {
+      ctx._accountService = ctx._accountService ||
+        createAccountService(ctx._session.account.identifier)
+
+      const updatedAccount = await ctx._accountService.changePassword(self.identifier, {
+        currentPassword,
+        newPassword
+      })
+
+      return updatedAccount
     }
   },
   _destroy: {
