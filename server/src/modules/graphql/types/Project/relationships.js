@@ -142,7 +142,7 @@ export default () => ({
       return ({ projectId: project._id, name })
     }
   },
-  invalidation: {
+  invalidations: {
     type: new GraphQLList(Invalidation),
     resolve: async (project) => {
       return await invalidationService.list(project.identifier)

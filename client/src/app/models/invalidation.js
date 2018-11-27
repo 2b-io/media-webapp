@@ -4,6 +4,7 @@ import { stringToList } from 'services/string-to-list'
 
 export const INVALIDATION_FRAGMENT = `
   identifier,
+  patterns,
   status
 `
 
@@ -19,7 +20,7 @@ export default {
         session(token: $token) {
           account {
             project(identifier: $identifier) {
-              invalidation {
+              invalidations {
                 ${ INVALIDATION_FRAGMENT }
               }
             }
@@ -31,7 +32,7 @@ export default {
       identifier: projectIdentifier
     })
 
-    return body.session.account.project.invalidation
+    return body.session.account.project.invalidations
   },
   async invalidateCache(params, options) {
     const { projectIdentifier, patterns } = params

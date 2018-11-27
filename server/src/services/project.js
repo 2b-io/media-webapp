@@ -176,20 +176,14 @@ export const remove = async (condition, account) => {
     SecretKey.deleteMany({ project: _id }),
     Permission.deleteMany({ project: _id }),
     infrastructureService.remove(_id),
-    invalidationService.create(project.identifier, [ '/*' ], {
-      deleteOnS3: true,
-      deleteOnDistribution: false
-    })
+    invalidationService.create(project.identifier, [ '/*' ])
   ])
 
   return true
 }
 
 export const invalidateCache = async (projectIdentifier, patterns = []) => {
-  return await invalidationService.create(projectIdentifier, patterns, {
-    deleteOnS3: true,
-    deleteOnDistribution: true
-  })
+  return await invalidationService.create(projectIdentifier, patterns)
 }
 
 export default {

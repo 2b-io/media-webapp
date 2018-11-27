@@ -1,3 +1,3 @@
 export default {
-  listInvalidateCache: state => Object.values(state || {}),
+  listInvalidateCaches: state => state || {},
 }

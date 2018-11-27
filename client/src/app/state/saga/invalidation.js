@@ -59,19 +59,19 @@ const invalidateCacheLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const { identifier, status } = yield Invalidation.invalidateCache({
+      const invalidateCache = yield Invalidation.invalidateCache({
         projectIdentifier,
         patterns
       }, {
         token: session.token
       })
 
-      if (!identifier) {
+      if (!invalidateCache) {
         throw 'Invalidate cache failed'
       }
 
       yield put(
-        actions.invalidateCacheCompleted(identifier, status, patterns)
+        actions.invalidateCacheCompleted(invalidateCache)
       )
     } catch (e) {
       yield put(
