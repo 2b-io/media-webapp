@@ -26,10 +26,9 @@ export default () => ({
         return account
       }
 
-      ctx._accountService = ctx._accountService ||
-        createAccountService(ctx._session.account.identifier)
+      const accountService = createAccountService(ctx._session.account.identifier)
 
-      return await ctx._accountService.findByIdentifier(identifier)
+      return await accountService.findByIdentifier(identifier)
     }
   },
   accounts: {
