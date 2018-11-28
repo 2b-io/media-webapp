@@ -9,11 +9,12 @@ class ApiService {
   }
 
   async callApi(method, path, body) {
-    const apiPath = config.apiServer + path
-
+    const apiPath = config.apiUrl + path
     const response = await request(method, apiPath)
       .set('Content-Type', 'application/json')
-      .set('Authorization', `MEDIA_CDN app=${ this.appIdentifier },account=${ this.accountIdentifier }`)
+      .set('Authorization', `MEDIA_CDN app=${ this.appIdentifier },${
+        this.accountIdentifier && `account=${ this.accountIdentifier }`
+      }`)
       .send(body)
 
     return response.body
