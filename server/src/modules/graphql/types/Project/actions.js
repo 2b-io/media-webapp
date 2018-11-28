@@ -20,12 +20,13 @@ import {
   makeOwner as makeOwner
 } from 'services/permission'
 import projectService from 'services/project'
-import { get as getPullSetting } from 'services/pull-setting'
+
 import {
   forgotPassword as createResetCode
 } from 'services/reset-password-code'
 
 import { Collaborator } from '../Collaborator'
+import { Invalidation } from '../invalidation'
 import { Preset, PresetStruct } from '../Preset'
 
 export default ({ Project, ProjectStruct }) => ({
@@ -174,12 +175,10 @@ export default ({ Project, ProjectStruct }) => ({
         type: GraphQLNonNull(GraphQLList(GraphQLString))
       }
     },
-    type: GraphQLBoolean,
+    type: Invalidation,
     resolve: async (project, { patterns }) => {
       const { identifier } = project
-      const { pullURL } = await getPullSetting(project._id)
-
-      return await projectService.invalidateCache(patterns, identifier, pullURL)
+      return await projectService.invalidateCache(identifier, patterns)
     }
   }
 })

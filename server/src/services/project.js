@@ -1,7 +1,4 @@
 import namor from 'namor'
-import request from 'superagent'
-
-import config from 'infrastructure/config'
 
 import Permission from 'models/Permission'
 import Preset from 'models/Preset'
@@ -10,8 +7,8 @@ import PullSetting from 'models/pull-setting'
 import SecretKey from 'models/secret-key'
 
 import cacheSettingService from 'services/cache-setting'
-import cloudFront from 'services/cloud-front'
 import infrastructureService from 'services/infrastructure'
+import invalidationService from 'services/invalidation'
 
 const generateUniqueIdentifier = async (retry) => {
   const identifier = namor.generate({
@@ -40,7 +37,7 @@ const generateUniqueIdentifier = async (retry) => {
 
 export const update = async (condition, account, { isActive, name }) => {
   const {
-    _id: projectID,
+    _id: projectId,
     status: currentStatus,
     isActive: currentIsActive,
   } = await get(condition, account)
@@ -48,13 +45,13 @@ export const update = async (condition, account, { isActive, name }) => {
   const needUpdateDistribution = currentIsActive !== isActive
 
   if (needUpdateDistribution) {
-    await infrastructureService.update(projectID, {
+    await infrastructureService.update(projectId, {
       enabled: isActive
     })
-    await infrastructureService.createInfraJob(project.identifier)
+    await infrastructureService.createInfraJob(projectId)
   }
 
-  return await Project.findByIdAndUpdate(projectID, {
+  return await Project.findByIdAndUpdate(projectId, {
     name,
     isActive,
     status: needUpdateDistribution ?
@@ -179,34 +176,14 @@ export const remove = async (condition, account) => {
     SecretKey.deleteMany({ project: _id }),
     Permission.deleteMany({ project: _id }),
     infrastructureService.remove(_id),
-    requestInvalidateCache([ '/*' ], project.identifier, {
-      deleteOnS3: true,
-      deleteOnDistribution: false
-    })
+    invalidationService.create(project.identifier, [ '/*' ])
   ])
 
   return true
 }
 
-const requestInvalidateCache = async (patterns, identifier, options) => {
-  const { cdnServer } = config
-
-  return await request
-    .post(`${ cdnServer }/projects/${ identifier }/cache-invalidations`)
-    .set('Content-Type', 'application/json')
-    .send({
-      patterns,
-      options
-    })
-}
-
-export const invalidateCache = async (patterns = [], identifier) => {
-  await requestInvalidateCache(patterns, identifier, {
-    deleteOnS3: true,
-    deleteOnDistribution: true
-  })
-
-  return true
+export const invalidateCache = async (projectIdentifier, patterns = []) => {
+  return await invalidationService.create(projectIdentifier, patterns)
 }
 
 export default {

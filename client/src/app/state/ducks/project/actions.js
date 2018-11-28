@@ -123,21 +123,21 @@ export const makeOwnerFailed = reason => ({
   payload: { reason }
 })
 
-export const invalidateCache = (patterns, identifier) => ({
-  type: types.INVALIDATE_CACHE,
-  payload: { patterns, identifier }
-})
-
-export const invalidateCacheCompleted = () => {
-  return ({
-    type: types.INVALIDATE_CACHE_COMPLETED
-  })
-}
-
-export const invalidateCacheFailed = reason => ({
-  type: types.INVALIDATE_CACHE_FAILED,
-  payload: { reason }
-})
+// export const invalidateCache = (patterns, identifier) => ({
+//   type: types.INVALIDATE_CACHE,
+//   payload: { patterns, identifier }
+// })
+//
+// export const invalidateCacheCompleted = () => {
+//   return ({
+//     type: types.INVALIDATE_CACHE_COMPLETED
+//   })
+// }
+//
+// export const invalidateCacheFailed = reason => ({
+//   type: types.INVALIDATE_CACHE_FAILED,
+//   payload: { reason }
+// })
 
 export const sortProjects = (sortCondition) => ({
   type: types.SORT,

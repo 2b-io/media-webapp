@@ -1,6 +1,7 @@
 export { types as account } from './account'
 export { types as cacheSetting } from './cache-setting'
 export { types as dialog } from './dialog'
+export { types as invalidation } from './invalidation'
 export { types as resetPasswordCode } from './reset-password-code'
 export { types as layout } from './layout'
 export { types as location } from './location'

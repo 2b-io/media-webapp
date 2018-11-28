@@ -79,6 +79,18 @@ const watchCacheInvalidator = function*(path) {
   }
 }
 
+const watchCopyPatternsInvalidateCache = function*(path) {
+  while (true) {
+    const listPatterns = yield take(types.invalidation.COPY_PATTERN_INVALIDATE_CACHE)
+    const { patterns } = listPatterns.payload
+    yield put(
+      actions.mergeUIState(path, {
+        patterns
+      })
+    )
+  }
+}
+
 export default {
   '/projects/:identifier/cache-invalidator': {
     component: CacheInvalidate,
@@ -86,14 +98,16 @@ export default {
     *state(path) {
       yield fork(watchGetProject)
       yield fork(watchCacheInvalidator, path)
+      yield fork(watchCopyPatternsInvalidateCache, path)
 
       const { identifier } = yield select(selectors.currentParams)
-
       yield all([
         put(
           actions.getProject(identifier)
         ),
-
+        put(
+          actions.listInvalidateCache(identifier)
+        ),
         put(
           actions.initializeUIState(path, {
             idle: true
