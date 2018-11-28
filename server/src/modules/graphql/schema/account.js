@@ -62,10 +62,16 @@ export default () => ({
     },
     type: GraphQLBoolean,
     resolve: async (rootValue, { account, code }) => {
+      //get account by reset token
       const resetPasswordService = createResetPasswordService()
       const { accountIdentifier } = await resetPasswordService.getResetCode({ token: code })
 
       const accountService = createAccountService(accountIdentifier)
+
+      //update account name
+      await accountService.update(accountIdentifier, { name: account.name })
+
+      //change password by account identifier
       const updatedAccount = await accountService.changePassword(accountIdentifier, {
         token: code,
         newPassword: account.password
