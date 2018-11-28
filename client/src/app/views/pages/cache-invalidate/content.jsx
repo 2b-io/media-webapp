@@ -13,7 +13,8 @@ import _CacheInvalidForm from './form'
 
 const BREAK_POINTS = {
   phone: 1,
-  tablet: 2
+  tablet: 1,
+  otherwise: 2
 }
 
 const Layout = styled.section`
@@ -26,7 +27,7 @@ const Layout = styled.section`
 `
 
 const Wrapper = styled.div`
-  padding: 8px;
+  padding: 16px;
 `
 
 const CacheInvalidForm = reduxForm({

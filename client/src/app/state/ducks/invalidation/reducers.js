@@ -7,7 +7,10 @@ export default (state = {}, action) => {
       return arrayToMap(action.payload.listInvalidateCaches, 'identifier')
     }
     case types.INVALIDATE_CACHE_COMPLETED: {
-      return { ...state, [ action.payload.invalidateCache.identifier ]: action.payload.invalidateCache }
+      return {
+        ...state,
+        [ action.payload.invalidateCache.identifier ]: action.payload.invalidateCache
+      }
     }
   }
   return state
