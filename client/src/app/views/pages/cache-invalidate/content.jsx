@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
@@ -6,8 +6,9 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { listToString } from 'services/string-to-list'
-import { Card, List, StatusIndicator, ResponsiveGrid } from 'ui/elements'
-import { TextLine } from 'ui/typo'
+import { Card, List, PlainButton, StatusIndicator, ResponsiveGrid } from 'ui/elements'
+import { CopyIcon } from 'ui/icons'
+import { DescriptionTextLine, Heading, TextLine } from 'ui/typo'
 import _CacheInvalidForm from './form'
 
 const BREAK_POINTS = {
@@ -22,6 +23,10 @@ const Layout = styled.section`
   max-height: 100%;
   overflow-y: auto;
   background: #e6e6e6;
+`
+
+const Wrapper = styled.div`
+  padding: 8px;
 `
 
 const CacheInvalidForm = reduxForm({
@@ -42,17 +47,20 @@ const CacheInvalidate = ({
   const items = Object.values(listInvalidateCaches).map(
     ({ identifier, patterns, status }) => ({
       key: identifier,
-      onClick: () => copyPatternsInvalidateCache(patterns),
       content: () => <TextLine>
-        Pattern: <br />
+        { identifier } <br />
         { patterns.length && patterns.map((pattern, index) => (
-          <Fragment key={ index }>
+          <DescriptionTextLine key={ index }>
             - { pattern }<br />
-          </Fragment>
-        )) || (<Fragment>&nbsp;&nbsp;N/A<br /></Fragment>)
+          </DescriptionTextLine>
+        )) || (<DescriptionTextLine>&nbsp;&nbsp;N/A<br /></DescriptionTextLine>)
         }
       </TextLine>,
-      trailing: () => <TextLine mostRight>{ status }</TextLine>,
+      trailing: () => (
+        <PlainButton>
+          <CopyIcon onClick={ () => copyPatternsInvalidateCache(patterns) } />
+        </PlainButton>
+      ),
       leading: () => <StatusIndicator isActive={ status === 'COMPLETED' ? true : false } />
     })
   )
@@ -64,18 +72,27 @@ const CacheInvalidate = ({
           {
             content: () => (
               <Card
-                content={ () => (<CacheInvalidForm
-                  idle={ idle }
-                  initialValues={ { patterns: listToString(patterns) } }
-                  onSubmit={ ({ patterns }) => invalidateCache(identifier, patterns) }
-                />) }
+                content={ () => (
+                  <Wrapper>
+                    <CacheInvalidForm
+                      idle={ idle }
+                      initialValues={ { patterns: listToString(patterns) } }
+                      onSubmit={ ({ patterns }) => invalidateCache(identifier, patterns) }
+                    />
+                  </Wrapper>
+                ) }
               />
             )
           },
           {
             content: () => (
               <Card
-                content={ () => (<List interactable={ true } items={ items } />) }
+                title={ () => <Heading mostLeft mostRight>Invalidations</Heading> }
+                content={ () => (
+                  <Wrapper>
+                    <List items={ items } />
+                  </Wrapper>
+                ) }
               />
             )
           }
