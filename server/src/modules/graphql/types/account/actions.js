@@ -20,10 +20,8 @@ export default ({ Account, AccountStruct }) => ({
     },
     type: Account,
     resolve: async (self, { account }, ctx) => {
-      ctx._accountService = ctx._accountService ||
-        createAccountService(ctx._session.account.identifier)
-
-      const updatedAccount = await ctx._accountService.update(self.identifier, account)
+      const accountService = createAccountService(ctx._session.account.identifier)
+      const updatedAccount = await accountService.update(self.identifier, account)
 
       return {
         ...updatedAccount,
@@ -42,10 +40,8 @@ export default ({ Account, AccountStruct }) => ({
     },
     type: GraphQLBoolean,
     resolve: async (self, { currentPassword, newPassword }, ctx) => {
-      ctx._accountService = ctx._accountService ||
-        createAccountService(ctx._session.account.identifier)
-
-      const updatedAccount = await ctx._accountService.changePassword(self.identifier, {
+      const accountService = createAccountService(ctx._session.account.identifier)
+      const updatedAccount = await accountService.changePassword(self.identifier, {
         currentPassword,
         newPassword
       })
