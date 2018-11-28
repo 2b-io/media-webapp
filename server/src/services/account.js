@@ -69,6 +69,10 @@ class AccountService extends ApiService {
     return await this.callApi('get', `/accounts/${ identifier }`)
   }
 
+  async create(body) {
+    return await this.callApi('post', '/accounts', body)
+  }
+
   async update(identifier, body) {
     return await this.callApi('patch', `/accounts/${ identifier }`, body)
   }
