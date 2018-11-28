@@ -22,11 +22,14 @@ export default () => ({
     },
     type: Account,
     resolve: async (rootValue, { account }) => {
-      const newAccount = await createAccount(account)
-      const { code }  = await forgotPassword(newAccount.email)
+      const accountService = createAccountService()
+      const newAccount = await accountService.create(account)
+
+      const resetPasswordService = createResetPasswordService()
+      const { token } = await resetPasswordService.forgotPassword({ email: newAccount.email })
 
       await emailService.sendEmailRegister(newAccount.email, {
-        code
+        code: token
       })
 
       return newAccount
