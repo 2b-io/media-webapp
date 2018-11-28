@@ -1,4 +1,4 @@
-import { Account } from '../Account'
+import { Account } from '../account'
 
 import {
   findById as findAccountById

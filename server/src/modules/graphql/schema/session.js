@@ -8,7 +8,7 @@ import {
   verify as verifySession
 } from 'services/session'
 
-import { AccountStruct } from '../types/Account'
+import { AccountStruct } from '../types/account'
 import { Session } from '../types/Session'
 
 export default () => ({

@@ -7,13 +7,11 @@ import {
   create as createAccount
 } from 'services/account'
 import emailService from 'services/email'
-import {
-  forgotPassword,
-  resetPassword,
-  getResetCode
-} from 'services/reset-password-code'
 
-import { Account, AccountStruct } from '../types/Account'
+import createAccountService from 'services/account'
+import createResetPasswordService from 'services/reset-password-code'
+
+import { Account, AccountStruct } from '../types/account'
 
 export default () => ({
   _createAccount: {
@@ -42,10 +40,11 @@ export default () => ({
     },
     type: GraphQLBoolean,
     resolve: async (rootValue, { email }) => {
-      const { code } = await forgotPassword(email)
+      const resetPasswordService = createResetPasswordService()
+      const { token } = await resetPasswordService.forgotPassword({ email })
 
       return await emailService.sendEmailResetPassword(email, {
-        code
+        code: token
       })
     }
   },
@@ -60,7 +59,16 @@ export default () => ({
     },
     type: GraphQLBoolean,
     resolve: async (rootValue, { account, code }) => {
-      return await resetPassword(account, code)
+      const resetPasswordService = createResetPasswordService()
+      const { accountIdentifier } = await resetPasswordService.getResetCode({ token: code })
+
+      const accountService = createAccountService(accountIdentifier)
+      const updatedAccount = await accountService.changePassword(accountIdentifier, {
+        token: code,
+        newPassword: account.password
+      })
+
+      return updatedAccount
     }
   },
   resetCode: {
@@ -71,7 +79,12 @@ export default () => ({
     },
     type: Account,
     resolve: async (rootValue, { code }) => {
-      return await getResetCode(code)
+      const resetPasswordService = createResetPasswordService()
+      const { accountIdentifier } = await resetPasswordService.getResetCode({ token: code })
+
+      const accountService = createAccountService(accountIdentifier)
+      const account = await accountService.findByIdentifier(accountIdentifier)
+      return account
     }
   }
 })

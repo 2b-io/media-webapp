@@ -2,6 +2,7 @@ import escapeStringRegexp from 'escape-string-regexp'
 import uuid from 'uuid'
 
 import Account from 'models/Account'
+import ApiService from 'services/api'
 
 export const list = async () => {
   return await Account.find().lean().exec()
@@ -19,22 +20,8 @@ export const create = async (info) => {
   }).save()
 }
 
-export const update = async (_id, data) => {
-  const account = await Account.findOneAndUpdate(
-    { _id },
-    { ...data },
-    { new: true }
-  ).lean()
-
-  return account
-}
-
 export const findById = async (id) => {
   return await Account.findById(id)
-}
-
-export const findByIdentifier = async (identifier) => {
-  return await Account.findOne({ identifier })
 }
 
 export const findByEmail = async (email) => {
@@ -68,4 +55,25 @@ export const changePassword = async (_id, currentPassword, newPassword) => {
   await account.save()
 
   return true
+}
+
+//use new api
+
+class AccountService extends ApiService {
+  async changePassword(identifier, body) {
+    await this.callApi('put', `/accounts/${ identifier }/password`, body)
+    return true
+  }
+
+  async findByIdentifier(identifier) {
+    return await this.callApi('get', `/accounts/${ identifier }`)
+  }
+
+  async update(identifier, body) {
+    return await this.callApi('patch', `/accounts/${ identifier }`, body)
+  }
+}
+
+export default (account) => {
+  return new AccountService('webapp', account)
 }
