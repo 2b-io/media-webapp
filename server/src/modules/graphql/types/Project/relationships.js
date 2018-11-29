@@ -34,6 +34,7 @@ import { PushSetting } from '../push-setting'
 import { PullSetting } from '../pull-setting'
 
 import createPresetService from 'services/preset'
+import createPullSettingService from 'services/pull-setting'
 
 export default () => ({
   account: {
@@ -123,8 +124,10 @@ export default () => ({
   },
   pullSetting: {
     type: PullSetting,
-    resolve: async (project) => {
-      return await getPullSetting(project._id)
+    resolve: async (project, args, ctx) => {
+      const PullSettingService = createPullSettingService(ctx._session.account.identifier)
+
+      return await PullSettingService.get(project.identifier)
     }
   },
   pushSetting: {
