@@ -5,6 +5,8 @@ import {
   update as updatePreset
 } from 'services/preset'
 
+import createPresetService from 'services/preset'
+
 export default ({ Preset, PresetStruct }) => ({
   _update: {
     args: {
@@ -26,9 +28,20 @@ export default ({ Preset, PresetStruct }) => ({
   _destroy: {
     type: GraphQLBoolean,
     resolve: async (self) => {
-      const { project: { _id: project }, contentType } = self
+      const {
+        project: {
+          account: {
+            identifier: accountIdentifier
+          },
+          identifier: projectIdentifier
+        },
+        contentType
+      } = self
 
-      return removePreset(project, contentType)
+      const presetService = createPresetService(accountIdentifier)
+      await presetService.remove(projectIdentifier, contentType)
+
+      return true
     }
   }
 })
