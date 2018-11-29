@@ -57,7 +57,7 @@ export default () => ({
     resolve: async (project) => {
       const presetService = createPresetService(project.account.identifier)
       const presets = await presetService.list(project.identifier)
-      
+
       return presets.map(preset => {
         // add ref
         preset.project = project
@@ -74,11 +74,13 @@ export default () => ({
     },
     type: Preset,
     resolve: async (project, { contentType }) => {
+      const presetService = createPresetService(project.account.identifier)
+      const preset = await presetService.get(project.identifier, contentType)
 
-      const preset = await getPreset(project._id, contentType)
-      // add ref
-      preset.project = project
-      return preset
+      return {
+        ...preset,
+        project
+      }
     }
   },
   listMedia: {
