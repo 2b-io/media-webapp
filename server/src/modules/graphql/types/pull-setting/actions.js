@@ -1,8 +1,6 @@
 import { GraphQLNonNull } from 'graphql'
 
-import {
-  update as updatePullSetting
-} from 'services/pull-setting'
+import createPullSettingService from 'services/pull-setting'
 
 export default ({ PullSetting, PullSettingStruct }) => ({
   _update: {
@@ -12,12 +10,25 @@ export default ({ PullSetting, PullSettingStruct }) => ({
       }
     },
     type: PullSetting,
-    resolve: async (self, { pullSetting }) => {
-      const p = await updatePullSetting(self.project, pullSetting)
-      // add ref
-      p.project = self.project
+    resolve: async (self, { pullSetting }, ctx) => {
+      const { project } = self
+      const {
+        allowedOrigins,
+        headers,
+        pullURL: pullUrl
+      } = pullSetting
 
-      return p
+      const PullSettingService = createPullSettingService(ctx._session.account.identifier)
+      const newPullSetting = await PullSettingService.update(project.identifier, {
+        allowedOrigins,
+        headers,
+        pullUrl
+      })
+
+      return {
+        ...newPullSetting,
+        project
+      }
     }
   }
 })

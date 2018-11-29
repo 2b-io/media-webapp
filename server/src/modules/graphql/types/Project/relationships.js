@@ -12,10 +12,6 @@ import {
 } from 'services/media'
 
 import {
-  get as getPullSetting,
-} from 'services/pull-setting'
-
-import {
   list as listPermissions
 } from 'services/permission'
 
