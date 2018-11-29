@@ -2,6 +2,7 @@ import sh from 'shorthash'
 
 import Preset from 'models/Preset'
 import cache from 'services/cache'
+import ApiService from 'services/api'
 
 const DEFAULT_PARAMETERS = {
   'image/jpeg': {
@@ -105,4 +106,18 @@ export const remove = async (projectId, contentType) => {
     project: projectId,
     contentType
   })
+}
+
+class PresetService extends ApiService {
+  async list(projectIdentifier) {
+    return await this.callApi('get', `/projects/${ projectIdentifier }/presets`)
+  }
+
+  async get(projectIdentifier, contentType) {
+    return await this.callApi('get', `/projects/${ projectIdentifier }/presets/${ contentType }`)
+  }
+}
+
+export default (accountIdentifier) => {
+  return new PresetService('webapp', accountIdentifier)
 }

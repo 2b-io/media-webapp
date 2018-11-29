@@ -27,7 +27,7 @@ import {
 
 import { Collaborator } from '../Collaborator'
 import { Invalidation } from '../invalidation'
-import { Preset, PresetStruct } from '../Preset'
+import { Preset, PresetStruct } from '../preset'
 
 export default ({ Project, ProjectStruct }) => ({
   _update: {

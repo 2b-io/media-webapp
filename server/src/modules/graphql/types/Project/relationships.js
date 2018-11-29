@@ -34,9 +34,11 @@ import { Invalidation } from '../invalidation'
 import { Infrastructure } from '../Infrastructure'
 import { Metric } from '../metric'
 import { Media } from '../Media'
-import { Preset } from '../Preset'
+import { Preset } from '../preset'
 import { PushSetting } from '../push-setting'
 import { PullSetting } from '../pull-setting'
+
+import createPresetService from 'services/preset'
 
 export default () => ({
   account: {
@@ -53,8 +55,9 @@ export default () => ({
   presets: {
     type: new GraphQLList(Preset),
     resolve: async (project) => {
-      let presets = await listPresetsInProject(project._id)
-
+      const presetService = createPresetService(project.account.identifier)
+      const presets = await presetService.list(project.identifier)
+      
       return presets.map(preset => {
         // add ref
         preset.project = project
