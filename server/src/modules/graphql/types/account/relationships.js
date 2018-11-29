@@ -4,8 +4,8 @@ import {
   GraphQLString
 } from 'graphql'
 
+import createPinnedProjectService from 'services/pinned-project'
 import projectService from 'services/project'
-import pinnedProjectService from 'services/pinned-project'
 import { Project } from '../Project'
 import { Session } from '../Session'
 
@@ -46,11 +46,14 @@ export default () => ({
   pinnedProjects: {
     type: new GraphQLList(Project),
     resolve: async (account) => {
-      const pinnedProjects = await pinnedProjectService.list(account._id)
+
+      const pinnedProjectService = await createPinnedProjectService(account.identifier)
+
+      const { projectIdentifiers } = await pinnedProjectService.list(account.identifier)
 
       const filtered = await projectService.list(account._id, {
         identifier: {
-          $in: pinnedProjects
+          $in: projectIdentifiers
         }
       })
 

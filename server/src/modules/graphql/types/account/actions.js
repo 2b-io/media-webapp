@@ -6,7 +6,7 @@ import {
 } from 'graphql'
 
 import createAccountService from 'services/account'
-import pinnedProjectService from 'services/pinned-project'
+import createPinnedProjectService from 'services/pinned-project'
 import projectService from 'services/project'
 
 import { Project, ProjectStruct } from '../Project'
@@ -82,11 +82,13 @@ export default ({ Account, AccountStruct }) => ({
     },
     type: new GraphQLList(Project),
     resolve: async (account, { projectIdentifiers }) => {
-      const pinnedProjects = await pinnedProjectService.update(account._id, projectIdentifiers)
+      const pinnedProjectService = await createPinnedProjectService(account.identifier)
+
+      const { projectIdentifiers: _projectIdentifiers } = await pinnedProjectService.update(account.identifier, projectIdentifiers)
 
       const filtered = await projectService.list(account._id, {
         identifier: {
-          $in: pinnedProjects
+          $in: _projectIdentifiers
         }
       })
 
