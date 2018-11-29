@@ -12,7 +12,7 @@ const schema = mongoose.Schema({
       value: String
     }
   ],
-  pullURL: {
+  pullUrl: {
     type: String,
     index: true
   },

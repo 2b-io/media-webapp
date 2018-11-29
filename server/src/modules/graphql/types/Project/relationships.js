@@ -122,8 +122,12 @@ export default () => ({
     type: PullSetting,
     resolve: async (project, args, ctx) => {
       const PullSettingService = createPullSettingService(ctx._session.account.identifier)
+      const pullSetting = await PullSettingService.get(project.identifier)
 
-      return await PullSettingService.get(project.identifier)
+      return {
+        ...pullSetting,
+        project
+      }
     }
   },
   pushSetting: {

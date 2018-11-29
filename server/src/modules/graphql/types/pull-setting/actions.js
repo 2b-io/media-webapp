@@ -15,7 +15,7 @@ export default ({ PullSetting, PullSettingStruct }) => ({
       const {
         allowedOrigins,
         headers,
-        pullURL: pullUrl
+        pullUrl
       } = pullSetting
 
       const PullSettingService = createPullSettingService(ctx._session.account.identifier)
