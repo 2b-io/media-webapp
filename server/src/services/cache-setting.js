@@ -2,6 +2,8 @@ import ms from 'ms'
 
 import CacheSetting from 'models/cache-setting'
 
+import ApiService from 'services/api'
+
 const DEFAULT_CACHE_SETTING = {
   ttl: ms('90d') / 1000
 }
@@ -33,9 +35,12 @@ const update = async (projectId, cacheSetting) => {
   }).lean()
 }
 
-export default {
-  create,
-  get,
-  remove,
-  update
+class CacheSettingService extends ApiService {
+  async get(projectIdentifier) {
+    return await this.callApi('get', `/projects/${ projectIdentifier }/cache-setting`)
+  }
+}
+
+export default (accountIdentifier) => {
+  return new CacheSettingService('webapp', accountIdentifier)
 }
