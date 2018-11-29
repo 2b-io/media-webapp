@@ -12,11 +12,6 @@ import {
 } from 'services/media'
 
 import {
-  get as getPreset,
-  list as listPresetsInProject
-} from 'services/preset'
-
-import {
   get as getPullSetting,
 } from 'services/pull-setting'
 
@@ -34,9 +29,11 @@ import { Invalidation } from '../invalidation'
 import { Infrastructure } from '../Infrastructure'
 import { Metric } from '../metric'
 import { Media } from '../Media'
-import { Preset } from '../Preset'
+import { Preset } from '../preset'
 import { PushSetting } from '../push-setting'
 import { PullSetting } from '../pull-setting'
+
+import createPresetService from 'services/preset'
 
 export default () => ({
   account: {
@@ -52,8 +49,9 @@ export default () => ({
   },
   presets: {
     type: new GraphQLList(Preset),
-    resolve: async (project) => {
-      let presets = await listPresetsInProject(project._id)
+    resolve: async (project, args, ctx) => {
+      const presetService = createPresetService(ctx._session.account.identifier)
+      const presets = await presetService.list(project.identifier)
 
       return presets.map(preset => {
         // add ref
@@ -70,12 +68,14 @@ export default () => ({
       }
     },
     type: Preset,
-    resolve: async (project, { contentType }) => {
+    resolve: async (project, { contentType }, ctx) => {
+      const presetService = createPresetService(ctx._session.account.identifier)
+      const preset = await presetService.get(project.identifier, contentType)
 
-      const preset = await getPreset(project._id, contentType)
-      // add ref
-      preset.project = project
-      return preset
+      return {
+        ...preset,
+        project
+      }
     }
   },
   listMedia: {

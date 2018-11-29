@@ -3,9 +3,7 @@ import {
   GraphQLNonNull,
   GraphQLString
 } from 'graphql'
-import {
-  create as createAccount
-} from 'services/account'
+
 import emailService from 'services/email'
 
 import createAccountService from 'services/account'

@@ -10,9 +10,7 @@ import {
   findByEmail as findAccountByEmail
 } from 'services/account'
 import emailService from 'services/email'
-import {
-  create as createPreset
-} from 'services/preset'
+
 import {
   invite as inviteCollaborator,
   list as getPermissionList,
@@ -27,7 +25,9 @@ import {
 
 import { Collaborator } from '../Collaborator'
 import { Invalidation } from '../invalidation'
-import { Preset, PresetStruct } from '../Preset'
+import { Preset, PresetStruct } from '../preset'
+
+import createPresetService from 'services/preset'
 
 export default ({ Project, ProjectStruct }) => ({
   _update: {
@@ -63,13 +63,16 @@ export default ({ Project, ProjectStruct }) => ({
       }
     },
     type: Preset,
-    resolve: async (project, { preset }) => {
-      const p = await createPreset(project._id, preset)
+    resolve: async (project, { preset }, ctx) => {
+      const presetService = createPresetService(ctx._session.account.identifier)
+      const newPreset = await presetService.create(project.identifier, {
+        contentType: preset.contentType
+      })
 
-      // add ref
-      p.project = project
-
-      return p
+      return {
+        ...newPreset,
+        project
+      }
     }
   },
   _addCollaboratorsByEmails: {

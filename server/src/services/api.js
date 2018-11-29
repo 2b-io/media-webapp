@@ -13,9 +13,9 @@ class ApiService {
       app: this.appIdentifier,
       account: this.accountIdentifier
     })
-    .map((entry) => entry[ 1 ] && entry.join('='))
-    .filter(Boolean)
-    .join(',')
+      .map((entry) => entry[ 1 ] && entry.join('='))
+      .filter(Boolean)
+      .join(',')
 
     const response = await request(method, `${ config.apiUrl }${ path }`)
       .set('Content-Type', 'application/json')
