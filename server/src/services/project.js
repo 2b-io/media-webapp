@@ -6,7 +6,7 @@ import Project from 'models/Project'
 import PullSetting from 'models/pull-setting'
 import SecretKey from 'models/secret-key'
 
-import cacheSettingService from 'services/cache-setting'
+//import cacheSettingService from 'services/cache-setting'
 import infrastructureService from 'services/infrastructure'
 import invalidationService from 'services/invalidation'
 
@@ -139,7 +139,7 @@ export const create = async ({ name }, provider, account) => {
       project: project._id
     }).save()
 
-    await cacheSettingService.create(project._id)
+    //await cacheSettingService.create(project._id)
     await infrastructureService.create(project, provider)
     await infrastructureService.createInfraJob(project.identifier)
 
@@ -148,7 +148,7 @@ export const create = async ({ name }, provider, account) => {
     await Project.findOneAndRemove({ _id: project._id })
     await Permission.deleteMany({ project: project._id })
     await PullSetting.deleteMany({ project: project._id })
-    await cacheSettingService.remove(project._id)
+    //await cacheSettingService.remove(project._id)
 
     throw error
   }
@@ -170,7 +170,7 @@ export const remove = async (condition, account) => {
   await Project.findOneAndRemove({ _id })
 
   await Promise.all([
-    cacheSettingService.remove(_id),
+    //cacheSettingService.remove(_id),
     Preset.deleteMany({ project: _id }),
     PullSetting.deleteMany({ project: _id }),
     SecretKey.deleteMany({ project: _id }),

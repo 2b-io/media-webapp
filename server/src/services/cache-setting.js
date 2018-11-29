@@ -1,39 +1,38 @@
-import ms from 'ms'
-
-import CacheSetting from 'models/cache-setting'
-
 import ApiService from 'services/api'
 
-const DEFAULT_CACHE_SETTING = {
-  ttl: ms('90d') / 1000
-}
+//import ms from 'ms'
+//import CacheSetting from 'models/cache-setting'
 
-const create = async (projectId) => {
-  return await new CacheSetting({
-    project: projectId,
-    ...DEFAULT_CACHE_SETTING
-  }).save()
-}
+// const DEFAULT_CACHE_SETTING = {
+//   ttl: ms('90d') / 1000
+// }
 
-const remove = async (projectId) => {
-  return CacheSetting.deleteMany({
-    project: projectId
-  })
-}
+// const create = async (projectId) => {
+//   return await new CacheSetting({
+//     project: projectId,
+//     ...DEFAULT_CACHE_SETTING
+//   }).save()
+// }
 
-const get = async (projectId) => {
-  return await CacheSetting.findOne({
-    project: projectId
-  }).lean()
-}
+// const remove = async (projectId) => {
+//   return CacheSetting.deleteMany({
+//     project: projectId
+//   })
+// }
 
-const update = async (projectId, cacheSetting) => {
-  return await CacheSetting.findOneAndUpdate({
-    project: projectId
-  }, cacheSetting, {
-    new: true
-  }).lean()
-}
+// const get = async (projectId) => {
+//   return await CacheSetting.findOne({
+//     project: projectId
+//   }).lean()
+// }
+
+// const update = async (projectId, cacheSetting) => {
+//   return await CacheSetting.findOneAndUpdate({
+//     project: projectId
+//   }, cacheSetting, {
+//     new: true
+//   }).lean()
+// }
 
 class CacheSettingService extends ApiService {
   async get(projectIdentifier) {

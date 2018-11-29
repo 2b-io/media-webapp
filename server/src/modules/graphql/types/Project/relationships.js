@@ -19,7 +19,6 @@ import {
   list as listPermissions
 } from 'services/permission'
 
-import cacheSetingService from 'services/cache-setting'
 import infrastructureService from 'services/infrastructure'
 
 import { Account } from '../account'
