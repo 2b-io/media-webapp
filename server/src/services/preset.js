@@ -109,6 +109,10 @@ export const remove = async (projectId, contentType) => {
 }
 
 class PresetService extends ApiService {
+  async create(projectIdentifier, body) {
+    return await this.callApi('post', `/projects/${ projectIdentifier }/presets`, body)
+  }
+
   async list(projectIdentifier) {
     return await this.callApi('get', `/projects/${ projectIdentifier }/presets`)
   }

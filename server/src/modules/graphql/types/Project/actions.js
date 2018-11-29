@@ -29,6 +29,8 @@ import { Collaborator } from '../Collaborator'
 import { Invalidation } from '../invalidation'
 import { Preset, PresetStruct } from '../preset'
 
+import createPresetService from 'services/preset'
+
 export default ({ Project, ProjectStruct }) => ({
   _update: {
     args: {
@@ -64,12 +66,15 @@ export default ({ Project, ProjectStruct }) => ({
     },
     type: Preset,
     resolve: async (project, { preset }) => {
-      const p = await createPreset(project._id, preset)
+      const presetService = createPresetService(project.account.identifier)
+      const newPreset = await presetService.create(project.identifier, {
+        contentType: preset.contentType
+      })
 
-      // add ref
-      p.project = project
-
-      return p
+      return {
+        ...newPreset,
+        project
+      }
     }
   },
   _addCollaboratorsByEmails: {
