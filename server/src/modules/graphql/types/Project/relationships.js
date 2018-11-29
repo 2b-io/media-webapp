@@ -12,11 +12,6 @@ import {
 } from 'services/media'
 
 import {
-  get as getPreset,
-  list as listPresetsInProject
-} from 'services/preset'
-
-import {
   get as getPullSetting,
 } from 'services/pull-setting'
 

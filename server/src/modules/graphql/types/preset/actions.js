@@ -1,10 +1,5 @@
 import { GraphQLBoolean, GraphQLNonNull } from 'graphql'
 
-import {
-  remove as removePreset,
-  update as updatePreset
-} from 'services/preset'
-
 import createPresetService from 'services/preset'
 
 export default ({ Preset, PresetStruct }) => ({

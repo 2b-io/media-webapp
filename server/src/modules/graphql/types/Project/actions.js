@@ -10,9 +10,7 @@ import {
   findByEmail as findAccountByEmail
 } from 'services/account'
 import emailService from 'services/email'
-import {
-  create as createPreset
-} from 'services/preset'
+
 import {
   invite as inviteCollaborator,
   list as getPermissionList,
