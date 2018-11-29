@@ -65,8 +65,8 @@ export default ({ Project, ProjectStruct }) => ({
       }
     },
     type: Preset,
-    resolve: async (project, { preset }) => {
-      const presetService = createPresetService(project.account.identifier)
+    resolve: async (project, { preset }, ctx) => {
+      const presetService = createPresetService(ctx._session.account.identifier)
       const newPreset = await presetService.create(project.identifier, {
         contentType: preset.contentType
       })

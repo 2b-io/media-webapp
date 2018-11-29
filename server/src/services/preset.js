@@ -124,6 +124,10 @@ class PresetService extends ApiService {
   async remove(projectIdentifier, contentType) {
     return await this.callApi('delete', `/projects/${ projectIdentifier }/presets/${ encodeURIComponent(contentType) }`)
   }
+
+  async update(projectIdentifier, contentType, body) {
+    return await this.callApi('put', `/projects/${ projectIdentifier }/presets/${ encodeURIComponent(contentType) }`, body)
+  }
 }
 
 export default (accountIdentifier) => {

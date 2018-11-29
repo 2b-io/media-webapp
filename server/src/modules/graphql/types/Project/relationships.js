@@ -54,8 +54,8 @@ export default () => ({
   },
   presets: {
     type: new GraphQLList(Preset),
-    resolve: async (project) => {
-      const presetService = createPresetService(project.account.identifier)
+    resolve: async (project, args, ctx) => {
+      const presetService = createPresetService(ctx._session.account.identifier)
       const presets = await presetService.list(project.identifier)
 
       return presets.map(preset => {
@@ -73,8 +73,8 @@ export default () => ({
       }
     },
     type: Preset,
-    resolve: async (project, { contentType }) => {
-      const presetService = createPresetService(project.account.identifier)
+    resolve: async (project, { contentType }, ctx) => {
+      const presetService = createPresetService(ctx._session.account.identifier)
       const preset = await presetService.get(project.identifier, contentType)
 
       return {

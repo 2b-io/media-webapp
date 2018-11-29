@@ -15,30 +15,42 @@ export default ({ Preset, PresetStruct }) => ({
       }
     },
     type: Preset,
-    resolve: async (self, { preset }) => {
-      const { project, contentType } = self
-      const p = await updatePreset(project, contentType, preset)
-
-      // add ref
-      p.project = self.project
-
-      return p
-    }
-  },
-  _destroy: {
-    type: GraphQLBoolean,
-    resolve: async (self) => {
+    resolve: async (self, { preset }, ctx) => {
       const {
         project: {
-          account: {
-            identifier: accountIdentifier
-          },
           identifier: projectIdentifier
         },
         contentType
       } = self
 
-      const presetService = createPresetService(accountIdentifier)
+      const {
+        isActive,
+        parameters
+      } = preset
+
+      const presetService = createPresetService(ctx._session.account.identifier)
+      const newPreset = await presetService.update(projectIdentifier, contentType, {
+        isActive,
+        parameters
+      })
+
+      return {
+        ...newPreset,
+        project: self.project
+      }
+    }
+  },
+  _destroy: {
+    type: GraphQLBoolean,
+    resolve: async (self, args, ctx) => {
+      const {
+        project: {
+          identifier: projectIdentifier
+        },
+        contentType
+      } = self
+
+      const presetService = createPresetService(ctx._session.account.identifier)
       await presetService.remove(projectIdentifier, contentType)
 
       return true
