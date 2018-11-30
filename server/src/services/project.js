@@ -8,6 +8,7 @@ import SecretKey from 'models/secret-key'
 
 //import cacheSettingService from 'services/cache-setting'
 import infrastructureService from 'services/infrastructure'
+import createInfrastructureJobService from 'services/infrastructure-job'
 import invalidationService from 'services/invalidation'
 
 const generateUniqueIdentifier = async (retry) => {
@@ -48,7 +49,7 @@ export const update = async (condition, account, { isActive, name }) => {
     await infrastructureService.update(projectId, {
       enabled: isActive
     })
-    await infrastructureService.createInfraJob(projectId)
+    await createInfrastructureJobService(projectId)
   }
 
   return await Project.findByIdAndUpdate(projectId, {
@@ -141,7 +142,7 @@ export const create = async ({ name }, provider, account) => {
 
     //await cacheSettingService.create(project._id)
     await infrastructureService.create(project, provider)
-    await infrastructureService.createInfraJob(project.identifier)
+    await createInfrastructureJobService(project.identifier)
 
     return project
   } catch (error) {
