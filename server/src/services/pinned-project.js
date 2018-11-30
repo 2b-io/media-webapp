@@ -1,31 +1,22 @@
-import PinnedProject from 'models/pinned-project'
+import ApiService from 'services/api'
 
-const list = async (accountID) => {
-  const data = await PinnedProject.findOne({
-    account: accountID
-  }).lean()
-
-  if (!data) {
-    return []
+class PinnedProjectService extends ApiService {
+  async list (accountIdentifier) {
+    return await this.callApi(
+      'get',
+      `/accounts/${ accountIdentifier }/pinned-projects`
+    )
   }
 
-  return data.projects
+  async update (accountIdentifier, projectIdentifiers) {
+    return await this.callApi(
+      'put',
+      `/accounts/${ accountIdentifier }/pinned-projects`,
+      { projectIdentifiers }
+    )
+  }
 }
 
-const update = async (accountID, projectIdentifiers) => {
-  const { projects } = await PinnedProject.findOneAndUpdate({
-    account: accountID
-  }, {
-    projects: projectIdentifiers
-  }, {
-    new: true,
-    upsert: true
-  }).lean()
-
-  return projects
-}
-
-export default {
-  list,
-  update
+export default (accountIdentifier) => {
+  return new PinnedProjectService('webapp', accountIdentifier)
 }
