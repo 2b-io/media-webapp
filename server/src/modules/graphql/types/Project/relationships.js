@@ -27,6 +27,7 @@ import { PushSetting } from '../push-setting'
 import { PullSetting } from '../pull-setting'
 
 import createCacheSettingService from 'services/cache-setting'
+import createCollaboratorService from 'services/collaborator'
 import createInfrastructureService from 'services/infrastructure'
 import createPresetService from 'services/preset'
 import createPullSettingService from 'services/pull-setting'
@@ -37,10 +38,10 @@ export default () => ({
   },
   collaborators: {
     type: new GraphQLList(Collaborator),
-    resolve: async (project) => {
-      const collaborators = await listPermissions(project)
+    resolve: async (project, args, ctx) => {
+      const collaboratorService = createCollaboratorService(ctx._session.account.identifier)
 
-      return collaborators
+      return await collaboratorService.list(project.identifier)
     }
   },
   presets: {
