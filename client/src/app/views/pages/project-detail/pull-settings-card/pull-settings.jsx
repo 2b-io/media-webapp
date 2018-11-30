@@ -34,7 +34,7 @@ const PullSettings = ({
           <Fragment>
             <Text mostLeft mostRight>
               Pull URL:<br />
-              &nbsp;&nbsp;{ pullSetting.pullURL || 'N/A' }<br />
+              &nbsp;&nbsp;{ pullSetting.pullUrl || 'N/A' }<br />
             </Text>
             <Text mostLeft mostRight>
               Allowed Origins:<br />
