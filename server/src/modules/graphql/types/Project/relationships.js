@@ -97,8 +97,8 @@ export default () => ({
   },
   infrastructure: {
     type: Infrastructure,
-    resolve: async (project, args, ctx) => {
-      const infrastructureService = createInfrastructureService(ctx._session.account.identifier)
+    resolve: async (project) => {
+      const infrastructureService = createInfrastructureService()
       const infrastructure = await infrastructureService.get(project.identifier)
 
       return {
@@ -143,7 +143,7 @@ export default () => ({
     },
     type: Metric,
     resolve: async (project, { name }) => {
-      return ({ projectId: project._id, name })
+      return ({ project, name })
     }
   },
   invalidations: {
