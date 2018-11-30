@@ -1,28 +1,28 @@
 import ApiServices from 'services/api'
 
-// import request from 'superagent'
+import request from 'superagent'
 
-// import config from 'infrastructure/config'
-// import Infrastructure from 'models/Infrastructure'
-// import cloudFront from 'services/cloud-front'
+import config from 'infrastructure/config'
+import Infrastructure from 'models/Infrastructure'
+import cloudFront from 'services/cloud-front'
 
-// export const create = async (project, provider) => {
-//   if (provider !== 'cloudfront') {
-//     throw 'Invalid parameters: Not support [provider] value'
-//   }
+export const create = async (project, provider) => {
+  if (provider !== 'cloudfront') {
+    throw 'Invalid parameters: Not support [provider] value'
+  }
 
-//   const { distribution, domain } = await cloudFront.create({
-//     identifier: project.identifier
-//   })
+  const { distribution, domain } = await cloudFront.create({
+    identifier: project.identifier
+  })
 
-//   return await new Infrastructure({
-//     project: project._id,
-//     identifier: distribution.Id,
-//     domain: distribution.DomainName,
-//     cname: domain,
-//     provider
-//   }).save()
-// }
+  return await new Infrastructure({
+    project: project._id,
+    identifier: distribution.Id,
+    domain: distribution.DomainName,
+    cname: domain,
+    provider
+  }).save()
+}
 
 // export const get = async (projectID) => {
 //   return await Infrastructure.findOne({

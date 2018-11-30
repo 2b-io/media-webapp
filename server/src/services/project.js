@@ -7,7 +7,7 @@ import PullSetting from 'models/pull-setting'
 import SecretKey from 'models/secret-key'
 
 //import cacheSettingService from 'services/cache-setting'
-import infrastructureService from 'services/infrastructure'
+import { create as createInfrastructure } from 'services/infrastructure'
 import createInfrastructureJobService from 'services/infrastructure-job'
 import invalidationService from 'services/invalidation'
 
@@ -46,10 +46,11 @@ export const update = async (condition, account, { isActive, name }) => {
   const needUpdateDistribution = currentIsActive !== isActive
 
   if (needUpdateDistribution) {
-    await infrastructureService.update(projectId, {
-      enabled: isActive
-    })
-    await createInfrastructureJobService(projectId)
+    // await infrastructureService.update(projectId, {
+    //   enabled: isActive
+    // })
+    const infrastructureJobService = createInfrastructureJobService(account.identifier)
+    await infrastructureJobService(condition.identifier)
   }
 
   return await Project.findByIdAndUpdate(projectId, {
@@ -141,8 +142,9 @@ export const create = async ({ name }, provider, account) => {
     }).save()
 
     //await cacheSettingService.create(project._id)
-    await infrastructureService.create(project, provider)
-    await createInfrastructureJobService(project.identifier)
+    await createInfrastructure(project, provider)
+    const infrastructureJobService = createInfrastructureJobService(account.identifier)
+    await infrastructureJobService(project.identifier)
 
     return project
   } catch (error) {
@@ -176,7 +178,7 @@ export const remove = async (condition, account) => {
     PullSetting.deleteMany({ project: _id }),
     SecretKey.deleteMany({ project: _id }),
     Permission.deleteMany({ project: _id }),
-    infrastructureService.remove(_id),
+    //infrastructureService.remove(_id),
     invalidationService.create(project.identifier, [ '/*' ])
   ])
 
