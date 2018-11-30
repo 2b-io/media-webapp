@@ -15,8 +15,6 @@ import {
   list as listPermissions
 } from 'services/permission'
 
-import infrastructureService from 'services/infrastructure'
-
 import { Account } from '../account'
 import { CacheSetting } from '../cache-setting'
 import { Collaborator } from '../Collaborator'
@@ -29,6 +27,7 @@ import { PushSetting } from '../push-setting'
 import { PullSetting } from '../pull-setting'
 
 import createCacheSettingService from 'services/cache-setting'
+import createInfrastructureService from 'services/infrastructure'
 import createPresetService from 'services/preset'
 import createPullSettingService from 'services/pull-setting'
 
@@ -99,12 +98,13 @@ export default () => ({
   infrastructure: {
     type: Infrastructure,
     resolve: async (project) => {
-      const infrastructure = await infrastructureService.get(project._id)
+      const infrastructureService = createInfrastructureService()
+      const infrastructure = await infrastructureService.get(project.identifier)
 
-      // add ref
-      infrastructure.project = project
-
-      return infrastructure
+      return {
+        ...infrastructure,
+        project
+      }
     }
   },
   cacheSetting: {
