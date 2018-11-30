@@ -1,69 +1,69 @@
-import request from 'superagent'
-
-import config from 'infrastructure/config'
-import Infrastructure from 'models/Infrastructure'
-import cloudFront from 'services/cloud-front'
-
 import ApiServices from 'services/api'
 
-export const create = async (project, provider) => {
-  if (provider !== 'cloudfront') {
-    throw 'Invalid parameters: Not support [provider] value'
-  }
+// import request from 'superagent'
 
-  const { distribution, domain } = await cloudFront.create({
-    identifier: project.identifier
-  })
+// import config from 'infrastructure/config'
+// import Infrastructure from 'models/Infrastructure'
+// import cloudFront from 'services/cloud-front'
 
-  return await new Infrastructure({
-    project: project._id,
-    identifier: distribution.Id,
-    domain: distribution.DomainName,
-    cname: domain,
-    provider
-  }).save()
-}
+// export const create = async (project, provider) => {
+//   if (provider !== 'cloudfront') {
+//     throw 'Invalid parameters: Not support [provider] value'
+//   }
 
-export const get = async (projectID) => {
-  return await Infrastructure.findOne({
-    project: projectID
-  }).lean()
-}
+//   const { distribution, domain } = await cloudFront.create({
+//     identifier: project.identifier
+//   })
 
-export const remove = async (projectID) => {
-  const infrastructure = await get(projectID)
+//   return await new Infrastructure({
+//     project: project._id,
+//     identifier: distribution.Id,
+//     domain: distribution.DomainName,
+//     cname: domain,
+//     provider
+//   }).save()
+// }
 
-  if (!infrastructure) {
-    throw 'Infrastructure not found'
-  }
+// export const get = async (projectID) => {
+//   return await Infrastructure.findOne({
+//     project: projectID
+//   }).lean()
+// }
 
-  await cloudFront.remove(infrastructure.identifier)
+// export const remove = async (projectID) => {
+//   const infrastructure = await get(projectID)
 
-  await Infrastructure.findOneAndRemove({
-    _id: infrastructure._id
-  })
+//   if (!infrastructure) {
+//     throw 'Infrastructure not found'
+//   }
 
-  return true
-}
+//   await cloudFront.remove(infrastructure.identifier)
 
-export const update = async (projectID, data) => {
-  const { identifier } = await get(projectID)
+//   await Infrastructure.findOneAndRemove({
+//     _id: infrastructure._id
+//   })
 
-  return await cloudFront.update(identifier, data)
-}
+//   return true
+// }
 
-const createInfraJob = async (projectIdentifier) => {
-  return await request
-    .post(`${ config.jobServer }/jobs`)
-    .set('Content-Type', 'application/json')
-    .send({
-      name: 'CHECK_INFRASTRUCTURE',
-      when: Date.now(),
-      payload: {
-        projectIdentifier
-      }
-    })
-}
+// export const update = async (projectID, data) => {
+//   const { identifier } = await get(projectID)
+
+//   return await cloudFront.update(identifier, data)
+// }
+
+// const createInfraJob = async (projectIdentifier) => {
+//   return await request
+//     .post(`${ config.jobServer }/jobs`)
+//     .set('Content-Type', 'application/json')
+//     .send({
+//       name: 'CHECK_INFRASTRUCTURE',
+//       when: Date.now(),
+//       payload: {
+//         projectIdentifier
+//       }
+//     })
+// }
 
 class InfrastructureService extends ApiServices {
   async get(projectIdentifier) {
