@@ -21,16 +21,8 @@ export default () => ({
     type: Account,
     resolve: async (rootValue, { account }) => {
       const accountService = createAccountService()
-      const newAccount = await accountService.create(account)
 
-      const resetPasswordService = createResetPasswordService()
-      const { token } = await resetPasswordService.forgotPassword({ email: newAccount.email })
-
-      await emailService.sendEmailRegister(newAccount.email, {
-        code: token
-      })
-
-      return newAccount
+      return await accountService.create(account)
     }
   },
   _forgotPassword: {
@@ -42,11 +34,9 @@ export default () => ({
     type: GraphQLBoolean,
     resolve: async (rootValue, { email }) => {
       const resetPasswordService = createResetPasswordService()
-      const { token } = await resetPasswordService.forgotPassword({ email })
+      await resetPasswordService.forgotPassword({ email })
 
-      return await emailService.sendEmailResetPassword(email, {
-        code: token
-      })
+      return true
     }
   },
   _resetPassword: {
