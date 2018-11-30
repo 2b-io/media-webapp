@@ -4,6 +4,8 @@ import config from 'infrastructure/config'
 import Infrastructure from 'models/Infrastructure'
 import cloudFront from 'services/cloud-front'
 
+import ApiServices from 'services/api'
+
 export const create = async (project, provider) => {
   if (provider !== 'cloudfront') {
     throw 'Invalid parameters: Not support [provider] value'
@@ -63,10 +65,16 @@ const createInfraJob = async (projectIdentifier) => {
     })
 }
 
-export default {
-  create,
-  get,
-  remove,
-  update,
-  createInfraJob
+class InfrastructureService extends ApiServices {
+  async get(projectIdentifier) {
+    return await this.callApi('get', `/projects/${ projectIdentifier }/infrastructure`)
+  }
+
+  async update(projectIdentifier, body) {
+    return await this.callApi('patch', `/projects/${ projectIdentifier }/infrastructure`, body)
+  }
+}
+
+export default (accountIdentifier) => {
+  return new InfrastructureService('webapp', accountIdentifier)
 }
