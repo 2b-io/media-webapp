@@ -15,7 +15,7 @@ const pullSettingForm = ({
     <TextBox
       disabled={ !idle }
       label="Pull URL"
-      name="pullURL"
+      name="pullUrl"
       validate={ validateUrl }
     />
     <DescriptionText mostLeft mostRight>

@@ -12,10 +12,6 @@ import {
 } from 'services/media'
 
 import {
-  get as getPullSetting,
-} from 'services/pull-setting'
-
-import {
   list as listPermissions
 } from 'services/permission'
 
@@ -34,6 +30,7 @@ import { PushSetting } from '../push-setting'
 import { PullSetting } from '../pull-setting'
 
 import createPresetService from 'services/preset'
+import createPullSettingService from 'services/pull-setting'
 
 export default () => ({
   account: {
@@ -123,8 +120,14 @@ export default () => ({
   },
   pullSetting: {
     type: PullSetting,
-    resolve: async (project) => {
-      return await getPullSetting(project._id)
+    resolve: async (project, args, ctx) => {
+      const PullSettingService = createPullSettingService(ctx._session.account.identifier)
+      const pullSetting = await PullSettingService.get(project.identifier)
+
+      return {
+        ...pullSetting,
+        project
+      }
     }
   },
   pushSetting: {

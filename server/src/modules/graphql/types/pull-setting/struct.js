@@ -4,7 +4,7 @@ import {
 } from 'graphql'
 
 export default {
-  pullURL: {
+  pullUrl: {
     type: GraphQLString
   },
   allowedOrigins: {
