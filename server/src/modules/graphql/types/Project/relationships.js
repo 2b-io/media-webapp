@@ -15,7 +15,6 @@ import {
   list as listPermissions
 } from 'services/permission'
 
-import cacheSetingService from 'services/cache-setting'
 import infrastructureService from 'services/infrastructure'
 
 import { Account } from '../account'
@@ -29,6 +28,7 @@ import { Preset } from '../preset'
 import { PushSetting } from '../push-setting'
 import { PullSetting } from '../pull-setting'
 
+import createCacheSettingService from 'services/cache-setting'
 import createPresetService from 'services/preset'
 import createPullSettingService from 'services/pull-setting'
 
@@ -109,13 +109,14 @@ export default () => ({
   },
   cacheSetting: {
     type: CacheSetting,
-    resolve: async (project) => {
-      const cacheSetting = await cacheSetingService.get(project._id)
+    resolve: async (project, args, ctx) => {
+      const CacheSettingService = createCacheSettingService(ctx._session.account.identifier)
+      const cacheSetting = await CacheSettingService.get(project.identifier)
 
-      // add ref
-      cacheSetting.project = project
-
-      return cacheSetting
+      return {
+        ...cacheSetting,
+        project
+      }
     }
   },
   pullSetting: {
