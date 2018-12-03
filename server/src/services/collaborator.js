@@ -5,7 +5,7 @@ class CollaboratorService extends ApiService {
     return await this.callApi('get', `/projects/${ projectIdentifier }/collaborators`)
   }
 
-  async create(projectIdentifier, body) {
+  async invite(projectIdentifier, body) {
     return await this.callApi('patch', `/projects/${ projectIdentifier }/collaborators`, body)
   }
 
@@ -14,7 +14,9 @@ class CollaboratorService extends ApiService {
   }
 
   async makeOwner(projectIdentifier, accountIdentifier) {
-    return await this.callApi('put', `/projects/${ projectIdentifier }/collaborators/${ accountIdentifier }`, { privilege: 'owner' })
+    return await this.callApi('put', `/projects/${ projectIdentifier }/collaborators/${ accountIdentifier }`, {
+      privilege: 'owner'
+    })
   }
 }
 
