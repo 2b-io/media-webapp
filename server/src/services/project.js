@@ -198,6 +198,10 @@ export const invalidateCache = async (projectIdentifier, patterns = []) => {
 // }
 
 class ProjectService extends ApiService {
+  async create(body) {
+    return await this.callApi('post', '/projects', body)
+  }
+
   async list() {
     return await this.callApi('get', '/projects')
   }

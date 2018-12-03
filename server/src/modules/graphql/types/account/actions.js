@@ -7,7 +7,8 @@ import {
 
 import createAccountService from 'services/account'
 import createPinnedProjectService from 'services/pinned-project'
-import projectService from 'services/project'
+import ProjectService from 'services/project'
+import createProjectService from 'services/project'
 
 import { Project, ProjectStruct } from '../Project'
 
@@ -65,13 +66,14 @@ export default ({ Account, AccountStruct }) => ({
       }
     },
     type: Project,
-    resolve: async (account, { project, provider }) => {
-      const p = await projectService.create(project, provider, account)
+    resolve: async (account, { project, provider }, ctx) => {
+      const projectService = createProjectService(ctx._session.account.identifier)
+      const newProject = await projectService.create({ ...project, provider })
 
-      // add ref
-      p.account = account
-
-      return p
+      return {
+        ...newProject,
+        account
+      }
     }
   },
   _pinProjects: {
