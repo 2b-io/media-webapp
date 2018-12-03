@@ -5,9 +5,10 @@ import {
   GraphQLList
 } from 'graphql'
 
+import projectService from 'services/project' //old code
+
 import createAccountService from 'services/account'
 import createPinnedProjectService from 'services/pinned-project'
-import ProjectService from 'services/project'
 import createProjectService from 'services/project'
 
 import { Project, ProjectStruct } from '../Project'
