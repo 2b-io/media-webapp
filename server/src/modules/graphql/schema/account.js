@@ -4,8 +4,6 @@ import {
   GraphQLString
 } from 'graphql'
 
-import emailService from 'services/email'
-
 import createAccountService from 'services/account'
 import createResetPasswordService from 'services/reset-password-code'
 
