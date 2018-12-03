@@ -5,23 +5,7 @@ import {
   GraphQLString
 } from 'graphql'
 
-import {
-  create as createAccount,
-  findByEmail as findAccountByEmail
-} from 'services/account'
-import emailService from 'services/email'
-
-import {
-  invite as inviteCollaborator,
-  list as getPermissionList,
-  remove as removeCollaborator,
-  makeOwner as makeOwner
-} from 'services/permission'
 import projectService from 'services/project'
-
-import {
-  forgotPassword as createResetCode
-} from 'services/reset-password-code'
 
 import { Collaborator } from '../Collaborator'
 import { Invalidation } from '../invalidation'
@@ -76,78 +60,6 @@ export default ({ Project, ProjectStruct }) => ({
       }
     }
   },
-/*  _addCollaboratorsByEmails: {
-    args: {
-      emails: {
-        type: GraphQLNonNull(GraphQLList(GraphQLString))
-      },
-      message: {
-        type: GraphQLString
-      }
-    },
-    type: GraphQLList(Collaborator),
-    resolve: async (project, { emails, message }) => {
-      // create account & send email invite
-      const existedAccounts = (await Promise.all(
-        emails.map(async (email) => await findAccountByEmail(email))
-      )).filter(Boolean)
-
-      // Emails do not exist on systems
-      const notExistedEmails = emails.filter(
-        (email) => !existedAccounts.some(
-          (account) => account.email === email
-        )
-      )
-
-      // create accounts
-      const newAccounts = await Promise.all(
-        notExistedEmails.map(
-          async (email) => await createAccount({ email })
-        )
-      )
-
-      // Invite: create code & send email
-      await Promise.all(
-        newAccounts.map(
-          async ({ email }) => {
-            const resetPasswordCode = await createResetCode(email)
-            const { code } = resetPasswordCode
-            await emailService.sendEmailInviteToRegister(email, {
-              code,
-              inviter: project.account,
-              message
-            })
-          }
-        )
-      )
-
-      // get account id on permission
-      const collaboratorIDs = (await getPermissionList(project)).map(permission => permission.account)
-
-      //filter account are not collaborator
-      const notCollaborators = existedAccounts.filter(
-        (account) => !collaboratorIDs.some(
-          (id) => String(id) === String(account._id)
-        )
-      )
-
-      const accountsToInvite = [ ...notCollaborators, ...newAccounts ]
-
-      // add to project
-      const collaborators = await Promise.all(
-        accountsToInvite.map(
-          async (account) => await inviteCollaborator(project, account)
-        )
-      )
-
-      return collaborators.map(
-        (collaborator) => ({
-          project,
-          ...collaborator.toJSON()
-        })
-      )
-    }
-  },*/
   _addCollaboratorsByEmails: {
     args: {
       emails: {
@@ -160,7 +72,7 @@ export default ({ Project, ProjectStruct }) => ({
     type: GraphQLList(Collaborator),
     resolve: async (project, { emails, message }, ctx) => {
       const collaboratorService = createCollaboratorService(ctx._session.account.identifier)
-      const collaborators = await collaboratorService.create(project.identifier, { emails })
+      const collaborators = await collaboratorService.create(project.identifier, { emails, message })
 
       return collaborators.map(
         (collaborator) => {
@@ -172,20 +84,6 @@ export default ({ Project, ProjectStruct }) => ({
       )
     }
   },
-/*  _removeCollaborator: {
-    args: {
-      accountId: {
-        type: GraphQLNonNull(GraphQLString)
-      }
-    },
-    type: GraphQLBoolean,
-    resolve: async (project, { collaboratorIdentifier }, ctx) => { // accountId => collaboratorIdentifier
-      const collaboratorService = createCollaboratorService(ctx._session.account.identifier)
-      await collaboratorService.remove(project.identifier, collaboratorIdentifier)
-
-      return true
-    }
-  },*/
   _removeCollaborator: {
     args: {
       accountId: {

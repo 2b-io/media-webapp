@@ -11,10 +11,6 @@ import {
   getMedia
 } from 'services/media'
 
-import {
-  list as listPermissions
-} from 'services/permission'
-
 import { Account } from '../account'
 import { CacheSetting } from '../cache-setting'
 import { Collaborator } from '../Collaborator'
