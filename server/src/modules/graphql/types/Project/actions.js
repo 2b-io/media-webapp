@@ -28,6 +28,7 @@ import { Invalidation } from '../invalidation'
 import { Preset, PresetStruct } from '../preset'
 
 import createPresetService from 'services/preset'
+import createCollaboratorService from 'services/collaborator'
 
 export default ({ Project, ProjectStruct }) => ({
   _update: {
@@ -75,7 +76,7 @@ export default ({ Project, ProjectStruct }) => ({
       }
     }
   },
-  _addCollaboratorsByEmails: {
+/*  _addCollaboratorsByEmails: {
     args: {
       emails: {
         type: GraphQLNonNull(GraphQLList(GraphQLString))
@@ -146,7 +147,45 @@ export default ({ Project, ProjectStruct }) => ({
         })
       )
     }
+  },*/
+  _addCollaboratorsByEmails: {
+    args: {
+      emails: {
+        type: GraphQLNonNull(GraphQLList(GraphQLString))
+      },
+      message: {
+        type: GraphQLString
+      }
+    },
+    type: GraphQLList(Collaborator),
+    resolve: async (project, { emails, message }, ctx) => {
+      const collaboratorService = createCollaboratorService(ctx._session.account.identifier)
+      const collaborators = await collaboratorService.create(project.identifier, { emails })
+
+      return collaborators.map(
+        (collaborator) => {
+          return ({
+            project,
+            ...collaborator
+          })
+        }
+      )
+    }
   },
+/*  _removeCollaborator: {
+    args: {
+      accountId: {
+        type: GraphQLNonNull(GraphQLString)
+      }
+    },
+    type: GraphQLBoolean,
+    resolve: async (project, { collaboratorIdentifier }, ctx) => { // accountId => collaboratorIdentifier
+      const collaboratorService = createCollaboratorService(ctx._session.account.identifier)
+      await collaboratorService.remove(project.identifier, collaboratorIdentifier)
+
+      return true
+    }
+  },*/
   _removeCollaborator: {
     args: {
       accountId: {
@@ -154,9 +193,11 @@ export default ({ Project, ProjectStruct }) => ({
       }
     },
     type: GraphQLBoolean,
-    resolve: async (project, { accountId }) => {
-      const { _id } = project
-      return await removeCollaborator(_id, accountId)
+    resolve: async (project, { accountId: accountIdentifier }, ctx) => {
+      const collaboratorService = createCollaboratorService(ctx._session.account.identifier)
+      await collaboratorService.remove(project.identifier, accountIdentifier)
+
+      return true
     }
   },
   _makeOwner: {
@@ -166,8 +207,9 @@ export default ({ Project, ProjectStruct }) => ({
       }
     },
     type: GraphQLBoolean,
-    resolve: async (project, { accountId }) => {
-      await makeOwner(project, { accountId })
+    resolve: async (project, { accountId: accountIdentifier }, ctx) => {
+      const collaboratorService = createCollaboratorService(ctx._session.account.identifier)
+      await collaboratorService.makeOwner(project.identifier, accountIdentifier)
 
       return true
     }
