@@ -9,6 +9,7 @@ import SecretKey from 'models/secret-key'
 //import cacheSettingService from 'services/cache-setting'
 import infrastructureService from 'services/infrastructure'
 import invalidationService from 'services/invalidation'
+import ApiService from 'services/api'
 
 const generateUniqueIdentifier = async (retry) => {
   const identifier = namor.generate({
@@ -186,12 +187,26 @@ export const invalidateCache = async (projectIdentifier, patterns = []) => {
   return await invalidationService.create(projectIdentifier, patterns)
 }
 
-export default {
-  create,
-  get,
-  getByID,
-  invalidateCache,
-  list,
-  remove,
-  update
+// export default {
+//   create,
+//   get,
+//   getByID,
+//   invalidateCache,
+//   list,
+//   remove,
+//   update
+// }
+
+class ProjectService extends ApiService {
+  async list() {
+    return await this.callApi('get', '/projects')
+  }
+
+  async get(projectIdentifier) {
+    return await this.callApi('get', `/projects/${ projectIdentifier }`)
+  }
+}
+
+export default (accountIdentifier) => {
+  return new ProjectService('webapp', accountIdentifier)
 }
