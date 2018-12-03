@@ -14,7 +14,7 @@ class CollaboratorService extends ApiService {
   }
 
   async makeOwner(projectIdentifier, accountIdentifier) {
-    return await this.callApi('put', `/projects/${ projectIdentifier }/collaborators/${ accountIdentifier }`)
+    return await this.callApi('put', `/projects/${ projectIdentifier }/collaborators/${ accountIdentifier }`, { privilege: 'owner' })
   }
 }
 
