@@ -72,13 +72,16 @@ export default ({ Project, ProjectStruct }) => ({
     type: GraphQLList(Collaborator),
     resolve: async (project, { emails, message }, ctx) => {
       const collaboratorService = createCollaboratorService(ctx._session.account.identifier)
-      const collaborators = await collaboratorService.create(project.identifier, { emails, message })
+      const collaborators = await collaboratorService.invite(project.identifier, {
+        emails,
+        message
+      })
 
       return collaborators.map(
         (collaborator) => {
           return ({
-            project,
-            ...collaborator
+            ...collaborator,
+            project
           })
         }
       )
