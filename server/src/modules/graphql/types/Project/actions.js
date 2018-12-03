@@ -5,12 +5,11 @@ import {
   GraphQLString
 } from 'graphql'
 
-import projectService from 'services/project'
-
 import { Collaborator } from '../Collaborator'
 import { Invalidation } from '../invalidation'
 import { Preset, PresetStruct } from '../preset'
 
+import createProjectService from 'services/project'
 import createPresetService from 'services/preset'
 import createCollaboratorService from 'services/collaborator'
 
@@ -22,23 +21,28 @@ export default ({ Project, ProjectStruct }) => ({
       }
     },
     type: Project,
-    resolve: async (self, { project }) => {
-      const p = await projectService.update({
-        identifier: self.identifier
-      }, self.account._id, project)
+    resolve: async (self, { project }, ctx) => {
+      const {
+        identifier: projectidentifier,
+        account
+      } = self
 
-      // add ref
-      p.account = self.account
+      const projectService = createProjectService(ctx._session.account.identifier)
+      const updatedProject = await projectService.update(projectidentifier, project)
 
-      return p
+      return {
+        ...updatedProject,
+        account
+      }
     }
   },
   _destroy: {
     type: GraphQLBoolean,
-    resolve: async (self) => {
-      return await projectService.remove({
-        identifier: self.identifier
-      }, self.account)
+    resolve: async (self, args, ctx) => {
+      const projectService = createProjectService(ctx._session.account.identifier)
+      await projectService.remove(self.identifier)
+
+      return true
     }
   },
   _createPreset: {

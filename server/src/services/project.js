@@ -209,6 +209,14 @@ class ProjectService extends ApiService {
   async get(projectIdentifier) {
     return await this.callApi('get', `/projects/${ projectIdentifier }`)
   }
+
+  async remove(projectIdentifier) {
+    return await this.callApi('delete', `/projects/${ projectIdentifier }`)
+  }
+
+  async update(projectIdentifier, body) {
+    return await this.callApi('patch', `/projects/${ projectIdentifier }`, body)
+  }
 }
 
 export default (accountIdentifier) => {
