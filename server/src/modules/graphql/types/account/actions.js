@@ -89,21 +89,11 @@ export default ({ Account, AccountStruct }) => ({
       const { projectIdentifiers: _projectIdentifiers } = await pinnedProjectService.update(account.identifier, projectIdentifiers)
 
       return _projectIdentifiers.map(
-        (projectIdentifier) => ({ projectIdentifier })
+        (projectIdentifier) => ({
+          account,
+          projectIdentifier
+        })
       )
-
-      // const filtered = await projectService.list(account._id, {
-      //   identifier: {
-      //     $in: _projectIdentifiers
-      //   }
-      // })
-
-      // // add ref
-      // return filtered.map((project) => {
-      //   project.account = account
-
-      //   return project
-      // })
     }
   }
 })
