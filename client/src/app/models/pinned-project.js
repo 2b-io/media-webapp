@@ -13,17 +13,19 @@ export default {
         session(token: $token) {
           account {
             pinnedProjects {
-              ${ PROJECT_FRAGMENT },
-              bytesDownloaded: metric(name: "BYTES_DOWNLOADED") {
-                name,
-                datapoints(startTime: $startTime, endTime: $endTime, period: $period) {
-                  ${ USAGE_REPORT_FRAGMENT }
-                }
-              },
-              requests: metric(name: "REQUESTS") {
-                name,
-                datapoints(startTime: $startTime, endTime: $endTime, period: $period) {
-                  ${ USAGE_REPORT_FRAGMENT }
+              project {
+                ${ PROJECT_FRAGMENT },
+                bytesDownloaded: metric(name: "BYTES_DOWNLOADED") {
+                  name,
+                  datapoints(startTime: $startTime, endTime: $endTime, period: $period) {
+                    ${ USAGE_REPORT_FRAGMENT }
+                  }
+                },
+                requests: metric(name: "REQUESTS") {
+                  name,
+                  datapoints(startTime: $startTime, endTime: $endTime, period: $period) {
+                    ${ USAGE_REPORT_FRAGMENT }
+                  }
                 }
               }
             }
@@ -48,17 +50,19 @@ export default {
         session(token: $token) {
           account {
             _pinProjects(projectIdentifiers: $projectIdentifiers) {
-              ${ PROJECT_FRAGMENT },
-              bytesDownloaded: metric(name: "BYTES_DOWNLOADED") {
-                name,
-                datapoints(startTime: $startTime, endTime: $endTime, period: $period) {
-                  ${ USAGE_REPORT_FRAGMENT }
-                }
-              },
-              requests: metric(name: "REQUESTS") {
-                name,
-                datapoints(startTime: $startTime, endTime: $endTime, period: $period) {
-                  ${ USAGE_REPORT_FRAGMENT }
+              project {
+                ${ PROJECT_FRAGMENT },
+                bytesDownloaded: metric(name: "BYTES_DOWNLOADED") {
+                  name,
+                  datapoints(startTime: $startTime, endTime: $endTime, period: $period) {
+                    ${ USAGE_REPORT_FRAGMENT }
+                  }
+                },
+                requests: metric(name: "REQUESTS") {
+                  name,
+                  datapoints(startTime: $startTime, endTime: $endTime, period: $period) {
+                    ${ USAGE_REPORT_FRAGMENT }
+                  }
                 }
               }
             }
