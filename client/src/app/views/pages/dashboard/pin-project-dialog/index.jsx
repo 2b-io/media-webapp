@@ -16,7 +16,7 @@ const UpdateProjectPinnedDialog = ({
   pinnedProjects
 }) => {
   if (!allProjects || !pinnedProjects) {
-    return
+    return null
   }
 
   const pinnedState = pinnedProjects

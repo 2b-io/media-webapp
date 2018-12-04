@@ -12,21 +12,21 @@ const startTime = dateTimeService.getStartOfUTCDay(new Date()) - ms('3d')
 const endTime = dateTimeService.getStartOfUTCDay(new Date())
 const period = ms('1h') / 1000
 
-const getPinnedProjectsData = (pinnedProjects) => pinnedProjects.map((projectData) => {
+const getPinnedProjectsData = (pinnedProjects) => pinnedProjects.map(({ project }) => {
   const {
     bytesDownloaded,
     requests
-  } = projectData
+  } = project
 
-  const bytesDownloadData = syntheticDataService.synthesizeBytesDownloadData(
+  const bytesDownloadData = bytesDownloaded && syntheticDataService.synthesizeBytesDownloadData(
     bytesDownloaded.datapoints
   )
-  const requestData = syntheticDataService.synthesizeRequestData(
+  const requestData = requests && syntheticDataService.synthesizeRequestData(
     requests.datapoints
   )
 
   return {
-    ...projectData,
+    ...project,
     bytesDownloadData,
     requestData
   }
