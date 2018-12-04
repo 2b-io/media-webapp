@@ -4,8 +4,6 @@ import {
   GraphQLNonNull
 } from 'graphql'
 
-import invalidationService from 'services/invalidation'
-
 import {
   getListMedia,
   getMedia
@@ -27,6 +25,7 @@ import createCollaboratorService from 'services/collaborator'
 import createInfrastructureService from 'services/infrastructure'
 import createPresetService from 'services/preset'
 import createPullSettingService from 'services/pull-setting'
+import createInvalidationService from 'services/invalidation'
 
 export default () => ({
   account: {
@@ -145,8 +144,10 @@ export default () => ({
   },
   invalidations: {
     type: new GraphQLList(Invalidation),
-    resolve: async (project) => {
-      return await invalidationService.list(project.identifier)
+    resolve: async (project, args, ctx) => {
+      const InvalidationService = createInvalidationService(ctx._session.account.identifier)
+
+      return await InvalidationService.list(project.identifier)
     }
   }
 })
