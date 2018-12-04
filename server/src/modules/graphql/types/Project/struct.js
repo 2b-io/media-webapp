@@ -1,8 +1,11 @@
 import {
   GraphQLBoolean,
-  GraphQLString,
-  GraphQLFloat
+  GraphQLString
 } from 'graphql'
+
+import {
+  GraphQLDateTime
+} from 'graphql-iso-date'
 
 export default {
   name: {
@@ -15,7 +18,7 @@ export default {
     type: GraphQLString
   },
   createdAt: {
-    type: GraphQLFloat
+    type: GraphQLDateTime
   },
   isActive: {
     type: GraphQLBoolean
