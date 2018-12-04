@@ -10,7 +10,7 @@ import createPinnedProjectService from 'services/pinned-project'
 import createProjectService from 'services/project'
 
 import { PinnedProject } from '../pinned-project'
-import { Project, ProjectStruct } from '../Project'
+import { Project, ProjectStruct } from '../project'
 
 export default ({ Account, AccountStruct }) => ({
   _update: {

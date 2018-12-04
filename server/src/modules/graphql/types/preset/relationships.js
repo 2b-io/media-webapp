@@ -3,7 +3,7 @@ import {
 } from 'graphql'
 import projectService from 'services/project'
 
-import { Project } from '../Project'
+import { Project } from '../project'
 
 export default () => ({
   project: {
