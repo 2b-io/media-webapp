@@ -4,14 +4,14 @@ import ApiServices from 'services/api'
 
 // import config from 'infrastructure/config'
 // import Infrastructure from 'models/Infrastructure'
-// import cloudFront from 'services/cloud-front'
+// import cloudfront from 'services/cloudfront'
 
 // export const create = async (project, provider) => {
 //   if (provider !== 'cloudfront') {
 //     throw 'Invalid parameters: Not support [provider] value'
 //   }
 
-//   const { distribution, domain } = await cloudFront.create({
+//   const { distribution, domain } = await cloudfront.create({
 //     identifier: project.identifier
 //   })
 
@@ -37,7 +37,7 @@ import ApiServices from 'services/api'
 //     throw 'Infrastructure not found'
 //   }
 
-//   await cloudFront.remove(infrastructure.identifier)
+//   await cloudfront.remove(infrastructure.identifier)
 
 //   await Infrastructure.findOneAndRemove({
 //     _id: infrastructure._id
@@ -49,7 +49,7 @@ import ApiServices from 'services/api'
 // export const update = async (projectID, data) => {
 //   const { identifier } = await get(projectID)
 
-//   return await cloudFront.update(identifier, data)
+//   return await cloudfront.update(identifier, data)
 // }
 
 // export const createInfraJob = async (projectIdentifier) => {
