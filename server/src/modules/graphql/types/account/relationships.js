@@ -4,8 +4,6 @@ import {
   GraphQLString
 } from 'graphql'
 
-import projectService from 'services/project' //old code
-
 import createPinnedProjectService from 'services/pinned-project'
 import createProjectService from 'services/project'
 import { PinnedProject } from '../pinned-project'

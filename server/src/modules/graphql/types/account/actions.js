@@ -5,12 +5,11 @@ import {
   GraphQLList
 } from 'graphql'
 
-import projectService from 'services/project' //old code
-
 import createAccountService from 'services/account'
 import createPinnedProjectService from 'services/pinned-project'
 import createProjectService from 'services/project'
 
+import { PinnedProject } from '../pinned-project'
 import { Project, ProjectStruct } from '../Project'
 
 export default ({ Account, AccountStruct }) => ({
@@ -83,24 +82,28 @@ export default ({ Account, AccountStruct }) => ({
         type: new GraphQLNonNull(GraphQLList(GraphQLString))
       }
     },
-    type: new GraphQLList(Project),
-    resolve: async (account, { projectIdentifiers }) => {
-      const pinnedProjectService = await createPinnedProjectService(account.identifier)
+    type: new GraphQLList(PinnedProject),
+    resolve: async (account, { projectIdentifiers }, ctx) => {
+      const pinnedProjectService = createPinnedProjectService(ctx._session.account.identifier)
 
       const { projectIdentifiers: _projectIdentifiers } = await pinnedProjectService.update(account.identifier, projectIdentifiers)
 
-      const filtered = await projectService.list(account._id, {
-        identifier: {
-          $in: _projectIdentifiers
-        }
-      })
+      return _projectIdentifiers.map(
+        (projectIdentifier) => ({ projectIdentifier })
+      )
 
-      // add ref
-      return filtered.map((project) => {
-        project.account = account
+      // const filtered = await projectService.list(account._id, {
+      //   identifier: {
+      //     $in: _projectIdentifiers
+      //   }
+      // })
 
-        return project
-      })
+      // // add ref
+      // return filtered.map((project) => {
+      //   project.account = account
+
+      //   return project
+      // })
     }
   }
 })
