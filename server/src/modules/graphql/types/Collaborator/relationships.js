@@ -8,7 +8,7 @@ export default () => ({
     resolve: async (collaborator, args, ctx) => {
       const accountService = createAccountService(ctx._session.account.identifier)
 
-      return await accountService.findByIdentifier(collaborator.accountIdentifier)
+      return await accountService.get(collaborator.accountIdentifier)
     }
   }
 })

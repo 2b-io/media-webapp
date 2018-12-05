@@ -12,6 +12,7 @@ import { Preset, PresetStruct } from '../preset'
 import createProjectService from 'services/project'
 import createPresetService from 'services/preset'
 import createCollaboratorService from 'services/collaborator'
+import createInvalidationService from 'services/invalidation'
 
 export default ({ Project, ProjectStruct }) => ({
   _update: {
@@ -126,9 +127,11 @@ export default ({ Project, ProjectStruct }) => ({
       }
     },
     type: Invalidation,
-    resolve: async (project, { patterns }) => {
+    resolve: async (project, { patterns }, ctx) => {
       const { identifier } = project
-      return await projectService.invalidateCache(identifier, patterns)
+      const InvalidationService = createInvalidationService(ctx._session.account.identifier)
+
+      return await InvalidationService.create(identifier, { patterns })
     }
   }
 })

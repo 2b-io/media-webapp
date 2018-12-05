@@ -53,21 +53,11 @@ export default () => ({
       const { projectIdentifiers } = await pinnedProjectService.list(account.identifier)
 
       return projectIdentifiers.map(
-        (projectIdentifier) => ({ projectIdentifier })
+        (projectIdentifier) => ({
+          account,
+          projectIdentifier
+        })
       )
-
-      // const filtered = await projectService.list(account._id, {
-      //   identifier: {
-      //     $in: projectIdentifiers
-      //   }
-      // })
-
-      // // add ref
-      // return filtered.map((project) => {
-      //   project.account = account
-
-      //   return project
-      // })
     }
   }
 })
