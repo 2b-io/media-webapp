@@ -78,7 +78,8 @@ export default () => ({
       const { accountIdentifier } = await resetPasswordService.getResetCode({ token: code })
 
       const accountService = createAccountService(accountIdentifier)
-      const account = await accountService.findByIdentifier(accountIdentifier)
+      const account = await accountService.get(accountIdentifier)
+
       return account
     }
   }

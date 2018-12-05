@@ -65,7 +65,7 @@ class AccountService extends ApiService {
     return true
   }
 
-  async findByIdentifier(identifier) {
+  async get(identifier) {
     return await this.callApi('get', `/accounts/${ identifier }`)
   }
 

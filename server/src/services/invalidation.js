@@ -1,29 +1,15 @@
-import request from 'superagent'
+import ApiService from 'services/api'
 
-import config from 'infrastructure/config'
+class InvalidationService extends ApiService {
+  async create(projectIdentifier, body) {
+    return await this.callApi('post', `/projects/${ projectIdentifier }/invalidations`, body)
+  }
 
-const list = async (projectIdentifier) => {
-  const { body } = await request
-    .get(`${ config.apiUrl }/projects/${ projectIdentifier }/invalidations`)
-    .set('Content-Type', 'application/json')
-    .set('Authorization', 'MEDIA_CDN app=webapp')
-
-  return body
+  async list(projectIdentifier) {
+    return await this.callApi('get', `/projects/${ projectIdentifier }/invalidations`)
+  }
 }
 
-const create = async (projectIdentifier, patterns) => {
-  const { body } = await request
-    .post(`${ config.apiUrl }/projects/${ projectIdentifier }/invalidations`)
-    .set('Content-Type', 'application/json')
-    .set('Authorization', 'MEDIA_CDN app=webapp')
-    .send({
-      patterns
-    })
-
-  return body
-}
-
-export default {
-  list,
-  create
+export default (accountIdentifier) => {
+  return new InvalidationService('webapp', accountIdentifier)
 }
