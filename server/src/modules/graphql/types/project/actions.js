@@ -5,7 +5,7 @@ import {
   GraphQLString
 } from 'graphql'
 
-import { Collaborator } from '../Collaborator'
+import { Collaborator } from '../collaborator'
 import { Invalidation } from '../invalidation'
 import { Preset, PresetStruct } from '../preset'
 

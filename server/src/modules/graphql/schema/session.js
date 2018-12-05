@@ -9,7 +9,7 @@ import {
 } from 'services/session'
 
 import { AccountStruct } from '../types/account'
-import { Session } from '../types/Session'
+import { Session } from '../types/session'
 
 export default () => ({
   session: {
