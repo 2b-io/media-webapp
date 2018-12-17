@@ -133,7 +133,7 @@ export const create = async ({ name }, provider, account) => {
     await new Permission({
       project: project._id,
       account: account._id,
-      privilege: 'owner'
+      privilege: 'OWNER'
     }).save()
 
     await new PullSetting({

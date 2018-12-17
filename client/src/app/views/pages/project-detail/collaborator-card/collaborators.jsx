@@ -51,16 +51,16 @@ const Collaborators = ({
       content: () => (
         <div>
           <TextLine
-            mostRight={ !(signedInCollaborator && signedInCollaborator.privilege === 'owner' && privilege === 'admin') }
+            mostRight={ !(signedInCollaborator && signedInCollaborator.privilege === 'OWNER' && privilege === 'ADMIN') }
           >
             <Link href="#" onClick={ () => toProfile(account.identifier) } >
               { account.name }
             </Link>
             { !account.isActive && ' (pending)' }
-            { privilege === 'owner' && ` (${ privilege })` }
+            { privilege === 'OWNER' && ` (${ privilege })` }
           </TextLine>
           <DescriptionTextLine
-            mostRight={ !(signedInCollaborator && signedInCollaborator.privilege === 'owner' && privilege === 'admin') }
+            mostRight={ !(signedInCollaborator && signedInCollaborator.privilege === 'OWNER' && privilege === 'ADMIN') }
           >
             { account.email }
           </DescriptionTextLine>
@@ -74,7 +74,7 @@ const Collaborators = ({
           />
         </Avatar>
       ),
-      trailing: (signedInCollaborator && signedInCollaborator.privilege === 'owner' && privilege === 'admin') ?
+      trailing: (signedInCollaborator && signedInCollaborator.privilege === 'OWNER' && privilege === 'ADMIN') ?
         () => (
           <ContextMenu
             name={ `collaborator-${ account.identifier }` }
@@ -103,7 +103,7 @@ const Collaborators = ({
             ) }
           />
         ) : (
-          (signedInCollaborator && signedInCollaborator.privilege === 'admin' && signedInCollaborator.account.identifier === account.identifier) ?
+          (signedInCollaborator && signedInCollaborator.privilege === 'ADMIN' && signedInCollaborator.account.identifier === account.identifier) ?
             () => (
               <ContextMenu
                 name={ `collaborator-${ account.identifier }` }
