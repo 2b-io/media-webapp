@@ -23,7 +23,7 @@ export const invite = async (project, account) => {
   return new Permission({
     project: project._id,
     account: account._id,
-    privilege: 'admin'
+    privilege: 'ADMIN'
   }).save()
 }
 
@@ -50,12 +50,12 @@ export const makeOwner = async (project, { accountId }) => {
 
   const nextOwner = await findAccountByIdenfier(accountId)
 
-  await updatePermission(project._id, currentAccountId, 'admin')
+  await updatePermission(project._id, currentAccountId, 'ADMIN')
 
   try {
-    await updatePermission(project._id, nextOwner._id, 'owner')
+    await updatePermission(project._id, nextOwner._id, 'OWNER')
   } catch (error) {
-    await updatePermission(project._id, currentAccountId, 'owner')
+    await updatePermission(project._id, currentAccountId, 'OWNER')
 
     throw error
   }

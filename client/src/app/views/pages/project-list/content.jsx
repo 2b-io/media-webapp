@@ -47,7 +47,7 @@ const sortProjects = ({ type, ascending }, projects, currentAccountId) => {
             ({ account }) => account._id === currentAccountId
           )[0].privilege
 
-          return privilegeInProject === 'owner' && ascending
+          return privilegeInProject === 'OWNER' && ascending
         }
       )
     }
