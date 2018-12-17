@@ -95,10 +95,10 @@ export default createReducer({})({
         collaborators: {
           ...state[ identifier ].collaborators,
           [ currentAccountId ]: {
-            ...state[ identifier ].collaborators[ currentAccountId ], privilege: 'admin',
+            ...state[ identifier ].collaborators[ currentAccountId ], privilege: 'ADMIN',
           },
           [ accountId ]: {
-            ...state[ identifier ].collaborators[ accountId ], privilege: 'owner'
+            ...state[ identifier ].collaborators[ accountId ], privilege: 'OWNER'
           }
         }
       },
