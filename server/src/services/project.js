@@ -1,6 +1,5 @@
 import namor from 'namor'
 
-import Permission from 'models/Permission'
 import Preset from 'models/Preset'
 import Project from 'models/Project'
 import PullSetting from 'models/pull-setting'
@@ -69,20 +68,6 @@ export const get = async (condition, account) => {
     return null
   }
 
-  //  check permission
-  const permission = await Permission.findOne({
-    account,
-    project: {
-      $eq: project._id
-    }
-  }).lean()
-
-  if (!permission) {
-    throw 'Forbidden'
-  }
-
-  return project
-}
 
 export const getByID = async (id) => {
   return await Project.findOne({
@@ -90,70 +75,6 @@ export const getByID = async (id) => {
   }).lean()
 }
 
-export const list = async (accountID, condition = {}) => {
-  if (!accountID) {
-    throw 'Invaid parameters: Missing [accountID]'
-  }
-
-  const permissions = await Permission.find({
-    account: accountID
-  }).lean()
-
-  const projects = await Promise.all(
-    permissions.map(
-      async (permission) => await get({
-        _id: permission.project,
-        ...condition
-      }, permission.account)
-    )
-  )
-
-  return projects.filter(Boolean)
-}
-
-export const create = async ({ name }, provider, account) => {
-  if (!name) {
-    throw 'Invalid parameters: Missing [name]'
-  }
-
-  if (provider !== 'cloudfront') {
-    throw 'Invalid parameters: Not support [provider] value'
-  }
-
-  // retry 10 times
-  const identifier = await generateUniqueIdentifier(10)
-
-  const project = await new Project({
-    name,
-    identifier,
-    status: 'INITIALIZING'
-  }).save()
-
-  try {
-    await new Permission({
-      project: project._id,
-      account: account._id,
-      privilege: 'OWNER'
-    }).save()
-
-    await new PullSetting({
-      project: project._id
-    }).save()
-
-    //await cacheSettingService.create(project._id)
-    await infrastructureService.create(project, provider)
-    await infrastructureService.createInfraJob(project.identifier)
-
-    return project
-  } catch (error) {
-    await Project.findOneAndRemove({ _id: project._id })
-    await Permission.deleteMany({ project: project._id })
-    await PullSetting.deleteMany({ project: project._id })
-    //await cacheSettingService.remove(project._id)
-
-    throw error
-  }
-}
 
 export const remove = async (condition, account) => {
   const project = await get(condition, account)
@@ -175,7 +96,6 @@ export const remove = async (condition, account) => {
     Preset.deleteMany({ project: _id }),
     PullSetting.deleteMany({ project: _id }),
     SecretKey.deleteMany({ project: _id }),
-    Permission.deleteMany({ project: _id }),
     infrastructureService.remove(_id),
     invalidationService.create(project.identifier, [ '/*' ])
   ])
