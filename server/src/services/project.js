@@ -67,7 +67,7 @@ export const get = async (condition, account) => {
   if (!project) {
     return null
   }
-
+}
 
 export const getByID = async (id) => {
   return await Project.findOne({
