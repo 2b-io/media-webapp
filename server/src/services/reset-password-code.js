@@ -1,3 +1,4 @@
+import Account from 'models/Account'
 import ApiService from 'services/api'
 
 class ResetPasswordService extends ApiService {
