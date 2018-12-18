@@ -42,9 +42,9 @@ const generateContentProject = (isActive, ui) => {
       {
         content: () => <PullSettings ui={ ui } />,
       },
-      {
-        content: () => <ApiKeys ui={ ui } />,
-      },
+      // {
+      //   content: () => <ApiKeys ui={ ui } />,
+      // },
       {
         content: () => <Collaborators ui={ ui } />,
       },
