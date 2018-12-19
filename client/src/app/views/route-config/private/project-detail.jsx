@@ -309,10 +309,10 @@ export default {
     *state(path) {
       yield fork(watchGetProject, path)
       yield fork(watchFetchPreset)
-      yield fork(watchFetchSecretKey)
+      // yield fork(watchFetchSecretKey)
       yield fork(watchGetPullSetting)
       yield fork(watchGetCacheSetting)
-      yield fork(watchCreateSecretKey)
+      //yield fork(watchCreateSecretKey)
       yield fork(watchRemoveSecretKey)
       yield fork(watchUpdateSecretKey)
       yield fork(watchCreatePreset, path)
