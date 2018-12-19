@@ -1,27 +1,5 @@
-import Account, { hashPassword } from 'models/Account'
-import ResetPasswordCode from 'models/Reset-password-code'
-import {
-  // findById as findAccountById,
-  update as updateAccount
-} from 'services/account'
+import Account from 'models/Account'
 import ApiService from 'services/api'
-
-export const resetPassword = async ({ name, password }, code) => {
-  const { uid } = await ResetPasswordCode.findOne({
-    code,
-    used: false
-  }).lean()
-
-  await updateAccount(uid, {
-    name,
-    hashedPassword: hashPassword(password),
-    isActive: true
-  })
-
-  await ResetPasswordCode.deleteOne({ code })
-
-  return true
-}
 
 class ResetPasswordService extends ApiService {
   async forgotPassword(body) {
