@@ -1,11 +1,6 @@
 import { GraphQLString, GraphQLList } from 'graphql'
 
 import { Account } from '../account'
-
-import {
-  searchByEmail as searchAccountsByEmail
-} from 'services/account'
-
 import createAccountService from 'services/account'
 
 export default () => ({
@@ -39,9 +34,9 @@ export default () => ({
     },
     type: new GraphQLList(Account),
     resolve: async (session, { email }) => {
-      const accounts = await searchAccountsByEmail(email)
+      const accountService = createAccountService()
 
-      return accounts
+      return await accountService.list({ email })
     }
   }
 })

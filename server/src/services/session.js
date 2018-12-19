@@ -2,25 +2,24 @@ import jwt from 'jsonwebtoken'
 import ms from 'ms'
 
 import config from 'infrastructure/config'
-import {
-  findByEmail as findByAccountEmail,
-  findById as findAccountById
-} from 'services/account'
+import createAccountService from 'services/account'
 
 export const create = async ({ email, password }) => {
-  const account = await findByAccountEmail(email)
+  const accountService = createAccountService()
+  const account = await accountService.signIn({ email, password })
 
   if (!account) {
     throw new Error('Invalid email')
   }
 
-  return account.comparePassword(password) ? issueJWT(account) : null
+  return issueJWT(account)
 }
 
 export const verify = async (token, { refresh } = { refresh: false }) => {
   const decoded = jwt.verify(token, config.session.secret)
 
-  const account = await findAccountById(decoded._id)
+  const accountService = createAccountService()
+  const account = await accountService.get(decoded.identifier)
 
   if (!account) {
     throw new Error('Invalid or expired JWT')
@@ -35,7 +34,7 @@ export const verify = async (token, { refresh } = { refresh: false }) => {
 
 export const issueJWT = (account) => {
   const payload = {
-    _id: account._id
+    identifier: account.identifier
   }
 
   const token = jwt.sign(payload, config.session.secret, {
