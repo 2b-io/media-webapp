@@ -6,7 +6,7 @@ import createAccountService from 'services/account'
 import ApiService from 'services/api'
 
 class SessionService extends ApiService {
-   issueJWT(account) {
+  issueJWT(account) {
     const payload = {
       identifier: account.identifier
     }
