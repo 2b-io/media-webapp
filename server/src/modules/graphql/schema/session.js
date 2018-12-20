@@ -3,13 +3,11 @@ import {
   GraphQLNonNull,
   GraphQLString
 } from 'graphql'
-import {
-  create as createSession,
-  verify as verifySession
-} from 'services/session'
 
 import { AccountStruct } from '../types/account'
 import { Session } from '../types/session'
+
+import createSessionService from 'services/session'
 
 export default () => ({
   session: {
@@ -24,8 +22,8 @@ export default () => ({
     type: Session,
     resolve: async (rootValue, args, ctx) => {
       const { token, refresh = false } = args
-
-      const session = await verifySession(token, { refresh })
+      const sessionService = createSessionService()
+      const session = await sessionService.verify(token, { refresh })
 
       ctx._session = session
 
@@ -40,7 +38,8 @@ export default () => ({
     },
     type: Session,
     resolve: async (rootValue, { account }, ctx) => {
-      const session = await createSession(account)
+      const sessionService = createSessionService()
+      const session = await sessionService.create(account)
 
       ctx._session = session
 
