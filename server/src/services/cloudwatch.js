@@ -1,15 +1,11 @@
-import request from 'superagent'
+import ApiService from 'services/api'
 
-import config from 'infrastructure/config'
-
-const metricCloudfront = async (projectIdentifier, name, startTime, endTime, period) => {
-  const response = await request('get', `${ config.apiUrl }/projects/${ projectIdentifier }/metrics/${ name }/datapoints?startTime=${ new Date(startTime).toISOString() }&endTime=${ new Date(endTime).toISOString() }&period=${ period }`)
-    .set('Content-Type', 'application/json')
-    .set('Authorization', 'MEDIA_CDN app=webapp')
-
-  return response.body
+class CloudwatchService extends ApiService {
+  async metricCloudfront(projectIdentifier, name, startTime, endTime, period) {
+    return await this.callApi('get', `/projects/${ projectIdentifier }/metrics/${ name }/datapoints?startTime=${ new Date(startTime).toISOString() }&endTime=${ new Date(endTime).toISOString() }&period=${ period }`)
+  }
 }
 
-export default {
-  metricCloudfront
+export default (accountIdentifier) => {
+  return new CloudwatchService('webapp', accountIdentifier)
 }

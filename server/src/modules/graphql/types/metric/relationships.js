@@ -3,7 +3,7 @@ import {
   GraphQLList
 } from 'graphql'
 
-import cloudwatch from 'services/cloudwatch'
+import createCloudwatchService from 'services/cloudwatch'
 import { Datapoint } from '../datapoint'
 
 export default () => ({
@@ -20,10 +20,11 @@ export default () => ({
       }
     },
     type: new GraphQLList(Datapoint),
-    resolve: async (self, { startTime, endTime, period }) => {
-      const { datapoints } = await cloudwatch.metricCloudfront(
-        self.projectIdentifier,
-        self.name.toLowerCase(),
+    resolve: async ({ projectIdentifier, name }, { startTime, endTime, period }, ctx) => {
+      const cloudwatchService = createCloudwatchService(ctx._session.account.identifier)
+      const { datapoints } = await cloudwatchService.metricCloudfront(
+        projectIdentifier,
+        name.toLowerCase(),
         startTime,
         endTime,
         period
