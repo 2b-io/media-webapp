@@ -6,10 +6,6 @@ class AccountService extends ApiService {
     return true
   }
 
-  async list({ email }) {
-    return await this.callApi('get', `/accounts?email=${ encodeURIComponent(email) }`)
-  }
-
   async get(identifier) {
     return await this.callApi('get', `/accounts/${ identifier }`)
   }

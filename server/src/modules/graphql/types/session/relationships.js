@@ -25,18 +25,18 @@ export default () => ({
 
       return await accountService.get(identifier)
     }
-  },
-  accounts: {
-    args: {
-      email: {
-        type: GraphQLString
-      }
-    },
-    type: new GraphQLList(Account),
-    resolve: async (session, { email }) => {
-      const accountService = createAccountService()
-
-      return await accountService.list({ email })
-    }
   }
+  // accounts: {
+  //   args: {
+  //     email: {
+  //       type: GraphQLString
+  //     }
+  //   },
+  //   type: new GraphQLList(Account),
+  //   resolve: async (session, { email }) => {
+  //     const accountService = createAccountService()
+
+  //     return await accountService.list({ email })
+  //   }
+  // }
 })
