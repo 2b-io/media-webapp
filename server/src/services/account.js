@@ -6,14 +6,6 @@ class AccountService extends ApiService {
     return true
   }
 
-  async signIn({ email, password }) {
-    const emailEncoded = encodeURIComponent(email)
-    const passwordEncoded = Buffer.from(encodeURIComponent(password)).toString('base64')
-    const accounts = await this.callApi('get', `/accounts?email=${ emailEncoded }&password=${ passwordEncoded }`)
-
-    return accounts[ 0 ]
-  }
-
   async list({ email }) {
     return await this.callApi('get', `/accounts?email=${ encodeURIComponent(email) }`)
   }
