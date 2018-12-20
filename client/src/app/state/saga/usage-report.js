@@ -1,4 +1,3 @@
-import ms from 'ms'
 import { fork, put, select, take } from 'redux-saga/effects'
 import serializeError from 'serialize-error'
 
@@ -26,10 +25,13 @@ const generateUsageReportLoop = function*() {
       if (!session) {
         throw 'Unauthorized'
       }
+      // Convert period to minute:
+      // daily <--> 1440 minute hourly <--> 60minute
+      const convetedPeriod = granularity === 'daily' ? 1440 : 60
 
       const data = yield Metric.generateUsageReport({
         projectIdentifier,
-        period: granularity === 'daily' ? ms('1d') / 1000 : ms('1h') / 1000, //86400s : 3600s
+        period: convetedPeriod,
         startTime: dateTimeService.getStartOfUTCDay(new Date(startDate)),
         endTime: dateTimeService.getEndOfUTCDay(new Date(endDate))
       }, {

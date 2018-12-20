@@ -139,7 +139,7 @@ export default () => ({
     },
     type: Metric,
     resolve: async (project, { name }) => {
-      return ({ projectId: project._id, name })
+      return ({ projectIdentifier: project.identifier, name })
     }
   },
   invalidations: {

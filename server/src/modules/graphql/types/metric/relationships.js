@@ -21,9 +21,9 @@ export default () => ({
     },
     type: new GraphQLList(Datapoint),
     resolve: async (self, { startTime, endTime, period }) => {
-      const { datapoints } = await cloudwatch.metriCloudfront(
-        self.projectId,
-        self.name,
+      const { datapoints } = await cloudwatch.metricCloudfront(
+        self.projectIdentifier,
+        self.name.toLowerCase(),
         startTime,
         endTime,
         period
