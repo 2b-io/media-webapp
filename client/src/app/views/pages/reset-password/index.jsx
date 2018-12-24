@@ -31,7 +31,7 @@ const ResetPassword = ({
     idle
   }
 }) => {
-  if (error || !account) {
+  if (error) {
     return (
       <Container>
         <CenterDescriptionText mostLeft mostRight>
@@ -39,6 +39,10 @@ const ResetPassword = ({
         </CenterDescriptionText>
       </Container>
     )
+  }
+
+  if (!account) {
+    return null
   }
 
   return (
