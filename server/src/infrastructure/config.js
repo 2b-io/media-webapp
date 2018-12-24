@@ -9,6 +9,7 @@ export default {
   webpackDevServer: process.env.DEV_SERVER,
   mongodb: process.env.MONGO,
   apiUrl: process.env.API_URL,
+  apiSecretKey: process.env.API_SECRET_KEY,
   session: {
     secret: process.env.SESSION_SECRET,
     ttl: process.env.SESSION_TTL

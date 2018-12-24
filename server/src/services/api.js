@@ -11,7 +11,8 @@ class ApiService {
   async callApi(method, path, body) {
     const authParams = Object.entries({
       app: this.appIdentifier,
-      account: this.accountIdentifier
+      account: this.accountIdentifier,
+      secret: config.apiSecretKey
     })
       .map((entry) => entry[ 1 ] && entry.join('='))
       .filter(Boolean)
