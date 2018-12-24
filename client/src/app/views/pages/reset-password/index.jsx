@@ -1,7 +1,6 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
