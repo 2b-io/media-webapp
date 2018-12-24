@@ -1,20 +1,7 @@
-import Account from 'models/Account'
 import ApiService from 'services/api'
 
 class ResetPasswordService extends ApiService {
   async forgotPassword(body) {
-    const account = await Account.findOne({ email: body.email }).lean()
-
-    if (!account) {
-      return null
-    }
-
-    const { _id, removed } = account
-
-    if (!_id && removed) {
-      return null
-    }
-
     return await this.callApi('post', '/reset-tokens', body)
   }
 
