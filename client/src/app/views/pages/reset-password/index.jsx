@@ -17,11 +17,6 @@ const ResetPasswordForm = reduxForm({
   validate: validateConfirmPassword
 })(StatelessForm)
 
-
-const CenterDescriptionText = styled(DescriptionText)`
-  text-align: center;
-`
-
 const ResetPassword = ({
   resetPassword,
   ui: {
@@ -34,9 +29,9 @@ const ResetPassword = ({
   if (error) {
     return (
       <Container>
-        <CenterDescriptionText mostLeft mostRight>
+        <DescriptionText mostLeft mostRight align="center">
           This password reset link has expired. Please try again
-        </CenterDescriptionText>
+        </DescriptionText>
       </Container>
     )
   }
