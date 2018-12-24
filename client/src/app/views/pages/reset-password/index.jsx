@@ -1,11 +1,13 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
 import { Container } from 'ui/elements'
 import { validateConfirmPassword } from 'views/common/validate'
+import { DescriptionText } from 'ui/typo'
 
 import StatelessForm from './form'
 
@@ -15,16 +17,28 @@ const ResetPasswordForm = reduxForm({
   validate: validateConfirmPassword
 })(StatelessForm)
 
+
+const CenterDescriptionText = styled(DescriptionText)`
+  text-align: center;
+`
+
 const ResetPassword = ({
   resetPassword,
   ui: {
-    idle,
     account,
-    code
+    code,
+    error,
+    idle
   }
 }) => {
-  if (!account) {
-    return null
+  if (error || !account) {
+    return (
+      <Container>
+        <CenterDescriptionText mostLeft mostRight>
+          This password reset link has expired. Please try again
+        </CenterDescriptionText>
+      </Container>
+    )
   }
 
   return (
