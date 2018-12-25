@@ -302,19 +302,62 @@ const watchRemoveSecretKey = function*() {
   }
 }
 
+const watchGetProjectDetail = function*(path) {
+  const { completed, failed } = yield race({
+    completed: take(types.project.GET_COMPLETED),
+    failed: take(types.project.GET_FAILED)
+  })
+
+  if (failed) {
+    yield all([
+      fork(addToast, {
+        type: 'error',
+        message: 'Cannot connect to project. Project does not exist or network has error(s).'
+      }),
+      put(
+        actions.requestLocation('/projects')
+      )
+    ])
+  }
+
+  if (completed) {
+    console.log('completed.payload.project', completed.payload.project);
+    const {
+      isActive,
+      status,
+      presets,
+      cacheSetting,
+      pullSetting
+    } = completed.payload.project
+
+    if (isActive === true && status === 'DEPLOYED') {
+      yield put(
+        actions.mergeUIState(path, {
+          isProjectActive: true,
+          presets,
+          cacheSetting,
+          pullSetting
+        })
+      )
+    }
+  }
+}
+
+
 export default {
   '/projects/:identifier': {
     component: ProjectDetail,
     exact: true,
     *state(path) {
-      yield fork(watchGetProject, path)
-      yield fork(watchFetchPreset)
-      // yield fork(watchFetchSecretKey)
-      yield fork(watchGetPullSetting)
-      yield fork(watchGetCacheSetting)
+      yield fork(watchGetProjectDetail, path)
+      // yield fork(watchGetProject, path)
+      // yield fork(watchFetchPreset)
+      // // yield fork(watchFetchSecretKey)
+      // yield fork(watchGetPullSetting)
+      // yield fork(watchGetCacheSetting)
       //yield fork(watchCreateSecretKey)
-      yield fork(watchRemoveSecretKey)
-      yield fork(watchUpdateSecretKey)
+      // yield fork(watchRemoveSecretKey)
+      // yield fork(watchUpdateSecretKey)
       yield fork(watchCreatePreset, path)
       yield fork(watchLeaveProject, path)
       yield fork(watchMakeOwner, path)
@@ -326,25 +369,28 @@ export default {
         put(
           actions.getProject(identifier)
         ),
-        put(
-          actions.fetchPresets({ identifier })
-        ),
-        put(
-          actions.getCacheSetting(identifier)
-        ),
-        put(
-          actions.getPullSetting(identifier)
-        ),
-        put(
-          actions.fetchSecretKeys(identifier)
-        ),
+        // put(
+        //   actions.fetchPresets({ identifier })
+        // ),
+        // put(
+        //   actions.getCacheSetting(identifier)
+        // ),
+        // put(
+        //   actions.getPullSetting(identifier)
+        // ),
+        // put(
+        //   actions.fetchSecretKeys(identifier)
+        // ),
         put(
           actions.initializeUIState(path, {
             idle: true,
             isProjectActive: false,
             isCreatePresetDialogActive: false,
             isLeaveProjectDialogActive: false,
-            isMakeOwnerDialogActive: false
+            isMakeOwnerDialogActive: false,
+            presets: null,
+            cacheSetting: null,
+            pullSetting: null
           })
         )
       ])

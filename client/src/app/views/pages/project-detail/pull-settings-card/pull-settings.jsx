@@ -12,10 +12,13 @@ import { stringToList } from 'services/string-to-list'
 const PullSettings = ({
   identifier,
   toEditPullSetting,
-  pullSetting = {}
+  //pullSetting = {},
+  ui: {
+    pullSetting
+  }
 }) => {
-
-  const allowedOrigins = stringToList(pullSetting.allowedOrigins)
+  // const allowedOrigins = pullSetting.stringToList(pullSetting.allowedOrigins)
+  const allowedOrigins = pullSetting.allowedOrigins
 
   const filteredHeaders = (pullSetting.headers || []).filter(
     (header) => !!(header && header.name && header.value)
@@ -71,7 +74,7 @@ export default connect(
 
     return {
       identifier,
-      pullSetting: selectors.pullSetting(state, identifier)
+      //pullSetting: selectors.pullSetting(state, identifier)
     }
   },
   mapDispatch({
