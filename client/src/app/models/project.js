@@ -2,8 +2,8 @@ import request from 'services/graphql'
 import { listToString, stringToList } from 'services/string-to-list'
 
 import { ACCOUNT_FRAGMENT } from './account'
-import { PRESET_FRAGMENT } from './preset'
 import { CACHE_SETTING_FRAGMENT } from './cache-setting'
+import { PRESET_FRAGMENT } from './preset'
 import { PULL_SETTING_FRAGMENT } from './pull-setting'
 
 export const COLLABORATOR_FRAGMENT = `
@@ -47,13 +47,13 @@ export default {
           account {
             project(identifier: $identifier) {
               ${ PROJECT_FRAGMENT },
-              presets: presets {
+              presets {
                 ${ PRESET_FRAGMENT }
               },
-              cacheSetting: cacheSetting {
+              cacheSetting {
                 ${ CACHE_SETTING_FRAGMENT }
               },
-              pullSetting: pullSetting {
+              pullSetting {
                 ${ PULL_SETTING_FRAGMENT }
               }
             }
