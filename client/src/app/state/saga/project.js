@@ -1,8 +1,9 @@
-import { take, fork, put, select } from 'redux-saga/effects'
+import { all, take, fork, put, select } from 'redux-saga/effects'
 import serializeError from 'serialize-error'
 
 import Project from 'models/project'
 import { actions, types, selectors } from 'state/interface'
+import { listToString } from 'services/string-to-list'
 
 const createLoop = function*() {
   while (true) {
@@ -93,7 +94,16 @@ const getLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const project = yield Project.get({
+      const {
+        presets,
+        cacheSetting,
+        pullSetting: {
+          pullUrl,
+          allowedOrigins,
+          headers
+        },
+        ...project
+      } = yield Project.get({
         identifier
       }, {
         token: session.token
@@ -103,9 +113,33 @@ const getLoop = function*() {
         throw 'Get project failed'
       }
 
-      yield put(
-        actions.getProjectCompleted(project)
-      )
+      const pullSetting = {
+        pullUrl,
+        headers,
+        allowedOrigins: listToString(allowedOrigins)
+      }
+
+      yield all([
+        put(actions.getProjectCompleted(project)),
+        put(
+          actions.fetchPresetsCompleted({
+            presets,
+            identifier: project.identifier
+          })
+        ),
+        put(
+          actions.getCacheSettingCompleted({
+            cacheSetting,
+            identifier: project.identifier
+          })
+        ),
+        put(
+          actions.getPullSettingCompleted({
+            pullSetting,
+            identifier: project.identifier
+          })
+        )
+      ])
     } catch (e) {
       yield put(
         actions.getProjectFailed(serializeError(e))
