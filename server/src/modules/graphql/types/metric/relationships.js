@@ -6,6 +6,10 @@ import {
 import createCloudwatchService from 'services/cloudwatch'
 import { Datapoint } from '../datapoint'
 
+const compareDateTimeString = (firstDateTime, secondDateTime) => {
+  return new Date(firstDateTime) - new Date(secondDateTime)
+}
+
 export default () => ({
   datapoints: {
     args: {
@@ -22,7 +26,7 @@ export default () => ({
     type: new GraphQLList(Datapoint),
     resolve: async ({ projectIdentifier, name }, { startTime, endTime, period }, ctx) => {
       const cloudwatchService = createCloudwatchService(ctx._session.account.identifier)
-      const { datapoints } = await cloudwatchService.metricCloudfront(
+      const datapoints = await cloudwatchService.metricCloudfront(
         projectIdentifier,
         name.toLowerCase(),
         startTime,
@@ -35,10 +39,10 @@ export default () => ({
         timestamp
       }) => ({
         value,
-        timestamp
+        timestamp: Date.parse(new Date(timestamp))
       })).sort(
         (datapoint, nextDatapoint) => (
-          datapoint.timestamp - nextDatapoint.timestamp
+          compareDateTimeString(datapoint.timestamp, nextDatapoint.timestamp)
         )
       )
     }
