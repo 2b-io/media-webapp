@@ -2,6 +2,9 @@ import request from 'services/graphql'
 import { stringToList } from 'services/string-to-list'
 
 import { ACCOUNT_FRAGMENT } from './account'
+import { PRESET_FRAGMENT } from './preset'
+import { CACHE_SETTING_FRAGMENT } from './cache-setting'
+import { PULL_SETTING_FRAGMENT } from './pull-setting'
 
 export const COLLABORATOR_FRAGMENT = `
   account {
@@ -39,11 +42,20 @@ export default {
     const { token } = options
 
     const body = await request(`
-      query getProject($identifier: String!, $token: String!) {
+      query getProjectDetail($identifier: String!, $token: String!) {
         session(token: $token) {
           account {
             project(identifier: $identifier) {
-              ${ PROJECT_FRAGMENT }
+              ${ PROJECT_FRAGMENT },
+              presets: presets {
+                ${ PRESET_FRAGMENT }
+              },
+              cacheSetting: cacheSetting {
+                ${ CACHE_SETTING_FRAGMENT }
+              },
+              pullSetting: pullSetting {
+                ${ PULL_SETTING_FRAGMENT }
+              }
             }
           }
         }
