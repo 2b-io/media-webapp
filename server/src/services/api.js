@@ -3,16 +3,14 @@ import request from 'superagent'
 import config from 'infrastructure/config'
 
 class ApiService {
-  constructor(appIdentifier, accountIdentifier) {
-    this.appIdentifier = appIdentifier
+  constructor(accountIdentifier) {
     this.accountIdentifier = accountIdentifier
   }
 
   async callApi(method, path, body) {
     const authParams = Object.entries({
-      app: this.appIdentifier,
-      account: this.accountIdentifier,
-      secret: config.apiSecretKey
+      app: config.apiSecretKey,
+      account: this.accountIdentifier
     })
       .map((entry) => entry[ 1 ] && entry.join('='))
       .filter(Boolean)

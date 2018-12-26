@@ -11,5 +11,5 @@ class CacheSettingService extends ApiService {
 }
 
 export default (accountIdentifier) => {
-  return new CacheSettingService('webapp', accountIdentifier)
+  return new CacheSettingService(accountIdentifier)
 }
