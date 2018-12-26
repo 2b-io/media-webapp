@@ -3,7 +3,6 @@ import serializeError from 'serialize-error'
 
 import Project from 'models/project'
 import { actions, types, selectors } from 'state/interface'
-import { listToString } from 'services/string-to-list'
 
 const createLoop = function*() {
   while (true) {
