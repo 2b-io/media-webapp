@@ -97,11 +97,7 @@ const getLoop = function*() {
       const {
         presets,
         cacheSetting,
-        pullSetting: {
-          pullUrl,
-          allowedOrigins,
-          headers
-        },
+        pullSetting,
         ...project
       } = yield Project.get({
         identifier
@@ -111,12 +107,6 @@ const getLoop = function*() {
 
       if (!project) {
         throw 'Get project failed'
-      }
-
-      const pullSetting = {
-        pullUrl,
-        headers,
-        allowedOrigins: listToString(allowedOrigins)
       }
 
       yield all([

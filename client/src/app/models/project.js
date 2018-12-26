@@ -1,5 +1,5 @@
 import request from 'services/graphql'
-import { stringToList } from 'services/string-to-list'
+import { listToString, stringToList } from 'services/string-to-list'
 
 import { ACCOUNT_FRAGMENT } from './account'
 import { PRESET_FRAGMENT } from './preset'
@@ -42,7 +42,7 @@ export default {
     const { token } = options
 
     const body = await request(`
-      query getProjectDetail($identifier: String!, $token: String!) {
+      query getProject($identifier: String!, $token: String!) {
         session(token: $token) {
           account {
             project(identifier: $identifier) {
@@ -65,7 +65,15 @@ export default {
       token
     })
 
-    return body.session.account.project
+    const { pullSetting, ...projectDetail } = body.session.account.project
+
+    return {
+      ...projectDetail,
+      pullSetting: {
+        ...pullSetting,
+        allowedOrigins: listToString(pullSetting.allowedOrigins)
+      }
+    }
   },
 
   async fetch(params, options) {
