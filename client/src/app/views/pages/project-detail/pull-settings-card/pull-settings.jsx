@@ -7,18 +7,14 @@ import { Heading, Text } from 'ui/typo'
 import { Card, PlainButton } from 'ui/elements'
 import { EditIcon } from 'ui/icons'
 
-// import { stringToList } from 'services/string-to-list'
+import { stringToList } from 'services/string-to-list'
 
 const PullSettings = ({
   identifier,
   toEditPullSetting,
-  //pullSetting = {},
-  ui: {
-    pullSetting
-  }
+  pullSetting = {}
 }) => {
-  // const allowedOrigins = pullSetting.stringToList(pullSetting.allowedOrigins)
-  const allowedOrigins = pullSetting.allowedOrigins
+  const allowedOrigins = pullSetting.stringToList(pullSetting.allowedOrigins)
 
   const filteredHeaders = (pullSetting.headers || []).filter(
     (header) => !!(header && header.name && header.value)
@@ -74,7 +70,7 @@ export default connect(
 
     return {
       identifier,
-      //pullSetting: selectors.pullSetting(state, identifier)
+      pullSetting: selectors.pullSetting(state, identifier)
     }
   },
   mapDispatch({

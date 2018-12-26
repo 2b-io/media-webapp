@@ -4,6 +4,40 @@ import { addToast } from 'state/saga/toast'
 import { actions, selectors, types } from 'state/interface'
 import * as ProjectDetail from 'views/pages/project-detail'
 
+const watchGetProject = function*(path) {
+  const { completed, failed } = yield race({
+    completed: take(types.project.GET_COMPLETED),
+    failed: take(types.project.GET_FAILED)
+  })
+
+  if (failed) {
+    yield all([
+      fork(addToast, {
+        type: 'error',
+        message: 'Cannot connect to project. Project does not exist or network has error(s).'
+      }),
+      put(
+        actions.requestLocation('/projects')
+      )
+    ])
+  }
+
+  if (completed) {
+    const {
+      isActive,
+      status
+    } = completed.payload.project
+
+    if (isActive === true && status === 'DEPLOYED') {
+      yield put(
+        actions.mergeUIState(path, {
+          isProjectActive: true
+        })
+      )
+    }
+  }
+}
+
 const watchCreatePreset = function*(path) {
   while (true) {
     yield take(`${ types.dialog.SHOW }:CREATE_PRESET`)
@@ -235,53 +269,12 @@ const watchMakeOwner = function*(path) {
 //   }
 // }
 
-const watchGetProjectDetail = function*(path) {
-  const { completed, failed } = yield race({
-    completed: take(types.project.GET_COMPLETED),
-    failed: take(types.project.GET_FAILED)
-  })
-
-  if (failed) {
-    yield all([
-      fork(addToast, {
-        type: 'error',
-        message: 'Cannot connect to project. Project does not exist or network has error(s).'
-      }),
-      put(
-        actions.requestLocation('/projects')
-      )
-    ])
-  }
-
-  if (completed) {
-    const {
-      isActive,
-      status,
-      presets,
-      cacheSetting,
-      pullSetting
-    } = completed.payload.project
-
-    if (isActive === true && status === 'DEPLOYED') {
-      yield put(
-        actions.mergeUIState(path, {
-          isProjectActive: true,
-          presets,
-          cacheSetting,
-          pullSetting
-        })
-      )
-    }
-  }
-}
-
-
 export default {
   '/projects/:identifier': {
     component: ProjectDetail,
     exact: true,
     *state(path) {
-      yield fork(watchGetProjectDetail, path)
+      yield fork(watchGetProject, path)
       yield fork(watchCreatePreset, path)
       yield fork(watchLeaveProject, path)
       yield fork(watchMakeOwner, path)
@@ -299,10 +292,7 @@ export default {
             isProjectActive: false,
             isCreatePresetDialogActive: false,
             isLeaveProjectDialogActive: false,
-            isMakeOwnerDialogActive: false,
-            presets: null,
-            cacheSetting: null,
-            pullSetting: null
+            isMakeOwnerDialogActive: false
           })
         )
       ])

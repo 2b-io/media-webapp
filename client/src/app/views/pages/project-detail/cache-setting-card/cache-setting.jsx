@@ -11,10 +11,7 @@ import { EditIcon } from 'ui/icons'
 const CacheSetting = ({
   identifier,
   toEditCacheSetting,
-  //cacheSetting,
-  ui: {
-    cacheSetting
-  }
+  cacheSetting
 }) => (
   <Fragment>
     <Card
@@ -43,7 +40,7 @@ export default connect(
 
     return {
       identifier,
-      //cacheSetting: selectors.cacheSetting(state, identifier)
+      cacheSetting: selectors.cacheSetting(state, identifier)
     }
   },
   mapDispatch({

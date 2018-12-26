@@ -15,13 +15,12 @@ const Presets = ({
   showCreateDialog,
   hideCreateDialog,
   identifier,
-  //presets = {},
+  presets = {},
   createPreset,
   toPreset,
   ui: {
     idle,
-    isCreatePresetDialogActive,
-    presets
+    isCreatePresetDialogActive
   }
 }) => {
   const items = Object.values(presets).map(
@@ -73,7 +72,7 @@ export default connect(
     }
 
     return {
-      //presets: selectors.presets(state, identifier),
+      presets: selectors.presets(state, identifier),
       identifier
     }
   },

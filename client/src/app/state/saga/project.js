@@ -78,42 +78,6 @@ const removeLoop = function*() {
   }
 }
 
-// const getLoop = function*() {
-//   while (true) {
-//     try {
-//       const {
-//         payload: {
-//           identifier
-//         }
-//       } = yield take(types.project.GET)
-
-//       const session = yield select(selectors.currentSession)
-
-//       if (!session) {
-//         throw 'Unauthorized'
-//       }
-
-//       const project = yield Project.get({
-//         identifier
-//       }, {
-//         token: session.token
-//       })
-
-//       if (!project) {
-//         throw 'Get project failed'
-//       }
-
-//       yield put(
-//         actions.getProjectCompleted(project)
-//       )
-//     } catch (e) {
-//       yield put(
-//         actions.getProjectFailed(serializeError(e))
-//       )
-//     }
-//   }
-// }
-
 const getLoop = function*() {
   while (true) {
     try {
