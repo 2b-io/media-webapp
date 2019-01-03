@@ -18,5 +18,5 @@ class PinnedProjectService extends ApiService {
 }
 
 export default (accountIdentifier) => {
-  return new PinnedProjectService('webapp', accountIdentifier)
+  return new PinnedProjectService(accountIdentifier)
 }

@@ -52,5 +52,5 @@ class SessionService extends ApiService {
 }
 
 export default () => {
-  return new SessionService('webapp')
+  return new SessionService()
 }
