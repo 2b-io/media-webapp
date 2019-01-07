@@ -142,10 +142,10 @@ const renderYAxisTick = (convertData) => ({ payload, x, y }) => (
   />
 )
 
-const UsageReportChart = ({
+const CdnReportChart = ({
   data,
   period,
-  usageData,
+  consumedData,
   requestData
 }) => (
   <Fragment>
@@ -154,22 +154,25 @@ const UsageReportChart = ({
         <Fragment>
           <AreaChart
             data={ data.bytesDownloaded.datapoints }
-            name="Bytes Downloaded"
+            name="Time Consumed"
             valueKey="value"
             xKey="timestamp"
             yKey="value"
             type="linear"
-            customTooltip={ renderTooltip(period, dataFormat.formatSize, 'Bytes Downloaded') }
+            customTooltip={ renderTooltip(period, dataFormat.milisecondToTimeString, 'Time Consumed') }
             customXAxisTick={ renderXAxisTick(period) }
-            customYAxisTick={ renderYAxisTick(dataFormat.formatSize) }
+            customYAxisTick={ renderYAxisTick(dataFormat.milisecondToTimeString) }
           />
           <AreaChartDetail>
             <DescriptionTextLine>Time UTC</DescriptionTextLine>
-            <Analysis>
-              <TextLine mostLeft mostRight>
-                Total Bytes: { dataFormat.formatSize(usageData.totalBytes) }
-              </TextLine>
-            </Analysis>
+            {
+              consumedData && consumedData.totalHours &&
+                <Analysis>
+                  <TextLine mostLeft mostRight>
+                    Total Time: { dataFormat.milisecondToTimeString(consumedData.totalHours, 'h:m:s') }
+                  </TextLine>
+                </Analysis>
+            }
           </AreaChartDetail>
           <Break />
         </Fragment>
@@ -190,20 +193,23 @@ const UsageReportChart = ({
           />
           <AreaChartDetail>
             <DescriptionTextLine>Time UTC</DescriptionTextLine>
-            <Analysis>
-              <TextLine mostLeft mostRight>
-                Average: { dataFormat.formatNumber(requestData.average) }
-              </TextLine>
-              <TextLine mostLeft mostRight>
-                Total: { dataFormat.formatNumber(requestData.total) }
-              </TextLine>
-              <TextLine mostLeft mostRight>
-                Maximum: { dataFormat.formatNumber(requestData.maximum) }
-              </TextLine>
-              <TextLine mostLeft mostRight>
-                Minimum: { dataFormat.formatNumber(requestData.minimum) }
-              </TextLine>
-            </Analysis>
+            {
+              requestData &&
+                <Analysis>
+                  <TextLine mostLeft mostRight>
+                    Average: { dataFormat.formatNumber(requestData.average) }
+                  </TextLine>
+                  <TextLine mostLeft mostRight>
+                    Total: { dataFormat.formatNumber(requestData.total) }
+                  </TextLine>
+                  <TextLine mostLeft mostRight>
+                    Maximum: { dataFormat.formatNumber(requestData.maximum) }
+                  </TextLine>
+                  <TextLine mostLeft mostRight>
+                    Minimum: { dataFormat.formatNumber(requestData.minimum) }
+                  </TextLine>
+                </Analysis>
+            }
           </AreaChartDetail>
           <Break />
         </Fragment>
@@ -211,4 +217,4 @@ const UsageReportChart = ({
   </Fragment>
 )
 
-export default UsageReportChart
+export default CdnReportChart
