@@ -9,8 +9,10 @@ import { actions, selectors } from 'state/interface'
 import { Break, Container } from 'ui/elements'
 import { TextLine } from 'ui/typo'
 
-import { UsageReportChart } from 'views/common/compounds'
-import _UsageReportForm from './form'
+import {
+  UsageReportChart,
+  UsageForm as _UsageReportForm
+} from 'views/common/compounds'
 
 const DATA_DEFAULT = {
   date: {

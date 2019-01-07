@@ -12,7 +12,7 @@ const BREAK_POINTS = {
   desktop: 4
 }
 
-const UsageReportForm = ({
+const CdnReportForm = ({
   currentDateRange,
   handleSubmit,
   options,
@@ -85,4 +85,4 @@ const UsageReportForm = ({
   )
 }
 
-export default UsageReportForm
+export default CdnReportForm
