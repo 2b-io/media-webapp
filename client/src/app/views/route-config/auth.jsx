@@ -1,5 +1,6 @@
 import cacheInvalidate from './private/cache-invalidate'
 import cacheSetting from './private/cache-setting'
+import cdnReport from './private/cdn-report'
 import dashboard from './private/dashboard'
 import inviteCollaborator from './private/invite-collaborator'
 import preset from './private/preset'
@@ -15,6 +16,7 @@ import usageReport from './private/usage-report'
 export default {
   ...cacheInvalidate,
   ...cacheSetting,
+  ...cdnReport,
   ...dashboard,
   ...inviteCollaborator,
   ...profile,

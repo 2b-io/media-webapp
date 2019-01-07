@@ -25,6 +25,7 @@ const Layout = styled.section`
 `
 
 const Reports = ({
+  toCdnReport,
   toUsageReport
 }) => (
   <Layout>
@@ -48,6 +49,24 @@ const Reports = ({
               ) }
             />
           )
+        },
+        {
+          content: () => (
+            <Card
+              interactable
+              onClick={ toCdnReport }
+              content={ () => (
+                <Fragment>
+                  <TextLine mostLeft mostRight>
+                    Cdn Report
+                  </TextLine>
+                  <DescriptionText readOnly mostLeft mostRight>
+                    The following charts show optimize usage (TimeConsumed & Requests).
+                  </DescriptionText>
+                </Fragment>
+              ) }
+            />
+          )
         }
       ] }
     />
@@ -57,6 +76,7 @@ const Reports = ({
 export default connect(
   null,
   mapDispatch({
-    toUsageReport: () => actions.requestLocation('/reports/usage')
+    toUsageReport: () => actions.requestLocation('/reports/usage'),
+    toCdnReport: () => actions.requestLocation('/reports/cdn')
   })
 )(Reports)
