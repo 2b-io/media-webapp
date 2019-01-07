@@ -32,7 +32,18 @@ const synthesizeRequestData = (datapoints) => {
   }
 }
 
+const synthesizeTimeConsumedData = (datapoints) => {
+  if (!datapoints.length) {
+    return { totalHours: 0 }
+  }
+
+  const totalHours = datapoints.map((item) => item.value).reduce((total, value) => total + value)
+
+  return { totalHours }
+}
+
 export default {
   synthesizeBytesDownloadData,
-  synthesizeRequestData
+  synthesizeRequestData,
+  synthesizeTimeConsumedData
 }

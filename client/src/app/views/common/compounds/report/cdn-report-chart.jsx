@@ -145,31 +145,31 @@ const renderYAxisTick = (convertData) => ({ payload, x, y }) => (
 const CdnReportChart = ({
   data,
   period,
-  consumedData,
+  timeConsumedData,
   requestData
 }) => (
   <Fragment>
     {
-      data && data.bytesDownloaded &&
+      data && data.timeConsumed &&
         <Fragment>
           <AreaChart
-            data={ data.bytesDownloaded.datapoints }
+            data={ data.timeConsumed.datapoints }
             name="Time Consumed"
             valueKey="value"
             xKey="timestamp"
             yKey="value"
             type="linear"
-            customTooltip={ renderTooltip(period, dataFormat.milisecondToTimeString, 'Time Consumed') }
+            customTooltip={ renderTooltip(period, dataFormat.formatMilisecondToString, 'Time Consumed') }
             customXAxisTick={ renderXAxisTick(period) }
-            customYAxisTick={ renderYAxisTick(dataFormat.milisecondToTimeString) }
+            customYAxisTick={ renderYAxisTick(dataFormat.formatMilisecondToString) }
           />
           <AreaChartDetail>
             <DescriptionTextLine>Time UTC</DescriptionTextLine>
             {
-              consumedData && consumedData.totalHours &&
+              timeConsumedData && timeConsumedData.totalHours &&
                 <Analysis>
                   <TextLine mostLeft mostRight>
-                    Total Time: { dataFormat.milisecondToTimeString(consumedData.totalHours, 'h:m:s') }
+                    Total Time: { dataFormat.formatMilisecondToString(timeConsumedData.totalHours, 'h:m:s') }
                   </TextLine>
                 </Analysis>
             }

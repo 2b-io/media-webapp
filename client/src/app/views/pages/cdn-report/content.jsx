@@ -46,7 +46,9 @@ const CdnReport = ({
   ui: {
     data,
     idle,
-    period
+    period,
+    timeConsumedData,
+    requestData
   }
 }) => {
   if (!projects.length) {
@@ -76,7 +78,12 @@ const CdnReport = ({
         currentDateRange={ { startDate, endDate } }
       />
       <Break double />
-      <div>chart</div>
+      <CdnReportChart
+        data={ data }
+        period={ period }
+        timeConsumedData={ timeConsumedData }
+        requestData={ requestData }
+      />
     </Container>
   )
 }

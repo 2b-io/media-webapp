@@ -15,7 +15,7 @@ const watchFetchProjects = function*() {
 
 const watchGenerateCdnReport = function*(path) {
   while (true) {
-    yield take(types.reports.GENERATE_USAGE_REPORT)
+    yield take(types.reports.GENERATE_CDN_REPORT)
 
     yield put(
       actions.mergeUIState(path, {
@@ -24,8 +24,8 @@ const watchGenerateCdnReport = function*(path) {
     )
 
     const { completed, failed } = yield race({
-      completed: take(types.reports.GENERATE_USAGE_REPORT_COMPLETED),
-      failed: take(types.reports.GENERATE_USAGE_REPORT_FAILED)
+      completed: take(types.reports.GENERATE_CDN_REPORT_COMPLETED),
+      failed: take(types.reports.GENERATE_CDN_REPORT_FAILED)
     })
 
     yield put(
@@ -46,15 +46,15 @@ const watchGenerateCdnReport = function*(path) {
         data,
         period,
         requestData,
-        usageData
+        timeConsumedData
       } = completed.payload
 
       yield put(
         actions.mergeUIState(path, {
           data,
           period,
-          usageData,
-          requestData
+          requestData,
+          timeConsumedData
         })
       )
     }

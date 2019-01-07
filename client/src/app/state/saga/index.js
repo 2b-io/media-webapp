@@ -1,6 +1,7 @@
 export { default as account } from './account'
 export { default as authenticate } from './authenticate'
 export { default as cacheSetting } from './cache-setting'
+export { default as cdnReport } from './cdn-report'
 export { default as invalidation } from './invalidation'
 export { default as resetPasswordCode } from './reset-password-code'
 export { default as layout } from './layout'
@@ -14,3 +15,4 @@ export { default as pullSetting } from './pull-setting'
 export { default as removeToastLoop } from './remove-toast'
 export { default as secretKey } from './secret-key'
 export { default as usageReport } from './usage-report'
+
