@@ -21,5 +21,5 @@ class CollaboratorService extends ApiService {
 }
 
 export default (accountIdentifier) => {
-  return new CollaboratorService('webapp', accountIdentifier)
+  return new CollaboratorService(accountIdentifier)
 }

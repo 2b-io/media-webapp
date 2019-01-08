@@ -20,5 +20,5 @@ class AccountService extends ApiService {
 }
 
 export default (account) => {
-  return new AccountService('webapp', account)
+  return new AccountService(account)
 }

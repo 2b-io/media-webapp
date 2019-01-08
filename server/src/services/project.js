@@ -23,5 +23,5 @@ class ProjectService extends ApiService {
 }
 
 export default (accountIdentifier) => {
-  return new ProjectService('webapp', accountIdentifier)
+  return new ProjectService(accountIdentifier)
 }

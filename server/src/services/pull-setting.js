@@ -11,5 +11,5 @@ class PullSettingService extends ApiService {
 }
 
 export default (accountIdentifier) => {
-  return new PullSettingService('webapp', accountIdentifier)
+  return new PullSettingService(accountIdentifier)
 }

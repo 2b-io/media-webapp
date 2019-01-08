@@ -11,5 +11,5 @@ class InvalidationService extends ApiService {
 }
 
 export default (accountIdentifier) => {
-  return new InvalidationService('webapp', accountIdentifier)
+  return new InvalidationService(accountIdentifier)
 }
