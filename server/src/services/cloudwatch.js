@@ -7,5 +7,5 @@ class CloudwatchService extends ApiService {
 }
 
 export default (accountIdentifier) => {
-  return new CloudwatchService('webapp', accountIdentifier)
+  return new CloudwatchService(accountIdentifier)
 }

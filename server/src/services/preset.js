@@ -23,5 +23,5 @@ class PresetService extends ApiService {
 }
 
 export default (accountIdentifier) => {
-  return new PresetService('webapp', accountIdentifier)
+  return new PresetService(accountIdentifier)
 }

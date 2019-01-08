@@ -11,5 +11,5 @@ class ResetPasswordService extends ApiService {
 }
 
 export default (account) => {
-  return new ResetPasswordService('webapp', account)
+  return new ResetPasswordService(account)
 }
