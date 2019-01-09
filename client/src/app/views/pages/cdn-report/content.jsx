@@ -103,6 +103,9 @@ export default connect(
     }
   },
   mapDispatch({
-    generateCdnReport: actions.generateCdnReport
+    generateUsageReport: (params) => actions.generateUsageReport({
+      ...params,
+      metricNames: [ 'OPT_TIME_CONSUMED', 'OPT_REQUESTS' ]
+    })
   })
 )(CdnReport)

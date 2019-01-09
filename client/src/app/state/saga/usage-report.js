@@ -15,6 +15,7 @@ const generateUsageReportLoop = function*() {
           data: {
             endDate,
             granularity,
+            metricNames,
             projectIdentifier,
             startDate
           }
@@ -30,6 +31,7 @@ const generateUsageReportLoop = function*() {
       const convetedPeriod = granularity === 'daily' ? 1440 : 60
 
       const data = yield Metric.generateUsageReport({
+        metricNames,
         projectIdentifier,
         period: convetedPeriod,
         startTime: dateTimeService.getStartOfUTCDay(new Date(startDate)),
@@ -42,16 +44,22 @@ const generateUsageReportLoop = function*() {
         throw 'Generate report failed'
       }
 
-      const {
-        bytesDownloaded,
-        requests
-      } = data
+      const result = {}
 
-      const bytesDownloadData = syntheticDataService.synthesizeBytesDownloadData(bytesDownloaded.datapoints)
-      const requestData = syntheticDataService.synthesizeRequestData(requests.datapoints)
+      metricNames.map((name) => {
+        const response = data[ name ]
+
+        result[ name ] = {
+          synthesizedData: syntheticDataService.synthesizeRequestData(response.datapoints),
+          ...response
+        }
+      })
 
       yield put(
-        actions.generateUsageReportCompleted(data, granularity, requestData, bytesDownloadData)
+        actions.generateUsageReportCompleted(
+          result,
+          granularity
+        )
       )
     } catch (e) {
       yield put(

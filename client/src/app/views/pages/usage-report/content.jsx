@@ -103,6 +103,9 @@ export default connect(
     }
   },
   mapDispatch({
-    generateUsageReport: actions.generateUsageReport
+    generateUsageReport: (params) => actions.generateUsageReport({
+      ...params,
+      metricNames: [ 'BYTES_DOWNLOADED', 'REQUESTS' ]
+    })
   })
 )(UsageReport)

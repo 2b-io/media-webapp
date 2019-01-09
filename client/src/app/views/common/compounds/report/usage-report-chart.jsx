@@ -144,16 +144,14 @@ const renderYAxisTick = (convertData) => ({ payload, x, y }) => (
 
 const UsageReportChart = ({
   data,
-  period,
-  usageData,
-  requestData
+  period
 }) => (
   <Fragment>
     {
-      data && data.bytesDownloaded &&
+      data && data.BYTES_DOWNLOADED &&
         <Fragment>
           <AreaChart
-            data={ data.bytesDownloaded.datapoints }
+            data={ data.BYTES_DOWNLOADED.datapoints }
             name="Bytes Downloaded"
             valueKey="value"
             xKey="timestamp"
@@ -167,7 +165,9 @@ const UsageReportChart = ({
             <DescriptionTextLine>Time UTC</DescriptionTextLine>
             <Analysis>
               <TextLine mostLeft mostRight>
-                Total Bytes: { dataFormat.formatSize(usageData.totalBytes) }
+                Total Bytes: {
+                  dataFormat.formatSize(data.BYTES_DOWNLOADED.synthesizedData.total)
+                }
               </TextLine>
             </Analysis>
           </AreaChartDetail>
@@ -175,10 +175,10 @@ const UsageReportChart = ({
         </Fragment>
     }
     {
-      data && data.requests &&
+      data && data.REQUESTS &&
         <Fragment>
           <AreaChart
-            data={ data.requests.datapoints }
+            data={ data.REQUESTS.datapoints }
             name="Requests"
             valueKey="value"
             xKey="timestamp"
@@ -192,16 +192,16 @@ const UsageReportChart = ({
             <DescriptionTextLine>Time UTC</DescriptionTextLine>
             <Analysis>
               <TextLine mostLeft mostRight>
-                Average: { dataFormat.formatNumber(requestData.average) }
+                Average: { dataFormat.formatNumber(data.REQUESTS.synthesizedData.average) }
               </TextLine>
               <TextLine mostLeft mostRight>
-                Total: { dataFormat.formatNumber(requestData.total) }
+                Total: { dataFormat.formatNumber(data.REQUESTS.synthesizedData.total) }
               </TextLine>
               <TextLine mostLeft mostRight>
-                Maximum: { dataFormat.formatNumber(requestData.maximum) }
+                Maximum: { dataFormat.formatNumber(data.REQUESTS.synthesizedData.maximum) }
               </TextLine>
               <TextLine mostLeft mostRight>
-                Minimum: { dataFormat.formatNumber(requestData.minimum) }
+                Minimum: { dataFormat.formatNumber(data.REQUESTS.synthesizedData.minimum) }
               </TextLine>
             </Analysis>
           </AreaChartDetail>

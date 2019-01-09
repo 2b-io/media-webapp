@@ -44,17 +44,13 @@ const watchGenerateUsageReport = function*(path) {
     if (completed) {
       const {
         data,
-        period,
-        requestData,
-        usageData
+        period
       } = completed.payload
 
       yield put(
         actions.mergeUIState(path, {
           data,
-          period,
-          usageData,
-          requestData
+          period
         })
       )
     }
