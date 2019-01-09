@@ -11,5 +11,5 @@ class InfrastructureService extends ApiServices {
 }
 
 export default (accountIdentifier) => {
-  return new InfrastructureService('webapp', accountIdentifier)
+  return new InfrastructureService(accountIdentifier)
 }
