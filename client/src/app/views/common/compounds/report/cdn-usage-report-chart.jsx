@@ -60,7 +60,7 @@ const renderTooltip = (period, format, tooltipText) => ({ payload, label }) => (
       </DescriptionTextLine>
       <DescriptionTextLine mostLeft mostRight>
         {
-          `${ tooltipText }: ${ format(payload[0].value) }`
+          `${ tooltipText }: ${ format(payload[ 0 ].value) }`
         }
       </DescriptionTextLine>
     </AreaChartContent>
@@ -145,70 +145,85 @@ const renderYAxisTick = (convertData) => ({ payload, x, y }) => (
 const CdnUsageReportChart = ({
   data,
   period
-}) => (
-  <Fragment>
-    {
-      data && data.BYTES_DOWNLOADED &&
-        <Fragment>
-          <AreaChart
-            data={ data.BYTES_DOWNLOADED.datapoints }
-            name="Bytes Downloaded"
-            valueKey="value"
-            xKey="timestamp"
-            yKey="value"
-            type="linear"
-            customTooltip={ renderTooltip(period, dataFormat.formatSize, 'Bytes Downloaded') }
-            customXAxisTick={ renderXAxisTick(period) }
-            customYAxisTick={ renderYAxisTick(dataFormat.formatSize) }
-          />
-          <AreaChartDetail>
-            <DescriptionTextLine>Time UTC</DescriptionTextLine>
-            <Analysis>
-              <TextLine mostLeft mostRight>
-                Total Bytes: {
-                  dataFormat.formatSize(data.BYTES_DOWNLOADED.synthesizedData.total)
-                }
-              </TextLine>
-            </Analysis>
-          </AreaChartDetail>
-          <Break />
-        </Fragment>
-    }
-    {
-      data && data.REQUESTS &&
-        <Fragment>
-          <AreaChart
-            data={ data.REQUESTS.datapoints }
-            name="Requests"
-            valueKey="value"
-            xKey="timestamp"
-            yKey="value"
-            type="linear"
-            customTooltip={ renderTooltip(period, dataFormat.formatNumber, 'Requests') }
-            customXAxisTick={ renderXAxisTick(period) }
-            customYAxisTick={ renderYAxisTick(dataFormat.formatNumber) }
-          />
-          <AreaChartDetail>
-            <DescriptionTextLine>Time UTC</DescriptionTextLine>
-            <Analysis>
-              <TextLine mostLeft mostRight>
-                Average: { dataFormat.formatNumber(data.REQUESTS.synthesizedData.average) }
-              </TextLine>
-              <TextLine mostLeft mostRight>
-                Total: { dataFormat.formatNumber(data.REQUESTS.synthesizedData.total) }
-              </TextLine>
-              <TextLine mostLeft mostRight>
-                Maximum: { dataFormat.formatNumber(data.REQUESTS.synthesizedData.maximum) }
-              </TextLine>
-              <TextLine mostLeft mostRight>
-                Minimum: { dataFormat.formatNumber(data.REQUESTS.synthesizedData.minimum) }
-              </TextLine>
-            </Analysis>
-          </AreaChartDetail>
-          <Break />
-        </Fragment>
-    }
-  </Fragment>
-)
+}) => {
+  if (!data) {
+    return null
+  }
+
+  const bytesDownloaded = data.BYTES_DOWNLOADED
+  const requests = data.REQUESTS
+
+  return (
+    <Fragment>
+      {
+        bytesDownloaded &&
+          <Fragment>
+            <AreaChart
+              data={ bytesDownloaded.datapoints }
+              name="Bytes Downloaded"
+              valueKey="value"
+              xKey="timestamp"
+              yKey="value"
+              type="linear"
+              customTooltip={ renderTooltip(period, dataFormat.formatSize, 'Bytes Downloaded') }
+              customXAxisTick={ renderXAxisTick(period) }
+              customYAxisTick={ renderYAxisTick(dataFormat.formatSize) }
+            />
+            <AreaChartDetail>
+              <DescriptionTextLine>Time UTC</DescriptionTextLine>
+              {
+                bytesDownloaded.synthesizedData &&
+                  <Analysis>
+                    <TextLine mostLeft mostRight>
+                      Total Bytes: {
+                        dataFormat.formatSize(bytesDownloaded.synthesizedData.total)
+                      }
+                    </TextLine>
+                  </Analysis>
+              }
+            </AreaChartDetail>
+            <Break />
+          </Fragment>
+      }
+      {
+        requests &&
+          <Fragment>
+            <AreaChart
+              data={ requests.datapoints }
+              name="Requests"
+              valueKey="value"
+              xKey="timestamp"
+              yKey="value"
+              type="linear"
+              customTooltip={ renderTooltip(period, dataFormat.formatNumber, 'Requests') }
+              customXAxisTick={ renderXAxisTick(period) }
+              customYAxisTick={ renderYAxisTick(dataFormat.formatNumber) }
+            />
+            <AreaChartDetail>
+              <DescriptionTextLine>Time UTC</DescriptionTextLine>
+              {
+                requests.synthesizedData &&
+                  <Analysis>
+                    <TextLine mostLeft mostRight>
+                      Average: { dataFormat.formatNumber(requests.synthesizedData.average) }
+                    </TextLine>
+                    <TextLine mostLeft mostRight>
+                      Total: { dataFormat.formatNumber(requests.synthesizedData.total) }
+                    </TextLine>
+                    <TextLine mostLeft mostRight>
+                      Maximum: { dataFormat.formatNumber(requests.synthesizedData.maximum) }
+                    </TextLine>
+                    <TextLine mostLeft mostRight>
+                      Minimum: { dataFormat.formatNumber(requests.synthesizedData.minimum) }
+                    </TextLine>
+                  </Analysis>
+              }
+            </AreaChartDetail>
+            <Break />
+          </Fragment>
+      }
+    </Fragment>
+  )
+}
 
 export default CdnUsageReportChart

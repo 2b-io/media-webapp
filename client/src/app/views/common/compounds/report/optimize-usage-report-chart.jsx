@@ -60,7 +60,7 @@ const renderTooltip = (period, format, tooltipText) => ({ payload, label }) => (
       </DescriptionTextLine>
       <DescriptionTextLine mostLeft mostRight>
         {
-          `${ tooltipText }: ${ format(payload[0].value) }`
+          `${ tooltipText }: ${ format(payload[ 0 ].value) }`
         }
       </DescriptionTextLine>
     </AreaChartContent>
