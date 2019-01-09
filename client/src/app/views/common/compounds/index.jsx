@@ -3,3 +3,4 @@ export { default as OptimizeUsageReportChart } from './report/optimize-usage-rep
 export { default as MenuButton } from './menu-button'
 export { default as Project } from './project'
 export { default as UsageForm } from './report/usage-form'
+export { default as UsageReportChart } from './usage-report-chart'
