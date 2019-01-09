@@ -10,8 +10,8 @@ import { Break, Container } from 'ui/elements'
 import { TextLine } from 'ui/typo'
 
 import {
-  CdnReportChart,
-  UsageForm as _CdnReportForm
+  OptimizeUsageReportChart,
+  UsageForm as _OptimizeUsageReportForm
 } from 'views/common/compounds'
 
 const DATA_DEFAULT = {
@@ -31,24 +31,22 @@ const DATA_DEFAULT = {
   ]
 }
 
-const CdnReportForm = reduxForm({
+const OptimizeUsageReportForm = reduxForm({
   form: 'CDN_REPORT_FORM',
   enableReinitialize: true
-})(_CdnReportForm)
+})(_OptimizeUsageReportForm)
 
 const formSelector = formValueSelector('CDN_REPORT_FORM')
 
-const CdnReport = ({
-  generateCdnReport,
+const OptimizeUsageReport = ({
+  generateUsageReport,
   projects,
   startDate,
   endDate,
   ui: {
     data,
     idle,
-    period,
-    timeConsumedData,
-    requestData
+    period
   }
 }) => {
   if (!projects.length) {
@@ -62,7 +60,7 @@ const CdnReport = ({
 
   return (
     <Container allowFullWidth={ true } >
-      <CdnReportForm
+      <OptimizeUsageReportForm
         idle={ idle }
         initialValues={ {
           projectIdentifier: projectsSelectData[0].value,
@@ -70,7 +68,7 @@ const CdnReport = ({
           startDate: DATA_DEFAULT.date.startDate,
           endDate: DATA_DEFAULT.date.endDate
         } }
-        onSubmit={ generateCdnReport }
+        onSubmit={ generateUsageReport }
         options={ {
           projects: projectsSelectData,
           granularity: DATA_DEFAULT.granularity
@@ -78,11 +76,9 @@ const CdnReport = ({
         currentDateRange={ { startDate, endDate } }
       />
       <Break double />
-      <CdnReportChart
+      <OptimizeUsageReportChart
         data={ data }
         period={ period }
-        timeConsumedData={ timeConsumedData }
-        requestData={ requestData }
       />
     </Container>
   )
@@ -108,4 +104,4 @@ export default connect(
       metricNames: [ 'OPT_TIME_CONSUMED', 'OPT_REQUESTS' ]
     })
   })
-)(CdnReport)
+)(OptimizeUsageReport)

@@ -142,79 +142,86 @@ const renderYAxisTick = (convertData) => ({ payload, x, y }) => (
   />
 )
 
-const CdnReportChart = ({
+const OptimizeUsageReportChart = ({
   data,
-  period,
-  timeConsumedData,
-  requestData
-}) => (
-  <Fragment>
-    {
-      data && data.timeConsumed &&
-        <Fragment>
-          <AreaChart
-            data={ data.timeConsumed.datapoints }
-            name="Time Consumed"
-            valueKey="value"
-            xKey="timestamp"
-            yKey="value"
-            type="linear"
-            customTooltip={ renderTooltip(period, dataFormat.formatMilisecondToString, 'Time Consumed') }
-            customXAxisTick={ renderXAxisTick(period) }
-            customYAxisTick={ renderYAxisTick(dataFormat.formatMilisecondToString) }
-          />
-          <AreaChartDetail>
-            <DescriptionTextLine>Time UTC</DescriptionTextLine>
-            {
-              timeConsumedData && timeConsumedData.totalHours &&
-                <Analysis>
-                  <TextLine mostLeft mostRight>
-                    Total Time: { dataFormat.formatMilisecondToString(timeConsumedData.totalHours, 'h:m:s') }
-                  </TextLine>
-                </Analysis>
-            }
-          </AreaChartDetail>
-          <Break />
-        </Fragment>
-    }
-    {
-      data && data.requests &&
-        <Fragment>
-          <AreaChart
-            data={ data.requests.datapoints }
-            name="Requests"
-            valueKey="value"
-            xKey="timestamp"
-            yKey="value"
-            type="linear"
-            customTooltip={ renderTooltip(period, dataFormat.formatNumber, 'Requests') }
-            customXAxisTick={ renderXAxisTick(period) }
-            customYAxisTick={ renderYAxisTick(dataFormat.formatNumber) }
-          />
-          <AreaChartDetail>
-            <DescriptionTextLine>Time UTC</DescriptionTextLine>
-            {
-              requestData &&
-                <Analysis>
-                  <TextLine mostLeft mostRight>
-                    Average: { dataFormat.formatNumber(requestData.average) }
-                  </TextLine>
-                  <TextLine mostLeft mostRight>
-                    Total: { dataFormat.formatNumber(requestData.total) }
-                  </TextLine>
-                  <TextLine mostLeft mostRight>
-                    Maximum: { dataFormat.formatNumber(requestData.maximum) }
-                  </TextLine>
-                  <TextLine mostLeft mostRight>
-                    Minimum: { dataFormat.formatNumber(requestData.minimum) }
-                  </TextLine>
-                </Analysis>
-            }
-          </AreaChartDetail>
-          <Break />
-        </Fragment>
-    }
-  </Fragment>
-)
+  period
+}) => {
+  if (!data) {
+    return null
+  }
 
-export default CdnReportChart
+  const optTimeConsumed = data.OPT_TIME_CONSUMED
+  const optRequests = data.OPT_REQUESTS
+
+  return (
+    <Fragment>
+      {
+        optTimeConsumed &&
+          <Fragment>
+            <AreaChart
+              data={ optTimeConsumed.datapoints }
+              name="Optimize Time Consumed"
+              valueKey="value"
+              xKey="timestamp"
+              yKey="value"
+              type="linear"
+              customTooltip={ renderTooltip(period, dataFormat.formatMilisecondToString, 'Optimized time') }
+              customXAxisTick={ renderXAxisTick(period) }
+              customYAxisTick={ renderYAxisTick(dataFormat.formatMilisecondToString) }
+            />
+            <AreaChartDetail>
+              <DescriptionTextLine>Time UTC</DescriptionTextLine>
+              {
+                optTimeConsumed.synthesizedData &&
+                  <Analysis>
+                    <TextLine mostLeft mostRight>
+                      Total Time: { dataFormat.formatMilisecondToString(optTimeConsumed.synthesizedData.total, 'h:m:s') }
+                    </TextLine>
+                  </Analysis>
+              }
+            </AreaChartDetail>
+            <Break />
+          </Fragment>
+      }
+      {
+        optRequests &&
+          <Fragment>
+            <AreaChart
+              data={ optRequests.datapoints }
+              name="Requests"
+              valueKey="value"
+              xKey="timestamp"
+              yKey="value"
+              type="linear"
+              customTooltip={ renderTooltip(period, dataFormat.formatNumber, 'Requests') }
+              customXAxisTick={ renderXAxisTick(period) }
+              customYAxisTick={ renderYAxisTick(dataFormat.formatNumber) }
+            />
+            <AreaChartDetail>
+              <DescriptionTextLine>Time UTC</DescriptionTextLine>
+              {
+                optRequests.synthesizedData &&
+                  <Analysis>
+                    <TextLine mostLeft mostRight>
+                      Average: { dataFormat.formatNumber(optRequests.synthesizedData.average) }
+                    </TextLine>
+                    <TextLine mostLeft mostRight>
+                      Total: { dataFormat.formatNumber(optRequests.synthesizedData.total) }
+                    </TextLine>
+                    <TextLine mostLeft mostRight>
+                      Maximum: { dataFormat.formatNumber(optRequests.synthesizedData.maximum) }
+                    </TextLine>
+                    <TextLine mostLeft mostRight>
+                      Minimum: { dataFormat.formatNumber(optRequests.synthesizedData.minimum) }
+                    </TextLine>
+                  </Analysis>
+              }
+            </AreaChartDetail>
+            <Break />
+          </Fragment>
+      }
+    </Fragment>
+  )
+}
+
+export default OptimizeUsageReportChart

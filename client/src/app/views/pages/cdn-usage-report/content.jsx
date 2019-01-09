@@ -10,8 +10,8 @@ import { Break, Container } from 'ui/elements'
 import { TextLine } from 'ui/typo'
 
 import {
-  UsageReportChart,
-  UsageForm as _UsageReportForm
+  CdnUsageReportChart,
+  UsageForm as _CdnUsageReportForm
 } from 'views/common/compounds'
 
 const DATA_DEFAULT = {
@@ -31,14 +31,14 @@ const DATA_DEFAULT = {
   ]
 }
 
-const UsageReportForm = reduxForm({
+const CdnUsageReportForm = reduxForm({
   form: 'USAGE_REPORT_FORM',
   enableReinitialize: true
-})(_UsageReportForm)
+})(_CdnUsageReportForm)
 
 const formSelector = formValueSelector('USAGE_REPORT_FORM')
 
-const UsageReport = ({
+const CdnUsageReport = ({
   generateUsageReport,
   projects,
   startDate,
@@ -46,9 +46,7 @@ const UsageReport = ({
   ui: {
     data,
     idle,
-    period,
-    usageData,
-    requestData
+    period
   }
 }) => {
   if (!projects.length) {
@@ -62,7 +60,7 @@ const UsageReport = ({
 
   return (
     <Container allowFullWidth={ true } >
-      <UsageReportForm
+      <CdnUsageReportForm
         idle={ idle }
         initialValues={ {
           projectIdentifier: projectsSelectData[0].value,
@@ -78,11 +76,9 @@ const UsageReport = ({
         currentDateRange={ { startDate, endDate } }
       />
       <Break double />
-      <UsageReportChart
+      <CdnUsageReportChart
         data={ data }
         period={ period }
-        usageData={ usageData }
-        requestData={ requestData }
       />
     </Container>
   )
@@ -108,4 +104,4 @@ export default connect(
       metricNames: [ 'BYTES_DOWNLOADED', 'REQUESTS' ]
     })
   })
-)(UsageReport)
+)(CdnUsageReport)

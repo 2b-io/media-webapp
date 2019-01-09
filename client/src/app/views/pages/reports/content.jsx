@@ -77,6 +77,6 @@ export default connect(
   null,
   mapDispatch({
     toUsageReport: () => actions.requestLocation('/reports/usage'),
-    toCdnReport: () => actions.requestLocation('/reports/cdn')
+    toCdnReport: () => actions.requestLocation('/reports/optimization')
   })
 )(Reports)

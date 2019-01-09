@@ -1,8 +1,9 @@
 import cacheInvalidate from './private/cache-invalidate'
 import cacheSetting from './private/cache-setting'
-import cdnReport from './private/cdn-report'
+import cdnUsageReport from './private/cdn-usage-report'
 import dashboard from './private/dashboard'
 import inviteCollaborator from './private/invite-collaborator'
+import optimizeUsageReport from './private/optimize-usage-report'
 import preset from './private/preset'
 import profile from './private/profile'
 import projectCreate from './private/project-create'
@@ -11,14 +12,15 @@ import projectEdit from './private/project-edit'
 import projectList from './private/project-list'
 import pullSetting from './private/pull-setting'
 import reports from './private/reports'
-import usageReport from './private/usage-report'
+
 
 export default {
   ...cacheInvalidate,
   ...cacheSetting,
-  ...cdnReport,
+  ...cdnUsageReport,
   ...dashboard,
   ...inviteCollaborator,
+  ...optimizeUsageReport,
   ...profile,
   ...projectCreate,
   ...projectList,
@@ -26,6 +28,5 @@ export default {
   ...projectDetail,
   ...projectEdit,
   ...pullSetting,
-  ...reports,
-  ...usageReport
+  ...reports
 }

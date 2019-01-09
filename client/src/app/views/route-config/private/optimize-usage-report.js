@@ -2,7 +2,7 @@ import { all, fork, put, race, take } from 'redux-saga/effects'
 
 import { addToast } from 'state/saga/toast'
 import { actions, types } from 'state/interface'
-import * as UsageReport from 'views/pages/usage-report'
+import * as OptimizeUsageReport from 'views/pages/optimize-usage-report'
 
 const watchFetchProjects = function*() {
   yield take(types.project.FETCH_FAILED)
@@ -13,7 +13,7 @@ const watchFetchProjects = function*() {
   })
 }
 
-const watchGenerateUsageReport = function*(path) {
+const watchGenerateOptimizeUsageReport = function*(path) {
   while (true) {
     yield take(types.reports.GENERATE_USAGE_REPORT)
 
@@ -58,12 +58,12 @@ const watchGenerateUsageReport = function*(path) {
 }
 
 export default {
-  '/reports/usage': {
-    component: UsageReport,
+  '/reports/optimization': {
+    component: OptimizeUsageReport,
     exact: true,
     *state(path) {
       yield fork(watchFetchProjects)
-      yield fork(watchGenerateUsageReport, path)
+      yield fork(watchGenerateOptimizeUsageReport, path)
 
       yield all([
         put(

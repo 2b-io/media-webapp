@@ -142,7 +142,7 @@ const renderYAxisTick = (convertData) => ({ payload, x, y }) => (
   />
 )
 
-const UsageReportChart = ({
+const CdnUsageReportChart = ({
   data,
   period
 }) => (
@@ -211,4 +211,4 @@ const UsageReportChart = ({
   </Fragment>
 )
 
-export default UsageReportChart
+export default CdnUsageReportChart

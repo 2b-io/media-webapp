@@ -50,7 +50,7 @@ const generateUsageReportLoop = function*() {
         const response = data[ name ]
 
         result[ name ] = {
-          synthesizedData: syntheticDataService.synthesizeRequestData(response.datapoints),
+          synthesizedData: syntheticDataService.synthesizeData(response.datapoints),
           ...response
         }
       })

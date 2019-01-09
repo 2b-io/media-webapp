@@ -7,12 +7,12 @@ import { PlainButton } from 'ui/elements'
 import { BackIcon } from 'ui/icons'
 import { PageTitle } from 'ui/typo'
 
-const CdnReport = ({ navigateBack }) => (
+const CdnUsageReport = ({ navigateBack }) => (
   <Fragment>
     <PlainButton onClick={ navigateBack }>
       <BackIcon />
     </PlainButton>
-    <PageTitle>Cdn Report</PageTitle>
+    <PageTitle>Cdn Usage Report</PageTitle>
   </Fragment>
 )
 
@@ -21,4 +21,4 @@ export default connect(
   mapDispatch({
     navigateBack: () => actions.requestLocation('/reports')
   })
-)(CdnReport)
+)(CdnUsageReport)

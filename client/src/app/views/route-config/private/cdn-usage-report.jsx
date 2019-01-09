@@ -2,7 +2,7 @@ import { all, fork, put, race, take } from 'redux-saga/effects'
 
 import { addToast } from 'state/saga/toast'
 import { actions, types } from 'state/interface'
-import * as CdnReport from 'views/pages/cdn-report'
+import * as CdnUsageReport from 'views/pages/cdn-usage-report'
 
 const watchFetchProjects = function*() {
   yield take(types.project.FETCH_FAILED)
@@ -13,9 +13,9 @@ const watchFetchProjects = function*() {
   })
 }
 
-const watchGenerateCdnReport = function*(path) {
+const watchGenerateCdnUsageReport = function*(path) {
   while (true) {
-    yield take(types.reports.GENERATE_CDN_REPORT)
+    yield take(types.reports.GENERATE_USAGE_REPORT)
 
     yield put(
       actions.mergeUIState(path, {
@@ -24,8 +24,8 @@ const watchGenerateCdnReport = function*(path) {
     )
 
     const { completed, failed } = yield race({
-      completed: take(types.reports.GENERATE_CDN_REPORT_COMPLETED),
-      failed: take(types.reports.GENERATE_CDN_REPORT_FAILED)
+      completed: take(types.reports.GENERATE_USAGE_REPORT_COMPLETED),
+      failed: take(types.reports.GENERATE_USAGE_REPORT_FAILED)
     })
 
     yield put(
@@ -44,17 +44,13 @@ const watchGenerateCdnReport = function*(path) {
     if (completed) {
       const {
         data,
-        period,
-        requestData,
-        timeConsumedData
+        period
       } = completed.payload
 
       yield put(
         actions.mergeUIState(path, {
           data,
-          period,
-          requestData,
-          timeConsumedData
+          period
         })
       )
     }
@@ -62,12 +58,12 @@ const watchGenerateCdnReport = function*(path) {
 }
 
 export default {
-  '/reports/cdn': {
-    component: CdnReport,
+  '/reports/usage': {
+    component: CdnUsageReport,
     exact: true,
     *state(path) {
       yield fork(watchFetchProjects)
-      yield fork(watchGenerateCdnReport, path)
+      yield fork(watchGenerateCdnUsageReport, path)
 
       yield all([
         put(
