@@ -25,8 +25,8 @@ const Layout = styled.section`
 `
 
 const Reports = ({
-  toCdnReport,
-  toUsageReport
+  toCdnUsageReport,
+  toOptimizeUsageReport
 }) => (
   <Layout>
     <ResponsiveGrid
@@ -36,11 +36,11 @@ const Reports = ({
           content: () => (
             <Card
               interactable
-              onClick={ toUsageReport }
+              onClick={ toCdnUsageReport }
               content={ () => (
                 <Fragment>
                   <TextLine mostLeft mostRight>
-                    Usage Report
+                    Cdn Usage Report
                   </TextLine>
                   <DescriptionText readOnly mostLeft mostRight>
                     The following charts show selected values from the AWS Usage Report for CloudFront.
@@ -54,11 +54,11 @@ const Reports = ({
           content: () => (
             <Card
               interactable
-              onClick={ toCdnReport }
+              onClick={ toOptimizeUsageReport }
               content={ () => (
                 <Fragment>
                   <TextLine mostLeft mostRight>
-                    Cdn Report
+                    Optimize Usage Report
                   </TextLine>
                   <DescriptionText readOnly mostLeft mostRight>
                     The following charts show optimize usage (TimeConsumed & Requests).
@@ -76,7 +76,7 @@ const Reports = ({
 export default connect(
   null,
   mapDispatch({
-    toUsageReport: () => actions.requestLocation('/reports/usage'),
-    toCdnReport: () => actions.requestLocation('/reports/optimization')
+    toCdnUsageReport: () => actions.requestLocation('/reports/usage'),
+    toOptimizeUsageReport: () => actions.requestLocation('/reports/optimization')
   })
 )(Reports)
