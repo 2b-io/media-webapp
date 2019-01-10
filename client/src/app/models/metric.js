@@ -17,36 +17,7 @@ export default {
     const { token } = options
 
     if (!metricNames) {
-      const body = await request(`
-        query generateReport($token: String!, $projectIdentifier: String!, $startTime: Float!, $endTime: Float! ,$period: Float!) {
-          session(token: $token) {
-            account {
-              project(identifier: $projectIdentifier) {
-                bytesDownloaded: metric(name: "BYTES_DOWNLOADED") {
-                  name,
-                  datapoints(startTime: $startTime, endTime: $endTime, period: $period) {
-                    ${ USAGE_REPORT_FRAGMENT }
-                  }
-                },
-                requests: metric(name: "REQUESTS") {
-                  name,
-                  datapoints(startTime: $startTime, endTime: $endTime, period: $period) {
-                    ${ USAGE_REPORT_FRAGMENT }
-                  }
-                }
-              }
-            }
-          }
-        }
-      `, {
-        endTime,
-        period,
-        projectIdentifier,
-        startTime,
-        token
-      })
-
-      return body.session.account.project
+      return null
     }
 
     const queryResponse = metricNames.map((name) => {
