@@ -3,13 +3,29 @@ import React from 'react'
 import { Break, Form, Link, PrimaryButton } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
 import { Radio, TextBox } from 'views/common/form'
-import { validateRequired } from 'views/common/validate'
+import { validateDomain, validateRequired } from 'views/common/validate'
 
 const projectForm = ({ handleSubmit, idle }) => (
   <Form handleSubmit={ handleSubmit }>
     <TextBox
       label="Project Name"
       name="name"
+      disabled={ !idle }
+      validate={ validateRequired }
+      maxLength={ 50 }
+    />
+    <Break />
+    <TextBox
+      label="Domain"
+      name="domain"
+      disabled={ !idle }
+      validate={ [ validateRequired, validateDomain ] }
+      maxLength={ 50 }
+    />
+    <Break />
+    <TextBox
+      label="Protocol"
+      name="protocol"
       disabled={ !idle }
       validate={ validateRequired }
       maxLength={ 50 }

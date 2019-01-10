@@ -9,7 +9,9 @@ const createLoop = function*() {
     try {
       const {
         payload: {
+          domain,
           name,
+          protocol,
           provider
         }
       } = yield take(types.project.CREATE)
@@ -21,7 +23,9 @@ const createLoop = function*() {
       }
 
       const newProject = yield Project.create({
+        domain,
         name,
+        protocol,
         provider
       }, {
         token: session.token
