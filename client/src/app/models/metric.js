@@ -16,11 +16,11 @@ export default {
     } = params
     const { token } = options
 
-    if (!metricNames) {
+    if (!metricNames || metricNames.length === 0) {
       return null
     }
 
-    const queryResponse = metricNames.map((name) => {
+    const responseQuery = metricNames.map((name) => {
       return `
         ${ name }: metric(name: "${ name }") {
           name,
@@ -35,7 +35,7 @@ export default {
         session(token: $token) {
           account {
             project(identifier: $projectIdentifier) {
-              ${ queryResponse }
+              ${ responseQuery }
             }
           }
         }
