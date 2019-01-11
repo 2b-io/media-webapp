@@ -38,48 +38,54 @@ const watchGetProject = function*(path) {
 }
 
 const watchGetProjectDetail = function*(identifier) {
-  const session = yield select(selectors.currentSession)
+  try {
+    const session = yield select(selectors.currentSession)
 
-  if (!session) {
-    throw 'Unauthorized'
-  }
+    if (!session) {
+      throw 'Unauthorized'
+    }
 
-  const {
-    presets,
-    cacheSetting,
-    pullSetting,
-    ...project
-  } = yield Project.get({
-    identifier
-  }, {
-    token: session.token
-  })
+    const {
+      presets,
+      cacheSetting,
+      pullSetting,
+      ...project
+    } = yield Project.get({
+      identifier
+    }, {
+      token: session.token
+    })
 
-  if (!project) {
-    throw 'Get project failed'
-  }
+    if (!project) {
+      throw 'Get project failed'
+    }
 
-  yield all([
-    put(actions.getProjectCompleted(project)),
-    put(
-      actions.fetchPresetsCompleted({
-        presets,
-        identifier
-      })
-    ),
-    put(
-      actions.getCacheSettingCompleted({
-        cacheSetting,
-        identifier
-      })
-    ),
-    put(
-      actions.getPullSettingCompleted({
-        pullSetting,
-        identifier
-      })
+    yield all([
+      put(actions.getProjectCompleted(project)),
+      put(
+        actions.fetchPresetsCompleted({
+          presets,
+          identifier
+        })
+      ),
+      put(
+        actions.getCacheSettingCompleted({
+          cacheSetting,
+          identifier
+        })
+      ),
+      put(
+        actions.getPullSettingCompleted({
+          pullSetting,
+          identifier
+        })
+      )
+    ])
+  } catch (e) {
+    yield put(
+      actions.getProjectFailed(serializeError(e))
     )
-  ])
+  }
 }
 
 const watchCreatePreset = function*(path) {
@@ -318,8 +324,6 @@ export default {
     component: ProjectDetail,
     exact: true,
     *state(path) {
-      const { identifier } = yield select(selectors.currentParams)
-      yield fork(watchGetProjectDetail, identifier)
       yield fork(watchGetProject, path)
       yield fork(watchRemoveSecretKey)
       yield fork(watchUpdateSecretKey)
@@ -327,6 +331,9 @@ export default {
       yield fork(watchLeaveProject, path)
       yield fork(watchMakeOwner, path)
       yield fork(watchRemoveCollaborator)
+
+      const { identifier } = yield select(selectors.currentParams)
+      yield fork(watchGetProjectDetail, identifier)
 
       yield put(
         actions.initializeUIState(path, {
