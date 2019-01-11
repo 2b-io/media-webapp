@@ -12,16 +12,6 @@ const pullSettingForm = ({
   idle
 }) => (
   <Form handleSubmit={ handleSubmit }>
-    <TextBox
-      disabled={ !idle }
-      label="Pull URL"
-      name="pullUrl"
-      validate={ validateUrl }
-    />
-    <DescriptionText mostLeft mostRight>
-      (Optional) If you want Media CDN to request your content from a directory in your origin, enter the Pull URL here, for example, https://mywebsite.com/assets. Do not include a / at the end of the Pull URL.
-    </DescriptionText>
-    <Break />
     <TextArea
       disabled={ !idle }
       label="Allowed Origins"

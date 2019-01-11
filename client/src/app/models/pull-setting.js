@@ -6,7 +6,6 @@ export const HEADER_FRAGMENT = `
   value
 `
 export const PULL_SETTING_FRAGMENT = `
-  pullUrl,
   allowedOrigins,
   headers {
     ${ HEADER_FRAGMENT }
