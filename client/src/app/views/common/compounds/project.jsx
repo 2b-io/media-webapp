@@ -32,8 +32,7 @@ const Project = ({ project }) => {
       </ProjectName>
       <Text mostLeft mostRight>
         { provider === 'cloudfront' ? 'Amazon CloudFront' : 'Key CDN' }<br />
-        { domain }<br />
-        { protocol }<br />
+        { protocol + '://' + domain }<br />
         { ifraDomain }<br />
         { project.status !== 'DEPLOYED' ? project.status : project.isActive ? 'DEPLOYED' : 'DISABLED' }
       </Text>
