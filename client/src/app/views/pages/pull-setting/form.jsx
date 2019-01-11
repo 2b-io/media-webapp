@@ -2,8 +2,8 @@ import React from 'react'
 
 import { Break, Form, PrimaryButton } from 'ui/elements'
 import { DescriptionText } from 'ui/typo'
-import { TextArea, TextBox } from 'views/common/form'
-import { validateDomain, validateUrl } from 'views/common/validate'
+import { TextArea } from 'views/common/form'
+import { validateDomain } from 'views/common/validate'
 
 import CustomHeader from './custom-header'
 
