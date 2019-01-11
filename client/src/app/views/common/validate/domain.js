@@ -1,7 +1,7 @@
 import { stringToList } from 'services/string-to-list'
 
-//use url regex on this site: https://regexr.com/3au3g
-const domainRegex = /^(?:[a-z\d](?:[a-z\d-]{0,63}[a-z\d])?\.)+[a-z\d][a-z\d-]{0,63}[a-z\d]$/i
+//tested at: https://www.regextester.com/?fam=106985
+const domainRegex = /^((?:[a-z\d](?:[a-z\d-]{0,63}[a-z\d])?|\*)\.)+[a-z\d][a-z\d-]{0,63}[a-z\d]$/i
 
 const checkValidDoMain = (domain) => domain && domainRegex.test(domain)
 
