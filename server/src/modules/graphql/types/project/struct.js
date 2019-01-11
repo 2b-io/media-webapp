@@ -8,6 +8,12 @@ import {
 } from 'graphql-iso-date'
 
 export default {
+  domain: {
+    type: GraphQLString
+  },
+  protocol: {
+    type: GraphQLString
+  },
   name: {
     type: GraphQLString
   },
