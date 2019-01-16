@@ -1,5 +1,7 @@
 import { all, fork, put, race, select, take } from 'redux-saga/effects'
+import serializeError from 'serialize-error'
 
+import Project from 'models/project'
 import { addToast } from 'state/saga/toast'
 import { actions, selectors, types } from 'state/interface'
 import * as ProjectDetail from 'views/pages/project-detail'
@@ -32,6 +34,57 @@ const watchGetProject = function*(path) {
         })
       )
     }
+  }
+}
+
+const watchGetProjectDetail = function*(identifier) {
+  try {
+    const session = yield select(selectors.currentSession)
+
+    if (!session) {
+      throw 'Unauthorized'
+    }
+
+    const {
+      presets,
+      cacheSetting,
+      pullSetting,
+      ...project
+    } = yield Project.get({
+      identifier
+    }, {
+      token: session.token
+    })
+
+    if (!project) {
+      throw 'Get project failed'
+    }
+
+    yield all([
+      put(actions.getProjectCompleted(project)),
+      put(
+        actions.fetchPresetsCompleted({
+          presets,
+          identifier
+        })
+      ),
+      put(
+        actions.getCacheSettingCompleted({
+          cacheSetting,
+          identifier
+        })
+      ),
+      put(
+        actions.getPullSettingCompleted({
+          pullSetting,
+          identifier
+        })
+      )
+    ])
+  } catch (e) {
+    yield put(
+      actions.getProjectFailed(serializeError(e))
+    )
   }
 }
 
@@ -280,21 +333,17 @@ export default {
       yield fork(watchRemoveCollaborator)
 
       const { identifier } = yield select(selectors.currentParams)
+      yield fork(watchGetProjectDetail, identifier)
 
-      yield all([
-        put(
-          actions.getProject(identifier)
-        ),
-        put(
-          actions.initializeUIState(path, {
-            idle: true,
-            isProjectActive: false,
-            isCreatePresetDialogActive: false,
-            isLeaveProjectDialogActive: false,
-            isMakeOwnerDialogActive: false
-          })
-        )
-      ])
+      yield put(
+        actions.initializeUIState(path, {
+          idle: true,
+          isProjectActive: false,
+          isCreatePresetDialogActive: false,
+          isLeaveProjectDialogActive: false,
+          isMakeOwnerDialogActive: false
+        })
+      )
     }
   }
 }
