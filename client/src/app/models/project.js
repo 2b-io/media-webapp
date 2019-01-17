@@ -14,6 +14,8 @@ export const COLLABORATOR_FRAGMENT = `
 `
 
 export const PROJECT_FRAGMENT = `
+  domain,
+  protocol,
   identifier,
   name,
   infrastructure {
@@ -93,7 +95,12 @@ export default {
   },
 
   async create(params, options) {
-    const { name, provider } = params
+    const {
+      domain,
+      name,
+      protocol,
+      provider
+    } = params
     const { token } = options
 
     const body = await request(`
@@ -108,7 +115,9 @@ export default {
       }
     `, {
       project: {
-        name
+        domain,
+        name,
+        protocol
       },
       provider,
       token,

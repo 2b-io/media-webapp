@@ -15,7 +15,14 @@ const ProjectName = styled.div`
 `
 
 const Project = ({ project }) => {
-  const { domain, provider } = project.infrastructure
+  const {
+    domain,
+    protocol,
+    infrastructure: {
+      domain: ifraDomain,
+      provider
+    }
+  } = project
 
   return (
     <section>
@@ -25,8 +32,13 @@ const Project = ({ project }) => {
       </ProjectName>
       <Text mostLeft mostRight>
         { provider === 'cloudfront' ? 'Amazon CloudFront' : 'Key CDN' }<br />
-        { domain }<br />
-        { project.status !== 'DEPLOYED' ? project.status : project.isActive ? 'DEPLOYED' : 'DISABLED' }
+        { `${ protocol }://${ domain }` }<br />
+        { ifraDomain }<br />
+        {
+          project.status !== 'DEPLOYED' ?
+            project.status :
+            project.isActive ? 'DEPLOYED' : 'DISABLED'
+        }
       </Text>
     </section>
   )

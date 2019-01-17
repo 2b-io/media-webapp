@@ -14,15 +14,13 @@ export default ({ PullSetting, PullSettingStruct }) => ({
       const { project } = self
       const {
         allowedOrigins,
-        headers,
-        pullUrl
+        headers
       } = pullSetting
 
       const PullSettingService = createPullSettingService(ctx._session.account.identifier)
       const newPullSetting = await PullSettingService.update(project.identifier, {
         allowedOrigins,
-        headers,
-        pullUrl
+        headers
       })
 
       return {
