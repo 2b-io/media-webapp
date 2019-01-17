@@ -97,12 +97,7 @@ const getLoop = function*() {
         throw 'Unauthorized'
       }
 
-      const {
-        presets,
-        cacheSetting,
-        pullSetting,
-        ...project
-      } = yield Project.get({
+      const project = yield Project.get({
         identifier
       }, {
         token: session.token
@@ -113,25 +108,7 @@ const getLoop = function*() {
       }
 
       yield all([
-        put(actions.getProjectCompleted(project)),
-        put(
-          actions.fetchPresetsCompleted({
-            presets,
-            identifier: project.identifier
-          })
-        ),
-        put(
-          actions.getCacheSettingCompleted({
-            cacheSetting,
-            identifier: project.identifier
-          })
-        ),
-        put(
-          actions.getPullSettingCompleted({
-            pullSetting,
-            identifier: project.identifier
-          })
-        )
+        put(actions.getProjectCompleted(project))
       ])
     } catch (e) {
       yield put(

@@ -33,10 +33,6 @@ const PullSettings = ({
         content={ () => (
           <Fragment>
             <Text mostLeft mostRight>
-              Pull URL:<br />
-              &nbsp;&nbsp;{ pullSetting.pullUrl || 'N/A' }<br />
-            </Text>
-            <Text mostLeft mostRight>
               Allowed Origins:<br />
               {
                 allowedOrigins.length &&
