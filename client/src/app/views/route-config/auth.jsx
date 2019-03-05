@@ -11,6 +11,7 @@ import projectList from './private/project-list'
 import pullSetting from './private/pull-setting'
 import reports from './private/reports'
 import usageReport from './private/usage-report'
+import payment from './private/payment'
 
 export default {
   ...cacheInvalidate,
@@ -25,5 +26,6 @@ export default {
   ...projectEdit,
   ...pullSetting,
   ...reports,
-  ...usageReport
+  ...usageReport,
+  ...payment
 }
