@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Identicon } from 'ui/elements'
+import { Identicon, LoadingIcon } from 'ui/elements'
 import { DescriptionTextLine, TextLine } from 'ui/typo'
 
 const Wrapper = styled.div`
@@ -39,8 +39,9 @@ const UserAvatar = styled.div`
   border-radius: 50%;
 `
 
-const Top = ({ account = {} }) => (
+const Top = ({ account = {}, idle }) => (
   <Wrapper>
+    { !idle && <LoadingIcon />}
     <Account>
       <UserAvatar>
         <Identicon circle

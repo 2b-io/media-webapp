@@ -30,7 +30,15 @@ const watchGetProject = function*(path) {
     if (isActive === true && status === 'DEPLOYED') {
       yield put(
         actions.mergeUIState(path, {
-          isProjectActive: true
+          isProjectActive: true,
+          idle: true
+        })
+      )
+    } else {
+      yield put(
+        actions.mergeUIState(path, {
+          isProjectActive: false,
+          idle: true
         })
       )
     }
@@ -337,7 +345,7 @@ export default {
 
       yield put(
         actions.initializeUIState(path, {
-          idle: true,
+          idle: false,
           isProjectActive: false,
           isCreatePresetDialogActive: false,
           isLeaveProjectDialogActive: false,

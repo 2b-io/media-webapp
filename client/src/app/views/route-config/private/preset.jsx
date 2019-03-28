@@ -4,57 +4,32 @@ import { addToast } from 'state/saga/toast'
 import { actions, selectors, types } from 'state/interface'
 import * as Preset from 'views/pages/preset'
 
-const watchGetProject = function*() {
-  const { identifier } = yield select(selectors.currentParams)
-
+const watchGetPreset = function*(path) {
   const { completed, failed } = yield race({
-    completed: take(types.project.GET_COMPLETED),
-    failed: take(types.project.GET_FAILED)
+    completed: take(types.preset.GET_COMPLETED),
+    failed: take(types.preset.GET_FAILED)
   })
 
+  const { identifier } = yield select(selectors.currentParams)
+
   if (failed) {
-    yield all([
-      fork(addToast, {
+    yield all ([
+      yield fork(addToast, {
         type: 'error',
-        message: 'Cannot connect to project. Project does not exist or network has error(s).'
+        message: 'Preset does not exist or internet connection has error(s).'
       }),
       put(
-        actions.requestLocation('/projects')
+        actions.requestLocation(`/projects/${ identifier }`)
       )
     ])
   }
 
-  if (completed) {
-    const { isActive, status } = completed.payload.project
+  yield put(
+    actions.mergeUIState(path, {
+      idle: true
+    })
+  )
 
-    if (!(isActive === true && status === 'DEPLOYED')) {
-      yield all([
-        fork(addToast, {
-          type: 'error',
-          message: 'Project is initializing or disabled.'
-        }),
-        put(
-          actions.requestLocation(`/projects/${ identifier }`)
-        )
-      ])
-    }
-  }
-}
-
-const watchGetPreset = function*() {
-  yield take(types.preset.GET_FAILED)
-
-  const { identifier } = yield select(selectors.currentParams)
-
-  yield all ([
-    yield fork(addToast, {
-      type: 'error',
-      message: 'Preset does not exist or internet connection has error(s).'
-    }),
-    put(
-      actions.requestLocation(`/projects/${ identifier }`)
-    )
-  ])
 }
 
 const watchRemovePreset = function*(path) {
@@ -187,8 +162,7 @@ export default {
     component: Preset,
     exact: true,
     *state(path) {
-      yield fork(watchGetProject)
-      yield fork(watchGetPreset)
+      yield fork(watchGetPreset, path)
       yield fork(watchRemovePreset, path)
       yield fork(watchUpdatePreset, path)
 
@@ -206,7 +180,7 @@ export default {
         ),
         put(
           actions.initializeUIState(path, {
-            idle: true,
+            idle: false,
             isRemovePresetDialogActive: false,
             isUpdatePresetDialogActive: false
           })

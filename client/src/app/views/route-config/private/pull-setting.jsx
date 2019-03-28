@@ -4,10 +4,10 @@ import { addToast } from 'state/saga/toast'
 import { actions, types, selectors } from 'state/interface'
 import * as PullSetting from 'views/pages/pull-setting'
 
-const watchGetProject = function*() {
+const watchGetProject = function*(path) {
   const { identifier } = yield select(selectors.currentParams)
 
-  const { completed, failed } = yield race({
+  const { completed, failed, pullSetting } = yield race({
     completed: take(types.project.GET_COMPLETED),
     failed: take(types.project.GET_FAILED)
   })
@@ -39,6 +39,12 @@ const watchGetProject = function*() {
       ])
     }
   }
+
+  yield put(
+    actions.replaceUIState(path, {
+      idle: true
+    })
+  )
 }
 
 const watchGetPullSetting = function*() {
@@ -96,7 +102,7 @@ export default {
     component: PullSetting,
     exact: true,
     *state(path) {
-      yield fork(watchGetProject)
+      yield fork(watchGetProject, path)
       yield fork(watchGetPullSetting)
       yield fork(watchUpdatePullSetting, path)
 
@@ -111,7 +117,7 @@ export default {
         ),
         put(
           actions.initializeUIState(path, {
-            idle: true
+            idle: false
           })
         )
       ])

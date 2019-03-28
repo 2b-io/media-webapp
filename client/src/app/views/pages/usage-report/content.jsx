@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import dateTimeService from 'services/date-time'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
-import { Break, Container } from 'ui/elements'
+import { Break, Container, LoadingIcon } from 'ui/elements'
 import { TextLine } from 'ui/typo'
 
 import { UsageReportChart } from 'views/common/compounds'
@@ -49,7 +49,11 @@ const UsageReport = ({
     requestData
   }
 }) => {
-  if (!projects.length) {
+  if (!idle && !projects.length) {
+    return <LoadingIcon />
+  }
+
+  if (!projects.length && idle) {
     return <TextLine mostLeft mostRight>No project found.</TextLine>
   }
 
@@ -57,9 +61,11 @@ const UsageReport = ({
     label: `${ project.name } (${ project.identifier })`,
     value: project.identifier
   }))
-
   return (
     <Container allowFullWidth={ true } >
+      {
+        !idle && <LoadingIcon />
+      }
       <UsageReportForm
         idle={ idle }
         initialValues={ {

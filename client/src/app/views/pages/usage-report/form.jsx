@@ -2,7 +2,7 @@ import ms from 'ms'
 import React from 'react'
 
 import dateTimeService from 'services/date-time'
-import { Break, Form, PrimaryButton, ResponsiveGrid } from 'ui/elements'
+import { Break, Form, PrimaryButton, ResponsiveGrid, LoadingIcon } from 'ui/elements'
 import { DatePicker, Select } from 'views/common/form'
 import { validateRequired } from 'views/common/validate'
 
@@ -20,7 +20,6 @@ const UsageReportForm = ({
 }) => {
   const min = dateTimeService.getStartOfUTCDay(new Date(Date.now() - ms('60d')))
   const max = dateTimeService.getStartOfUTCDay(new Date())
-
   return (
     <Form handleSubmit={ handleSubmit } idle={ idle }>
       <ResponsiveGrid

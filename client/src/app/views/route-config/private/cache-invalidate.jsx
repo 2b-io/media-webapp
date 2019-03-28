@@ -4,41 +4,30 @@ import { addToast } from 'state/saga/toast'
 import { actions, types, selectors } from 'state/interface'
 import * as CacheInvalidate from 'views/pages/cache-invalidate'
 
-const watchGetProject = function*() {
+const watchGetListInvalidate = function*(path) {
   const { identifier } = yield select(selectors.currentParams)
 
   const { completed, failed } = yield race({
-    completed: take(types.project.GET_COMPLETED),
-    failed: take(types.project.GET_FAILED)
+    completed: take(types.invalidation.LIST_INVALIDATE_CACHE_COMPLETED),
+    failed: take(types.invalidation.LIST_INVALIDATE_CACHE_FAILED),
   })
 
   if (failed) {
     yield all([
       fork(addToast, {
         type: 'error',
-        message: 'Cannot connect to project. Project does not exist or network has error(s).'
+        message: 'Cannot connect to invalidation cache'
       }),
       put(
-        actions.requestLocation('/projects')
+        actions.requestLocation(`/projects/${ identifier }`)
       )
     ])
   }
-
-  if (completed) {
-    const { isActive, status } = completed.payload.project
-
-    if (!(isActive === true && status === 'DEPLOYED')) {
-      yield all([
-        fork(addToast, {
-          type: 'error',
-          message: 'Project is initializing or disabled.'
-        }),
-        put(
-          actions.requestLocation(`/projects/${ identifier }`)
-        )
-      ])
-    }
-  }
+  yield put(
+    actions.mergeUIState(path, {
+      idle: true
+    })
+  )
 }
 
 const watchCacheInvalidator = function*(path) {
@@ -96,9 +85,9 @@ export default {
     component: CacheInvalidate,
     exact: true,
     *state(path) {
-      yield fork(watchGetProject)
       yield fork(watchCacheInvalidator, path)
       yield fork(watchCopyPatternsInvalidateCache, path)
+      yield fork(watchGetListInvalidate, path)
 
       const { identifier } = yield select(selectors.currentParams)
       yield all([
@@ -110,7 +99,7 @@ export default {
         ),
         put(
           actions.initializeUIState(path, {
-            idle: true
+            idle: false
           })
         )
       ])

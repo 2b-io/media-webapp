@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
 import { listToString } from 'services/string-to-list'
-import { Card, List, PlainButton, StatusIndicator, ResponsiveGrid } from 'ui/elements'
+import { Card, List, PlainButton, StatusIndicator, ResponsiveGrid, LoadingIcon } from 'ui/elements'
 import { CopyIcon } from 'ui/icons'
 import { DescriptionTextLine, Heading, TextLine } from 'ui/typo'
 import _CacheInvalidForm from './form'
@@ -65,6 +65,9 @@ const CacheInvalidate = ({
       leading: () => <StatusIndicator isActive={ status === 'COMPLETED' ? true : false } />
     })
   )
+  if (!idle) {
+    return <LoadingIcon />
+  }
   return (
     <Layout>
       <ResponsiveGrid

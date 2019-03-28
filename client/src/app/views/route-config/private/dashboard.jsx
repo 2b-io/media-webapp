@@ -4,16 +4,25 @@ import { actions, types } from 'state/interface'
 import * as Dashboard from 'views/pages/dashboard'
 import { addToast } from 'state/saga/toast'
 
-const watchInitialData = function*() {
-  yield race({
+const watchInitialData = function*(path) {
+  const { failedListPinnedProjects, failedListProjects, pinnedProjects } = yield race({
     failedListPinnedProjects: take(types.pinnedProjects.LIST_FAILED),
-    failedListProjects: take(types.project.FETCH_FAILED)
+    failedListProjects: take(types.project.FETCH_FAILED),
+    projects: take(types.project.FETCH_COMPLETED)
   })
 
-  yield fork(addToast, {
-    type: 'error',
-    message: 'Project does not exists or network connection has error(s).'
-  })
+  if (failedListProjects) {
+    yield fork(addToast, {
+      type: 'error',
+      message: 'Project does not exists or network connection has error(s).'
+    })
+  }
+
+  yield put(
+    actions.mergeUIState(path, {
+      idle: true
+    })
+  )
 }
 
 const watchUpdatePinProject = function*(path) {
@@ -84,7 +93,7 @@ export default {
     component: Dashboard,
     exact: true,
     *state(path) {
-      yield fork(watchInitialData)
+      yield fork(watchInitialData, path)
       yield fork(watchUpdatePinProject, path)
       yield fork(watchPinnedProjects, path)
 
@@ -97,7 +106,7 @@ export default {
         ),
         put(
           actions.initializeUIState(path, {
-            idle: true,
+            idle: false,
             isPinProjectsDialogActive: false
           })
         )

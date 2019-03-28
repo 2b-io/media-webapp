@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
-import { Container } from 'ui/elements'
+import { Container, LoadingIcon } from 'ui/elements'
 
 import StatelessPullSettingForm from './form'
 
@@ -20,15 +20,20 @@ const PullSetting = ({
   ui: {
     idle
   }
-}) => (
-  <Container>
-    <PullSettingForm
-      idle={ idle }
-      initialValues={ pullSetting }
-      onSubmit={ (pullSetting) => updatePullSetting({ identifier, pullSetting }) }
-    />
-  </Container>
-)
+}) => {
+  return (
+    <Container>
+      {
+        !idle && <LoadingIcon />
+      }
+      <PullSettingForm
+        idle={ idle }
+        initialValues={ pullSetting }
+        onSubmit={ (pullSetting) => updatePullSetting({ identifier, pullSetting }) }
+      />
+    </Container>
+  )
+}
 
 export default connect(
   (state) => {

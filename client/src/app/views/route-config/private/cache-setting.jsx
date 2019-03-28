@@ -4,7 +4,7 @@ import { addToast } from 'state/saga/toast'
 import { actions, selectors, types } from 'state/interface'
 import * as CacheSetting from 'views/pages/cache-setting'
 
-const watchGetInitializeData = function*() {
+const watchGetInitializeData = function*(path) {
   const { identifier } = yield select(selectors.currentParams)
 
   const { cacheSetting, getProjectCompleted, getProjectFailed } = yield race({
@@ -52,6 +52,12 @@ const watchGetInitializeData = function*() {
       )
     ])
   }
+
+  yield put(
+    actions.initializeUIState(path, {
+      idle: true
+    })
+  )
 }
 
 const watchUpdateCacheSetting = function*(path) {
@@ -100,7 +106,7 @@ export default {
     component: CacheSetting,
     exact: true,
     *state(path) {
-      yield fork(watchGetInitializeData)
+      yield fork(watchGetInitializeData, path)
       yield fork(watchUpdateCacheSetting, path)
 
       const { identifier } = yield select(selectors.currentParams)
@@ -114,7 +120,7 @@ export default {
         ),
         put(
           actions.initializeUIState(path, {
-            idle: true
+            idle: false
           })
         )
       ])

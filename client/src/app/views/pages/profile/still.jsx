@@ -17,7 +17,8 @@ const Profile = ({
   toChangePassword,
   showMenu, hideMenu,
   ui: {
-    isMenuActive
+    isMenuActive,
+    idle
   }
 }) => {
   const menuItems = [ {
@@ -31,7 +32,7 @@ const Profile = ({
   return (
     <Fragment>
       <MenuButton onClick={ maximizeSidebar } />
-      <Top account={ account } />
+      <Top account={ account } idle={idle} />
       { account && session && session.account &&
         account.identifier === session.account.identifier && (
         <ContextMenu.Menu
