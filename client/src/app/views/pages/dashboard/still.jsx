@@ -27,7 +27,7 @@ const Dashboard = ({
   <Fragment>
     <MenuButton onClick={ maximizeSidebar } />
     <PageTitle>Dashboard</PageTitle>
-    <ContextMenu
+    { idle  && <ContextMenu
       name={ 'pinnedProject' }
       content={ () => (
         <List
@@ -43,7 +43,8 @@ const Dashboard = ({
           ] }
         />
       ) }
-    />
+      />
+    }
     <Dialog
       isActive={ isPinProjectsDialogActive }
       onOverlayClick={ hidePinProjectDialog }

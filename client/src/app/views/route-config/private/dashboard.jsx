@@ -35,31 +35,36 @@ const watchUpdatePinProject = function*(path) {
       })
     )
 
-    const { hide } = yield race({
+    const { hide, update } = yield race({
       hide: take(`${ types.dialog.HIDE }:PIN_PROJECT`),
       update: take(types.pinnedProjects.UPDATE)
     })
 
-    yield put(
-      actions.mergeUIState(path, {
-        isPinProjectsDialogActive: false
-      })
-    )
+    if (update) {
+      yield put(
+        actions.mergeUIState(path, {
+          isPinProjectsDialogActive: false,
+          idle: false
+        })
+      )
+    }
 
     if (hide) {
       continue
     }
 
-    const { updateFailed } = yield race({
+    const { updateFailed, updateCompleted } = yield race({
       updateCompleted: take(types.pinnedProjects.UPDATE_COMPLETED),
       updateFailed: take(types.pinnedProjects.UPDATE_FAILED)
     })
 
-    yield put(
-      actions.mergeUIState(path, {
-        idle: true
-      })
-    )
+    if (updateCompleted) {
+      yield put(
+        actions.mergeUIState(path, {
+          idle: true
+        })
+      )
+    }
 
     if (updateFailed) {
       yield fork(addToast, {
@@ -81,7 +86,8 @@ const watchPinnedProjects = function*(path) {
 
     yield put(
       actions.mergeUIState(path, {
-        pinnedProjects
+        pinnedProjects,
+        idle: true
       })
     )
   }
