@@ -29,5 +29,6 @@ export default {
     key: process.env.SENDGRID_API_KEY,
     sender: process.env.SENDGRID_SENDER
   },
-  apiSecretKey:  process.env.API_SECRET_KEY
+  apiSecretKey:  process.env.API_SECRET_KEY,
+  pageSize: process.env.PAGE_SIZE
 }
