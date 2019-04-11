@@ -4,7 +4,8 @@ import { FormSection } from 'redux-form'
 import {
   Break,
   Form,
-  ButtonGroup, LinkButton, PrimaryButton
+  ButtonGroup, LinkButton, PrimaryButton,
+  LoadingIcon
 } from 'ui/elements'
 import { TextBox, CheckBox } from 'views/common/form'
 
@@ -37,48 +38,53 @@ const PresetForm = ({
   handleSubmit,
   idle,
   showRemovePresetDialog
-}) => (
-  <Form handleSubmit={ handleSubmit }>
-    <TextBox
-      disabled={ !idle }
-      label="Content Type"
-      name="contentType"
-      readOnly
-    />
-    <Break />
-    <CheckBox
-      disabled={ !idle }
-      name="isActive"
-      label="Enable"
-    />
-    <Break />
-    <FormSection name="parameters">
+}) => {
+  return (
+    <Form handleSubmit={ handleSubmit }>
       {
-        renderParameterForm(contentType, {
-          currentParameters,
-          idle
-        })
+        !idle && <LoadingIcon />
       }
-    </FormSection>
-    <Break double />
-    <ButtonGroup
-      primary={ () => (
-        <PrimaryButton disabled={ !idle } type="submit">
-          Save
-        </PrimaryButton>
-      ) }
-      secondary={ () => (
-        <div style={ { textAlign: 'center' } }>
-          <LinkButton
-            onClick={ showRemovePresetDialog }
-            disabled={ !idle }
-          >
-            Permanently delete
-          </LinkButton>
-        </div>
-      ) }
-    />
-  </Form>
-)
+      <TextBox
+        disabled={ !idle }
+        label="Content Type"
+        name="contentType"
+        readOnly
+      />
+      <Break />
+      <CheckBox
+        disabled={ !idle }
+        name="isActive"
+        label="Enable"
+      />
+      <Break />
+      <FormSection name="parameters">
+        {
+          renderParameterForm(contentType, {
+            currentParameters,
+            idle
+          })
+        }
+      </FormSection>
+      <Break double />
+      <ButtonGroup
+        primary={ () => (
+          <PrimaryButton disabled={ !idle } type="submit">
+            Save
+          </PrimaryButton>
+        ) }
+        secondary={ () => (
+          <div style={ { textAlign: 'center' } }>
+            <LinkButton
+              onClick={ showRemovePresetDialog }
+              disabled={ !idle }
+            >
+              Permanently delete
+            </LinkButton>
+          </div>
+        ) }
+      />
+    </Form>
+  )
+}
 
 export default PresetForm

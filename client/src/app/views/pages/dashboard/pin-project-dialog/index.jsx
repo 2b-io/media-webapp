@@ -1,7 +1,7 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
 
-import { Container } from 'ui/elements'
+import { Container, LoadingIcon } from 'ui/elements'
 import _PinnedProjectForm from './form'
 
 const PinnedProjectForm = reduxForm({
@@ -15,6 +15,10 @@ const UpdateProjectPinnedDialog = ({
   allProjects,
   pinnedProjects
 }) => {
+  if (!idle) {
+    return <div> <LoadingIcon /> </div>
+  }
+
   if (!allProjects || !pinnedProjects) {
     return null
   }

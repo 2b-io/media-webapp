@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 import { mapDispatch, mapState } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
-import { Card, PrimaryButton, ResponsiveGrid } from 'ui/elements'
+import { Card, PrimaryButton, ResponsiveGrid, LoadingIcon } from 'ui/elements'
 import { AddIcon } from 'ui/icons'
 import { Project } from 'views/common/compounds'
 
@@ -78,6 +78,7 @@ const ProjectList = ({
   toProjectDetail,
   session,
   ui: {
+    idle,
     sortType,
     sortAscending,
     hideDisabledProjects
@@ -107,6 +108,9 @@ const ProjectList = ({
       }
     )
   )
+  if (!idle) {
+    return <div> <LoadingIcon /> </div>
+  }
   return (
     <Layout>
       <ResponsiveGrid

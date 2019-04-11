@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { mapDispatch } from 'services/redux-helpers'
 import { actions } from 'state/interface'
 
-import { Card, ResponsiveGrid } from 'ui/elements'
+import { Card, ResponsiveGrid, LoadingIcon } from 'ui/elements'
 import { Project } from 'views/common/compounds'
 import { UsageReportChart } from 'views/common/compounds'
 
@@ -26,8 +26,12 @@ const Layout = styled.section`
 
 const Dashboard = ({
   toProjectDetail,
-  ui: { pinnedProjects }
+  ui: { pinnedProjects, idle }
 }) => {
+  if (!idle) {
+    return <Layout> <LoadingIcon /> </Layout>
+  }
+
   if (!pinnedProjects) {
     return <Layout />
   }

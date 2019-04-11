@@ -4,7 +4,7 @@ import styled from 'styled-components'
 // import { ApiKeys } from './api-keys-card'
 import { CacheSetting } from './cache-setting-card'
 import { Collaborators } from './collaborator-card'
-import { ResponsiveGrid } from 'ui/elements'
+import { ResponsiveGrid, LoadingIcon } from 'ui/elements'
 import { ProjectInfo } from './project-info-card'
 import { ProjectTools } from './project-tools-card'
 import { Presets } from './presets-card'
@@ -27,8 +27,8 @@ const BREAK_POINTS = {
   otherwise: 5
 }
 
-const generateContentProject = (isActive, ui) => {
-  if (isActive) {
+const generateContentProject = (ui) => {
+  if (ui.isProjectActive) {
     return [
       {
         content: () => <ProjectInfo ui={ ui } />
@@ -61,14 +61,19 @@ const generateContentProject = (isActive, ui) => {
   }
 }
 
-const Project = ({ ui }) => (
-  <Layout>
-    <ResponsiveGrid
-      breakpoints={ BREAK_POINTS }
-      items={ generateContentProject(ui.isProjectActive, ui) }
-      height="auto"
-    />
-  </Layout>
-)
+const Project = ({ ui }) => { console.log('ui', ui);
+  if (!ui.idle) {
+    return <div> <LoadingIcon /> </div>
+  }
+  return (
+    <Layout>
+      <ResponsiveGrid
+        breakpoints={ BREAK_POINTS }
+        items={ generateContentProject(ui) }
+        height="auto"
+      />
+    </Layout>
+  )
+}
 
 export default Project

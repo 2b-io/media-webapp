@@ -4,13 +4,24 @@ import { addToast } from 'state/saga/toast'
 import { actions, types } from 'state/interface'
 import * as UsageReport from 'views/pages/usage-report'
 
-const watchFetchProjects = function*() {
-  yield take(types.project.FETCH_FAILED)
-
-  yield fork(addToast, {
-    type: 'error',
-    message: 'Cannot fetch project. Project does not exist or network has error(s).'
+const watchFetchProjects = function*(path) {
+  const { completed, failed } = yield race({
+    completed: take(types.project.FETCH_COMPLETED),
+    failed: take(types.project.GET_FAILED)
   })
+
+  if (failed) {
+    yield fork(addToast, {
+      type: 'error',
+      message: 'Cannot fetch project. Project does not exist or network has error(s).'
+    })
+  }
+
+  yield put(
+    actions.mergeUIState(path, {
+      idle: true
+    })
+  )
 }
 
 const watchGenerateUsageReport = function*(path) {
@@ -54,7 +65,8 @@ const watchGenerateUsageReport = function*(path) {
           data,
           period,
           usageData,
-          requestData
+          requestData,
+          idle: true
         })
       )
     }
@@ -66,7 +78,7 @@ export default {
     component: UsageReport,
     exact: true,
     *state(path) {
-      yield fork(watchFetchProjects)
+      yield fork(watchFetchProjects, path)
       yield fork(watchGenerateUsageReport, path)
 
       yield all([
@@ -76,7 +88,7 @@ export default {
         put(
           actions.initializeUIState(path, {
             data: null,
-            idle: true
+            idle: false
           })
         )
       ])

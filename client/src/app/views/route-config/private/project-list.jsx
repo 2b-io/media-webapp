@@ -1,16 +1,27 @@
-import { all, fork, put, take } from 'redux-saga/effects'
+import { all, fork, put, take, race } from 'redux-saga/effects'
 
 import { actions, types } from 'state/interface'
 import * as ProjectList from 'views/pages/project-list'
 import { addToast } from 'state/saga/toast'
 
-const watchFetchProjects = function*() {
-  yield take(types.project.FETCH_FAILED)
-
-  yield fork(addToast, {
-    type: 'error',
-    message: 'Cannot fetch project. Project does not exist or network has error(s).'
+const watchFetchProjects = function*(path) {
+  const { completed, failed } = yield race({
+    completed: take(types.project.FETCH_COMPLETED),
+    failed: take(types.project.GET_FAILED)
   })
+
+  if (failed) {
+    yield fork(addToast, {
+      type: 'error',
+      message: 'Cannot fetch project. Project does not exist or network has error(s).'
+    })
+  }
+
+  yield put(
+    actions.mergeUIState(path, {
+      idle: true
+    })
+  )
 }
 
 const watchHideDisabledProjects = function*(path) {
@@ -63,7 +74,7 @@ export default {
     component: ProjectList,
     exact: true,
     *state(path) {
-      yield fork(watchFetchProjects)
+      yield fork(watchFetchProjects, path)
       yield fork(watchFilterMenu, path)
       yield fork(watchHideDisabledProjects, path)
       yield fork(watchSortCondition, path)
@@ -74,6 +85,7 @@ export default {
         ),
         put(
           actions.initializeUIState(path, {
+            idle: false,
             isFilterMenuActive: false,
             hideDisabledProjects: false,
             sortAscending: true,

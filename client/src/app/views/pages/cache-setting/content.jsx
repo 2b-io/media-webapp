@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import { mapDispatch } from 'services/redux-helpers'
 import { actions, selectors } from 'state/interface'
-import { Container } from 'ui/elements'
+import { Container, LoadingIcon } from 'ui/elements'
 
 import _CacheSettingForm from './form'
 
@@ -20,15 +20,20 @@ const CacheSetting = ({
   ui: {
     idle
   }
-}) => (
-  <Container>
-    <CacheSettingForm
-      idle={ idle }
-      initialValues={ cacheSetting }
-      onSubmit={ (cacheSetting) => updateCacheSetting({ identifier, cacheSetting }) }
-    />
-  </Container>
-)
+}) => {
+  return (
+    <Container>
+      {
+        !idle && <LoadingIcon />
+      }
+      <CacheSettingForm
+        idle={ idle }
+        initialValues={ cacheSetting }
+        onSubmit={ (cacheSetting) => updateCacheSetting({ identifier, cacheSetting }) }
+      />
+    </Container>
+  )
+}
 
 export default connect(
   (state) => {

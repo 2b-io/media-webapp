@@ -49,16 +49,27 @@ const watchChangePassword = function*(path) {
   }
 }
 
-const watchGetProfile = function*() {
-  yield take(types.account.GET_FAILED)
-
-  yield fork(addToast, {
-    type: 'error',
-    message: 'Cannot get your profile. Please check your network connection and try again.'
+const watchGetProfile = function*(path) {
+  const { completed, failed } = yield race({
+    completed: take(types.account.GET_COMPLETED),
+    failed: take(types.account.GET_FAILED)
   })
 
+  if (failed) {
+    yield fork(addToast, {
+      type: 'error',
+      message: 'Cannot get your profile. Please check your network connection and try again.'
+    })
+
+    yield put(
+      actions.requestLocation('/')
+    )
+  }
+
   yield put(
-    actions.requestLocation('/')
+    actions.mergeUIState(path, {
+      idle: true
+    })
   )
 }
 
@@ -126,7 +137,7 @@ export default {
     exact: true,
     *state(path) {
       yield fork(watchUpdateProfile, path)
-      yield fork(watchGetProfile)
+      yield fork(watchGetProfile, path)
 
       const { identifier } = yield select(selectors.currentParams)
 
@@ -136,7 +147,7 @@ export default {
         ),
         put(
           actions.initializeUIState(path, {
-            idle: true
+            idle: false
           })
         )
       ])
@@ -147,7 +158,7 @@ export default {
     exact: true,
     *state(path) {
       yield fork(watchChangePassword, path)
-      yield fork(watchGetProfile)
+      yield fork(watchGetProfile, path)
 
       const { identifier } = yield select(selectors.currentParams)
 
@@ -157,7 +168,7 @@ export default {
         ),
         put(
           actions.initializeUIState(path, {
-            idle: true
+            idle: false
           })
         )
       ])
@@ -167,7 +178,7 @@ export default {
     component: Profile,
     exact: true,
     *state(path) {
-      yield fork(watchGetProfile)
+      yield fork(watchGetProfile, path)
       yield fork(watchMenu, path)
 
       const { identifier } = yield select(selectors.currentParams)
@@ -178,7 +189,8 @@ export default {
         ),
         put(
           actions.initializeUIState(path, {
-            isMenuActive: false
+            isMenuActive: false,
+            idle: false
           })
         )
       ])
