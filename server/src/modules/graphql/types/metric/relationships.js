@@ -3,8 +3,8 @@ import {
   GraphQLList
 } from 'graphql'
 
+import config from 'infrastructure/config'
 import createCloudwatchService from 'services/cloudwatch'
-import searchDataAll from 'services/search-data-all'
 import { Datapoint } from '../datapoint'
 
 const compareDateTimeString = (firstDateTime, secondDateTime) => {
@@ -49,7 +49,7 @@ const formatDataMetric = (metricData, { startTime, endTime, period }) => {
 
       if (!datapoints[ index ]) {
         datapoints[ index ] = {
-          timestamp: new Date(timestamp).toISOString(),
+          timestamp,
           value: 0
         }
       }
@@ -59,6 +59,40 @@ const formatDataMetric = (metricData, { startTime, endTime, period }) => {
   )
 
   return datapoints
+}
+
+const getDataAll = async (accountIdentifier, projectIdentifier, name, startTime, endTime, period) => {
+  const cloudwatchService = createCloudwatchService(accountIdentifier)
+
+  let totalHits = 0
+  let total = 0
+  let sources = []
+  let from = 0
+
+  do {
+    const {
+      listData,
+      total: _total
+    } = await cloudwatchService.metricCloudfront(
+      projectIdentifier,
+      name,
+      startTime,
+      endTime,
+      period,
+      from
+    )
+    from = from + Number(config.pageSize)
+
+    totalHits = totalHits + listData.length
+    total = _total
+
+    sources = [
+      ...sources,
+      ...listData.map(({ _source }) => _source)
+    ]
+  } while (totalHits < total)
+
+  return sources
 }
 
 export default () => ({
@@ -76,15 +110,14 @@ export default () => ({
     },
     type: new GraphQLList(Datapoint),
     resolve: async ({ projectIdentifier, name }, { startTime, endTime, period }, ctx) => {
-      const cloudwatchService = createCloudwatchService(ctx._session.account.identifier)
-      const metricData = await searchDataAll(
-        cloudwatchService.metricCloudfront(
-            projectIdentifier,
-            name.toLowerCase(),
-            startTime,
-            endTime,
-            period
-        )
+
+      const metricData = await getDataAll(
+        ctx._session.account.identifier,
+        projectIdentifier,
+        name.toLowerCase(),
+        startTime,
+        endTime,
+        period
       )
 
       const datapoints = await formatDataMetric(
