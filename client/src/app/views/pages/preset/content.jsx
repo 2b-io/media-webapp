@@ -67,6 +67,23 @@ const PresetJpeg = ({
         idle={ idle }
         isUpdatePresetDialogActive={ isUpdatePresetDialogActive }
         onConfirm={ ({ identifier, preset }) => {
+          // const { parameters, contentType, isActive } = preset
+          // if (preset.contentType === 'image/png') {
+          //   const { maxQuality, minQuality, speed } = parameters
+          //   const _parameters = {
+          //     maxQuality: parseInt(maxQuality),
+          //     minQuality: parseInt(minQuality),
+          //     speed: parseInt(speed)
+          //   }
+          //
+          //   const _preset = {
+          //     contentType,
+          //     isActive,
+          //     parameters: _parameters
+          //   }
+          //   updatePreset({ identifier, preset: _preset })
+          //   return
+          // }
           updatePreset({ identifier, preset })
         } }
         onCancel={ hideUpdatePresetDialog }
