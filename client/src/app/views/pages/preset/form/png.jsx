@@ -13,14 +13,14 @@ const PngParameterForm = ({
       <SlideBar
         disabled={ !idle }
         name="minQuality"
-        min="0"
+        min={ 0 }
         max={ parseInt(currentParameters.maxQuality, 10) - 1 }
       />
       <SlideBar
         disabled={ !idle }
         name="maxQuality"
         min={ parseInt(currentParameters.minQuality, 10) + 1 }
-        max="100"
+        max={ 100 }
       />
       <DescriptionText mostLeft mostRight>
         Set minimum and maximum image quality factor.<br />
@@ -32,8 +32,8 @@ const PngParameterForm = ({
         disabled={ !idle }
         label="Speed"
         name="speed"
-        min="1"
-        max="10"
+        min={ 1 }
+        max={ 10 }
       />
       <DescriptionText mostLeft mostRight>
         Speed/quality trade-off from 1 (brute-force) to 10 (fastest). The default is 3. Speed 10 has 5% lower quality, but is 8 times faster than the default.

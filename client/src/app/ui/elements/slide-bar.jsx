@@ -117,7 +117,11 @@ const SlideBar = ({
           >
             <CircleThumb disabled={ disabled } />
           </Track>
-          <Range { ...props } />
+          <Range
+            { ...props }
+            onChange={ (event) => props.onChange(Number(event.target.value)) }
+            onBlur={ (event) => props.onBlur(Number(event.target.value)) }
+          />
         </Track>
         <Track
           disabled={ disabled }
